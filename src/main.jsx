@@ -7,6 +7,7 @@ import Code from './Code'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import WorkoutGrid from './WorkoutGrid'
+import Home from './Home'
 
 const darkTheme = createTheme({
   palette: {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: 'workouts/:filter/:name',
         element: <Code />,
+      },
+      {
+        path: 'home',
+        element: <Home />,
       },
     ],
   },

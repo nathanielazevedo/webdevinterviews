@@ -9,7 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
+// import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ListItem from '@mui/material/ListItem'
@@ -17,9 +17,20 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
-import { Outlet } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
+import YouTubeIcon from '@mui/icons-material/YouTube'
+import PestControlIcon from '@mui/icons-material/PestControl'
+import HomeIcon from '@mui/icons-material/Home'
 
-const drawerWidth = 150
+const drawerWidth = 190
+const navIcons = [
+  <HomeIcon key='4' />,
+  <FitnessCenterIcon key='1' />,
+  <YouTubeIcon key='2' />,
+  <PestControlIcon key='3' />,
+]
+
+const navRoutes = ['/home', '/workouts', '/youtube', 'bug-bounties']
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -113,7 +124,7 @@ export default function MiniDrawer() {
               ...(open && { display: 'none' }),
             }}
           >
-            <MenuIcon />
+            <ChevronRightIcon />
           </IconButton>
           <Typography
             variant='h6'
@@ -150,27 +161,44 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Workout'].map((text) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <FitnessCenterIcon />
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
+          {['Home', 'Workout', 'YouTube', 'Bug Bounties'].map((text, index) => (
+            <NavLink
+              key={text}
+              to={navRoutes[index]}
+              style={({ isActive }) => {
+                return {
+                  color: isActive ? '#19e4ff' : 'white',
+                  textDecoration: 'none',
+                }
+              }}
+            >
+              {({ isActive }) => (
+                <ListItem disablePadding sx={{ display: 'block' }}>
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? 'initial' : 'center',
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        color: isActive ? '#19e4ff' : 'white',
+                        minWidth: 0,
+                        mr: open ? 2 : 'auto',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {navIcons[index]}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={text}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              )}
+            </NavLink>
           ))}
         </List>
       </Drawer>

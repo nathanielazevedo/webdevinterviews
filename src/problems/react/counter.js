@@ -3,7 +3,8 @@ const problem = {
   name: 'counter',
   title: 'Counter',
   difficulty: 0,
-  description: 'Build a simple counter app.',
+  description:
+    'The classic counter question. Probably the most common question out there.',
   gif: '',
 }
 
