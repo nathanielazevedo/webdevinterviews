@@ -20,6 +20,10 @@ const router = createBrowserRouter([
     element: <Nav />,
     children: [
       {
+        path: '',
+        element: <WorkoutGrid />,
+      },
+      {
         path: '/workouts?/:filter',
         element: <WorkoutGrid />,
       },
