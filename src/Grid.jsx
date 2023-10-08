@@ -30,7 +30,7 @@ export default function DataGridDemo() {
         columns={columns}
         hideFooter
         onRowClick={(row) => {
-          navigate(`${row.row.name}`)
+          navigate(`/workouts/react/${row.row.name}`)
         }}
       />
     </Box>
