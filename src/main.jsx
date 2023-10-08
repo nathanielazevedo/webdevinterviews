@@ -11,6 +11,13 @@ import WorkoutGrid from './WorkoutGrid'
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
+    primary: {
+      main: '#19e4ff',
+    },
+  },
+
+  typography: {
+    fontFamily: 'Bai Jamjuree',
   },
 })
 

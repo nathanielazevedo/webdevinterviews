@@ -12,7 +12,7 @@ const columns = [
   {
     field: 'description',
     headerName: 'Description',
-    width: 450,
+    flex: 1,
   },
   {
     field: 'difficulty',
@@ -29,8 +29,19 @@ export default function DataGridDemo() {
         rows={rows}
         columns={columns}
         hideFooter
+        disableColumnMenu
         onRowClick={(row) => {
           navigate(`/workouts/react/${row.row.name}`)
+        }}
+        sx={{
+          // disable cell selection style
+          '.MuiDataGrid-cell:focus': {
+            outline: 'none',
+          },
+          // pointer cursor on ALL rows
+          '& .MuiDataGrid-row:hover': {
+            cursor: 'pointer',
+          },
         }}
       />
     </Box>

@@ -3,7 +3,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import rows from './problems/react'
-import { Typography, Box } from '@mui/material'
+import { Typography, Box, Button } from '@mui/material'
 
 const App = () => {
   const files = {}
@@ -14,13 +14,16 @@ const App = () => {
 
   return (
     <>
-      <ArrowBackIcon
-        style={{ marginBottom: '10px', cursor: 'pointer' }}
+      <Button
+        variant='contained'
+        style={{ cursor: 'pointer' }}
         onClick={() => {
           navigate('/workouts/' + filter)
         }}
-      />
-      <Box mt={2} mb={4}>
+      >
+        <ArrowBackIcon />
+      </Button>
+      <Box mt={4} mb={4}>
         <Typography variant='h4' sx={{ fontWeight: 'bold' }}>
           {challenge.title}
         </Typography>
