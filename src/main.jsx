@@ -8,6 +8,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import WorkoutGrid from './WorkoutGrid'
 import Home from './Home'
+import YouTube from './YouTube'
+import BugBounties from './BugBounties'
 
 const darkTheme = createTheme({
   palette: {
@@ -42,6 +44,14 @@ const router = createBrowserRouter([
       {
         path: 'home',
         element: <Home />,
+      },
+      {
+        path: 'youtube',
+        element: <YouTube />,
+      },
+      {
+        path: 'bug-bounties',
+        element: <BugBounties />,
       },
     ],
   },

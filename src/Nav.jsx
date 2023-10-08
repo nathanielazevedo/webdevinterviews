@@ -21,6 +21,9 @@ import { NavLink, Outlet } from 'react-router-dom'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import PestControlIcon from '@mui/icons-material/PestControl'
 import HomeIcon from '@mui/icons-material/Home'
+import NotificationsIcon from '@mui/icons-material/Notifications'
+import Badge from '@mui/material/Badge'
+import AccountCircle from '@mui/icons-material/AccountCircle'
 
 const drawerWidth = 190
 const navIcons = [
@@ -100,10 +103,15 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer() {
   const theme = useTheme()
   const [open, setOpen] = React.useState(false)
+  // const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleDrawerOpen = () => {
     setOpen(true)
   }
+
+  // const handleProfileMenuOpen = (event) => {
+  //   setAnchorEl(event.currentTarget)
+  // }
 
   const handleDrawerClose = () => {
     setOpen(false)
@@ -147,6 +155,28 @@ export default function MiniDrawer() {
             </span>
             INTERVIEWS
           </Typography>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <IconButton
+              size='large'
+              aria-label='show 17 new notifications'
+              color='inherit'
+            >
+              <Badge badgeContent={0} color='error'>
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size='large'
+              edge='end'
+              aria-label='account of current user'
+              // aria-controls={menuId}
+              aria-haspopup='true'
+              color='inherit'
+            >
+              <AccountCircle />
+            </IconButton>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer variant='permanent' open={open}>

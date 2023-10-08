@@ -21,7 +21,7 @@ const Rating = ({ rating }) => {
           border: 'solid transparent 1px',
           padding: '5px',
           borderRadius: '5px',
-          backgroundColor: 'yellow',
+          backgroundColor: rating > 1 ? 'yellow' : 'transparent',
         }}
       ></div>
       <div
@@ -29,7 +29,7 @@ const Rating = ({ rating }) => {
           border: 'solid transparent 1px',
           padding: '5px',
           borderRadius: '5px',
-          backgroundColor: 'red',
+          backgroundColor: rating > 2 ? 'red' : 'transparent',
         }}
       ></div>
     </div>
