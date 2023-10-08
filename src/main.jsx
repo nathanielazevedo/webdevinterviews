@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 import Nav from './Nav.jsx'
+import Code from './Code'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
+import WorkoutGrid from './WorkoutGrid'
 
 const darkTheme = createTheme({
   palette: {
@@ -16,8 +18,20 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Nav />,
+    children: [
+      {
+        path: '/workouts?/:filter',
+        element: <WorkoutGrid />,
+      },
+      {
+        path: 'workouts/:filter/:name',
+        element: <Code />,
+      },
+    ],
   },
 ])
+
+// /workouts/react
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

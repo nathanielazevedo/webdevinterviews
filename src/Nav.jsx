@@ -16,10 +16,10 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import ReactCode from './React'
-import CodeIcon from '@mui/icons-material/Code'
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
+import { Outlet } from 'react-router-dom'
 
-const drawerWidth = 240
+const drawerWidth = 150
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -137,7 +137,7 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Code'].map((text) => (
+          {['Workout'].map((text) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -153,7 +153,7 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  <CodeIcon />
+                  <FitnessCenterIcon />
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
@@ -163,7 +163,7 @@ export default function MiniDrawer() {
       </Drawer>
       <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <ReactCode />
+        <Outlet />
       </Box>
     </Box>
   )
