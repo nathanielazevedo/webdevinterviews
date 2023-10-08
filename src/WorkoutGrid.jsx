@@ -3,6 +3,7 @@ import Stack from '@mui/material/Stack'
 import Grid from './Grid'
 import { Avatar } from '@mui/material'
 import react from './assets/react-2.svg'
+import js from './assets/logo-javascript.svg'
 
 export default function BasicChips() {
   const handleClick = () => {
@@ -14,10 +15,14 @@ export default function BasicChips() {
         <Chip label='All' onClick={handleClick} variant='outlined' />
         <Chip
           label='React'
-          avatar={<Avatar alt='R' src={react} style={{ padding: '4px' }} />}
+          avatar={<Avatar alt='R' src={react} />}
           onClick={handleClick}
         />
-        <Chip label='JavaScript' variant='outlined' />
+        <Chip
+          label='JavaScript'
+          variant='outlined'
+          avatar={<Avatar alt='JS' src={js} />}
+        />
       </Stack>
       <Grid />
     </>

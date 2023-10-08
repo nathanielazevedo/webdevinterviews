@@ -121,7 +121,20 @@ export default function MiniDrawer() {
             component='div'
             fontFamily={'Bai Jamjuree'}
           >
-            Web <span style={{ color: '#19e4ff' }}>Dev</span> Interviews
+            WEB
+            <span
+              style={{
+                color: 'black',
+                border: 'solid #19e4ff 1px',
+                borderRadius: '10px',
+                padding: '0 5px',
+                margin: '0 5px',
+                backgroundColor: '#19e4ff',
+              }}
+            >
+              DEV
+            </span>
+            INTERVIEWS
           </Typography>
         </Toolbar>
       </AppBar>
