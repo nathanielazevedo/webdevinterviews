@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
 import rows from './problems/react'
 import { useNavigate } from 'react-router-dom'
+import Rating from './Rating'
 
 const columns = [
   {
@@ -18,6 +19,7 @@ const columns = [
     field: 'difficulty',
     headerName: 'Difficulty',
     width: 110,
+    renderCell: (params) => <Rating rating={params.row.difficulty} />,
   },
 ]
 
