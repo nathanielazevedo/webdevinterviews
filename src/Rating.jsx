@@ -10,7 +10,7 @@ const Rating = ({ rating }) => {
     >
       <div
         style={{
-          border: 'solid transparent 1px',
+          border: 'solid grey 1px',
           padding: '5px',
           borderRadius: '5px',
           backgroundColor: 'lightgreen',
@@ -18,7 +18,7 @@ const Rating = ({ rating }) => {
       ></div>
       <div
         style={{
-          border: 'solid transparent 1px',
+          border: 'solid grey 1px',
           padding: '5px',
           borderRadius: '5px',
           backgroundColor: rating > 1 ? 'yellow' : 'transparent',
@@ -26,7 +26,7 @@ const Rating = ({ rating }) => {
       ></div>
       <div
         style={{
-          border: 'solid transparent 1px',
+          border: 'solid grey 1px',
           padding: '5px',
           borderRadius: '5px',
           backgroundColor: rating > 2 ? 'red' : 'transparent',

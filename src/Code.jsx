@@ -5,6 +5,7 @@ import rows from './problems/react'
 import { Typography, Box, Button } from '@mui/material'
 import Rating from './Rating'
 import Code2 from './Code2'
+import YouTubeIcon from '@mui/icons-material/YouTube'
 
 const App = () => {
   const navigate = useNavigate()
@@ -14,7 +15,13 @@ const App = () => {
 
   return (
     <>
-      <Box style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+      <Box
+        style={{
+          display: 'flex',
+          gap: '25px',
+          alignItems: 'center',
+        }}
+      >
         <Button
           variant='contained'
           style={{ cursor: 'pointer', height: '30px' }}
@@ -24,9 +31,38 @@ const App = () => {
         >
           <ArrowBackIcon />
         </Button>
-        <Typography variant='h4' sx={{ fontWeight: 'bold' }}>
-          {challenge.title}
-        </Typography>
+
+        <a
+          href={challenge.link}
+          target='_blank'
+          rel='noreferrer'
+          style={{
+            display: 'flex',
+            textDecoration: 'none',
+            color: 'inherit',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <YouTubeIcon
+            sx={{
+              color: '#FF0000',
+            }}
+            style={{
+              fontSize: '50px',
+              height: '40px',
+            }}
+          />
+          <Typography
+            variant='h4'
+            sx={{
+              fontWeight: 'bold',
+            }}
+          >
+            {challenge.title}
+          </Typography>
+        </a>
+
         <Rating rating={challenge.difficulty} />
       </Box>
       <Typography mt={3} mb={3}>

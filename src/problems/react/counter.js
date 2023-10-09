@@ -6,6 +6,7 @@ const problem = {
   description:
     'The classic counter question. Probably the most common question out there.',
   gif: '',
+  link: 'https://youtu.be/DhF1SJ5WUlY',
 }
 
 export default problem
