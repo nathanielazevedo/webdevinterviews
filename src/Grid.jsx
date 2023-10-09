@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import Rating from './Rating'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import { GridActionsCellItem } from '@mui/x-data-grid'
+import { Typography } from '@mui/material'
 
 const columns = [
   {
@@ -37,6 +38,11 @@ const columns = [
     field: 'title',
     headerName: 'Title',
     width: 150,
+    renderCell: (params) => (
+      <Typography sx={{ '&:hover': { textDecoration: 'underline' } }}>
+        {params.row.title}
+      </Typography>
+    ),
   },
   {
     field: 'description',
@@ -75,6 +81,7 @@ export default function DataGridDemo() {
           },
           '& .MuiDataGrid-row:hover': {
             cursor: 'pointer',
+            backgroundColor: 'inherit',
           },
         }}
       />

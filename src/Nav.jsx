@@ -18,7 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import { NavLink, Outlet } from 'react-router-dom'
-import YouTubeIcon from '@mui/icons-material/YouTube'
+// import YouTubeIcon from '@mui/icons-material/YouTube'
 import PestControlIcon from '@mui/icons-material/PestControl'
 import HomeIcon from '@mui/icons-material/Home'
 import NotificationsIcon from '@mui/icons-material/Notifications'
@@ -29,11 +29,10 @@ const drawerWidth = 190
 const navIcons = [
   <HomeIcon key='4' />,
   <FitnessCenterIcon key='1' />,
-  <YouTubeIcon key='2' />,
   <PestControlIcon key='3' />,
 ]
 
-const navRoutes = ['/home', '/workouts', '/youtube', 'bug-bounties']
+const navRoutes = ['/home', '/workouts', '/bug-bounties']
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -191,10 +190,10 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Home', 'Workout', 'YouTube', 'Bug Bounties'].map((text, index) => (
+          {['Workout'].map((text) => (
             <NavLink
               key={text}
-              to={navRoutes[index]}
+              to={navRoutes[1]}
               style={({ isActive }) => {
                 return {
                   color: isActive ? '#19e4ff' : 'white',
@@ -219,7 +218,7 @@ export default function MiniDrawer() {
                         justifyContent: 'center',
                       }}
                     >
-                      {navIcons[index]}
+                      {navIcons[1]}
                     </ListItemIcon>
                     <ListItemText
                       primary={text}

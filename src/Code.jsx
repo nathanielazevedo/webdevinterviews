@@ -4,15 +4,15 @@ import { useParams } from 'react-router-dom'
 import rows from './problems/react'
 import { Typography, Box, Button } from '@mui/material'
 import Rating from './Rating'
-import Code2 from './Code2'
+// import Code2 from './Code2'
 import YouTubeIcon from '@mui/icons-material/YouTube'
+import Tabs from './Tabs'
 
 const App = () => {
   const navigate = useNavigate()
   let { filter, name } = useParams()
 
   const challenge = rows.filter((row) => row.name === name)[0]
-
   return (
     <>
       <Box
@@ -31,7 +31,6 @@ const App = () => {
         >
           <ArrowBackIcon />
         </Button>
-
         <a
           href={challenge.link}
           target='_blank'
@@ -44,15 +43,6 @@ const App = () => {
             alignItems: 'center',
           }}
         >
-          <YouTubeIcon
-            sx={{
-              color: '#FF0000',
-            }}
-            style={{
-              fontSize: '50px',
-              height: '40px',
-            }}
-          />
           <Typography
             variant='h4'
             sx={{
@@ -62,13 +52,38 @@ const App = () => {
             {challenge.title}
           </Typography>
         </a>
-
         <Rating rating={challenge.difficulty} />
+        <Button>
+          <a
+            href={challenge.link}
+            target='_blank'
+            rel='noreferrer'
+            style={{
+              display: 'flex',
+              textDecoration: 'none',
+              color: 'inherit',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <YouTubeIcon
+              sx={{
+                color: '#FF0000',
+              }}
+              style={{
+                fontSize: '50px',
+                height: '40px',
+              }}
+            />
+          </a>
+        </Button>
+        {/* <img
+          src='https://img.youtube.com/vi/DhF1SJ5WUlY/0.jpg'
+          width='100px'
+          style={{ border: 'solid white 1px', borderRadius: '20px' }}
+        /> */}
       </Box>
-      <Typography mt={3} mb={3}>
-        {challenge.description}
-      </Typography>
-      <Code2 />
+      <Tabs challenge={challenge} />
     </>
   )
 }
