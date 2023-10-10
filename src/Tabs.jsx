@@ -61,10 +61,7 @@ export default function BasicTabs({ challenge }) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Typography mt={1} mb={3}>
-          {challenge.description}
-        </Typography>
-        <Code2 />
+        <Code2 challenge={challenge} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         {challenge.demo()}

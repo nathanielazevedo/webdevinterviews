@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { filterItems, findParent } from './utils'
 
-const CheckboxTree = ({ data }) => {
+const CheckboxTree = ({ data, onChange }) => {
   const [checkedItems, setCheckedItems] = useState({})
   const [expandedItems, setExpandedItems] = useState({})
   const [searchQuery, setSearchQuery] = useState('') // State variable for search query
@@ -19,6 +19,11 @@ const CheckboxTree = ({ data }) => {
       uncheckAllChildren(data, itemId, updatedCheckedItems)
     }
 
+    // update parent onChange
+    const checkedIds = Object.keys(updatedCheckedItems).filter(
+      (id) => updatedCheckedItems[id]
+    )
+    onChange(checkedIds)
     setCheckedItems(updatedCheckedItems)
   }
 
@@ -70,13 +75,6 @@ const CheckboxTree = ({ data }) => {
     }))
   }
 
-  const handlePrintCheckedIds = () => {
-    const checkedIds = Object.keys(checkedItems).filter(
-      (id) => checkedItems[id]
-    )
-    console.log(checkedIds)
-  }
-
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value)
   }
@@ -86,7 +84,16 @@ const CheckboxTree = ({ data }) => {
 
   const renderTree = (nodes) => {
     return (
-      <ul style={{ listStyleType: 'none' }}>
+      <ul
+        style={{
+          listStyleType: 'none',
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+          flexDirection: 'column',
+          paddingInlineStart: '20px',
+        }}
+      >
         {nodes.map((node) => (
           <li key={node.id}>
             <div>
@@ -120,18 +127,43 @@ const CheckboxTree = ({ data }) => {
 
   return (
     <div
-      style={{ border: 'solid red 1px', width: '300px', borderRadius: '10px' }}
+      style={{
+        border: 'solid grey 1px',
+        width: '300px',
+        borderRadius: '10px',
+        backgroundColor: 'white',
+        color: 'black',
+        padding: '5px',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        flexDirection: 'column',
+      }}
     >
       <input
         type='text'
         placeholder='Search...'
         value={searchQuery}
         onChange={handleSearchChange}
+        style={{
+          width: '100%',
+          padding: '10px',
+          borderRadius: '10px',
+        }}
       />
-      <button onClick={handlePrintCheckedIds}>Print Checked IDs</button>
-      <div>
-        <ul style={{ listStyleType: 'none' }}>{renderTree(filteredData)}</ul>
-      </div>
+      <ul
+        style={{
+          listStyleType: 'none',
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+          flex: '1',
+          width: '100%',
+          paddingInlineStart: '0px',
+        }}
+      >
+        {renderTree(filteredData)}
+      </ul>
     </div>
   )
 }
