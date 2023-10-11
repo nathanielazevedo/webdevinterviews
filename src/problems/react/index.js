@@ -1,6 +1,6 @@
-import counter from './counter'
-import worst from './checkedTree'
+// import counter from './counter'
+import checkedTree from './checkedTree'
 
-const problems = [counter, worst]
+const problems = [checkedTree]
 
 export default problems

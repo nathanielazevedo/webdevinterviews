@@ -60,10 +60,6 @@ const columns = [
 export default function DataGridDemo() {
   const navigate = useNavigate()
 
-  const handleOnCellClick = (params) => {
-    console.log(params)
-  }
-
   return (
     <Box sx={{ width: '100%' }}>
       <DataGrid
@@ -71,7 +67,6 @@ export default function DataGridDemo() {
         columns={columns}
         hideFooter
         disableColumnMenu
-        onCellClick={handleOnCellClick}
         onRowClick={(row) => {
           navigate(`/workouts/react/${row.row.name}`)
         }}

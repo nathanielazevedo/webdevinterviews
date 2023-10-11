@@ -1,6 +1,5 @@
 // eslint-disable-next-line react/prop-types
 const Rating = ({ rating }) => {
-  console.log(rating)
   return (
     <div
       style={{

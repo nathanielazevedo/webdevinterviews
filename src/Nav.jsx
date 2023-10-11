@@ -24,6 +24,8 @@ import HomeIcon from '@mui/icons-material/Home'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import Badge from '@mui/material/Badge'
 import AccountCircle from '@mui/icons-material/AccountCircle'
+import Slide from '@mui/material/Slide'
+import useScrollTrigger from '@mui/material/useScrollTrigger'
 
 const drawerWidth = 190
 const navIcons = [
@@ -49,9 +51,9 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `calc(${theme.spacing(1)} + 1px)`,
   [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
+    width: `calc(${theme.spacing(1)} + 1px)`,
   },
 })
 
@@ -99,7 +101,24 @@ const Drawer = styled(MuiDrawer, {
   }),
 }))
 
-export default function MiniDrawer() {
+function HideOnScroll(props) {
+  // eslint-disable-next-line react/prop-types
+  const { children, window } = props
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+  })
+
+  return (
+    <Slide appear={false} direction='down' in={!trigger}>
+      {children}
+    </Slide>
+  )
+}
+
+export default function MiniDrawer(props) {
   const theme = useTheme()
   const [open, setOpen] = React.useState(false)
   // const [anchorEl, setAnchorEl] = React.useState(null)
@@ -119,65 +138,67 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position='fixed' open={open}>
-        <Toolbar>
-          <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            onClick={handleDrawerOpen}
-            edge='start'
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <ChevronRightIcon />
-          </IconButton>
-          <Typography
-            variant='h6'
-            noWrap
-            component='div'
-            fontFamily={'Bai Jamjuree'}
-          >
-            WEB
-            <span
-              style={{
-                color: 'black',
-                border: 'solid #19e4ff 1px',
-                borderRadius: '10px',
-                padding: '0 5px',
-                margin: '0 5px',
-                backgroundColor: '#19e4ff',
+      <HideOnScroll {...props}>
+        <AppBar position='fixed' open={open}>
+          <Toolbar>
+            <IconButton
+              color='inherit'
+              aria-label='open drawer'
+              onClick={handleDrawerOpen}
+              edge='start'
+              sx={{
+                marginRight: 5,
+                ...(open && { display: 'none' }),
               }}
             >
-              DEV
-            </span>
-            INTERVIEWS
-          </Typography>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size='large'
-              aria-label='show 17 new notifications'
-              color='inherit'
-            >
-              <Badge badgeContent={0} color='error'>
-                <NotificationsIcon />
-              </Badge>
+              <ChevronRightIcon />
             </IconButton>
-            <IconButton
-              size='large'
-              edge='end'
-              aria-label='account of current user'
-              // aria-controls={menuId}
-              aria-haspopup='true'
-              color='inherit'
+            <Typography
+              variant='h6'
+              noWrap
+              component='div'
+              fontFamily={'Bai Jamjuree'}
             >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
+              WEB
+              <span
+                style={{
+                  color: 'black',
+                  border: 'solid #19e4ff 1px',
+                  borderRadius: '10px',
+                  padding: '0 5px',
+                  margin: '0 5px',
+                  backgroundColor: '#19e4ff',
+                }}
+              >
+                DEV
+              </span>
+              INTERVIEWS
+            </Typography>
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <IconButton
+                size='large'
+                aria-label='show 17 new notifications'
+                color='inherit'
+              >
+                <Badge badgeContent={0} color='error'>
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                size='large'
+                edge='end'
+                aria-label='account of current user'
+                // aria-controls={menuId}
+                aria-haspopup='true'
+                color='inherit'
+              >
+                <AccountCircle />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
       <Drawer variant='permanent' open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
