@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import rows from './problems/react'
 import { Typography, Box, Button } from '@mui/material'
-import Rating from './Rating'
-// import Code2 from './Code2'
+import Rating from '../components/Rating'
 import YouTubeIcon from '@mui/icons-material/YouTube'
-import Tabs from './Tabs'
+import Tabs from '../WorkoutTabs'
 
 const App = () => {
   const navigate = useNavigate()

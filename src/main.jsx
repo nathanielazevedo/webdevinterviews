@@ -1,16 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import Nav from './Nav.jsx'
+import React from 'react'
 import Code from './Code'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
+import Nav from './Nav.jsx'
 import WorkoutGrid from './WorkoutGrid'
-// import Home from './Home'
-import YouTube from './YouTube'
-// import BugBounties from './BugBounties'
+import ReactDOM from 'react-dom/client'
 import { Analytics } from '@vercel/analytics/react'
+import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 const darkTheme = createTheme({
   palette: {
@@ -42,18 +39,6 @@ const router = createBrowserRouter([
         path: 'workouts/:filter/:name',
         element: <Code />,
       },
-      // {
-      //   path: 'home',
-      //   element: <Home />,
-      // },
-      {
-        path: 'youtube',
-        element: <YouTube />,
-      },
-      // {
-      //   path: 'bug-bounties',
-      //   element: <BugBounties />,
-      // },
       {
         path: '*',
         element: <Code />,
@@ -61,8 +46,6 @@ const router = createBrowserRouter([
     ],
   },
 ])
-
-// /workouts/react
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

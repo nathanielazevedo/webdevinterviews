@@ -3,7 +3,6 @@ import Stack from '@mui/material/Stack'
 import Grid from './Grid'
 import { Avatar } from '@mui/material'
 import react from './assets/react-2.svg'
-import js from './assets/logo-javascript.svg'
 import { useState } from 'react'
 
 export default function BasicChips() {
@@ -26,12 +25,6 @@ export default function BasicChips() {
           avatar={<Avatar alt='R' src={react} />}
           onClick={() => handleClick('react')}
           variant={chip === 'react' ? 'filled' : 'outlined'}
-        />
-        <Chip
-          label='JavaScript'
-          avatar={<Avatar alt='JS' src={js} />}
-          onClick={() => handleClick('javascript')}
-          variant={chip === 'javascript' ? 'filled' : 'outlined'}
         />
       </Stack>
       <Grid />
