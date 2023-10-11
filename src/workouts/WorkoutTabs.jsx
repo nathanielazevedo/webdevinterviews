@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import * as React from 'react'
+import Code from './tabs/Code'
 import PropTypes from 'prop-types'
-import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-// import Workout from './tabs/Workout'
-import Editor from '../code-editor/EditorMain'
+import Tabs from '@mui/material/Tabs'
+import Typography from '@mui/material/Typography'
+import Demo from './tabs/Demo'
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props
@@ -42,34 +42,32 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs({ challenge }) {
-  const [value, setValue] = React.useState(0)
+  const [tab, setTab] = React.useState(1)
 
   const handleChange = (event, newValue) => {
-    setValue(newValue)
+    setTab(newValue)
   }
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label='basic tabs example'
-        >
+        <Tabs value={tab} onChange={handleChange}>
           <Tab label='Challenge' {...a11yProps(0)} />
           <Tab label='Code' {...a11yProps(0)} />
           <Tab label='Demo / Solution' {...a11yProps(1)} />
           <Tab label='YouTube' {...a11yProps(2)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}></CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <Editor challenge={challenge} />
+      <CustomTabPanel value={tab} index={0}>
+        First Tab
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        {/* {challenge.demo()} */}
+      <CustomTabPanel value={tab} index={1}>
+        <Code challenge={challenge} />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
+      <CustomTabPanel value={tab} index={2}>
+        <Demo challenge={challenge} />
+      </CustomTabPanel>
+      <CustomTabPanel value={tab} index={3}>
         Item Three
       </CustomTabPanel>
     </Box>

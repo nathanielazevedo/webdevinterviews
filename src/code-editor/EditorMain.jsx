@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import './styles.css'
+import { useRef } from 'react'
 import Preview from './Preview'
-import { useState, useRef } from 'react'
 import LocalStorage from './LocalStorage'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import ResizeHandle from '../resizeable-panels/ResizeHandle'
@@ -13,28 +13,21 @@ import {
   SandpackLayout,
 } from '@codesandbox/sandpack-react'
 
-const MySandpackComponent = ({ challenge }) => {
-  const [files, setFiles] = useState(
-    localStorage.getItem(challenge.id) ?? undefined
-  )
-
+const EditorMain = ({ files, setFiles, challenge }) => {
   const codemirrorInstance = useRef()
 
   return (
     <>
       <SandpackProvider
         template='react'
-        files={files ? JSON.parse(files) : {}}
+        files={files}
         options={{ visibleFiles: ['/App.js'] }}
       >
         <LocalStorage challenge={challenge} setCode={setFiles} />
         <SandpackThemeProvider theme={'dark'}>
           <SandpackLayout>
             <div className='layout'>
-              <PanelGroup
-                autoSaveId='editor-preferences'
-                direction='horizontal'
-              >
+              <PanelGroup autoSaveId='editor-prefs' direction='horizontal'>
                 <>
                   <Panel collapsible={true} defaultSize={20} order={1}>
                     <SandpackFileExplorer style={{ height: '100%' }} />
@@ -59,20 +52,12 @@ const MySandpackComponent = ({ challenge }) => {
                 </>
                 <>
                   <ResizeHandle />
-                  <Panel collapsible={true} defaultSize={20} order={3}>
-                    <div>
-                      <div
-                        style={{
-                          minWidth: 190,
-                          display: 'flex',
-                          flexDirection: 'column',
-                        }}
-                      >
-                        <Preview
-                          setCode={setFiles}
-                          codemirrorInstance={codemirrorInstance}
-                        />
-                      </div>
+                  <Panel collapsible={true} defaultSize={50} order={3}>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <Preview
+                        setCode={setFiles}
+                        codemirrorInstance={codemirrorInstance}
+                      />
                     </div>
                   </Panel>
                 </>
@@ -85,4 +70,4 @@ const MySandpackComponent = ({ challenge }) => {
   )
 }
 
-export default MySandpackComponent
+export default EditorMain

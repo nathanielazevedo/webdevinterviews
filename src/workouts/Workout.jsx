@@ -11,7 +11,6 @@ const App = () => {
   const navigate = useNavigate()
   let { filter, name } = useParams()
   const challenge = rows.filter((row) => row.name === name)[0]
-  console.log(challenge)
 
   return (
     <>

@@ -1,7 +1,7 @@
 import './index.css'
 import React from 'react'
 import Nav from './components/Nav'
-import Code from './workouts/Workout'
+import Workout from './workouts/Workout'
 import ReactDOM from 'react-dom/client'
 import WorkoutGrid from './workouts/WorkoutsMain'
 import { Analytics } from '@vercel/analytics/react'
@@ -37,11 +37,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'workouts/:filter/:name',
-        element: <Code />,
+        element: <Workout />,
       },
       {
         path: '*',
-        element: <Code />,
+        element: <WorkoutGrid />,
       },
     ],
   },
