@@ -1,4 +1,4 @@
-import Main from '../../demos/nestedNelly/Main'
+import Main from './demo/Main'
 
 const checkedTree = {
   id: 2,

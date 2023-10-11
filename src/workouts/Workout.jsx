@@ -1,17 +1,18 @@
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { useNavigate } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
-import rows from './problems/react'
-import { Typography, Box, Button } from '@mui/material'
+import Tabs from './WorkoutTabs'
+import rows from './problems'
 import Rating from '../components/Rating'
+import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import YouTubeIcon from '@mui/icons-material/YouTube'
-import Tabs from '../WorkoutTabs'
+import { Typography, Box, Button } from '@mui/material'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 const App = () => {
   const navigate = useNavigate()
   let { filter, name } = useParams()
-
   const challenge = rows.filter((row) => row.name === name)[0]
+  console.log(challenge)
+
   return (
     <>
       <Box
@@ -76,11 +77,6 @@ const App = () => {
             />
           </a>
         </Button>
-        {/* <img
-          src='https://img.youtube.com/vi/DhF1SJ5WUlY/0.jpg'
-          width='100px'
-          style={{ border: 'solid white 1px', borderRadius: '20px' }}
-        /> */}
       </Box>
       <Tabs challenge={challenge} />
     </>

@@ -1,8 +1,8 @@
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
-import Grid from './Grid'
+import WorkoutsGrid from './WorkoutsGrid'
 import { Avatar } from '@mui/material'
-import react from './assets/react-2.svg'
+import react from '../assets/react.svg'
 import { useState } from 'react'
 
 export default function BasicChips() {
@@ -27,7 +27,7 @@ export default function BasicChips() {
           variant={chip === 'react' ? 'filled' : 'outlined'}
         />
       </Stack>
-      <Grid />
+      <WorkoutsGrid />
     </>
   )
 }

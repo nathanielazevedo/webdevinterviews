@@ -12,7 +12,7 @@ import { SandpackFileExplorer } from 'sandpack-file-explorer'
 import { useEffect, useState, useRef } from 'react'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import ResizeHandle from '../resizeable-panels/ResizeHandle'
-import Preview from '../Preview'
+import Preview from './Preview'
 
 const Some = ({ challenge, setCode }) => {
   const { sandpack } = useSandpack()
