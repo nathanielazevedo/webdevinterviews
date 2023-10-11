@@ -10,6 +10,7 @@ import WorkoutGrid from './WorkoutGrid'
 // import Home from './Home'
 import YouTube from './YouTube'
 // import BugBounties from './BugBounties'
+import { Analytics } from '@vercel/analytics/react'
 
 const darkTheme = createTheme({
   palette: {
@@ -65,6 +66,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <Analytics />
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <RouterProvider router={router} />

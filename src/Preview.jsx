@@ -16,10 +16,17 @@ const Preview = ({ setCode, codemirrorInstance }) => {
       <SandpackPreview
         options={{ showConsole: true }}
         style={{
-          height: showConsole ? '300px' : '90vh',
+          height: showConsole ? '25vh' : '86vh',
         }}
       />
-      <SandpackConsole showHeader={true} />
+      <div
+        style={{
+          height: showConsole ? '61vh' : '86vh',
+          overflow: 'auto',
+        }}
+      >
+        <SandpackConsole />
+      </div>
     </>
   )
 }

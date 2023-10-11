@@ -62,7 +62,7 @@ const PreviewTabs = ({
     <>
       <div
         style={{
-          height: '40px',
+          height: '4vh',
           display: 'flex',
           alignItems: 'center',
 

@@ -56,17 +56,19 @@ export default function BasicTabs({ challenge }) {
           aria-label='basic tabs example'
         >
           <Tab label='Challenge' {...a11yProps(0)} />
+          <Tab label='Code' {...a11yProps(0)} />
           <Tab label='Demo / Solution' {...a11yProps(1)} />
           <Tab label='YouTube' {...a11yProps(2)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
+      <CustomTabPanel value={value} index={0}></CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
         <Code2 challenge={challenge} />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
+      <CustomTabPanel value={value} index={2}>
         {challenge.demo()}
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
+      <CustomTabPanel value={value} index={3}>
         Item Three
       </CustomTabPanel>
     </Box>

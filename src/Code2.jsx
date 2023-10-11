@@ -54,8 +54,8 @@ const MySandpackComponent = ({ challenge }) => {
               style={{
                 display: 'flex',
                 width: '100%',
-                minHeight: '90vh',
-                maxHeight: '90vh',
+                minHeight: '95vh',
+                maxHeight: '95vh',
                 backgroundColor: `var(--sp-colors-surface1)`,
               }}
             >
