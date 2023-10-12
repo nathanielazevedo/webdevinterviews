@@ -20,6 +20,10 @@
   --color-solid-resize-bar-handle: rgba(255, 255, 255, 0.2);
 }
 
+* {
+  --sp-layout-height: 95vh;
+}
+
 .stop-scrolling {
   height: 100%;
   overflow: hidden;

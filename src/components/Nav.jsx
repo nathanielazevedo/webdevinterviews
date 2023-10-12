@@ -9,7 +9,6 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
-// import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ListItem from '@mui/material/ListItem'
@@ -18,9 +17,6 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import { NavLink, Outlet } from 'react-router-dom'
-// import YouTubeIcon from '@mui/icons-material/YouTube'
-import PestControlIcon from '@mui/icons-material/PestControl'
-import HomeIcon from '@mui/icons-material/Home'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import Badge from '@mui/material/Badge'
 import AccountCircle from '@mui/icons-material/AccountCircle'
@@ -28,11 +24,7 @@ import Slide from '@mui/material/Slide'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 
 const drawerWidth = 190
-const navIcons = [
-  <HomeIcon key='4' />,
-  <FitnessCenterIcon key='1' />,
-  <PestControlIcon key='3' />,
-]
+const navIcons = [<FitnessCenterIcon key='1' />]
 
 const navRoutes = ['/home', '/workouts', '/bug-bounties']
 
@@ -121,15 +113,10 @@ function HideOnScroll(props) {
 export default function MiniDrawer(props) {
   const theme = useTheme()
   const [open, setOpen] = React.useState(false)
-  // const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleDrawerOpen = () => {
     setOpen(true)
   }
-
-  // const handleProfileMenuOpen = (event) => {
-  //   setAnchorEl(event.currentTarget)
-  // }
 
   const handleDrawerClose = () => {
     setOpen(false)
@@ -189,7 +176,6 @@ export default function MiniDrawer(props) {
                 size='large'
                 edge='end'
                 aria-label='account of current user'
-                // aria-controls={menuId}
                 aria-haspopup='true'
                 color='inherit'
               >
@@ -235,7 +221,7 @@ export default function MiniDrawer(props) {
                       sx={{
                         color: isActive ? '#19e4ff' : 'white',
                         minWidth: 0,
-                        mr: open ? 2 : 'auto',
+                        mr: open ? 0 : 'auto',
                         justifyContent: 'center',
                       }}
                     >

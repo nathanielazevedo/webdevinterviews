@@ -8,6 +8,7 @@ import { Analytics } from '@vercel/analytics/react'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import SecretPlayground from './components/SecretPlayground'
 
 const darkTheme = createTheme({
   palette: {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
         element: <WorkoutGrid />,
       },
     ],
+  },
+  {
+    path: '/secretplayground',
+    element: <SecretPlayground />,
   },
 ])
 

@@ -7,6 +7,7 @@ import Box from '@mui/material/Box'
 import Tabs from '@mui/material/Tabs'
 import Typography from '@mui/material/Typography'
 import Demo from './tabs/Demo'
+import Instructions from './tabs/Instructions'
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props
@@ -52,23 +53,19 @@ export default function BasicTabs({ challenge }) {
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={tab} onChange={handleChange}>
-          <Tab label='Challenge' {...a11yProps(0)} />
+          <Tab label='Instructions' {...a11yProps(0)} />
           <Tab label='Code' {...a11yProps(0)} />
           <Tab label='Demo / Solution' {...a11yProps(1)} />
-          <Tab label='YouTube' {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={tab} index={0}>
-        First Tab
+        <Instructions challenge={challenge} />
       </CustomTabPanel>
       <CustomTabPanel value={tab} index={1}>
         <Code challenge={challenge} />
       </CustomTabPanel>
       <CustomTabPanel value={tab} index={2}>
         <Demo challenge={challenge} />
-      </CustomTabPanel>
-      <CustomTabPanel value={tab} index={3}>
-        Item Three
       </CustomTabPanel>
     </Box>
   )

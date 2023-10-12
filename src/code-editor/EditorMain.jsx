@@ -13,7 +13,7 @@ import {
   SandpackLayout,
 } from '@codesandbox/sandpack-react'
 
-const EditorMain = ({ files, setFiles, challenge }) => {
+const EditorMain = ({ demo, files, setFiles, challenge }) => {
   const codemirrorInstance = useRef()
 
   return (
@@ -23,22 +23,69 @@ const EditorMain = ({ files, setFiles, challenge }) => {
         files={files}
         options={{ visibleFiles: ['/App.js'] }}
       >
-        <LocalStorage challenge={challenge} setCode={setFiles} />
-        <SandpackThemeProvider theme={'dark'}>
+        {!demo && <LocalStorage challenge={challenge} setCode={setFiles} />}
+        <SandpackThemeProvider
+          theme={{
+            colors: {
+              surface1: '#151515',
+              surface2: '#252525',
+              surface3: '#2F2F2F',
+              clickable: '#999999',
+              base: '#808080',
+              disabled: '#4D4D4D',
+              hover: '#C5C5C5',
+              accent: '#4ef8fe',
+              error: '#E1CFF8',
+              errorSurface: '#b08df8',
+            },
+            syntax: {
+              plain: '#f0fdaf',
+              comment: {
+                color: '#757575',
+                fontStyle: 'italic',
+              },
+              keyword: '#55dfe4',
+              tag: '#71e251',
+              punctuation: '#ffffff',
+              definition: '#f18636',
+              property: '#90e86f',
+              static: '#ffffff',
+              string: '#dafecf',
+            },
+            font: {
+              body: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+              mono: '"Bai Jamjuree", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace',
+              size: '13px',
+              lineHeight: '20px',
+            },
+          }}
+        >
           <SandpackLayout>
             <div className='layout'>
-              <PanelGroup autoSaveId='editor-prefs' direction='horizontal'>
+              <PanelGroup
+                autoSaveId='editor-prefs'
+                direction='horizontal'
+                disablePointerEventsDuringResize
+              >
                 <>
-                  <Panel collapsible={true} defaultSize={20} order={1}>
-                    <SandpackFileExplorer style={{ height: '100%' }} />
+                  <Panel
+                    collapsible={true}
+                    defaultSize={demo ? 10 : 20}
+                    order={1}
+                  >
+                    <div style={{ height: '100%', overflow: 'auto' }}>
+                      <SandpackFileExplorer
+                        style={{ height: '100%', overflow: 'auto' }}
+                      />
+                    </div>
                   </Panel>
                   <ResizeHandle />
                 </>
                 <>
                   <Panel
-                    collapsible={true}
                     order={2}
-                    style={{ overflow: 'scroll' }}
+                    collapsible={true}
+                    // style={{ overflow: 'scroll' }}
                   >
                     <SandpackCodeEditor
                       ref={codemirrorInstance}
@@ -47,6 +94,8 @@ const EditorMain = ({ files, setFiles, challenge }) => {
                       closableTabs
                       showInlineErrors
                       showLineNumbers
+                      autoScroll
+                      style={{ height: '100%' }}
                     />
                   </Panel>
                 </>
