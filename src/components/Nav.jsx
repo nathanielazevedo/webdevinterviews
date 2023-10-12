@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { styled, useTheme } from '@mui/material/styles'
+// import * as React from 'react'
+import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MuiDrawer from '@mui/material/Drawer'
 import MuiAppBar from '@mui/material/AppBar'
@@ -8,18 +8,18 @@ import List from '@mui/material/List'
 import CssBaseline from '@mui/material/CssBaseline'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+// import IconButton from '@mui/material/IconButton'
+// import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+// import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import { NavLink, Outlet } from 'react-router-dom'
-import NotificationsIcon from '@mui/icons-material/Notifications'
-import Badge from '@mui/material/Badge'
-import AccountCircle from '@mui/icons-material/AccountCircle'
+// import NotificationsIcon from '@mui/icons-material/Notifications'
+// import Badge from '@mui/material/Badge'
+// import AccountCircle from '@mui/icons-material/AccountCircle'
 import Slide from '@mui/material/Slide'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 
@@ -111,24 +111,24 @@ function HideOnScroll(props) {
 }
 
 export default function MiniDrawer(props) {
-  const theme = useTheme()
-  const [open, setOpen] = React.useState(false)
+  // const theme = useTheme()
+  // const [open, setOpen] = React.useState(false)
 
-  const handleDrawerOpen = () => {
-    setOpen(true)
-  }
+  // const handleDrawerOpen = () => {
+  //   setOpen(true)
+  // }
 
-  const handleDrawerClose = () => {
-    setOpen(false)
-  }
+  // const handleDrawerClose = () => {
+  //   setOpen(false)
+  // }
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <HideOnScroll {...props}>
-        <AppBar position='fixed' open={open}>
+        <AppBar open={false}>
           <Toolbar>
-            <IconButton
+            {/* <IconButton
               color='inherit'
               aria-label='open drawer'
               onClick={handleDrawerOpen}
@@ -139,7 +139,7 @@ export default function MiniDrawer(props) {
               }}
             >
               <ChevronRightIcon />
-            </IconButton>
+            </IconButton> */}
             <Typography
               variant='h6'
               noWrap
@@ -162,7 +162,7 @@ export default function MiniDrawer(props) {
               INTERVIEWS
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            {/* <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <IconButton
                 size='large'
                 aria-label='show 17 new notifications'
@@ -181,12 +181,12 @@ export default function MiniDrawer(props) {
               >
                 <AccountCircle />
               </IconButton>
-            </Box>
+            </Box> */}
           </Toolbar>
         </AppBar>
       </HideOnScroll>
-      <Drawer variant='permanent' open={open}>
-        <DrawerHeader>
+      <Drawer variant='permanent' open={false}>
+        {/* <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? (
               <ChevronRightIcon />
@@ -194,7 +194,7 @@ export default function MiniDrawer(props) {
               <ChevronLeftIcon />
             )}
           </IconButton>
-        </DrawerHeader>
+        </DrawerHeader> */}
         <Divider />
         <List>
           {['Workout'].map((text) => (

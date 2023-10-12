@@ -10,7 +10,7 @@ import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Tooltip from '@mui/material/Tooltip'
 
-const PreviewTabs = ({ setCode, codemirrorInstance }) => {
+const PreviewTabs = ({ setCode, codemirrorInstance, challenge }) => {
   const [prettierCode, setPrettierCode] = useState('')
   const [lockScreen, setLockScreen] = useState(false)
   const { sandpack } = useSandpack()
@@ -66,11 +66,10 @@ const PreviewTabs = ({ setCode, codemirrorInstance }) => {
           height: '4vh',
           display: 'flex',
           alignItems: 'center',
-
           gap: '20px',
+          padding: '0 10px',
         }}
       >
-        <div style={{ flex: 1 }}></div>
         <Tooltip title='Lock Screen'>
           <div
             onClick={() => {
@@ -91,20 +90,20 @@ const PreviewTabs = ({ setCode, codemirrorInstance }) => {
               runPrettier()
             }}
             style={{
-              // padding: '10px 5px',
               cursor: 'pointer',
             }}
           >
             <FlashOn />
           </div>
         </Tooltip>
+        <div style={{ flex: 1 }}></div>
         <Tooltip title='Reset Code'>
           <div
             onClick={() => {
-              setCode('{}')
+              localStorage.removeItem(challenge.id)
+              setCode(challenge.template)
             }}
             style={{
-              marginRight: '10px',
               cursor: 'pointer',
             }}
           >

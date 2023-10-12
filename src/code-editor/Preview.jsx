@@ -5,7 +5,7 @@ import { Panel, PanelGroup } from 'react-resizable-panels'
 import ResizeHandle from '../resizeable-panels/ResizeHandle'
 import { Typography } from '@mui/material'
 
-const Preview = ({ setCode, codemirrorInstance }) => {
+const Preview = ({ setCode, codemirrorInstance, challenge }) => {
   return (
     <PanelGroup
       autoSaveId='console'
@@ -15,6 +15,7 @@ const Preview = ({ setCode, codemirrorInstance }) => {
       <Panel>
         <PreviewTabs
           setCode={setCode}
+          challenge={challenge}
           codemirrorInstance={codemirrorInstance}
         />
         <SandpackPreview style={{ height: '95%' }} />
@@ -27,7 +28,6 @@ const Preview = ({ setCode, codemirrorInstance }) => {
         >
           Console
         </Typography>
-
         <SandpackConsole style={{ height: '90%' }} />
       </Panel>
     </PanelGroup>

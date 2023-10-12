@@ -1,4 +1,5 @@
 import asString from './demo/asString'
+import template from './template/asString'
 
 const checkedTree = {
   id: 2,
@@ -10,6 +11,7 @@ const checkedTree = {
   gif: '',
   link: 'https://youtu.be/DhF1SJ5WUlY',
   demo: asString,
+  template: template,
 }
 
 export default checkedTree

@@ -1,11 +1,9 @@
 import './styles.css'
 import data from './data'
 import { useState } from 'react'
-import { formatData } from './utils'
-import CheckedTree from './CheckedTree'
+// import CheckedTree from './CheckedTree'
 
 const Main = () => {
-  const [items] = useState(formatData(data))
   const [formData, setFormData] = useState({ checkedTree: [] })
 
   const handleSubmit = () => {
@@ -17,15 +15,7 @@ const Main = () => {
       <h1>Mock Form</h1>
       <input placeholder='Mock Input' className='common' />
       <input placeholder='Mock Input' className='common' />
-      <CheckedTree
-        data={items}
-        onChange={(checkedItems) => {
-          setFormData((prevFormData) => ({
-            ...prevFormData,
-            checkedTree: checkedItems,
-          }))
-        }}
-      />
+      {/* <CheckedTree /> */}
       <button onClick={handleSubmit} className='common'>
         Submit
       </button>

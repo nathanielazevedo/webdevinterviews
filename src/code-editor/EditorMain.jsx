@@ -21,7 +21,7 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
     lightBlue: '#9cdcfe',
     yellow: '#dcdcaa',
     purple: '#d16dce',
-    green: '#4ec9b0',
+    green: '#6a9956',
     orange: '#ce9178',
     comment: '#6a9956',
     blue: '#4fc1ff',
@@ -46,13 +46,13 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
               disabled: '#4D4D4D',
               hover: '#C5C5C5',
               accent: colors.yellow,
-              error: '#E1CFF8',
-              errorSurface: '#b08df8',
+              error: 'white',
+              errorSurface: '#5c0600',
             },
             syntax: {
               plain: colors.yellow,
               comment: {
-                color: colors.lightBlue,
+                color: colors.green,
                 fontStyle: 'italic',
               },
               keyword: colors.purple,
@@ -93,11 +93,7 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
                   <ResizeHandle />
                 </>
                 <>
-                  <Panel
-                    order={2}
-                    collapsible={true}
-                    // style={{ overflow: 'scroll' }}
-                  >
+                  <Panel order={2} collapsible={true}>
                     <SandpackCodeEditor
                       ref={codemirrorInstance}
                       wrapContent
@@ -105,7 +101,7 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
                       closableTabs
                       showInlineErrors
                       showLineNumbers
-                      autoScroll
+                      showRunButton
                       style={{ height: '100%' }}
                     />
                   </Panel>
@@ -115,6 +111,7 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
                   <Panel collapsible={true} defaultSize={50} order={3}>
                     <Preview
                       setCode={setFiles}
+                      challenge={challenge}
                       codemirrorInstance={codemirrorInstance}
                     />
                   </Panel>
