@@ -1,33 +1,36 @@
 /* eslint-disable react/prop-types */
 import PreviewTabs from './PreviewTabs'
-import { useState } from 'react'
 import { SandpackPreview, SandpackConsole } from '@codesandbox/sandpack-react'
+import { Panel, PanelGroup } from 'react-resizable-panels'
+import ResizeHandle from '../resizeable-panels/ResizeHandle'
+import { Typography } from '@mui/material'
 
 const Preview = ({ setCode, codemirrorInstance }) => {
-  const [showConsole, setShowConsole] = useState(false)
   return (
-    <>
-      <PreviewTabs
-        showConsole={showConsole}
-        setShowConsole={setShowConsole}
-        setCode={setCode}
-        codemirrorInstance={codemirrorInstance}
-      />
-      <SandpackPreview
-        options={{ showConsole: true }}
-        style={{
-          height: showConsole ? '25vh' : '86vh',
-        }}
-      />
-      <div
-        style={{
-          height: showConsole ? '61vh' : '86vh',
-          overflow: 'auto',
-        }}
-      >
-        <SandpackConsole />
-      </div>
-    </>
+    <PanelGroup
+      autoSaveId='console'
+      disablePointerEventsDuringResize
+      direction='vertical'
+    >
+      <Panel>
+        <PreviewTabs
+          setCode={setCode}
+          codemirrorInstance={codemirrorInstance}
+        />
+        <SandpackPreview style={{ height: '95%' }} />
+      </Panel>
+      <ResizeHandle direction='vertical' />
+      <Panel collapsible>
+        <Typography
+          variant='h6'
+          sx={{ textAlign: 'left', marginLeft: '10px', color: '#dcdcaa' }}
+        >
+          Console
+        </Typography>
+
+        <SandpackConsole style={{ height: '90%' }} />
+      </Panel>
+    </PanelGroup>
   )
 }
 

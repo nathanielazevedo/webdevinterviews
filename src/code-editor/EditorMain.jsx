@@ -113,12 +113,10 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
                 <>
                   <ResizeHandle />
                   <Panel collapsible={true} defaultSize={50} order={3}>
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                      <Preview
-                        setCode={setFiles}
-                        codemirrorInstance={codemirrorInstance}
-                      />
-                    </div>
+                    <Preview
+                      setCode={setFiles}
+                      codemirrorInstance={codemirrorInstance}
+                    />
                   </Panel>
                 </>
               </PanelGroup>

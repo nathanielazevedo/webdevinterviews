@@ -8,12 +8,9 @@ import { FlashOn } from '@mui/icons-material'
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined'
 import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-const PreviewTabs = ({
-  showConsole,
-  setShowConsole,
-  setCode,
-  codemirrorInstance,
-}) => {
+import Tooltip from '@mui/material/Tooltip'
+
+const PreviewTabs = ({ setCode, codemirrorInstance }) => {
   const [prettierCode, setPrettierCode] = useState('')
   const [lockScreen, setLockScreen] = useState(false)
   const { sandpack } = useSandpack()
@@ -73,65 +70,47 @@ const PreviewTabs = ({
           gap: '20px',
         }}
       >
-        <div
-          onClick={() => {
-            setShowConsole(false)
-          }}
-          style={{
-            padding: '10px 10px',
-            color: showConsole ? 'white' : '#dcdcaa',
-            cursor: 'pointer',
-          }}
-        >
-          Browser
-        </div>
-        <div
-          onClick={() => {
-            setShowConsole(true)
-          }}
-          style={{
-            padding: '10px 10px',
-            color: showConsole ? '#dcdcaa' : 'white',
-            cursor: 'pointer',
-          }}
-        >
-          Console
-        </div>
         <div style={{ flex: 1 }}></div>
-        <div
-          onClick={() => {
-            setLockScreen(!lockScreen)
-            document.body.classList.toggle('stop-scrolling')
-          }}
-          style={{
-            color: lockScreen ? '#dcdcaa' : 'white',
-            cursor: 'pointer',
-          }}
-        >
-          {lockScreen ? <LockOutlinedIcon /> : <LockOpenOutlinedIcon />}
-        </div>
-        <div
-          onClick={() => {
-            runPrettier()
-          }}
-          style={{
-            padding: '10px 5px',
-            cursor: 'pointer',
-          }}
-        >
-          <FlashOn />
-        </div>
-        <div
-          onClick={() => {
-            setCode('{}')
-          }}
-          style={{
-            marginRight: '10px',
-            cursor: 'pointer',
-          }}
-        >
-          <RotateLeftOutlinedIcon />
-        </div>
+        <Tooltip title='Lock Screen'>
+          <div
+            onClick={() => {
+              setLockScreen(!lockScreen)
+              document.body.classList.toggle('stop-scrolling')
+            }}
+            style={{
+              color: lockScreen ? '#dcdcaa' : 'white',
+              cursor: 'pointer',
+            }}
+          >
+            {lockScreen ? <LockOutlinedIcon /> : <LockOpenOutlinedIcon />}
+          </div>
+        </Tooltip>
+        <Tooltip title='Format Code'>
+          <div
+            onClick={() => {
+              runPrettier()
+            }}
+            style={{
+              // padding: '10px 5px',
+              cursor: 'pointer',
+            }}
+          >
+            <FlashOn />
+          </div>
+        </Tooltip>
+        <Tooltip title='Reset Code'>
+          <div
+            onClick={() => {
+              setCode('{}')
+            }}
+            style={{
+              marginRight: '10px',
+              cursor: 'pointer',
+            }}
+          >
+            <RotateLeftOutlinedIcon />
+          </div>
+        </Tooltip>
       </div>
     </>
   )
