@@ -15,9 +15,20 @@ import {
 
 const EditorMain = ({ demo, files, setFiles, challenge }) => {
   const codemirrorInstance = useRef()
+  // hello
+
+  const colors = {
+    lightBlue: '#9cdcfe',
+    yellow: '#dcdcaa',
+    purple: '#d16dce',
+    green: '#4ec9b0',
+    orange: '#ce9178',
+    comment: '#6a9956',
+    blue: '#4fc1ff',
+  }
 
   return (
-    <>
+    <div className='shadow'>
       <SandpackProvider
         template='react'
         files={files}
@@ -27,35 +38,35 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
         <SandpackThemeProvider
           theme={{
             colors: {
-              surface1: '#151515',
-              surface2: '#252525',
+              surface1: '#1f1f1f',
+              surface2: '#181818',
               surface3: '#2F2F2F',
               clickable: '#999999',
               base: '#808080',
               disabled: '#4D4D4D',
               hover: '#C5C5C5',
-              accent: '#4ef8fe',
+              accent: colors.yellow,
               error: '#E1CFF8',
               errorSurface: '#b08df8',
             },
             syntax: {
-              plain: '#f0fdaf',
+              plain: colors.yellow,
               comment: {
-                color: '#757575',
+                color: colors.lightBlue,
                 fontStyle: 'italic',
               },
-              keyword: '#55dfe4',
-              tag: '#71e251',
-              punctuation: '#ffffff',
-              definition: '#f18636',
-              property: '#90e86f',
-              static: '#ffffff',
-              string: '#dafecf',
+              keyword: colors.purple,
+              tag: colors.blue,
+              punctuation: colors.purple,
+              definition: colors.yellow,
+              property: colors.lightBlue,
+              static: colors.blue,
+              string: colors.orange,
             },
             font: {
               body: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-              mono: '"Bai Jamjuree", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace',
-              size: '13px',
+              mono: ' "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace',
+              size: '15px',
               lineHeight: '20px',
             },
           }}
@@ -115,7 +126,7 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
           </SandpackLayout>
         </SandpackThemeProvider>
       </SandpackProvider>
-    </>
+    </div>
   )
 }
 

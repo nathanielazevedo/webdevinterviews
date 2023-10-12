@@ -4,6 +4,10 @@ import * as prettier from 'prettier'
 import parserBabel from 'prettier/parser-babel'
 import { useEffect, useState, useCallback } from 'react'
 import { useActiveCode } from '@codesandbox/sandpack-react'
+import { FlashOn } from '@mui/icons-material'
+import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined'
+import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 const PreviewTabs = ({
   showConsole,
   setShowConsole,
@@ -75,7 +79,7 @@ const PreviewTabs = ({
           }}
           style={{
             padding: '10px 10px',
-            color: showConsole ? 'white' : '#19e4ff',
+            color: showConsole ? 'white' : '#dcdcaa',
             cursor: 'pointer',
           }}
         >
@@ -87,7 +91,7 @@ const PreviewTabs = ({
           }}
           style={{
             padding: '10px 10px',
-            color: showConsole ? '#19e4ff' : 'white',
+            color: showConsole ? '#dcdcaa' : 'white',
             cursor: 'pointer',
           }}
         >
@@ -100,12 +104,11 @@ const PreviewTabs = ({
             document.body.classList.toggle('stop-scrolling')
           }}
           style={{
-            padding: '10px 5px',
-            color: lockScreen ? '#19e4ff' : 'white',
+            color: lockScreen ? '#dcdcaa' : 'white',
             cursor: 'pointer',
           }}
         >
-          Lock Scroll
+          {lockScreen ? <LockOutlinedIcon /> : <LockOpenOutlinedIcon />}
         </div>
         <div
           onClick={() => {
@@ -116,18 +119,18 @@ const PreviewTabs = ({
             cursor: 'pointer',
           }}
         >
-          Format Code
+          <FlashOn />
         </div>
         <div
           onClick={() => {
             setCode('{}')
           }}
           style={{
-            padding: '10px 10px',
+            marginRight: '10px',
             cursor: 'pointer',
           }}
         >
-          Reset Code
+          <RotateLeftOutlinedIcon />
         </div>
       </div>
     </>
