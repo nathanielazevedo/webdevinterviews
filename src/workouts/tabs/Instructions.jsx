@@ -1,5 +1,4 @@
-import { Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Typography, Box, Checkbox } from '@mui/material'
 
 /* eslint-disable react/prop-types */
 const Description = ({ challenge }) => {
@@ -14,7 +13,6 @@ const Description = ({ challenge }) => {
         justifyContent: 'center',
       }}
     >
-      <Typography>{challenge.description}</Typography>
       {challenge.gif && (
         <img
           src={challenge.gif}
@@ -22,11 +20,27 @@ const Description = ({ challenge }) => {
           style={{ maxWidth: '30%' }}
         />
       )}
-      {challenge.checkList.map((item, index) => (
-        <Typography key={index} variant='body1'>
-          {item}
+      <Typography>{challenge.description}</Typography>
+      <Box>
+        <Typography variant='h6' color='primary'>
+          Checklist
         </Typography>
-      ))}
+        {challenge.checkList.map((item, index) => (
+          <Box
+            key={index}
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <Checkbox />
+            <Typography key={index} variant='body1'>
+              {item}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
     </Box>
   )
 }

@@ -90,7 +90,7 @@ const PreviewTabs = ({
     // Handle both, `ctrl` and `meta`.
     if ((e.metaKey || e.ctrlKey) && e.key === 's') {
       e.preventDefault()
-      formatAndSave()
+      formatAndSave(true)
     }
   }
 

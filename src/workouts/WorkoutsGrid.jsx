@@ -68,7 +68,7 @@ const columns = [
     flex: 1,
     renderCell: (params) => (
       <Tooltip title={params.row.description} placement='bottom'>
-        <Typography>{params.row.description}</Typography>
+        <Typography>{params.row.gist}</Typography>
       </Tooltip>
     ),
   },
