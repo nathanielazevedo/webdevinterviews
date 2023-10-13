@@ -65,14 +65,14 @@ const PreviewTabs = ({
           console.log('error')
         }
       }
-      !save && enqueueSnackbar('Format complete.')
+      !save && enqueueSnackbar('Formatted.')
       save && enqueueSnackbar('Saved.')
       sandpack.updateFile(sandpack.activePath, formatted)
     }
   }
 
-  const formatAndSave = () => {
-    const formatted = runPrettier(true)
+  const formatAndSave = (save) => {
+    const formatted = runPrettier(save)
     const newData = {}
     const keys = Object.keys(sandpack.files)
     keys.forEach((each) => {
@@ -132,7 +132,7 @@ const PreviewTabs = ({
         <Tooltip title='Format Code'>
           <div
             onClick={() => {
-              runPrettier()
+              formatAndSave(false)
             }}
             style={{
               cursor: 'pointer',
@@ -143,7 +143,7 @@ const PreviewTabs = ({
         </Tooltip>
         <Tooltip title='Save'>
           <div
-            onClick={formatAndSave}
+            onClick={() => formatAndSave(true)}
             style={{
               cursor: 'pointer',
             }}

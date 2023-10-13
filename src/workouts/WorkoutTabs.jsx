@@ -43,7 +43,7 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs({ challenge }) {
-  const [tab, setTab] = React.useState(1)
+  const [tab, setTab] = React.useState(0)
 
   const handleChange = (event, newValue) => {
     setTab(newValue)

@@ -46,7 +46,7 @@ export default function BasicMenu({ autoSave, setAutoSave }) {
             handleClose()
           }}
         >
-          {autoSave && <CheckIcon />}
+          {autoSave ? <CheckIcon fontSize='small' /> : <div></div>}
           Auto Save
         </MenuItem>
       </Menu>

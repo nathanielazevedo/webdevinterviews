@@ -20,7 +20,7 @@ const columns = [
       <GridActionsCellItem
         key='1'
         icon={
-          <Tooltip title='Watch the video' placement='top'>
+          <Tooltip title='Watch the video' placement='bottom'>
             <a
               style={{
                 display: 'flex',
@@ -45,12 +45,13 @@ const columns = [
       <Tooltip
         title={
           <>
-            <Typography sx={{ '&:hover': { textDecoration: 'underline' } }}>
-              {params.row.title}
-            </Typography>
-            <Typography sx={{ '&:hover': { textDecoration: 'underline' } }}>
-              {params.row.description}
-            </Typography>
+            {params.row.gif && (
+              <img
+                src={params.row.gif}
+                alt={params.row.name}
+                style={{ maxWidth: '100%' }}
+              />
+            )}
           </>
         }
         placement='bottom'
@@ -65,6 +66,11 @@ const columns = [
     field: 'description',
     headerName: 'Description',
     flex: 1,
+    renderCell: (params) => (
+      <Tooltip title={params.row.description} placement='bottom'>
+        <Typography>{params.row.description}</Typography>
+      </Tooltip>
+    ),
   },
   {
     field: 'difficulty',
@@ -95,7 +101,7 @@ export default function DataGridDemo() {
           },
           '& .MuiDataGrid-row:hover': {
             cursor: 'pointer',
-            backgroundColor: 'inherit',
+            // backgroundColor: 'inherit',
           },
         }}
       />

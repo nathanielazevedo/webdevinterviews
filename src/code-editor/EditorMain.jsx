@@ -136,7 +136,7 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
                       closableTabs
                       showInlineErrors
                       showLineNumbers
-                      showRunButton={false}
+                      // showRunButton={false}
                       style={{ height: '95%' }}
                     />
                   </Panel>
