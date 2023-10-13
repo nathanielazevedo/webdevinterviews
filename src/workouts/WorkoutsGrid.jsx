@@ -6,6 +6,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { useNavigate } from 'react-router-dom'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import { GridActionsCellItem } from '@mui/x-data-grid'
+import Tooltip from '@mui/material/Tooltip'
 
 const columns = [
   {
@@ -19,16 +20,18 @@ const columns = [
       <GridActionsCellItem
         key='1'
         icon={
-          <a
-            style={{
-              display: 'flex',
-            }}
-            href={params.row.link}
-            target='_blank'
-            rel='noreferrer'
-          >
-            <YouTubeIcon sx={{ color: '#FF0000' }} fontSize='large' />
-          </a>
+          <Tooltip title='Watch the video' placement='top'>
+            <a
+              style={{
+                display: 'flex',
+              }}
+              href={params.row.link}
+              target='_blank'
+              rel='noreferrer'
+            >
+              <YouTubeIcon sx={{ color: '#FF0000' }} fontSize='large' />
+            </a>
+          </Tooltip>
         }
         label='Delete'
       />,
@@ -52,7 +55,9 @@ const columns = [
   {
     field: 'difficulty',
     headerName: 'Difficulty',
+    headerAlign: 'center',
     width: 110,
+    align: 'center',
     renderCell: (params) => <Rating rating={params.row.difficulty} />,
   },
 ]

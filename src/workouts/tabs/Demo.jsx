@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 import EditorMain from '../../code-editor/EditorMain'
+import { useState } from 'react'
 
 const Demo = ({ challenge }) => {
-  const files = challenge.demo
+  const [files, setFiles] = useState(challenge.demo)
   return (
     <EditorMain
       demo={true}
       files={files}
-      setFiles={() => {}}
+      setFiles={setFiles}
       challenge={challenge}
     />
   )

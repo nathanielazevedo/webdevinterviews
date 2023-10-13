@@ -4,7 +4,7 @@ import Rating from '../components/Rating'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import YouTubeIcon from '@mui/icons-material/YouTube'
-import { Typography, Box, Button } from '@mui/material'
+import { Typography, Box, Button, Tooltip } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 const App = () => {
@@ -17,65 +17,55 @@ const App = () => {
       <Box
         style={{
           display: 'flex',
-          gap: '25px',
+          gap: '20px',
           alignItems: 'center',
         }}
       >
         <Button
-          variant='contained'
-          style={{ cursor: 'pointer', height: '30px' }}
+          style={{ cursor: 'pointer' }}
           onClick={() => {
             navigate('/workouts/' + filter)
           }}
         >
           <ArrowBackIcon />
         </Button>
-        <a
-          href={challenge.link}
-          target='_blank'
-          rel='noreferrer'
-          style={{
-            display: 'flex',
-            textDecoration: 'none',
-            color: 'inherit',
-            justifyContent: 'center',
-            alignItems: 'center',
+
+        <Typography
+          variant='h4'
+          sx={{
+            fontWeight: 'bold',
           }}
         >
-          <Typography
-            variant='h4'
-            sx={{
-              fontWeight: 'bold',
-            }}
-          >
-            {challenge.title}
-          </Typography>
-        </a>
+          {challenge.title}
+        </Typography>
+
         <Rating rating={challenge.difficulty} />
-        <Button>
-          <a
-            href={challenge.link}
-            target='_blank'
-            rel='noreferrer'
-            style={{
-              display: 'flex',
-              textDecoration: 'none',
-              color: 'inherit',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <YouTubeIcon
-              sx={{
-                color: '#FF0000',
-              }}
+        <Tooltip title='Watch the video' placement='top'>
+          <Button>
+            <a
+              href={challenge.link}
+              target='_blank'
+              rel='noreferrer'
               style={{
-                fontSize: '50px',
-                height: '40px',
+                display: 'flex',
+                textDecoration: 'none',
+                color: 'inherit',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
-            />
-          </a>
-        </Button>
+            >
+              <YouTubeIcon
+                sx={{
+                  color: '#FF0000',
+                }}
+                style={{
+                  fontSize: '50px',
+                  height: '40px',
+                }}
+              />
+            </a>
+          </Button>
+        </Tooltip>
       </Box>
       <Tabs challenge={challenge} />
     </>

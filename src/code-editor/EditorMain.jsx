@@ -15,7 +15,6 @@ import {
 
 const EditorMain = ({ demo, files, setFiles, challenge }) => {
   const codemirrorInstance = useRef()
-  // hello
 
   const colors = {
     lightBlue: '#9cdcfe',
@@ -110,6 +109,7 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
                   <ResizeHandle />
                   <Panel collapsible={true} defaultSize={50} order={3}>
                     <Preview
+                      demo={demo}
                       setCode={setFiles}
                       challenge={challenge}
                       codemirrorInstance={codemirrorInstance}

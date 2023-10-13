@@ -5,7 +5,7 @@ import { Panel, PanelGroup } from 'react-resizable-panels'
 import ResizeHandle from '../resizeable-panels/ResizeHandle'
 import { Typography } from '@mui/material'
 
-const Preview = ({ setCode, codemirrorInstance, challenge }) => {
+const Preview = ({ setCode, codemirrorInstance, challenge, demo }) => {
   return (
     <PanelGroup
       autoSaveId='console'
@@ -14,6 +14,7 @@ const Preview = ({ setCode, codemirrorInstance, challenge }) => {
     >
       <Panel>
         <PreviewTabs
+          demo={demo}
           setCode={setCode}
           challenge={challenge}
           codemirrorInstance={codemirrorInstance}

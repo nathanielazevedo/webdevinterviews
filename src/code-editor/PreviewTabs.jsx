@@ -9,12 +9,16 @@ import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined'
 import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Tooltip from '@mui/material/Tooltip'
+import Alert from '../components/Alert'
+import { useSnackbar } from 'notistack'
 
-const PreviewTabs = ({ setCode, codemirrorInstance, challenge }) => {
+const PreviewTabs = ({ setCode, codemirrorInstance, challenge, demo }) => {
   const [prettierCode, setPrettierCode] = useState('')
   const [lockScreen, setLockScreen] = useState(false)
+  const [showWarning, setShowWarning] = useState(false)
   const { sandpack } = useSandpack()
   const activeCode = useActiveCode()
+  const { enqueueSnackbar } = useSnackbar()
 
   const runPrettier = useCallback(() => {
     if (activeCode.code) {
@@ -53,17 +57,18 @@ const PreviewTabs = ({ setCode, codemirrorInstance, challenge }) => {
           console.log('error')
         }
       }
-
+      enqueueSnackbar('Format complete.')
       sandpack.updateFile(sandpack.activePath, prettierCode)
 
       setPrettierCode(null)
     }
   }, [prettierCode])
+
   return (
     <>
       <div
         style={{
-          height: '4vh',
+          height: '40px',
           display: 'flex',
           alignItems: 'center',
           gap: '20px',
@@ -73,6 +78,9 @@ const PreviewTabs = ({ setCode, codemirrorInstance, challenge }) => {
         <Tooltip title='Lock Screen'>
           <div
             onClick={() => {
+              lockScreen
+                ? enqueueSnackbar('Screen unlocked.')
+                : enqueueSnackbar('Screen locked.')
               setLockScreen(!lockScreen)
               document.body.classList.toggle('stop-scrolling')
             }}
@@ -100,8 +108,7 @@ const PreviewTabs = ({ setCode, codemirrorInstance, challenge }) => {
         <Tooltip title='Reset Code'>
           <div
             onClick={() => {
-              localStorage.removeItem(challenge.id)
-              setCode(challenge.template)
+              setShowWarning(true)
             }}
             style={{
               cursor: 'pointer',
@@ -111,6 +118,14 @@ const PreviewTabs = ({ setCode, codemirrorInstance, challenge }) => {
           </div>
         </Tooltip>
       </div>
+      {showWarning && (
+        <Alert
+          demo={demo}
+          challenge={challenge}
+          setCode={setCode}
+          setOpen={setShowWarning}
+        />
+      )}
     </>
   )
 }
