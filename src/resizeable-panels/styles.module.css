@@ -35,7 +35,10 @@
   position: relative;
   outline: none;
   --background-color: transparent;
+  border-right: 1px solid var(--color-solid-resize-bar);
+  /* background-color: #19191a !important; */
 }
+
 .ResizeHandleOuter[data-resize-handle-active] {
   --background-color: var(--color-solid-resize-bar-handle);
 }

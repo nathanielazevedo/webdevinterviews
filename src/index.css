@@ -28,3 +28,16 @@
   height: 100%;
   overflow: hidden;
 }
+
+/* div[id^='data-panel-id'] > div > div > div {
+  background-color: #19191a !important;
+} */
+
+.layout {
+  /* max-height: 50vh;
+  min-height: 50vh; */
+}
+
+.panel-content.file-explorer-panel > div {
+  background-color: #1c1c1c !important;
+}

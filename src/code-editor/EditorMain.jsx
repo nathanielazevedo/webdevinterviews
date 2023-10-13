@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import './styles.css'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import Preview from './Preview'
+import Toolbar from './Toolbar'
 import LocalStorage from './LocalStorage'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import ResizeHandle from '../resizeable-panels/ResizeHandle'
@@ -15,6 +16,7 @@ import {
 
 const EditorMain = ({ demo, files, setFiles, challenge }) => {
   const codemirrorInstance = useRef()
+  const [autoSave, setAutoSave] = useState(false)
 
   const colors = {
     lightBlue: '#9cdcfe',
@@ -27,21 +29,37 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
   }
 
   return (
-    <div className='shadow'>
+    <div
+      style={{
+        height: '95vh',
+        width: '100%',
+        borderRadius: '5px',
+        overflow: 'hidden',
+        border: '2px solid #2F2F2F',
+      }}
+    >
       <SandpackProvider
         template='react'
         files={files}
-        options={{ visibleFiles: ['/App.js'] }}
+        options={{
+          visibleFiles: ['/App.js'],
+          autorun: autoSave ? true : false,
+          autoReload: autoSave ? true : false,
+        }}
       >
-        {!demo && <LocalStorage challenge={challenge} setCode={setFiles} />}
+        {!demo && autoSave && (
+          <LocalStorage challenge={challenge} setCode={setFiles} />
+        )}
         <SandpackThemeProvider
+          autoSave={false}
+          autoRun={false}
           theme={{
             colors: {
-              surface1: '#1f1f1f',
+              surface1: '#1e1e1e',
               surface2: '#181818',
               surface3: '#2F2F2F',
               clickable: '#999999',
-              base: '#808080',
+              base: '#1e1e1e',
               disabled: '#4D4D4D',
               hover: '#C5C5C5',
               accent: colors.yellow,
@@ -70,7 +88,13 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
             },
           }}
         >
-          <SandpackLayout>
+          <Toolbar
+            setCode={setFiles}
+            codemirrorInstance={codemirrorInstance}
+            challenge={challenge}
+            demo={demo}
+          />
+          <SandpackLayout style={{ borderRadius: '0px 0px 5px 5px' }}>
             <div className='layout'>
               <PanelGroup
                 autoSaveId='editor-prefs'
@@ -82,17 +106,27 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
                     collapsible={true}
                     defaultSize={demo ? 10 : 20}
                     order={1}
+                    minSize={0}
                   >
-                    <div style={{ height: '100%', overflow: 'auto' }}>
+                    <div
+                      style={{
+                        height: '100%',
+                        overflow: 'auto',
+                      }}
+                    >
                       <SandpackFileExplorer
-                        style={{ height: '100%', overflow: 'auto' }}
+                        className='file-explorer'
+                        style={{
+                          height: '100%',
+                          overflow: 'auto',
+                        }}
                       />
                     </div>
                   </Panel>
-                  <ResizeHandle />
+                  <ResizeHandle className='left' />
                 </>
                 <>
-                  <Panel order={2} collapsible={true}>
+                  <Panel order={2} collapsible={true} minSize={0}>
                     <SandpackCodeEditor
                       ref={codemirrorInstance}
                       wrapContent
@@ -100,14 +134,19 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
                       closableTabs
                       showInlineErrors
                       showLineNumbers
-                      showRunButton
+                      showRunButton={true}
                       style={{ height: '100%' }}
                     />
                   </Panel>
                 </>
                 <>
-                  <ResizeHandle />
-                  <Panel collapsible={true} defaultSize={50} order={3}>
+                  <ResizeHandle className='right' />
+                  <Panel
+                    collapsible={true}
+                    defaultSize={50}
+                    order={3}
+                    minSize={0}
+                  >
                     <Preview
                       demo={demo}
                       setCode={setFiles}
