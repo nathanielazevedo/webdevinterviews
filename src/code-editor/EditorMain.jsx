@@ -16,16 +16,18 @@ import {
 
 const EditorMain = ({ demo, files, setFiles, challenge }) => {
   const codemirrorInstance = useRef()
-  const [autoSave, setAutoSave] = useState(false)
+  const [autoSave, setAutoSave] = useState(
+    localStorage.getItem('autoSave') === 'true' ? true : false
+  )
 
   const colors = {
     lightBlue: '#9cdcfe',
     yellow: '#dcdcaa',
     purple: '#d16dce',
-    green: '#6a9956',
+    green: '#4ec9b0',
     orange: '#ce9178',
     comment: '#6a9956',
-    blue: '#4fc1ff',
+    blue: '#569cd6',
   }
 
   return (
@@ -43,16 +45,14 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
         files={files}
         options={{
           visibleFiles: ['/App.js'],
-          autorun: autoSave ? true : false,
-          autoReload: autoSave ? true : false,
+          autorun: autoSave,
+          autoReload: autoSave,
         }}
       >
         {!demo && autoSave && (
           <LocalStorage challenge={challenge} setCode={setFiles} />
         )}
         <SandpackThemeProvider
-          autoSave={false}
-          autoRun={false}
           theme={{
             colors: {
               surface1: '#1e1e1e',
@@ -67,15 +67,15 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
               errorSurface: '#5c0600',
             },
             syntax: {
-              plain: colors.yellow,
+              plain: '#C5C5C5',
               comment: {
-                color: colors.green,
+                color: colors.comment,
                 fontStyle: 'italic',
               },
               keyword: colors.purple,
               tag: colors.blue,
-              punctuation: colors.purple,
-              definition: colors.yellow,
+              punctuation: 'grey',
+              definition: colors.green,
               property: colors.lightBlue,
               static: colors.blue,
               string: colors.orange,
@@ -93,6 +93,8 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
             codemirrorInstance={codemirrorInstance}
             challenge={challenge}
             demo={demo}
+            autoSave={autoSave}
+            setAutoSave={setAutoSave}
           />
           <SandpackLayout style={{ borderRadius: '0px 0px 5px 5px' }}>
             <div className='layout'>
@@ -134,8 +136,8 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
                       closableTabs
                       showInlineErrors
                       showLineNumbers
-                      showRunButton={true}
-                      style={{ height: '100%' }}
+                      showRunButton={false}
+                      style={{ height: '95%' }}
                     />
                   </Panel>
                 </>
@@ -162,6 +164,140 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
       </SandpackProvider>
     </div>
   )
+
+  // return (
+  //   <div
+  //     style={{
+  //       height: '95vh',
+  //       width: '100%',
+  //       borderRadius: '5px',
+  //       overflow: 'hidden',
+  //       border: '2px solid #2F2F2F',
+  //     }}
+  //   >
+  //     <SandpackProvider
+  //       template='react'
+  //       files={files}
+  //       options={{
+  //         visibleFiles: ['/App.js'],
+  //         autorun: autoSave,
+  //         autoReload: autoSave,
+  //       }}
+  //     >
+  //       {/* {!demo && autoSave && (
+  //         <LocalStorage challenge={challenge} setCode={setFiles} />
+  //       )} */}
+  //       <SandpackThemeProvider
+  //         theme={{
+  //           colors: {
+  //             surface1: '#1e1e1e',
+  //             surface2: '#181818',
+  //             surface3: '#2F2F2F',
+  //             clickable: '#999999',
+  //             base: '#1e1e1e',
+  //             disabled: '#4D4D4D',
+  //             hover: '#C5C5C5',
+  //             accent: colors.yellow,
+  //             error: 'white',
+  //             errorSurface: '#5c0600',
+  //           },
+  //           syntax: {
+  //             plain: colors.yellow,
+  //             comment: {
+  //               color: colors.comment,
+  //               fontStyle: 'italic',
+  //             },
+  //             keyword: colors.purple,
+  //             tag: colors.blue,
+  //             punctuation: 'grey',
+  //             definition: colors.green,
+  //             property: colors.lightBlue,
+  //             static: colors.blue,
+  //             string: colors.orange,
+  //           },
+  //           font: {
+  //             body: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+  //             mono: ' "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace',
+  //             size: '15px',
+  //             lineHeight: '20px',
+  //           },
+  //         }}
+  //       >
+  //         <Toolbar
+  //           setCode={setFiles}
+  //           codemirrorInstance={codemirrorInstance}
+  //           challenge={challenge}
+  //           demo={demo}
+  //           autoSave={autoSave}
+  //           setAutoSave={setAutoSave}
+  //         />
+  //         <SandpackLayout style={{ borderRadius: '0px 0px 5px 5px' }}>
+  //           <div className='layout'>
+  //             <PanelGroup
+  //               autoSaveId='editor-prefs'
+  //               direction='horizontal'
+  //               disablePointerEventsDuringResize
+  //             >
+  //               <>
+  //                 <Panel
+  //                   collapsible={true}
+  //                   defaultSize={demo ? 10 : 20}
+  //                   order={1}
+  //                   minSize={0}
+  //                 >
+  //                   <div
+  //                     style={{
+  //                       height: '100%',
+  //                       overflow: 'auto',
+  //                     }}
+  //                   >
+  //                     <SandpackFileExplorer
+  //                       className='file-explorer'
+  //                       style={{
+  //                         height: '100%',
+  //                         overflow: 'auto',
+  //                       }}
+  //                     />
+  //                   </div>
+  //                 </Panel>
+  //                 <ResizeHandle className='left' />
+  //               </>
+  //               <>
+  //                 <Panel order={2} collapsible={true} minSize={0}>
+  //                   <SandpackCodeEditor
+  //                     ref={codemirrorInstance}
+  //                     wrapContent
+  //                     showTabs
+  //                     closableTabs
+  //                     showInlineErrors
+  //                     showLineNumbers
+  //                     // showRunButton={true}
+  //                     style={{ height: '95%' }}
+  //                   />
+  //                 </Panel>
+  //               </>
+  //               <>
+  //                 <ResizeHandle className='right' />
+  //                 <Panel
+  //                   collapsible={true}
+  //                   defaultSize={50}
+  //                   order={3}
+  //                   minSize={0}
+  //                 >
+  //                   <Preview
+  //                     demo={demo}
+  //                     setCode={setFiles}
+  //                     challenge={challenge}
+  //                     codemirrorInstance={codemirrorInstance}
+  //                   />
+  //                 </Panel>
+  //               </>
+  //             </PanelGroup>
+  //           </div>
+  //         </SandpackLayout>
+  //       </SandpackThemeProvider>
+  //     </SandpackProvider>
+  //   </div>
 }
 
 export default EditorMain

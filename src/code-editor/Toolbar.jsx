@@ -2,7 +2,14 @@
 import { Box } from '@mui/material'
 import ToolbarItems from './ToolbarItems'
 
-const Toolbar = ({ setCode, codemirrorInstance, challenge, demo }) => {
+const Toolbar = ({
+  setCode,
+  codemirrorInstance,
+  challenge,
+  demo,
+  autoSave,
+  setAutoSave,
+}) => {
   return (
     <Box
       sx={{
@@ -18,8 +25,10 @@ const Toolbar = ({ setCode, codemirrorInstance, challenge, demo }) => {
       <ToolbarItems
         demo={demo}
         setCode={setCode}
+        autoSave={autoSave}
         challenge={challenge}
         codemirrorInstance={codemirrorInstance}
+        setAutoSave={setAutoSave}
       />
     </Box>
   )

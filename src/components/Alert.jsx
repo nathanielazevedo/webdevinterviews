@@ -8,9 +8,11 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { useSnackbar } from 'notistack'
+import { useSandpack } from '@codesandbox/sandpack-react'
 
 export default function AlertDialog({ challenge, setCode, setOpen, demo }) {
   const { enqueueSnackbar } = useSnackbar()
+  const { sandpack } = useSandpack()
   const handleCloseDeny = () => {
     setOpen(false)
   }
@@ -18,7 +20,10 @@ export default function AlertDialog({ challenge, setCode, setOpen, demo }) {
   const handleCloseAgree = () => {
     localStorage.removeItem(challenge.id)
     setOpen(false)
+
     demo ? setCode({ ...challenge.demo }) : setCode({ ...challenge.template })
+    console.log(sandpack)
+    sandpack.runSandpack()
     enqueueSnackbar('Code reset to original template')
   }
 

@@ -42,9 +42,23 @@ const columns = [
     headerName: 'Title',
     width: 150,
     renderCell: (params) => (
-      <Typography sx={{ '&:hover': { textDecoration: 'underline' } }}>
-        {params.row.title}
-      </Typography>
+      <Tooltip
+        title={
+          <>
+            <Typography sx={{ '&:hover': { textDecoration: 'underline' } }}>
+              {params.row.title}
+            </Typography>
+            <Typography sx={{ '&:hover': { textDecoration: 'underline' } }}>
+              {params.row.description}
+            </Typography>
+          </>
+        }
+        placement='bottom'
+      >
+        <Typography sx={{ '&:hover': { textDecoration: 'underline' } }}>
+          {params.row.title}
+        </Typography>
+      </Tooltip>
     ),
   },
   {

@@ -41,3 +41,10 @@
 .panel-content.file-explorer-panel > div {
   background-color: #1c1c1c !important;
 }
+
+.bar-divider {
+  position: relative;
+  width: 1px;
+  height: 55%;
+  background-color: #ccc;
+}

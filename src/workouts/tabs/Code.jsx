@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 const Code = ({ challenge }) => {
   const storedFiles = localStorage.getItem(challenge.id)
+  const [autoSave, setAutoSave] = useState(true)
   const whichFile = storedFiles
     ? JSON.parse(storedFiles)
     : challenge.template
@@ -12,7 +13,15 @@ const Code = ({ challenge }) => {
 
   const [files, setFiles] = useState(whichFile ? whichFile : {})
 
-  return <EditorMain files={files} setFiles={setFiles} challenge={challenge} />
+  return (
+    <EditorMain
+      files={files}
+      setFiles={setFiles}
+      challenge={challenge}
+      autoSave={autoSave}
+      setAutoSave={setAutoSave}
+    />
+  )
 }
 
 export default Code
