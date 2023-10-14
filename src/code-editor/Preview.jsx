@@ -3,38 +3,61 @@ import { SandpackPreview, SandpackConsole } from '@codesandbox/sandpack-react'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import ResizeHandle from '../resizeable-panels/ResizeHandle'
 import { Typography } from '@mui/material'
+import Console from './Console'
 
 const Preview = () => {
   return (
-    <PanelGroup
-      autoSaveId='console'
-      disablePointerEventsDuringResize
-      direction='vertical'
+    <div
+      style={{
+        height: '96%',
+        display: 'flex',
+        flexDirection: 'column',
+        // border: '1px solid #2F2F2F',
+        // borderTop: 'none',
+      }}
     >
-      <Panel minSize={0}>
-        <SandpackPreview style={{ height: '100%' }} showNavigator />
-      </Panel>
-      <ResizeHandle direction='vertical' />
-      <Panel
-        collapsible
-        style={{
-          backgroundColor: 'black',
-          borderTop: '1px solid #2F2F2F',
-        }}
-        minSize={0}
+      <PanelGroup
+        autoSaveId='console'
+        disablePointerEventsDuringResize
+        direction='vertical'
       >
-        <Typography
-          variant='h6'
-          p={1}
-          sx={{ textAlign: 'left', marginLeft: '10px', color: '#dcdcaa' }}
+        <Panel minSize={0}>
+          <SandpackPreview style={{ height: '100%' }} showNavigator />
+        </Panel>
+        <ResizeHandle direction='vertical' />
+        <Panel
+          collapsible={true}
+          minSize={0}
+          style={{
+            backgroundColor: 'black',
+            borderTop: '1px solid #2F2F2F',
+          }}
         >
-          Console
-        </Typography>
-        <SandpackConsole
-          style={{ height: '85%', backgroundColor: 'black', overflow: 'auto' }}
-        />
-      </Panel>
-    </PanelGroup>
+          <Typography
+            variant='h6'
+            p={1}
+            sx={{
+              textAlign: 'left',
+              marginLeft: '10px',
+              color: '#dcdcaa',
+              height: '40px',
+            }}
+          >
+            Console
+          </Typography>
+          <SandpackConsole
+            clientId='console'
+            style={{
+              height: '100%',
+              backgroundColor: 'black',
+              overflow: 'auto',
+            }}
+          >
+            <div>hllo</div>
+          </SandpackConsole>
+        </Panel>
+      </PanelGroup>
+    </div>
   )
 }
 
