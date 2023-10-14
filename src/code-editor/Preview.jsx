@@ -10,9 +10,12 @@ const Preview = () => {
   return (
     <div
       style={{
-        height: '93.5vh',
+        height: '100%',
+        maxHeight: '100%',
         display: 'flex',
         flexDirection: 'column',
+        // border: 'solid #2f2f2f 1px',
+        borderRadius: '0px',
       }}
     >
       <PanelGroup
@@ -28,7 +31,7 @@ const Preview = () => {
             showOpenInCodeSandbox={false}
           />
         </Panel>
-        <ResizeHandle direction='vertical' />
+        <ResizeHandle direction='vertical' className='horz' />
         <Panel minSize={0} collapsible={true}>
           <div
             style={{

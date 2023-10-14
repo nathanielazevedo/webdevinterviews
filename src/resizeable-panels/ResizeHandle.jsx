@@ -9,7 +9,10 @@ export default function ResizeHandle({ className = '', id }) {
       className={[styles.ResizeHandleOuter, className].join(' ')}
       id={id}
     >
-      <div className={styles.ResizeHandleInner}></div>
+      <div
+        className={[styles.ResizeHandleInner, className].join(' ')}
+        id='horz'
+      ></div>
     </PanelResizeHandle>
   )
 }

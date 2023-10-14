@@ -1,23 +1,21 @@
 .ResizeHandleOuter {
-  flex: 0 0 3px;
+  flex: 0.5;
   position: relative;
-  outline: none;
-  --background-color: transparent;
-  border-right: 1px solid var(--color-solid-resize-bar);
+  /* outline: var(--color-solid-resize-bar); */
+  background-color: #1e1e1e;
 }
 
 .ResizeHandleOuter[data-resize-handle-active] {
   --background-color: var(--color-solid-resize-bar-handle);
-  border-right: 2px solid #19e4ff;
+  outline: 1px solid #19e4ff;
 }
 
 .ResizeHandleInner {
   position: absolute;
-  top: 0.25em;
-  bottom: 0.25em;
-  left: 0.25em;
-  right: 0.25em;
-  border-radius: 0.25em;
-  /* background-color: var(--background-color); */
-  transition: border-right 0.2s linear;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: outline 2s linear;
+  outline: 0.5px solid var(--color-solid-resize-bar);
 }

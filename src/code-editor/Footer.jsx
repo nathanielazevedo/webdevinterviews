@@ -1,16 +1,14 @@
 import { Box } from '@mui/material'
-import GlowBall from '../components/GlowBall'
 
 const Footer = () => {
   return (
     <Box
       style={{
         height: '20px',
-        backgroundColor: '#2f2f2f',
+        backgroundColor: '#171717',
+        borderTop: '0.5px solid var(--color-solid-resize-bar)',
       }}
-    >
-      <GlowBall />
-    </Box>
+    ></Box>
   )
 }
 

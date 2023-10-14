@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography'
 
 const LogoText = () => {
   return (
-    <Typography variant='h6' noWrap component='div' fontFamily={'Bai Jamjuree'}>
+    <Typography variant='h6' noWrap component='div'>
       WEB
       <span
         style={{

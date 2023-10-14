@@ -2,10 +2,7 @@
   --sp-layout-height: 94vh;
 }
 
-.layout {
-  display: flex;
-  width: 100%;
-  min-height: 93.5vh;
-  max-height: 93.5vh;
-  border: solid #2f2f2f 1px;
+.component {
+  border: 'solid green 1px';
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 1);
 }

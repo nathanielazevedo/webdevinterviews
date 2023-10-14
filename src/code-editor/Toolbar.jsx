@@ -8,11 +8,10 @@ import { FlashOn } from '@mui/icons-material'
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined'
 import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import SaveIcon from '@mui/icons-material/Save'
 import Tooltip from '@mui/material/Tooltip'
 import Alert from '../components/Alert'
-import { useSnackbar } from 'notistack'
-import ToolbarMenu from './ToolbarMenu'
 import Timer from './Timer'
 import { Button } from '@mui/material'
 
@@ -27,8 +26,8 @@ const PreviewTabs = ({
   const [lockScreen, setLockScreen] = useState(false)
   const [showWarning, setShowWarning] = useState(false)
   const { sandpack } = useSandpack()
+  console.log(sandpack.editorState)
   const activeCode = useActiveCode()
-  const { enqueueSnackbar } = useSnackbar()
 
   const runPrettier = (save) => {
     if (activeCode.code) {
@@ -46,7 +45,7 @@ const PreviewTabs = ({
     }
   }
 
-  const updateCode = (formatted, save) => {
+  const updateCode = (formatted) => {
     if (formatted) {
       const cmInstance = codemirrorInstance.current.getCodemirror()
 
@@ -66,8 +65,8 @@ const PreviewTabs = ({
           console.log('error')
         }
       }
-      !save && enqueueSnackbar('Formatted.')
-      save && enqueueSnackbar('Saved.')
+      // !save && enqueueSnackbar('Formatted.')
+      // save && enqueueSnackbar('Saved.')
       sandpack.updateFile(sandpack.activePath, formatted)
     }
   }
@@ -88,7 +87,6 @@ const PreviewTabs = ({
   const handleKeyboard = (e) => {
     if (e.repeat) return
 
-    // Handle both, `ctrl` and `meta`.
     if ((e.metaKey || e.ctrlKey) && e.key === 's') {
       e.preventDefault()
       formatAndSave(true)
@@ -97,15 +95,12 @@ const PreviewTabs = ({
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyboard)
-
-    // Important to remove the listeners.
     return () => document.removeEventListener('keydown', handleKeyboard)
   })
 
   const lockScroll = () => {
-    lockScreen
-      ? enqueueSnackbar('Screen unlocked.')
-      : enqueueSnackbar('Screen locked.')
+    // console.log(sandpack.editorState)
+    // sandpack.dispatch({ type: 'refresh' })
     setLockScreen(!lockScreen)
     document.body.classList.toggle('stop-scrolling')
   }
@@ -116,12 +111,11 @@ const PreviewTabs = ({
         display: 'flex',
         alignItems: 'center',
         width: '100%',
-        backgroundColor: '#2f2f2f',
+        backgroundColor: '#171717',
+        borderBottom: '0.5px solid var(--color-solid-resize-bar)',
         height: '35px',
       }}
     >
-      <ToolbarMenu autoSave={autoSave} setAutoSave={setAutoSave} />
-      <div className='bar-divider'></div>
       <div
         style={{
           display: 'flex',
@@ -130,9 +124,8 @@ const PreviewTabs = ({
         }}
       >
         <Button
-          size='small'
           onClick={lockScroll}
-          sx={{ color: lockScreen ? '#19e4ff' : 'white', minWidth: '30px' }}
+          sx={{ color: lockScreen ? '#19e4ff' : '#C5C5C5', minWidth: '30px' }}
         >
           <Tooltip title='Lock Screen' style={{ cursor: 'pointer' }}>
             {lockScreen ? (
@@ -143,18 +136,34 @@ const PreviewTabs = ({
           </Tooltip>
         </Button>
 
-        <Button sx={{ height: '30px', color: 'white', minWidth: '30px' }}>
+        <Button
+          sx={{ color: autoSave ? '#19e4ff' : '#C5C5C5', minWidth: '30px' }}
+        >
+          <Tooltip title='Auto Save' style={{ cursor: 'pointer' }}>
+            <FlashOn
+              fontSize='small'
+              onClick={() => {
+                setAutoSave(!autoSave)
+                sandpack.runSandpack()
+                sandpack.openFile('/package.json')
+                localStorage.setItem('autoSave', !autoSave)
+              }}
+            />
+          </Tooltip>
+        </Button>
+
+        <Button sx={{ height: '30px', color: '#C5C5C5', minWidth: '30px' }}>
           <Tooltip
             title='Format Code'
             onClick={() => {
               formatAndSave(false)
             }}
           >
-            <FlashOn fontSize='small' />
+            <AutoAwesomeIcon fontSize='small' />
           </Tooltip>
         </Button>
 
-        <Button sx={{ height: '30px', color: 'white', minWidth: '30px' }}>
+        <Button sx={{ height: '30px', color: '#C5C5C5', minWidth: '30px' }}>
           <Tooltip
             title='Save All'
             style={{ cursor: 'pointer' }}

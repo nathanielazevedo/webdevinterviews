@@ -26,6 +26,6 @@
   /* position: relative; */
   width: 1px;
   height: 20px;
-  background-color: #ccc;
+  background-color: var(--color-solid-resize-bar);
   margin: 0 20px;
 }

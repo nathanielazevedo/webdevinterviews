@@ -29,10 +29,19 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        borderRadius: '10px',
+        overflow: 'hidden',
       }}
     >
       <div
-        style={{ width: '97vw', height: '97vh', border: 'solid #2f2f2f 1px' }}
+        className='component'
+        style={{
+          width: '97vw',
+          height: '97vh',
+          border: 'solid var(--color-solid-resize-bar) 0.5px',
+          borderRadius: '10px',
+          overflow: 'hidden',
+        }}
       >
         <SandpackProvider
           files={files}
