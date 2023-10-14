@@ -10,12 +10,11 @@ import Instructions from './tabs/Instructions'
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props
-  const showPanel = value === index
-  return showPanel ? (
-    <div hidden={!showPanel} {...other}>
+  return (
+    <div hidden={value !== index} {...other}>
       {value === index && <div>{children}</div>}
     </div>
-  ) : null
+  )
 }
 
 CustomTabPanel.propTypes = {
@@ -43,17 +42,7 @@ export default function BasicTabs({ challenge }) {
       <CustomTabPanel value={tab} index={0}>
         <Instructions challenge={challenge} />
       </CustomTabPanel>
-      <CustomTabPanel
-        value={tab}
-        index={1}
-        style={{
-          height: '100vh',
-          width: '100vw',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
+      <CustomTabPanel value={tab} index={1}>
         <Code challenge={challenge} />
       </CustomTabPanel>
       <CustomTabPanel value={tab} index={2}>

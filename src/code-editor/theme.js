@@ -36,9 +36,8 @@ export const theme = {
     string: colors.orange,
   },
   font: {
-    body: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-    mono: ' "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace',
-    size: '15px',
-    lineHeight: '20px',
+    size: '13px',
+    lineHeight: '17px',
+    mono: 'Fira Code, monospace',
   },
 }

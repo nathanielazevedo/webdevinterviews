@@ -13,13 +13,11 @@ const Toolbar = ({
   return (
     <Box
       sx={{
-        backgroundColor: '#181818',
-        height: '40px',
+        height: '3vh',
         display: 'flex',
         alignItems: 'center',
         gap: '20px',
         padding: '0 10px',
-        borderBottom: '1px solid black',
       }}
     >
       <ToolbarItems

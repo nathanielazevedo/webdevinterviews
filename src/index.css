@@ -1,15 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@700&family=Coming+Soon&family=Poppins:wght@200;300;500&display=swap');
-
-.MuiDataGrid-root .MuiDataGrid-cell:focus-within {
-  outline: none !important;
-}
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@700&family=Coming+Soon&family=Fira+Code:wght@500&family=Poppins:wght@200;300;500&display=swap');
 
 :root {
   --color-background-code: rgba(0, 0, 0, 0.35);
   --color-background-default: #081120;
-  --color-button-background: #2a3343;
-  --color-button-background-hover: #454950;
-  --color-button-border: #18181a;
   --color-code: #c67bff;
   --color-default: #ffffff;
   --color-horizontal-rule: #454950;
@@ -20,22 +13,9 @@
   --color-solid-resize-bar-handle: rgba(255, 255, 255, 0.2);
 }
 
-* {
-  --sp-layout-height: 100vh;
-}
-
 .stop-scrolling {
   height: 100%;
   overflow: hidden;
-}
-
-/* div[id^='data-panel-id'] > div > div > div {
-  background-color: #19191a !important;
-} */
-
-.layout {
-  /* max-height: 50vh;
-  min-height: 50vh; */
 }
 
 .panel-content.file-explorer-panel > div {

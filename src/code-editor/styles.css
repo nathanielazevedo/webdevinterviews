@@ -1,7 +1,11 @@
+* {
+  --sp-layout-height: 94vh;
+}
+
 .layout {
   display: flex;
   width: 100%;
-  min-height: 95vh;
-  max-height: 95vh;
-  background-color: var(--sp-colors-surface1);
+  min-height: 93.5vh;
+  max-height: 93.5vh;
+  border: solid #2f2f2f 1px;
 }

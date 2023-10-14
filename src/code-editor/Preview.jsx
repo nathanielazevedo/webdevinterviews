@@ -1,60 +1,36 @@
-/* eslint-disable react/prop-types */
-import { SandpackPreview, SandpackConsole } from '@codesandbox/sandpack-react'
+import Console from './Console'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import ResizeHandle from '../resizeable-panels/ResizeHandle'
-import { Typography } from '@mui/material'
-import Console from './Console'
+import { SandpackPreview } from '@codesandbox/sandpack-react'
 
 const Preview = () => {
   return (
     <div
       style={{
-        height: '96%',
+        height: '93.5vh',
         display: 'flex',
         flexDirection: 'column',
-        // border: '1px solid #2F2F2F',
-        // borderTop: 'none',
       }}
     >
       <PanelGroup
         autoSaveId='console'
-        disablePointerEventsDuringResize
         direction='vertical'
+        disablePointerEventsDuringResize
       >
         <Panel minSize={0}>
           <SandpackPreview style={{ height: '100%' }} showNavigator />
         </Panel>
         <ResizeHandle direction='vertical' />
         <Panel
-          collapsible={true}
           minSize={0}
+          collapsible={true}
           style={{
-            backgroundColor: 'black',
-            borderTop: '1px solid #2F2F2F',
+            border: 'solid red 1px',
+            height: '10vh',
+            maxHeight: '30vh',
           }}
         >
-          <Typography
-            variant='h6'
-            p={1}
-            sx={{
-              textAlign: 'left',
-              marginLeft: '10px',
-              color: '#dcdcaa',
-              height: '40px',
-            }}
-          >
-            Console
-          </Typography>
-          <SandpackConsole
-            clientId='console'
-            style={{
-              height: '100%',
-              backgroundColor: 'black',
-              overflow: 'auto',
-            }}
-          >
-            <div>hllo</div>
-          </SandpackConsole>
+          <Console />
         </Panel>
       </PanelGroup>
     </div>
