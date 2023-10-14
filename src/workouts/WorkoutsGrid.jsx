@@ -22,9 +22,7 @@ const columns = [
         icon={
           <Tooltip title='Watch the video' placement='bottom'>
             <a
-              style={{
-                display: 'flex',
-              }}
+              style={{ display: 'flex' }}
               href={params.row.link}
               target='_blank'
               rel='noreferrer'
@@ -101,7 +99,6 @@ export default function DataGridDemo() {
           },
           '& .MuiDataGrid-row:hover': {
             cursor: 'pointer',
-            // backgroundColor: 'inherit',
           },
         }}
       />

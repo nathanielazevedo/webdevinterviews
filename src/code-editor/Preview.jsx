@@ -2,8 +2,11 @@ import Console from './Console'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import ResizeHandle from '../resizeable-panels/ResizeHandle'
 import { SandpackPreview } from '@codesandbox/sandpack-react'
+import { useRef } from 'react'
 
 const Preview = () => {
+  const previewRef = useRef()
+
   return (
     <div
       style={{
@@ -18,19 +21,25 @@ const Preview = () => {
         disablePointerEventsDuringResize
       >
         <Panel minSize={0}>
-          <SandpackPreview style={{ height: '100%' }} showNavigator />
+          <SandpackPreview
+            style={{ height: '100%' }}
+            showNavigator
+            ref={previewRef}
+            showOpenInCodeSandbox={false}
+          />
         </Panel>
         <ResizeHandle direction='vertical' />
-        <Panel
-          minSize={0}
-          collapsible={true}
-          style={{
-            border: 'solid red 1px',
-            height: '10vh',
-            maxHeight: '30vh',
-          }}
-        >
-          <Console />
+        <Panel minSize={0} collapsible={true}>
+          <div
+            style={{
+              backgroundColor: '#242424',
+              height: '100%',
+              overflow: 'scroll',
+              paddingBottom: '5rem',
+            }}
+          >
+            <Console previewRef={previewRef} />
+          </div>
         </Panel>
       </PanelGroup>
     </div>
