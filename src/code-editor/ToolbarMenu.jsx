@@ -18,11 +18,16 @@ export default function BasicMenu({ autoSave, setAutoSave }) {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        paddingLeft: '10px',
+      }}
+    >
       <Button
         id='basic-button'
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup='true'
+        size='small'
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >

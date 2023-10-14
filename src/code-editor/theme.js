@@ -17,7 +17,7 @@ export const theme = {
     base: '#1e1e1e',
     disabled: '#4D4D4D',
     hover: '#C5C5C5',
-    accent: colors.yellow,
+    accent: '',
     error: 'white',
     errorSurface: '#5c0600',
   },

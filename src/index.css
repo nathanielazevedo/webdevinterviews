@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@700&family=Coming+Soon&family=Fira+Code:wght@500&family=Poppins:wght@200;300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@700&family=Coming+Soon&family=Fira+Code:wght@600&family=Poppins:wght@200;300;500&display=swap');
 
 :root {
   --color-background-code: rgba(0, 0, 0, 0.35);
@@ -23,8 +23,9 @@
 }
 
 .bar-divider {
-  position: relative;
+  /* position: relative; */
   width: 1px;
-  height: 55%;
+  height: 20px;
   background-color: #ccc;
+  margin: 0 20px;
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import PauseIcon from '@mui/icons-material/Pause'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import HistoryIcon from '@mui/icons-material/History'
-import { Tooltip } from '@mui/material'
+import { Tooltip, Typography } from '@mui/material'
 
 const Timer = () => {
   const [minutes, setMinutes] = useState(45)
@@ -42,8 +42,6 @@ const Timer = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '100%',
-        height: '100%',
       }}
     >
       <div
@@ -51,23 +49,21 @@ const Timer = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          width: '100%',
-          height: '100%',
         }}
       >
-        <div style={{ marginRight: '0.5rem' }}>
+        <Typography style={{ marginRight: '7px' }}>
           {minutes < 10 ? `0${minutes}` : minutes}
-        </div>
-        <div style={{ marginRight: '0.5rem' }}>:</div>
-        <div style={{ marginRight: '0.5rem' }}>
+        </Typography>
+        <div>:</div>
+        <Typography style={{ marginLeft: '7px' }}>
           {seconds < 10 ? `0${seconds}` : seconds}
-        </div>
+        </Typography>
       </div>
       <div
         style={{
           display: 'flex',
-          gap: '0.5rem',
-          marginLeft: '0.5rem',
+          gap: '5px',
+          marginLeft: '10px',
         }}
       >
         <Tooltip
@@ -75,14 +71,18 @@ const Timer = () => {
           title={isPaused ? 'Start Timer' : 'Pause Timer'}
           style={{ cursor: 'pointer' }}
         >
-          {isPaused ? <PlayArrowIcon /> : <PauseIcon />}
+          {isPaused ? (
+            <PlayArrowIcon fontSize='small' />
+          ) : (
+            <PauseIcon fontSize='small' />
+          )}
         </Tooltip>
         <Tooltip
           onClick={handleReset}
           title='Reset Timer'
           style={{ cursor: 'pointer' }}
         >
-          <HistoryIcon />
+          <HistoryIcon fontSize='small' />
         </Tooltip>
       </div>
     </div>
