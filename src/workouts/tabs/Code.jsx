@@ -3,7 +3,7 @@ import EditorMain from '../../code-editor/EditorMain'
 import { useState } from 'react'
 
 const Code = ({ challenge }) => {
-  const storedFiles = localStorage.getItem(challenge.id)
+  const storedFiles = localStorage.getItem(challenge.name + '-challenge')
   const [autoSave, setAutoSave] = useState(true)
   const whichFile = storedFiles
     ? JSON.parse(storedFiles)

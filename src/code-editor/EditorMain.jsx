@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import './styles.css'
+import Footer from './Footer'
 import Preview from './Preview'
 import Toolbar from './Toolbar'
 import { theme } from './theme'
 import AutoSave from './AutoSave'
 import { useRef, useState } from 'react'
-import Footer from './Footer'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import ResizeHandle from '../resizeable-panels/ResizeHandle'
 import { SandpackFileExplorer } from 'sandpack-file-explorer'
@@ -18,7 +18,9 @@ import {
 
 const EditorMain = ({ demo, files, setFiles, challenge }) => {
   const codemirrorInstance = useRef()
+  const [saved, setSaved] = useState(true)
   const storedAutoSave = localStorage.getItem('autoSave')
+  const [manuallySaved, setManuallySaved] = useState(false)
   const [autoSave, setAutoSave] = useState(storedAutoSave === 'true')
 
   return (
@@ -47,22 +49,28 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
           files={files}
           template='react'
           options={{
-            autoReload: autoSave,
+            autoReload: false,
             visibleFiles: ['/App.js'],
           }}
         >
           <AutoSave
             demo={demo}
             setCode={setFiles}
+            setSaved={setSaved}
             autoSave={autoSave}
             challenge={challenge}
+            manuallySaved={manuallySaved}
+            setManuallySaved={setManuallySaved}
           />
           <SandpackThemeProvider theme={theme}>
             <Toolbar
               demo={demo}
               setCode={setFiles}
+              saved={saved}
+              setSaved={setSaved}
               autoSave={autoSave}
               challenge={challenge}
+              setManuallySaved={setManuallySaved}
               setAutoSave={setAutoSave}
               codemirrorInstance={codemirrorInstance}
             />
@@ -100,8 +108,18 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
                     />
                   </Panel>
                   <ResizeHandle className='right' />
-                  <Panel minSize={0} defaultSize={15} collapsible={true}>
-                    <SandpackFileExplorer className='file-explorer' />
+                  <Panel
+                    className='file-bg'
+                    minSize={0}
+                    defaultSize={15}
+                    collapsible={true}
+                  >
+                    <SandpackFileExplorer
+                      className='nate'
+                      style={{
+                        backgroundColor: 'transparent',
+                      }}
+                    />
                   </Panel>
                 </PanelGroup>
               </div>

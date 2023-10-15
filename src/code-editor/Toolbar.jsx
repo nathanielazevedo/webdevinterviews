@@ -18,16 +18,18 @@ import { Button } from '@mui/material'
 const PreviewTabs = ({
   setCode,
   codemirrorInstance,
+  setManuallySaved,
   challenge,
   demo,
+  saved,
   autoSave,
   setAutoSave,
 }) => {
   const [lockScreen, setLockScreen] = useState(false)
   const [showWarning, setShowWarning] = useState(false)
-  const { sandpack } = useSandpack()
-  console.log(sandpack.editorState)
   const activeCode = useActiveCode()
+  const { sandpack } = useSandpack()
+  console.log(sandpack.autoReload)
 
   const runPrettier = (save) => {
     if (activeCode.code) {
@@ -65,9 +67,6 @@ const PreviewTabs = ({
           console.log('error')
         }
       }
-      // !save && enqueueSnackbar('Formatted.')
-      // save && enqueueSnackbar('Saved.')
-      sandpack.updateFile(sandpack.activePath, formatted)
     }
   }
 
@@ -82,6 +81,7 @@ const PreviewTabs = ({
     })
     localStorage.setItem(challenge.id, JSON.stringify(newData))
     sandpack.runSandpack()
+    setManuallySaved(true)
   }
 
   const handleKeyboard = (e) => {
@@ -99,8 +99,6 @@ const PreviewTabs = ({
   })
 
   const lockScroll = () => {
-    // console.log(sandpack.editorState)
-    // sandpack.dispatch({ type: 'refresh' })
     setLockScreen(!lockScreen)
     document.body.classList.toggle('stop-scrolling')
   }
@@ -127,7 +125,10 @@ const PreviewTabs = ({
           onClick={lockScroll}
           sx={{ color: lockScreen ? '#19e4ff' : '#C5C5C5', minWidth: '30px' }}
         >
-          <Tooltip title='Lock Screen' style={{ cursor: 'pointer' }}>
+          <Tooltip
+            title={lockScreen ? 'Unlock Screen' : 'Lock Screen'}
+            style={{ cursor: 'pointer' }}
+          >
             {lockScreen ? (
               <LockOutlinedIcon fontSize='small' />
             ) : (
@@ -138,36 +139,45 @@ const PreviewTabs = ({
 
         <Button
           sx={{ color: autoSave ? '#19e4ff' : '#C5C5C5', minWidth: '30px' }}
+          onClick={() => {
+            localStorage.setItem('autoSave', !autoSave)
+            setAutoSave(!autoSave)
+            sandpack.runSandpack()
+            // sandpack.openFile('/package.json')
+          }}
         >
-          <Tooltip title='Auto Save' style={{ cursor: 'pointer' }}>
-            <FlashOn
-              fontSize='small'
-              onClick={() => {
-                setAutoSave(!autoSave)
-                sandpack.runSandpack()
-                sandpack.openFile('/package.json')
-                localStorage.setItem('autoSave', !autoSave)
-              }}
-            />
+          <Tooltip
+            title={autoSave ? 'Turn off Auto Save' : 'Turn on Auto Save'}
+            style={{ cursor: 'pointer' }}
+          >
+            <FlashOn fontSize='small' />
           </Tooltip>
         </Button>
 
-        <Button sx={{ height: '30px', color: '#C5C5C5', minWidth: '30px' }}>
-          <Tooltip
-            title='Format Code'
-            onClick={() => {
-              formatAndSave(false)
-            }}
-          >
+        <Button
+          sx={{ height: '30px', color: '#C5C5C5', minWidth: '30px' }}
+          onClick={() => {
+            formatAndSave(false)
+          }}
+        >
+          <Tooltip title='Format Code'>
             <AutoAwesomeIcon fontSize='small' />
           </Tooltip>
         </Button>
 
-        <Button sx={{ height: '30px', color: '#C5C5C5', minWidth: '30px' }}>
+        <Button
+          sx={{
+            height: '30px',
+            color: saved ? '#C5C5C5' : 'red',
+            minWidth: '30px',
+          }}
+          onClick={() => formatAndSave(true)}
+        >
           <Tooltip
-            title='Save All'
+            title={
+              saved ? 'All changes are saved.' : 'Some changes are unsaved.'
+            }
             style={{ cursor: 'pointer' }}
-            onClick={() => formatAndSave(true)}
           >
             <SaveIcon fontSize='small' />
           </Tooltip>
@@ -176,12 +186,12 @@ const PreviewTabs = ({
       <div className='bar-divider'></div>
       <Timer />
       <div style={{ flex: 1 }}></div>
-      <Button color='error' sx={{ height: '30px', minWidth: '30px' }}>
-        <Tooltip
-          title='Reset Code'
-          style={{ cursor: 'pointer' }}
-          onClick={() => setShowWarning(true)}
-        >
+      <Button
+        color='error'
+        sx={{ height: '30px', minWidth: '30px' }}
+        onClick={() => setShowWarning(true)}
+      >
+        <Tooltip title='Reset Code' style={{ cursor: 'pointer' }}>
           <RotateLeftOutlinedIcon />
         </Tooltip>
       </Button>

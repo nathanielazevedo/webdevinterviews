@@ -2,7 +2,6 @@
   --sp-layout-height: 94vh;
 }
 
-.component {
-  border: 'solid green 1px';
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 1);
+.file-bg > div > div {
+  background-color: transparent !important;
 }

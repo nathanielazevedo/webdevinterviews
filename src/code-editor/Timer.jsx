@@ -49,13 +49,15 @@ const Timer = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          color: '#C5C5C5',
+          width: '75px',
         }}
       >
-        <Typography style={{ marginRight: '7px' }}>
+        <Typography fontSize='small' style={{ marginRight: '7px' }}>
           {minutes < 10 ? `0${minutes}` : minutes}
         </Typography>
         <div>:</div>
-        <Typography style={{ marginLeft: '7px' }}>
+        <Typography fontSize='small' style={{ marginLeft: '7px' }}>
           {seconds < 10 ? `0${seconds}` : seconds}
         </Typography>
       </div>
@@ -72,9 +74,19 @@ const Timer = () => {
           style={{ cursor: 'pointer' }}
         >
           {isPaused ? (
-            <PlayArrowIcon fontSize='small' />
+            <PlayArrowIcon
+              fontSize='small'
+              sx={{
+                color: '#C5C5C5',
+              }}
+            />
           ) : (
-            <PauseIcon fontSize='small' />
+            <PauseIcon
+              fontSize='small'
+              sx={{
+                color: '#C5C5C5',
+              }}
+            />
           )}
         </Tooltip>
         <Tooltip
@@ -82,7 +94,12 @@ const Timer = () => {
           title='Reset Timer'
           style={{ cursor: 'pointer' }}
         >
-          <HistoryIcon fontSize='small' />
+          <HistoryIcon
+            fontSize='small'
+            sx={{
+              color: '#C5C5C5',
+            }}
+          />
         </Tooltip>
       </div>
     </div>
