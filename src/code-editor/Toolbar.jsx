@@ -29,7 +29,6 @@ const PreviewTabs = ({
   const [showWarning, setShowWarning] = useState(false)
   const activeCode = useActiveCode()
   const { sandpack } = useSandpack()
-  console.log(sandpack.autoReload)
 
   const runPrettier = (save) => {
     if (activeCode.code) {

@@ -10,8 +10,7 @@ const SmallLogoText = () => {
       WEB
       <span
         style={{
-          color: 'black',
-          border: 'solid #C5C5C5 1px',
+          color: 'black ',
           borderRadius: '5px',
           padding: '0 1px',
           margin: '0 3px',

@@ -3,28 +3,21 @@
 import { Box } from '@mui/material'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
-import { useSnackbar } from 'notistack'
 import { useSandpack } from '@codesandbox/sandpack-react'
+import DialogContentText from '@mui/material/DialogContentText'
 
 export default function AlertDialog({ challenge, setCode, setOpen, demo }) {
-  const { enqueueSnackbar } = useSnackbar()
   const { sandpack } = useSandpack()
-  const handleCloseDeny = () => {
-    setOpen(false)
-  }
+  const handleCloseDeny = () => setOpen(false)
 
   const handleCloseAgree = () => {
     localStorage.removeItem(challenge.id)
     setOpen(false)
-
     demo ? setCode({ ...challenge.demo }) : setCode({ ...challenge.template })
-    console.log(sandpack)
     sandpack.runSandpack()
-    enqueueSnackbar('Code reset to original template')
   }
 
   return (

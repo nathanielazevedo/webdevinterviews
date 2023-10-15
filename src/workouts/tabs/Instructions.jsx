@@ -4,13 +4,18 @@ import { Typography, Box, Checkbox } from '@mui/material'
 const Description = ({ challenge }) => {
   return (
     <Box
-      pl={2}
-      pr={2}
       gap={'40px'}
+      zIndex={1000}
+      id='instructions'
       sx={{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+        posiiton: 'absolute',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
       }}
     >
       {challenge.gif && (

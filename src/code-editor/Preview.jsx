@@ -1,6 +1,6 @@
 import Console from './Console'
 import { Panel, PanelGroup } from 'react-resizable-panels'
-import ResizeHandle from '../resizeable-panels/ResizeHandle'
+import ResizeHandle from '../components/ResizeHandle'
 import { SandpackPreview } from '@codesandbox/sandpack-react'
 import { useRef } from 'react'
 
