@@ -16,10 +16,11 @@ import {
 } from '@codesandbox/sandpack-react'
 
 const EditorMain = ({
-  demo,
   files,
+  setDemo,
   setFiles,
   challenge,
+  localStorageKey,
   setShowInstructions,
 }) => {
   const codemirrorInstance = useRef()
@@ -38,19 +39,18 @@ const EditorMain = ({
       }}
     >
       <AutoSave
-        demo={demo}
-        setCode={setFiles}
         setSaved={setSaved}
         autoSave={autoSave}
         challenge={challenge}
         manuallySaved={manuallySaved}
+        localStorageKey={localStorageKey}
         setManuallySaved={setManuallySaved}
       />
       <SandpackThemeProvider theme={theme}>
         <Toolbar
-          demo={demo}
           saved={saved}
-          setCode={setFiles}
+          setFiles={setFiles}
+          setDemo={setDemo}
           setSaved={setSaved}
           autoSave={autoSave}
           challenge={challenge}
@@ -93,12 +93,7 @@ const EditorMain = ({
               </Panel>
               <ResizeHandle />
               <Panel minSize={0} defaultSize={45} collapsible={true}>
-                <Preview
-                  demo={demo}
-                  setCode={setFiles}
-                  challenge={challenge}
-                  codemirrorInstance={codemirrorInstance}
-                />
+                <Preview />
               </Panel>
             </PanelGroup>
           </div>

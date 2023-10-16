@@ -3,6 +3,7 @@ import Timer from './Timer'
 import * as prettier from 'prettier'
 import { Button } from '@mui/material'
 import Alert from '../components/Alert'
+import Leave from '../components/Leave'
 import Tooltip from '@mui/material/Tooltip'
 import { useEffect, useState } from 'react'
 import { FlashOn } from '@mui/icons-material'
@@ -12,7 +13,7 @@ import SaveIcon from '@mui/icons-material/Save'
 import InfoIcon from '@mui/icons-material/Info'
 import CloseIcon from '@mui/icons-material/Close'
 import { useSandpack } from '@codesandbox/sandpack-react'
-import Leave from '../components/Leave'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 import { useActiveCode } from '@codesandbox/sandpack-react'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined'
@@ -20,7 +21,8 @@ import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined'
 const PreviewTabs = ({
   demo,
   saved,
-  setCode,
+  setFiles,
+  setDemo,
   autoSave,
   challenge,
   setAutoSave,
@@ -33,6 +35,11 @@ const PreviewTabs = ({
   const { sandpack } = useSandpack()
   const [showWarning, setShowWarning] = useState(false)
   const [showLeaveWarning, setShowLeaveWarning] = useState(false)
+  if (codemirrorInstance.current) {
+    const cmInstance = codemirrorInstance.current.getCodemirror()
+
+    console.log('cmInstance', cmInstance)
+  }
 
   const runPrettier = (save) => {
     if (activeCode.code) {
@@ -158,7 +165,9 @@ const PreviewTabs = ({
           onClick={() => {
             localStorage.setItem('autoSave', !autoSave)
             setAutoSave(!autoSave)
-            sandpack.runSandpack()
+            setTimeout(() => {
+              sandpack.runSandpack()
+            }, 1000)
           }}
         >
           <Tooltip
@@ -197,6 +206,26 @@ const PreviewTabs = ({
             <SaveIcon fontSize='small' />
           </Tooltip>
         </Button>
+
+        <Button
+          sx={{
+            height: '30px',
+            color: '#C5C5C5',
+            minWidth: '30px',
+          }}
+          onClick={() => {
+            setDemo((old) => !old)
+          }}
+        >
+          <Tooltip
+            title={
+              saved ? 'All changes are saved.' : 'Some changes are unsaved.'
+            }
+            style={{ cursor: 'pointer' }}
+          >
+            <VisibilityIcon fontSize='small' />
+          </Tooltip>
+        </Button>
       </div>
       <div className='bar-divider'></div>
       <Timer />
@@ -214,7 +243,7 @@ const PreviewTabs = ({
         <Alert
           demo={demo}
           challenge={challenge}
-          setCode={setCode}
+          setFiles={setFiles}
           setOpen={setShowWarning}
         />
       )}

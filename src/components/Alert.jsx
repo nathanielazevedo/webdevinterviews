@@ -9,14 +9,14 @@ import DialogContent from '@mui/material/DialogContent'
 import { useSandpack } from '@codesandbox/sandpack-react'
 import DialogContentText from '@mui/material/DialogContentText'
 
-export default function AlertDialog({ challenge, setCode, setOpen, demo }) {
+export default function AlertDialog({ challenge, setFiles, setOpen, demo }) {
   const { sandpack } = useSandpack()
   const handleCloseDeny = () => setOpen(false)
 
   const handleCloseAgree = () => {
-    localStorage.removeItem(challenge.id)
     setOpen(false)
-    demo ? setCode({ ...challenge.demo }) : setCode({ ...challenge.template })
+    localStorage.removeItem(challenge.id)
+    demo ? setFiles({ ...challenge.demo }) : setFiles({ ...challenge.template })
     sandpack.runSandpack()
   }
 

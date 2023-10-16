@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import rows from './problems'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box } from '@mui/material'
 import Instructions from './Instructions'
 import { useParams } from 'react-router-dom'
@@ -8,16 +8,29 @@ import EditorMain from '../code-editor/EditorMain'
 
 const Workout = () => {
   const [showInstructions, setShowInstructions] = useState(true)
+  const [demo, setDemo] = useState(false)
 
   let { name } = useParams()
   const challenge = rows.filter((row) => row.name === name)[0]
-  const storedFiles = localStorage.getItem(challenge.name + '-challenge')
+  const tag = demo ? '-demo' : '-challenge'
+  const storedFiles = localStorage.getItem(challenge.name + tag)
   const whichFile = storedFiles
     ? JSON.parse(storedFiles)
     : challenge.template
     ? challenge.template
     : undefined
   const [files, setFiles] = useState(whichFile ? whichFile : {})
+
+  useEffect(() => {
+    const whichFile = storedFiles
+      ? JSON.parse(storedFiles)
+      : demo && challenge.demo
+      ? challenge.demo
+      : challenge.template
+      ? challenge.template
+      : undefined
+    setFiles(whichFile ? whichFile : {})
+  }, [challenge.demo, challenge.template, demo, storedFiles])
 
   return (
     <Box
@@ -30,6 +43,8 @@ const Workout = () => {
     >
       <EditorMain
         files={files}
+        demo={demo}
+        setDemo={setDemo}
         setFiles={setFiles}
         challenge={challenge}
         setShowInstructions={setShowInstructions}
