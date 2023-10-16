@@ -40,16 +40,16 @@ const router = createBrowserRouter([
         errorElement: <div>404</div>,
       },
       {
-        path: 'workouts/:filter/:name',
-        element: <Workout />,
-        errorElement: <div>404</div>,
-      },
-      {
         path: '*',
         element: <WorkoutGrid />,
         errorElement: <div>404</div>,
       },
     ],
+  },
+  {
+    path: 'workouts/:filter/:name',
+    element: <Workout />,
+    errorElement: <div>404</div>,
   },
   {
     path: '/secretplayground',

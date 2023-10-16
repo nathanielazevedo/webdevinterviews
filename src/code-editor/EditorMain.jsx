@@ -15,7 +15,13 @@ import {
   SandpackThemeProvider,
 } from '@codesandbox/sandpack-react'
 
-const EditorMain = ({ demo, files, setFiles, challenge }) => {
+const EditorMain = ({
+  demo,
+  files,
+  setFiles,
+  challenge,
+  setShowInstructions,
+}) => {
   const codemirrorInstance = useRef()
   const [saved, setSaved] = useState(true)
   const storedAutoSave = localStorage.getItem('autoSave')
@@ -43,22 +49,22 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
       <SandpackThemeProvider theme={theme}>
         <Toolbar
           demo={demo}
-          setCode={setFiles}
           saved={saved}
+          setCode={setFiles}
           setSaved={setSaved}
           autoSave={autoSave}
           challenge={challenge}
-          setManuallySaved={setManuallySaved}
           setAutoSave={setAutoSave}
+          setManuallySaved={setManuallySaved}
           codemirrorInstance={codemirrorInstance}
+          setShowInstructions={setShowInstructions}
         />
         <SandpackLayout>
           <div
             style={{
-              display: 'flex',
-              width: ' 100%',
-              minHeight: 'calc(97vh - 55px)',
-              maxHeight: 'calc(97vh - 55px)',
+              width: '100%',
+              minHeight: 'calc(100vh - 60px)',
+              maxHeight: 'calc(100vh - 60px)',
             }}
           >
             <PanelGroup
@@ -66,15 +72,15 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
               autoSaveId='editor-prefs'
               disablePointerEventsDuringResize
             >
-              <Panel minSize={0} defaultSize={45} collapsible={true}>
-                <Preview
-                  demo={demo}
-                  setCode={setFiles}
-                  challenge={challenge}
-                  codemirrorInstance={codemirrorInstance}
-                />
+              <Panel
+                minSize={0}
+                defaultSize={15}
+                collapsible={true}
+                className='file-bg'
+              >
+                <SandpackFileExplorer />
               </Panel>
-              <ResizeHandle className='left' />
+              <ResizeHandle />
               <Panel minSize={0} defaultSize={40} collapsible={true}>
                 <SandpackCodeEditor
                   showTabs
@@ -85,25 +91,20 @@ const EditorMain = ({ demo, files, setFiles, challenge }) => {
                   style={{ height: '100%' }}
                 />
               </Panel>
-              <ResizeHandle className='right' />
-              <Panel
-                className='file-bg'
-                minSize={0}
-                defaultSize={15}
-                collapsible={true}
-              >
-                <SandpackFileExplorer
-                  className='nate'
-                  style={{
-                    backgroundColor: 'transparent',
-                  }}
+              <ResizeHandle />
+              <Panel minSize={0} defaultSize={45} collapsible={true}>
+                <Preview
+                  demo={demo}
+                  setCode={setFiles}
+                  challenge={challenge}
+                  codemirrorInstance={codemirrorInstance}
                 />
               </Panel>
             </PanelGroup>
           </div>
         </SandpackLayout>
+        <Footer />
       </SandpackThemeProvider>
-      <Footer />
     </SandpackProvider>
   )
 }

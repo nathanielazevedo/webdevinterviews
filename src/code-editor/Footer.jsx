@@ -5,13 +5,13 @@ const Footer = () => {
   return (
     <Box
       style={{
-        height: '20px',
+        height: '25px',
         backgroundColor: '#171717',
         borderTop: '0.5px solid var(--color-solid-resize-bar)',
         display: 'flex',
         alignItems: 'center',
-        paddingLeft: '10px',
-        justifyContent: 'flex-start',
+        padding: '0 10px',
+        justifyContent: 'flex-end',
       }}
     >
       <SmallLogoText />

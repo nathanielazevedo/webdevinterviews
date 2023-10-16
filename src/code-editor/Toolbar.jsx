@@ -1,34 +1,38 @@
 /* eslint-disable react/prop-types */
-import { useSandpack } from '@codesandbox/sandpack-react'
-import * as prettier from 'prettier'
-import parserBabel from 'prettier/parser-babel'
-import { useEffect, useState } from 'react'
-import { useActiveCode } from '@codesandbox/sandpack-react'
-import { FlashOn } from '@mui/icons-material'
-import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined'
-import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
-import SaveIcon from '@mui/icons-material/Save'
-import Tooltip from '@mui/material/Tooltip'
-import Alert from '../components/Alert'
 import Timer from './Timer'
+import * as prettier from 'prettier'
 import { Button } from '@mui/material'
+import Alert from '../components/Alert'
+import Tooltip from '@mui/material/Tooltip'
+import { useEffect, useState } from 'react'
+import { FlashOn } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
+import parserBabel from 'prettier/parser-babel'
+import SaveIcon from '@mui/icons-material/Save'
+import InfoIcon from '@mui/icons-material/Info'
+import CloseIcon from '@mui/icons-material/Close'
+import { useSandpack } from '@codesandbox/sandpack-react'
+import Leave from '../components/Leave'
+import { useActiveCode } from '@codesandbox/sandpack-react'
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
+import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined'
 
 const PreviewTabs = ({
-  setCode,
-  codemirrorInstance,
-  setManuallySaved,
-  challenge,
   demo,
   saved,
+  setCode,
   autoSave,
+  challenge,
   setAutoSave,
+  setManuallySaved,
+  codemirrorInstance,
+  setShowInstructions,
 }) => {
-  const [lockScreen, setLockScreen] = useState(false)
-  const [showWarning, setShowWarning] = useState(false)
+  const navigate = useNavigate()
   const activeCode = useActiveCode()
   const { sandpack } = useSandpack()
+  const [showWarning, setShowWarning] = useState(false)
+  const [showLeaveWarning, setShowLeaveWarning] = useState(false)
 
   const runPrettier = (save) => {
     if (activeCode.code) {
@@ -85,7 +89,6 @@ const PreviewTabs = ({
 
   const handleKeyboard = (e) => {
     if (e.repeat) return
-
     if ((e.metaKey || e.ctrlKey) && e.key === 's') {
       e.preventDefault()
       formatAndSave(true)
@@ -97,42 +100,56 @@ const PreviewTabs = ({
     return () => document.removeEventListener('keydown', handleKeyboard)
   })
 
-  const lockScroll = () => {
-    setLockScreen(!lockScreen)
-    document.body.classList.toggle('stop-scrolling')
+  const leave = () => {
+    navigate('/')
   }
 
   return (
     <div
       style={{
+        width: '100%',
+        height: '35px',
         display: 'flex',
         alignItems: 'center',
-        width: '100%',
         backgroundColor: '#171717',
         borderBottom: '0.5px solid var(--color-solid-resize-bar)',
-        height: '35px',
       }}
     >
       <div
         style={{
           display: 'flex',
-          justifyContent: 'center',
           alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <Button
-          onClick={lockScroll}
-          sx={{ color: lockScreen ? '#19e4ff' : '#C5C5C5', minWidth: '30px' }}
+          sx={{
+            height: '30px',
+            color: '#C5C5C5',
+            minWidth: '30px',
+            marginLeft: '10px',
+          }}
+          onClick={() => {
+            if (saved) leave()
+            else setShowLeaveWarning(true)
+          }}
         >
-          <Tooltip
-            title={lockScreen ? 'Unlock Screen' : 'Lock Screen'}
-            style={{ cursor: 'pointer' }}
-          >
-            {lockScreen ? (
-              <LockOutlinedIcon fontSize='small' />
-            ) : (
-              <LockOpenOutlinedIcon fontSize='small' />
-            )}
+          <Tooltip title='Leave' style={{ cursor: 'pointer' }}>
+            <CloseIcon fontSize='small' />
+          </Tooltip>
+        </Button>
+        <div className='bar-divider'></div>
+
+        <Button
+          sx={{
+            height: '30px',
+            color: '#C5C5C5',
+            minWidth: '30px',
+          }}
+          onClick={() => setShowInstructions(true)}
+        >
+          <Tooltip title='Show Instructions' style={{ cursor: 'pointer' }}>
+            <InfoIcon fontSize='small' />
           </Tooltip>
         </Button>
 
@@ -142,7 +159,6 @@ const PreviewTabs = ({
             localStorage.setItem('autoSave', !autoSave)
             setAutoSave(!autoSave)
             sandpack.runSandpack()
-            // sandpack.openFile('/package.json')
           }}
         >
           <Tooltip
@@ -167,7 +183,7 @@ const PreviewTabs = ({
         <Button
           sx={{
             height: '30px',
-            color: saved ? '#C5C5C5' : 'red',
+            color: saved ? '#C5C5C5' : '#d32f2f',
             minWidth: '30px',
           }}
           onClick={() => formatAndSave(true)}
@@ -187,8 +203,8 @@ const PreviewTabs = ({
       <div style={{ flex: 1 }}></div>
       <Button
         color='error'
-        sx={{ height: '30px', minWidth: '30px' }}
         onClick={() => setShowWarning(true)}
+        sx={{ height: '30px', minWidth: '30px' }}
       >
         <Tooltip title='Reset Code' style={{ cursor: 'pointer' }}>
           <RotateLeftOutlinedIcon />
@@ -201,6 +217,9 @@ const PreviewTabs = ({
           setCode={setCode}
           setOpen={setShowWarning}
         />
+      )}
+      {showLeaveWarning && (
+        <Leave onLeave={leave} setOpen={setShowLeaveWarning} />
       )}
     </div>
   )
