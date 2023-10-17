@@ -4,60 +4,49 @@ import Preview from './Preview'
 import Toolbar from './Toolbar'
 import { theme } from './theme'
 import AutoSave from './AutoSave'
-import { useRef, useState } from 'react'
+import { useRef, useState, useContext } from 'react'
 import ResizeHandle from '../components/ResizeHandle'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import { SandpackFileExplorer } from 'sandpack-file-explorer'
+import { RenderCounter } from '../components/RenderCount'
 import {
   SandpackLayout,
   SandpackProvider,
   SandpackCodeEditor,
   SandpackThemeProvider,
 } from '@codesandbox/sandpack-react'
+import { WorkoutContext } from '../workouts/Workout'
 
-const EditorMain = ({
-  files,
-  setDemo,
-  setFiles,
-  challenge,
-  localStorageKey,
-  setShowInstructions,
-}) => {
+const EditorMain = () => {
   const codemirrorInstance = useRef()
-  const [saved, setSaved] = useState(true)
   const storedAutoSave = localStorage.getItem('autoSave')
   const [manuallySaved, setManuallySaved] = useState(false)
+  const [workoutState] = useContext(WorkoutContext)
   const [autoSave, setAutoSave] = useState(storedAutoSave === 'true')
 
   return (
     <SandpackProvider
-      files={files}
+      files={workoutState.files}
       template='react'
       options={{
         autoReload: false,
         visibleFiles: ['/App.js'],
       }}
     >
-      <AutoSave
-        setSaved={setSaved}
-        autoSave={autoSave}
-        challenge={challenge}
-        manuallySaved={manuallySaved}
-        localStorageKey={localStorageKey}
-        setManuallySaved={setManuallySaved}
-      />
+      <RenderCounter name={'EditorMain'} />
+      {/* {autoSave && (
+        <AutoSave
+          autoSave={autoSave}
+          manuallySaved={manuallySaved}
+          setManuallySaved={setManuallySaved}
+        />
+      )} */}
       <SandpackThemeProvider theme={theme}>
         <Toolbar
-          saved={saved}
-          setFiles={setFiles}
-          setDemo={setDemo}
-          setSaved={setSaved}
           autoSave={autoSave}
-          challenge={challenge}
           setAutoSave={setAutoSave}
           setManuallySaved={setManuallySaved}
           codemirrorInstance={codemirrorInstance}
-          setShowInstructions={setShowInstructions}
         />
         <SandpackLayout>
           <div

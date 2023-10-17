@@ -1,36 +1,42 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import { useSandpack } from '@codesandbox/sandpack-react'
+import { setLocalStorage } from './utils'
+import { WorkoutContext } from '../workouts/Workout'
+import { RenderCounter } from '../components/RenderCount'
 
-const AutoSave = ({
-  demo,
-  challenge,
-  autoSave,
-  setSaved,
-  manuallySaved,
-  setManuallySaved,
-}) => {
+const AutoSave = ({ autoSave, manuallySaved, setManuallySaved }) => {
   const { sandpack } = useSandpack()
   const { files } = sandpack
+  // const [workoutState, setWorkoutState] = useContext(WorkoutContext)
 
-  useEffect(() => {
-    if (autoSave) {
-      const tag = demo ? 'demo' : 'challenge'
-      localStorage.setItem(challenge.name + '-' + tag, JSON.stringify(files))
-      setSaved(true)
-      setManuallySaved(false)
-      sandpack.runSandpack()
-    } else if (manuallySaved) {
-      setManuallySaved(false)
-      sandpack.runSandpack()
-      setSaved(true)
-    } else {
-      setSaved(false)
-    }
-  }, [autoSave, files])
+  // useEffect(() => {
+  //   if (autoSave) {
+  //     setLocalStorage(workoutState.challenge, files, workoutState.showDemo)
+  //     setWorkoutState((prevState) => ({
+  //       ...prevState,
+  //       saved: true,
+  //       files: files,
+  //     }))
+  //     setManuallySaved(false)
+  //     sandpack.runSandpack()
+  //   } else if (manuallySaved) {
+  //     setManuallySaved(false)
+  //     sandpack.runSandpack()
+  //     setWorkoutState((prevState) => ({
+  //       ...prevState,
+  //       saved: true,
+  //     }))
+  //   } else {
+  //     setWorkoutState((prevState) => ({
+  //       ...prevState,
+  //       saved: false,
+  //     }))
+  //   }
+  // }, [autoSave, files])
 
-  return <></>
+  return <RenderCounter name={'AutoSave'} />
 }
 
 export default AutoSave

@@ -1,36 +1,37 @@
 /* eslint-disable react/prop-types */
 import rows from './problems'
-import { useEffect, useState } from 'react'
 import { Box } from '@mui/material'
 import Instructions from './Instructions'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import EditorMain from '../code-editor/EditorMain'
+import { getLocalStorage } from '../code-editor/utils'
+import { createContext } from 'react'
+import { RenderCounter } from '../components/RenderCount'
+
+export const WorkoutContext = createContext({})
 
 const Workout = () => {
-  const [showInstructions, setShowInstructions] = useState(true)
-  const [demo, setDemo] = useState(false)
-
   let { name } = useParams()
-  const challenge = rows.filter((row) => row.name === name)[0]
-  const tag = demo ? '-demo' : '-challenge'
-  const storedFiles = localStorage.getItem(challenge.name + tag)
-  const whichFile = storedFiles
-    ? JSON.parse(storedFiles)
-    : challenge.template
-    ? challenge.template
-    : undefined
-  const [files, setFiles] = useState(whichFile ? whichFile : {})
 
-  useEffect(() => {
-    const whichFile = storedFiles
-      ? JSON.parse(storedFiles)
-      : demo && challenge.demo
-      ? challenge.demo
-      : challenge.template
-      ? challenge.template
-      : undefined
-    setFiles(whichFile ? whichFile : {})
-  }, [challenge.demo, challenge.template, demo, storedFiles])
+  const challenge = rows.filter((row) => row.name === name)[0]
+  const showDemo = false
+  const showInstructions = true
+  const files = getLocalStorage(challenge, showDemo)
+  const context = {
+    files,
+    showDemo,
+    challenge,
+    saved: true,
+    showInstructions,
+  }
+
+  const [workoutState, setWorkoutState] = useState(context)
+  console.log('Workout State', workoutState)
+
+  // useEffect(() => {
+  //   setFiles(getLocalStorage(challenge, showDemo))
+  // }, [challenge, showDemo])
 
   return (
     <Box
@@ -41,19 +42,11 @@ const Workout = () => {
         position: 'relative',
       }}
     >
-      <EditorMain
-        files={files}
-        demo={demo}
-        setDemo={setDemo}
-        setFiles={setFiles}
-        challenge={challenge}
-        setShowInstructions={setShowInstructions}
-      />
-      <Instructions
-        challenge={challenge}
-        showInstructions={showInstructions}
-        setShowInstructions={setShowInstructions}
-      />
+      <RenderCounter name={'Workout'} />
+      <WorkoutContext.Provider value={[workoutState, setWorkoutState]}>
+        <EditorMain />
+        <Instructions />
+      </WorkoutContext.Provider>
     </Box>
   )
 }

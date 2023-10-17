@@ -8,15 +8,28 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import { useSandpack } from '@codesandbox/sandpack-react'
 import DialogContentText from '@mui/material/DialogContentText'
+import { WorkoutContext } from '../workouts/Workout'
+import { useContext } from 'react'
 
-export default function AlertDialog({ challenge, setFiles, setOpen, demo }) {
+export default function AlertDialog({ setOpen }) {
   const { sandpack } = useSandpack()
+  const [workoutState, setWorkoutState] = useContext(WorkoutContext)
+
   const handleCloseDeny = () => setOpen(false)
 
   const handleCloseAgree = () => {
     setOpen(false)
-    localStorage.removeItem(challenge.id)
-    demo ? setFiles({ ...challenge.demo }) : setFiles({ ...challenge.template })
+    localStorage.removeItem(workoutState.challenge.id)
+
+    workoutState.showDemo
+      ? setWorkoutState((prevState) => ({
+          ...prevState,
+          files: { ...workoutState.challenge.demo },
+        }))
+      : setWorkoutState((prevState) => ({
+          ...prevState,
+          files: { ...workoutState.challenge.template },
+        }))
     sandpack.runSandpack()
   }
 

@@ -2,20 +2,23 @@
 import { useEffect, useState } from 'react'
 import { Box, Button, Checkbox, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import { WorkoutContext } from './Workout'
+import { useContext } from 'react'
 
-const Description = ({ challenge, showInstructions, setShowInstructions }) => {
-  const [isVisible, setIsVisible] = useState(showInstructions)
+const Description = () => {
+  const [workoutState, setWorkoutState] = useContext(WorkoutContext)
+  const [isVisible, setIsVisible] = useState(workoutState.showInstructions)
 
   const handleHide = () => {
     setIsVisible(false)
     setTimeout(() => {
-      setShowInstructions(false)
+      setWorkoutState((prev) => ({ ...prev, showInstructions: false }))
     }, 300)
   }
 
-  useEffect(() => {
-    setIsVisible(showInstructions)
-  }, [showInstructions])
+  // useEffect(() => {
+  //   setIsVisible(workoutState.showInstructions)
+  // }, [workoutState.showInstructions])
 
   return (
     <Box
@@ -44,7 +47,7 @@ const Description = ({ challenge, showInstructions, setShowInstructions }) => {
           <CloseIcon />
         </Button>
       </Box>
-      <Typography variant='h4'>{challenge.title}</Typography>
+      <Typography variant='h4'>{workoutState.challenge.title}</Typography>
       {/* {challenge.gif && (
         <img
           src={challenge.gif}
@@ -52,12 +55,12 @@ const Description = ({ challenge, showInstructions, setShowInstructions }) => {
           style={{ maxWidth: '30%' }}
         />
       )} */}
-      <Typography>{challenge.description}</Typography>
+      <Typography>{workoutState.challenge.description}</Typography>
       <Box>
         <Typography variant='h6' color='primary'>
           Checklist
         </Typography>
-        {challenge.checkList.map((item, index) => (
+        {workoutState.challenge.checkList.map((item, index) => (
           <Box
             key={index}
             sx={{

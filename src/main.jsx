@@ -1,5 +1,4 @@
 import './index.css'
-import React from 'react'
 import Nav from './components/Nav'
 import Workout from './workouts/Workout'
 import ReactDOM from 'react-dom/client'
@@ -59,13 +58,13 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <Analytics />
+  <>
+    {/* <Analytics /> */}
     <SnackbarProvider maxSnack={3}>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <RouterProvider router={router} />
       </ThemeProvider>
     </SnackbarProvider>
-  </React.StrictMode>
+  </>
 )
