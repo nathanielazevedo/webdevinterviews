@@ -3,38 +3,37 @@ import Footer from './Footer'
 import Preview from './Preview'
 import Toolbar from './Toolbar'
 import { theme } from './theme'
+import AutoSave from './AutoSave'
 import { useContext, useRef } from 'react'
+import { WorkoutContext } from '../workouts/Workout'
 import ResizeHandle from '../components/ResizeHandle'
 import { RenderCounter } from '../components/RenderCount'
 import { Panel, PanelGroup } from 'react-resizable-panels'
+import { SandpackFileExplorer } from 'sandpack-file-explorer'
 import {
   SandpackLayout,
   SandpackProvider,
   SandpackCodeEditor,
   SandpackThemeProvider,
 } from '@codesandbox/sandpack-react'
-import { WorkoutContext } from '../workouts/Workout'
-import ChangeSpy from './ChangeSpy'
-import { SandpackFileExplorer } from 'sandpack-file-explorer'
 
 const EditorMain = () => {
   const [workoutState] = useContext(WorkoutContext)
-  const renderCountRef = useRef(0)
+  const codemirrorInstance = useRef()
 
   return (
     <SandpackProvider
       files={workoutState.files}
       template='react'
       options={{
-        autoReload: false,
-        visibleFiles: workoutState.visibleFiles,
-        activeFile: workoutState.activeFile,
+        autoReload: true,
+        visibleFiles: ['/App.js'],
       }}
     >
+      <AutoSave />
       <RenderCounter name={'EditorMain'} />
       <SandpackThemeProvider theme={theme}>
-        <ChangeSpy renderCountRef={renderCountRef} />
-        <Toolbar renderCountRef={renderCountRef} />
+        <Toolbar codemirrorInstance={codemirrorInstance} />
         <SandpackLayout>
           <div
             style={{
@@ -64,6 +63,7 @@ const EditorMain = () => {
                   closableTabs
                   showLineNumbers
                   showInlineErrors
+                  ref={codemirrorInstance}
                   style={{ height: '100%' }}
                 />
               </Panel>

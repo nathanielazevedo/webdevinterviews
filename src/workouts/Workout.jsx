@@ -22,14 +22,10 @@ const Workout = () => {
     files,
     showDemo,
     challenge,
-    unSavedFiles: [],
     showInstructions,
-    activeFile: '/App.js',
-    visibleFiles: ['/App.js'],
   }
 
   const [workoutState, setWorkoutState] = useState(context)
-  console.log('Workout State', workoutState)
 
   return (
     <Box
