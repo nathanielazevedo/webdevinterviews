@@ -6,6 +6,7 @@ import { useSandpack } from '@codesandbox/sandpack-react'
 const ChangeSpy = ({ renderCountRef }) => {
   const { sandpack } = useSandpack()
   const [workoutState, setWorkoutState] = useContext(WorkoutContext)
+  console.log(renderCountRef.current)
 
   useEffect(() => {
     workoutState.unSavedFiles.forEach((path) => {
@@ -13,7 +14,6 @@ const ChangeSpy = ({ renderCountRef }) => {
         '[aria-label="Select active file"]'
       )
       container.style.display = 'flex'
-      // container.style.justifyContent = 'center'
       container.style.alignItems = 'center'
       const element = document.querySelector('[title="' + path + '"]')
       try {
@@ -60,6 +60,14 @@ const ChangeSpy = ({ renderCountRef }) => {
     workoutState.showDemo,
     workoutState.unSavedFiles,
   ])
+
+  useEffect(() => {
+    setWorkoutState((prevState) => ({
+      ...prevState,
+      activeFile: sandpack.activeFile,
+      visibleFiles: sandpack.visibleFiles,
+    }))
+  }, [sandpack.visibleFiles])
 
   return <></>
 }

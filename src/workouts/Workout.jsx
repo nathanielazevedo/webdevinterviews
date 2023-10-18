@@ -24,6 +24,8 @@ const Workout = () => {
     challenge,
     unSavedFiles: [],
     showInstructions,
+    activeFile: '/App.js',
+    visibleFiles: ['/App.js'],
   }
 
   const [workoutState, setWorkoutState] = useState(context)

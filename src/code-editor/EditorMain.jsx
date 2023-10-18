@@ -27,7 +27,8 @@ const EditorMain = () => {
       template='react'
       options={{
         autoReload: false,
-        visibleFiles: ['/App.js'],
+        visibleFiles: workoutState.visibleFiles,
+        activeFile: workoutState.activeFile,
       }}
     >
       <RenderCounter name={'EditorMain'} />

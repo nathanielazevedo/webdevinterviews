@@ -23,6 +23,7 @@ const Toolbar = ({ renderCountRef }) => {
   const [showWarning, setShowWarning] = useState(false)
   const [showLeaveWarning, setShowLeaveWarning] = useState(false)
   const [workoutState, setWorkoutState] = useContext(WorkoutContext)
+  console.log('sandpack', sandpack)
 
   const runPrettier = () => {
     if (activeCode.code) {
