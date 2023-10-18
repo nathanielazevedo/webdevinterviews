@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { useContext, useState, useEffect } from 'react'
-import { getLocalStorage } from './utils'
 import InfoIcon from '@mui/icons-material/Info'
 import { Button, Tooltip } from '@mui/material'
 import { WorkoutContext } from '../workouts/Workout'
+import { useContext, useState, useEffect } from 'react'
 import { useSandpack } from '@codesandbox/sandpack-react'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { useActiveCode } from '@codesandbox/sandpack-react'
@@ -31,7 +30,7 @@ const ToolbarIcons = ({ codemirrorInstance }) => {
   const [prettierCode, setPrettierCode] = useState('')
   const { sandpack } = useSandpack()
   const activeCode = useActiveCode()
-  console.log(sandpack)
+
   const runPrettier = () => {
     if (activeCode.code) {
       try {
@@ -60,6 +59,8 @@ const ToolbarIcons = ({ codemirrorInstance }) => {
             insert: prettierCode,
           },
         })
+        console.log('cm', cmInstance.state.selection)
+        console.log('trans', trans)
 
         cmInstance.update([trans])
       }
@@ -94,29 +95,15 @@ const ToolbarIcons = ({ codemirrorInstance }) => {
       onClick: runPrettier,
     },
     {
-      title: workoutState.showDemo ? 'Close Solution' : 'Show Solution',
-      content: (
-        <VisibilityIcon
-          fontSize='small'
-          color={workoutState.showDemo ? 'primary' : 'inherit'}
-        />
-      ),
+      title: 'Show Solution',
+      content: <VisibilityIcon fontSize='small' color='inherit' />,
       onClick: () => {
-        let files
         setWorkoutState((prev) => {
-          const newShowDemo = !prev.showDemo
-          files = newShowDemo
-            ? prev.challenge.demo
-            : getLocalStorage(prev.challenge)
           return {
             ...prev,
-            files,
-            unSavedFiles: [],
-            showDemo: newShowDemo,
+            showDemo: !prev.showDemo,
           }
         })
-        sandpack.updateFile(files, true)
-        // sandpack.runSandpack()
       },
     },
   ]

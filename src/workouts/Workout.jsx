@@ -8,24 +8,18 @@ import EditorMain from '../code-editor/EditorMain'
 import { getLocalStorage } from '../code-editor/utils'
 import { createContext } from 'react'
 import { RenderCounter } from '../components/RenderCount'
+import ReadOnlyEditor from '../read-only-editor/ReadOnlyEditor'
 
 export const WorkoutContext = createContext({})
 
 const Workout = () => {
   let { name } = useParams()
-
   const challenge = rows.filter((row) => row.name === name)[0]
-  const showDemo = false
-  const showInstructions = true
-  const files = getLocalStorage(challenge)
-  const context = {
-    files,
-    showDemo,
+  const [workoutState, setWorkoutState] = useState({
     challenge,
-    showInstructions,
-  }
-
-  const [workoutState, setWorkoutState] = useState(context)
+    showDemo: false,
+    showInstructions: true,
+  })
 
   return (
     <Box
@@ -38,7 +32,12 @@ const Workout = () => {
     >
       <RenderCounter name={'Workout'} />
       <WorkoutContext.Provider value={[workoutState, setWorkoutState]}>
-        <EditorMain />
+        {!workoutState.showDemo ? (
+          <EditorMain files={getLocalStorage(challenge)} />
+        ) : null}
+        {workoutState.showDemo ? (
+          <ReadOnlyEditor files={challenge.demo} />
+        ) : null}
         <Instructions />
       </WorkoutContext.Provider>
     </Box>

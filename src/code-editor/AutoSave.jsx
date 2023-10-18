@@ -6,8 +6,10 @@ import { useActiveCode, useSandpack } from '@codesandbox/sandpack-react'
 
 const AutoSave = () => {
   const activeCode = useActiveCode()
-  const [workoutState] = useContext(WorkoutContext)
   const { sandpack } = useSandpack()
+  const [workoutState] = useContext(WorkoutContext)
+  console.log('rendered')
+  console.log(workoutState)
 
   useEffect(() => {
     if (activeCode.code) {
@@ -23,7 +25,7 @@ const AutoSave = () => {
     }
   }, [activeCode.code])
 
-  return <div>AutoSave</div>
+  return <></>
 }
 
 export default AutoSave

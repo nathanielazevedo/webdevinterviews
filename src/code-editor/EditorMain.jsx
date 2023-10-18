@@ -2,12 +2,10 @@
 import Footer from './Footer'
 import Preview from './Preview'
 import Toolbar from './Toolbar'
+import { useRef } from 'react'
 import { theme } from './theme'
 import AutoSave from './AutoSave'
-import { useContext, useRef } from 'react'
-import { WorkoutContext } from '../workouts/Workout'
 import ResizeHandle from '../components/ResizeHandle'
-import { RenderCounter } from '../components/RenderCount'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import { SandpackFileExplorer } from 'sandpack-file-explorer'
 import {
@@ -17,13 +15,12 @@ import {
   SandpackThemeProvider,
 } from '@codesandbox/sandpack-react'
 
-const EditorMain = () => {
-  const [workoutState] = useContext(WorkoutContext)
+const EditorMain = ({ files }) => {
   const codemirrorInstance = useRef()
 
   return (
     <SandpackProvider
-      files={workoutState.files}
+      files={files}
       template='react'
       options={{
         autoReload: true,
@@ -31,7 +28,6 @@ const EditorMain = () => {
       }}
     >
       <AutoSave />
-      <RenderCounter name={'EditorMain'} />
       <SandpackThemeProvider theme={theme}>
         <Toolbar codemirrorInstance={codemirrorInstance} />
         <SandpackLayout>

@@ -1,16 +1,14 @@
 /* eslint-disable react/prop-types */
-import Timer from './Timer'
-import { useState } from 'react'
-import Alert from '../components/Alert'
-import ToolbarIcons from './ToolbarIcons'
-import { ToolbarIcon } from './ToolbarIcons'
+import { ToolbarIcon } from '../code-editor/ToolbarIcons'
 import { useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
-import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import { useContext } from 'react'
+import { WorkoutContext } from '../workouts/Workout'
 
-const Toolbar = ({ codemirrorInstance }) => {
+const Toolbar = () => {
   const navigate = useNavigate()
-  const [showWarning, setShowWarning] = useState(false)
+  const [, setWorkoutState] = useContext(WorkoutContext)
 
   const leave = () => {
     navigate('/')
@@ -44,22 +42,21 @@ const Toolbar = ({ codemirrorInstance }) => {
 
         <div className='bar-divider' />
 
-        <ToolbarIcons codemirrorInstance={codemirrorInstance} />
+        <ToolbarIcon
+          icon={{
+            title: 'Close Solution',
+            content: <VisibilityIcon fontSize='small' color='inherit' />,
+            onClick: () => {
+              setWorkoutState((prev) => {
+                return {
+                  ...prev,
+                  showDemo: !prev.showDemo,
+                }
+              })
+            },
+          }}
+        />
       </div>
-
-      <div className='bar-divider' />
-      <Timer />
-      <div style={{ flex: 1 }}></div>
-
-      <ToolbarIcon
-        icon={{
-          title: 'Reset Code',
-          content: <RotateLeftOutlinedIcon color='error' />,
-          onClick: () => setShowWarning(true),
-        }}
-      />
-
-      {showWarning && <Alert setOpen={setShowWarning} />}
     </div>
   )
 }
