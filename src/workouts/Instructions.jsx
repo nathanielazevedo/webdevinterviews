@@ -3,6 +3,8 @@ import { useContext } from 'react'
 import { WorkoutContext } from './Workout'
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, Button, Checkbox, Typography } from '@mui/material'
+import YouTubeIcon from '@mui/icons-material/YouTube'
+import Tooltip from '@mui/material/Tooltip'
 
 const Description = () => {
   const [workoutState, setWorkoutState] = useContext(WorkoutContext)
@@ -39,15 +41,33 @@ const Description = () => {
           <CloseIcon />
         </Button>
       </Box>
-      <Typography variant='h4'>{workoutState.challenge.title}</Typography>
-      {/* {challenge.gif && (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant='h4'>{workoutState.challenge.title}</Typography>
+        <Tooltip title='Watch the video' placement='bottom'>
+          <a
+            style={{ display: 'flex' }}
+            href={workoutState.challenge.link}
+            target='_blank'
+            rel='noreferrer'
+          >
+            <YouTubeIcon sx={{ color: '#FF0000', fontSize: '50px' }} />
+          </a>
+        </Tooltip>
+      </Box>
+      {workoutState.challenge.gif && (
         <img
-          src={challenge.gif}
-          alt={challenge.name}
-          style={{ maxWidth: '30%' }}
+          src={workoutState.challenge.gif}
+          alt={workoutState.challenge.name}
+          style={{ maxWidth: '100%' }}
         />
-      )} */}
-      <Typography>{workoutState.challenge.description}</Typography>
+      )}
+      {/* <Typography>{workoutState.challenge.description}</Typography> */}
       <Box>
         <Typography variant='h6' color='primary'>
           Checklist

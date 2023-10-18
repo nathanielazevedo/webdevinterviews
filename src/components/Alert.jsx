@@ -20,7 +20,6 @@ export default function AlertDialog({ setOpen }) {
     localStorage.removeItem(workoutState.challenge.name)
     setWorkoutState((prevState) => ({
       ...prevState,
-      files: { ...workoutState.challenge.template },
     }))
   }
 

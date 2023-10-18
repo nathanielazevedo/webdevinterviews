@@ -64,11 +64,7 @@ const columns = [
     field: 'description',
     headerName: 'Description',
     flex: 1,
-    renderCell: (params) => (
-      <Tooltip title={params.row.description} placement='bottom'>
-        <Typography>{params.row.gist}</Typography>
-      </Tooltip>
-    ),
+    renderCell: (params) => <Typography>{params.row.gist}</Typography>,
   },
   {
     field: 'difficulty',
@@ -84,7 +80,7 @@ export default function DataGridDemo() {
   const navigate = useNavigate()
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', padding: '20px' }}>
       <DataGrid
         rows={rows}
         columns={columns}
