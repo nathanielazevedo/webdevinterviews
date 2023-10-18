@@ -20,7 +20,7 @@ function readFiles(dirname) {
               return
             }
             const key = '/' + path.parse(filename).name + '.js'
-            fileContents[key] = content
+            fileContents[key] = { code: content }
             count--
             if (count === 0) {
               resolve(fileContents)
