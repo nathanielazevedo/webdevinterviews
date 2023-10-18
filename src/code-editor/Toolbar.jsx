@@ -3,20 +3,20 @@ import Timer from './Timer'
 import * as prettier from 'prettier'
 import Alert from '../components/Alert'
 import Leave from '../components/Leave'
-import { ToolbarIcon } from './ToolbarIcons'
 import { setLocalStorage } from './utils'
 import ToolbarIcons from './ToolbarIcons'
+import { ToolbarIcon } from './ToolbarIcons'
 import { useNavigate } from 'react-router-dom'
 import parserBabel from 'prettier/parser-babel'
 import CloseIcon from '@mui/icons-material/Close'
 import { WorkoutContext } from '../workouts/Workout'
 import { useContext, useEffect, useState } from 'react'
 import { useSandpack } from '@codesandbox/sandpack-react'
+import { RenderCounter } from '../components/RenderCount'
 import { useActiveCode } from '@codesandbox/sandpack-react'
 import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined'
-import { RenderCounter } from '../components/RenderCount'
 
-const Toolbar = ({ autoSave, setAutoSave, setManuallySaved }) => {
+const Toolbar = ({ renderCountRef }) => {
   const navigate = useNavigate()
   const activeCode = useActiveCode()
   const { sandpack } = useSandpack()
@@ -42,13 +42,15 @@ const Toolbar = ({ autoSave, setAutoSave, setManuallySaved }) => {
     const formatted = runPrettier()
     const files = sandpack.files
     files[sandpack.activeFile].code = formatted
-    setLocalStorage(workoutState.challenge, workoutState.showDemo, files)
+    // Remove all elements with class name 'circle'
+    const circles = document.querySelectorAll('.circle')
+    circles.forEach((circle) => circle.remove())
+    setLocalStorage(workoutState.challenge, files)
     setWorkoutState((prevState) => ({
       ...prevState,
       files,
-      saved: true,
+      unSavedFiles: [],
     }))
-    setManuallySaved(true)
   }
 
   const handleKeyboard = (e) => {
@@ -60,6 +62,7 @@ const Toolbar = ({ autoSave, setAutoSave, setManuallySaved }) => {
   }
 
   useEffect(() => {
+    if (workoutState.showDemo) return
     document.addEventListener('keydown', handleKeyboard)
     return () => document.removeEventListener('keydown', handleKeyboard)
   })
@@ -100,11 +103,10 @@ const Toolbar = ({ autoSave, setAutoSave, setManuallySaved }) => {
 
         <div className='bar-divider' />
 
-        {/* <ToolbarIcons
-          autoSave={autoSave}
+        <ToolbarIcons
           formatAndSave={formatAndSave}
-          setAutoSave={setAutoSave}
-        /> */}
+          renderCountRef={renderCountRef}
+        />
       </div>
 
       <div className='bar-divider' />
@@ -114,7 +116,7 @@ const Toolbar = ({ autoSave, setAutoSave, setManuallySaved }) => {
       <ToolbarIcon
         icon={{
           title: 'Reset Code',
-          content: <RotateLeftOutlinedIcon />,
+          content: <RotateLeftOutlinedIcon color='error' />,
           onClick: () => setShowWarning(true),
         }}
       />

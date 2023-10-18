@@ -1,49 +1,41 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react'
-import { Box, Button, Checkbox, Typography } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
-import { WorkoutContext } from './Workout'
 import { useContext } from 'react'
+import { WorkoutContext } from './Workout'
+import CloseIcon from '@mui/icons-material/Close'
+import { Box, Button, Checkbox, Typography } from '@mui/material'
 
 const Description = () => {
   const [workoutState, setWorkoutState] = useContext(WorkoutContext)
-  const [isVisible, setIsVisible] = useState(workoutState.showInstructions)
-
-  const handleHide = () => {
-    setIsVisible(false)
-    setTimeout(() => {
-      setWorkoutState((prev) => ({ ...prev, showInstructions: false }))
-    }, 300)
-  }
-
-  // useEffect(() => {
-  //   setIsVisible(workoutState.showInstructions)
-  // }, [workoutState.showInstructions])
+  const { showInstructions } = workoutState
 
   return (
     <Box
       id='instructions'
       sx={{
-        backgroundColor: 'grey.900',
-        flexDirection: 'column',
-        position: 'absolute',
-        display: 'flex',
-        left: isVisible ? 0 : '-35%',
         top: '35px',
-        width: '500px',
-        height: 'calc(100% - 35px)',
-        transition: 'transform 0.3s ease-in-out, left 0.3s ease-in-out',
-        transform: isVisible ? 'translateX(0)' : 'translateX(-100%)',
-        borderRight: 'var(--color-solid-resize-bar) 0.5px solid',
-        boxShadow: isVisible ? '5px 0px 5px rgba(0, 0, 0, 0.5)' : 'none',
-        padding: '1rem',
         gap: '1rem',
+        width: '500px',
+        display: 'flex',
+        padding: '1rem',
+        position: 'absolute',
+        flexDirection: 'column',
+        backgroundColor: 'grey.900',
+        height: 'calc(100% - 35px)',
         borderTopRightRadius: '10px',
         borderBottomRightRadius: '10px',
+        left: showInstructions ? 0 : '-35%',
+        borderRight: 'var(--color-solid-resize-bar) 0.5px solid',
+        transition: 'transform 0.3s ease-in-out, left 0.3s ease-in-out',
+        transform: showInstructions ? 'translateX(0)' : 'translateX(-100%)',
+        boxShadow: showInstructions ? '5px 0px 5px rgba(0, 0, 0, 0.5)' : 'none',
       }}
     >
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button onClick={handleHide}>
+        <Button
+          onClick={() =>
+            setWorkoutState((prev) => ({ ...prev, showInstructions: false }))
+          }
+        >
           <CloseIcon />
         </Button>
       </Box>

@@ -17,21 +17,17 @@ const Workout = () => {
   const challenge = rows.filter((row) => row.name === name)[0]
   const showDemo = false
   const showInstructions = true
-  const files = getLocalStorage(challenge, showDemo)
+  const files = getLocalStorage(challenge)
   const context = {
     files,
     showDemo,
     challenge,
-    saved: true,
+    unSavedFiles: [],
     showInstructions,
   }
 
   const [workoutState, setWorkoutState] = useState(context)
   console.log('Workout State', workoutState)
-
-  // useEffect(() => {
-  //   setFiles(getLocalStorage(challenge, showDemo))
-  // }, [challenge, showDemo])
 
   return (
     <Box

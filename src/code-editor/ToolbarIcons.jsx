@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useContext } from 'react'
-import { Button, Tooltip } from '@mui/material'
 import { getLocalStorage } from './utils'
 import InfoIcon from '@mui/icons-material/Info'
-import { WorkoutContext } from '../workouts/Workout'
 import SaveIcon from '@mui/icons-material/Save'
-import { FlashOn } from '@mui/icons-material'
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
+import { Button, Tooltip } from '@mui/material'
+import { WorkoutContext } from '../workouts/Workout'
+import { useSandpack } from '@codesandbox/sandpack-react'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import DoDisturbAltIcon from '@mui/icons-material/DoDisturbAlt'
 
 export const ToolbarIcon = ({ icon }) => {
   return (
@@ -22,72 +22,71 @@ export const ToolbarIcon = ({ icon }) => {
   )
 }
 
-const ToolbarIcons = ({ autoSave, setAutoSave, formatAndSave }) => {
+const ToolbarIcons = ({ formatAndSave, renderCountRef }) => {
   const [workoutState, setWorkoutState] = useContext(WorkoutContext)
+  const { sandpack } = useSandpack()
 
   const toolbarIcons = [
     {
-      title: 'Show Instructions',
-      content: <InfoIcon fontSize='small' />,
-      onClick: () => {
-        if (!workoutState.showInstructions) {
-          setWorkoutState((old) => ({
-            ...old,
-            showInstructions: true,
-          }))
-          return
-        }
-      },
-    },
-    {
-      title: autoSave ? 'Turn off Auto Save' : 'Turn on Auto Save',
+      title: workoutState.showInstructions
+        ? 'Close Instructions'
+        : 'Show Instructions',
       content: (
-        <FlashOn fontSize='small' color={autoSave ? 'primary' : 'disabled'} />
+        <InfoIcon
+          fontSize='small'
+          color={workoutState.showInstructions ? 'primary' : 'inherit'}
+        />
       ),
       onClick: () => {
-        localStorage.setItem('autoSave', !autoSave)
-        setAutoSave(!autoSave)
-      },
-    },
-    {
-      title: 'Format Code',
-      content: <AutoAwesomeIcon fontSize='small' />,
-      onClick: () => {
-        formatAndSave(false)
-      },
-    },
-    {
-      title: workoutState.saved
-        ? 'All changes are saved.'
-        : 'Some changes are unsaved.',
-      content: <SaveIcon fontSize='small' />,
-      onClick: () => {
-        setWorkoutState((old) => ({
-          ...old,
-          files: getLocalStorage(old.challenge, !old.showDemo),
-          showDemo: !old.showDemo,
+        setWorkoutState((prev) => ({
+          ...prev,
+          showInstructions: !prev.showInstructions,
         }))
       },
     },
     {
-      title: 'Show Solution',
-      content: <VisibilityIcon fontSize='small' />,
+      title: workoutState.showDemo ? 'Close Solution' : 'Show Solution',
+      content: (
+        <VisibilityIcon
+          fontSize='small'
+          color={workoutState.showDemo ? 'primary' : 'inherit'}
+        />
+      ),
       onClick: () => {
-        setWorkoutState((old) => {
-          const files = getLocalStorage(old.challenge, !old.showDemo)
-          console.log('files', files)
+        let files
+        setWorkoutState((prev) => {
+          renderCountRef.current = 0
+          const newShowDemo = !prev.showDemo
+          files = newShowDemo
+            ? prev.challenge.demo
+            : getLocalStorage(prev.challenge)
           return {
-            ...old,
-            showDemo: !old.showDemo,
+            ...prev,
             files,
+            unSavedFiles: [],
+            showDemo: newShowDemo,
           }
         })
+        sandpack.updateFile(files, true)
+        // sandpack.runSandpack()
       },
     },
+    {
+      title: workoutState.showDemo
+        ? 'Cannot save solution.'
+        : 'Format and Save.',
+      content: workoutState.showDemo ? (
+        <DoDisturbAltIcon fontSize='small' />
+      ) : (
+        <SaveIcon fontSize='small' />
+      ),
+      onClick: workoutState.showDemo ? () => {} : formatAndSave,
+    },
   ]
-  return toolbarIcons.map((icon) => (
-    <ToolbarIcon key={icon.title} icon={icon} />
-  ))
+
+  return toolbarIcons.map((icon) => {
+    return <ToolbarIcon key={icon.title} icon={icon} />
+  })
 }
 
 export default ToolbarIcons
