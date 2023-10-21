@@ -13,7 +13,7 @@ const CheckboxTree = ({ data, onChange }) => {
 
     if (updatedCheckedItems[itemId]) {
       // If checking a child, check all parents
-      checkAllParents(data, itemId, updatedCheckedItems)
+      checkParents(itemId, updatedCheckedItems)
     } else {
       // If unchecking a parent, uncheck all children
       uncheckAllChildren(data, itemId, updatedCheckedItems)
@@ -27,24 +27,27 @@ const CheckboxTree = ({ data, onChange }) => {
     setCheckedItems(updatedCheckedItems)
   }
 
-  const checkAllParents = (nodes, childId, updatedCheckedItems) => {
+  const findParent = (nodes, itemId) => {
     for (const node of nodes) {
-      if (node.id === childId) {
-        // Child found, check all its parents
-        checkParents(node, updatedCheckedItems)
-        return
-      }
       if (node.children.length > 0) {
-        checkAllParents(node.children, childId, updatedCheckedItems)
+        if (node.children.some((child) => child.id === itemId)) {
+          return node
+        } else {
+          const parent = findParent(node.children, itemId)
+          if (parent) {
+            return parent
+          }
+        }
       }
     }
+    return null
   }
 
-  const checkParents = (node, updatedCheckedItems) => {
-    updatedCheckedItems[node.id] = true
-    const parent = findParent(data, node.id)
+  const checkParents = (id, updatedCheckedItems) => {
+    updatedCheckedItems[id] = true
+    const parent = findParent(data, id)
     if (parent) {
-      checkParents(parent, updatedCheckedItems)
+      checkParents(parent.id, updatedCheckedItems)
     }
   }
 

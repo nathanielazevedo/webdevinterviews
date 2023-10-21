@@ -57,6 +57,7 @@ const EditorMain = ({ files }) => {
                 <SandpackCodeEditor
                   showTabs
                   closableTabs
+                  showRunButton={true}
                   showLineNumbers
                   showInlineErrors
                   ref={codemirrorInstance}

@@ -5,7 +5,7 @@ import { formatData } from './utils'
 import CheckedTree from './CheckedTree'
 
 const Main = () => {
-  const [items] = useState(formatData(data))
+  const items = formatData(data)
   const [formData, setFormData] = useState({ checkedTree: [] })
 
   const handleSubmit = () => {

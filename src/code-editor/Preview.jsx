@@ -33,6 +33,7 @@ const Preview = () => {
               height: '100%',
               overflow: 'scroll',
               paddingBottom: '5rem',
+              backgroundColor: '#242424',
             }}
           >
             <Box
