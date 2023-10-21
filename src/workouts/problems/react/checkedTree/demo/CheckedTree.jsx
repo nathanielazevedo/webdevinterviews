@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
-import { filterItems, findParent } from './utils'
+import { filterItems } from './utils'
 
 const CheckboxTree = ({ data, onChange }) => {
   const [searchQuery, setSearchQuery] = useState('')

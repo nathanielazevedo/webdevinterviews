@@ -35,23 +35,4 @@ const filterItems = (nodes, query) => {
   })
 }
 
-const findParent = (nodes, itemId) => {
-  for (const node of nodes) {
-    if (node.id === itemId) {
-      return null // Root node reached
-    }
-    if (node.children.length > 0) {
-      if (node.children.some((child) => child.id === itemId)) {
-        return node
-      } else {
-        const parent = findParent(node.children, itemId)
-        if (parent) {
-          return parent
-        }
-      }
-    }
-  }
-  return null
-}
-
-export { filterItems, findParent, formatData }
+export { filterItems, formatData }

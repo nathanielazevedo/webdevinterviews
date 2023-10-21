@@ -19,7 +19,7 @@ const checkedTree = {
     'Clicking submit should console an array of all the checked items IDs.',
   ],
   gif: gif,
-  link: 'https://youtu.be/DhF1SJ5WUlY',
+  link: 'https://www.youtube.com/watch?v=WX8Oplyd3Ag',
   demo: asString,
   template: template,
 }
