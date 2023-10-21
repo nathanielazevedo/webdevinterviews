@@ -59,7 +59,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
-    {/* <Analytics /> */}
+    <Analytics />
     <SnackbarProvider maxSnack={3}>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
