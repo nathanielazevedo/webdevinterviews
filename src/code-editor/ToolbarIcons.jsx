@@ -8,6 +8,7 @@ import { useSandpack } from '@codesandbox/sandpack-react'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { useActiveCode } from '@codesandbox/sandpack-react'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun'
 
 import * as prettier from 'prettier'
 import parserBabel from 'prettier/parser-babel'
@@ -93,6 +94,11 @@ const ToolbarIcons = ({ codemirrorInstance }) => {
       title: 'Format Code',
       content: <AutoAwesomeIcon fontSize='small' />,
       onClick: runPrettier,
+    },
+    {
+      title: 'Run Code',
+      content: <DirectionsRunIcon fontSize='small' />,
+      onClick: () => sandpack.runSandpack(),
     },
     {
       title: 'Show Solution',

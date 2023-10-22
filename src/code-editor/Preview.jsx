@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import { Console } from 'console-feed'
 import ResizeHandle from '../components/ResizeHandle'
 import { Panel, PanelGroup } from 'react-resizable-panels'
@@ -8,7 +7,6 @@ import { useSandpackConsole } from '@codesandbox/sandpack-react'
 import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt'
 
 const Preview = () => {
-  const previewRef = useRef()
   const { logs, reset } = useSandpackConsole({})
 
   return (
@@ -21,7 +19,6 @@ const Preview = () => {
         <Panel minSize={0}>
           <SandpackPreview
             showNavigator
-            ref={previewRef}
             style={{ height: '100%' }}
             showOpenInCodeSandbox={false}
           />

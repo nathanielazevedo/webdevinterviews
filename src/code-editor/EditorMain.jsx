@@ -22,6 +22,7 @@ const EditorMain = ({ files }) => {
     <SandpackProvider
       files={files}
       template='react'
+      customSetup={{ dependencies: { 'jest-extended': '^3.0.2' } }}
       options={{
         autoReload: true,
         visibleFiles: ['/App.js'],
