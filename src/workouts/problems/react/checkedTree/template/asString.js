@@ -5,14 +5,4 @@ export default {
     "const response = [\n  { id: 4, parentId: 3, name: 'Days' },\n  { id: 1, parentId: null, name: 'Years' },\n  { id: 2, parentId: 1, name: 'Months' },\n  { id: 5, parentId: null, name: 'Stars' },\n  { id: 3, parentId: 2, name: 'Weeks' },\n  { id: 6, parentId: 5, name: 'Sun' },\n  { id: 7, parentId: 5, name: 'Proxima Centauri' },\n  { id: 8, parentId: null, name: 'Dogs' },\n]\n\nexport default response\n",
   '/styles.css':
     '* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n\n.container {\n  margin: 30px;\n  width: 500px;\n  color: black;\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n\n.common {\n  width: 100%;\n  padding: 10px;\n}\n',
-  '/extended.test.ts': `import * as matchers from 'jest-extended';
-    import { add } from './add';
-
-    expect.extend(matchers);
-
-    describe('jest-extended matchers are supported', () => {
-    test('adding two positive integers yields a positive integer', () => {
-    expect(add(1, 2)).toBePositive();});
-});
-    `,
 }
