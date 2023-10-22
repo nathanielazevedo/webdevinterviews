@@ -1,12 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@700&family=Coming+Soon&family=Fira+Code:wght@600&family=Poppins:wght@200;300;500&display=swap');
 
 :root {
-  --color-background-code: rgba(0, 0, 0, 0.35);
-  --color-background-default: #081120;
-  --color-code: #c67bff;
-  --color-default: #ffffff;
-  --color-horizontal-rule: #454950;
-  --color-link: #dcadff;
   --color-panel-background: #192230;
   --color-panel-background-alternate: #202124;
   --color-solid-resize-bar: #454950;
@@ -26,19 +20,14 @@
   background-color: transparent !important;
 }
 
-.horz {
-  /* box-shadow: 0px -0px 3px rgba(0, 0, 0, 1); */
-  border-top: 1px solid var(--color-solid-resize-bar);
-}
-
 .ResizeHandleOuter {
-  flex: 0.3;
+  flex: 0 0 0.5em;
   position: relative;
-  border-left: 1px solid var(--color-solid-resize-bar);
+  outline: none;
+  --background-color: transparent;
 }
-
 .ResizeHandleOuter[data-resize-handle-active] {
-  border-left: 1px solid #19e4ff7e;
+  --background-color: #1a548b;
 }
 
 .ResizeHandleInner {
@@ -47,7 +36,9 @@
   bottom: 0;
   left: 0;
   right: 0;
-  transition: outline 2s linear;
+  background-color: var(--background-color);
+  transition: background-color 0.2s linear;
+  border-right: solid 1px var(--color-solid-resize-bar);
 }
 
 .bar-divider {

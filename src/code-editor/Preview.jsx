@@ -23,13 +23,13 @@ const Preview = () => {
             showOpenInCodeSandbox={false}
           />
         </Panel>
-        <ResizeHandle direction='vertical' className='horz' />
+        <ResizeHandle />
         <Panel minSize={0} collapsible={true}>
           <div
             style={{
               height: '100%',
-              overflow: 'scroll',
-              paddingBottom: '5rem',
+              overflowY: 'scroll',
+              // paddingBottom: '5rem',
               backgroundColor: '#242424',
             }}
           >
