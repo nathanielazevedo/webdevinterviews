@@ -10,6 +10,53 @@ import Tooltip from '@mui/material/Tooltip'
 
 const columns = [
   {
+    field: 'id',
+    headerName: '#',
+    width: 100,
+    align: 'center',
+    headerAlign: 'center',
+    renderCell: (params) => (
+      <Typography
+        sx={{ '&:hover': { textDecoration: 'underline' } }}
+        variant='subtitle'
+      >
+        {params.row.id}
+      </Typography>
+    ),
+  },
+  {
+    field: 'title',
+    headerName: 'Title',
+    width: 150,
+    flex: 1,
+    renderCell: (params) => (
+      <Tooltip
+        title={
+          <>
+            {params.row.gif && (
+              <img
+                src={params.row.gif}
+                alt={params.row.name}
+                style={{ maxWidth: '100%' }}
+              />
+            )}
+          </>
+        }
+        placement='bottom'
+      >
+        <Typography variant='subtitle'>{params.row.title}</Typography>
+      </Tooltip>
+    ),
+  },
+  {
+    field: 'difficulty',
+    headerName: 'Difficulty',
+    headerAlign: 'center',
+    width: 110,
+    align: 'center',
+    renderCell: (params) => <Rating rating={params.row.difficulty} />,
+  },
+  {
     field: 'youtube',
     headerName: 'YouTube',
     width: '100',
@@ -27,7 +74,7 @@ const columns = [
               target='_blank'
               rel='noreferrer'
             >
-              <YouTubeIcon sx={{ color: '#FF0000' }} fontSize='large' />
+              <YouTubeIcon sx={{ color: '#FF0000' }} fontSize='medium' />
             </a>
           </Tooltip>
         }
@@ -35,68 +82,52 @@ const columns = [
       />,
     ],
   },
-  {
-    field: 'title',
-    headerName: 'Title',
-    width: 150,
-    renderCell: (params) => (
-      <Tooltip
-        title={
-          <>
-            {params.row.gif && (
-              <img
-                src={params.row.gif}
-                alt={params.row.name}
-                style={{ maxWidth: '100%' }}
-              />
-            )}
-          </>
-        }
-        placement='bottom'
-      >
-        <Typography sx={{ '&:hover': { textDecoration: 'underline' } }}>
-          {params.row.title}
-        </Typography>
-      </Tooltip>
-    ),
-  },
-  {
-    field: 'description',
-    headerName: 'Description',
-    flex: 1,
-    renderCell: (params) => <Typography>{params.row.gist}</Typography>,
-  },
-  {
-    field: 'difficulty',
-    headerName: 'Difficulty',
-    headerAlign: 'center',
-    width: 110,
-    align: 'center',
-    renderCell: (params) => <Rating rating={params.row.difficulty} />,
-  },
 ]
 
 export default function DataGridDemo() {
   const navigate = useNavigate()
 
   return (
-    <Box sx={{ width: '100%', padding: '20px' }}>
+    <Box
+      sx={{
+        width: '100%',
+        padding: '20px 20vw',
+      }}
+    >
       <DataGrid
         rows={rows}
         columns={columns}
         hideFooter
+        rowHeight={38}
         disableColumnMenu
-        onRowClick={(row) => {
-          navigate(`/workouts/react/${row.row.name}`)
-        }}
+        disableRowSelectionOnClick
         sx={{
+          '&, [class^=MuiDataGrid]': { border: 'none' },
+          '& .MuiDataGrid-row:hover': {
+            cursor: 'pointer',
+            backgroundColor: 'inherit',
+          },
           '.MuiDataGrid-cell:focus': {
             outline: 'none',
           },
-          '& .MuiDataGrid-row:hover': {
-            cursor: 'pointer',
+          '.MuiDataGrid-columnHeaderTitle': {
+            color: 'grey',
           },
         }}
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
+        }
+        onRowClick={(row) => {
+          navigate(`/workouts/react/${row.row.name}`)
+        }}
+        // sx={{
+        // '.MuiDataGrid-cell:focus': {
+        //   outline: 'none',
+        // },
+        // '& .MuiDataGrid-row:hover': {
+        //   cursor: 'pointer',
+        // },
+        // }}
       />
     </Box>
   )

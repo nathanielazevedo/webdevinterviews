@@ -5,6 +5,7 @@
   --color-panel-background-alternate: #202124;
   --color-solid-resize-bar: #454950;
   --color-solid-resize-bar-handle: rgba(255, 255, 255, 0.2);
+  --row-bg: grey.900;
 }
 
 .stop-scrolling {
@@ -46,4 +47,16 @@
   height: 20px;
   background-color: var(--color-solid-resize-bar);
   margin: 0 10px;
+}
+
+.even {
+  background-color: #212121;
+}
+
+.even:hover {
+  background-color: #454950 !important;
+}
+
+.odd:hover {
+  background-color: #454950 !important;
 }

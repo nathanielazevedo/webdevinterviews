@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  height: 100vh;
+}
+
+.card {
+  border-radius: 10px;
+  border: solid black 1px;
+  padding: 40px;
+  gap: 50px;
+}
+
+.form {
+  gap: 20px;
+  flex-direction: column;
+}
+
+.form > * {
+  padding: 15px;
+  width: 100%;
+}

@@ -11,7 +11,13 @@ export default function Nav() {
       <CssBaseline />
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position='static'>
-          <Toolbar sx={{ backgroundColor: 'grey.900' }}>
+          <Toolbar
+            variant='dense'
+            sx={{
+              backgroundColor: 'grey.900',
+              borderBottom: '1px solid #454950',
+            }}
+          >
             <LogoText />
           </Toolbar>
         </AppBar>

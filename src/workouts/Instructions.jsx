@@ -17,6 +17,7 @@ const Description = () => {
         top: '35px',
         gap: '1rem',
         width: '500px',
+        zIndex: 100,
         display: 'flex',
         padding: '1rem',
         position: 'absolute',

@@ -32,11 +32,11 @@ function readFiles(dirname) {
   })
 }
 
-readFiles('./src/workouts/problems/react/checkedTree/demo')
+readFiles('./src/workouts/problems/react/tic-tac-toe/demo')
   .then((fileContents) => {
     const asString = `export default ${JSON.stringify(fileContents)};`
     fs.writeFile(
-      './src/workouts/problems/react/checkedTree/demo/asString.js',
+      './src/workouts/problems/react/tic-tac-toe/demo/asString.js',
       asString,
       function (err) {
         if (err) {

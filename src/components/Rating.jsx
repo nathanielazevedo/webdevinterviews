@@ -1,7 +1,4 @@
-import SignalCellularAlt1BarIcon from '@mui/icons-material/SignalCellularAlt1Bar'
-import SignalCellularAlt2BarIcon from '@mui/icons-material/SignalCellularAlt2Bar'
-import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt'
-import Tooltip from '@mui/material/Tooltip'
+import { Typography } from '@mui/material'
 
 // eslint-disable-next-line react/prop-types
 const Rating = ({ rating }) => {
@@ -9,21 +6,21 @@ const Rating = ({ rating }) => {
     switch (rating) {
       case 1:
         return (
-          <Tooltip title='Easy' placement='top' fontSize='large'>
-            <SignalCellularAlt1BarIcon color='success' />
-          </Tooltip>
+          <Typography variant='caption' color='success.main'>
+            EASY
+          </Typography>
         )
       case 2:
         return (
-          <Tooltip title='Medium' placement='top'>
-            <SignalCellularAlt2BarIcon color='warning' fontSize='large' />
-          </Tooltip>
+          <Typography variant='caption' color='warning.main'>
+            MEDIUM
+          </Typography>
         )
       case 3:
         return (
-          <Tooltip title='Hard' placement='top'>
-            <SignalCellularAltIcon color='error' fontSize='large' />
-          </Tooltip>
+          <Typography variant='caption' color='error'>
+            HARD
+          </Typography>
         )
       default:
         return null
