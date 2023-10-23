@@ -2,7 +2,7 @@
 import { ToolbarIcon } from '../code-editor/ToolbarIcons'
 import { useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
-import VisibilityIcon from '@mui/icons-material/Visibility'
+import Typography from '@mui/material/Typography'
 import { useContext } from 'react'
 import { WorkoutContext } from '../workouts/Workout'
 
@@ -45,7 +45,11 @@ const Toolbar = () => {
         <ToolbarIcon
           icon={{
             title: 'Close Solution',
-            content: <VisibilityIcon fontSize='small' color='inherit' />,
+            content: (
+              <Typography variant='body2' color='error'>
+                Close Solution
+              </Typography>
+            ),
             onClick: () => {
               setWorkoutState((prev) => {
                 return {

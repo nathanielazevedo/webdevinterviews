@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Tooltip, Typography } from '@mui/material'
 import SmallLogoText from '../components/SmallLogoText'
 
 const Footer = () => {
@@ -11,9 +11,27 @@ const Footer = () => {
         display: 'flex',
         alignItems: 'center',
         padding: '0 10px',
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
       }}
     >
+      <Tooltip
+        title='AutoSave is on. Check localstorage to view your save.'
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '10px',
+          paddingBottom: '4px',
+          paddingLeft: '10px',
+        }}
+      >
+        <Typography variant='caption' style={{ color: 'var(--color-text)' }}>
+          AutoSave:{' '}
+          <Typography variant='caption' color={'primary'}>
+            ON
+          </Typography>
+        </Typography>
+      </Tooltip>
       <SmallLogoText />
     </Box>
   )

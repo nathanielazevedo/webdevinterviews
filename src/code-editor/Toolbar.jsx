@@ -25,6 +25,7 @@ const Toolbar = ({ codemirrorInstance }) => {
         alignItems: 'center',
         backgroundColor: '#171717',
         borderBottom: '0.5px solid var(--color-solid-resize-bar)',
+        padding: '0 10px',
       }}
     >
       <div
