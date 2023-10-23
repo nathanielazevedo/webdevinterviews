@@ -37,12 +37,12 @@ const columns = [
               <img
                 src={params.row.gif}
                 alt={params.row.name}
-                style={{ maxWidth: '100%' }}
+                style={{ maxWidth: '200px' }}
               />
             )}
           </>
         }
-        placement='bottom'
+        placement='left'
       >
         <Typography variant='subtitle'>{params.row.title}</Typography>
       </Tooltip>

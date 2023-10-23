@@ -65,7 +65,7 @@ const Description = () => {
         <img
           src={workoutState.challenge.gif}
           alt={workoutState.challenge.name}
-          style={{ maxWidth: '100%' }}
+          style={{ maxWidth: '300px' }}
         />
       )}
       {/* <Typography>{workoutState.challenge.description}</Typography> */}
