@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import rows from './problems'
 import { Box } from '@mui/material'
+import { createContext } from 'react'
 import Instructions from './Instructions'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import EditorMain from '../code-editor/EditorMain'
 import { getLocalStorage } from '../code-editor/utils'
-import { createContext } from 'react'
 import { RenderCounter } from '../components/RenderCount'
 import ReadOnlyEditor from '../read-only-editor/ReadOnlyEditor'
 
@@ -14,12 +14,18 @@ export const WorkoutContext = createContext({})
 
 const Workout = () => {
   let { name } = useParams()
+  const [key, setKey] = useState(0)
   const challenge = rows.filter((row) => row.name === name)[0]
   const [workoutState, setWorkoutState] = useState({
     challenge,
+    reset: 0,
     showDemo: false,
     showInstructions: true,
   })
+
+  useEffect(() => {
+    setKey((prevKey) => prevKey + 1)
+  }, [workoutState.reset])
 
   return (
     <Box
@@ -33,7 +39,7 @@ const Workout = () => {
       <RenderCounter name={'Workout'} />
       <WorkoutContext.Provider value={[workoutState, setWorkoutState]}>
         {!workoutState.showDemo ? (
-          <EditorMain files={getLocalStorage(challenge)} />
+          <EditorMain key={key} files={getLocalStorage(challenge)} />
         ) : null}
         {workoutState.showDemo ? (
           <ReadOnlyEditor files={challenge.demo} />

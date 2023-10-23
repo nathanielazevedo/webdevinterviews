@@ -24,13 +24,15 @@ const Preview = () => {
           />
         </Panel>
         <ResizeHandle />
-        <Panel minSize={0} collapsible={true}>
+        <Panel minSize={3.3} collapsible={false}>
           <div
             style={{
               height: '100%',
-              overflowY: 'scroll',
+
               // paddingBottom: '5rem',
               backgroundColor: '#242424',
+              position: 'relative',
+              // display: 'flex',
             }}
           >
             <Box
@@ -39,7 +41,14 @@ const Preview = () => {
                 display: 'flex',
                 justifyContent: 'space-between',
                 padding: '5px 10px 5px 10px',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                zIndex: 1,
+                width: '100%',
                 borderBottom: '0.5px solid var(--color-solid-resize-bar)',
+                // border: 'solid white 1px',
+                backgroundColor: '#242424',
               }}
             >
               <Typography fontSize={'small'}>
@@ -54,7 +63,9 @@ const Preview = () => {
                 </Tooltip>
               </Button>
             </Box>
-            <Console logs={logs} variant='dark' />
+            <Box paddingTop={4.5} sx={{ overflowY: 'scroll', height: '100%' }}>
+              <Console logs={logs} variant='dark' />
+            </Box>
           </div>
         </Panel>
       </PanelGroup>
