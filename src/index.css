@@ -8,11 +8,6 @@
   --row-bg: grey.900;
 }
 
-.stop-scrolling {
-  height: 100%;
-  overflow: hidden;
-}
-
 * {
   --sp-layout-height: 94vh;
 }
@@ -53,10 +48,15 @@
   background-color: #212121;
 }
 
+.even {
+  cursor: pointer !important;
+}
+
 .even:hover {
-  background-color: #454950 !important;
+  background-color: #1a1a1a !important;
+  cursor: pointer !important;
 }
 
 .odd:hover {
-  background-color: #454950 !important;
+  background-color: #121212 !important;
 }
