@@ -60,8 +60,6 @@ const ToolbarIcons = ({ codemirrorInstance }) => {
             insert: prettierCode,
           },
         })
-        console.log('cm', cmInstance.state.selection)
-        console.log('trans', trans)
 
         cmInstance.update([trans])
       }
@@ -72,7 +70,7 @@ const ToolbarIcons = ({ codemirrorInstance }) => {
     }
   }, [prettierCode])
 
-  const toolbarIcons = [
+  const icons1 = [
     {
       title: workoutState.showInstructions
         ? 'Close Instructions'
@@ -91,16 +89,6 @@ const ToolbarIcons = ({ codemirrorInstance }) => {
       },
     },
     {
-      title: 'Format Code',
-      content: <AutoAwesomeIcon fontSize='small' />,
-      onClick: runPrettier,
-    },
-    {
-      title: 'Run Code',
-      content: <DirectionsRunIcon fontSize='small' />,
-      onClick: () => sandpack.runSandpack(),
-    },
-    {
       title: 'Show Solution',
       content: <VisibilityIcon fontSize='small' color='inherit' />,
       onClick: () => {
@@ -114,9 +102,30 @@ const ToolbarIcons = ({ codemirrorInstance }) => {
     },
   ]
 
-  return toolbarIcons.map((icon) => {
-    return <ToolbarIcon key={icon.title} icon={icon} />
-  })
+  const icons2 = [
+    {
+      title: 'Format Code',
+      content: <AutoAwesomeIcon fontSize='small' />,
+      onClick: runPrettier,
+    },
+    {
+      title: 'Run Code',
+      content: <DirectionsRunIcon fontSize='small' />,
+      onClick: () => sandpack.runSandpack(),
+    },
+  ]
+
+  return (
+    <>
+      {icons1.map((icon) => {
+        return <ToolbarIcon key={icon.title} icon={icon} />
+      })}
+      <div className='bar-divider' />
+      {icons2.map((icon) => {
+        return <ToolbarIcon key={icon.title} icon={icon} />
+      })}
+    </>
+  )
 }
 
 export default ToolbarIcons
