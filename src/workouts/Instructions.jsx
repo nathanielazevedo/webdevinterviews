@@ -49,7 +49,9 @@ const Description = () => {
           alignItems: 'center',
         }}
       >
-        <Typography variant='h4'>{workoutState.challenge.title}</Typography>
+        <Typography variant='h4' fontWeight='bold'>
+          {workoutState.challenge.title}
+        </Typography>
         <Tooltip title='Watch the video' placement='bottom'>
           <a
             style={{ display: 'flex' }}
@@ -65,12 +67,15 @@ const Description = () => {
         <img
           src={workoutState.challenge.gif}
           alt={workoutState.challenge.name}
-          style={{ maxWidth: '300px' }}
+          style={{
+            maxWidth: '500px',
+            border: '15px solid black',
+            borderRadius: '10px',
+          }}
         />
       )}
-      {/* <Typography>{workoutState.challenge.description}</Typography> */}
       <Box>
-        <Typography variant='h6' color='primary'>
+        <Typography variant='h6' color='primary' fontWeight='bold'>
           Checklist
         </Typography>
         {workoutState.challenge.checkList.map((item, index) => (
