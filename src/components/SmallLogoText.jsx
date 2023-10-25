@@ -5,22 +5,9 @@ const SmallLogoText = () => {
     <Typography
       noWrap
       sx={{ color: '#C5C5C5', paddingBottom: '3px' }}
-      fontSize={7}
+      fontSize={10}
     >
-      WEB
-      <span
-        style={{
-          color: 'black ',
-          borderRadius: '5px',
-          padding: '0 1px',
-          margin: '0 3px',
-          backgroundColor: '#C5C5C5',
-          fontSize: '7px',
-        }}
-      >
-        DEV
-      </span>
-      INTERVIEWS
+      FLOW STATE CODING
     </Typography>
   )
 }
