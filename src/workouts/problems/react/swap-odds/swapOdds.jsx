@@ -15,7 +15,7 @@ const swapOdds = {
     'When the button is clicked, swap the odds from the left list to the right list and vice versa.',
   ],
   gif: gif,
-  link: 'https://www.youtube.com/watch?v=WX8Oplyd3Ag',
+  link: 'https://youtu.be/TNoC0Ri52VU',
   demo: demo,
   template: template,
 }
