@@ -1,9 +1,36 @@
+/* eslint-disable no-undef */
 import fs from 'fs'
 import path from 'path'
+import readline from 'readline'
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+})
+
+rl.question('Type: ', (type) => {
+  const templatePath = `./src/workouts/problems/react/swap-odds/${type}`
+  const asStringPath = `./src/workouts/problems/react/swap-odds/${type}/asString.js`
+
+  readFiles(templatePath).then((fileContents) => {
+    const asString = `export default ${JSON.stringify(fileContents)};`
+    fs.writeFile(asStringPath, asString, function (err) {
+      if (err) {
+        console.error(err)
+      }
+    })
+  })
+
+  rl.close()
+})
 
 function readFiles(dirname) {
   return new Promise((resolve, reject) => {
     const fileContents = {}
+    const asStringPath = path.join(dirname, 'asString.js')
+    if (fs.existsSync(asStringPath)) {
+      fs.unlinkSync(asStringPath)
+    }
     fs.readdir(dirname, function (err, filenames) {
       if (err) {
         reject(err)
@@ -19,7 +46,11 @@ function readFiles(dirname) {
               reject(err)
               return
             }
-            const key = '/' + path.parse(filename).name + '.js'
+            const ext =
+              path.parse(filename).ext === '.jsx'
+                ? '.js'
+                : path.parse(filename).ext
+            const key = '/' + path.parse(filename).name + ext
             fileContents[key] = { code: content }
             count--
             if (count === 0) {
@@ -32,11 +63,11 @@ function readFiles(dirname) {
   })
 }
 
-readFiles('./src/workouts/problems/react/tic-tac-toe/demo')
+readFiles('./src/workouts/problems/react/swap-odds/template')
   .then((fileContents) => {
     const asString = `export default ${JSON.stringify(fileContents)};`
     fs.writeFile(
-      './src/workouts/problems/react/tic-tac-toe/demo/asString.js',
+      './src/workouts/problems/react/swap-odds/template/asString.js',
       asString,
       function (err) {
         if (err) {

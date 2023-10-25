@@ -1,15 +1,16 @@
-import CheckboxTree from '../workouts/problems/react/checkedTree/demo/App'
+// import CheckboxTree from '../workouts/problems/react/checkedTree/demo/App'
+import SwapOdds from '../workouts/problems/react/swap-odds/demo/App'
 
 const SecretPlayground = () => {
   return (
     <div
       style={{
-        height: '90vh',
-        width: '90vw',
+        height: '100vh',
+        width: '100vw',
         backgroundColor: 'white',
       }}
     >
-      <CheckboxTree />
+      <SwapOdds />
     </div>
   )
 }

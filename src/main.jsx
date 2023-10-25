@@ -1,14 +1,14 @@
 import './index.css'
 import Nav from './components/Nav'
-import Workout from './workouts/Workout'
 import ReactDOM from 'react-dom/client'
-import { Analytics } from '@vercel/analytics/react'
-import CssBaseline from '@mui/material/CssBaseline'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import SecretPlayground from './components/SecretPlayground'
+import Workout from './workouts/Workout'
 import { SnackbarProvider } from 'notistack'
 import WorkoutTable from './workouts/WorkoutTable'
+import CssBaseline from '@mui/material/CssBaseline'
+import { Analytics } from '@vercel/analytics/react'
+import SecretPlayground from './components/SecretPlayground'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 const darkTheme = createTheme({
   palette: {
