@@ -1,11 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import InfoIcon from '@mui/icons-material/Info'
 import { Button, Tooltip } from '@mui/material'
-import { WorkoutContext } from '../workouts/Workout'
-import { useContext, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useSandpack } from '@codesandbox/sandpack-react'
-import VisibilityIcon from '@mui/icons-material/Visibility'
 import { useActiveCode } from '@codesandbox/sandpack-react'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun'
@@ -27,7 +24,6 @@ export const ToolbarIcon = ({ icon }) => {
 }
 
 const ToolbarIcons = ({ codemirrorInstance }) => {
-  const [workoutState, setWorkoutState] = useContext(WorkoutContext)
   const [prettierCode, setPrettierCode] = useState('')
   const { sandpack } = useSandpack()
   const activeCode = useActiveCode()
@@ -70,38 +66,6 @@ const ToolbarIcons = ({ codemirrorInstance }) => {
     }
   }, [prettierCode])
 
-  const icons1 = [
-    {
-      title: workoutState.showInstructions
-        ? 'Close Instructions'
-        : 'Show Instructions',
-      content: (
-        <InfoIcon
-          fontSize='small'
-          color={workoutState.showInstructions ? 'primary' : 'inherit'}
-        />
-      ),
-      onClick: () => {
-        setWorkoutState((prev) => ({
-          ...prev,
-          showInstructions: !prev.showInstructions,
-        }))
-      },
-    },
-    {
-      title: 'Show Solution',
-      content: <VisibilityIcon fontSize='small' color='inherit' />,
-      onClick: () => {
-        setWorkoutState((prev) => {
-          return {
-            ...prev,
-            showDemo: !prev.showDemo,
-          }
-        })
-      },
-    },
-  ]
-
   const icons2 = [
     {
       title: 'Format Code',
@@ -117,10 +81,6 @@ const ToolbarIcons = ({ codemirrorInstance }) => {
 
   return (
     <>
-      {icons1.map((icon) => {
-        return <ToolbarIcon key={icon.title} icon={icon} />
-      })}
-      <div className='bar-divider' />
       {icons2.map((icon) => {
         return <ToolbarIcon key={icon.title} icon={icon} />
       })}

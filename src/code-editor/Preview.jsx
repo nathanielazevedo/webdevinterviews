@@ -1,13 +1,16 @@
 import { Console } from 'console-feed'
 import ResizeHandle from '../components/ResizeHandle'
 import { Panel, PanelGroup } from 'react-resizable-panels'
-import { SandpackPreview } from '@codesandbox/sandpack-react'
+import { SandpackPreview, SandpackTests } from '@codesandbox/sandpack-react'
 import { Typography, Box, Tooltip, Button } from '@mui/material'
 import { useSandpackConsole } from '@codesandbox/sandpack-react'
 import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt'
+import { WorkoutContext } from '../workouts/Workout'
+import { useContext } from 'react'
 
 const Preview = () => {
   const { logs, reset } = useSandpackConsole({})
+  const [workoutState] = useContext(WorkoutContext)
 
   return (
     <div style={{ height: '100%', maxHeight: '100%' }}>
@@ -17,18 +20,21 @@ const Preview = () => {
         disablePointerEventsDuringResize
       >
         <Panel minSize={0}>
-          <SandpackPreview
-            showNavigator
-            style={{ height: '100%' }}
-            showOpenInCodeSandbox={false}
-          />
+          {workoutState.showTests ? (
+            <SandpackTests />
+          ) : (
+            <SandpackPreview
+              showNavigator
+              style={{ height: '100%' }}
+              showOpenInCodeSandbox={false}
+            />
+          )}
         </Panel>
         <ResizeHandle />
         <Panel minSize={3.3} collapsible={false}>
           <div
             style={{
               height: '100%',
-
               // paddingBottom: '5rem',
               backgroundColor: '#242424',
               position: 'relative',

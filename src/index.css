@@ -17,6 +17,10 @@
   --sp-layout-height: 94vh;
 }
 
+.sp-test-header-button[data-active='true'] {
+  color: var(--color-solid-resize-bar) !important;
+}
+
 .file-bg > div > div {
   background-color: transparent !important;
 }

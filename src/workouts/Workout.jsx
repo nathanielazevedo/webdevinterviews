@@ -7,7 +7,6 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import EditorMain from '../code-editor/EditorMain'
 import { getLocalStorage } from '../code-editor/utils'
-import { RenderCounter } from '../components/RenderCount'
 import ReadOnlyEditor from '../read-only-editor/ReadOnlyEditor'
 
 export const WorkoutContext = createContext({})
@@ -20,9 +19,11 @@ const Workout = () => {
     challenge,
     reset: 0,
     showDemo: false,
+    showTests: false,
     showInstructions: true,
   })
 
+  // what is this doing?
   useEffect(() => {
     setKey((prevKey) => prevKey + 1)
   }, [workoutState.reset])
@@ -36,7 +37,6 @@ const Workout = () => {
         position: 'relative',
       }}
     >
-      <RenderCounter name={'Workout'} />
       <WorkoutContext.Provider value={[workoutState, setWorkoutState]}>
         {!workoutState.showDemo ? (
           <EditorMain key={key} files={getLocalStorage(challenge)} />

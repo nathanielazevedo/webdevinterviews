@@ -2,19 +2,13 @@
 import Timer from './Timer'
 import { useState } from 'react'
 import Alert from '../components/Alert'
+import ToolbarMenu from './ToolbarMenu'
 import ToolbarIcons from './ToolbarIcons'
 import { ToolbarIcon } from './ToolbarIcons'
-import { useNavigate } from 'react-router-dom'
-import CloseIcon from '@mui/icons-material/Close'
 import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined'
 
 const Toolbar = ({ codemirrorInstance }) => {
-  const navigate = useNavigate()
   const [showWarning, setShowWarning] = useState(false)
-
-  const leave = () => {
-    navigate('/')
-  }
 
   return (
     <div
@@ -22,10 +16,10 @@ const Toolbar = ({ codemirrorInstance }) => {
         width: '100%',
         height: '35px',
         display: 'flex',
+        padding: '0 10px',
         alignItems: 'center',
         backgroundColor: '#171717',
         borderBottom: '0.5px solid var(--color-solid-resize-bar)',
-        padding: '0 10px',
       }}
     >
       <div
@@ -35,13 +29,7 @@ const Toolbar = ({ codemirrorInstance }) => {
           justifyContent: 'center',
         }}
       >
-        <ToolbarIcon
-          icon={{
-            title: 'Leave',
-            content: <CloseIcon fontSize='small' />,
-            onClick: leave,
-          }}
-        />
+        <ToolbarMenu codemirrorInstance={codemirrorInstance} />
 
         <div className='bar-divider' />
 
