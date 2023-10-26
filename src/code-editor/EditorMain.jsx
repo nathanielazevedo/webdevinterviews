@@ -2,7 +2,8 @@
 import Footer from './Footer'
 import Preview from './Preview'
 import Toolbar from './Toolbar'
-import { useRef } from 'react'
+import { useRef, useContext } from 'react'
+import { WorkoutContext } from '../workouts/Workout'
 import { theme } from './theme'
 import AutoSave from './AutoSave'
 import ResizeHandle from '../components/ResizeHandle'
@@ -17,6 +18,7 @@ import {
 
 const EditorMain = ({ files }) => {
   const codemirrorInstance = useRef()
+  const [workoutState] = useContext(WorkoutContext)
 
   return (
     <SandpackProvider
@@ -25,7 +27,8 @@ const EditorMain = ({ files }) => {
       customSetup={{ dependencies: { 'jest-extended': '^3.0.2' } }}
       options={{
         autoReload: true,
-        visibleFiles: ['/App.js'],
+        visibleFiles: workoutState.visibleFiles,
+        activeFile: workoutState.activeFile,
       }}
     >
       <AutoSave />

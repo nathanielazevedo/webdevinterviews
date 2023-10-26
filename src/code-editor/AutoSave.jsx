@@ -8,8 +8,6 @@ const AutoSave = () => {
   const activeCode = useActiveCode()
   const { sandpack } = useSandpack()
   const [workoutState] = useContext(WorkoutContext)
-  console.log('rendered')
-  console.log(workoutState)
 
   useEffect(() => {
     if (activeCode.code) {

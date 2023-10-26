@@ -101,6 +101,8 @@ export default function BasicMenu({ codemirrorInstance }) {
             setWorkoutState((prev) => {
               return {
                 ...prev,
+                activeFile: sandpack.activeFile,
+                visibleFiles: sandpack.visibleFiles,
                 showTests: !prev.showTests,
               }
             })
@@ -117,6 +119,8 @@ export default function BasicMenu({ codemirrorInstance }) {
           onClick={() => {
             setWorkoutState((prev) => ({
               ...prev,
+              activeFile: sandpack.activeFile,
+              visibleFiles: sandpack.visibleFiles,
               showInstructions: !prev.showInstructions,
             }))
             handleClose()

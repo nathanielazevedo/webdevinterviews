@@ -19,6 +19,8 @@ const Workout = () => {
     challenge,
     reset: 0,
     showDemo: false,
+    activeFile: '/App.js',
+    visibleFiles: ['/App.js'],
     showTests: false,
     showInstructions: true,
   })
