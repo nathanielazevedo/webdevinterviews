@@ -13,6 +13,8 @@ import { theme } from '../code-editor/theme'
 import ReadOnlyToolbar from './ReadOnlyToolbar'
 import Footer from '../code-editor/Footer'
 import { Box } from '@mui/material'
+import { Panel, PanelGroup } from 'react-resizable-panels'
+import ResizeHandle from '../components/ResizeHandle'
 
 const ReadOnlyEditor = () => {
   const [workoutState] = useContext(WorkoutContext)
@@ -28,35 +30,52 @@ const ReadOnlyEditor = () => {
       <SandpackThemeProvider theme={theme}>
         <ReadOnlyToolbar />
         <SandpackLayout>
-          <SandpackFileExplorer />
-          <SandpackCodeViewer />
-          <Box
-            sx={{
-              width: '40%',
-              height: '97vh',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
+          <PanelGroup
+            direction='horizontal'
+            autoSaveId='editor-prefs'
+            disablePointerEventsDuringResize
           >
-            <Box
-              sx={{
-                height: '55vh',
-              }}
+            <Panel
+              minSize={0}
+              defaultSize={15}
+              collapsible={true}
+              className='file-bg'
             >
-              <SandpackPreview
-                style={{
-                  height: '100%',
+              <SandpackFileExplorer style={{ height: '100%' }} />
+            </Panel>
+            <ResizeHandle />
+            <Panel minSize={0} collapsible={true}>
+              <SandpackCodeViewer style={{ height: '100%' }} />
+            </Panel>
+            <ResizeHandle />
+            <Panel minSize={0} collapsible={true}>
+              <Box
+                sx={{
+                  height: '97vh',
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
-              />
-            </Box>
-            <Box
-              sx={{
-                height: '39vh',
-              }}
-            >
-              <SandpackConsole />
-            </Box>
-          </Box>
+              >
+                <PanelGroup
+                  autoSaveId='console'
+                  direction='vertical'
+                  disablePointerEventsDuringResize
+                >
+                  <Panel minSize={0}>
+                    <Box sx={{ height: '100%' }}>
+                      <SandpackPreview style={{ height: '100%' }} />
+                    </Box>
+                  </Panel>
+                  <ResizeHandle />
+                  <Panel minSize={10}>
+                    <Box sx={{ height: '100%' }}>
+                      <SandpackConsole />
+                    </Box>
+                  </Panel>
+                </PanelGroup>
+              </Box>
+            </Panel>
+          </PanelGroup>
         </SandpackLayout>
         <Footer />
       </SandpackThemeProvider>
