@@ -44,8 +44,16 @@ const ReadOnlyEditor = () => {
               <SandpackFileExplorer style={{ height: '100%' }} />
             </Panel>
             <ResizeHandle />
-            <Panel minSize={0} collapsible={true}>
-              <SandpackCodeViewer style={{ height: '100%' }} />
+            <Panel
+              minSize={0}
+              collapsible={true}
+              style={{ maxHeight: '96vh', minHeight: '96vh' }}
+            >
+              <SandpackCodeViewer
+                showTabs
+                showLineNumbers
+                style={{ height: '100%' }}
+              />
             </Panel>
             <ResizeHandle />
             <Panel minSize={0} collapsible={true}>
