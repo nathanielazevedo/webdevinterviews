@@ -4,10 +4,10 @@ const SmallLogoText = () => {
   return (
     <Typography
       noWrap
-      sx={{ color: '#C5C5C5', paddingBottom: '3px' }}
       fontSize={10}
+      sx={{ color: '#C5C5C5', paddingBottom: '3px' }}
     >
-      FLOW STATE CODING
+      FLOW STATE CODE
     </Typography>
   )
 }

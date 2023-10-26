@@ -6,6 +6,11 @@
   --color-solid-resize-bar: #454950;
   --color-solid-resize-bar-handle: rgba(255, 255, 255, 0.2);
   --row-bg: grey.900;
+  --green: rgb(151, 199, 132);
+  --blue: rgb(9, 151, 188);
+  --pink: rgb(255, 99, 132);
+  --orange: rgb(243, 164, 78);
+  --red: rgb(194, 24, 7);
 }
 
 * {

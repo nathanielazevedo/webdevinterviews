@@ -6,19 +6,31 @@ const Rating = ({ rating }) => {
     switch (rating) {
       case 1:
         return (
-          <Typography variant='caption' color='success.main'>
+          <Typography
+            variant='caption'
+            sx={{ color: 'var(--green)' }}
+            fontWeight='bolder'
+          >
             EASY
           </Typography>
         )
       case 2:
         return (
-          <Typography variant='caption' color='warning.main'>
+          <Typography
+            variant='caption'
+            sx={{ color: 'var(--orange)' }}
+            fontWeight='bolder'
+          >
             MEDIUM
           </Typography>
         )
       case 3:
         return (
-          <Typography variant='caption' color='error'>
+          <Typography
+            variant='caption'
+            sx={{ color: 'var(--red)' }}
+            fontWeight='bolder'
+          >
             HARD
           </Typography>
         )
