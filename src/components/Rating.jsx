@@ -11,7 +11,7 @@ const Rating = ({ rating }) => {
             sx={{ color: 'var(--green)' }}
             fontWeight='bolder'
           >
-            EASY
+            JUNIOR
           </Typography>
         )
       case 2:
@@ -21,7 +21,7 @@ const Rating = ({ rating }) => {
             sx={{ color: 'var(--orange)' }}
             fontWeight='bolder'
           >
-            MEDIUM
+            MID-LEVEL
           </Typography>
         )
       case 3:
@@ -31,7 +31,7 @@ const Rating = ({ rating }) => {
             sx={{ color: 'var(--red)' }}
             fontWeight='bolder'
           >
-            HARD
+            SENIOR
           </Typography>
         )
       default:

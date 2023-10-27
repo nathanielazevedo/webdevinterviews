@@ -9,16 +9,19 @@ import AutoSave from './AutoSave'
 import ResizeHandle from '../components/ResizeHandle'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import { SandpackFileExplorer } from 'sandpack-file-explorer'
+import EditorSideNav from './EditorSideNav'
 import {
   SandpackLayout,
   SandpackProvider,
   SandpackCodeEditor,
   SandpackThemeProvider,
 } from '@codesandbox/sandpack-react'
+import { Box } from '@mui/material'
 
 const EditorMain = ({ files }) => {
   const codemirrorInstance = useRef()
   const [workoutState] = useContext(WorkoutContext)
+  const filePanelRef = useRef()
 
   return (
     <SandpackProvider
@@ -40,8 +43,11 @@ const EditorMain = ({ files }) => {
               width: '100%',
               minHeight: 'calc(100vh - 60px)',
               maxHeight: 'calc(100vh - 60px)',
+              display: 'flex',
+              flexDirection: 'row',
             }}
           >
+            <EditorSideNav filePanelRef={filePanelRef} />
             <PanelGroup
               direction='horizontal'
               autoSaveId='editor-prefs'
@@ -52,8 +58,17 @@ const EditorMain = ({ files }) => {
                 defaultSize={15}
                 collapsible={true}
                 className='file-bg'
+                ref={filePanelRef}
               >
-                <SandpackFileExplorer />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    flexDirection: 'row',
+                  }}
+                >
+                  <SandpackFileExplorer />
+                </Box>
               </Panel>
 
               <ResizeHandle />

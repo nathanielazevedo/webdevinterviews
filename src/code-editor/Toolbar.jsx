@@ -1,15 +1,9 @@
 /* eslint-disable react/prop-types */
 import Timer from './Timer'
-import { useState } from 'react'
-import Alert from '../components/Alert'
 import ToolbarMenu from './ToolbarMenu'
 import ToolbarIcons from './ToolbarIcons'
-import { ToolbarIcon } from './ToolbarIcons'
-import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined'
 
 const Toolbar = ({ codemirrorInstance }) => {
-  const [showWarning, setShowWarning] = useState(false)
-
   return (
     <div
       style={{
@@ -36,19 +30,8 @@ const Toolbar = ({ codemirrorInstance }) => {
         <ToolbarIcons codemirrorInstance={codemirrorInstance} />
       </div>
 
-      <div className='bar-divider' />
-      <Timer />
       <div style={{ flex: 1 }}></div>
-
-      <ToolbarIcon
-        icon={{
-          title: 'Reset Code',
-          content: <RotateLeftOutlinedIcon color='error' />,
-          onClick: () => setShowWarning(true),
-        }}
-      />
-
-      {showWarning && <Alert setOpen={setShowWarning} />}
+      <Timer />
     </div>
   )
 }

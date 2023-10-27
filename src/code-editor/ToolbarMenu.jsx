@@ -10,10 +10,12 @@ import * as prettier from 'prettier'
 import parserBabel from 'prettier/parser-babel'
 import { useSandpack } from '@codesandbox/sandpack-react'
 import { useActiveCode } from '@codesandbox/sandpack-react'
+import Alert from '../components/Alert'
 
 export default function BasicMenu({ codemirrorInstance }) {
   const [anchorEl, setAnchorEl] = useState(null)
   const [workoutState, setWorkoutState] = useContext(WorkoutContext)
+  const [showWarning, setShowWarning] = useState(false)
   const navigate = useNavigate()
   const { sandpack } = useSandpack()
   const activeCode = useActiveCode()
@@ -145,11 +147,14 @@ export default function BasicMenu({ codemirrorInstance }) {
         >
           <Typography fontSize='14px'>View Solution</Typography>
         </MenuItem>
+        <MenuItem onClick={() => setShowWarning(true)}>
+          <Typography fontSize='14px'>Reset Code</Typography>
+        </MenuItem>
         <MenuItem onClick={leave}>
-          {' '}
-          <Typography fontSize='14px'>Leave</Typography>
+          <Typography fontSize='14px'>Exit</Typography>
         </MenuItem>
       </Menu>
+      {showWarning && <Alert setOpen={setShowWarning} />}
     </div>
   )
 }

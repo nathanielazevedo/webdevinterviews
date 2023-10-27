@@ -14,8 +14,8 @@ export default function Nav() {
           <Toolbar
             variant='dense'
             sx={{
-              backgroundColor: 'grey.900',
-              borderBottom: '1px solid #454950',
+              backgroundColor: 'background.paper',
+              borderBottom: '0.5px solid #454950',
             }}
           >
             <LogoText />
