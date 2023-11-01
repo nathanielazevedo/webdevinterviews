@@ -17,6 +17,7 @@ const transferList = {
   link: 'https://youtu.be/vweARwTPmg4',
   demo: asString,
   template: {},
+  type: 'react',
 }
 
 export default transferList

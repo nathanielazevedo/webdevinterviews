@@ -22,6 +22,7 @@ const checkedTree = {
   link: 'https://www.youtube.com/watch?v=WX8Oplyd3Ag',
   demo: asString,
   template: template,
+  type: 'react',
 }
 
 export default checkedTree

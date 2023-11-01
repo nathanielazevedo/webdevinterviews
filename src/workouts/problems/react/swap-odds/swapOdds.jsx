@@ -18,6 +18,7 @@ const swapOdds = {
   link: 'https://youtu.be/TNoC0Ri52VU',
   demo: demo,
   template: template,
+  type: 'react',
 }
 
 export default swapOdds

@@ -1,5 +1,4 @@
 import { Box, Tooltip, Typography } from '@mui/material'
-import SmallLogoText from '../components/SmallLogoText'
 
 const Footer = () => {
   return (
@@ -32,7 +31,13 @@ const Footer = () => {
           </Typography>
         </Typography>
       </Tooltip>
-      <SmallLogoText />
+      <Typography
+        noWrap
+        fontSize={10}
+        sx={{ color: '#C5C5C5', paddingBottom: '3px' }}
+      >
+        REACT PRO
+      </Typography>
     </Box>
   )
 }

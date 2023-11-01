@@ -15,6 +15,7 @@
 
 * {
   --sp-layout-height: 94vh;
+  --sp-colors-disabled: white;
 }
 
 .sp-test-header-button[data-active='true'] {

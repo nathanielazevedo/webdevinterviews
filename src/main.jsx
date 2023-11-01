@@ -1,5 +1,4 @@
 import './index.css'
-import Nav from './components/Nav'
 import ReactDOM from 'react-dom/client'
 import Workout from './workouts/Workout'
 import { SnackbarProvider } from 'notistack'
@@ -9,6 +8,8 @@ import { Analytics } from '@vercel/analytics/react'
 import SecretPlayground from './components/SecretPlayground'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import ClippedDrawer from './components/ClippedNav'
+import Home from './pages/Home'
 
 const darkTheme = createTheme({
   palette: {
@@ -17,7 +18,6 @@ const darkTheme = createTheme({
       main: '#19e4ff',
     },
   },
-
   typography: {
     fontFamily: 'Bai Jamjuree',
   },
@@ -26,11 +26,16 @@ const darkTheme = createTheme({
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Nav />,
+    element: <ClippedDrawer />,
     children: [
       {
+        path: '/home',
+        element: <Home />,
+        errorElement: <div>404</div>,
+      },
+      {
         path: '',
-        element: <WorkoutTable />,
+        element: <Home />,
         errorElement: <div>404</div>,
       },
       {

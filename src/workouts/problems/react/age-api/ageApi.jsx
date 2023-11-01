@@ -16,6 +16,7 @@ const ageApi = {
   link: 'https://youtu.be/1T0iMtIWmrw',
   demo: asString,
   template: {},
+  type: 'react',
 }
 
 export default ageApi
