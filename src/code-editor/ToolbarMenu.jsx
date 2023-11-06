@@ -29,7 +29,7 @@ export default function BasicMenu({ codemirrorInstance }) {
   }
 
   const leave = () => {
-    navigate('/')
+    navigate('/workouts')
   }
 
   const runPrettier = () => {

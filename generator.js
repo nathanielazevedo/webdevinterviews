@@ -9,8 +9,8 @@ const rl = readline.createInterface({
 })
 
 rl.question('Type: ', (type) => {
-  const templatePath = `./src/workouts/problems/react/swap-odds/${type}`
-  const asStringPath = `./src/workouts/problems/react/swap-odds/${type}/asString.js`
+  const templatePath = `./src/workouts/problems/react/tabs/${type}`
+  const asStringPath = `./src/workouts/problems/react/tabs/${type}/asString.js`
 
   readFiles(templatePath).then((fileContents) => {
     const asString = `export default ${JSON.stringify(fileContents)};`
@@ -63,11 +63,11 @@ function readFiles(dirname) {
   })
 }
 
-readFiles('./src/workouts/problems/react/swap-odds/template')
+readFiles('./src/workouts/problems/react/tabs/demo')
   .then((fileContents) => {
     const asString = `export default ${JSON.stringify(fileContents)};`
     fs.writeFile(
-      './src/workouts/problems/react/swap-odds/template/asString.js',
+      './src/workouts/problems/react/tabs/demo/asString.js',
       asString,
       function (err) {
         if (err) {

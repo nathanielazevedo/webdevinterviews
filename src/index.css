@@ -15,7 +15,8 @@
 
 * {
   --sp-layout-height: 94vh;
-  --sp-colors-disabled: white;
+  --sp-colors-disabled: grey;
+  /* --sp-colors-surface1: #1a1a1a; */
 }
 
 .sp-test-header-button[data-active='true'] {
@@ -44,7 +45,7 @@
   right: 0;
   background-color: var(--background-color);
   transition: background-color 0.2s linear;
-  border-right: solid 1px var(--color-solid-resize-bar);
+  border-right: solid 0.5px var(--color-solid-resize-bar);
 }
 
 .bar-divider {

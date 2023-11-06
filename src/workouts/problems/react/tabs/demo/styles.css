@@ -1,0 +1,15 @@
+.container {
+  height: 200px;
+}
+
+.tabs-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  border-bottom: solid black 1px;
+  padding: 5px 20px;
+  cursor: pointer;
+}
