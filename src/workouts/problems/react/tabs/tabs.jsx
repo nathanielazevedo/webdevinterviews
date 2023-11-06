@@ -6,7 +6,7 @@ const tabs = {
   id: 5,
   name: 'tabs',
   title: 'Tabs',
-  difficulty: 3,
+  difficulty: 1,
   checkList: [
     'Build 3 clickable tabs',
     'Clicking on tab should show proper contents for that tab.',
