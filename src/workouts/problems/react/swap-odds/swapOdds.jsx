@@ -3,7 +3,7 @@ import template from './template/asString'
 import gif from './swapOddsGif.gif'
 
 const swapOdds = {
-  id: 2,
+  id: 6,
   name: 'swapOdds',
   title: 'Swap Odds',
   difficulty: 2,

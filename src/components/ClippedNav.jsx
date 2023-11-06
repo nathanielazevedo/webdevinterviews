@@ -182,10 +182,11 @@ export default function MiniDrawer() {
             component='div'
             sx={{
               letterSpacing: '0.4em',
+              fontWeight: 'bold',
               // color: 'grey.500',
             }}
           >
-            React Pro
+            REACT PRO
           </Typography>
         </Toolbar>
       </Box>
@@ -202,7 +203,7 @@ export default function MiniDrawer() {
         {/* SideNav ----------------------------*/}
         <Drawer open={open} sx={{ borderRight: '0.5px solid #454950' }}>
           <List>
-            {links.map((link, index) => (
+            {links.map((link) => (
               <ListItem
                 key={link.name}
                 disablePadding

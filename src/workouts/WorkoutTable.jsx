@@ -66,26 +66,7 @@ export default function DenseTable() {
                     }}
                   >
                     <TableCell align='center'>
-                      <Tooltip
-                        title={
-                          <>
-                            {row.gif && (
-                              <img
-                                src={row.gif}
-                                alt={row.name}
-                                style={{ maxWidth: '200px' }}
-                              />
-                            )}
-                          </>
-                        }
-                        placement='left'
-                      >
-                        <PhotoSizeSelectActualIcon
-                          sx={{
-                            color: 'grey.700',
-                          }}
-                        />
-                      </Tooltip>
+                      <Typography variant='subtitle'>{row.id}.</Typography>
                     </TableCell>
                     <TableCell align='left' sx={{ cursor: 'pointer' }}>
                       <Typography
@@ -101,6 +82,28 @@ export default function DenseTable() {
                       >
                         {row.title}
                       </Typography>
+                    </TableCell>
+                    <TableCell align='left'>
+                      <Tooltip
+                        title={
+                          <>
+                            {row.gif && (
+                              <img
+                                src={row.gif}
+                                alt={row.name}
+                                style={{ maxWidth: '200px' }}
+                              />
+                            )}
+                          </>
+                        }
+                        placement='right'
+                      >
+                        <PhotoSizeSelectActualIcon
+                          sx={{
+                            color: 'grey.700',
+                          }}
+                        />
+                      </Tooltip>
                     </TableCell>
                     <TableCell align='center'>
                       <Rating rating={row.difficulty} />

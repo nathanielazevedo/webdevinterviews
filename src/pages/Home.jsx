@@ -14,28 +14,27 @@ const Home = () => {
         }}
       >
         <Box>
-          <Typography variant='h3'>Become a React Pro.</Typography>
-          <Box mt={'50px'}>
-            <Typography variant='h5'>What this site provides:</Typography>
+          <Box mt={'0px'}>
+            <Typography variant='h3'>My goals:</Typography>
             <List>
               <ListItem>
-                <Typography variant='body1'>
-                  1. A feature full in browser code editor.
+                <Typography variant='h6'>
+                  - Provide a nice in-browser code editor.
                 </Typography>
               </ListItem>
               <ListItem>
-                <Typography variant='body1'>
-                  2. React, TypeScript, Redux, React Router challenges.
+                <Typography variant='h6'>
+                  - React, TypeScript, Redux, React Router challenges.
                 </Typography>
               </ListItem>
               <ListItem>
-                <Typography variant='body1'>
-                  3. Realistic React component builds.
+                <Typography variant='h6'>
+                  - Realistic React component builds.
                 </Typography>
               </ListItem>
               <ListItem>
-                <Typography variant='body1'>
-                  4. Real React Interview Questions.
+                <Typography variant='h6'>
+                  - Real React Interview Questions.
                 </Typography>
               </ListItem>
             </List>

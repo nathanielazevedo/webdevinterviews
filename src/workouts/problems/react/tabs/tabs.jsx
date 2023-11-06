@@ -12,7 +12,7 @@ const tabs = {
     'Clicking on tab should show proper contents for that tab.',
   ],
   gif: gif,
-  link: 'https://youtu.be/vweARwTPmg4',
+  link: 'https://youtu.be/kjsPAe5boEU',
   demo: asString,
   template: template,
   type: 'react',
