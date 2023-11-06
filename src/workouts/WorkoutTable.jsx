@@ -12,6 +12,7 @@ import Rating from '../components/Rating'
 import PhotoSizeSelectActualIcon from '@mui/icons-material/PhotoSizeSelectActual'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 
 export default function DenseTable() {
   const navigate = useNavigate()
@@ -98,11 +99,29 @@ export default function DenseTable() {
                         }
                         placement='right'
                       >
-                        <PhotoSizeSelectActualIcon
+                        <Box
                           sx={{
-                            color: 'grey.700',
+                            display: 'flex',
+                            gap: '2px',
+                            alignItems: 'center',
                           }}
-                        />
+                        >
+                          {/* <InfoOutlinedIcon
+                            fontSize='small'
+                            sx={{
+                              color: 'grey.700',
+                              fontSize: '1rem',
+                            }}
+                          /> */}
+                          <Typography
+                            sx={{
+                              cursor: 'pointer',
+                              color: 'grey.700',
+                            }}
+                          >
+                            GIF
+                          </Typography>
+                        </Box>
                       </Tooltip>
                     </TableCell>
                     <TableCell align='center'>
@@ -121,7 +140,7 @@ export default function DenseTable() {
                           rel='noreferrer'
                         >
                           <YouTubeIcon
-                            sx={{ color: 'grey.700' }}
+                            sx={{ color: 'darkred' }}
                             fontSize='large'
                           />
                         </a>

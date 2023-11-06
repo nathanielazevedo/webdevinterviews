@@ -97,6 +97,8 @@ export default function MiniDrawer() {
   const navigate = useNavigate()
   const location = useLocation()
 
+  const firstPath = location.pathname.split('/')[1]
+
   const handleDrawer2Open = () => {
     setDrawer2Open(true)
   }
@@ -150,18 +152,18 @@ export default function MiniDrawer() {
       title: 'React',
       path: '/workouts/react',
     },
-    {
-      title: 'React Testing',
-      path: '/workouts/react-testing',
-    },
-    {
-      title: 'Redux',
-      path: '/workouts/redux',
-    },
-    {
-      title: 'React Router',
-      path: '/workouts/redux',
-    },
+    // {
+    //   title: 'React Testing',
+    //   path: '/workouts/react-testing',
+    // },
+    // {
+    //   title: 'Redux',
+    //   path: '/workouts/redux',
+    // },
+    // {
+    //   title: 'React Router',
+    //   path: '/workouts/redux',
+    // },
   ]
 
   return (
@@ -223,12 +225,19 @@ export default function MiniDrawer() {
                       minWidth: 0,
                       mr: open ? 3 : 'auto',
                       justifyContent: 'center',
-                      color: 'grey.400',
+                      color:
+                        '/' + firstPath === link.path ? 'white' : 'grey.600',
                     }}
                   >
                     {link.icon}
                   </ListItemIcon>
-                  <Typography sx={{ fontSize: '10px', color: 'grey.500' }}>
+                  <Typography
+                    sx={{
+                      fontSize: '10px',
+                      color:
+                        '/' + firstPath === link.path ? 'white' : 'grey.600',
+                    }}
+                  >
                     {link.name}
                   </Typography>
                 </ListItemButton>
