@@ -4,7 +4,16 @@ import ageApi from './react/age-api/ageApi'
 import ticTacToe from './react/tic-tac-toe/ticTacToe'
 import swapOdds from './react/swap-odds/swapOdds'
 import tabs from './react/tabs/tabs'
+import switches from './react/switch/switch'
 
-const problems = [checkedTree, transferList, ageApi, ticTacToe, swapOdds, tabs]
+const problems = [
+  checkedTree,
+  transferList,
+  ageApi,
+  ticTacToe,
+  swapOdds,
+  tabs,
+  switches,
+]
 
 export default problems
