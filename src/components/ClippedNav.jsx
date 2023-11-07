@@ -188,7 +188,7 @@ export default function MiniDrawer() {
               // color: 'grey.500',
             }}
           >
-            REACT PRO
+            WEB DEV INTERVIEWS
           </Typography>
         </Toolbar>
       </Box>
