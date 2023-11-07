@@ -36,7 +36,7 @@ const Footer = () => {
         fontSize={10}
         sx={{ color: '#C5C5C5', paddingBottom: '3px' }}
       >
-        REACT PRO
+        WEB DEV INTERVIEWS
       </Typography>
     </Box>
   )

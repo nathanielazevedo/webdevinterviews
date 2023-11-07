@@ -80,7 +80,7 @@ export default function BasicMenu({ codemirrorInstance }) {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <Typography variant='subtitle' color='grey.200' textTransform='none'>
+        <Typography variant='subtitle' textTransform='none'>
           FILE
         </Typography>
       </Button>
