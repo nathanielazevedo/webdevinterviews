@@ -9,18 +9,18 @@ import YouTubeIcon from '@mui/icons-material/YouTube'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import Rating from '../components/Rating'
-import PhotoSizeSelectActualIcon from '@mui/icons-material/PhotoSizeSelectActual'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 
 export default function DenseTable() {
   const navigate = useNavigate()
   const location = useLocation()
   const filter = location.pathname.split('/').pop()
-  console.log(filter)
   const filteredRows =
     filter == 'workouts' ? rows : rows.filter((row) => row.type === filter)
+
+  const rowsOrderedById = filteredRows.sort((a, b) => a.id - b.id)
+
   return (
     <Box
       sx={{
@@ -39,10 +39,17 @@ export default function DenseTable() {
           width: '100%',
         }}
       >
-        <Typography variant='h5' mb={'15px'}>
-          Workouts
+        <Typography
+          mb={'25px'}
+          sx={{
+            color: 'var(--lightBlue)',
+            letterSpacing: '2px',
+            borderBottom: 'solid 1px var(--lightBlue)',
+          }}
+        >
+          WORKOUTS
         </Typography>
-        {filteredRows.length === 0 ? (
+        {rowsOrderedById.length === 0 ? (
           <Typography color='grey.500'>
             Sorry, No {filter} questions yet.
           </Typography>
@@ -54,7 +61,7 @@ export default function DenseTable() {
               sx={{ width: '100%' }}
             >
               <TableBody>
-                {filteredRows.map((row, index) => (
+                {rowsOrderedById.map((row, index) => (
                   <TableRow
                     key={row.name}
                     sx={{
@@ -66,10 +73,31 @@ export default function DenseTable() {
                       width: '100%',
                     }}
                   >
-                    <TableCell align='center'>
-                      <Typography variant='subtitle'>{row.id}.</Typography>
-                    </TableCell>
-                    <TableCell align='left' sx={{ cursor: 'pointer' }}>
+                    {/* <TableCell align='center'>
+                      <Typography
+                        variant='subtitle'
+                        sx={{
+                          fontWeight: 'bold',
+                          color: '#19e4ff',
+                        }}
+                      >
+                        {row.id}.
+                      </Typography>
+                    </TableCell> */}
+                    <TableCell
+                      align='left'
+                      sx={{ cursor: 'pointer', paddingLeft: '75px' }}
+                    >
+                      <Typography
+                        variant='subtitle'
+                        sx={{
+                          fontWeight: 'bold',
+                          color: 'grey.600',
+                          paddingRight: '10px',
+                        }}
+                      >
+                        {row.id}.
+                      </Typography>
                       <Typography
                         variant='subtitle'
                         sx={{
@@ -97,7 +125,7 @@ export default function DenseTable() {
                             )}
                           </>
                         }
-                        placement='right'
+                        placement='left'
                       >
                         <Box
                           sx={{
@@ -106,13 +134,6 @@ export default function DenseTable() {
                             alignItems: 'center',
                           }}
                         >
-                          {/* <InfoOutlinedIcon
-                            fontSize='small'
-                            sx={{
-                              color: 'grey.700',
-                              fontSize: '1rem',
-                            }}
-                          /> */}
                           <Typography
                             sx={{
                               cursor: 'pointer',

@@ -12,6 +12,7 @@ import FoundationIcon from '@mui/icons-material/Foundation'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import { useLocation } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import LogoText from './LogoText'
 
 const drawerWidth = 170
 const drawer2Width = 150
@@ -176,21 +177,17 @@ export default function MiniDrawer() {
       }}
     >
       {/* TopNav ----------------------------*/}
-      <Box variant='outlined'>
-        <Toolbar variant='dense' sx={{ borderBottom: '0.5px solid #454950' }}>
-          <Typography
-            variant='subtitle'
-            noWrap
-            component='div'
-            sx={{
-              letterSpacing: '0.4em',
-              fontWeight: 'bold',
-              // color: 'grey.500',
-            }}
-          >
-            WEB DEV INTERVIEWS
-          </Typography>
-        </Toolbar>
+
+      <Box
+        sx={{
+          borderBottom: '0.5px solid #454950',
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+          display: 'flex',
+          padding: '10px 20px',
+        }}
+      >
+        <LogoText />
       </Box>
 
       {/* Body ----------------------------*/}
@@ -226,7 +223,9 @@ export default function MiniDrawer() {
                       mr: open ? 3 : 'auto',
                       justifyContent: 'center',
                       color:
-                        '/' + firstPath === link.path ? 'white' : 'grey.600',
+                        '/' + firstPath === link.path
+                          ? 'var(--lightBlue)'
+                          : 'grey.600',
                     }}
                   >
                     {link.icon}
@@ -235,7 +234,9 @@ export default function MiniDrawer() {
                     sx={{
                       fontSize: '10px',
                       color:
-                        '/' + firstPath === link.path ? 'white' : 'grey.600',
+                        '/' + firstPath === link.path
+                          ? 'var(--lightBlue)'
+                          : 'grey.600',
                     }}
                   >
                     {link.name}

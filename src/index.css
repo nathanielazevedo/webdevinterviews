@@ -11,12 +11,13 @@
   --pink: rgb(255, 99, 132);
   --orange: rgb(243, 164, 78);
   --red: rgb(194, 24, 7);
+  --lightBlue: #19e4ff;
 }
 
 * {
   --sp-layout-height: 94vh;
   --sp-colors-disabled: grey;
-  /* --sp-colors-surface1: #1a1a1a; */
+  --sp-colors-surface1: #1a1a1a;
 }
 
 .sp-test-header-button[data-active='true'] {

@@ -81,7 +81,7 @@ export default function BasicMenu({ codemirrorInstance }) {
         onClick={handleClick}
       >
         <Typography variant='subtitle' color='grey.200' textTransform='none'>
-          File
+          FILE
         </Typography>
       </Button>
       <Menu
