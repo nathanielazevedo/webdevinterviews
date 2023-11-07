@@ -8,10 +8,10 @@ const switches = {
   difficulty: 1,
   checkList: [
     'Ball should move back and forth.',
-    'Clicking on tab should show proper contents for that tab.',
+    'Status of switch should be in state.',
   ],
   gif: gif,
-  link: 'https://youtu.be/kjsPAe5boEU',
+  link: 'https://youtu.be/NRFOgIOxRrg',
   demo: asString,
   template: {},
   type: 'react',
