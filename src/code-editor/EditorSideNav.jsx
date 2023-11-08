@@ -6,7 +6,7 @@ const EditorSideNav = ({ filePanelRef }) => {
   const closeFilePanel = () => {
     if (filePanelRef.current) {
       if (filePanelRef.current.getSize() === 0) {
-        filePanelRef.current.resize(10)
+        filePanelRef.current.resize(12)
         return
       }
       filePanelRef.current.resize(0)

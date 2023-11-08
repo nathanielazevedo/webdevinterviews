@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography'
 import Rating from '../components/Rating'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
+import reactLogo from '../assets/react.svg'
 
 export default function DenseTable() {
   const navigate = useNavigate()
@@ -84,10 +85,22 @@ export default function DenseTable() {
                         {row.id}.
                       </Typography>
                     </TableCell> */}
-                    <TableCell
-                      align='left'
-                      sx={{ cursor: 'pointer', paddingLeft: '75px' }}
-                    >
+                    <TableCell align='center'>
+                      <Typography
+                        variant='subtitle'
+                        sx={{
+                          ':hover': {
+                            textDecoration: 'underline',
+                            color: 'info.light',
+                            cursor: 'pointer !important',
+                          },
+                        }}
+                        onClick={() => navigate(`/workouts/react/${row.name}`)}
+                      >
+                        <img src={reactLogo} alt='react logo' width='20px' />
+                      </Typography>
+                    </TableCell>
+                    <TableCell align='left' sx={{ cursor: 'pointer' }}>
                       <Typography
                         variant='subtitle'
                         sx={{
@@ -112,7 +125,7 @@ export default function DenseTable() {
                         {row.title}
                       </Typography>
                     </TableCell>
-                    <TableCell align='left'>
+                    <TableCell align='right'>
                       <Tooltip
                         title={
                           <>

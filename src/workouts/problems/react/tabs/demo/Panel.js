@@ -1,11 +1,8 @@
 /* eslint-disable react/prop-types */
+// Panel.js
 
-const Panel = ({ children, currTab, index }) => {
-  return (
-    <div hidden={currTab !== index}>
-      {currTab === index && <div>{children}</div>}
-    </div>
-  )
+const Panel = ({ panel, tab, index }) => {
+  return <div hidden={tab === index ? false : true}>{panel}</div>
 }
 
 export default Panel

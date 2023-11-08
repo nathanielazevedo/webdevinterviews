@@ -107,6 +107,7 @@ export default function MiniDrawer() {
   const handleDrawer2Close = () => {
     setDrawer2Open(false)
   }
+  console.log(location.pathname.split('/')[1])
 
   const links = [
     {
@@ -123,7 +124,7 @@ export default function MiniDrawer() {
       icon: <FitnessCenterIcon />,
       path: '/workouts',
       onClick:
-        location.pathname === '/workouts'
+        location.pathname.split('/')[1] === 'workouts'
           ? () => setDrawer2Open(!drawer2Open)
           : () => {
               navigate('/workouts')

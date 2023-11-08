@@ -1,42 +1,35 @@
+const tabs = ['TAB 1', 'TAB 2', 'TAB 3']
+const panels = ['Panel 1', 'Panel 2', 'Panel 3']
 import { useState } from 'react'
+import Tab from './Tab'
 import Panel from './Panel'
 
 export default function App() {
   const [currTab, setCurrTab] = useState(0)
 
-  return (
-    <div className='container'>
-      <div className='tabs-container'>
-        {['TAB 1', 'TAB 2', 'TAB 3'].map((tab, index) => (
-          <div
-            key={tab}
-            className='tab'
-            onClick={() => setCurrTab(index)}
-            style={{
-              borderBottom:
-                index == currTab ? 'blue 2px solid' : 'black 1px solid',
-            }}
-          >
-            <b
-              style={{
-                color: index == currTab ? 'blue' : 'black',
-              }}
-            >
-              {tab}
-            </b>
-          </div>
-        ))}
-      </div>
+  const handleTabChange = (tab) => {
+    setCurrTab(tab)
+  }
 
-      <Panel currTab={currTab} index={0}>
-        Panel One
-      </Panel>
-      <Panel currTab={currTab} index={1}>
-        Panel Two
-      </Panel>
-      <Panel currTab={currTab} index={2}>
-        Panel Three
-      </Panel>
+  return (
+    <div>
+      <div className='tabs-container'>
+        {tabs.map((tab, index) => {
+          return (
+            <Tab
+              key={index}
+              tab={tab}
+              onClick={() => handleTabChange(index)}
+              active={currTab === index}
+            />
+          )
+        })}
+      </div>
+      <div style={{ paddingTop: '15px' }}>
+        {panels.map((panel, index) => {
+          return <Panel key={index} tab={currTab} index={index} panel={panel} />
+        })}
+      </div>
     </div>
   )
 }
