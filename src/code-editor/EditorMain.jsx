@@ -10,6 +10,7 @@ import ResizeHandle from '../components/ResizeHandle'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import { SandpackFileExplorer } from 'sandpack-file-explorer'
 import EditorSideNav from './EditorSideNav'
+import Instructions from './Instructions'
 import {
   SandpackLayout,
   SandpackProvider,
@@ -45,6 +46,7 @@ const EditorMain = ({ files }) => {
               maxHeight: 'calc(100vh - 60px)',
               display: 'flex',
               flexDirection: 'row',
+              position: 'relative',
             }}
           >
             <EditorSideNav filePanelRef={filePanelRef} />
@@ -52,7 +54,11 @@ const EditorMain = ({ files }) => {
               direction='horizontal'
               autoSaveId='editor-prefs'
               disablePointerEventsDuringResize
+              style={{
+                position: 'relative',
+              }}
             >
+              <Instructions />
               <Panel
                 minSize={0}
                 defaultSize={15}

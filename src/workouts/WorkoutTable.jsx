@@ -1,192 +1,177 @@
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableRow from '@mui/material/TableRow'
-import Box from '@mui/material/Box'
 import rows from './problems'
-import YouTubeIcon from '@mui/icons-material/YouTube'
-import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Table from '@mui/material/Table'
 import Rating from '../components/Rating'
+import Tooltip from '@mui/material/Tooltip'
+import reactLogo from '../assets/react.svg'
+import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
-import reactLogo from '../assets/react.svg'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import Typography from '@mui/material/Typography'
+import YouTubeIcon from '@mui/icons-material/YouTube'
+import TableContainer from '@mui/material/TableContainer'
 
-export default function DenseTable() {
+const orderById = (rows) => {
+  const rowsOrderedById = rows.sort((a, b) => a.id - b.id)
+  return rowsOrderedById
+}
+
+const filterRows = (filter) => {
+  const filteredRows = rows.filter((row) => row.type === filter)
+  const filteredAndOrderedRows = orderById(filteredRows)
+  return filteredAndOrderedRows
+}
+
+const WorkoutTable = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const filter = location.pathname.split('/').pop()
-  const filteredRows =
-    filter == 'workouts' ? rows : rows.filter((row) => row.type === filter)
-
-  const rowsOrderedById = filteredRows.sort((a, b) => a.id - b.id)
+  const tableRows = filter == 'workouts' ? orderById(rows) : filterRows(filter)
 
   return (
     <Box
       sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        padding: ' 20px 40px',
         width: '100%',
+        display: 'flex',
+        padding: ' 30px 50px',
+        justifyContent: 'center',
       }}
     >
       <Box
         sx={{
+          width: '100%',
           display: 'flex',
-          justifyContent: 'flex-start',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          width: '100%',
+          justifyContent: 'flex-start',
         }}
       >
-        <Typography
-          mb={'25px'}
-          sx={{
-            color: 'var(--lightBlue)',
-            letterSpacing: '2px',
-            borderBottom: 'solid 1px var(--lightBlue)',
-          }}
-        >
+        <Typography mb='25px' color='primary'>
           WORKOUTS
         </Typography>
-        {rowsOrderedById.length === 0 ? (
-          <Typography color='grey.500'>
-            Sorry, No {filter} questions yet.
-          </Typography>
-        ) : (
-          <TableContainer sx={{ width: '100%' }}>
-            <Table
-              size='medium'
-              aria-label='a dense table'
-              sx={{ width: '100%' }}
-            >
-              <TableBody>
-                {rowsOrderedById.map((row, index) => (
-                  <TableRow
-                    key={row.name}
-                    sx={{
-                      td: { border: 0 },
-                      background: index % 2 === 0 ? '#1a1a1a' : '#121212',
-                      borderRadius: '20px',
-                      // border: 'solid 0.5px var(--color-solid-resize-bar)',
-                      height: '70px',
-                      width: '100%',
-                    }}
-                  >
-                    {/* <TableCell align='center'>
-                      <Typography
-                        variant='subtitle'
+        <TableContainer sx={{ width: '100%' }}>
+          <Table
+            size='medium'
+            sx={{ width: '100%' }}
+            aria-label='a dense table'
+          >
+            <TableBody>
+              {tableRows.map((row, index) => (
+                <TableRow
+                  key={row.name}
+                  sx={{
+                    width: '100%',
+                    height: '70px',
+                    td: { border: 0 },
+                    borderRadius: '20px',
+                    background: index % 2 === 0 ? '#1a1a1a' : '#121212',
+                  }}
+                >
+                  <TableCell align='center'>
+                    <Typography
+                      variant='subtitle'
+                      sx={{
+                        ':hover': {
+                          textDecoration: 'underline',
+                          color: 'info.light',
+                          cursor: 'pointer !important',
+                        },
+                      }}
+                      onClick={() => navigate(`/workouts/react/${row.name}`)}
+                    >
+                      <img src={reactLogo} alt='react logo' width='20px' />
+                    </Typography>
+                  </TableCell>
+                  <TableCell align='left' sx={{ cursor: 'pointer' }}>
+                    <Typography
+                      variant='subtitle'
+                      sx={{
+                        fontWeight: 'bold',
+                        color: 'grey.600',
+                        paddingRight: '10px',
+                      }}
+                    >
+                      {row.id}.
+                    </Typography>
+                    <Typography
+                      variant='subtitle'
+                      sx={{
+                        ':hover': {
+                          textDecoration: 'underline',
+                          color: 'info.light',
+                          cursor: 'pointer !important',
+                        },
+                      }}
+                      onClick={() => navigate(`/workouts/react/${row.name}`)}
+                    >
+                      {row.title}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align='right'>
+                    <Tooltip
+                      title={
+                        <>
+                          {row.gif && (
+                            <img
+                              src={row.gif}
+                              alt={row.name}
+                              style={{ maxWidth: '200px' }}
+                            />
+                          )}
+                        </>
+                      }
+                      placement='left'
+                    >
+                      <Box
                         sx={{
-                          fontWeight: 'bold',
-                          color: '#19e4ff',
+                          gap: '2px',
+                          display: 'flex',
+                          alignItems: 'center',
                         }}
                       >
-                        {row.id}.
-                      </Typography>
-                    </TableCell> */}
-                    <TableCell align='center'>
-                      <Typography
-                        variant='subtitle'
-                        sx={{
-                          ':hover': {
-                            textDecoration: 'underline',
-                            color: 'info.light',
-                            cursor: 'pointer !important',
-                          },
-                        }}
-                        onClick={() => navigate(`/workouts/react/${row.name}`)}
-                      >
-                        <img src={reactLogo} alt='react logo' width='20px' />
-                      </Typography>
-                    </TableCell>
-                    <TableCell align='left' sx={{ cursor: 'pointer' }}>
-                      <Typography
-                        variant='subtitle'
-                        sx={{
-                          fontWeight: 'bold',
-                          color: 'grey.600',
-                          paddingRight: '10px',
-                        }}
-                      >
-                        {row.id}.
-                      </Typography>
-                      <Typography
-                        variant='subtitle'
-                        sx={{
-                          ':hover': {
-                            textDecoration: 'underline',
-                            color: 'info.light',
-                            cursor: 'pointer !important',
-                          },
-                        }}
-                        onClick={() => navigate(`/workouts/react/${row.name}`)}
-                      >
-                        {row.title}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align='right'>
-                      <Tooltip
-                        title={
-                          <>
-                            {row.gif && (
-                              <img
-                                src={row.gif}
-                                alt={row.name}
-                                style={{ maxWidth: '200px' }}
-                              />
-                            )}
-                          </>
-                        }
-                        placement='left'
-                      >
-                        <Box
+                        <Typography
                           sx={{
-                            display: 'flex',
-                            gap: '2px',
-                            alignItems: 'center',
+                            cursor: 'pointer',
+                            color: 'grey.700',
                           }}
                         >
-                          <Typography
-                            sx={{
-                              cursor: 'pointer',
-                              color: 'grey.700',
-                            }}
-                          >
-                            GIF
-                          </Typography>
-                        </Box>
-                      </Tooltip>
-                    </TableCell>
-                    <TableCell align='center'>
-                      <Rating rating={row.difficulty} />
-                    </TableCell>
-                    <TableCell align='center' sx={{}}>
-                      <Tooltip title='Watch the video' placement='bottom'>
-                        <a
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}
-                          href={row.link}
-                          target='_blank'
-                          rel='noreferrer'
-                        >
-                          <YouTubeIcon
-                            sx={{ color: 'darkred' }}
-                            fontSize='large'
-                          />
-                        </a>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )}
+                          GIF
+                        </Typography>
+                      </Box>
+                    </Tooltip>
+                  </TableCell>
+                  <TableCell align='center'>
+                    <Rating rating={row.difficulty} />
+                  </TableCell>
+                  <TableCell align='center' sx={{}}>
+                    <Tooltip title='Watch the video' placement='bottom'>
+                      <a
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                        href={row.link}
+                        target='_blank'
+                        rel='noreferrer'
+                      >
+                        <YouTubeIcon
+                          sx={{ color: 'darkred' }}
+                          fontSize='large'
+                        />
+                      </a>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
     </Box>
   )
 }
+
+export default WorkoutTable

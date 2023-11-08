@@ -2,7 +2,6 @@
 import rows from './problems'
 import { Box } from '@mui/material'
 import { createContext } from 'react'
-import Instructions from './Instructions'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import EditorMain from '../code-editor/EditorMain'
@@ -46,7 +45,6 @@ const Workout = () => {
         {workoutState.showDemo ? (
           <ReadOnlyEditor files={challenge.demo} />
         ) : null}
-        <Instructions />
       </WorkoutContext.Provider>
     </Box>
   )

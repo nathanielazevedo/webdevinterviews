@@ -36,7 +36,7 @@ export const theme = {
     string: colors.orange,
   },
   font: {
-    size: '15px',
+    size: '13px',
     lineHeight: '17px',
     mono: 'Fira Code, monospace',
   },

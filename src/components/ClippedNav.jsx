@@ -1,42 +1,21 @@
 import * as React from 'react'
-import { styled } from '@mui/material/styles'
+import LogoText from './LogoText'
 import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
 import List from '@mui/material/List'
-import Typography from '@mui/material/Typography'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
 import { Outlet } from 'react-router-dom'
-import FoundationIcon from '@mui/icons-material/Foundation'
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
+import ListItem from '@mui/material/ListItem'
+import { styled } from '@mui/material/styles'
 import { useLocation } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import LogoText from './LogoText'
+import Typography from '@mui/material/Typography'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemButton from '@mui/material/ListItemButton'
+import FoundationIcon from '@mui/icons-material/Foundation'
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 
 const drawerWidth = 170
 const drawer2Width = 150
 
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: 'hidden',
-})
-
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-})
 const openedMixin2 = (theme) => ({
   width: drawer2Width,
   transition: theme.transitions.create('width', {
@@ -58,23 +37,6 @@ const closedMixin2 = (theme) => ({
   },
 })
 
-const Drawer = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: 'nowrap',
-  boxSizing: 'border-box',
-  ...(open && {
-    ...openedMixin(theme),
-    '& .MuiDrawer-paper': openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    '& .MuiDrawer-paper': closedMixin(theme),
-  }),
-}))
-
 const Drawer2 = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
@@ -93,21 +55,11 @@ const Drawer2 = styled(Box, {
 }))
 
 export default function MiniDrawer() {
-  const [open, setOpen] = React.useState(false)
   const [drawer2Open, setDrawer2Open] = React.useState(false)
   const navigate = useNavigate()
   const location = useLocation()
 
   const firstPath = location.pathname.split('/')[1]
-
-  const handleDrawer2Open = () => {
-    setDrawer2Open(true)
-  }
-
-  const handleDrawer2Close = () => {
-    setDrawer2Open(false)
-  }
-  console.log(location.pathname.split('/')[1])
 
   const links = [
     {
@@ -138,34 +90,10 @@ export default function MiniDrawer() {
       title: 'All',
       path: '/workouts',
     },
-    // {
-    //   title: 'CSS',
-    //   path: '/workouts/css',
-    // },
-    // {
-    //   title: 'HTML',
-    //   path: '/workouts/html',
-    // },
-    // {
-    //   title: 'JavaScript',
-    //   path: '/workouts/javascript',
-    // },
     {
       title: 'React',
       path: '/workouts/react',
     },
-    // {
-    //   title: 'React Testing',
-    //   path: '/workouts/react-testing',
-    // },
-    // {
-    //   title: 'Redux',
-    //   path: '/workouts/redux',
-    // },
-    // {
-    //   title: 'React Router',
-    //   path: '/workouts/redux',
-    // },
   ]
 
   return (
@@ -183,12 +111,15 @@ export default function MiniDrawer() {
         sx={{
           borderBottom: '0.5px solid #454950',
           justifyContent: 'flex-start',
-          alignItems: 'flex-start',
+          alignItems: 'center',
           display: 'flex',
-          padding: '10px 20px',
+          padding: '0px 20px',
+          minHeight: '35px',
         }}
       >
-        <LogoText />
+        <Box>
+          <LogoText />
+        </Box>
       </Box>
 
       {/* Body ----------------------------*/}
@@ -201,7 +132,7 @@ export default function MiniDrawer() {
         }}
       >
         {/* SideNav ----------------------------*/}
-        <Drawer open={open} sx={{ borderRight: '0.5px solid #454950' }}>
+        <Box sx={{ width: '65px', borderRight: '0.5px solid #454950' }}>
           <List>
             {links.map((link) => (
               <ListItem
@@ -221,7 +152,6 @@ export default function MiniDrawer() {
                   <ListItemIcon
                     sx={{
                       minWidth: 0,
-                      mr: open ? 3 : 'auto',
                       justifyContent: 'center',
                       color:
                         '/' + firstPath === link.path
@@ -233,7 +163,7 @@ export default function MiniDrawer() {
                   </ListItemIcon>
                   <Typography
                     sx={{
-                      fontSize: '10px',
+                      fontSize: '9px',
                       color:
                         '/' + firstPath === link.path
                           ? 'var(--lightBlue)'
@@ -245,34 +175,8 @@ export default function MiniDrawer() {
                 </ListItemButton>
               </ListItem>
             ))}
-            <Box sx={{ flex: 1 }}></Box>
-            {/* <ListItem disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  onClick={open ? handleDrawerClose : handleDrawerOpen}
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                    color: 'grey.400',
-                  }}
-                >
-                  {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                </ListItemIcon>
-                <ListItemText
-                  primary={'Collapse'}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem> */}
           </List>
-        </Drawer>
+        </Box>
         <Drawer2 open={drawer2Open} sx={{ borderRight: '0.5px solid #454950' }}>
           <List>
             {filters.map((filter) => (

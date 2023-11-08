@@ -2,7 +2,8 @@
 import Timer from './Timer'
 import ToolbarMenu from './ToolbarMenu'
 import ToolbarIcons from './ToolbarIcons'
-
+import LogoText from '../components/LogoText'
+import Box from '@mui/material/Box'
 const Toolbar = ({ codemirrorInstance }) => {
   return (
     <div
@@ -12,7 +13,7 @@ const Toolbar = ({ codemirrorInstance }) => {
         display: 'flex',
         padding: '0 10px',
         alignItems: 'center',
-        backgroundColor: '#171717',
+        backgroundColor: '#121212',
         borderBottom: '0.5px solid var(--color-solid-resize-bar)',
       }}
     >
@@ -23,7 +24,17 @@ const Toolbar = ({ codemirrorInstance }) => {
           justifyContent: 'center',
         }}
       >
-        <ToolbarMenu codemirrorInstance={codemirrorInstance} />
+        <Box
+          sx={{
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            display: 'flex',
+            margin: '0px 10px',
+          }}
+        >
+          <LogoText />
+        </Box>
+        {/* <ToolbarMenu codemirrorInstance={codemirrorInstance} /> */}
 
         <div className='bar-divider' />
 

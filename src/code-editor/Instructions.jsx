@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useContext } from 'react'
-import { WorkoutContext } from './Workout'
+import { WorkoutContext } from '../workouts/Workout'
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, Button, Checkbox, Typography } from '@mui/material'
 import YouTubeIcon from '@mui/icons-material/YouTube'
@@ -14,26 +14,26 @@ const Description = () => {
     <Box
       id='instructions'
       sx={{
-        top: '35px',
+        top: '0',
         gap: '1rem',
-        width: '500px',
+        width: '100%',
         zIndex: 100,
-        display: 'flex',
+        display: showInstructions ? 'flex' : 'none',
         padding: '1rem',
         position: 'absolute',
         flexDirection: 'column',
-        backgroundColor: '#1a1a1a',
-        height: 'calc(100% - 60px)',
+        backgroundColor: '#121212',
+        height: '100%',
         borderTopRightRadius: '10px',
         borderBottomRightRadius: '10px',
-        left: showInstructions ? 50 : '-15%',
+        left: showInstructions ? '0' : '0px',
         borderRight: 'var(--color-solid-resize-bar) 0.5px solid',
         transition: 'transform 0.3s ease-in-out, left 0.3s ease-in-out',
         transform: showInstructions ? 'translateX(0)' : 'translateX(-100%)',
         boxShadow: showInstructions ? '5px 0px 5px rgba(0, 0, 0, 0.5)' : 'none',
       }}
     >
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+      {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button
           onClick={() =>
             setWorkoutState((prev) => ({ ...prev, showInstructions: false }))
@@ -41,7 +41,7 @@ const Description = () => {
         >
           <CloseIcon />
         </Button>
-      </Box>
+      </Box> */}
       <Box
         sx={{
           display: 'flex',

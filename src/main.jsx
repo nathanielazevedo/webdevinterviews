@@ -1,15 +1,15 @@
 import './index.css'
+import Home from './pages/Home'
 import ReactDOM from 'react-dom/client'
 import Workout from './workouts/Workout'
 import { SnackbarProvider } from 'notistack'
 import WorkoutTable from './workouts/WorkoutTable'
+import ClippedDrawer from './components/ClippedNav'
 import CssBaseline from '@mui/material/CssBaseline'
 import { Analytics } from '@vercel/analytics/react'
 import SecretPlayground from './components/SecretPlayground'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import ClippedDrawer from './components/ClippedNav'
-import Home from './pages/Home'
 
 const darkTheme = createTheme({
   palette: {
@@ -31,22 +31,22 @@ const router = createBrowserRouter([
       {
         path: '/home',
         element: <Home />,
-        errorElement: <div>404</div>,
+        errorElement: <div>Sorry, I have a bug.</div>,
       },
       {
         path: '',
         element: <Home />,
-        errorElement: <div>404</div>,
+        errorElement: <div>Sorry, I have a bug.</div>,
       },
       {
         path: '/workouts?/:filter',
         element: <WorkoutTable />,
-        errorElement: <div>404</div>,
+        errorElement: <div>Sorry, I have a bug.</div>,
       },
       {
         path: '*',
         element: <WorkoutTable />,
-        errorElement: <div>404</div>,
+        errorElement: <div>Sorry, I have a bug.</div>,
       },
     ],
   },
@@ -64,7 +64,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
-    <Analytics />
+    {/* <Analytics /> */}
     <SnackbarProvider maxSnack={3}>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />

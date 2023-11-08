@@ -5,7 +5,7 @@ const Footer = () => {
     <Box
       style={{
         height: '25px',
-        backgroundColor: '#171717',
+        backgroundColor: '#121212',
         borderTop: '0.5px solid var(--color-solid-resize-bar)',
         display: 'flex',
         alignItems: 'center',

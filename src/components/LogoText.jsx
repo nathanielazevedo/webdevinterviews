@@ -9,6 +9,7 @@ const LogoText = () => {
         alignItems: 'center',
         justifyContent: 'center',
         gap: '0px',
+        fontSize: '14px',
       }}
     >
       <Typography variant='' noWrap component='div' color='grey.200'>
@@ -24,11 +25,21 @@ const LogoText = () => {
           backgroundColor: '#19e4ff',
           fontWeight: 'bold',
           fontSize: '12px',
+          maxHeight: '17px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         DEV
       </span>
-      <Typography variant='' noWrap component='div' color='grey.200'>
+      <Typography
+        variant=''
+        noWrap
+        component='div'
+        color='grey.200'
+        fontSize={'14px'}
+      >
         INTERVIEWS
       </Typography>
     </Box>

@@ -44,25 +44,29 @@ const ToolbarIcons = ({ codemirrorInstance }) => {
   }
 
   useEffect(() => {
-    if (prettierCode) {
-      const cmInstance = codemirrorInstance.current.getCodemirror()
+    try {
+      if (prettierCode) {
+        const cmInstance = codemirrorInstance.current.getCodemirror()
 
-      if (cmInstance) {
-        const trans = cmInstance.state.update({
-          selection: cmInstance.state.selection,
-          changes: {
-            from: 0,
-            to: cmInstance.state.doc.length,
-            insert: prettierCode,
-          },
-        })
+        if (cmInstance) {
+          const trans = cmInstance.state.update({
+            selection: cmInstance.state.selection,
+            changes: {
+              from: 0,
+              to: cmInstance.state.doc.length,
+              insert: prettierCode,
+            },
+          })
 
-        cmInstance.update([trans])
+          cmInstance.update([trans])
+        }
+
+        sandpack.updateFile(sandpack.activeFile, prettierCode)
+
+        setPrettierCode(null)
       }
-
-      sandpack.updateFile(sandpack.activeFile, prettierCode)
-
-      setPrettierCode(null)
+    } catch {
+      console.error('Prettier failed to format the code')
     }
   }, [prettierCode])
 
