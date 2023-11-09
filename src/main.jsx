@@ -1,11 +1,11 @@
 import './index.css'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import Home from './pages/Home'
+import Home from './pages/root/Home'
 import ReactDOM from 'react-dom/client'
-import Workout from './workouts/Workout'
+import EditorEntrance from './pages/EditorEntrance'
 import { SnackbarProvider } from 'notistack'
-import WorkoutTable from './pages/WorkoutTable'
-import Frame from './components/frame/Frame'
+import WorkoutTable from './pages/root/WorkoutTable'
+import Root from './pages/root/Root'
 // import { Analytics } from '@vercel/analytics/react'
 import SecretPlayground from './pages/SecretPlayground'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -26,13 +26,8 @@ const darkTheme = createTheme({
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Frame />,
+    element: <Root />,
     children: [
-      {
-        path: '/home',
-        element: <Home />,
-        errorElement: <div>Sorry, I have a bug.</div>,
-      },
       {
         path: '',
         element: <Home />,
@@ -45,14 +40,14 @@ const router = createBrowserRouter([
       },
       {
         path: '*',
-        element: <WorkoutTable />,
+        element: <Home />,
         errorElement: <div>Sorry, I have a bug.</div>,
       },
     ],
   },
   {
     path: 'workouts/:filter/:name',
-    element: <Workout />,
+    element: <EditorEntrance />,
     errorElement: <div>404</div>,
   },
   {

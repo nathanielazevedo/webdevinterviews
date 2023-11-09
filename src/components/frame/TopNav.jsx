@@ -1,21 +1,21 @@
+/* eslint-disable react/prop-types */
 import Box from '@mui/material/Box'
 import LogoText from '../LogoText'
 
-const TopNav = () => {
+const TopNav = ({ actions }) => {
   return (
     <Box
       sx={{
-        borderBottom: '0.5px solid #454950',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
         display: 'flex',
-        padding: '0px 20px',
         minHeight: '35px',
+        padding: '0px 20px',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        borderBottom: '0.5px solid #454950',
       }}
     >
-      <Box>
-        <LogoText />
-      </Box>
+      <LogoText />
+      {actions && actions}
     </Box>
   )
 }

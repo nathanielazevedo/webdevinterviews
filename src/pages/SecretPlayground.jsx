@@ -1,5 +1,5 @@
 // import CheckboxTree from '../workouts/problems/react/checkedTree/demo/App'
-import SwapOdds from '../workouts/problems/react/swap-odds/demo/App'
+import SwapOdds from '../workouts/react/swap-odds/solution/App'
 
 const SecretPlayground = () => {
   return (
