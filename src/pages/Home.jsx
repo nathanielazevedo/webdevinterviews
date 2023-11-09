@@ -1,23 +1,17 @@
-import { List, Typography, ListItem } from '@mui/material'
 import Box from '@mui/material/Box'
 import Logo from '../assets/logo.png'
+import { List, Typography, ListItem } from '@mui/material'
 
 const Home = () => {
   return (
-    <Box
-      sx={{
-        padding: '50px',
-        width: '100%',
-      }}
-    >
+    <Box sx={{ padding: '50px', width: '100%' }}>
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          // border: 'solid white 1px',
-          height: '80vh',
-          alignItems: 'center',
           width: '100%',
+          height: '80vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-evenly',
         }}
       >
         <img src={Logo} alt='logo' width={'500px'} />

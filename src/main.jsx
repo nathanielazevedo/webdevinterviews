@@ -1,15 +1,15 @@
 import './index.css'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Home from './pages/Home'
 import ReactDOM from 'react-dom/client'
 import Workout from './workouts/Workout'
 import { SnackbarProvider } from 'notistack'
-import WorkoutTable from './workouts/WorkoutTable'
-import ClippedDrawer from './components/ClippedNav'
-import CssBaseline from '@mui/material/CssBaseline'
-import { Analytics } from '@vercel/analytics/react'
-import SecretPlayground from './components/SecretPlayground'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
+import WorkoutTable from './pages/WorkoutTable'
+import Frame from './components/frame/Frame'
+// import { Analytics } from '@vercel/analytics/react'
+import SecretPlayground from './pages/SecretPlayground'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import CssBaseline from '@mui/material/CssBaseline'
 
 const darkTheme = createTheme({
   palette: {
@@ -26,7 +26,7 @@ const darkTheme = createTheme({
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <ClippedDrawer />,
+    element: <Frame />,
     children: [
       {
         path: '/home',

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Box } from '@mui/material'
+import Box from '@mui/material/Box'
 import FileCopyIcon from '@mui/icons-material/FileCopy'
 import Typography from '@mui/material/Typography'
 import List from '@mui/material/List'

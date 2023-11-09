@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { ToolbarIcon } from '../code-editor/ToolbarIcons'
+import { ToolbarIcon } from '../editor/ToolbarIcons'
 import { useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
 import Typography from '@mui/material/Typography'

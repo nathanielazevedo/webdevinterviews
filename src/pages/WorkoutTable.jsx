@@ -1,9 +1,9 @@
-import rows from './problems'
+import rows from '../workouts/problems'
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
 import Rating from '../components/Rating'
 import Tooltip from '@mui/material/Tooltip'
-import reactLogo from '../assets/react.svg'
+// import reactLogo from '../assets/react.svg'
 import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
@@ -35,7 +35,7 @@ const WorkoutTable = () => {
       sx={{
         width: '100%',
         display: 'flex',
-        padding: ' 30px 50px',
+        padding: '30px 30px',
         justifyContent: 'center',
       }}
     >
@@ -63,34 +63,37 @@ const WorkoutTable = () => {
                   key={row.name}
                   sx={{
                     width: '100%',
-                    height: '70px',
+                    height: '60px',
                     td: { border: 0 },
-                    borderRadius: '20px',
-                    background: index % 2 === 0 ? '#1a1a1a' : '#121212',
+                    background: index % 2 === 0 ? '#171717' : '#121212',
                   }}
                 >
-                  <TableCell align='center'>
+                  {/* <TableCell align='center'>
                     <Typography
                       variant='subtitle'
                       sx={{
                         ':hover': {
-                          textDecoration: 'underline',
                           color: 'info.light',
+                          textDecoration: 'underline',
                           cursor: 'pointer !important',
                         },
                       }}
                       onClick={() => navigate(`/workouts/react/${row.name}`)}
                     >
-                      <img src={reactLogo} alt='react logo' width='20px' />
+                      <img src={reactLogo} alt='react logo' width='15px' />
                     </Typography>
-                  </TableCell>
-                  <TableCell align='left' sx={{ cursor: 'pointer' }}>
+                  </TableCell> */}
+                  <TableCell
+                    align='left'
+                    sx={{ cursor: 'pointer', width: '300px' }}
+                  >
                     <Typography
                       variant='subtitle'
                       sx={{
                         fontWeight: 'bold',
                         color: 'grey.600',
                         paddingRight: '10px',
+                        marginLeft: '40px',
                       }}
                     >
                       {row.id}.
@@ -109,7 +112,7 @@ const WorkoutTable = () => {
                       {row.title}
                     </Typography>
                   </TableCell>
-                  <TableCell align='right'>
+                  <TableCell align='right' sx={{ width: '150px' }}>
                     <Tooltip
                       title={
                         <>
@@ -142,10 +145,10 @@ const WorkoutTable = () => {
                       </Box>
                     </Tooltip>
                   </TableCell>
-                  <TableCell align='center'>
+                  <TableCell align='center' sx={{ width: '150px' }}>
                     <Rating rating={row.difficulty} />
                   </TableCell>
-                  <TableCell align='center' sx={{}}>
+                  <TableCell align='center' sx={{ width: '150px' }}>
                     <Tooltip title='Watch the video' placement='bottom'>
                       <a
                         style={{

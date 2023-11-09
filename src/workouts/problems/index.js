@@ -5,7 +5,6 @@ import ticTacToe from './react/tic-tac-toe/ticTacToe'
 import swapOdds from './react/swap-odds/swapOdds'
 import tabs from './react/tabs/tabs'
 import switches from './react/switch/switch'
-import pieChart from './react/pie-chart/pieChart'
 
 const problems = [
   checkedTree,
@@ -15,7 +14,6 @@ const problems = [
   swapOdds,
   tabs,
   switches,
-  pieChart,
 ]
 
 export default problems

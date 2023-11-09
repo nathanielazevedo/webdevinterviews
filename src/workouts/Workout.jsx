@@ -4,8 +4,8 @@ import { Box } from '@mui/material'
 import { createContext } from 'react'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import EditorMain from '../code-editor/EditorMain'
-import { getLocalStorage } from '../code-editor/utils'
+import EditorMain from '../editor/EditorMain'
+import { getLocalStorage } from '../editor/utils'
 import ReadOnlyEditor from '../read-only-editor/ReadOnlyEditor'
 
 export const WorkoutContext = createContext({})

@@ -8,23 +8,21 @@ const LogoText = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: '0px',
-        fontSize: '14px',
+        height: '30px',
+        maxHeight: '30px',
       }}
     >
-      <Typography variant='' noWrap component='div' color='grey.200'>
+      <Typography component='div' color='grey.300' fontSize={'14px'}>
         WEB
       </Typography>
       <span
         style={{
           color: 'black',
-          border: 'solid #19e4ff 1px',
-          borderRadius: '5px',
-          padding: '0 3px',
+          padding: '0 2px',
           margin: '0 5px',
           backgroundColor: '#19e4ff',
           fontWeight: 'bold',
-          fontSize: '12px',
+          fontSize: '11px',
           maxHeight: '17px',
           display: 'flex',
           alignItems: 'center',
@@ -33,13 +31,7 @@ const LogoText = () => {
       >
         DEV
       </span>
-      <Typography
-        variant=''
-        noWrap
-        component='div'
-        color='grey.200'
-        fontSize={'14px'}
-      >
+      <Typography component='div' color='grey.300' fontSize={'14px'}>
         INTERVIEWS
       </Typography>
     </Box>
