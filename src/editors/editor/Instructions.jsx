@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useContext } from 'react'
-import { WorkoutContext } from '../../pages/EditorEntrance'
-import { Box, Checkbox, Typography } from '@mui/material'
-import YouTubeIcon from '@mui/icons-material/YouTube'
 import Tooltip from '@mui/material/Tooltip'
+import YouTubeIcon from '@mui/icons-material/YouTube'
+import { Box, Checkbox, Typography } from '@mui/material'
+import { WorkoutContext } from '../../pages/EditorEntrance'
 
 const Description = () => {
-  const [workoutState, setWorkoutState] = useContext(WorkoutContext)
+  const [workoutState] = useContext(WorkoutContext)
   const { showInstructions } = workoutState
 
   return (
@@ -32,15 +32,6 @@ const Description = () => {
         boxShadow: showInstructions ? '5px 0px 5px rgba(0, 0, 0, 0.5)' : 'none',
       }}
     >
-      {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button
-          onClick={() =>
-            setWorkoutState((prev) => ({ ...prev, showInstructions: false }))
-          }
-        >
-          <CloseIcon />
-        </Button>
-      </Box> */}
       <Box
         sx={{
           display: 'flex',
@@ -68,7 +59,7 @@ const Description = () => {
           alt={workoutState.challenge.name}
           style={{
             maxWidth: '500px',
-            border: '15px solid black',
+            // border: '15px solid black',
             borderRadius: '10px',
           }}
         />

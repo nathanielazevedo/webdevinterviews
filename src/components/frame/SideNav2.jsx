@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 import ListItemButton from '@mui/material/ListItemButton'
 
 const drawerWidth = 170
-const drawer2Width = 150
+const drawer2Width = 130
 
 const filters = [
   {

@@ -16,7 +16,7 @@ export default function MiniDrawer() {
     {
       name: 'HOME',
       icon: <FoundationIcon />,
-      path: '/home',
+      path: '/',
       onClick: () => {
         setDrawer2Open(false)
         navigate('/')
