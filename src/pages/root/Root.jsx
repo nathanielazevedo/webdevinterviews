@@ -25,7 +25,7 @@ export default function MiniDrawer() {
     {
       name: 'WORKOUT',
       icon: <FitnessCenterIcon />,
-      path: '/workouts',
+      path: 'workouts',
       onClick:
         location.pathname.split('/')[1] === 'workouts'
           ? () => setDrawer2Open(!drawer2Open)

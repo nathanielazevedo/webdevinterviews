@@ -12,6 +12,8 @@
   --orange: rgb(243, 164, 78);
   --red: rgb(194, 24, 7);
   --lightBlue: #19e4ff;
+  --divider: rgba(255, 255, 255, 0.2);
+  --side-bar-1-width: 65px;
 }
 
 * {
@@ -71,4 +73,12 @@
 
 .odd:hover {
   background-color: #121212 !important;
+}
+
+.active {
+  color: var(--lightBlue);
+}
+
+.not-active {
+  color: grey;
 }

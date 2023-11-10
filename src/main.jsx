@@ -10,6 +10,7 @@ import Root from './pages/root/Root'
 import SecretPlayground from './pages/SecretPlayground'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import CssBaseline from '@mui/material/CssBaseline'
+import Error from './pages/Error'
 
 const darkTheme = createTheme({
   palette: {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
       {
         path: '',
         element: <Home />,
-        errorElement: <div>Sorry, I have a bug.</div>,
+        errorElement: <Error />,
       },
       {
         path: '/workouts?/:filter',
