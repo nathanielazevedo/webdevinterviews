@@ -1,22 +1,18 @@
-import TopNav from '../../components/frame/TopNav'
-import Footer from '../../components/frame/Footer'
-import SideNav from '../../components/frame/SideNav'
-// import SideNav2 from '../../components/frame/SideNav2'
 import Box from '@mui/material/Box'
-import { Outlet, useParams } from 'react-router-dom'
-import { useState } from 'react'
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
-import FoundationIcon from '@mui/icons-material/Foundation'
-import { useNavigate } from 'react-router-dom'
-import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined'
-import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useLocation } from 'react-router-dom'
+import Footer from '../components/frame/Footer'
+import TopNav from '../components/frame/TopNav'
+import CodeIcon from '@mui/icons-material/Code'
+import SideNav from '../components/frame/SideNav'
+import { Outlet, useParams } from 'react-router-dom'
+import FoundationIcon from '@mui/icons-material/Foundation'
+import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 
 export default function MiniDrawer() {
   const location = useLocation()
   const params = useParams()
-  console.log(params)
 
   const tabs = [
     {
@@ -25,7 +21,7 @@ export default function MiniDrawer() {
       path: '/',
     },
     {
-      name: 'WORKOUT',
+      name: 'WORKOUTS',
       icon: <FitnessCenterIcon />,
       path: 'workouts',
     },
@@ -35,17 +31,17 @@ export default function MiniDrawer() {
     {
       name: 'DETAILS',
       icon: <InfoOutlinedIcon />,
-      path: `/workouts/react/${params.workoutName}/details`,
+      path: `/workouts/${params.workoutName}/details`,
     },
     {
-      name: 'FILES',
-      icon: <FileCopyOutlinedIcon />,
-      path: `/workouts/react/${params.workoutName}/files`,
+      name: 'EDITOR',
+      icon: <CodeIcon />,
+      path: `/workouts/${params.workoutName}/editor`,
     },
     {
       name: 'SOLUTION',
       icon: <QuizOutlinedIcon />,
-      path: `/workouts/react/${params.workoutName}/solution`,
+      path: `/workouts/${params.workoutName}/solution`,
     },
   ]
 

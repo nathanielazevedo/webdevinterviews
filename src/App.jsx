@@ -1,17 +1,14 @@
 import './index.css'
-import Home from './pages/root/Home'
-// import EditorEntrance from './pages/EditorEntrance'
-import WorkoutTable from './pages/root/WorkoutTable'
-import Root from './pages/root/Root'
-import SecretPlayground from './pages/SecretPlayground'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Error from './pages/Error'
-import { createContext, useState } from 'react'
-import Editor from './editors/editor/EditorMain'
 import rows from './workouts'
-import Instructions from './editors/editor/Instructions'
-
-// const TestRoute = () => <div style={{ color: 'white' }}>test</div>
+import Error from './pages/Error'
+import Home from './pages/Home'
+import Root from './pages/Root'
+import Editor from './pages/workouts/workout/Editor'
+import SecretPlayground from './pages/SecretPlayground'
+import Solution from './pages/workouts/workout/Solution'
+import WorkoutTable from './pages/workouts/WorkoutTable'
+import Instructions from './pages/workouts/workout/Details'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 const router = createBrowserRouter([
   {
@@ -34,17 +31,16 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path: '/workouts/:filter/:workoutName/details',
+        path: '/workouts/:workoutName/details',
         element: <Instructions />,
         errorElement: <Error />,
         loader: ({ params }) => {
-          console.log(params)
           const workout = rows.find((row) => row.name === params.workoutName)
           return workout
         },
       },
       {
-        path: '/workouts/:filter/:workoutName/files',
+        path: '/workouts/:workoutName/editor',
         element: <Editor />,
         errorElement: <Error />,
         loader: ({ params }) => {
@@ -55,8 +51,8 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: '/workouts/:filter/:workoutName/solution',
-        element: <Editor />,
+        path: '/workouts/:workoutName/solution',
+        element: <Solution />,
         errorElement: <Error />,
         loader: ({ params }) => {
           const workout = rows.find((row) => row.name === params.workoutName)
@@ -77,20 +73,8 @@ const router = createBrowserRouter([
   },
 ])
 
-export const WorkoutContext = createContext({})
-
 const App = () => {
-  const [workoutState, setWorkoutState] = useState({
-    showTests: false,
-    activeFile: '/App.js',
-    visibleFiles: ['/App.js'],
-  })
-
-  return (
-    <WorkoutContext.Provider value={[workoutState, setWorkoutState]}>
-      <RouterProvider router={router} />
-    </WorkoutContext.Provider>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App

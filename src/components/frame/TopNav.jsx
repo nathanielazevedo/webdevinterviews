@@ -1,8 +1,12 @@
 /* eslint-disable react/prop-types */
 import Box from '@mui/material/Box'
 import LogoText from '../LogoText'
+import { useLocation } from 'react-router-dom'
+import { Typography } from '@mui/material'
 
-const TopNav = ({ actions }) => {
+const TopNav = () => {
+  const location = useLocation()
+  console.log(location)
   return (
     <Box
       sx={{
@@ -15,7 +19,9 @@ const TopNav = ({ actions }) => {
       }}
     >
       <LogoText />
-      {actions && actions}
+      <Typography variant='caption' color='grey.500' ml={'10px'}>
+        {location.pathname}
+      </Typography>
     </Box>
   )
 }

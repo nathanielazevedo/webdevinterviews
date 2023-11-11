@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box'
-import Logo from '../../assets/logo.png'
+import Logo from '../assets/logo.png'
 import { List, Typography, ListItem } from '@mui/material'
 
 const Home = () => {

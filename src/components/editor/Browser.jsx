@@ -1,18 +1,20 @@
+/* eslint-disable react/prop-types */
 import { Console } from 'console-feed'
+import { useRef } from 'react'
 import ResizeHandle from '../../components/ResizeHandle'
 import { Panel, PanelGroup } from 'react-resizable-panels'
-import { SandpackPreview, SandpackTests } from '@codesandbox/sandpack-react'
-import { Typography, Box, Tooltip, Button } from '@mui/material'
-import { useSandpackConsole } from '@codesandbox/sandpack-react'
-import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { WorkoutContext } from '../../App'
-import { useContext, useRef } from 'react'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import { Typography, Box, Tooltip, Button } from '@mui/material'
+import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt'
+import {
+  SandpackPreview,
+  SandpackTests,
+  useSandpackConsole,
+} from '@codesandbox/sandpack-react'
 
-const Preview = () => {
+const Browser = ({ showTests }) => {
   const { logs, reset } = useSandpackConsole({})
-  const [workoutState] = useContext(WorkoutContext)
   const consolePanelRef = useRef()
 
   const closeFilePanel = () => {
@@ -33,7 +35,7 @@ const Preview = () => {
         disablePointerEventsDuringResize
       >
         <Panel minSize={0}>
-          {workoutState.showTests ? (
+          {showTests ? (
             <SandpackTests />
           ) : (
             <SandpackPreview
@@ -111,4 +113,4 @@ const Preview = () => {
   )
 }
 
-export default Preview
+export default Browser

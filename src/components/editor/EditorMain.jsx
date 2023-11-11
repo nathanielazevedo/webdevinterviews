@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
-import Preview from './Preview'
+import Browser from './Browser'
 import { theme } from './theme'
 import AutoSave from './AutoSave'
 import SpeedDial from './SpeedDial'
-import { useRef, useContext } from 'react'
-import { WorkoutContext } from '../../App'
+import Box from '@mui/material/Box'
+import { useRef, useState } from 'react'
+import GifIcon from '@mui/icons-material/Gif'
 import { useLoaderData } from 'react-router-dom'
 import ResizeHandle from '../../components/ResizeHandle'
 import { Panel, PanelGroup } from 'react-resizable-panels'
@@ -15,12 +16,13 @@ import {
   SandpackThemeProvider,
   SandpackProvider,
 } from '@codesandbox/sandpack-react'
+import { Tooltip } from '@mui/material'
 
 const EditorMain = () => {
   const filePanelRef = useRef()
   const codemirrorInstance = useRef()
-  const [workoutState] = useContext(WorkoutContext)
   const { files, mode, workout } = useLoaderData()
+  const [showTests, setShowTests] = useState(false)
 
   return (
     <>
@@ -30,8 +32,8 @@ const EditorMain = () => {
         customSetup={{ dependencies: { 'jest-extended': '^3.0.2' } }}
         options={{
           autoReload: true,
-          activeFile: workoutState.activeFile,
-          visibleFiles: workoutState.visibleFiles,
+          activeFile: '/App.js',
+          visibleFiles: ['/App.js'],
         }}
       >
         {mode === 'template' && <AutoSave workout={workout} />}
@@ -76,16 +78,50 @@ const EditorMain = () => {
                     ref={codemirrorInstance}
                     style={{ height: '100%' }}
                   />
+                  <Box>
+                    <Tooltip
+                      title={
+                        <>
+                          {workout.gif && (
+                            <img
+                              src={workout.gif}
+                              alt={workout.name}
+                              style={{ maxWidth: '200px' }}
+                            />
+                          )}
+                        </>
+                      }
+                      placement='bottom-end'
+                    >
+                      <GifIcon
+                        fontSize='large'
+                        sx={{
+                          position: 'absolute',
+                          top: '3px',
+                          right: '0px',
+                          color: 'grey.600',
+                          cursor: 'pointer',
+                          zIndex: '100',
+                          ':hover': {
+                            color: 'primary.main',
+                          },
+                        }}
+                        onClick={() => setShowTests(!showTests)}
+                      />
+                    </Tooltip>
+                  </Box>
                   {mode === 'template' && (
                     <SpeedDial
                       codemirrorInstance={codemirrorInstance}
                       workout={workout}
+                      setShowTests={setShowTests}
+                      showTests={showTests}
                     />
                   )}
                 </Panel>
                 <ResizeHandle />
                 <Panel minSize={0} defaultSize={45} collapsible={true}>
-                  <Preview />
+                  <Browser showTests={showTests} />
                 </Panel>
               </PanelGroup>
             </div>

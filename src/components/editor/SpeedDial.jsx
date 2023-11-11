@@ -1,27 +1,31 @@
 /* eslint-disable react/prop-types */
+import * as prettier from 'prettier'
+import { useState, useEffect } from 'react'
+import parserBabel from 'prettier/parser-babel'
+import { useSandpack } from '@codesandbox/sandpack-react'
+import { useActiveCode } from '@codesandbox/sandpack-react'
+//mui
 import Box from '@mui/material/Box'
 import SpeedDial from '@mui/material/SpeedDial'
 import SpeedDialIcon from '@mui/material/SpeedDialIcon'
 import SpeedDialAction from '@mui/material/SpeedDialAction'
-import { useState, useEffect } from 'react'
-import { useSandpack } from '@codesandbox/sandpack-react'
-import { useActiveCode } from '@codesandbox/sandpack-react'
-import * as prettier from 'prettier'
-import parserBabel from 'prettier/parser-babel'
+//icons
+import Alert from '../../components/Alert'
+import BoltIcon from '@mui/icons-material/Bolt'
+import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun'
-import Alert from '../../components/Alert'
-import RestartAltIcon from '@mui/icons-material/RestartAlt'
-import { WorkoutContext } from '../../App'
-import { useContext } from 'react'
-import BoltIcon from '@mui/icons-material/Bolt'
 
-export default function BasicSpeedDial({ codemirrorInstance, workout }) {
+export default function BasicSpeedDial({
+  codemirrorInstance,
+  workout,
+  setShowTests,
+  showTests,
+}) {
   const [prettierCode, setPrettierCode] = useState('')
   const [showWarning, setShowWarning] = useState(false)
   const { sandpack } = useSandpack()
   const activeCode = useActiveCode()
-  const [workoutState, setWorkoutState] = useContext(WorkoutContext)
 
   const runPrettier = () => {
     if (activeCode.code) {
@@ -71,14 +75,9 @@ export default function BasicSpeedDial({ codemirrorInstance, workout }) {
     },
     {
       icon: <BoltIcon />,
-      name: workoutState.showTests ? 'Close Tests' : 'Run Tests',
+      name: showTests ? 'Close Tests' : 'Run Tests',
       onClick: () => {
-        setWorkoutState((prev) => {
-          return {
-            ...prev,
-            showTests: !prev.showTests,
-          }
-        })
+        setShowTests((prev) => !prev)
         sandpack.runSandpack()
       },
     },

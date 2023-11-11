@@ -3,7 +3,6 @@ import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
 import Rating from '../../components/Rating'
 import Tooltip from '@mui/material/Tooltip'
-// import reactLogo from '../assets/react.svg'
 import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
@@ -68,21 +67,6 @@ const WorkoutTable = () => {
                     background: index % 2 === 0 ? '#171717' : '#121212',
                   }}
                 >
-                  {/* <TableCell align='center'>
-                    <Typography
-                      variant='subtitle'
-                      sx={{
-                        ':hover': {
-                          color: 'info.light',
-                          textDecoration: 'underline',
-                          cursor: 'pointer !important',
-                        },
-                      }}
-                      onClick={() => navigate(`/workouts/react/${row.name}`)}
-                    >
-                      <img src={reactLogo} alt='react logo' width='15px' />
-                    </Typography>
-                  </TableCell> */}
                   <TableCell
                     align='left'
                     sx={{ cursor: 'pointer', width: '300px' }}
@@ -107,9 +91,7 @@ const WorkoutTable = () => {
                           cursor: 'pointer !important',
                         },
                       }}
-                      onClick={() =>
-                        navigate(`/workouts/react/${row.name}/details`)
-                      }
+                      onClick={() => navigate(`/workouts/${row.name}/details`)}
                     >
                       {row.title}
                     </Typography>
@@ -138,8 +120,13 @@ const WorkoutTable = () => {
                       >
                         <Typography
                           sx={{
-                            cursor: 'pointer',
+                            cursor: 'default',
+                            fontWeight: 'bold',
+                            fontSize: '14px',
                             color: 'grey.700',
+                            ':hover': {
+                              color: 'primary.main',
+                            },
                           }}
                         >
                           GIF
