@@ -30,12 +30,12 @@ const SideNavIcon = ({ link }) => {
             sx={{
               minWidth: 0,
               justifyContent: 'center',
-              color: 'grey.500',
+              color: 'inherit',
             }}
           >
             {link.icon}
           </ListItemIcon>
-          <Typography sx={{ fontSize: '9px' }}>{link.name}</Typography>
+          <Typography sx={{ fontSize: '8px' }}>{link.name}</Typography>
         </ListItemButton>
       </ListItem>
     </NavLink>

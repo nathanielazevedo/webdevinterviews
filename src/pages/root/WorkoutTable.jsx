@@ -107,7 +107,9 @@ const WorkoutTable = () => {
                           cursor: 'pointer !important',
                         },
                       }}
-                      onClick={() => navigate(`/workouts/react/${row.name}`)}
+                      onClick={() =>
+                        navigate(`/workouts/react/${row.name}/details`)
+                      }
                     >
                       {row.title}
                     </Typography>

@@ -7,8 +7,8 @@ import BoltIcon from '@mui/icons-material/Bolt'
 import { useNavigate } from 'react-router-dom'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import { useSandpack } from '@codesandbox/sandpack-react'
-import { WorkoutContext } from '../../pages/EditorEntrance'
-import SideNav1 from '../../components/frame/SideNav1'
+import { WorkoutContext } from '../../App'
+// import SideNav1 from '../../components/frame/SideNav1'
 
 const EditorSideNav = ({ filePanelRef }) => {
   const [workoutState, setWorkoutState] = useContext(WorkoutContext)
@@ -48,7 +48,6 @@ const EditorSideNav = ({ filePanelRef }) => {
           visibleFiles: sandpack.visibleFiles,
           showInstructions: !prev.showInstructions,
         }))
-        setActiveTab('DETAILS')
       },
     },
     {
@@ -56,7 +55,6 @@ const EditorSideNav = ({ filePanelRef }) => {
       icon: <FileCopyIcon />,
       onClick: () => {
         closeFilePanel()
-        setActiveTab('FILES')
         closeDetailsPanel()
       },
     },
@@ -97,7 +95,7 @@ const EditorSideNav = ({ filePanelRef }) => {
         borderRight: '1px solid var(--color-solid-resize-bar-handle)',
       }}
     >
-      <SideNav1 links={links} />
+      {/* <SideNav1 links={links} /> */}
     </Box>
   )
 }

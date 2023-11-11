@@ -6,7 +6,7 @@ import { Typography, Box, Tooltip, Button } from '@mui/material'
 import { useSandpackConsole } from '@codesandbox/sandpack-react'
 import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { WorkoutContext } from '../../pages/EditorEntrance'
+import { WorkoutContext } from '../../App'
 import { useContext, useRef } from 'react'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 
@@ -18,7 +18,6 @@ const Preview = () => {
   const closeFilePanel = () => {
     if (consolePanelRef.current) {
       if (consolePanelRef.current.getSize() === 3.3) {
-        console.log(consolePanelRef.current.getSize())
         consolePanelRef.current.resize(50)
         return
       }
@@ -49,10 +48,8 @@ const Preview = () => {
           <div
             style={{
               height: '100%',
-              // paddingBottom: '5rem',
-              backgroundColor: '#242424',
+              backgroundColor: '#121212',
               position: 'relative',
-              // display: 'flex',
             }}
           >
             <Box
@@ -67,8 +64,6 @@ const Preview = () => {
                 zIndex: 1,
                 width: '100%',
                 borderBottom: '0.5px solid var(--color-solid-resize-bar)',
-                // border: 'solid white 1px',
-                backgroundColor: '#242424',
               }}
             >
               <Box

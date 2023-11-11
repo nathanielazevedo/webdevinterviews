@@ -20,15 +20,16 @@
   --sp-layout-height: 94vh;
   --sp-colors-disabled: grey;
   --sp-colors-surface1: #121212;
+  --sp-colors-accent: #19e4ff;
 }
 
 .sp-test-header-button[data-active='true'] {
   color: var(--color-solid-resize-bar) !important;
 }
 
-.file-bg > div > div {
+/* .file-bg > div > div {
   background-color: transparent !important;
-}
+} */
 
 .ResizeHandleOuter {
   flex: 0 0 0.5em;

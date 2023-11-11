@@ -1,13 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useContext } from 'react'
 import Tooltip from '@mui/material/Tooltip'
+import { useLoaderData } from 'react-router-dom'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import { Box, Checkbox, Typography } from '@mui/material'
-import { WorkoutContext } from '../../pages/EditorEntrance'
 
 const Description = () => {
-  const [workoutState] = useContext(WorkoutContext)
-  const { showInstructions } = workoutState
+  const workout = useLoaderData()
 
   return (
     <Box
@@ -16,20 +14,11 @@ const Description = () => {
         top: '0',
         gap: '1rem',
         width: '100%',
-        zIndex: 100,
-        display: showInstructions ? 'flex' : 'none',
+        display: 'flex',
         padding: '1rem',
-        position: 'absolute',
         flexDirection: 'column',
         backgroundColor: '#121212',
         height: '100%',
-        borderTopRightRadius: '10px',
-        borderBottomRightRadius: '10px',
-        left: '0',
-        borderRight: 'var(--color-solid-resize-bar) 0.5px solid',
-        transition: 'transform 0.3s ease-in-out, left 0.3s ease-in-out',
-        transform: showInstructions ? 'translateX(0)' : 'translateX(-100%)',
-        boxShadow: showInstructions ? '5px 0px 5px rgba(0, 0, 0, 0.5)' : 'none',
       }}
     >
       <Box
@@ -40,12 +29,12 @@ const Description = () => {
         }}
       >
         <Typography variant='h4' fontWeight='bold'>
-          {workoutState.challenge.title}
+          {workout.title}
         </Typography>
         <Tooltip title='Watch the video' placement='bottom'>
           <a
             style={{ display: 'flex' }}
-            href={workoutState.challenge.link}
+            href={workout.link}
             target='_blank'
             rel='noreferrer'
           >
@@ -53,10 +42,10 @@ const Description = () => {
           </a>
         </Tooltip>
       </Box>
-      {workoutState.challenge.gif && (
+      {workout.gif && (
         <img
-          src={workoutState.challenge.gif}
-          alt={workoutState.challenge.name}
+          src={workout.gif}
+          alt={workout.name}
           style={{
             maxWidth: '500px',
             // border: '15px solid black',
@@ -68,7 +57,7 @@ const Description = () => {
         <Typography variant='h6' color='primary' fontWeight='bold'>
           Checklist
         </Typography>
-        {workoutState.challenge.checkList.map((item, index) => (
+        {workout.checkList.map((item, index) => (
           <Box
             key={index}
             sx={{
