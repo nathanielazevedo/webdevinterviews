@@ -11,6 +11,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import DetailsIcon from '@mui/icons-material/Details'
+import SportsMartialArtsOutlinedIcon from '@mui/icons-material/SportsMartialArtsOutlined'
 
 export default function MiniDrawer() {
   const location = useLocation()
@@ -24,7 +25,7 @@ export default function MiniDrawer() {
     },
     {
       name: 'WORKOUTS',
-      icon: <FitnessCenterIcon />,
+      icon: <SportsMartialArtsOutlinedIcon />,
       path: 'workouts',
     },
   ]

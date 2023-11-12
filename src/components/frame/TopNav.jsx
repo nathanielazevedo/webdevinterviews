@@ -49,7 +49,7 @@ const TopNav = ({ variant }) => {
       sx={{
         display: 'flex',
         height: variant === 'hidden' ? '0' : '35px',
-        minHeight: variant === 'hidden' ? '0' : '35px',
+        // minHeight: variant === 'hidden' ? '0' : '35px',
         padding: '0px 20px',
         alignItems: 'center',
         justifyContent: 'flex-start',

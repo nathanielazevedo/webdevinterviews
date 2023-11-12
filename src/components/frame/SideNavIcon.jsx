@@ -34,9 +34,10 @@ const SideNavIcon = ({ link, isCollapsed, isHidden }) => {
           onClick={link.onClick}
           sx={{
             px: 2.5,
-            minHeight: isCollapsed ? 40 : 48,
+            height: isCollapsed ? 40 : 48,
             flexDirection: 'column',
             justifyContent: 'center',
+            transition: 'height 0.5s ease-in-out',
           }}
         >
           <ListItemIcon
