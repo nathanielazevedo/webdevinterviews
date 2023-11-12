@@ -8,6 +8,7 @@ import SecretPlayground from './pages/SecretPlayground'
 import Solution from './pages/workouts/workout/Solution'
 import WorkoutTable from './pages/workouts/WorkoutTable'
 import Instructions from './pages/workouts/workout/Details'
+import EditorRoot from './pages/workouts/workout/Root'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {
-        path: '',
+        index: true,
         element: <Home />,
         errorElement: <Error />,
       },
@@ -31,48 +32,61 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path: '/workouts/:workoutName/details',
-        element: <Instructions />,
+        path: '/workouts/:workoutName',
+        element: <EditorRoot />,
         errorElement: <Error />,
-        loader: ({ params }) => {
-          const workout = rows.find((row) => row.name === params.workoutName)
-          //update local storage for this workouts active tab
-          const local = JSON.parse(localStorage.getItem(workout.name))
-          if (local) {
-            local.activeTab = 'details'
-            localStorage.setItem(workout.name, JSON.stringify(local))
-          }
-          return workout
-        },
-      },
-      {
-        path: '/workouts/:workoutName/editor',
-        element: <Editor />,
-        errorElement: <Error />,
-        loader: ({ params }) => {
-          const workout = rows.find((row) => row.name === params.workoutName)
-          const local = JSON.parse(localStorage.getItem(workout.name))
-          if (local) {
-            local.activeTab = 'editor'
-            localStorage.setItem(workout.name, JSON.stringify(local))
-          }
-          const files = local ? local.files : workout.template
-          return { workout, files, mode: 'template', local }
-        },
-      },
-      {
-        path: '/workouts/:workoutName/solution',
-        element: <Solution />,
-        errorElement: <Error />,
-        loader: ({ params }) => {
-          const workout = rows.find((row) => row.name === params.workoutName)
-          const local = JSON.parse(localStorage.getItem(workout.name))
-          if (local) {
-            local.activeTab = 'solution'
-            localStorage.setItem(workout.name, JSON.stringify(local))
-          }
-          return { workout, files: workout.demo, mode: 'demo' }
-        },
+        children: [
+          {
+            path: '/workouts/:workoutName/details',
+            element: <Instructions />,
+            errorElement: <Error />,
+            loader: ({ params }) => {
+              const workout = rows.find(
+                (row) => row.name === params.workoutName
+              )
+              //update local storage for this workouts active tab
+              const local = JSON.parse(localStorage.getItem(workout.name))
+              if (local) {
+                local.activeTab = 'details'
+                localStorage.setItem(workout.name, JSON.stringify(local))
+              }
+              return workout
+            },
+          },
+          {
+            path: '/workouts/:workoutName/editor',
+            element: <Editor />,
+            errorElement: <Error />,
+            loader: ({ params }) => {
+              const workout = rows.find(
+                (row) => row.name === params.workoutName
+              )
+              const local = JSON.parse(localStorage.getItem(workout.name))
+              if (local) {
+                local.activeTab = 'editor'
+                localStorage.setItem(workout.name, JSON.stringify(local))
+              }
+              const files = local ? local.files : workout.template
+              return { workout, files, mode: 'template', local }
+            },
+          },
+          {
+            path: '/workouts/:workoutName/solution',
+            element: <Solution />,
+            errorElement: <Error />,
+            loader: ({ params }) => {
+              const workout = rows.find(
+                (row) => row.name === params.workoutName
+              )
+              const local = JSON.parse(localStorage.getItem(workout.name))
+              if (local) {
+                local.activeTab = 'solution'
+                localStorage.setItem(workout.name, JSON.stringify(local))
+              }
+              return { workout, files: workout.demo, mode: 'demo' }
+            },
+          },
+        ],
       },
       {
         path: '/secretplayground',

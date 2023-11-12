@@ -1,49 +1,27 @@
 import Box from '@mui/material/Box'
+import { Outlet } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import Footer from '../components/frame/Footer'
 import TopNav from '../components/frame/TopNav'
-import CodeIcon from '@mui/icons-material/Code'
 import SideNav from '../components/frame/SideNav'
-import { Outlet, useParams } from 'react-router-dom'
-import DetailsIcon from '@mui/icons-material/Details'
 import FoundationIcon from '@mui/icons-material/Foundation'
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import SportsMartialArtsOutlinedIcon from '@mui/icons-material/SportsMartialArtsOutlined'
+
+const tabs = [
+  {
+    name: 'HOME',
+    icon: <FoundationIcon />,
+    path: '/',
+  },
+  {
+    name: 'WORKOUTS',
+    icon: <SportsMartialArtsOutlinedIcon />,
+    path: 'workouts',
+  },
+]
 
 export default function MiniDrawer() {
   const location = useLocation()
-  const params = useParams()
-
-  const tabs = [
-    {
-      name: 'HOME',
-      icon: <FoundationIcon />,
-      path: '/',
-    },
-    {
-      name: 'WORKOUTS',
-      icon: <SportsMartialArtsOutlinedIcon />,
-      path: 'workouts',
-    },
-  ]
-
-  const editorTabs = [
-    {
-      name: 'DETAILS',
-      icon: <DetailsIcon />,
-      path: `/workouts/${params.workoutName}/details`,
-    },
-    {
-      name: 'EDITOR',
-      icon: <CodeIcon />,
-      path: `/workouts/${params.workoutName}/editor`,
-    },
-    {
-      name: 'SOLUTION',
-      icon: <VisibilityOutlinedIcon />,
-      path: `/workouts/${params.workoutName}/solution`,
-    },
-  ]
 
   const showSecondNav = () => {
     if (location.pathname === '/' || location.pathname === '/workouts') {
@@ -63,7 +41,7 @@ export default function MiniDrawer() {
         width: '100%',
       }}
     >
-      <TopNav />
+      <TopNav variant={showSecondNav() ? 'collapsed' : 'normal'} />
       <Box
         sx={{
           flexGrow: 1,
@@ -76,28 +54,8 @@ export default function MiniDrawer() {
           links={tabs}
           variant={showSecondNav() ? 'collapsed' : 'normal'}
         />
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%',
-          }}
-        >
-          <TopNav variant={showSecondNav() ? 'editorNav' : 'hidden'} />
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-            }}
-          >
-            <SideNav
-              links={editorTabs}
-              variant={showSecondNav() ? 'normal' : 'hidden'}
-            />
-            <Box flex={1}>
-              <Outlet />
-            </Box>
-          </Box>
+        <Box flex={1}>
+          <Outlet />
         </Box>
       </Box>
       <Footer />

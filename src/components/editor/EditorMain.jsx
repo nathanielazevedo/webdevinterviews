@@ -16,7 +16,7 @@ import {
   SandpackThemeProvider,
   SandpackProvider,
 } from '@codesandbox/sandpack-react'
-import { Tooltip } from '@mui/material'
+import { Tooltip, Typography } from '@mui/material'
 
 const EditorMain = () => {
   const filePanelRef = useRef()
@@ -42,7 +42,6 @@ const EditorMain = () => {
             <div
               style={{
                 width: '100%',
-                // height: '100%',
                 minHeight: 'calc(100vh - 97px)',
                 maxHeight: 'calc(100vh - 97px)',
                 display: 'flex',
@@ -79,37 +78,32 @@ const EditorMain = () => {
                     ref={codemirrorInstance}
                     style={{ height: '100%' }}
                   />
-                  <Box>
-                    <Tooltip
-                      title={
-                        <>
-                          {workout.gif && (
-                            <img
-                              src={workout.gif}
-                              alt={workout.name}
-                              style={{ maxWidth: '200px' }}
-                            />
-                          )}
-                        </>
-                      }
-                      placement='bottom-end'
-                    >
-                      <GifIcon
-                        fontSize='large'
-                        sx={{
-                          position: 'absolute',
-                          top: '3px',
-                          right: '0px',
-                          color: 'grey.600',
-                          cursor: 'pointer',
-                          zIndex: '100',
-                          ':hover': {
-                            color: 'primary.main',
-                          },
-                        }}
-                      />
-                    </Tooltip>
-                  </Box>
+                  {mode === 'template' && (
+                    <Box>
+                      <Tooltip title={<>Changes Saved.</>} placement='left'>
+                        <Box
+                          fontSize='large'
+                          sx={{
+                            position: 'absolute',
+                            top: '13px',
+                            right: '10px',
+                            color: 'grey.600',
+                            boxShadow: '0px 0px 2px 1px grey',
+                            cursor: 'pointer',
+                            backgroundColor: 'var(--green)',
+                            opacity: '0.7',
+                            height: '15px',
+                            width: '15px',
+                            borderRadius: '50%',
+                            zIndex: '100',
+                            ':hover': {
+                              color: 'primary.main',
+                            },
+                          }}
+                        ></Box>
+                      </Tooltip>
+                    </Box>
+                  )}
                   {mode === 'template' && (
                     <SpeedDial
                       codemirrorInstance={codemirrorInstance}

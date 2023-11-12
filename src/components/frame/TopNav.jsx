@@ -1,54 +1,16 @@
 /* eslint-disable react/prop-types */
 import Box from '@mui/material/Box'
-import LogoText from '../LogoText'
-// import { useLocation } from 'react-router-dom'
 import { Typography } from '@mui/material'
-import { useParams } from 'react-router-dom'
-import rows from '../../workouts/index'
-import Rating from '../Rating'
+import { useLocation } from 'react-router-dom'
 
 const TopNav = ({ variant }) => {
-  // const location = useLocation()
-  const params = useParams()
-  const workout = rows.find((row) => row.name === params.workoutName)
-
-  const getContents = () => {
-    switch (variant) {
-      case 'editorNav':
-        return (
-          <Box
-            sx={{
-              display: 'flex',
-              gap: '15px',
-              width: '100%',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Typography variant='caption' color='primary.main'>
-              WORKOUT #{workout.id} - {workout.title}
-            </Typography>
-            <Rating rating={workout.difficulty} />
-          </Box>
-        )
-      case 'hidden':
-        return null
-      default:
-        return (
-          <>
-            <LogoText />
-            {/* <Typography variant='caption' color='grey.500' ml={'10px'}>
-              {location.pathname}
-            </Typography> */}
-          </>
-        )
-    }
-  }
+  const location = useLocation()
 
   return (
     <Box
       sx={{
         display: 'flex',
-        height: variant === 'hidden' ? '0' : '35px',
+        height: variant === 'collapsed' ? '25px' : '35px',
         // minHeight: variant === 'hidden' ? '0' : '35px',
         padding: '0px 20px',
         alignItems: 'center',
@@ -57,7 +19,29 @@ const TopNav = ({ variant }) => {
         transition: 'height 0.3s ease-in-out',
       }}
     >
-      {getContents()}
+      <>
+        <Typography
+          component='div'
+          color='grey.500'
+          fontWeight={'bold'}
+          sx={{
+            fontSize: variant === 'collapsed' ? '10px' : '14px',
+            transition: 'font-size 0.3s ease-in-out',
+          }}
+        >
+          WEB DEV INTERVIEWS
+        </Typography>
+        <Typography
+          color='grey.500'
+          ml={'10px'}
+          sx={{
+            fontSize: variant === 'collapsed' ? '10px' : '14px',
+            transition: 'font-size 0.3s ease-in-out',
+          }}
+        >
+          {location.pathname}
+        </Typography>
+      </>
     </Box>
   )
 }
