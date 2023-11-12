@@ -8,7 +8,7 @@ import { useSandpackConsole } from '@codesandbox/sandpack-react'
 
 const Console = ({ closeFilePanel, consolePanelRef }) => {
   const { logs, reset } = useSandpackConsole({})
-  console.log('console')
+
   return (
     <div
       style={{

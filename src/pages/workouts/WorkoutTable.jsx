@@ -90,7 +90,14 @@ const WorkoutTable = () => {
                           cursor: 'pointer !important',
                         },
                       }}
-                      onClick={() => navigate(`/workouts/${row.name}/details`)}
+                      onClick={() => {
+                        const local = JSON.parse(localStorage.getItem(row.name))
+                        if (local && local.activeTab) {
+                          navigate(`/workouts/${row.name}/${local.activeTab}`)
+                        } else {
+                          navigate(`/workouts/${row.name}/details`)
+                        }
+                      }}
                     >
                       {row.title}
                     </Typography>

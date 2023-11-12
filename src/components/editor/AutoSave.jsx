@@ -1,21 +1,26 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react'
-import { useActiveCode, useSandpack } from '@codesandbox/sandpack-react'
+import { useSandpack } from '@codesandbox/sandpack-react'
 
 const AutoSave = ({ workout }) => {
-  const activeCode = useActiveCode()
   const { sandpack } = useSandpack()
 
   useEffect(() => {
-    if (activeCode.code) {
+    if (sandpack) {
+      const editorState = {
+        files: sandpack.files,
+        activeFile: sandpack.activeFile,
+        visibleFiles: sandpack.visibleFiles,
+        activeTab: 'editor',
+      }
       try {
-        localStorage.setItem(workout.name, JSON.stringify(sandpack.files))
+        localStorage.setItem(workout.name, JSON.stringify(editorState))
       } catch {
         console.log('error saving')
       }
     }
-  }, [activeCode.code])
+  }, [sandpack])
 
   return <></>
 }

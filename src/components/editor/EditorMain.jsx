@@ -21,7 +21,7 @@ import { Tooltip } from '@mui/material'
 const EditorMain = () => {
   const filePanelRef = useRef()
   const codemirrorInstance = useRef()
-  const { files, mode, workout } = useLoaderData()
+  const { files, mode, workout, local } = useLoaderData()
   const [showTests, setShowTests] = useState(false)
 
   return (
@@ -32,8 +32,8 @@ const EditorMain = () => {
         customSetup={{ dependencies: { 'jest-extended': '^3.0.2' } }}
         options={{
           autoReload: true,
-          activeFile: '/App.js',
-          visibleFiles: ['/App.js'],
+          activeFile: local ? local.activeFile : '/App.js',
+          visibleFiles: local ? local.visibleFiles : ['/App.js'],
         }}
       >
         {mode === 'template' && <AutoSave workout={workout} />}

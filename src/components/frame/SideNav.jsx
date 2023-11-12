@@ -20,7 +20,7 @@ const SideNav1 = ({ links, variant }) => {
       sx={{
         width: getWidth(),
         borderRight: '0.5px solid var(--divider)',
-        transition: 'width 0.5s ease-in-out',
+        transition: 'width 0.3s ease-in-out',
       }}
     >
       <List>

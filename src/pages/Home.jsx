@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import Logo from '../assets/logo.png'
-import { List, Typography, ListItem } from '@mui/material'
+// import { List, Typography, ListItem } from '@mui/material'
 
 const Home = () => {
   return (
@@ -15,7 +15,7 @@ const Home = () => {
         }}
       >
         <img src={Logo} alt='logo' width={'500px'} />
-        <Box mt={'0px'}>
+        {/* <Box mt={'0px'}>
           <Typography
             variant='h2'
             fontWeight={'bold'}
@@ -41,7 +41,7 @@ const Home = () => {
               </Typography>
             </ListItem>
           </List>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   )
