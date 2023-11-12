@@ -10,6 +10,8 @@ const Rating = ({ rating }) => {
             variant='caption'
             sx={{ color: 'var(--green)' }}
             fontWeight='bolder'
+            noWrap
+            width='200px'
           >
             JUNIOR
           </Typography>
@@ -20,6 +22,8 @@ const Rating = ({ rating }) => {
             variant='caption'
             sx={{ color: 'var(--orange)' }}
             fontWeight='bolder'
+            width='100px'
+            noWrap
           >
             MID-LEVEL
           </Typography>
@@ -30,6 +34,7 @@ const Rating = ({ rating }) => {
             variant='caption'
             sx={{ color: 'var(--red)' }}
             fontWeight='bolder'
+            width='200px'
           >
             SENIOR
           </Typography>
