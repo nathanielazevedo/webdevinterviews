@@ -6,7 +6,7 @@ const LogoText = () => {
     <Box sx={{}}>
       <Typography
         component='div'
-        color='primary'
+        color='grey.500'
         fontSize={'14px'}
         fontWeight={'bold'}
       >

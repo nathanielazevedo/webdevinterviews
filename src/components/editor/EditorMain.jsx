@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import Browser from './Browser'
+import Browser from './preview/Browser'
 import { theme } from './theme'
 import AutoSave from './AutoSave'
 import SpeedDial from './SpeedDial'
@@ -42,8 +42,9 @@ const EditorMain = () => {
             <div
               style={{
                 width: '100%',
-                minHeight: 'calc(100vh - 62px)',
-                maxHeight: 'calc(100vh - 62px)',
+                // height: '100%',
+                minHeight: 'calc(100vh - 97px)',
+                maxHeight: 'calc(100vh - 97px)',
                 display: 'flex',
                 flexDirection: 'row',
                 position: 'relative',
@@ -106,7 +107,6 @@ const EditorMain = () => {
                             color: 'primary.main',
                           },
                         }}
-                        onClick={() => setShowTests(!showTests)}
                       />
                     </Tooltip>
                   </Box>

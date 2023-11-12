@@ -62,7 +62,6 @@ const WorkoutTable = () => {
                   key={row.name}
                   sx={{
                     width: '100%',
-                    height: '60px',
                     td: { border: 0 },
                     background: index % 2 === 0 ? '#171717' : '#121212',
                   }}

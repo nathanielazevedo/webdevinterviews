@@ -14,7 +14,7 @@ export const theme = {
     surface2: '#181818',
     surface3: '#2F2F2F',
     clickable: '#999999',
-    base: '#1e1e1e',
+    base: 'white',
     disabled: '#4D4D4D',
     hover: '#C5C5C5',
     accent: '',

@@ -14,6 +14,8 @@
   --lightBlue: #19e4ff;
   --divider: rgba(255, 255, 255, 0.2);
   --side-bar-1-width: 65px;
+  --side-nav-width-collapsed: 40px;
+  --side-nav-width: 60px;
 }
 
 * {
@@ -32,13 +34,14 @@
 } */
 
 .ResizeHandleOuter {
-  flex: 0 0 0.5em;
+  cursor: col-resize;
+  width: 3px;
   position: relative;
-  outline: none;
   --background-color: transparent;
 }
+
 .ResizeHandleOuter[data-resize-handle-active] {
-  --background-color: #1a548b;
+  --background-color: var(--lightBlue);
 }
 
 .ResizeHandleInner {
@@ -52,12 +55,7 @@
   border-right: solid 0.5px var(--color-solid-resize-bar);
 }
 
-.bar-divider {
-  width: 1px;
-  height: 20px;
-  background-color: var(--color-solid-resize-bar);
-  margin: 0 10px;
-}
+/* for table */
 
 .even {
   background-color: #212121;
@@ -75,6 +73,8 @@
 .odd:hover {
   background-color: #121212 !important;
 }
+
+/* for side nav icons */
 
 .active {
   color: var(--lightBlue);

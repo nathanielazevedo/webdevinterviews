@@ -9,6 +9,8 @@ import FoundationIcon from '@mui/icons-material/Foundation'
 import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
+import DetailsIcon from '@mui/icons-material/Details'
 
 export default function MiniDrawer() {
   const location = useLocation()
@@ -30,7 +32,7 @@ export default function MiniDrawer() {
   const editorTabs = [
     {
       name: 'DETAILS',
-      icon: <InfoOutlinedIcon />,
+      icon: <DetailsIcon />,
       path: `/workouts/${params.workoutName}/details`,
     },
     {
@@ -40,7 +42,7 @@ export default function MiniDrawer() {
     },
     {
       name: 'SOLUTION',
-      icon: <QuizOutlinedIcon />,
+      icon: <VisibilityOutlinedIcon />,
       path: `/workouts/${params.workoutName}/solution`,
     },
   ]
@@ -60,14 +62,44 @@ export default function MiniDrawer() {
         minHeight: '100vh',
         maxHeight: '100vh',
         flexDirection: 'column',
+        width: '100%',
       }}
     >
       <TopNav />
-      <Box sx={{ flexGrow: 1, display: 'flex' }}>
-        <SideNav links={tabs} />
-        {showSecondNav() && <SideNav links={editorTabs} />}
-        <Box flex={1}>
-          <Outlet />
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: 'flex',
+          height: 'calc(100vh - 60px)',
+          width: '100%',
+        }}
+      >
+        <SideNav
+          links={tabs}
+          variant={showSecondNav() ? 'collapsed' : 'normal'}
+        />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+          }}
+        >
+          <TopNav variant={showSecondNav() ? 'editorNav' : 'hidden'} />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+            }}
+          >
+            <SideNav
+              links={editorTabs}
+              variant={showSecondNav() ? 'normal' : 'hidden'}
+            />
+            <Box flex={1}>
+              <Outlet />
+            </Box>
+          </Box>
         </Box>
       </Box>
       <Footer />

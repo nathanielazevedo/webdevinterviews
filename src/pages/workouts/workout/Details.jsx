@@ -3,6 +3,7 @@ import Tooltip from '@mui/material/Tooltip'
 import { useLoaderData } from 'react-router-dom'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import { Box, Checkbox, Typography } from '@mui/material'
+import Rating from '../../../components/Rating'
 
 const Description = () => {
   const workout = useLoaderData()
@@ -12,20 +13,33 @@ const Description = () => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'flex-start',
         padding: '2rem 2rem',
+        height: 'calc(100vh - 97px)',
       }}
     >
-      <Typography fontWeight={'bold'} color='grey.600'>
-        WORKOUT #{workout.id}
-      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: '15px',
+          alignItems: 'flex-end',
+        }}
+      >
+        <Typography fontWeight={'bold'} color='grey.600'>
+          WORKOUT #{workout.id}
+        </Typography>
+        <Rating rating={workout.difficulty} />
+      </Box>
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          gap: '1rem',
+          paddingTop: '5px',
         }}
       >
-        <Typography variant='h4' fontWeight='bold' color={'primary.main'}>
+        <Typography variant='h4' fontWeight='bold'>
           {workout.title}
         </Typography>
         <Tooltip title='Watch the video' placement='bottom'>
@@ -35,7 +49,7 @@ const Description = () => {
             target='_blank'
             rel='noreferrer'
           >
-            <YouTubeIcon sx={{ color: '#FF0000', fontSize: '50px' }} />
+            <YouTubeIcon sx={{ color: 'var(--red)', fontSize: '50px' }} />
           </a>
         </Tooltip>
       </Box>
@@ -43,7 +57,9 @@ const Description = () => {
         sx={{
           display: 'flex',
           justifyContent: 'space-evenly',
-          paddingTop: '3rem',
+          paddingTop: '20px',
+          flexDirection: 'column',
+          gap: '1.5rem',
         }}
       >
         {workout.gif && (
