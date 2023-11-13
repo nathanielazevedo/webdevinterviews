@@ -7,7 +7,7 @@ const SideNav1 = ({ links, variant }) => {
   const getWidth = () => {
     switch (variant) {
       case 'collapsed':
-        return 'var(--side-nav-width-collapsed)'
+        return '0px'
       case 'hidden':
         return '0'
       default:
@@ -29,8 +29,7 @@ const SideNav1 = ({ links, variant }) => {
             <SideNavIcon
               key={index}
               link={link}
-              isCollapsed={variant == 'collapsed'}
-              isHidden={variant == 'hidden'}
+              isHidden={variant == 'collapsed'}
             />
           )
         })}

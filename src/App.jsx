@@ -37,19 +37,13 @@ const router = createBrowserRouter([
         errorElement: <Error />,
         children: [
           {
-            path: '/workouts/:workoutName/details',
+            index: true,
             element: <Instructions />,
             errorElement: <Error />,
             loader: ({ params }) => {
               const workout = rows.find(
                 (row) => row.name === params.workoutName
               )
-              //update local storage for this workouts active tab
-              const local = JSON.parse(localStorage.getItem(workout.name))
-              if (local) {
-                local.activeTab = 'details'
-                localStorage.setItem(workout.name, JSON.stringify(local))
-              }
               return workout
             },
           },
@@ -62,10 +56,6 @@ const router = createBrowserRouter([
                 (row) => row.name === params.workoutName
               )
               const local = JSON.parse(localStorage.getItem(workout.name))
-              if (local) {
-                local.activeTab = 'editor'
-                localStorage.setItem(workout.name, JSON.stringify(local))
-              }
               const files = local ? local.files : workout.template
               return { workout, files, mode: 'template', local }
             },
@@ -78,11 +68,6 @@ const router = createBrowserRouter([
               const workout = rows.find(
                 (row) => row.name === params.workoutName
               )
-              const local = JSON.parse(localStorage.getItem(workout.name))
-              if (local) {
-                local.activeTab = 'solution'
-                localStorage.setItem(workout.name, JSON.stringify(local))
-              }
               return { workout, files: workout.demo, mode: 'demo' }
             },
           },

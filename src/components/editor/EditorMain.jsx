@@ -5,7 +5,6 @@ import AutoSave from './AutoSave'
 import SpeedDial from './SpeedDial'
 import Box from '@mui/material/Box'
 import { useRef, useState } from 'react'
-import GifIcon from '@mui/icons-material/Gif'
 import { useLoaderData } from 'react-router-dom'
 import ResizeHandle from '../../components/ResizeHandle'
 import { Panel, PanelGroup } from 'react-resizable-panels'
@@ -16,7 +15,7 @@ import {
   SandpackThemeProvider,
   SandpackProvider,
 } from '@codesandbox/sandpack-react'
-import { Tooltip, Typography } from '@mui/material'
+import { Tooltip } from '@mui/material'
 
 const EditorMain = () => {
   const filePanelRef = useRef()

@@ -11,7 +11,7 @@ const Rating = ({ rating }) => {
             sx={{ color: 'var(--green)' }}
             fontWeight='bolder'
             noWrap
-            width='200px'
+            width='100px'
           >
             JUNIOR
           </Typography>
@@ -34,7 +34,7 @@ const Rating = ({ rating }) => {
             variant='caption'
             sx={{ color: 'var(--red)' }}
             fontWeight='bolder'
-            width='200px'
+            width='100px'
           >
             SENIOR
           </Typography>

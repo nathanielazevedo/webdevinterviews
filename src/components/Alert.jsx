@@ -17,7 +17,7 @@ export default function AlertDialog({ setOpen, workout }) {
   const handleCloseAgree = () => {
     setOpen(false)
     localStorage.removeItem(workout.name)
-    navigate(`/workouts/react/${workout.name}/files`)
+    navigate(`/workouts/${workout.name}/editor`)
   }
 
   return (

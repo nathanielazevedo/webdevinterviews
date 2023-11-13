@@ -10,7 +10,7 @@ const TopNav = ({ variant }) => {
     <Box
       sx={{
         display: 'flex',
-        height: variant === 'collapsed' ? '25px' : '35px',
+        height: variant === 'collapsed' ? '30px' : '35px',
         // minHeight: variant === 'hidden' ? '0' : '35px',
         padding: '0px 20px',
         alignItems: 'center',

@@ -93,14 +93,7 @@ const WorkoutTable = () => {
                           },
                         }}
                         onClick={() => {
-                          const local = JSON.parse(
-                            localStorage.getItem(row.name)
-                          )
-                          if (local && local.activeTab) {
-                            navigate(`/workouts/${row.name}/${local.activeTab}`)
-                          } else {
-                            navigate(`/workouts/${row.name}/details`)
-                          }
+                          navigate(`/workouts/${row.name}/editor`)
                         }}
                       >
                         {row.title}
@@ -120,6 +113,9 @@ const WorkoutTable = () => {
                           </>
                         }
                         placement='left'
+                        sx={{
+                          backgroundColor: 'black',
+                        }}
                       >
                         <Box
                           sx={{
