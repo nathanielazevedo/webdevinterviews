@@ -12,23 +12,17 @@ import Typography from '@mui/material/Typography'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import TableContainer from '@mui/material/TableContainer'
 import Fade from '@mui/material/Fade'
-
-const orderById = (rows) => {
-  const rowsOrderedById = rows.sort((a, b) => a.id - b.id)
-  return rowsOrderedById
-}
-
-const filterRows = (filter) => {
-  const filteredRows = rows.filter((row) => row.type === filter)
-  const filteredAndOrderedRows = orderById(filteredRows)
-  return filteredAndOrderedRows
-}
+import { Form } from 'react-router-dom'
+import { TableHead } from '@mui/material'
+import Link from '@mui/material/Link'
+import { useLoaderData } from 'react-router-dom'
 
 const WorkoutTable = () => {
   const navigate = useNavigate()
-  const location = useLocation()
-  const filter = location.pathname.split('/').pop()
-  const tableRows = filter == 'workouts' ? orderById(rows) : filterRows(filter)
+  // const location = useLocation()
+  // const filter = location.pathname.split('/').pop()
+  // const tableRows = filter == 'workouts' ? orderById(rows) : filterRows(filter)
+  const rows = useLoaderData()
 
   return (
     <Fade in={true} timeout={1000}>
@@ -36,7 +30,7 @@ const WorkoutTable = () => {
         sx={{
           width: '100%',
           display: 'flex',
-          padding: '30px 30px',
+          padding: '00px 00px',
           justifyContent: 'center',
         }}
       >
@@ -49,74 +43,51 @@ const WorkoutTable = () => {
             justifyContent: 'flex-start',
           }}
         >
-          <Typography mb='25px' color='primary'>
-            WORKOUTS
-          </Typography>
-          <TableContainer sx={{ width: '100%' }}>
+          <TableContainer sx={{ width: '100%', padding: '5px 20px' }}>
             <Table
               size='medium'
-              sx={{ width: '100%' }}
+              sx={{ '& .MuiTableCell-head': { lineHeight: 1, color: 'grey' } }}
               aria-label='a dense table'
             >
-              <TableBody>
-                {tableRows.map((row, index) => (
-                  <TableRow
-                    key={row.name}
-                    sx={{
-                      width: '100%',
-                      td: { border: 0 },
-                      background: index % 2 === 0 ? '#171717' : '#121212',
-                    }}
-                  >
-                    <TableCell
-                      align='left'
-                      sx={{ cursor: 'pointer', width: '300px' }}
+              <TableHead elevation={2}>
+                <TableRow
+                  sx={{
+                    width: '100%',
+                    th: { border: 0, color: 'grey.600' },
+                    // background: index % 2 === 0 ? '#171717' : '#121212',
+                  }}
+                >
+                  <TableCell>name</TableCell>
+                  <TableCell align='left'>video link</TableCell>
+                  <TableCell align='left'>difficulty</TableCell>
+                </TableRow>
+              </TableHead>
+              {rows.length > 0 && (
+                <TableBody>
+                  {rows.map((row, index) => (
+                    <TableRow
+                      key={row.name}
+                      sx={{
+                        width: '100%',
+                        td: { border: 0 },
+                        background: index % 2 === 0 ? '#171717' : '#121212',
+                      }}
                     >
-                      <Typography
-                        variant='subtitle'
-                        sx={{
-                          fontWeight: 'bold',
-                          color: 'grey.600',
-                          paddingRight: '10px',
-                          marginLeft: '40px',
-                        }}
-                      >
-                        {row.id}.
-                      </Typography>
-                      <Typography
-                        variant='subtitle'
-                        sx={{
-                          ':hover': {
-                            textDecoration: 'underline',
-                            color: 'primary.main',
-                            cursor: 'pointer !important',
-                          },
-                        }}
-                        onClick={() => {
-                          navigate(`/workouts/${row.name}/editor`)
-                        }}
-                      >
-                        {row.title}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align='right' sx={{ width: '150px' }}>
-                      <Tooltip
-                        title={
-                          <>
-                            {row.gif && (
-                              <img
-                                src={row.gif}
-                                alt={row.name}
-                                style={{ maxWidth: '200px' }}
-                              />
-                            )}
-                          </>
-                        }
-                        placement='left'
-                        sx={{
-                          backgroundColor: 'black',
-                        }}
-                      >
+                      <TableCell align='right' sx={{ width: '100px' }}>
+                        {/* <Tooltip
+                          title={
+                            <>
+                              {row.gif && (
+                                <img
+                                  src={row.gif}
+                                  alt={row.name}
+                                  style={{ maxWidth: '200px' }}
+                                />
+                              )}
+                            </>
+                          }
+                          placement='right-start'
+                        > */}
                         <Box
                           sx={{
                             gap: '2px',
@@ -125,48 +96,64 @@ const WorkoutTable = () => {
                           }}
                         >
                           <Typography
+                            variant='subtitle'
                             sx={{
-                              cursor: 'default',
-                              fontWeight: 'bold',
-                              fontSize: '14px',
-                              color: 'grey.700',
                               ':hover': {
+                                textDecoration: 'underline',
                                 color: 'primary.main',
+                                cursor: 'pointer !important',
                               },
                             }}
+                            onClick={() => {
+                              navigate(`/workout/${row.name}/editor`)
+                            }}
                           >
-                            GIF
+                            {row.name}
                           </Typography>
                         </Box>
-                      </Tooltip>
-                    </TableCell>
-                    <TableCell align='center' sx={{ width: '150px' }}>
-                      <Rating rating={row.difficulty} />
-                    </TableCell>
-                    <TableCell align='center' sx={{ width: '150px' }}>
-                      <Tooltip title='Watch the video' placement='bottom'>
-                        <a
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
+                        {/* </Tooltip> */}
+                      </TableCell>
+                      <TableCell align='left' sx={{ width: '150px' }}>
+                        <Link
                           href={row.link}
                           target='_blank'
                           rel='noreferrer'
+                          sx={{
+                            color: 'grey.500',
+                            textDecorationColor: 'grey',
+                            ':hover': {
+                              textDecoration: 'underline',
+                              color: 'primary.main',
+                              cursor: 'pointer !important',
+                            },
+                          }}
                         >
-                          <YouTubeIcon
-                            sx={{ color: 'darkred' }}
-                            fontSize='large'
-                          />
-                        </a>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
+                          {row.link}
+                        </Link>
+                      </TableCell>
+                      <TableCell align='left' sx={{ width: '150px' }}>
+                        <Rating rating={row.difficulty} />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              )}
             </Table>
           </TableContainer>
+          {rows.length == 0 && (
+            <Box
+              sx={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: '20px',
+                color: 'grey.500',
+              }}
+            >
+              No workouts found.
+            </Box>
+          )}
         </Box>
       </Box>
     </Fade>

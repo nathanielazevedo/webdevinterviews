@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import Box from '@mui/material/Box'
 // import { useLocation } from 'react-router-dom'
-import { Button, Fade, IconButton, Typography } from '@mui/material'
+import { Fade, IconButton, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useParams, useNavigate } from 'react-router-dom'
 import rows from '../../workouts/index'
@@ -10,11 +10,13 @@ import Tooltip from '@mui/material/Tooltip'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered'
 import Checkbox from '@mui/material/Checkbox'
+import { useLoaderData } from 'react-router-dom'
 
 const EditorTopNav = () => {
   // const location = useLocation()
-  const params = useParams()
-  const workout = rows.find((row) => row.name === params.workoutName)
+  // const params = useParams()
+  const workout = useLoaderData()
+  // const workout = rows.find((row) => row.name === params.workoutName)
   const navigate = useNavigate()
 
   return (
@@ -57,7 +59,7 @@ const EditorTopNav = () => {
                 width: '60px',
                 color: 'grey.500',
                 borderRight: '0.5px solid #454950',
-                marginRight: '20px',
+                marginRight: '13px',
               }}
               onClick={() => navigate('/workouts')}
             >

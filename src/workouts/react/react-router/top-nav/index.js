@@ -1,14 +1,14 @@
-import solution from './solution/asString'
-import image from './ageApi.png'
+// import solution from './solution/asString'
+// import image from './ageApi.png'
 
 const topNav = {
   id: 4,
   name: 'ageApi',
   title: 'Age API',
   difficulty: 1,
-  gif: image,
+  gif: '',
   type: 'react',
-  demo: solution,
+  demo: {},
   template: {},
   link: 'https://youtu.be/1T0iMtIWmrw',
   checkList: [

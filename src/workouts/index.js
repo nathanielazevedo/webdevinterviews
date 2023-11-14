@@ -1,19 +1,7 @@
-import checkedTree from './react/checkedTree'
-import transferList from './react/transfer-list'
-import ageApi from './react/age-api'
-import ticTacToe from './react/tic-tac-toe'
-import swapOdds from './react/swap-odds'
-import tabs from './react/tabs'
-import switches from './react/switch'
+import react from './react'
 
-const problems = [
-  checkedTree,
-  transferList,
-  ageApi,
-  ticTacToe,
-  swapOdds,
-  tabs,
-  switches,
-]
+const workouts = {
+  react,
+}
 
-export default problems
+export default workouts

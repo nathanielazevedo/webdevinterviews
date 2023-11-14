@@ -18,6 +18,9 @@
   --side-nav-width-collapsed: 40px;
   --side-nav-width: 60px;
 }
+*:focus {
+  outline: none;
+}
 
 * {
   --sp-layout-height: 94vh;
@@ -84,3 +87,12 @@
 .not-active {
   color: grey;
 }
+
+.MuiTreeItem-label {
+  color: rgb(222, 221, 221);
+  font-size: 14px !important;
+}
+/* .MuiTreeItem-content {
+  color: white;
+  font-size: 10px;
+} */

@@ -12,17 +12,17 @@ const EditorSideNav = () => {
     {
       name: 'DETAILS',
       icon: <DetailsIcon />,
-      path: `/workouts/${params.workoutName}`,
+      path: `/workout/${params.workoutName}`,
     },
     {
       name: 'EDITOR',
       icon: <CodeIcon />,
-      path: `/workouts/${params.workoutName}/editor`,
+      path: `/workout/${params.workoutName}/editor`,
     },
     {
       name: 'SOLUTION',
       icon: <VisibilityOutlinedIcon />,
-      path: `/workouts/${params.workoutName}/solution`,
+      path: `/workout/${params.workoutName}/solution`,
     },
   ]
 

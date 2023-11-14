@@ -24,10 +24,18 @@ export default function MiniDrawer() {
   const location = useLocation()
 
   const showSecondNav = () => {
-    if (location.pathname === '/' || location.pathname === '/workouts') {
+    if (location.pathname === '/' || location.pathname.includes('/workouts')) {
       return false
     } else {
       return true
+    }
+  }
+
+  const topNavVariant = () => {
+    if (location.pathname === '/') {
+      return 'normal'
+    } else {
+      return 'collapsed'
     }
   }
 
@@ -41,7 +49,7 @@ export default function MiniDrawer() {
         width: '100%',
       }}
     >
-      <TopNav variant={showSecondNav() ? 'collapsed' : 'normal'} />
+      <TopNav variant={topNavVariant()} />
       <Box
         sx={{
           flexGrow: 1,
