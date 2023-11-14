@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import TopNav from './TopNav'
 import WorkoutTable from './WorkoutTable'
 import SideNav from './SideNav'
 import Box from '@mui/material/Box'
 
-const Root = () => {
+const Root = ({ difficulty }) => {
   return (
     <Box
       sx={{
@@ -20,7 +21,7 @@ const Root = () => {
           flexDirection: 'column',
         }}
       >
-        <TopNav />
+        <TopNav difficulty={difficulty} />
         <WorkoutTable />
       </Box>
     </Box>

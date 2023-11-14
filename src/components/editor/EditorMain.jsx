@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import Browser from './preview/Browser'
 import { theme } from './theme'
 import AutoSave from './AutoSave'
 import SpeedDial from './SpeedDial'
@@ -16,6 +15,7 @@ import {
   SandpackProvider,
 } from '@codesandbox/sandpack-react'
 import { Tooltip } from '@mui/material'
+import Browser from './browser'
 
 const EditorMain = () => {
   const filePanelRef = useRef()

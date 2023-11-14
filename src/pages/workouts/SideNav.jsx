@@ -56,9 +56,14 @@ const SideNav1 = () => {
           defaultExpanded={['8', '1']}
           defaultSelected={routeToNumber[lastParam]}
           sx={{
-            color: 'grey.200',
-            marginTop: '15px',
-            padding: '0 5px',
+            color: 'grey.400',
+            marginTop: '25px',
+            padding: '0 10px',
+            '.MuiTreeItem-label': {
+              fontSize: '12px',
+              fontWeight: 'bold',
+              color: 'grey.400',
+            },
           }}
         >
           <TreeItem

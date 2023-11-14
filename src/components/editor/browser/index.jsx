@@ -1,20 +1,20 @@
 /* eslint-disable react/prop-types */
-import { useRef } from 'react'
+import Preview from './Preview'
 import Console from './Console'
-import ResizeHandle from '../../ResizeHandle'
+import { useRef } from 'react'
+import ResizeHandle from '../../HorizontalResizeHandle'
 import { Panel, PanelGroup } from 'react-resizable-panels'
-import { SandpackPreview, SandpackTests } from '@codesandbox/sandpack-react'
 
 const Browser = ({ showTests }) => {
   const consolePanelRef = useRef()
 
   const closeFilePanel = () => {
     if (consolePanelRef.current) {
-      if (consolePanelRef.current.getSize() === 3.3) {
+      if (consolePanelRef.current.getSize() === 4.3) {
         consolePanelRef.current.resize(50)
         return
       }
-      consolePanelRef.current.resize(3.3)
+      consolePanelRef.current.resize(4.3)
     }
   }
 
@@ -25,19 +25,11 @@ const Browser = ({ showTests }) => {
         direction='vertical'
         disablePointerEventsDuringResize
       >
-        <Panel minSize={0}>
-          {showTests ? (
-            <SandpackTests style={{ height: '100%' }} />
-          ) : (
-            <SandpackPreview
-              showNavigator
-              style={{ height: '100%' }}
-              showOpenInCodeSandbox={false}
-            />
-          )}
+        <Panel>
+          <Preview showTests={showTests} />
         </Panel>
         <ResizeHandle />
-        <Panel minSize={3.3} collapsible={false} ref={consolePanelRef}>
+        <Panel minSize={4.3} collapsible={false} ref={consolePanelRef}>
           <Console
             closeFilePanel={closeFilePanel}
             consolePanelRef={consolePanelRef}

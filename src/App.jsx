@@ -12,6 +12,8 @@ import EditorRoot from './pages/workouts/workout/Root'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import FourOFour from './pages/FourOFour'
 
+console.log('rows', rows)
+
 function flattenObject(obj) {
   let result = []
 
@@ -63,44 +65,63 @@ const router = createBrowserRouter([
         errorElement: <Error />,
         loader: ({ params, request }) => {
           const url = new URL(request.url)
-          const d = url.searchParams.get('difficulty')
+          let d = url.searchParams.get('difficulty')
+          if (d == 'all') d = undefined
+
           const keys = params['*'].split('/')
+          let matchingWorkouts
+
+          // returns everything and checks for difficulty filters search params
           if (keys[0] === '') {
             if (d) {
-              const vals = Object.values(flattenObject(rows)[0]).filter(
+              matchingWorkouts = Object.values(flattenObject(rows)[0]).filter(
                 (workout) => workout.difficulty == d
               )
-              return vals
+            } else {
+              matchingWorkouts = Object.values(flattenObject(rows)[0])
             }
-            return Object.values(flattenObject(rows)[0])
+            return { rows: matchingWorkouts, difficulty: d }
           }
-          let currentObject = rows
 
+          // digging down the path to find whatever
+          let currentObject = rows
           for (let key of keys) {
             if (currentObject[key]) {
               currentObject = currentObject[key]
             } else {
-              return []
+              return { rows: [], difficulty: d }
             }
           }
 
+          // if it ends in workouts
           if (currentObject.workouts) {
             if (d) {
-              return Object.values(currentObject.workouts).filter(
-                (workout) => workout.rating === d
+              matchingWorkouts = Object.values(currentObject.workouts).filter(
+                (workout) => workout.difficulty == d
               )
+            } else {
+              matchingWorkouts = Object.values(currentObject.workouts)
             }
-            return Object.values(currentObject.workouts)
+            return {
+              rows: matchingWorkouts,
+              difficulty: d,
+            }
           } else {
+            // it ends not in workouts
             try {
               if (d) {
-                return Object.values(flattenObject(rows)[0]).filter(
+                matchingWorkouts = Object.values(flattenObject(rows)[0]).filter(
                   (workout) => workout.rating === d
                 )
+              } else {
+                matchingWorkouts = Object.values(flattenObject(rows)[0])
               }
-              return Object.values(flattenObject(rows)[0])
+              return {
+                rows: matchingWorkouts,
+                difficulty: d,
+              }
             } catch {
-              return []
+              return { rows: [], difficulty: d }
             }
           }
         },
@@ -111,7 +132,6 @@ const router = createBrowserRouter([
         errorElement: <Error />,
         loader: ({ params }) => {
           const workout = findKeyInObject(rows, params.workoutName)
-          console.log('row', workout)
           return workout
         },
         children: [
