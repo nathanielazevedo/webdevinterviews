@@ -47,6 +47,7 @@ export default function MiniDrawer() {
         maxHeight: '100vh',
         flexDirection: 'column',
         width: '100%',
+        overflow: 'hidden',
       }}
     >
       <TopNav variant={topNavVariant()} />

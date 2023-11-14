@@ -1,7 +1,7 @@
-import topNav from './top-nav'
+import outlet from './top-nav'
 
 export default {
   workouts: {
-    topNav,
+    outlet,
   },
 }

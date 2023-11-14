@@ -92,7 +92,12 @@
   color: rgb(222, 221, 221);
   font-size: 14px !important;
 }
-/* .MuiTreeItem-content {
-  color: white;
-  font-size: 10px;
-} */
+
+.MuiTreeItem-iconContainer {
+  margin-right: 0px !important;
+}
+
+.MuiRadio-root {
+  font-size: 10px !important;
+  height: 25px !important;
+}

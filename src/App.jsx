@@ -61,9 +61,17 @@ const router = createBrowserRouter([
         path: 'workouts/*',
         element: <WorkoutTable />,
         errorElement: <Error />,
-        loader: ({ params }) => {
+        loader: ({ params, request }) => {
+          const url = new URL(request.url)
+          const d = url.searchParams.get('difficulty')
           const keys = params['*'].split('/')
           if (keys[0] === '') {
+            if (d) {
+              const vals = Object.values(flattenObject(rows)[0]).filter(
+                (workout) => workout.difficulty == d
+              )
+              return vals
+            }
             return Object.values(flattenObject(rows)[0])
           }
           let currentObject = rows
@@ -77,20 +85,25 @@ const router = createBrowserRouter([
           }
 
           if (currentObject.workouts) {
+            if (d) {
+              return Object.values(currentObject.workouts).filter(
+                (workout) => workout.rating === d
+              )
+            }
             return Object.values(currentObject.workouts)
           } else {
             try {
+              if (d) {
+                return Object.values(flattenObject(rows)[0]).filter(
+                  (workout) => workout.rating === d
+                )
+              }
               return Object.values(flattenObject(rows)[0])
             } catch {
               return []
             }
           }
         },
-        // loader: ({ params }) => {
-        //   console.log('params', params['*'].split('/'))
-        //   const flatRows = flattenObject(rows)
-        //   return Object.values(flatRows[0])
-        // },
       },
       {
         path: 'workout/:workoutName/',
@@ -111,7 +124,6 @@ const router = createBrowserRouter([
                 errorElement: <Error />,
                 loader: ({ params }) => {
                   const workout = findKeyInObject(rows, params.workoutName)
-                  console.log('row', workout)
                   return workout
                 },
               },
@@ -123,6 +135,7 @@ const router = createBrowserRouter([
                   const workout = findKeyInObject(rows, params.workoutName)
                   const local = JSON.parse(localStorage.getItem(workout.name))
                   const files = local ? local.files : workout.template
+                  console.log('files', files)
                   return { workout, files, mode: 'template', local }
                 },
               },

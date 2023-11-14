@@ -1,10 +1,10 @@
 // import solution from './solution/asString'
 // import image from './ageApi.png'
 
-const topNav = {
-  id: 4,
-  name: 'ageApi',
-  title: 'Age API',
+export default {
+  id: 11,
+  name: 'outlet',
+  title: 'Outlet',
   difficulty: 1,
   gif: '',
   type: 'react',
@@ -18,5 +18,3 @@ const topNav = {
     'Create a cache so the same request is not sent twice.',
   ],
 }
-
-export default topNav

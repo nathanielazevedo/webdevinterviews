@@ -28,7 +28,12 @@ const EditorMain = () => {
       <SandpackProvider
         files={files}
         template='react'
-        customSetup={{ dependencies: { 'jest-extended': '^3.0.2' } }}
+        customSetup={{
+          dependencies: {
+            'jest-extended': '^3.0.2',
+            'react-router-dom': '^6.16.0',
+          },
+        }}
         options={{
           autoReload: true,
           activeFile: local ? local.activeFile : '/App.js',
@@ -41,8 +46,8 @@ const EditorMain = () => {
             <div
               style={{
                 width: '100%',
-                minHeight: 'calc(100vh - 97px)',
-                maxHeight: 'calc(100vh - 97px)',
+                minHeight: 'calc(100vh - 100px)',
+                maxHeight: 'calc(100vh - 100px)',
                 display: 'flex',
                 flexDirection: 'row',
                 position: 'relative',

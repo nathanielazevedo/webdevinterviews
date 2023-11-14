@@ -5,10 +5,21 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { TreeView } from '@mui/x-tree-view/TreeView'
 import { TreeItem } from '@mui/x-tree-view/TreeItem'
 import { Typography } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+
+const routeToNumber = {
+  workouts: '8',
+  html: '7',
+  css: '9',
+  react: '1',
+  router: '2',
+  pure: '10',
+}
 
 const SideNav1 = () => {
   const navigate = useNavigate()
+  const params = useParams()
+  const lastParam = params['*'].split('/').pop()
   return (
     <Box
       sx={{
@@ -42,8 +53,8 @@ const SideNav1 = () => {
           aria-label='file system navigator'
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ChevronRightIcon />}
-          defaultExpanded={['8']}
-          defaultSelected={['8']}
+          defaultExpanded={['8', '1']}
+          defaultSelected={routeToNumber[lastParam]}
           sx={{
             color: 'grey.200',
             marginTop: '15px',
@@ -52,7 +63,13 @@ const SideNav1 = () => {
         >
           <TreeItem
             nodeId='8'
-            label='WORKOUTS'
+            label='workouts'
+            className='workouts-nav'
+            // style={{
+            //   color: 'grey.600',
+            //   fontSize: '12px',
+            //   fontWeight: 'bold',
+            // }}
             onClick={() => {
               navigate('/workouts')
             }}

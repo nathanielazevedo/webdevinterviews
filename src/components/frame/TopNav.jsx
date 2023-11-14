@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
-import { useLocation } from 'react-router-dom'
+// import { useLocation } from 'react-router-dom'
 
 const TopNav = ({ variant }) => {
-  const location = useLocation()
+  // const location = useLocation()
 
   return (
     <Box
       sx={{
         display: 'flex',
-        height: variant === 'collapsed' ? '30px' : '35px',
+        height: '35px',
         // minHeight: variant === 'hidden' ? '0' : '35px',
         padding: '0px 20px',
         alignItems: 'center',
@@ -31,7 +31,7 @@ const TopNav = ({ variant }) => {
         >
           WEB DEV INTERVIEWS
         </Typography>
-        <Typography
+        {/* <Typography
           color='grey.500'
           ml={'10px'}
           sx={{
@@ -40,7 +40,7 @@ const TopNav = ({ variant }) => {
           }}
         >
           {location.pathname}
-        </Typography>
+        </Typography> */}
       </>
     </Box>
   )

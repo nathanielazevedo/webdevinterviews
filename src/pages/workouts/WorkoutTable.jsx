@@ -73,7 +73,15 @@ const WorkoutTable = () => {
                         background: index % 2 === 0 ? '#171717' : '#121212',
                       }}
                     >
-                      <TableCell align='right' sx={{ width: '100px' }}>
+                      <TableCell
+                        align='left'
+                        sx={{
+                          width: '75px',
+                          minWidth: '75px',
+                          maxWidth: '75px',
+                          backgroundColor: 'solid green 1px',
+                        }}
+                      >
                         {/* <Tooltip
                           title={
                             <>
@@ -88,32 +96,31 @@ const WorkoutTable = () => {
                           }
                           placement='right-start'
                         > */}
-                        <Box
+                        <Typography
+                          variant='subtitle'
                           sx={{
-                            gap: '2px',
-                            display: 'flex',
-                            alignItems: 'center',
+                            ':hover': {
+                              textDecoration: 'underline',
+                              color: 'primary.main',
+                              cursor: 'pointer !important',
+                            },
+                          }}
+                          onClick={() => {
+                            navigate(`/workout/${row.name}/editor`)
                           }}
                         >
-                          <Typography
-                            variant='subtitle'
-                            sx={{
-                              ':hover': {
-                                textDecoration: 'underline',
-                                color: 'primary.main',
-                                cursor: 'pointer !important',
-                              },
-                            }}
-                            onClick={() => {
-                              navigate(`/workout/${row.name}/editor`)
-                            }}
-                          >
-                            {row.name}
-                          </Typography>
-                        </Box>
+                          {row.name}
+                        </Typography>
                         {/* </Tooltip> */}
                       </TableCell>
-                      <TableCell align='left' sx={{ width: '150px' }}>
+                      <TableCell
+                        align='left'
+                        sx={{
+                          width: '150px',
+                          minWidth: '150px',
+                          maxWidth: '150px',
+                        }}
+                      >
                         <Link
                           href={row.link}
                           target='_blank'
@@ -125,10 +132,13 @@ const WorkoutTable = () => {
                               textDecoration: 'underline',
                               color: 'primary.main',
                               cursor: 'pointer !important',
+                              whiteSpace: 'nowrap',
                             },
                           }}
                         >
-                          {row.link}
+                          <Typography noWrap fontSize='12px'>
+                            {row.link}
+                          </Typography>
                         </Link>
                       </TableCell>
                       <TableCell align='left' sx={{ width: '150px' }}>

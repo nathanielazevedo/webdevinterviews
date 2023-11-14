@@ -21,6 +21,7 @@ const SideNav1 = ({ links, variant }) => {
         width: getWidth(),
         borderRight: '0.5px solid var(--divider)',
         transition: 'width 0.3s ease-in-out',
+        height: 'calc(100vh - 100px)',
       }}
     >
       <List>

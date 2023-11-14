@@ -17,6 +17,7 @@ const SideNavIcon = ({ link, isCollapsed, isHidden }) => {
   }, [isHidden])
   return (
     <NavLink
+      end={link.name === 'DETAILS'}
       to={link.path}
       className={({ isActive, isPending }) =>
         isActive ? 'active' : isPending ? 'pending' : 'not-active'
