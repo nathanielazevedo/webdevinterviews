@@ -20,6 +20,14 @@ const tabs = [
   },
 ]
 
+// if (isDev) {
+//   tabs.push({
+//     name: 'ADMIN',
+//     icon: <ManageAccountsIcon />,
+//     path: 'admin',
+//   })
+// }
+
 export default function MiniDrawer() {
   const location = useLocation()
 

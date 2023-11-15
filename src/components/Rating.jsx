@@ -4,7 +4,7 @@ import { Typography } from '@mui/material'
 const Rating = ({ rating }) => {
   const getIcon = (rating) => {
     switch (rating) {
-      case 1:
+      case '1':
         return (
           <Typography
             variant='caption'
@@ -16,7 +16,7 @@ const Rating = ({ rating }) => {
             JUNIOR
           </Typography>
         )
-      case 2:
+      case '2':
         return (
           <Typography
             variant='caption'
@@ -28,7 +28,7 @@ const Rating = ({ rating }) => {
             MID-LEVEL
           </Typography>
         )
-      case 3:
+      case '3':
         return (
           <Typography
             variant='caption'

@@ -21,7 +21,7 @@ const WorkoutTable = () => {
   return (
     <Fade in={true} timeout={1000}>
       <Box>
-        <TableContainer sx={{ width: '100%' }}>
+        <TableContainer sx={{ width: '100%', padding: '10px 20px' }}>
           <Table
             size='small'
             sx={{
@@ -34,13 +34,13 @@ const WorkoutTable = () => {
                 //   '0.3px solid var(--color-solid-resize-bar-handle)',
               },
               '& .MuiTableCell-body': {
-                lineHeight: '20px',
+                lineHeight: '25px',
                 color: 'grey',
                 border: 0,
                 fontSize: '14px',
-                width: '100px',
-                minWidth: '100px',
-                maxWidth: '100px',
+                width: '140px',
+                minWidth: '140px',
+                maxWidth: '140px',
                 // borderBottom:
                 //   '0.3px solid var(--color-solid-resize-bar-handle)',
               },
@@ -55,7 +55,7 @@ const WorkoutTable = () => {
                 <TableCell
                   align='left'
                   sx={{
-                    paddingLeft: '50px',
+                    paddingLeft: '70px',
                     width: '100px',
                     minWidth: '100px',
                     maxWidth: '100px',
@@ -87,7 +87,7 @@ const WorkoutTable = () => {
               </TableRow>
             </TableHead>
             {rows.length > 0 && (
-              <TableBody sx={{ paddingTop: '10px !important' }}>
+              <TableBody>
                 {rows.map((row, index) => (
                   <TableRow
                     key={row.name}
@@ -97,12 +97,12 @@ const WorkoutTable = () => {
                       td: { border: '0' },
                     }}
                   >
-                    <TableCell align='left' sx={{ paddingLeft: '30px' }}>
+                    <TableCell align='left' sx={{ paddingLeft: '45px' }}>
                       <Box
                         sx={{
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '7px',
+                          gap: '9px',
                         }}
                       >
                         <Tooltip

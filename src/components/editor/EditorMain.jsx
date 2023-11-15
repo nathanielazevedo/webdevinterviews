@@ -8,6 +8,7 @@ import { useLoaderData } from 'react-router-dom'
 import ResizeHandle from '../../components/ResizeHandle'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import { SandpackFileExplorer } from 'sandpack-file-explorer'
+import AdminDialog from './Submit'
 import {
   SandpackLayout,
   SandpackCodeEditor,
@@ -16,6 +17,7 @@ import {
 } from '@codesandbox/sandpack-react'
 import { Tooltip } from '@mui/material'
 import Browser from './browser'
+const isDev = import.meta.env.DEV
 
 const EditorMain = () => {
   const filePanelRef = useRef()
@@ -108,6 +110,8 @@ const EditorMain = () => {
                       </Tooltip>
                     </Box>
                   )}
+                  {isDev && <AdminDialog />}
+
                   {mode === 'template' && (
                     <SpeedDial
                       codemirrorInstance={codemirrorInstance}

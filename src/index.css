@@ -131,3 +131,7 @@
   background-color: #19e4ff4b !important;
   border-radius: 5px;
 }
+
+.MuiTreeItem-content {
+  padding: 0px !important;
+}

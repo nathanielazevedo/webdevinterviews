@@ -4,7 +4,6 @@ import Error from './pages/Error'
 import Home from './pages/Home'
 import Root from './pages/Root'
 import Editor from './pages/workouts/workout/Editor'
-import SecretPlayground from './pages/SecretPlayground'
 import Solution from './pages/workouts/workout/Solution'
 import WorkoutTable from './pages/workouts/Root'
 import Instructions from './pages/workouts/workout/Details'
@@ -168,7 +167,7 @@ const router = createBrowserRouter([
                 errorElement: <Error />,
                 loader: ({ params }) => {
                   const workout = findKeyInObject(rows, params.workoutName)
-                  return { workout, files: workout.demo, mode: 'demo' }
+                  return { workout, files: workout.solution, mode: 'demo' }
                 },
               },
               {
@@ -179,11 +178,6 @@ const router = createBrowserRouter([
             ],
           },
         ],
-      },
-      {
-        path: '/secretplayground',
-        element: <SecretPlayground />,
-        errorElement: <Error />,
       },
       {
         path: '*',

@@ -1,4 +1,4 @@
-import outlet from './top-nav'
+import outlet from './outlet'
 
 export default {
   workouts: {
