@@ -4,7 +4,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { TreeView } from '@mui/x-tree-view/TreeView'
 import { TreeItem } from '@mui/x-tree-view/TreeItem'
-import { Typography } from '@mui/material'
+import { Fade, Typography } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const routeToNumber = {
@@ -21,104 +21,107 @@ const SideNav1 = () => {
   const params = useParams()
   const lastParam = params['*'].split('/').pop()
   return (
-    <Box
-      sx={{
-        width: '200px',
-        borderRight: '0.5px solid var(--divider)',
-        transition: 'width 0.3s ease-in-out',
-        padding: '0px 0px',
-      }}
-    >
+    <Fade in={true} timeout={500}>
       <Box
         sx={{
-          height: '35px',
-          borderBottom: '0.5px solid var(--divider)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          padding: '0px 15px',
+          width: '185px',
+          borderRight: '0.5px solid var(--divider)',
+          transition: 'width 0.3s ease-in-out',
+          padding: '0px 0px',
         }}
       >
-        <Typography
+        <Box
           sx={{
-            fontSize: '12px',
-            color: 'grey.600',
+            height: '35px',
+            borderBottom: '0.5px solid var(--divider)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            padding: '0px 15px',
           }}
         >
-          EXPLORER
-        </Typography>
-      </Box>
-      <Box sx={{ minHeight: 180, flexGrow: 1 }}>
-        <TreeView
-          aria-label='file system navigator'
-          defaultCollapseIcon={<ExpandMoreIcon />}
-          defaultExpandIcon={<ChevronRightIcon />}
-          defaultExpanded={['8', '1']}
-          defaultSelected={routeToNumber[lastParam]}
-          sx={{
-            color: 'grey.400',
-            marginTop: '25px',
-            padding: '0 10px',
-            '.MuiTreeItem-label': {
+          <Typography
+            sx={{
               fontSize: '12px',
+              color: 'grey.600',
               fontWeight: 'bold',
+            }}
+          >
+            WORKOUTS
+          </Typography>
+        </Box>
+        <Box sx={{ minHeight: 180, flexGrow: 1 }}>
+          <TreeView
+            aria-label='file system navigator'
+            defaultCollapseIcon={<ExpandMoreIcon />}
+            defaultExpandIcon={<ChevronRightIcon />}
+            defaultExpanded={['8', '1']}
+            defaultSelected={routeToNumber[lastParam]}
+            sx={{
               color: 'grey.400',
-            },
-          }}
-        >
-          <TreeItem
-            nodeId='8'
-            label='workouts'
-            className='workouts-nav'
-            // style={{
-            //   color: 'grey.600',
-            //   fontSize: '12px',
-            //   fontWeight: 'bold',
-            // }}
-            onClick={() => {
-              navigate('/workouts')
+              marginTop: '15px',
+              padding: '0 5px',
+              '.MuiTreeItem-label': {
+                fontSize: '12px',
+
+                color: 'grey.400',
+              },
             }}
           >
             <TreeItem
-              nodeId='7'
-              label='html'
+              nodeId='8'
+              label='workouts'
+              className='workouts-nav'
+              // style={{
+              //   color: 'grey.600',
+              //   fontSize: '12px',
+              //   fontWeight: 'bold',
+              // }}
               onClick={() => {
-                navigate('/workouts/html')
-              }}
-            />
-            <TreeItem
-              nodeId='9'
-              label='css'
-              onClick={() => {
-                navigate('/workouts/css')
-              }}
-            />
-            <TreeItem
-              nodeId='1'
-              label='react'
-              onClick={() => {
-                navigate('/workouts/react')
+                navigate('/workouts')
               }}
             >
               <TreeItem
-                nodeId='2'
-                label='router'
+                nodeId='7'
+                label='html'
                 onClick={() => {
-                  navigate('/workouts/react/router')
+                  navigate('/workouts/html')
                 }}
               />
               <TreeItem
-                nodeId='10'
-                label='pure react'
+                nodeId='9'
+                label='css'
                 onClick={() => {
-                  navigate('/workouts/react/pure')
+                  navigate('/workouts/css')
                 }}
               />
+              <TreeItem
+                nodeId='1'
+                label='react'
+                onClick={() => {
+                  navigate('/workouts/react')
+                }}
+              >
+                <TreeItem
+                  nodeId='2'
+                  label='router'
+                  onClick={() => {
+                    navigate('/workouts/react/router')
+                  }}
+                />
+                <TreeItem
+                  nodeId='10'
+                  label='pure react'
+                  onClick={() => {
+                    navigate('/workouts/react/pure')
+                  }}
+                />
+              </TreeItem>
             </TreeItem>
-          </TreeItem>
-        </TreeView>
+          </TreeView>
+        </Box>
       </Box>
-    </Box>
+    </Fade>
   )
 }
 

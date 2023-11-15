@@ -9,7 +9,7 @@ import Solution from './pages/workouts/workout/Solution'
 import WorkoutTable from './pages/workouts/Root'
 import Instructions from './pages/workouts/workout/Details'
 import EditorRoot from './pages/workouts/workout/Root'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom'
 import FourOFour from './pages/FourOFour'
 
 console.log('rows', rows)
@@ -132,6 +132,9 @@ const router = createBrowserRouter([
         errorElement: <Error />,
         loader: ({ params }) => {
           const workout = findKeyInObject(rows, params.workoutName)
+          if (!workout) {
+            return redirect('/workouts')
+          }
           return workout
         },
         children: [

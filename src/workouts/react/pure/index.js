@@ -11,7 +11,7 @@ export default {
     ageApi,
     checkedTree,
     swapOdds,
-    switches,
+    switch: switches,
     tabs,
     ticTacToe,
     transferList,

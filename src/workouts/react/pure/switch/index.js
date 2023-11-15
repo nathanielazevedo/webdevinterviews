@@ -1,7 +1,7 @@
 import solution from './solution/asString'
 import gif from './gif.gif'
 
-const switches = {
+export default {
   id: 7,
   name: 'switch',
   title: 'Switch',
@@ -16,5 +16,3 @@ const switches = {
   template: {},
   type: 'react',
 }
-
-export default switches

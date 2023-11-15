@@ -21,17 +21,28 @@ const WorkoutTable = () => {
   return (
     <Fade in={true} timeout={1000}>
       <Box>
-        <TableContainer sx={{ width: '100%', padding: '10px 20px' }}>
+        <TableContainer sx={{ width: '100%' }}>
           <Table
             size='small'
             sx={{
               '& .MuiTableCell-head': {
-                lineHeight: 2,
+                lineHeight: '25px',
                 color: 'grey',
                 border: 0,
                 fontSize: '14px',
-                borderBottom:
-                  '0.3px solid var(--color-solid-resize-bar-handle)',
+                // borderBottom:
+                //   '0.3px solid var(--color-solid-resize-bar-handle)',
+              },
+              '& .MuiTableCell-body': {
+                lineHeight: '20px',
+                color: 'grey',
+                border: 0,
+                fontSize: '14px',
+                width: '100px',
+                minWidth: '100px',
+                maxWidth: '100px',
+                // borderBottom:
+                //   '0.3px solid var(--color-solid-resize-bar-handle)',
               },
             }}
           >
@@ -44,10 +55,11 @@ const WorkoutTable = () => {
                 <TableCell
                   align='left'
                   sx={{
-                    paddingLeft: '30px',
-                    width: '200px',
-                    minWidth: '200px',
-                    maxWidth: '200px',
+                    paddingLeft: '50px',
+                    width: '100px',
+                    minWidth: '100px',
+                    maxWidth: '100px',
+                    // outline: 'solid white 1px !important',
                   }}
                 >
                   Name
@@ -75,7 +87,7 @@ const WorkoutTable = () => {
               </TableRow>
             </TableHead>
             {rows.length > 0 && (
-              <TableBody>
+              <TableBody sx={{ paddingTop: '10px !important' }}>
                 {rows.map((row, index) => (
                   <TableRow
                     key={row.name}

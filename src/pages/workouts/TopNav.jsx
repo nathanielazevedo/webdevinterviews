@@ -3,11 +3,14 @@ import Box from '@mui/material/Box'
 import Select from '@mui/material/Select'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
-import { Form, useLoaderData, useLocation } from 'react-router-dom'
+import { Form, useLoaderData, useLocation, useParams } from 'react-router-dom'
+import { Typography } from '@mui/material'
 
 const TopNav = () => {
   const { difficulty } = useLoaderData()
   const location = useLocation()
+  const params = useParams()
+  console.log(params['*'])
 
   return (
     <Box
@@ -20,6 +23,14 @@ const TopNav = () => {
         borderBottom: '0.5px solid var(--color-solid-resize-bar-handle)',
       }}
     >
+      <Typography
+        sx={{
+          color: 'grey.300',
+          fontSize: '12px',
+        }}
+      >
+        /{params['*']}
+      </Typography>
       <div style={{ flexGrow: '1' }} />
       <Box
         sx={{
