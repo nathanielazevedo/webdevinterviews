@@ -3,8 +3,7 @@ import Box from '@mui/material/Box'
 // import { useLocation } from 'react-router-dom'
 import { Fade, IconButton, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { useParams, useNavigate } from 'react-router-dom'
-import rows from '../../workouts/index'
+import { useNavigate } from 'react-router-dom'
 import Rating from '../Rating'
 import Tooltip from '@mui/material/Tooltip'
 import YouTubeIcon from '@mui/icons-material/YouTube'
@@ -13,10 +12,7 @@ import Checkbox from '@mui/material/Checkbox'
 import { useLoaderData } from 'react-router-dom'
 
 const EditorTopNav = () => {
-  // const location = useLocation()
-  // const params = useParams()
   const workout = useLoaderData()
-  // const workout = rows.find((row) => row.name === params.workoutName)
   const navigate = useNavigate()
 
   return (
@@ -24,29 +20,21 @@ const EditorTopNav = () => {
       <Box
         sx={{
           display: 'flex',
-          // height: '35px',
           alignItems: 'center',
           borderBottom: '0.5px solid #454950',
           transition: 'height 0.3s ease-in-out',
-          // border: 'solid 1px green',
         }}
       >
         <Box
           sx={{
             display: 'flex',
             width: '100%',
-            // border: 'solid 1px blue',
-            // justifyContent: 'space-between',
-            // alignItems: 'flex-end',
           }}
         >
           <Box
             sx={{
               display: 'flex',
-              // gap: '50px',
               width: '100%',
-              // border: 'solid 1px yellow',
-              // justifyContent: 'space-between',
               alignItems: 'center',
             }}
           >
@@ -113,7 +101,7 @@ const EditorTopNav = () => {
               <Tooltip
                 title={
                   <>
-                    {workout.checkList.map((item, index) => (
+                    {/* {workout.checkList.map((item, index) => (
                       <Box
                         key={index}
                         sx={{
@@ -127,7 +115,7 @@ const EditorTopNav = () => {
                           {item}
                         </Typography>
                       </Box>
-                    ))}
+                    ))} */}
                   </>
                 }
                 placement='bottom'

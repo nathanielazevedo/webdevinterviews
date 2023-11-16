@@ -1,0 +1,418 @@
+{
+  "react": {
+    "pure": {
+      "workouts": {
+        "ageApi": {
+          "id": 4,
+          "name": "ageApi",
+          "title": "Age API",
+          "difficulty": "1",
+          "checkList": [
+            "Create a controlled input.",
+            "Send a request to the Age API.",
+            "Display the response from the Age API.",
+            "Create a cache so the same request is not sent twice."
+          ],
+          "gif": "/src/workouts/react/pure/age-api/ageApi.png",
+          "link": "https://youtu.be/1T0iMtIWmrw",
+          "solution": {
+            "/styles.css": {
+              "code": "* {\n  box-sizing: border-box;\n}\n\n.flex {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.page {\n  height: 100vh;\n}\n\n.card {\n  border-radius: 10px;\n  border: solid black 1px;\n  padding: 40px;\n  gap: 50px;\n}\n\n.form {\n  gap: 20px;\n  flex-direction: column;\n}\n\n.form > * {\n  padding: 15px;\n  width: 100%;\n}\n"
+            },
+            "/App.js": {
+              "code": "import './styles.css'\nimport { useState } from 'react'\n\nconst App = () => {\n  const [text, setText] = useState('')\n  const [result, setResult] = useState(null)\n  const [previousSearches, setPreviousSearches] = useState({})\n\n  const handleSubmit = async () => {\n    try {\n      if (previousSearches.hasOwnProperty(text)) {\n        setResult(previousSearches[text])\n      } else {\n        const response = await fetch(`https://api.agify.io/?name=${text}`)\n        if (!response.ok) {\n          throw new Error(response.status)\n        }\n        const result = await response.json()\n        setResult(result.age)\n        setPreviousSearches({ ...previousSearches, [text]: result.age })\n      }\n    } catch (e) {\n      console.log(e)\n    } finally {\n      setText('')\n    }\n  }\n\n  return (\n    <div className='page flex'>\n      <div className='card flex'>\n        <div className='form flex'>\n          <input\n            value={text}\n            placeholder='Enter a Name'\n            onChange={(evt) => setText(evt.target.value)}\n          />\n          <button disabled={text === ''} onClick={handleSubmit}>\n            SUBMIT\n          </button>\n        </div>\n        <h1>{result ?? '-'}</h1>\n      </div>\n    </div>\n  )\n}\n\nexport default App\n"
+            },
+            "/index.js": {
+              "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+            },
+            "/public/index.html": {
+              "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+            },
+            "/package.json": {
+              "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+            }
+          },
+          "template": {
+            "/styles.css": {
+              "code": ".flex{\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}"
+            },
+            "/App.js": {
+              "code": "export default function App() {\n  return (\n    <div\n      className=\"flex\"\n      style={{ height: \"100vh\", fontFamily: \"Bai Jamjuree\", fontSize: \"35px\" }}\n    >\n      WEB DEV INTERVIEWS\n    </div>\n  );\n}\n"
+            },
+            "/index.js": {
+              "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+            },
+            "/public/index.html": {
+              "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+            },
+            "/package.json": {
+              "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+            }
+          },
+          "type": "react",
+          "path": "/workouts/react/pure/age-api"
+        },
+        "checkedTree": {
+          "id": 2,
+          "name": "checkedTree",
+          "title": "Checked Tree",
+          "difficulty": "3",
+          "checkList": [
+            "Render the data in a nested structure.",
+            "Clicking a parent should expand/collapse its children.",
+            "Search should filter out matching items.",
+            "Checking a child should check all its parents.",
+            "Unchecking a parent should uncheck all its children.",
+            "Clicking submit should console an array of all the checked items IDs."
+          ],
+          "gif": "/src/workouts/react/pure/checkedTree/checkedTree.gif",
+          "link": "https://www.youtube.com/watch?v=WX8Oplyd3Ag",
+          "solution": {
+            "/CheckedTree.js": {
+              "code": "/* eslint-disable react/prop-types */\nimport { useState } from 'react'\nimport { filterItems } from './utils'\n\nconst CheckboxTree = ({ data, onChange }) => {\n  const [searchQuery, setSearchQuery] = useState('')\n  const [checkedItems, setCheckedItems] = useState({})\n  const [expandedItems, setExpandedItems] = useState({})\n\n  const handleCheckboxChange = (itemId) => {\n    const updatedCheckedItems = { ...checkedItems }\n    updatedCheckedItems[itemId] = !updatedCheckedItems[itemId]\n\n    if (updatedCheckedItems[itemId]) {\n      // If checking a child, check all parents\n      checkParents(itemId, updatedCheckedItems)\n    } else {\n      // If unchecking a parent, uncheck all children\n      uncheckAllChildren(data, itemId, updatedCheckedItems)\n    }\n\n    // update parent onChange\n    const checkedIds = Object.keys(updatedCheckedItems).filter(\n      (id) => updatedCheckedItems[id]\n    )\n    onChange(checkedIds)\n    setCheckedItems(updatedCheckedItems)\n  }\n\n  const findParent = (nodes, itemId) => {\n    for (const node of nodes) {\n      if (node.children.length > 0) {\n        if (node.children.some((child) => child.id === itemId)) {\n          return node\n        } else {\n          const parent = findParent(node.children, itemId)\n          if (parent) {\n            return parent\n          }\n        }\n      }\n    }\n    return null\n  }\n\n  const checkParents = (id, updatedCheckedItems) => {\n    updatedCheckedItems[id] = true\n    const parent = findParent(data, id)\n    if (parent) {\n      checkParents(parent.id, updatedCheckedItems)\n    }\n  }\n\n  const uncheckAllChildren = (nodes, parentId, updatedCheckedItems) => {\n    for (const node of nodes) {\n      if (node.id === parentId) {\n        // Parent found, uncheck all its children\n        uncheckChildren(node, updatedCheckedItems)\n        return\n      }\n      if (node.children.length > 0) {\n        uncheckAllChildren(node.children, parentId, updatedCheckedItems)\n      }\n    }\n  }\n\n  const uncheckChildren = (node, updatedCheckedItems) => {\n    updatedCheckedItems[node.id] = false\n    for (const child of node.children) {\n      uncheckChildren(child, updatedCheckedItems)\n    }\n  }\n\n  const handleExpandToggle = (itemId) => {\n    setExpandedItems((prevState) => ({\n      ...prevState,\n      [itemId]: !prevState[itemId],\n    }))\n  }\n\n  const handleSearchChange = (event) => {\n    setSearchQuery(event.target.value)\n  }\n\n  // Filter items based on search query\n  const filteredData = filterItems(data, searchQuery)\n\n  const renderTree = (nodes) => {\n    return (\n      <ul style={{ listStyleType: 'none', paddingInlineStart: '20px' }}>\n        {nodes.map((node) => (\n          <li key={node.id}>\n            <div>\n              {node.children.length > 0 ? (\n                <span\n                  onClick={() => handleExpandToggle(node.id)}\n                  style={{ cursor: 'pointer', marginRight: '5px' }}\n                >\n                  {expandedItems[node.id] ? `v` : '>'}\n                </span>\n              ) : (\n                <span>&nbsp;&nbsp;&nbsp;</span>\n              )}\n              <label>\n                <input\n                  type='checkbox'\n                  checked={checkedItems[node.id] || false}\n                  onChange={() => handleCheckboxChange(node.id)}\n                />\n                {node.name}\n              </label>\n            </div>\n            {expandedItems[node.id] &&\n              node.children.length > 0 &&\n              renderTree(node.children)}\n          </li>\n        ))}\n      </ul>\n    )\n  }\n\n  return (\n    <div style={{ border: 'solid grey 1px', width: '100%' }}>\n      <input\n        placeholder='Search...'\n        value={searchQuery}\n        onChange={handleSearchChange}\n        style={{ width: '100%', padding: '10px' }}\n      />\n      <ul style={{ listStyleType: 'none', paddingInlineStart: '0px' }}>\n        {renderTree(filteredData)}\n      </ul>\n    </div>\n  )\n}\n\nexport default CheckboxTree\n"
+            },
+            "/asString.js": {
+              "code": "export default {\n  '/CheckedTree.js': {\n    code: \"/* eslint-disable react/prop-types */\\nimport { useState } from 'react'\\nimport { filterItems, findParent } from './utils'\\n\\nconst CheckboxTree = ({ data, onChange }) => {\\n  const [searchQuery, setSearchQuery] = useState('')\\n  const [checkedItems, setCheckedItems] = useState({})\\n  const [expandedItems, setExpandedItems] = useState({})\\n\\n  const handleCheckboxChange = (itemId) => {\\n    const updatedCheckedItems = { ...checkedItems }\\n    updatedCheckedItems[itemId] = !updatedCheckedItems[itemId]\\n\\n    if (updatedCheckedItems[itemId]) {\\n      // If checking a child, check all parents\\n      checkParents(itemId, updatedCheckedItems)\\n    } else {\\n      // If unchecking a parent, uncheck all children\\n      uncheckAllChildren(data, itemId, updatedCheckedItems)\\n    }\\n\\n    // update parent onChange\\n    const checkedIds = Object.keys(updatedCheckedItems).filter(\\n      (id) => updatedCheckedItems[id]\\n    )\\n    onChange(checkedIds)\\n    setCheckedItems(updatedCheckedItems)\\n  }\\n\\n  const findParent = (nodes, itemId) => {\\n    for (const node of nodes) {\\n      if (node.children.length > 0) {\\n        if (node.children.some((child) => child.id === itemId)) {\\n          return node\\n        } else {\\n          const parent = findParent(node.children, itemId)\\n          if (parent) {\\n            return parent\\n          }\\n        }\\n      }\\n    }\\n    return null\\n  }\\n\\n  const checkParents = (id, updatedCheckedItems) => {\\n    updatedCheckedItems[id] = true\\n    const parent = findParent(data, id)\\n    if (parent) {\\n      checkParents(parent.id, updatedCheckedItems)\\n    }\\n  }\\n\\n  const uncheckAllChildren = (nodes, parentId, updatedCheckedItems) => {\\n    for (const node of nodes) {\\n      if (node.id === parentId) {\\n        // Parent found, uncheck all its children\\n        uncheckChildren(node, updatedCheckedItems)\\n        return\\n      }\\n      if (node.children.length > 0) {\\n        uncheckAllChildren(node.children, parentId, updatedCheckedItems)\\n      }\\n    }\\n  }\\n\\n  const uncheckChildren = (node, updatedCheckedItems) => {\\n    updatedCheckedItems[node.id] = false\\n    for (const child of node.children) {\\n      uncheckChildren(child, updatedCheckedItems)\\n    }\\n  }\\n\\n  const handleExpandToggle = (itemId) => {\\n    setExpandedItems((prevState) => ({\\n      ...prevState,\\n      [itemId]: !prevState[itemId],\\n    }))\\n  }\\n\\n  const handleSearchChange = (event) => {\\n    setSearchQuery(event.target.value)\\n  }\\n\\n  // Filter items based on search query\\n  const filteredData = filterItems(data, searchQuery)\\n\\n  const renderTree = (nodes) => {\\n    return (\\n      <ul style={{ listStyleType: 'none', paddingInlineStart: '20px' }}>\\n        {nodes.map((node) => (\\n          <li key={node.id}>\\n            <div>\\n              {node.children.length > 0 ? (\\n                <span\\n                  onClick={() => handleExpandToggle(node.id)}\\n                  style={{ cursor: 'pointer', marginRight: '5px' }}\\n                >\\n                  {expandedItems[node.id] ? `v` : '>'}\\n                </span>\\n              ) : (\\n                <span>&nbsp;&nbsp;&nbsp;</span>\\n              )}\\n              <label>\\n                <input\\n                  type='checkbox'\\n                  checked={checkedItems[node.id] || false}\\n                  onChange={() => handleCheckboxChange(node.id)}\\n                />\\n                {node.name}\\n              </label>\\n            </div>\\n            {expandedItems[node.id] &&\\n              node.children.length > 0 &&\\n              renderTree(node.children)}\\n          </li>\\n        ))}\\n      </ul>\\n    )\\n  }\\n\\n  return (\\n    <div style={{ border: 'solid grey 1px', width: '100%' }}>\\n      <input\\n        placeholder='Search...'\\n        value={searchQuery}\\n        onChange={handleSearchChange}\\n        style={{ width: '100%', padding: '10px' }}\\n      />\\n      <ul style={{ listStyleType: 'none', paddingInlineStart: '0px' }}>\\n        {renderTree(filteredData)}\\n      </ul>\\n    </div>\\n  )\\n}\\n\\nexport default CheckboxTree\\n\",\n  },\n  '/utils.js': {\n    code: 'const formatData = (data) => {\\n  const map = {}\\n  const result = []\\n\\n  // Create a map of items by their ID for quick access\\n  data.forEach((item) => {\\n    item.children = []\\n    map[item.id] = item\\n  })\\n\\n  // Iterate through the items to build the tree\\n  data.forEach((item) => {\\n    if (item.parentId !== null) {\\n      // If the item has a parent, push it into its parent\\'s \"children\" array\\n      map[item.parentId].children.push(item)\\n    } else {\\n      // If the item has no parent, it\\'s a top-level item, so add it to the result\\n      result.push(item)\\n    }\\n  })\\n  return result\\n}\\n\\n// Recursive function to filter items based on search query, including children\\nconst filterItems = (nodes, query) => {\\n  return nodes.filter((node) => {\\n    const isMatch = node.name.toLowerCase().includes(query.toLowerCase())\\n    if (isMatch) {\\n      return true\\n    }\\n    if (node.children.length > 0) {\\n      return filterItems(node.children, query).length > 0\\n    }\\n    return false\\n  })\\n}\\n\\nconst findParent = (nodes, itemId) => {\\n  for (const node of nodes) {\\n    if (node.id === itemId) {\\n      return null // Root node reached\\n    }\\n    if (node.children.length > 0) {\\n      if (node.children.some((child) => child.id === itemId)) {\\n        return node\\n      } else {\\n        const parent = findParent(node.children, itemId)\\n        if (parent) {\\n          return parent\\n        }\\n      }\\n    }\\n  }\\n  return null\\n}\\n\\nexport { filterItems, findParent, formatData }\\n',\n  },\n  '/App.js': {\n    code: \"import './styles.css'\\nimport data from './data'\\nimport { useState } from 'react'\\nimport { formatData } from './utils'\\nimport CheckedTree from './CheckedTree'\\n\\nconst Main = () => {\\n  const items = formatData(data)\\n  const [formData, setFormData] = useState({ checkedTree: [] })\\n\\n  const handleSubmit = () => {\\n    console.log(formData)\\n  }\\n\\n  return (\\n    <div className='container'>\\n      <h1>Mock Form</h1>\\n      <input placeholder='Mock Input' className='common' />\\n      <input placeholder='Mock Input' className='common' />\\n      <CheckedTree\\n        data={items}\\n        onChange={(checkedItems) => {\\n          setFormData((prevFormData) => ({\\n            ...prevFormData,\\n            checkedTree: checkedItems,\\n          }))\\n        }}\\n      />\\n      <button onClick={handleSubmit} className='common'>\\n        Submit\\n      </button>\\n    </div>\\n  )\\n}\\n\\nexport default Main\\n\",\n  },\n  '/data.js': {\n    code: \"const response = [\\n  { id: 4, parentId: 3, name: 'Days' },\\n  { id: 1, parentId: null, name: 'Years' },\\n  { id: 2, parentId: 1, name: 'Months' },\\n  { id: 5, parentId: null, name: 'Stars' },\\n  { id: 3, parentId: 2, name: 'Weeks' },\\n  { id: 6, parentId: 5, name: 'Sun' },\\n  { id: 7, parentId: 5, name: 'Proxima Centauri' },\\n  { id: 8, parentId: null, name: 'Dogs' },\\n]\\n\\nexport default response\\n\",\n  },\n  '/styles.css': {\n    code: '* {\\n  -webkit-box-sizing: border-box;\\n  -moz-box-sizing: border-box;\\n  box-sizing: border-box;\\n}\\n\\n.container {\\n  margin: 30px;\\n  width: 500px;\\n  color: black;\\n  display: flex;\\n  flex-direction: column;\\n  gap: 10px;\\n}\\n\\n.common {\\n  width: 100%;\\n  padding: 10px;\\n}\\n',\n  },\n  '/asString.js': {\n    code: \"export default {\\n  '/asString.js': {\\n    code: \\\"export default {\\\\n  '/App.js':\\\\n    \\\\\\\"import './styles.css'\\\\\\\\nimport data from './data'\\\\\\\\nimport { useState } from 'react'\\\\\\\\nimport { formatData } from './utils'\\\\\\\\nimport CheckedTree from './CheckedTree'\\\\\\\\n\\\\\\\\nconst Main = () => {\\\\\\\\n  const [items] = useState(formatData(data))\\\\\\\\n  const [formData, setFormData] = useState({ checkedTree: [] })\\\\\\\\n\\\\\\\\n  const handleSubmit = () => {\\\\\\\\n    console.log(formData)\\\\\\\\n  }\\\\\\\\n\\\\\\\\n  return (\\\\\\\\n    <div className='container'>\\\\\\\\n      <h1>Mock Form</h1>\\\\\\\\n      <input placeholder='Mock Input' className='common' />\\\\\\\\n      <input placeholder='Mock Input' className='common' />\\\\\\\\n      <CheckedTree\\\\\\\\n        data={items}\\\\\\\\n        onChange={(checkedItems) => {\\\\\\\\n          setFormData((prevFormData) => ({\\\\\\\\n            ...prevFormData,\\\\\\\\n            checkedTree: checkedItems,\\\\\\\\n          }))\\\\\\\\n        }}\\\\\\\\n      />\\\\\\\\n      <button onClick={handleSubmit} className='common'>\\\\\\\\n        Submit\\\\\\\\n      </button>\\\\\\\\n    </div>\\\\\\\\n  )\\\\\\\\n}\\\\\\\\n\\\\\\\\nexport default Main\\\\\\\\n\\\\\\\",\\\\n  '/styles.css':\\\\n    '* {\\\\\\\\n  -webkit-box-sizing: border-box;\\\\\\\\n  -moz-box-sizing: border-box;\\\\\\\\n  box-sizing: border-box;\\\\\\\\n}\\\\\\\\n\\\\\\\\n.container {\\\\\\\\n  margin: 30px;\\\\\\\\n  width: 500px;\\\\\\\\n  color: black;\\\\\\\\n  display: flex;\\\\\\\\n  flex-direction: column;\\\\\\\\n  gap: 10px;\\\\\\\\n}\\\\\\\\n\\\\\\\\n.common {\\\\\\\\n  width: 100%;\\\\\\\\n  padding: 10px;\\\\\\\\n}\\\\\\\\n',\\\\n  '/data.js':\\\\n    \\\\\\\"const response = [\\\\\\\\n  { id: 4, parentId: 3, name: 'Days' },\\\\\\\\n  { id: 1, parentId: null, name: 'Years' },\\\\\\\\n  { id: 2, parentId: 1, name: 'Months' },\\\\\\\\n  { id: 5, parentId: null, name: 'Stars' },\\\\\\\\n  { id: 3, parentId: 2, name: 'Weeks' },\\\\\\\\n  { id: 6, parentId: 5, name: 'Sun' },\\\\\\\\n  { id: 7, parentId: 5, name: 'Proxima Centauri' },\\\\\\\\n  { id: 8, parentId: null, name: 'Dogs' },\\\\\\\\n]\\\\\\\\n\\\\\\\\nexport default response\\\\\\\\n\\\\\\\",\\\\n  '/CheckedTree.js':\\\\n    \\\\\\\"/* eslint-disable react/prop-types */\\\\\\\\nimport { useState } from 'react'\\\\\\\\nimport { filterItems, findParent } from './utils'\\\\\\\\n\\\\\\\\nconst CheckboxTree = ({ data, onChange }) => {\\\\\\\\n  const [searchQuery, setSearchQuery] = useState('')\\\\\\\\n  const [checkedItems, setCheckedItems] = useState({})\\\\\\\\n  const [expandedItems, setExpandedItems] = useState({})\\\\\\\\n\\\\\\\\n  const handleCheckboxChange = (itemId) => {\\\\\\\\n    const updatedCheckedItems = { ...checkedItems }\\\\\\\\n    updatedCheckedItems[itemId] = !updatedCheckedItems[itemId]\\\\\\\\n\\\\\\\\n    if (updatedCheckedItems[itemId]) {\\\\\\\\n      // If checking a child, check all parents\\\\\\\\n      checkAllParents(data, itemId, updatedCheckedItems)\\\\\\\\n    } else {\\\\\\\\n      // If unchecking a parent, uncheck all children\\\\\\\\n      uncheckAllChildren(data, itemId, updatedCheckedItems)\\\\\\\\n    }\\\\\\\\n\\\\\\\\n    // update parent onChange\\\\\\\\n    const checkedIds = Object.keys(updatedCheckedItems).filter(\\\\\\\\n      (id) => updatedCheckedItems[id]\\\\\\\\n    )\\\\\\\\n    onChange(checkedIds)\\\\\\\\n    setCheckedItems(updatedCheckedItems)\\\\\\\\n  }\\\\\\\\n\\\\\\\\n  const checkAllParents = (nodes, childId, updatedCheckedItems) => {\\\\\\\\n    for (const node of nodes) {\\\\\\\\n      if (node.id === childId) {\\\\\\\\n        // Child found, check all its parents\\\\\\\\n        checkParents(node, updatedCheckedItems)\\\\\\\\n        return\\\\\\\\n      }\\\\\\\\n      if (node.children.length > 0) {\\\\\\\\n        checkAllParents(node.children, childId, updatedCheckedItems)\\\\\\\\n      }\\\\\\\\n    }\\\\\\\\n  }\\\\\\\\n\\\\\\\\n  const checkParents = (node, updatedCheckedItems) => {\\\\\\\\n    updatedCheckedItems[node.id] = true\\\\\\\\n    const parent = findParent(data, node.id)\\\\\\\\n    if (parent) {\\\\\\\\n      checkParents(parent, updatedCheckedItems)\\\\\\\\n    }\\\\\\\\n  }\\\\\\\\n\\\\\\\\n  const uncheckAllChildren = (nodes, parentId, updatedCheckedItems) => {\\\\\\\\n    for (const node of nodes) {\\\\\\\\n      if (node.id === parentId) {\\\\\\\\n        // Parent found, uncheck all its children\\\\\\\\n        uncheckChildren(node, updatedCheckedItems)\\\\\\\\n        return\\\\\\\\n      }\\\\\\\\n      if (node.children.length > 0) {\\\\\\\\n        uncheckAllChildren(node.children, parentId, updatedCheckedItems)\\\\\\\\n      }\\\\\\\\n    }\\\\\\\\n  }\\\\\\\\n\\\\\\\\n  const uncheckChildren = (node, updatedCheckedItems) => {\\\\\\\\n    updatedCheckedItems[node.id] = false\\\\\\\\n    for (const child of node.children) {\\\\\\\\n      uncheckChildren(child, updatedCheckedItems)\\\\\\\\n    }\\\\\\\\n  }\\\\\\\\n\\\\\\\\n  const handleExpandToggle = (itemId) => {\\\\\\\\n    setExpandedItems((prevState) => ({\\\\\\\\n      ...prevState,\\\\\\\\n      [itemId]: !prevState[itemId],\\\\\\\\n    }))\\\\\\\\n  }\\\\\\\\n\\\\\\\\n  const handleSearchChange = (event) => {\\\\\\\\n    setSearchQuery(event.target.value)\\\\\\\\n  }\\\\\\\\n\\\\\\\\n  // Filter items based on search query\\\\\\\\n  const filteredData = filterItems(data, searchQuery)\\\\\\\\n\\\\\\\\n  const renderTree = (nodes) => {\\\\\\\\n    return (\\\\\\\\n      <ul style={{ listStyleType: 'none', paddingInlineStart: '20px' }}>\\\\\\\\n        {nodes.map((node) => (\\\\\\\\n          <li key={node.id}>\\\\\\\\n            <div>\\\\\\\\n              {node.children.length > 0 ? (\\\\\\\\n                <span\\\\\\\\n                  onClick={() => handleExpandToggle(node.id)}\\\\\\\\n                  style={{ cursor: 'pointer', marginRight: '5px' }}\\\\\\\\n                >\\\\\\\\n                  {expandedItems[node.id] ? `v` : '>'}\\\\\\\\n                </span>\\\\\\\\n              ) : (\\\\\\\\n                <span>&nbsp;&nbsp;&nbsp;</span>\\\\\\\\n              )}\\\\\\\\n              <label>\\\\\\\\n                <input\\\\\\\\n                  type='checkbox'\\\\\\\\n                  checked={checkedItems[node.id] || false}\\\\\\\\n                  onChange={() => handleCheckboxChange(node.id)}\\\\\\\\n                />\\\\\\\\n                {node.name}\\\\\\\\n              </label>\\\\\\\\n            </div>\\\\\\\\n            {expandedItems[node.id] &&\\\\\\\\n              node.children.length > 0 &&\\\\\\\\n              renderTree(node.children)}\\\\\\\\n          </li>\\\\\\\\n        ))}\\\\\\\\n      </ul>\\\\\\\\n    )\\\\\\\\n  }\\\\\\\\n\\\\\\\\n  return (\\\\\\\\n    <div style={{ border: 'solid grey 1px', width: '100%' }}>\\\\\\\\n      <input\\\\\\\\n        placeholder='Search...'\\\\\\\\n        value={searchQuery}\\\\\\\\n        onChange={handleSearchChange}\\\\\\\\n        style={{ width: '100%', padding: '10px' }}\\\\\\\\n      />\\\\\\\\n      <ul style={{ listStyleType: 'none', paddingInlineStart: '0px' }}>\\\\\\\\n        {renderTree(filteredData)}\\\\\\\\n      </ul>\\\\\\\\n    </div>\\\\\\\\n  )\\\\\\\\n}\\\\\\\\n\\\\\\\\nexport default CheckboxTree\\\\\\\\n\\\\\\\",\\\\n  '/utils.js':\\\\n    'const formatData = (data) => {\\\\\\\\n  const map = {}\\\\\\\\n  const result = []\\\\\\\\n\\\\\\\\n  // Create a map of items by their ID for quick access\\\\\\\\n  data.forEach((item) => {\\\\\\\\n    item.children = []\\\\\\\\n    map[item.id] = item\\\\\\\\n  })\\\\\\\\n\\\\\\\\n  // Iterate through the items to build the tree\\\\\\\\n  data.forEach((item) => {\\\\\\\\n    if (item.parentId !== null) {\\\\\\\\n      // If the item has a parent, push it into its parent\\\\\\\\'s \\\\\\\"children\\\\\\\" array\\\\\\\\n      map[item.parentId].children.push(item)\\\\\\\\n    } else {\\\\\\\\n      // If the item has no parent, it\\\\\\\\'s a top-level item, so add it to the result\\\\\\\\n      result.push(item)\\\\\\\\n    }\\\\\\\\n  })\\\\\\\\n  return result\\\\\\\\n}\\\\\\\\n\\\\\\\\n// Recursive function to filter items based on search query, including children\\\\\\\\nconst filterItems = (nodes, query) => {\\\\\\\\n  return nodes.filter((node) => {\\\\\\\\n    const isMatch = node.name.toLowerCase().includes(query.toLowerCase())\\\\\\\\n    if (isMatch) {\\\\\\\\n      return true\\\\\\\\n    }\\\\\\\\n    if (node.children.length > 0) {\\\\\\\\n      return filterItems(node.children, query).length > 0\\\\\\\\n    }\\\\\\\\n    return false\\\\\\\\n  })\\\\\\\\n}\\\\\\\\n\\\\\\\\nconst findParent = (nodes, itemId) => {\\\\\\\\n  for (const node of nodes) {\\\\\\\\n    if (node.id === itemId) {\\\\\\\\n      return null // Root node reached\\\\\\\\n    }\\\\\\\\n    if (node.children.length > 0) {\\\\\\\\n      if (node.children.some((child) => child.id === itemId)) {\\\\\\\\n        return node\\\\\\\\n      } else {\\\\\\\\n        const parent = findParent(node.children, itemId)\\\\\\\\n        if (parent) {\\\\\\\\n          return parent\\\\\\\\n        }\\\\\\\\n      }\\\\\\\\n    }\\\\\\\\n  }\\\\\\\\n  return null\\\\\\\\n}\\\\\\\\n\\\\\\\\nexport { filterItems, findParent, formatData }\\\\\\\\n',\\\\n}\\\\n\\\",\\n  },\\n  '/App.js': {\\n    code: \\\"import './styles.css'\\\\nimport data from './data'\\\\nimport { useState } from 'react'\\\\nimport { formatData } from './utils'\\\\nimport CheckedTree from './CheckedTree'\\\\n\\\\nconst Main = () => {\\\\n  const [items] = useState(formatData(data))\\\\n  const [formData, setFormData] = useState({ checkedTree: [] })\\\\n\\\\n  const handleSubmit = () => {\\\\n    console.log(formData)\\\\n  }\\\\n\\\\n  return (\\\\n    <div className='container'>\\\\n      <h1>Mock Form</h1>\\\\n      <input placeholder='Mock Input' className='common' />\\\\n      <input placeholder='Mock Input' className='common' />\\\\n      <CheckedTree\\\\n        data={items}\\\\n        onChange={(checkedItems) => {\\\\n          setFormData((prevFormData) => ({\\\\n            ...prevFormData,\\\\n            checkedTree: checkedItems,\\\\n          }))\\\\n        }}\\\\n      />\\\\n      <button onClick={handleSubmit} className='common'>\\\\n        Submit\\\\n      </button>\\\\n    </div>\\\\n  )\\\\n}\\\\n\\\\nexport default Main\\\\n\\\",\\n  },\\n  '/data.js': {\\n    code: \\\"const response = [\\\\n  { id: 4, parentId: 3, name: 'Days' },\\\\n  { id: 1, parentId: null, name: 'Years' },\\\\n  { id: 2, parentId: 1, name: 'Months' },\\\\n  { id: 5, parentId: null, name: 'Stars' },\\\\n  { id: 3, parentId: 2, name: 'Weeks' },\\\\n  { id: 6, parentId: 5, name: 'Sun' },\\\\n  { id: 7, parentId: 5, name: 'Proxima Centauri' },\\\\n  { id: 8, parentId: null, name: 'Dogs' },\\\\n]\\\\n\\\\nexport default response\\\\n\\\",\\n  },\\n  '/styles.css': {\\n    code: '* {\\\\n  -webkit-box-sizing: border-box;\\\\n  -moz-box-sizing: border-box;\\\\n  box-sizing: border-box;\\\\n}\\\\n\\\\n.container {\\\\n  margin: 30px;\\\\n  width: 500px;\\\\n  color: black;\\\\n  display: flex;\\\\n  flex-direction: column;\\\\n  gap: 10px;\\\\n}\\\\n\\\\n.common {\\\\n  width: 100%;\\\\n  padding: 10px;\\\\n}\\\\n',\\n  },\\n  '/utils.js': {\\n    code: 'const formatData = (data) => {\\\\n  const map = {}\\\\n  const result = []\\\\n\\\\n  // Create a map of items by their ID for quick access\\\\n  data.forEach((item) => {\\\\n    item.children = []\\\\n    map[item.id] = item\\\\n  })\\\\n\\\\n  // Iterate through the items to build the tree\\\\n  data.forEach((item) => {\\\\n    if (item.parentId !== null) {\\\\n      // If the item has a parent, push it into its parent\\\\'s \\\"children\\\" array\\\\n      map[item.parentId].children.push(item)\\\\n    } else {\\\\n      // If the item has no parent, it\\\\'s a top-level item, so add it to the result\\\\n      result.push(item)\\\\n    }\\\\n  })\\\\n  return result\\\\n}\\\\n\\\\n// Recursive function to filter items based on search query, including children\\\\nconst filterItems = (nodes, query) => {\\\\n  return nodes.filter((node) => {\\\\n    const isMatch = node.name.toLowerCase().includes(query.toLowerCase())\\\\n    if (isMatch) {\\\\n      return true\\\\n    }\\\\n    if (node.children.length > 0) {\\\\n      return filterItems(node.children, query).length > 0\\\\n    }\\\\n    return false\\\\n  })\\\\n}\\\\n\\\\nconst findParent = (nodes, itemId) => {\\\\n  for (const node of nodes) {\\\\n    if (node.id === itemId) {\\\\n      return null // Root node reached\\\\n    }\\\\n    if (node.children.length > 0) {\\\\n      if (node.children.some((child) => child.id === itemId)) {\\\\n        return node\\\\n      } else {\\\\n        const parent = findParent(node.children, itemId)\\\\n        if (parent) {\\\\n          return parent\\\\n        }\\\\n      }\\\\n    }\\\\n  }\\\\n  return null\\\\n}\\\\n\\\\nexport { filterItems, findParent, formatData }\\\\n',\\n  },\\n  '/CheckedTree.js': {\\n    code: \\\"/* eslint-disable react/prop-types */\\\\nimport { useState } from 'react'\\\\nimport { filterItems, findParent } from './utils'\\\\n\\\\nconst CheckboxTree = ({ data, onChange }) => {\\\\n  const [searchQuery, setSearchQuery] = useState('')\\\\n  const [checkedItems, setCheckedItems] = useState({})\\\\n  const [expandedItems, setExpandedItems] = useState({})\\\\n\\\\n  const handleCheckboxChange = (itemId) => {\\\\n    const updatedCheckedItems = { ...checkedItems }\\\\n    updatedCheckedItems[itemId] = !updatedCheckedItems[itemId]\\\\n\\\\n    if (updatedCheckedItems[itemId]) {\\\\n      // If checking a child, check all parents\\\\n      checkAllParents(data, itemId, updatedCheckedItems)\\\\n    } else {\\\\n      // If unchecking a parent, uncheck all children\\\\n      uncheckAllChildren(data, itemId, updatedCheckedItems)\\\\n    }\\\\n\\\\n    // update parent onChange\\\\n    const checkedIds = Object.keys(updatedCheckedItems).filter(\\\\n      (id) => updatedCheckedItems[id]\\\\n    )\\\\n    onChange(checkedIds)\\\\n    setCheckedItems(updatedCheckedItems)\\\\n  }\\\\n\\\\n  const checkAllParents = (nodes, childId, updatedCheckedItems) => {\\\\n    for (const node of nodes) {\\\\n      if (node.id === childId) {\\\\n        // Child found, check all its parents\\\\n        checkParents(node, updatedCheckedItems)\\\\n        return\\\\n      }\\\\n      if (node.children.length > 0) {\\\\n        checkAllParents(node.children, childId, updatedCheckedItems)\\\\n      }\\\\n    }\\\\n  }\\\\n\\\\n  const checkParents = (node, updatedCheckedItems) => {\\\\n    updatedCheckedItems[node.id] = true\\\\n    const parent = findParent(data, node.id)\\\\n    if (parent) {\\\\n      checkParents(parent, updatedCheckedItems)\\\\n    }\\\\n  }\\\\n\\\\n  const uncheckAllChildren = (nodes, parentId, updatedCheckedItems) => {\\\\n    for (const node of nodes) {\\\\n      if (node.id === parentId) {\\\\n        // Parent found, uncheck all its children\\\\n        uncheckChildren(node, updatedCheckedItems)\\\\n        return\\\\n      }\\\\n      if (node.children.length > 0) {\\\\n        uncheckAllChildren(node.children, parentId, updatedCheckedItems)\\\\n      }\\\\n    }\\\\n  }\\\\n\\\\n  const uncheckChildren = (node, updatedCheckedItems) => {\\\\n    updatedCheckedItems[node.id] = false\\\\n    for (const child of node.children) {\\\\n      uncheckChildren(child, updatedCheckedItems)\\\\n    }\\\\n  }\\\\n\\\\n  const handleExpandToggle = (itemId) => {\\\\n    setExpandedItems((prevState) => ({\\\\n      ...prevState,\\\\n      [itemId]: !prevState[itemId],\\\\n    }))\\\\n  }\\\\n\\\\n  const handleSearchChange = (event) => {\\\\n    setSearchQuery(event.target.value)\\\\n  }\\\\n\\\\n  // Filter items based on search query\\\\n  const filteredData = filterItems(data, searchQuery)\\\\n\\\\n  const renderTree = (nodes) => {\\\\n    return (\\\\n      <ul style={{ listStyleType: 'none', paddingInlineStart: '20px' }}>\\\\n        {nodes.map((node) => (\\\\n          <li key={node.id}>\\\\n            <div>\\\\n              {node.children.length > 0 ? (\\\\n                <span\\\\n                  onClick={() => handleExpandToggle(node.id)}\\\\n                  style={{ cursor: 'pointer', marginRight: '5px' }}\\\\n                >\\\\n                  {expandedItems[node.id] ? `v` : '>'}\\\\n                </span>\\\\n              ) : (\\\\n                <span>&nbsp;&nbsp;&nbsp;</span>\\\\n              )}\\\\n              <label>\\\\n                <input\\\\n                  type='checkbox'\\\\n                  checked={checkedItems[node.id] || false}\\\\n                  onChange={() => handleCheckboxChange(node.id)}\\\\n                />\\\\n                {node.name}\\\\n              </label>\\\\n            </div>\\\\n            {expandedItems[node.id] &&\\\\n              node.children.length > 0 &&\\\\n              renderTree(node.children)}\\\\n          </li>\\\\n        ))}\\\\n      </ul>\\\\n    )\\\\n  }\\\\n\\\\n  return (\\\\n    <div style={{ border: 'solid grey 1px', width: '100%' }}>\\\\n      <input\\\\n        placeholder='Search...'\\\\n        value={searchQuery}\\\\n        onChange={handleSearchChange}\\\\n        style={{ width: '100%', padding: '10px' }}\\\\n      />\\\\n      <ul style={{ listStyleType: 'none', paddingInlineStart: '0px' }}>\\\\n        {renderTree(filteredData)}\\\\n      </ul>\\\\n    </div>\\\\n  )\\\\n}\\\\n\\\\nexport default CheckboxTree\\\\n\\\",\\n  },\\n}\\n\",\n  },\n}\n"
+            },
+            "/utils.js": {
+              "code": "const formatData = (data) => {\n  const map = {}\n  const result = []\n\n  // Create a map of items by their ID for quick access\n  data.forEach((item) => {\n    item.children = []\n    map[item.id] = item\n  })\n\n  // Iterate through the items to build the tree\n  data.forEach((item) => {\n    if (item.parentId !== null) {\n      // If the item has a parent, push it into its parent's \"children\" array\n      map[item.parentId].children.push(item)\n    } else {\n      // If the item has no parent, it's a top-level item, so add it to the result\n      result.push(item)\n    }\n  })\n  return result\n}\n\n// Recursive function to filter items based on search query, including children\nconst filterItems = (nodes, query) => {\n  return nodes.filter((node) => {\n    const isMatch = node.name.toLowerCase().includes(query.toLowerCase())\n    if (isMatch) {\n      return true\n    }\n    if (node.children.length > 0) {\n      return filterItems(node.children, query).length > 0\n    }\n    return false\n  })\n}\n\nexport { filterItems, formatData }\n"
+            },
+            "/App.js": {
+              "code": "import './styles.css'\nimport data from './data'\nimport { useState } from 'react'\nimport { formatData } from './utils'\nimport CheckedTree from './CheckedTree'\n\nconst Main = () => {\n  const items = formatData(data)\n  const [formData, setFormData] = useState({ checkedTree: [] })\n\n  const handleSubmit = () => {\n    console.log(formData)\n  }\n\n  return (\n    <div className='container'>\n      <h1>Mock Form</h1>\n      <input placeholder='Mock Input' className='common' />\n      <input placeholder='Mock Input' className='common' />\n      <CheckedTree\n        data={items}\n        onChange={(checkedItems) => {\n          setFormData((prevFormData) => ({\n            ...prevFormData,\n            checkedTree: checkedItems,\n          }))\n        }}\n      />\n      <button onClick={handleSubmit} className='common'>\n        Submit\n      </button>\n    </div>\n  )\n}\n\nexport default Main\n"
+            },
+            "/styles.css": {
+              "code": "* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n\n.container {\n  margin: 30px;\n  width: 500px;\n  color: black;\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n\n.common {\n  width: 100%;\n  padding: 10px;\n}\n"
+            },
+            "/data.js": {
+              "code": "const response = [\n  { id: 4, parentId: 3, name: 'Days' },\n  { id: 1, parentId: null, name: 'Years' },\n  { id: 2, parentId: 1, name: 'Months' },\n  { id: 5, parentId: null, name: 'Stars' },\n  { id: 3, parentId: 2, name: 'Weeks' },\n  { id: 6, parentId: 5, name: 'Sun' },\n  { id: 7, parentId: 5, name: 'Proxima Centauri' },\n  { id: 8, parentId: null, name: 'Dogs' },\n]\n\nexport default response\n"
+            }
+          },
+          "template": {
+            "/styles.css": {
+              "code": "* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n\n.container {\n  margin: 30px;\n  width: 500px;\n  color: black;\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n\n.common {\n  width: 100%;\n  padding: 10px;\n}\n"
+            },
+            "/App.js": {
+              "code": "import './styles.css'\nimport data from './data'\nimport { useState } from 'react'\n// import CheckedTree from './CheckedTree'\n\nconst Main = () => {\n  const [formData, setFormData] = useState({ checkedTree: [] })\n\n  const handleSubmit = () => {\n    console.log(formData)\n  }\n\n  return (\n    <div className='container'>\n      <h1>Mock Form</h1>\n      <input placeholder='Mock Input' className='common' />\n      <input placeholder='Mock Input' className='common' />\n      {/* <CheckedTree /> */}\n      <button onClick={handleSubmit} className='common'>\n        Submit\n      </button>\n    </div>\n  )\n}\n\nexport default Main\n"
+            },
+            "/index.js": {
+              "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+            },
+            "/public/index.html": {
+              "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+            },
+            "/package.json": {
+              "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+            },
+            "/data.js": {
+              "code": "const response = [\n  { id: 4, parentId: 3, name: 'Days' },\n  { id: 1, parentId: null, name: 'Years' },\n  { id: 2, parentId: 1, name: 'Months' },\n  { id: 5, parentId: null, name: 'Stars' },\n  { id: 3, parentId: 2, name: 'Weeks' },\n  { id: 6, parentId: 5, name: 'Sun' },\n  { id: 7, parentId: 5, name: 'Proxima Centauri' },\n  { id: 8, parentId: null, name: 'Dogs' },\n]\n\nexport default response\n"
+            }
+          },
+          "type": "react",
+          "path": "/workouts/react/pure/checkedTree"
+        },
+        "swapOdds": {
+          "id": 6,
+          "name": "swapOdds",
+          "title": "Swap Odds",
+          "difficulty": "2",
+          "gist": "A nested checkbox tree.",
+          "description": "",
+          "checkList": [
+            "Render both lists to the screen.",
+            "Render a button to the screen.",
+            "When the button is clicked, swap the odds from the left list to the right list and vice versa."
+          ],
+          "gif": "/src/workouts/react/pure/swap-odds/swapOddsGif.gif",
+          "link": "https://youtu.be/TNoC0Ri52VU",
+          "solution": {
+            "/Item.js": {
+              "code": "/* eslint-disable react/prop-types */\nconst Item = ({ item, index }) => {\n  return (\n    <li className='item'>\n      <small className='item-number'>{index + 1}.</small>\n      {item.charAt(0).toUpperCase() + item.slice(1)}\n    </li>\n  )\n}\n\nexport default Item\n"
+            },
+            "/App.js": {
+              "code": "import Cart from './Cart'\nimport { useState } from 'react'\nimport { cart1, cart2 } from './data.js'\n\nconst SwapOdds = () => {\n  const [cartA, setCartA] = useState(cart1)\n  const [cartB, setCartB] = useState(cart2)\n\n  const swapOdds = () => {\n    const newCartA = [...cartA]\n    const newCartB = [...cartB]\n    for (let i = 0; i < newCartA.length; i += 2) {\n      const temp = newCartA[i]\n      newCartA[i] = newCartB[i]\n      newCartB[i] = temp\n    }\n    setCartA(newCartA)\n    setCartB(newCartB)\n  }\n\n  return (\n    <div className='page flex'>\n      <div className='container flex'>\n        <Cart cartNumber={1} data={cartA} />\n        <button onClick={swapOdds} className='swap-button'>\n          Swap Odds\n        </button>\n        <Cart cartNumber={2} data={cartB} />\n      </div>\n    </div>\n  )\n}\n\nexport default SwapOdds\n"
+            },
+            "/Cart.js": {
+              "code": "/* eslint-disable react/prop-types */\nimport Item from './Item'\n\nconst Cart = ({ data, cartNumber }) => {\n  return (\n    <div className='cart'>\n      <h2 className='cart-title'>Cart {cartNumber}</h2>\n      <ul>\n        {data.map((item, index) => (\n          <Item key={index} item={item} index={index} />\n        ))}\n      </ul>\n    </div>\n  )\n}\n\nexport default Cart\n"
+            },
+            "/data.js": {
+              "code": "const cart1 = ['apples', 'bananas', 'grapes', 'oranges', 'pears', 'pineapple']\nconst cart2 = ['potatoes', 'beans', 'carrots', 'spinnach', 'kale', 'broccoli']\n\nexport { cart1, cart2 }\n"
+            },
+            "/styles.css": {
+              "code": "* {\n  padding: 0;\n  margin: 0;\n}\n\n.flex {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.page {\n  height: 100vh;\n}\n\n.container {\n  gap: 20px;\n}\n\n.cart {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  align-items: flex-start;\n  border-radius: 10px;\n  padding: 30px 50px;\n  border: 1px solid black;\n}\n\n.cart-title {\n  border-bottom: 1px solid black;\n}\n\n.item {\n  list-style: none;\n  padding: 5px;\n}\n\n.item-number {\n  margin-right: 4px;\n}\n\n.swap-button {\n  padding: 10px;\n}\n"
+            }
+          },
+          "template": {
+            "/styles.css": {
+              "code": "* {\n  padding: 0;\n  margin: 0;\n}\n\n.flex {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.page {\n  height: 100vh;\n}\n"
+            },
+            "/App.js": {
+              "code": "import { useState } from 'react'\nimport { cart1, cart2 } from './data.js'\n\nconst App = () => {\n  return <div className='page flex'>Hello Friend</div>\n}\n\nexport default App\n"
+            },
+            "/index.js": {
+              "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+            },
+            "/public/index.html": {
+              "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+            },
+            "/package.json": {
+              "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+            },
+            "/data.js": {
+              "code": "const cart1 = ['apples', 'bananas', 'grapes', 'oranges', 'pears', 'pineapple']\nconst cart2 = ['potatoes', 'beans', 'carrots', 'spinnach', 'kale', 'broccoli']\n\nexport { cart1, cart2 }\n"
+            }
+          },
+          "type": "react",
+          "path": "/workouts/react/pure/swap-odds"
+        },
+        "switch": {
+          "id": 7,
+          "name": "switch",
+          "title": "Switches",
+          "difficulty": "2",
+          "checkList": [
+            "Ball should move back and forth.",
+            "Status of switch should be in state."
+          ],
+          "gif": "/src/workouts/react/pure/switch/gif.gif",
+          "link": "https://youtu.be/NRFOgIOxRrg",
+          "solution": {
+            "/styles.css": {
+              "code": "body {\n  font-family: sans-serif;\n  -webkit-font-smoothing: auto;\n  -moz-font-smoothing: auto;\n  -moz-osx-font-smoothing: grayscale;\n  font-smoothing: auto;\n  text-rendering: optimizeLegibility;\n  font-smooth: always;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n}\n\nh1 {\n  font-size: 1.5rem;\n}\n\n.bar {\n  width: 100px;\n  height: 50px;\n\n  border-radius: 20px;\n  background-color: lightblue;\n  position: relative;\n}\n\n.ball {\n  width: 50px;\n  height: 50px;\n  border-radius: 50%;\n  background-color: blue;\n  position: absolute;\n}\n\n.on {\n  background-color: blue;\n  right: 0;\n}\n\n.off {\n  background-color: grey;\n}\n\n.barOn {\n  background-color: lightblue;\n}\n\n.barOff {\n  background-color: lightgrey;\n}\n"
+            },
+            "/App.js": {
+              "code": "import { useState } from 'react'\n\nexport default function App() {\n  const [switchStatus, setSwitchStatus] = useState(0)\n  console.log('hello world')\n  return (\n    <div className={`${switchStatus ? 'barOn' : 'barOff'} bar`}>\n      <div\n        className={`${switchStatus ? 'on' : 'off'} ball`}\n        onClick={() => setSwitchStatus(!switchStatus)}\n      ></div>\n    </div>\n  )\n}\n"
+            },
+            "/index.js": {
+              "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+            },
+            "/public/index.html": {
+              "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+            },
+            "/package.json": {
+              "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+            }
+          },
+          "template": {
+            "/styles.css": {
+              "code": "body {\n  font-family: sans-serif;\n  -webkit-font-smoothing: auto;\n  -moz-font-smoothing: auto;\n  -moz-osx-font-smoothing: grayscale;\n  font-smoothing: auto;\n  text-rendering: optimizeLegibility;\n  font-smooth: always;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n}\n\nh1 {\n  font-size: 1.5rem;\n}"
+            },
+            "/App.js": {
+              "code": "export default function App() {\n  return <h1>Hello world</h1>\n}\n"
+            },
+            "/index.js": {
+              "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+            },
+            "/public/index.html": {
+              "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+            },
+            "/package.json": {
+              "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+            }
+          },
+          "type": "react",
+          "path": "/workouts/react/pure/switch"
+        },
+        "tabs": {
+          "id": 5,
+          "name": "tabs",
+          "title": "Tabs",
+          "difficulty": "1",
+          "checkList": [
+            "Build 3 clickable tabs",
+            "Clicking on tab should show proper contents for that tab."
+          ],
+          "gif": "/src/workouts/react/pure/tabs/tabs-gif.gif",
+          "link": "https://youtu.be/kjsPAe5boEU",
+          "solution": {
+            "/App.js": {
+              "code": "const tabs = ['TAB 1', 'TAB 2', 'TAB 3']\nconst panels = ['Panel 1', 'Panel 2', 'Panel 3']\nimport { useState } from 'react'\nimport Tab from './Tab'\nimport Panel from './Panel'\n\nexport default function App() {\n  const [currTab, setCurrTab] = useState(0)\n\n  const handleTabChange = (tab) => {\n    setCurrTab(tab)\n  }\n\n  return (\n    <div>\n      <div className='tabs-container'>\n        {tabs.map((tab, index) => {\n          return (\n            <Tab\n              key={index}\n              tab={tab}\n              onClick={() => handleTabChange(index)}\n              active={currTab === index}\n            />\n          )\n        })}\n      </div>\n      <div style={{ paddingTop: '15px' }}>\n        {panels.map((panel, index) => {\n          return <Panel key={index} tab={currTab} index={index} panel={panel} />\n        })}\n      </div>\n    </div>\n  )\n}\n"
+            },
+            "/styles.css": {
+              "code": ".tabs-container {\n  display: flex;\n  gap: 10px;\n}\n\n.tab {\n  border-bottom: 1px solid black;\n  padding-bottom: 5px;\n  cursor: pointer;\n}\n"
+            },
+            "/Panel.js": {
+              "code": "/* eslint-disable react/prop-types */\n// Panel.js\n\nconst Panel = ({ panel, tab, index }) => {\n  return <div hidden={tab === index ? false : true}>{panel}</div>\n}\n\nexport default Panel\n"
+            },
+            "/Tab.js": {
+              "code": "/* eslint-disable react/prop-types */\n// Tab.js\n\nconst Tab = ({ tab, onClick, active }) => {\n  return (\n    <div\n      className='tab'\n      onClick={onClick}\n      style={{\n        borderBottom: active ? '2px solid blue' : '1px solid black',\n      }}\n    >\n      <b\n        style={{\n          color: active ? 'blue' : 'black',\n        }}\n      >\n        {tab}\n      </b>\n    </div>\n  )\n}\n\nexport default Tab\n"
+            }
+          },
+          "template": {
+            "/styles.css": {
+              "code": "body {\n  font-family: sans-serif;\n  -webkit-font-smoothing: auto;\n  -moz-font-smoothing: auto;\n  -moz-osx-font-smoothing: grayscale;\n  font-smoothing: auto;\n  text-rendering: optimizeLegibility;\n  font-smooth: always;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n}\n\nh1 {\n  font-size: 1.5rem;\n}"
+            },
+            "/App.js": {
+              "code": "const tabs = ['TAB 1', 'TAB 2', 'TAB 3']\nconst panels = ['Panel 1', 'Panel 2', 'Panel 3']\n\nexport default function App() {\n  return <h1>Hello world</h1>\n}\n"
+            },
+            "/index.js": {
+              "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+            },
+            "/public/index.html": {
+              "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+            },
+            "/package.json": {
+              "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+            }
+          },
+          "type": "react",
+          "path": "/workouts/react/pure/tabs"
+        },
+        "ticTacToe": {
+          "id": 1,
+          "name": "ticTacToe",
+          "title": "Tic Tac Toe",
+          "difficulty": "3",
+          "checkList": [
+            "Render a tic-tac-toe board.",
+            "Clicking a cell should show player (x, y).",
+            "Switch players after each click.",
+            "Create win logic",
+            "If winner, console winner, restart game."
+          ],
+          "gif": "/src/workouts/react/pure/tic-tac-toe/tic-tac-toe.png",
+          "link": "https://youtu.be/vweARwTPmg4",
+          "solution": {
+            "/App.js": {
+              "code": "/* eslint-disable no-unused-vars */\nimport { useState } from 'react'\n\nconst generateBoard = (size) => {\n  const newBoard = []\n  for (let i = 0; i < size; i++) {\n    newBoard.push([...Array(size)])\n  }\n  return newBoard\n}\n\nconst checkHorizotal = (board) => {\n  for (let row of board) {\n    const rowSet = new Set(row)\n    if (rowSet.size == 1 && !rowSet.has(undefined)) {\n      return true\n    }\n  }\n}\n\nconst rowsToColums = (board) => {\n  const newBoard = []\n  let column = 0\n  while (column < board.length) {\n    const newRow = []\n    for (let row = 0; row < board.length; row++) {\n      newRow.push(board[row][column])\n    }\n    newBoard.push(newRow)\n    column++\n  }\n  return newBoard\n}\n\nconst diagnolToRow = (board) => {\n  const newBoard = [[], []]\n  let increment = 0\n  let decrement = board.length - 1\n  while (increment < board.length) {\n    newBoard[0].push(board[increment][increment])\n    newBoard[1].push(board[increment][decrement])\n    increment++\n    decrement++\n  }\n  return newBoard\n}\n\nconst checkForWin = (board) => {\n  // horizontal\n  if (checkHorizotal(board)) {\n    return true\n  }\n  // vertical\n  if (checkHorizotal(rowsToColums(board))) {\n    return true\n  }\n  // diagnol\n  if (checkHorizotal(diagnolToRow(board))) {\n    return true\n  }\n}\n\nfunction Tictactoe() {\n  const [board, setBoard] = useState(generateBoard(3))\n  const [currPlayer, setCurrPlayer] = useState('x')\n\n  const handleClick = (row, col) => {\n    board[row][col] = currPlayer\n    setBoard([...board])\n    if (checkForWin(board)) {\n      console.log(currPlayer + 'wins')\n      setBoard(generateBoard(3))\n      setCurrPlayer('x')\n    } else {\n      setCurrPlayer(currPlayer == 'x' ? 'y' : 'x')\n    }\n  }\n  return (\n    <div>\n      {board.map((row, r) => {\n        return (\n          <div\n            key={r}\n            style={{\n              display: 'flex',\n            }}\n          >\n            {row.map((cell, c) => {\n              return (\n                <div\n                  key={c}\n                  onClick={() => handleClick(r, c)}\n                  style={{\n                    border: 'solid black 1px',\n                    height: '50px',\n                    width: '50px',\n                    display: 'flex',\n                    justifyContent: 'center',\n                    alignItems: 'center',\n                  }}\n                >\n                  {cell}\n                </div>\n              )\n            })}\n          </div>\n        )\n      })}\n    </div>\n  )\n}\n\nexport default Tictactoe\n"
+            },
+            "/asString.js": {
+              "code": "export default {\"/App.js\":{\"code\":\"/* eslint-disable no-unused-vars */\\nimport { useState } from 'react'\\n\\nconst generateBoard = (size) => {\\n  const newBoard = []\\n  for (let i = 0; i < size; i++) {\\n    newBoard.push([...Array(size)])\\n  }\\n  return newBoard\\n}\\n\\nconst checkHorizotal = (board) => {\\n  for (let row of board) {\\n    const rowSet = new Set(row)\\n    if (rowSet.size == 1 && !rowSet.has(undefined)) {\\n      return true\\n    }\\n  }\\n}\\n\\nconst rowsToColums = (board) => {\\n  const newBoard = []\\n  let column = 0\\n  while (column < board.length) {\\n    const newRow = []\\n    for (let row = 0; row < board.length; row++) {\\n      newRow.push(board[row][column])\\n    }\\n    newBoard.push(newRow)\\n    column++\\n  }\\n  return newBoard\\n}\\n\\nconst diagnolToRow = (board) => {\\n  const newBoard = [[], []]\\n  let increment = 0\\n  let decrement = board.length - 1\\n  while (increment < board.length) {\\n    newBoard[0].push(board[increment][increment])\\n    newBoard[1].push(board[increment][decrement])\\n    increment++\\n    decrement++\\n  }\\n  return newBoard\\n}\\n\\nconst checkForWin = (board) => {\\n  // horizontal\\n  if (checkHorizotal(board)) {\\n    return true\\n  }\\n  // vertical\\n  if (checkHorizotal(rowsToColums(board))) {\\n    return true\\n  }\\n  // diagnol\\n  if (checkHorizotal(diagnolToRow(board))) {\\n    return true\\n  }\\n}\\n\\nfunction Tictactoe() {\\n  const [board, setBoard] = useState(generateBoard(3))\\n  const [currPlayer, setCurrPlayer] = useState('x')\\n\\n  const handleClick = (row, col) => {\\n    board[row][col] = currPlayer\\n    setBoard([...board])\\n    if (checkForWin(board)) {\\n      console.log(currPlayer + 'wins')\\n      setBoard(generateBoard(3))\\n      setCurrPlayer('x')\\n    } else {\\n      setCurrPlayer(currPlayer == 'x' ? 'y' : 'x')\\n    }\\n  }\\n  return (\\n    <div>\\n      {board.map((row, r) => {\\n        return (\\n          <div\\n            key={r}\\n            style={{\\n              display: 'flex',\\n            }}\\n          >\\n            {row.map((cell, c) => {\\n              return (\\n                <div\\n                  key={c}\\n                  onClick={() => handleClick(r, c)}\\n                  style={{\\n                    border: 'solid white 1px',\\n                    height: '50px',\\n                    width: '50px',\\n                    display: 'flex',\\n                    justifyContent: 'center',\\n                    alignItems: 'center',\\n                  }}\\n                >\\n                  {cell}\\n                </div>\\n              )\\n            })}\\n          </div>\\n        )\\n      })}\\n    </div>\\n  )\\n}\\n\\nexport default Tictactoe\\n\"}};"
+            }
+          },
+          "template": {
+            "/styles.css": {
+              "code": ".flex{\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}"
+            },
+            "/App.js": {
+              "code": "export default function App() {\n  return (\n    <div\n      className=\"flex\"\n      style={{ height: \"100vh\", fontFamily: \"Bai Jamjuree\", fontSize: \"35px\" }}\n    >\n      WEB DEV INTERVIEWS\n    </div>\n  );\n}\n"
+            },
+            "/index.js": {
+              "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+            },
+            "/public/index.html": {
+              "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+            },
+            "/package.json": {
+              "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+            }
+          },
+          "type": "react",
+          "path": "/workouts/react/pure/tic-tac-toe"
+        },
+        "transferList": {
+          "id": 3,
+          "name": "transferList",
+          "title": "Transfer List",
+          "difficulty": "3",
+          "checkList": [
+            "Render two lists and action buttons.",
+            "Clicking an action button should move the item to the other list."
+          ],
+          "gif": "/src/workouts/react/pure/transfer-list/transferList.png",
+          "link": "https://youtu.be/w0Kvt65Z2Uk",
+          "solution": {
+            "/ActionButtons.js": {
+              "code": "/* eslint-disable react/prop-types */\nconst ActionButtons = ({ moveRight, moveLeft }) => {\n  return (\n    <div className='buttons flex'>\n      <button onClick={moveRight}>&gt;</button>\n      <button onClick={moveLeft}>&lt;</button>\n    </div>\n  )\n}\n\nexport default ActionButtons\n"
+            },
+            "/Item.js": {
+              "code": "/* eslint-disable react/prop-types */\nconst Item = ({ item, handleToggle }) => {\n  return (\n    <label>\n      <input type='checkbox' onChange={handleToggle} />\n      {item}\n    </label>\n  )\n}\n\nexport default Item\n"
+            },
+            "/App.js": {
+              "code": "import './styles.css'\nimport List from './List'\nimport { items } from './data'\nimport { useState } from 'react'\nimport ActionButtons from './ActionButtons'\nimport { not, intersection } from './utils'\n\nconst App = () => {\n  const [leftItems, setLeftItems] = useState(items)\n  const [rightItems, setRightItems] = useState([])\n  const [checkedItems, setCheckedItems] = useState([])\n\n  const leftCheckedItems = intersection(checkedItems, leftItems)\n  const rightCheckedItems = intersection(checkedItems, rightItems)\n\n  const handleToggle = (item) => {\n    const currentIndex = checkedItems.indexOf(item)\n    const newChecked = [...checkedItems]\n\n    if (currentIndex === -1) {\n      newChecked.push(item)\n    } else {\n      newChecked.splice(currentIndex, 1)\n    }\n\n    setCheckedItems(newChecked)\n  }\n\n  const moveRight = () => {\n    setRightItems(rightItems.concat(leftCheckedItems))\n    setLeftItems(not(leftItems, leftCheckedItems))\n    setCheckedItems(not(checkedItems, leftCheckedItems))\n  }\n\n  const moveLeft = () => {\n    setLeftItems(leftItems.concat(rightCheckedItems))\n    setRightItems(not(rightItems, rightCheckedItems))\n    setCheckedItems(not(checkedItems, rightCheckedItems))\n  }\n\n  return (\n    <div className='App flex'>\n      <List items={leftItems} handleToggle={handleToggle} />\n      <ActionButtons moveRight={moveRight} moveLeft={moveLeft} />\n      <List items={rightItems} handleToggle={handleToggle} />\n    </div>\n  )\n}\n\nexport default App\n"
+            },
+            "/data.js": {
+              "code": "export const items = [1, 2, 3, 4]\n"
+            },
+            "/styles.css": {
+              "code": ".flex {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.App {\n  height: 100vh;\n}\n\n.list {\n  border: solid black 1px;\n  width: 100px;\n  height: 150px;\n  flex-direction: column;\n  padding: 20px;\n  gap: 10px;\n  border-radius: 10px;\n}\n\n.buttons {\n  gap: 20px;\n  flex-direction: column;\n  padding: 20px;\n}\n\n.buttons > button {\n  padding: 5px;\n  font-size: 15px;\n  width: 50px;\n}\n"
+            },
+            "/List.js": {
+              "code": "/* eslint-disable react/prop-types */\nimport Item from './Item'\n\nconst List = ({ items, handleToggle }) => {\n  return (\n    <div className='list flex'>\n      {items.map((item) => (\n        <Item key={item} item={item} handleToggle={() => handleToggle(item)} />\n      ))}\n    </div>\n  )\n}\n\nexport default List\n"
+            },
+            "/utils.js": {
+              "code": "const intersection = (a, b) => {\n  return a.filter((value) => b.indexOf(value) !== -1)\n}\n\nconst not = (a, b) => {\n  return a.filter((value) => b.indexOf(value) === -1)\n}\n\nexport { not, intersection }\n"
+            }
+          },
+          "template": {
+            "/styles.css": {
+              "code": "body {\n  font-family: sans-serif;\n  -webkit-font-smoothing: auto;\n  -moz-font-smoothing: auto;\n  -moz-osx-font-smoothing: grayscale;\n  font-smoothing: auto;\n  text-rendering: optimizeLegibility;\n  font-smooth: always;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n}\n\nh1 {\n  font-size: 1.5rem;\n}"
+            },
+            "/App.js": {
+              "code": "export default function App() {\n  console.log('testing editor to solution')\n  return <h1>Hello world</h1>\n}\n"
+            },
+            "/index.js": {
+              "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+            },
+            "/public/index.html": {
+              "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+            },
+            "/package.json": {
+              "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+            }
+          },
+          "type": "react",
+          "path": "/workouts/react/pure/transfer-list"
+        }
+      }
+    },
+    "router": {
+      "workouts": {
+        "outlet": {
+          "template": {
+            "/styles.css": {
+              "code": "body {\n  font-family: sans-serif;\n  -webkit-font-smoothing: auto;\n  -moz-font-smoothing: auto;\n  -moz-osx-font-smoothing: grayscale;\n  font-smoothing: auto;\n  text-rendering: optimizeLegibility;\n  font-smooth: always;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n}\n\nh1 {\n  font-size: 1.5rem;\n}\n\n*{\n  padding: 0;\n  margin: 0\n}"
+            },
+            "/App.js": {
+              "code": "import { createBrowserRouter, RouterProvider } from \"react-router-dom\";\nimport Root from \"./root\";\nimport contacts from \"./contacts\";\nconsole.log(contacts)\n\nconst router = createBrowserRouter([\n  {\n    path: \"/\",\n    element: <Root />,\n    loader: () => contacts,\n    children: [\n      {\n        path: \"/\",\n        element: <div>hello</div>,\n      },\n    ],\n  },\n]);\n\nexport default function App() {\n  return <RouterProvider router={router} />;\n}\n"
+            },
+            "/index.js": {
+              "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+            },
+            "/public/index.html": {
+              "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+            },
+            "/package.json": {
+              "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+            },
+            "/root.js": {
+              "code": "// root.js\nimport { useLoaderData, NavLink } from \"react-router-dom\";\n\nexport default () => {\n  const contacts = useLoaderData();\n  console.log('hello liyuan')\n\n  return (\n    <div\n      style={{\n        width: \"100vw\",\n        height: \"100vh\",\n      }}\n    >\n      <ul\n        style={{\n          width: \"100px\",\n          borderRight: \"1px solid gray\",\n          height: \"100vh\",\n          display: \"flex\",\n          flexDirection: \"column\",\n          alignItems: \"center\",\n          paddingTop: \"20px\",\n        }}\n      >\n        {contacts.map((contact) => {\n          return (\n            <li>\n              <NavLink to=\"/dogs\">{contact.name}</NavLink>\n            </li>\n          );\n        })}\n      </ul>\n    </div>\n  );\n};\n"
+            },
+            "/contacts.js": {
+              "code": "// contacts.js\n\nexport default [\n  {\n    id: 1,\n    name: 'Nate',\n  }\n]"
+            }
+          },
+          "solution": {
+            "/styles.css": {
+              "code": "body {\n  font-family: sans-serif;\n  -webkit-font-smoothing: auto;\n  -moz-font-smoothing: auto;\n  -moz-osx-font-smoothing: grayscale;\n  font-smoothing: auto;\n  text-rendering: optimizeLegibility;\n  font-smooth: always;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n}\n\nh1 {\n  font-size: 1.5rem;\n}"
+            },
+            "/App.js": {
+              "code": "export default function App() {\n  console.log('solution')\n  console.log('editing solution')\n  console.log('hi')\n  console.log('bye')\n  return <h1>Hello world</h1>\n}\n"
+            },
+            "/index.js": {
+              "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+            },
+            "/public/index.html": {
+              "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+            },
+            "/package.json": {
+              "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+            }
+          },
+          "checkList": [
+            "Create a controlled input.",
+            "Send a request to the Age API.",
+            "Display the response from the Age API.",
+            "Create a cache so the same request is not sent twice."
+          ],
+          "id": "15",
+          "name": "outlet",
+          "title": "Outlet",
+          "path": "/workouts/react/react-router/outlet",
+          "difficulty": "2",
+          "link": "https://youtu.be/1T0iMtIWmrw",
+          "isSolution": "false"
+        }
+      }
+    }
+  }
+}

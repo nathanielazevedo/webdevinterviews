@@ -10,8 +10,7 @@ import Instructions from './pages/workouts/workout/Details'
 import EditorRoot from './pages/workouts/workout/Root'
 import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom'
 import FourOFour from './pages/FourOFour'
-
-console.log('rows', rows)
+import { action as editAction } from './components/editor/SubmitDialog'
 
 function flattenObject(obj) {
   let result = []
@@ -62,7 +61,7 @@ const router = createBrowserRouter([
         path: 'workouts/*',
         element: <WorkoutTable />,
         errorElement: <Error />,
-        loader: ({ params, request }) => {
+        loader: async ({ params, request }) => {
           const url = new URL(request.url)
           let d = url.searchParams.get('difficulty')
           if (d == 'all') d = undefined
@@ -130,6 +129,7 @@ const router = createBrowserRouter([
         element: <EditorRoot />,
         errorElement: <Error />,
         loader: ({ params }) => {
+          console.log('hey', rows.react.router.workouts.outlet)
           const workout = findKeyInObject(rows, params.workoutName)
           if (!workout) {
             return redirect('/workouts')
@@ -153,6 +153,7 @@ const router = createBrowserRouter([
                 path: 'editor',
                 element: <Editor />,
                 errorElement: <Error />,
+                action: editAction,
                 loader: ({ params }) => {
                   const workout = findKeyInObject(rows, params.workoutName)
                   const local = JSON.parse(localStorage.getItem(workout.name))

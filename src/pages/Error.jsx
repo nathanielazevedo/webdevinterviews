@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material'
 import { useRouteError } from 'react-router-dom'
-import Donkey from '../assets/donkey-brains.png'
 
 const Error = () => {
   const error = useRouteError()
@@ -11,7 +10,6 @@ const Error = () => {
         display: 'flex',
       }}
     >
-      <img src={Donkey} alt='donkey' width={'300px'} />
       <Box
         sx={{
           display: 'flex',

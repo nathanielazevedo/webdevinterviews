@@ -24,6 +24,7 @@ const EditorMain = () => {
   const codemirrorInstance = useRef()
   const { files, mode, workout, local } = useLoaderData()
   const [showTests, setShowTests] = useState(false)
+  console.log('files from EditorMain', files)
 
   return (
     <>

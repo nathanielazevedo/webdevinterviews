@@ -12,7 +12,6 @@ const AutoSave = ({ workout }) => {
         files: sandpack.files,
         activeFile: sandpack.activeFile,
         visibleFiles: sandpack.visibleFiles,
-        activeTab: 'editor',
       }
       try {
         localStorage.setItem(workout.name, JSON.stringify(editorState))
