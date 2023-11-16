@@ -4,6 +4,7 @@ import { Fade } from '@mui/material'
 // import { List, Typography, ListItem } from '@mui/material'
 
 const Home = () => {
+  console.log('checking cache invalidation')
   return (
     <Fade in={true} timeout={1000}>
       <Box sx={{ padding: '50px', width: '100%' }}>
