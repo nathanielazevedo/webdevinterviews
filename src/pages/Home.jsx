@@ -5,7 +5,7 @@ import { Fade } from '@mui/material'
 
 const Home = () => {
   const fetchData = async () => {
-    const response = await fetch('http://54.215.241.185/api')
+    const response = await fetch('https://api.webdevinterviews.com')
     const data = await response.json()
     console.log(data)
   }
