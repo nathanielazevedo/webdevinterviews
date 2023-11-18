@@ -16,7 +16,7 @@ import Tooltip from '@mui/material/Tooltip'
 
 const WorkoutTable = () => {
   const navigate = useNavigate()
-  const { rows } = useLoaderData()
+  const { workouts } = useLoaderData()
 
   return (
     <Fade in={true} timeout={1000}>
@@ -86,11 +86,11 @@ const WorkoutTable = () => {
                 </TableCell>
               </TableRow>
             </TableHead>
-            {rows.length > 0 && (
+            {workouts.length > 0 && (
               <TableBody>
-                {rows.map((row, index) => (
+                {workouts.map((workout, index) => (
                   <TableRow
-                    key={row.name}
+                    key={workout.name}
                     sx={{
                       width: '100%',
                       background: index % 2 === 0 ? '#1a1a1a' : '#121212',
@@ -108,10 +108,10 @@ const WorkoutTable = () => {
                         <Tooltip
                           title={
                             <>
-                              {row.gif && (
+                              {workout.gif && (
                                 <img
-                                  src={row.gif}
-                                  alt={row.name}
+                                  src={workout.gif}
+                                  alt={workout.name}
                                   style={{ maxWidth: '200px' }}
                                 />
                               )}
@@ -137,10 +137,10 @@ const WorkoutTable = () => {
                             },
                           }}
                           onClick={() => {
-                            navigate(`/workout/${row.name}`)
+                            navigate(`/workouts/${workout.id}`)
                           }}
                         >
-                          {row.name}
+                          {workout.name}
                         </Typography>
                       </Box>
                     </TableCell>
@@ -153,7 +153,7 @@ const WorkoutTable = () => {
                       }}
                     >
                       <Link
-                        href={row.link}
+                        href={workout.youtube_link}
                         target='_blank'
                         rel='noreferrer'
                         sx={{
@@ -168,12 +168,12 @@ const WorkoutTable = () => {
                         }}
                       >
                         <Typography noWrap fontSize='12px'>
-                          {row.link}
+                          {workout.youtube_link}
                         </Typography>
                       </Link>
                     </TableCell>
                     <TableCell align='left' sx={{ width: '150px' }}>
-                      <Rating rating={row.difficulty} />
+                      <Rating rating={workout.difficulty} />
                     </TableCell>
                   </TableRow>
                 ))}
@@ -181,7 +181,7 @@ const WorkoutTable = () => {
             )}
           </Table>
         </TableContainer>
-        {rows.length == 0 && (
+        {workouts.length == 0 && (
           <Box
             sx={{
               width: '100%',

@@ -12,7 +12,7 @@ import Checkbox from '@mui/material/Checkbox'
 import { useLoaderData } from 'react-router-dom'
 
 const EditorTopNav = () => {
-  const workout = useLoaderData()
+  const { workout } = useLoaderData()
   const navigate = useNavigate()
 
   return (

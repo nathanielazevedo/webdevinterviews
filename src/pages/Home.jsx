@@ -4,12 +4,6 @@ import { Fade } from '@mui/material'
 // import { List, Typography, ListItem } from '@mui/material'
 
 const Home = () => {
-  const fetchData = async () => {
-    const response = await fetch('https://api.webdevinterviews.com')
-    const data = await response.json()
-    console.log(data)
-  }
-  fetchData()
   return (
     <Fade in={true} timeout={1000}>
       <Box sx={{ padding: '50px', width: '100%' }}>

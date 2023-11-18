@@ -14,7 +14,7 @@ const AutoSave = ({ workout }) => {
         visibleFiles: sandpack.visibleFiles,
       }
       try {
-        localStorage.setItem(workout.name, JSON.stringify(editorState))
+        localStorage.setItem(workout.id, JSON.stringify(editorState))
       } catch {
         console.log('error saving')
       }

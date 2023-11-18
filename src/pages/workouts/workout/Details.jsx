@@ -1,18 +1,13 @@
 /* eslint-disable react/prop-types */
+import { useContext } from 'react'
 import Tooltip from '@mui/material/Tooltip'
-import { useLoaderData } from 'react-router-dom'
+import EditorContext from './EditorContext'
+import Rating from '../../../components/Rating'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import { Box, Checkbox, Fade, Typography } from '@mui/material'
-import Rating from '../../../components/Rating'
-import { useRef, useEffect } from 'react'
 
 const Description = () => {
-  const workout = useLoaderData()
-  const renderCount = useRef(0)
-
-  useEffect(() => {
-    renderCount.current++
-  }, [])
+  const { workout } = useContext(EditorContext)
 
   return (
     <Fade in={true} timeout={1500}>
@@ -84,7 +79,7 @@ const Description = () => {
             <Typography variant='h6' color='primary' fontWeight='bold'>
               Checklist
             </Typography>
-            {workout.checkList.map((item, index) => (
+            {workout.checklist.map((item, index) => (
               <Box
                 key={index}
                 sx={{

@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import TopNav from './TopNav'
 import WorkoutTable from './WorkoutTable'
-import SideNav from './SideNav'
 import Box from '@mui/material/Box'
 
 const Root = ({ difficulty }) => {
@@ -12,7 +11,6 @@ const Root = ({ difficulty }) => {
         height: '100%',
       }}
     >
-      <SideNav />
       <Box
         sx={{
           display: 'flex',

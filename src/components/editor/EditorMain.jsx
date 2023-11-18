@@ -4,7 +4,6 @@ import AutoSave from './AutoSave'
 import SpeedDial from './SpeedDial'
 import Box from '@mui/material/Box'
 import { useRef, useState } from 'react'
-import { useLoaderData } from 'react-router-dom'
 import ResizeHandle from '../../components/ResizeHandle'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import { SandpackFileExplorer } from 'sandpack-file-explorer'
@@ -18,13 +17,14 @@ import {
 import { Tooltip } from '@mui/material'
 import Browser from './browser'
 const isDev = import.meta.env.DEV
+import EditorContext from '../../pages/workouts/workout/EditorContext'
+import { useContext } from 'react'
 
-const EditorMain = () => {
+const EditorMain = ({ files, isSolution }) => {
   const filePanelRef = useRef()
   const codemirrorInstance = useRef()
-  const { files, mode, workout, local } = useLoaderData()
+  const { workout } = useContext(EditorContext)
   const [showTests, setShowTests] = useState(false)
-  console.log('files from EditorMain', files)
 
   return (
     <>
@@ -39,11 +39,11 @@ const EditorMain = () => {
         }}
         options={{
           autoReload: true,
-          activeFile: local ? local.activeFile : '/App.js',
-          visibleFiles: local ? local.visibleFiles : ['/App.js'],
+          activeFile: '/App.js',
+          visibleFiles: ['/App.js'],
         }}
       >
-        {mode === 'template' && <AutoSave workout={workout} />}
+        {!isSolution && <AutoSave workout={workout} />}
         <SandpackThemeProvider theme={theme}>
           <SandpackLayout>
             <div
@@ -85,7 +85,7 @@ const EditorMain = () => {
                     ref={codemirrorInstance}
                     style={{ height: '100%' }}
                   />
-                  {mode === 'template' && (
+                  {!isSolution && (
                     <Box>
                       <Tooltip title={<>Changes Saved.</>} placement='left'>
                         <Box
@@ -113,7 +113,7 @@ const EditorMain = () => {
                   )}
                   {isDev && <AdminDialog />}
 
-                  {mode === 'template' && (
+                  {!isSolution && (
                     <SpeedDial
                       codemirrorInstance={codemirrorInstance}
                       workout={workout}

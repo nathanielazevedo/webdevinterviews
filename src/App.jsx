@@ -1,51 +1,16 @@
 import './index.css'
-import rows from './workouts'
-import Error from './pages/Error'
-import Home from './pages/Home'
 import Root from './pages/Root'
-import Editor from './pages/workouts/workout/Editor'
-import Solution from './pages/workouts/workout/Solution'
-import WorkoutTable from './pages/workouts/Root'
-import Instructions from './pages/workouts/workout/Details'
-import EditorRoot from './pages/workouts/workout/Root'
-import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom'
+import Home from './pages/Home'
+import Error from './pages/Error'
 import FourOFour from './pages/FourOFour'
+import WorkoutTable from './pages/workouts/Root'
+import Editor from './pages/workouts/workout/Editor'
+import EditorRoot from './pages/workouts/workout/Root'
+import Solution from './pages/workouts/workout/Solution'
+import Instructions from './pages/workouts/workout/Details'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { action as editAction } from './components/editor/SubmitDialog'
-
-function flattenObject(obj) {
-  let result = []
-
-  for (let key in obj) {
-    if (
-      key === 'workouts' &&
-      typeof obj[key] === 'object' &&
-      obj[key] !== null
-    ) {
-      result.push(obj[key])
-    } else if (typeof obj[key] === 'object' && obj[key] !== null) {
-      result = result.concat(flattenObject(obj[key]))
-    }
-  }
-
-  return result
-}
-
-function findKeyInObject(obj, keyToFind) {
-  if (keyToFind in obj) {
-    return obj[keyToFind]
-  }
-
-  for (let key in obj) {
-    if (typeof obj[key] === 'object' && obj[key] !== null) {
-      const result = findKeyInObject(obj[key], keyToFind)
-      if (result !== undefined) {
-        return result
-      }
-    }
-  }
-
-  return undefined
-}
+import API from './api'
 
 const router = createBrowserRouter([
   {
@@ -58,83 +23,21 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path: 'workouts/*',
+        path: 'workouts',
         element: <WorkoutTable />,
         errorElement: <Error />,
-        loader: async ({ params, request }) => {
-          const url = new URL(request.url)
-          let d = url.searchParams.get('difficulty')
-          if (d == 'all') d = undefined
-
-          const keys = params['*'].split('/')
-          let matchingWorkouts
-
-          // returns everything and checks for difficulty filters search params
-          if (keys[0] === '') {
-            if (d) {
-              matchingWorkouts = Object.values(flattenObject(rows)[0]).filter(
-                (workout) => workout.difficulty == d
-              )
-            } else {
-              matchingWorkouts = Object.values(flattenObject(rows)[0])
-            }
-            return { rows: matchingWorkouts, difficulty: d }
-          }
-
-          // digging down the path to find whatever
-          let currentObject = rows
-          for (let key of keys) {
-            if (currentObject[key]) {
-              currentObject = currentObject[key]
-            } else {
-              return { rows: [], difficulty: d }
-            }
-          }
-
-          // if it ends in workouts
-          if (currentObject.workouts) {
-            if (d) {
-              matchingWorkouts = Object.values(currentObject.workouts).filter(
-                (workout) => workout.difficulty == d
-              )
-            } else {
-              matchingWorkouts = Object.values(currentObject.workouts)
-            }
-            return {
-              rows: matchingWorkouts,
-              difficulty: d,
-            }
-          } else {
-            // it ends not in workouts
-            try {
-              if (d) {
-                matchingWorkouts = Object.values(flattenObject(rows)[0]).filter(
-                  (workout) => workout.rating === d
-                )
-              } else {
-                matchingWorkouts = Object.values(flattenObject(rows)[0])
-              }
-              return {
-                rows: matchingWorkouts,
-                difficulty: d,
-              }
-            } catch {
-              return { rows: [], difficulty: d }
-            }
-          }
+        loader: async () => {
+          const workouts = await API.get('/workouts')
+          return { workouts, difficulty: '2' }
         },
       },
       {
-        path: 'workout/:workoutName/',
+        path: 'workouts/:id',
         element: <EditorRoot />,
         errorElement: <Error />,
-        loader: ({ params }) => {
-          console.log('hey', rows.react.router.workouts.outlet)
-          const workout = findKeyInObject(rows, params.workoutName)
-          if (!workout) {
-            return redirect('/workouts')
-          }
-          return workout
+        loader: async ({ params }) => {
+          const workout = await API.get(`/workouts/${params.id}`)
+          return { workout, difficulty: '2' }
         },
         children: [
           {
@@ -144,32 +47,17 @@ const router = createBrowserRouter([
                 index: true,
                 element: <Instructions />,
                 errorElement: <Error />,
-                loader: ({ params }) => {
-                  const workout = findKeyInObject(rows, params.workoutName)
-                  return workout
-                },
               },
               {
                 path: 'editor',
                 element: <Editor />,
                 errorElement: <Error />,
                 action: editAction,
-                loader: ({ params }) => {
-                  const workout = findKeyInObject(rows, params.workoutName)
-                  const local = JSON.parse(localStorage.getItem(workout.name))
-                  const files = local ? local.files : workout.template
-                  console.log('files', files)
-                  return { workout, files, mode: 'template', local }
-                },
               },
               {
                 path: 'solution',
                 element: <Solution />,
                 errorElement: <Error />,
-                loader: ({ params }) => {
-                  const workout = findKeyInObject(rows, params.workoutName)
-                  return { workout, files: workout.solution, mode: 'demo' }
-                },
               },
               {
                 path: '*',
