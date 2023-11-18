@@ -1,7 +1,7 @@
 class API {
   constructor() {
     this.baseURL = import.meta.env.DEV
-      ? 'https://api.webdevinterviews.com'
+      ? 'http://localhost:5000'
       : 'https://api.webdevinterviews.com'
   }
 
