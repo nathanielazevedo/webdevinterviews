@@ -10,8 +10,9 @@ import YouTubeIcon from '@mui/icons-material/YouTube'
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered'
 import Checkbox from '@mui/material/Checkbox'
 import { useLoaderData } from 'react-router-dom'
+import EditIcon from '@mui/icons-material/Edit'
 
-const EditorTopNav = () => {
+const EditorTopNav = ({ editDialogOpen, setEditDialogOpen }) => {
   const { workout } = useLoaderData()
   const navigate = useNavigate()
 
@@ -101,21 +102,22 @@ const EditorTopNav = () => {
               <Tooltip
                 title={
                   <>
-                    {/* {workout.checkList.map((item, index) => (
-                      <Box
-                        key={index}
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <Checkbox />
-                        <Typography key={index} fontSize='12px'>
-                          {item}
-                        </Typography>
-                      </Box>
-                    ))} */}
+                    {workout.checklist &&
+                      workout.checklist.map((item, index) => (
+                        <Box
+                          key={index}
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <Checkbox />
+                          <Typography key={index} fontSize='12px'>
+                            {item}
+                          </Typography>
+                        </Box>
+                      ))}
                   </>
                 }
                 placement='bottom'
@@ -126,18 +128,31 @@ const EditorTopNav = () => {
                 />
               </Tooltip>
               <Tooltip title='Watch the video' placement='bottom'>
-                <a
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                  href={workout.link}
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  <YouTubeIcon sx={{ color: 'darkred' }} fontSize='small' />
-                </a>
+                <IconButton size='small'>
+                  <a
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                    href={workout.youtube_link}
+                    target='_blank'
+                    rel='noreferrer'
+                  >
+                    <YouTubeIcon sx={{ color: 'darkred' }} fontSize='small' />
+                  </a>
+                </IconButton>
+              </Tooltip>
+              <Tooltip title='Edit' placement='bottom'>
+                <IconButton size='small'>
+                  <EditIcon
+                    sx={{ color: 'primary.main' }}
+                    fontSize='small'
+                    onClick={() => {
+                      setEditDialogOpen(!editDialogOpen)
+                    }}
+                  />
+                </IconButton>
               </Tooltip>
             </Box>
           </Box>

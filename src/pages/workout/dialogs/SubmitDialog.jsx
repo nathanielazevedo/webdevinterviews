@@ -13,7 +13,7 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
-import EditorContext from '../../pages/workouts/workout/EditorContext'
+import EditorContext from '..//EditorContext'
 import { useContext } from 'react'
 
 export async function action({ request, params }) {

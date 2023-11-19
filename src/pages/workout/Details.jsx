@@ -2,7 +2,7 @@
 import { useContext } from 'react'
 import Tooltip from '@mui/material/Tooltip'
 import EditorContext from './EditorContext'
-import Rating from '../../../components/Rating'
+import Rating from '../../components/Rating'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import { Box, Checkbox, Fade, Typography } from '@mui/material'
 
@@ -79,21 +79,22 @@ const Description = () => {
             <Typography variant='h6' color='primary' fontWeight='bold'>
               Checklist
             </Typography>
-            {workout.checklist.map((item, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <Checkbox />
-                <Typography key={index} variant='body1'>
-                  {item}
-                </Typography>
-              </Box>
-            ))}
+            {workout.checklist &&
+              workout.checklist.map((item, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Checkbox />
+                  <Typography key={index} variant='body1'>
+                    {item}
+                  </Typography>
+                </Box>
+              ))}
           </Box>
         </Box>
       </Box>

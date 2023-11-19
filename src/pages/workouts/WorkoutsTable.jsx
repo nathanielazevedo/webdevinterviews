@@ -14,7 +14,7 @@ import Link from '@mui/material/Link'
 import { useLoaderData } from 'react-router-dom'
 import Tooltip from '@mui/material/Tooltip'
 
-const WorkoutTable = () => {
+const WorkoutTables = () => {
   const navigate = useNavigate()
   const { workouts } = useLoaderData()
 
@@ -200,4 +200,4 @@ const WorkoutTable = () => {
   )
 }
 
-export default WorkoutTable
+export default WorkoutTables

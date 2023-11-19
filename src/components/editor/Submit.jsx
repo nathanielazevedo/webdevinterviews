@@ -1,7 +1,7 @@
 import { Button } from '@mui/material'
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import { useState } from 'react'
-import SubmitDialog from './SubmitDialog'
+import SubmitDialog from '../../pages/workout/dialogs/SubmitDialog'
 
 const Submit = () => {
   const [open, setOpen] = useState(false)

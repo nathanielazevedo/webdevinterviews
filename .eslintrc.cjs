@@ -16,5 +16,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'react/jsx-filename-extension': ['error', { extensions: ['.jsx'] }],
+    'react/jsx-pascal-case': ['error', { allowAllCaps: false }],
   },
 }

@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import SideNavIcon from './SideNavIcon'
 
-const SideNav1 = ({ links, variant }) => {
+const SideNav = ({ links, variant }) => {
   const getWidth = () => {
     switch (variant) {
       case 'collapsed':
@@ -39,4 +39,4 @@ const SideNav1 = ({ links, variant }) => {
   )
 }
 
-export default SideNav1
+export default SideNav

@@ -17,7 +17,7 @@ import {
 import { Tooltip } from '@mui/material'
 import Browser from './browser'
 const isDev = import.meta.env.DEV
-import EditorContext from '../../pages/workouts/workout/EditorContext'
+import EditorContext from '../../pages/workout/EditorContext'
 import { useContext } from 'react'
 
 const EditorMain = ({ files, isSolution }) => {

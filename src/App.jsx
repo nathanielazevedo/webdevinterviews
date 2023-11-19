@@ -1,16 +1,17 @@
 import './index.css'
+import API from './api'
 import Root from './pages/Root'
 import Home from './pages/Home'
 import Error from './pages/Error'
 import FourOFour from './pages/FourOFour'
-import WorkoutTable from './pages/workouts/Root'
-import Editor from './pages/workouts/workout/Editor'
-import EditorRoot from './pages/workouts/workout/Root'
-import Solution from './pages/workouts/workout/Solution'
-import Instructions from './pages/workouts/workout/Details'
+import WorkoutsRoot from './pages/workouts/WorkoutsRoot'
+import Template from './pages/workout/Template'
+import Solution from './pages/workout/Solution'
+import Details from './pages/workout/Details'
+import WorkoutRoot from './pages/workout/WorkoutRoot'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { action as editAction } from './components/editor/SubmitDialog'
-import API from './api'
+import { action as editAction } from './pages/workout/dialogs/SubmitDialog'
+import { action as createWorkoutAction } from './pages/workouts/dialogs/CreateDialog'
 
 const router = createBrowserRouter([
   {
@@ -24,20 +25,33 @@ const router = createBrowserRouter([
       },
       {
         path: 'workouts',
-        element: <WorkoutTable />,
+        element: <WorkoutsRoot />,
         errorElement: <Error />,
+        action: createWorkoutAction,
         loader: async () => {
-          const workouts = await API.get('/workouts')
-          return { workouts, difficulty: '2' }
+          try {
+            const workouts = await API.get('/workouts')
+            return { workouts }
+          } catch (error) {
+            console.error(`Failed to load workouts: ${error.message}`)
+            throw error
+          }
         },
       },
       {
         path: 'workouts/:id',
-        element: <EditorRoot />,
+        element: <WorkoutRoot />,
         errorElement: <Error />,
         loader: async ({ params }) => {
-          const workout = await API.get(`/workouts/${params.id}`)
-          return { workout, difficulty: '2' }
+          try {
+            const workout = await API.get(`/workouts/${params.id}`)
+            workout.solution = JSON.parse(workout.solution)
+            workout.template = JSON.parse(workout.template)
+            return { workout }
+          } catch (error) {
+            console.error(`Failed to load workout: ${error.message}`)
+            throw error
+          }
         },
         children: [
           {
@@ -45,12 +59,12 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <Instructions />,
+                element: <Details />,
                 errorElement: <Error />,
               },
               {
                 path: 'editor',
-                element: <Editor />,
+                element: <Template />,
                 errorElement: <Error />,
                 action: editAction,
               },

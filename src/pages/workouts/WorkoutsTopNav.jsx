@@ -1,13 +1,19 @@
 /* eslint-disable react/prop-types */
 import Box from '@mui/material/Box'
-import Select from '@mui/material/Select'
-import InputLabel from '@mui/material/InputLabel'
-import FormControl from '@mui/material/FormControl'
-import { Form, useLoaderData, useLocation } from 'react-router-dom'
+// import Select from '@mui/material/Select'
+import { IconButton } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+// import InputLabel from '@mui/material/InputLabel'
+// import FormControl from '@mui/material/FormControl'
+// import { Form, useLocation } from 'react-router-dom'
+const isDev = import.meta.env.DEV
+import PropTypes from 'prop-types'
 
-const TopNav = () => {
-  const { difficulty } = useLoaderData()
-  const location = useLocation()
+// Inside TopNav component file
+
+const TopNav = ({ open, setOpenDialog }) => {
+  // const { difficulty } = useLoaderData()
+  // const location = useLocation()
 
   return (
     <Box
@@ -20,8 +26,18 @@ const TopNav = () => {
         borderBottom: '0.5px solid var(--color-solid-resize-bar-handle)',
       }}
     >
+      {isDev && (
+        <IconButton size='small' onClick={() => setOpenDialog(!open)}>
+          <AddIcon
+            size='small'
+            sx={{
+              color: 'primary.main',
+            }}
+          />
+        </IconButton>
+      )}
       <div style={{ flexGrow: '1' }} />
-      <Box
+      {/* <Box
         sx={{
           minWidth: 120,
           display: 'flex',
@@ -50,7 +66,6 @@ const TopNav = () => {
             <Select
               labelId='demo-simple-select-label'
               id='demo-simple-select'
-              // value={age}
               label='Difficulty'
               native
               name='difficulty'
@@ -70,9 +85,14 @@ const TopNav = () => {
             <button type='submit' hidden id='submit-button'></button>
           </FormControl>
         </Form>
-      </Box>
+      </Box> */}
     </Box>
   )
 }
 
 export default TopNav
+
+TopNav.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpenDialog: PropTypes.func.isRequired,
+}

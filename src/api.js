@@ -6,24 +6,73 @@ class API {
   }
 
   async get(endpoint) {
-    const response = await fetch(`${this.baseURL}${endpoint}`)
-    const data = await response.json()
-    return data
+    try {
+      const response = await fetch(`${this.baseURL}${endpoint}`)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.error(`Fetch failed: ${error.message}`)
+      throw error
+    }
   }
 
   async post(endpoint, body) {
-    const response = await fetch(`${this.baseURL}${endpoint}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-    const data = await response.json()
-    return data
+    try {
+      const response = await fetch(`${this.baseURL}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.error(`Fetch failed: ${error.message}`)
+      throw error
+    }
   }
 
-  // Add more methods for PUT, DELETE, etc. if needed
+  async put(endpoint, body) {
+    try {
+      const response = await fetch(`${this.baseURL}${endpoint}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.error(`Fetch failed: ${error.message}`)
+      throw error
+    }
+  }
+
+  async delete(endpoint) {
+    try {
+      const response = await fetch(`${this.baseURL}${endpoint}`, {
+        method: 'DELETE',
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      return response.status
+    } catch (error) {
+      console.error(`Fetch failed: ${error.message}`)
+      throw error
+    }
+  }
 }
 
 export default new API()
