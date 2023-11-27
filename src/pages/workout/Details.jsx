@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useContext } from 'react'
 import Tooltip from '@mui/material/Tooltip'
-import EditorContext from './EditorContext'
+import WorkoutContext from './WorkoutContext'
 import Rating from '../../components/Rating'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import { Box, Checkbox, Fade, Typography } from '@mui/material'
 
 const Description = () => {
-  const { workout } = useContext(EditorContext)
+  const { workout } = useContext(WorkoutContext)
 
   return (
     <Fade in={true} timeout={1500}>
@@ -75,7 +75,7 @@ const Description = () => {
               }}
             />
           )}
-          <Box>
+          {/* <Box>
             <Typography variant='h6' color='primary' fontWeight='bold'>
               Checklist
             </Typography>
@@ -95,7 +95,7 @@ const Description = () => {
                   </Typography>
                 </Box>
               ))}
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </Fade>

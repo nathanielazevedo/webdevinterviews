@@ -1,17 +1,14 @@
 /* eslint-disable react/prop-types */
 import Box from '@mui/material/Box'
-import { Typography } from '@mui/material'
-// import { useLocation } from 'react-router-dom'
+import { Typography, IconButton } from '@mui/material'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
-const TopNav = ({ variant }) => {
-  // const location = useLocation()
-
+const TopNav = ({ isSmall, authDialogOpen, setAuthDialogOpen }) => {
   return (
     <Box
       sx={{
         display: 'flex',
         height: '35px',
-        // minHeight: variant === 'hidden' ? '0' : '35px',
         padding: '0px 20px',
         alignItems: 'center',
         justifyContent: 'flex-start',
@@ -25,22 +22,28 @@ const TopNav = ({ variant }) => {
           color='grey.500'
           fontWeight={'bold'}
           sx={{
-            fontSize: variant === 'collapsed' ? '10px' : '14px',
+            fontSize: isSmall ? '10px' : '14px',
             transition: 'font-size 0.3s ease-in-out',
           }}
         >
           WEB DEV INTERVIEWS
         </Typography>
-        {/* <Typography
-          color='grey.500'
-          ml={'10px'}
+        <Box sx={{ flexGrow: 1 }} />
+        <IconButton
+          onClick={() => setAuthDialogOpen(!authDialogOpen)}
           sx={{
-            fontSize: variant === 'collapsed' ? '10px' : '14px',
+            borderRadius: '50%',
+            padding: '0px',
             transition: 'font-size 0.3s ease-in-out',
           }}
         >
-          {location.pathname}
-        </Typography> */}
+          <AccountCircleIcon
+            sx={{
+              fontSize: isSmall ? '15px' : '20px',
+              transition: 'font-size 0.3s ease-in-out',
+            }}
+          />
+        </IconButton>
       </>
     </Box>
   )

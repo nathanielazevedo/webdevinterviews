@@ -1,39 +1,54 @@
 import { useState } from 'react'
 import Box from '@mui/material/Box'
 import { Fade } from '@mui/material'
-import EditDialog from './dialogs/EditDialog'
-import EditorContext from './EditorContext'
-import CodeIcon from '@mui/icons-material/Code'
-import DetailsIcon from '@mui/icons-material/Details'
-import SideNav from '../../components/frame/SideNav'
-import { Outlet, useLoaderData } from 'react-router-dom'
-import EditorTopNav from '../../components/editor/EditorTopNav'
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
+import WorkoutTopNav from './WorkoutTopNav'
+import WorkoutContext from './WorkoutContext'
+import WorkoutSideNav from './WorkoutSideNav'
+import DeleteDialog from './dialogs/DeleteDialog'
+import { Outlet, redirect, useLoaderData } from 'react-router-dom'
+import EditWorkoutDialog from './dialogs/EditWorkoutDialog'
+import API from '../../api'
+
+export const loader = async ({ params }) => {
+  try {
+    const { data: workout } = await API.get(`/workouts/${params.id}`)
+    workout.solution = JSON.parse(workout.solution)
+    workout.template = JSON.parse(workout.template)
+    return { workout }
+  } catch (error) {
+    console.error(`Failed to load workout: ${error.message}`)
+    if (error.response.status === 404) {
+      throw new Error('Not found')
+    } else {
+      throw error
+    }
+  }
+}
+
+export const action = async ({ request, params }) => {
+  try {
+    const formData = await request.formData()
+    const workoutForm = Object.fromEntries(formData)
+    // Handle the 'filter' entry
+    if (workoutForm.filter) {
+      workoutForm.filter = workoutForm.filter
+        .split(',')
+        .map((word) => word.trim())
+    }
+    await API.put(`/workouts/${params.id}`, workoutForm)
+    return redirect(`/workouts/${params.id}`)
+  } catch (error) {
+    console.error(`Failed to update workout: ${error.message}`)
+    // Handle the error here, e.g., by showing an error message to the user
+  }
+}
 
 const WorkoutRoot = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false)
-  const { workout } = useLoaderData()
-
-  const editorTabs = [
-    {
-      name: 'DETAILS',
-      icon: <DetailsIcon />,
-      path: `/workouts/${workout.id}`,
-    },
-    {
-      name: 'EDITOR',
-      icon: <CodeIcon />,
-      path: `/workouts/${workout.id}/editor`,
-    },
-    {
-      name: 'SOLUTION',
-      icon: <VisibilityOutlinedIcon />,
-      path: `/workouts/${workout.id}/solution`,
-    },
-  ]
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
   return (
-    <EditorContext.Provider value={useLoaderData()}>
+    <WorkoutContext.Provider value={useLoaderData()}>
       <Fade in={true} timeout={1000}>
         <Box
           flex={1}
@@ -43,9 +58,11 @@ const WorkoutRoot = () => {
             maxHeight: 'calc(100vh - 63px)',
           }}
         >
-          <EditorTopNav
+          <WorkoutTopNav
             editDialogOpen={editDialogOpen}
             setEditDialogOpen={setEditDialogOpen}
+            deleteDialogOpen={deleteDialogOpen}
+            setDeleteDialogOpen={setDeleteDialogOpen}
           />
           <Box
             display='flex'
@@ -56,15 +73,16 @@ const WorkoutRoot = () => {
               maxHeight: 'calc(100vh - 63px)',
             }}
           >
-            <SideNav links={editorTabs} />
+            <WorkoutSideNav />
             <Box flex={1}>
               <Outlet />
             </Box>
           </Box>
         </Box>
       </Fade>
-      <EditDialog open={editDialogOpen} setOpen={setEditDialogOpen} />
-    </EditorContext.Provider>
+      <EditWorkoutDialog open={editDialogOpen} setOpen={setEditDialogOpen} />
+      <DeleteDialog open={deleteDialogOpen} setOpen={setDeleteDialogOpen} />
+    </WorkoutContext.Provider>
   )
 }
 

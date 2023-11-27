@@ -1,17 +1,18 @@
 import './index.css'
-import API from './api'
 import Root from './pages/Root'
 import Home from './pages/Home'
 import Error from './pages/Error'
 import FourOFour from './pages/FourOFour'
-import WorkoutsRoot from './pages/workouts/WorkoutsRoot'
+import Details from './pages/workout/Details'
 import Template from './pages/workout/Template'
 import Solution from './pages/workout/Solution'
-import Details from './pages/workout/Details'
 import WorkoutRoot from './pages/workout/WorkoutRoot'
+import WorkoutsRoot from './pages/workouts/WorkoutsRoot'
+import { loader as workoutLoader } from './pages/workout/WorkoutRoot'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { action as editAction } from './pages/workout/dialogs/SubmitDialog'
-import { action as createWorkoutAction } from './pages/workouts/dialogs/CreateDialog'
+import { workoutsLoader } from './pages/workouts/loaders/workoutsLoader'
+import { action as editWorkoutAction } from './pages/workout/WorkoutRoot'
+import { action as uploadCodeAction } from './components/editor/UploadCodeDialog'
 
 const router = createBrowserRouter([
   {
@@ -27,32 +28,14 @@ const router = createBrowserRouter([
         path: 'workouts',
         element: <WorkoutsRoot />,
         errorElement: <Error />,
-        action: createWorkoutAction,
-        loader: async () => {
-          try {
-            const workouts = await API.get('/workouts')
-            return { workouts }
-          } catch (error) {
-            console.error(`Failed to load workouts: ${error.message}`)
-            throw error
-          }
-        },
+        loader: workoutsLoader,
       },
       {
         path: 'workouts/:id',
         element: <WorkoutRoot />,
-        errorElement: <Error />,
-        loader: async ({ params }) => {
-          try {
-            const workout = await API.get(`/workouts/${params.id}`)
-            workout.solution = JSON.parse(workout.solution)
-            workout.template = JSON.parse(workout.template)
-            return { workout }
-          } catch (error) {
-            console.error(`Failed to load workout: ${error.message}`)
-            throw error
-          }
-        },
+        errorElement: <Error redirectPath='/workouts' />,
+        loader: workoutLoader,
+        action: editWorkoutAction,
         children: [
           {
             errorElement: <Error />,
@@ -66,7 +49,7 @@ const router = createBrowserRouter([
                 path: 'editor',
                 element: <Template />,
                 errorElement: <Error />,
-                action: editAction,
+                action: uploadCodeAction,
               },
               {
                 path: 'solution',

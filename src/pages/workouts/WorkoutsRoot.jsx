@@ -1,12 +1,11 @@
-/* eslint-disable react/prop-types */
 import { useState } from 'react'
 import Box from '@mui/material/Box'
 import TopNav from './WorkoutsTopNav'
-import WorkoutTable from './WorkoutsTable'
-import CreateDialog from './dialogs/CreateDialog'
+import WorkoutsTable from './WorkoutsTable'
+import CreateWorkoutDialog from './dialogs/CreateDialog'
 
 const WorkoutsRoot = () => {
-  const [open, setOpen] = useState(false)
+  const [createWorkoutDialogOpen, setCreateWorkoutDialogOpen] = useState(false)
   return (
     <Box
       sx={{
@@ -22,9 +21,17 @@ const WorkoutsRoot = () => {
           flexDirection: 'column',
         }}
       >
-        <TopNav open={open} setOpenDialog={setOpen} />
-        <WorkoutTable />
-        <CreateDialog open={open} setOpen={setOpen} />
+        <TopNav
+          open={createWorkoutDialogOpen}
+          setOpenDialog={setCreateWorkoutDialogOpen}
+        />
+        <WorkoutsTable />
+        {createWorkoutDialogOpen && (
+          <CreateWorkoutDialog
+            open={createWorkoutDialogOpen}
+            setOpen={setCreateWorkoutDialogOpen}
+          />
+        )}
       </Box>
     </Box>
   )

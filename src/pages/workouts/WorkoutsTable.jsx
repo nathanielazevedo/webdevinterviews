@@ -30,8 +30,6 @@ const WorkoutTables = () => {
                 color: 'grey',
                 border: 0,
                 fontSize: '14px',
-                // borderBottom:
-                //   '0.3px solid var(--color-solid-resize-bar-handle)',
               },
               '& .MuiTableCell-body': {
                 lineHeight: '25px',
@@ -41,8 +39,6 @@ const WorkoutTables = () => {
                 width: '140px',
                 minWidth: '140px',
                 maxWidth: '140px',
-                // borderBottom:
-                //   '0.3px solid var(--color-solid-resize-bar-handle)',
               },
             }}
           >
@@ -59,7 +55,6 @@ const WorkoutTables = () => {
                     width: '100px',
                     minWidth: '100px',
                     maxWidth: '100px',
-                    // outline: 'solid white 1px !important',
                   }}
                 >
                   Name
@@ -140,7 +135,7 @@ const WorkoutTables = () => {
                             navigate(`/workouts/${workout.id}`)
                           }}
                         >
-                          {workout.name}
+                          {workout.title}
                         </Typography>
                       </Box>
                     </TableCell>

@@ -26,16 +26,6 @@ const TopNav = ({ open, setOpenDialog }) => {
         borderBottom: '0.5px solid var(--color-solid-resize-bar-handle)',
       }}
     >
-      {isDev && (
-        <IconButton size='small' onClick={() => setOpenDialog(!open)}>
-          <AddIcon
-            size='small'
-            sx={{
-              color: 'primary.main',
-            }}
-          />
-        </IconButton>
-      )}
       <div style={{ flexGrow: '1' }} />
       {/* <Box
         sx={{
@@ -86,6 +76,16 @@ const TopNav = ({ open, setOpenDialog }) => {
           </FormControl>
         </Form>
       </Box> */}
+      {isDev && (
+        <IconButton size='small' onClick={() => setOpenDialog(!open)}>
+          <AddIcon
+            size='small'
+            sx={{
+              color: 'primary.main',
+            }}
+          />
+        </IconButton>
+      )}
     </Box>
   )
 }

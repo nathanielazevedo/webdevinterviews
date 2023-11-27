@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import { Outlet } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import Footer from '../components/frame/Footer'
 import TopNav from '../components/frame/TopNav'
 import SideNav from '../components/frame/SideNav'
+import AuthDialog from './AuthDialog'
 import FoundationIcon from '@mui/icons-material/Foundation'
 import SportsMartialArtsOutlinedIcon from '@mui/icons-material/SportsMartialArtsOutlined'
 
@@ -20,32 +22,9 @@ const tabs = [
   },
 ]
 
-// if (isDev) {
-//   tabs.push({
-//     name: 'ADMIN',
-//     icon: <ManageAccountsIcon />,
-//     path: 'admin',
-//   })
-// }
-
 export default function MiniDrawer() {
   const location = useLocation()
-
-  const showSecondNav = () => {
-    if (location.pathname === '/' || location.pathname.includes('/workouts')) {
-      return false
-    } else {
-      return true
-    }
-  }
-
-  const topNavVariant = () => {
-    if (location.pathname === '/') {
-      return 'normal'
-    } else {
-      return 'collapsed'
-    }
-  }
+  const [authDialogOpen, setAuthDialogOpen] = useState(false)
 
   return (
     <Box
@@ -58,7 +37,11 @@ export default function MiniDrawer() {
         overflow: 'hidden',
       }}
     >
-      <TopNav variant={topNavVariant()} />
+      <TopNav
+        isSmall={location.pathname !== '/'}
+        authDialogOpen={authDialogOpen}
+        setAuthDialogOpen={setAuthDialogOpen}
+      />
       <Box
         sx={{
           flexGrow: 1,
@@ -67,15 +50,18 @@ export default function MiniDrawer() {
           width: '100%',
         }}
       >
-        <SideNav
-          links={tabs}
-          variant={showSecondNav() ? 'collapsed' : 'normal'}
-        />
+        <SideNav links={tabs} variant={'normal'} />
         <Box flex={1}>
           <Outlet />
         </Box>
       </Box>
       <Footer />
+      {authDialogOpen && (
+        <AuthDialog
+          open={authDialogOpen}
+          onClose={() => setAuthDialogOpen(false)}
+        />
+      )}
     </Box>
   )
 }

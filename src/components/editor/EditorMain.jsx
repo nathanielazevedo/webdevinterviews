@@ -7,24 +7,28 @@ import { useRef, useState } from 'react'
 import ResizeHandle from '../../components/ResizeHandle'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import { SandpackFileExplorer } from 'sandpack-file-explorer'
-import AdminDialog from './Submit'
+import UploadIcon from '@mui/icons-material/Upload'
 import {
   SandpackLayout,
   SandpackCodeEditor,
   SandpackThemeProvider,
   SandpackProvider,
 } from '@codesandbox/sandpack-react'
-import { Tooltip } from '@mui/material'
+import { IconButton, Tooltip } from '@mui/material'
 import Browser from './browser'
 const isDev = import.meta.env.DEV
-import EditorContext from '../../pages/workout/EditorContext'
+import WorkoutContext from '../../pages/workout/WorkoutContext'
 import { useContext } from 'react'
+import UploadCodeDialog from './UploadCodeDialog'
 
-const EditorMain = ({ files, isSolution }) => {
+const EditorMain = ({ files: initialFiles, isSolution }) => {
   const filePanelRef = useRef()
   const codemirrorInstance = useRef()
-  const { workout } = useContext(EditorContext)
+  const { workout } = useContext(WorkoutContext)
   const [showTests, setShowTests] = useState(false)
+  const [uploadCodeDialogOpen, setUploadCodeDialogOpen] = useState(false)
+  const [files, setFiles] = useState(initialFiles)
+  // console.log(isSolution, files)
 
   return (
     <>
@@ -43,7 +47,9 @@ const EditorMain = ({ files, isSolution }) => {
           visibleFiles: ['/App.js'],
         }}
       >
-        {!isSolution && <AutoSave workout={workout} />}
+        {!isSolution && (
+          <AutoSave workout={workout} files={files} setFiles={setFiles} />
+        )}
         <SandpackThemeProvider theme={theme}>
           <SandpackLayout>
             <div
@@ -85,6 +91,20 @@ const EditorMain = ({ files, isSolution }) => {
                     ref={codemirrorInstance}
                     style={{ height: '100%' }}
                   />
+                  {isDev && (
+                    <IconButton
+                      onClick={() => setUploadCodeDialogOpen(true)}
+                      fontSize='large'
+                      sx={{
+                        position: 'absolute',
+                        top: '0px',
+                        right: '50px',
+                        zIndex: '100',
+                      }}
+                    >
+                      <UploadIcon />
+                    </IconButton>
+                  )}
                   {!isSolution && (
                     <Box>
                       <Tooltip title={<>Changes Saved.</>} placement='left'>
@@ -111,8 +131,6 @@ const EditorMain = ({ files, isSolution }) => {
                       </Tooltip>
                     </Box>
                   )}
-                  {isDev && <AdminDialog />}
-
                   {!isSolution && (
                     <SpeedDial
                       codemirrorInstance={codemirrorInstance}
@@ -128,6 +146,12 @@ const EditorMain = ({ files, isSolution }) => {
                 </Panel>
               </PanelGroup>
             </div>
+            {uploadCodeDialogOpen && (
+              <UploadCodeDialog
+                open={uploadCodeDialogOpen}
+                setOpen={setUploadCodeDialogOpen}
+              />
+            )}
           </SandpackLayout>
         </SandpackThemeProvider>
       </SandpackProvider>

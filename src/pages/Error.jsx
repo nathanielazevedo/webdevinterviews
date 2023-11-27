@@ -1,8 +1,23 @@
 import { Box, Typography } from '@mui/material'
-import { useRouteError } from 'react-router-dom'
+import { useRouteError, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import PropTypes from 'prop-types'
+import RateLimitPage from './RateLimitError' // Import the RateLimitPage component
 
-const Error = () => {
+const Error = ({ redirectPath }) => {
   const error = useRouteError()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (redirectPath) {
+      navigate(redirectPath)
+    }
+  }, [redirectPath, navigate])
+
+  if (error.status === 429) {
+    return <RateLimitPage />
+  }
+
   return (
     <Box
       sx={{
@@ -41,3 +56,7 @@ const Error = () => {
 }
 
 export default Error
+
+Error.propTypes = {
+  redirectPath: PropTypes.string,
+}

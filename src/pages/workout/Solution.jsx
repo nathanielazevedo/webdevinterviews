@@ -1,11 +1,11 @@
 import EditorMain from '../../components/editor/EditorMain'
 import { Fade } from '@mui/material'
-import EditorContext from './EditorContext'
+import WorkoutContext from './WorkoutContext'
 import { useContext } from 'react'
 
 const Solution = () => {
-  const { workout } = useContext(EditorContext)
-
+  const { workout } = useContext(WorkoutContext)
+  console.log(workout.solution)
   return (
     <Fade in={true} timeout={1000}>
       <div>

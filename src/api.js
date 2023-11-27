@@ -6,17 +6,19 @@ class API {
   }
 
   async get(endpoint) {
-    try {
-      const response = await fetch(`${this.baseURL}${endpoint}`)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const data = await response.json()
-      return data
-    } catch (error) {
-      console.error(`Fetch failed: ${error.message}`)
+    const response = await fetch(`${this.baseURL}${endpoint}`)
+
+    if (!response.ok) {
+      const errorBody = await response.text()
+      const error = new Error(
+        `HTTP error! status: ${response.status}, status text: ${response.statusText}, body: ${errorBody}`
+      )
+      error.status = response.status
       throw error
     }
+
+    const data = await response.json()
+    return { data }
   }
 
   async post(endpoint, body) {

@@ -8,11 +8,9 @@ import {
   DialogActions,
   Button,
 } from '@mui/material'
-import { useState, useContext } from 'react'
 import { Form } from 'react-router-dom'
-import { redirect } from 'react-router-dom'
-import api from '../../../api'
-import EditorContext from '../EditorContext'
+import { useState, useContext } from 'react'
+import WorkoutContext from '../WorkoutContext'
 
 const keyOrder = [
   'name',
@@ -21,20 +19,10 @@ const keyOrder = [
   'difficulty',
   'image_link',
   'youtube_link',
-  'solution',
-  'template',
-  'checklist',
 ]
 
-export async function action({ request }) {
-  const formData = await request.formData()
-  const workoutForm = Object.fromEntries(formData)
-  const res = await api.post('/workouts', workoutForm)
-  return redirect('/workouts/' + res.id)
-}
-
-const WorkoutDialog = ({ open, setOpen }) => {
-  const { workout } = useContext(EditorContext)
+const EditWorkoutDialog = ({ open, setOpen }) => {
+  const { workout } = useContext(WorkoutContext)
   const [workoutForm, setWorkoutForm] = useState(workout)
 
   const handleChange = (event) => {
@@ -81,4 +69,4 @@ const WorkoutDialog = ({ open, setOpen }) => {
   )
 }
 
-export default WorkoutDialog
+export default EditWorkoutDialog

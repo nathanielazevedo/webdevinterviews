@@ -1,27 +1,25 @@
-/* eslint-disable react-refresh/only-export-components */
-/* eslint-disable react/prop-types */
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
-  DialogActions,
-  Button,
-} from '@mui/material'
-import { useState } from 'react'
-import { Form } from 'react-router-dom'
-import { redirect } from 'react-router-dom'
+import * as Yup from 'yup'
 import api from '../../../api'
+import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Alert,
+} from '@mui/material'
 
-export async function action({ request }) {
-  const formData = await request.formData()
-  const workoutForm = Object.fromEntries(formData)
-  const res = await api.post('/workouts', workoutForm)
-  return redirect('/workouts/' + res.id)
-}
+const schema = Yup.object().shape({
+  name: Yup.string().required('Name is required'),
+  title: Yup.string().required('Title is required'),
+})
 
 const CreateWorkoutDialog = ({ open, setOpen }) => {
+  const navigate = useNavigate()
   const [workout, setWorkout] = useState({
     name: '',
     title: '',
@@ -38,42 +36,71 @@ const CreateWorkoutDialog = ({ open, setOpen }) => {
     setOpen(false)
   }
 
+  const [errors, setErrors] = useState({})
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    setErrors({}) // Clear the errors
+
+    try {
+      await schema.validate(workout)
+    } catch (validationError) {
+      setErrors({ validation: validationError.message })
+      return // Stop the execution if the validation fails
+    }
+
+    try {
+      const res = await api.post('/workouts', workout)
+      handleClose()
+      return navigate('/workouts/' + res.id)
+    } catch (submissionError) {
+      setErrors({
+        submission: `Failed to create workout: ${submissionError.message}`,
+      })
+    }
+  }
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Create a Workout</DialogTitle>
       <DialogContent>
-        <Form method='post' id='edit-workout-form'>
-          {Object.keys(workout).map((name) => {
-            return (
-              <TextField
-                key={name}
-                margin='dense'
-                id={name}
-                label={name}
-                type='text'
-                name={name}
-                fullWidth
-                variant='standard'
-                defaultValue={workout?.name}
-                onChange={handleChange}
-              />
-            )
-          })}
-        </Form>
+        {errors.submission && (
+          <Alert severity='error'>{errors.submission}</Alert>
+        )}
+        <form onSubmit={handleSubmit} id='create-workout-form'>
+          {Object.keys(workout).map((name) => (
+            <TextField
+              key={name}
+              margin='dense'
+              id={name}
+              label={name.charAt(0).toUpperCase() + name.slice(1)}
+              type='text'
+              name={name}
+              fullWidth
+              variant='standard'
+              value={workout[name]}
+              onChange={handleChange}
+              required
+              autoComplete='off'
+              error={!!errors.validation && name in errors.validation}
+              helperText={errors.validation && errors.validation[name]}
+            />
+          ))}
+        </form>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button type='submit' form='edit-workout-form' onClick={handleClose}>
-          Save
+        <Button type='submit' form='create-workout-form' color='success'>
+          Create
         </Button>
       </DialogActions>
     </Dialog>
   )
 }
 
-export default CreateWorkoutDialog
-
 CreateWorkoutDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
 }
+
+export default CreateWorkoutDialog
