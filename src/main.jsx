@@ -1,9 +1,9 @@
 import './index.css'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import ReactDOM from 'react-dom/client'
-// import { Analytics } from '@vercel/analytics/react'
 import CssBaseline from '@mui/material/CssBaseline'
 import App from './App'
+import { LogProvider } from './pages/LogContext'
 
 const darkTheme = createTheme({
   palette: {
@@ -19,10 +19,11 @@ const darkTheme = createTheme({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
-    {/* <Analytics /> */}
     <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <App />
+      <LogProvider>
+        <CssBaseline />
+        <App />
+      </LogProvider>
     </ThemeProvider>
   </>
 )

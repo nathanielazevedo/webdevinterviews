@@ -2,15 +2,15 @@
 import Box from '@mui/material/Box'
 import Rating from '../../components/Rating'
 import Tooltip from '@mui/material/Tooltip'
-import Checkbox from '@mui/material/Checkbox'
 import { useNavigate } from 'react-router-dom'
 import EditIcon from '@mui/icons-material/Edit'
 import { useLoaderData } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import { IconButton, Typography } from '@mui/material'
-import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { AuthContext } from '../AuthContext'
+import { useContext } from 'react'
 
 const WorkoutTopNav = ({
   editDialogOpen,
@@ -20,6 +20,7 @@ const WorkoutTopNav = ({
 }) => {
   const { workout } = useLoaderData()
   const navigate = useNavigate()
+  const { isAdmin } = useContext(AuthContext)
 
   return (
     <Box
@@ -161,26 +162,33 @@ const WorkoutTopNav = ({
         }}
       >
         <Rating rating={workout.difficulty} />
-        <Tooltip title='Edit' placement='bottom'>
-          <IconButton
-            size='small'
-            onClick={() => {
-              setEditDialogOpen(!editDialogOpen)
-            }}
-          >
-            <EditIcon sx={{ color: 'primary.main' }} fontSize='small' />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title='Edit' placement='bottom'>
-          <IconButton
-            size='small'
-            onClick={() => {
-              setDeleteDialogOpen(!deleteDialogOpen)
-            }}
-          >
-            <DeleteForeverIcon fontSize='small' sx={{ color: 'error.main' }} />
-          </IconButton>
-        </Tooltip>
+        {isAdmin && (
+          <>
+            <Tooltip title='Edit' placement='bottom'>
+              <IconButton
+                size='small'
+                onClick={() => {
+                  setEditDialogOpen(!editDialogOpen)
+                }}
+              >
+                <EditIcon sx={{ color: 'primary.main' }} fontSize='small' />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title='Edit' placement='bottom'>
+              <IconButton
+                size='small'
+                onClick={() => {
+                  setDeleteDialogOpen(!deleteDialogOpen)
+                }}
+              >
+                <DeleteForeverIcon
+                  fontSize='small'
+                  sx={{ color: 'error.main' }}
+                />
+              </IconButton>
+            </Tooltip>
+          </>
+        )}
       </Box>
     </Box>
   )

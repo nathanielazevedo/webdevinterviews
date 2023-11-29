@@ -1,7 +1,5 @@
 import Box from '@mui/material/Box'
-// import Logo from '../assets/logo.png'
 import { Fade } from '@mui/material'
-// import { List, Typography, ListItem } from '@mui/material'
 
 const Home = () => {
   return (

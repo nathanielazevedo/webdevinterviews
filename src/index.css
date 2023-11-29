@@ -110,6 +110,10 @@
   color: var(--lightBlue);
 }
 
+.pending {
+  color: white;
+}
+
 .not-active {
   color: grey;
 }

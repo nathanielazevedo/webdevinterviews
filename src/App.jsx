@@ -11,8 +11,14 @@ import WorkoutsRoot from './pages/workouts/WorkoutsRoot'
 import { loader as workoutLoader } from './pages/workout/WorkoutRoot'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { workoutsLoader } from './pages/workouts/loaders/workoutsLoader'
+import Login from './pages/auth/Login'
+import SignUp from './pages/auth/SignUp'
 import { action as editWorkoutAction } from './pages/workout/WorkoutRoot'
 import { action as uploadCodeAction } from './components/editor/UploadCodeDialog'
+import Account from './pages/auth/Account'
+import VerifyEmail from './pages/auth/VerifyEmail'
+import ForgotPassword from './pages/auth/ForgotPassword'
+import ResetPassword from './pages/auth/ResetPassword'
 
 const router = createBrowserRouter([
   {
@@ -29,6 +35,42 @@ const router = createBrowserRouter([
         element: <WorkoutsRoot />,
         errorElement: <Error />,
         loader: workoutsLoader,
+      },
+      {
+        path: 'auth',
+        errorElement: <Error />,
+        children: [
+          {
+            path: 'login',
+            element: <Login />,
+            errorElement: <Error />,
+          },
+          {
+            path: 'signup',
+            element: <SignUp />,
+            errorElement: <Error />,
+          },
+          {
+            path: 'account',
+            element: <Account />,
+            errorElement: <Error />,
+          },
+          {
+            path: 'verify-email',
+            element: <VerifyEmail />,
+            errorElement: <Error />,
+          },
+          {
+            path: 'forgot-password',
+            element: <ForgotPassword />,
+            errorElement: <Error />,
+          },
+          {
+            path: 'reset-password',
+            element: <ResetPassword />,
+            errorElement: <Error />,
+          },
+        ],
       },
       {
         path: 'workouts/:id',

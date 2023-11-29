@@ -12,6 +12,8 @@ import {
   TextField,
   Alert,
 } from '@mui/material'
+import { useContext } from 'react'
+import { LogContext } from '../../LogContext' // Replace with the actual path to LogContext
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
@@ -20,6 +22,7 @@ const schema = Yup.object().shape({
 
 const CreateWorkoutDialog = ({ open, setOpen }) => {
   const navigate = useNavigate()
+  const { addLog } = useContext(LogContext)
   const [workout, setWorkout] = useState({
     name: '',
     title: '',
@@ -51,6 +54,7 @@ const CreateWorkoutDialog = ({ open, setOpen }) => {
 
     try {
       const res = await api.post('/workouts', workout)
+      addLog(`Workout created.`)
       handleClose()
       return navigate('/workouts/' + res.id)
     } catch (submissionError) {

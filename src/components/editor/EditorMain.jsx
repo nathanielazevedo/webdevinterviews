@@ -16,9 +16,9 @@ import {
 } from '@codesandbox/sandpack-react'
 import { IconButton, Tooltip } from '@mui/material'
 import Browser from './browser'
-const isDev = import.meta.env.DEV
-import WorkoutContext from '../../pages/workout/WorkoutContext'
+import { AuthContext } from '../../pages/AuthContext'
 import { useContext } from 'react'
+import WorkoutContext from '../../pages/workout/WorkoutContext'
 import UploadCodeDialog from './UploadCodeDialog'
 
 const EditorMain = ({ files: initialFiles, isSolution }) => {
@@ -29,6 +29,7 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
   const [uploadCodeDialogOpen, setUploadCodeDialogOpen] = useState(false)
   const [files, setFiles] = useState(initialFiles)
   // console.log(isSolution, files)
+  const { isAdmin } = useContext(AuthContext)
 
   return (
     <>
@@ -91,7 +92,7 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
                     ref={codemirrorInstance}
                     style={{ height: '100%' }}
                   />
-                  {isDev && (
+                  {isAdmin && (
                     <IconButton
                       onClick={() => setUploadCodeDialogOpen(true)}
                       fontSize='large'

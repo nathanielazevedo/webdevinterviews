@@ -13,10 +13,31 @@ import { TableHead } from '@mui/material'
 import Link from '@mui/material/Link'
 import { useLoaderData } from 'react-router-dom'
 import Tooltip from '@mui/material/Tooltip'
+import { useContext } from 'react'
+import { AuthContext } from '../AuthContext'
+import Lock from '@mui/icons-material/Lock'
+import { useState } from 'react'
+import AuthDialog from './dialogs/AuthDialog'
 
 const WorkoutTables = () => {
   const navigate = useNavigate()
   const { workouts } = useLoaderData()
+  const { user } = useContext(AuthContext)
+  const [authDialogOpen, setAuthDialogOpen] = useState(false)
+
+  const shouldShowLock = (user, access_level) => {
+    if (access_level === 'free') {
+      return false
+    }
+
+    if (user === null) {
+      return true
+    }
+
+    // Add any other conditions here
+
+    return false
+  }
 
   return (
     <Fade in={true} timeout={1000}>
@@ -36,22 +57,26 @@ const WorkoutTables = () => {
                 color: 'grey',
                 border: 0,
                 fontSize: '14px',
-                width: '140px',
-                minWidth: '140px',
-                maxWidth: '140px',
+                // width: '120px',
+                // minWidth: '120px',
+                // maxWidth: '120px',
               },
             }}
           >
             <TableHead>
-              <TableRow
-                sx={{
-                  width: '100px',
-                }}
-              >
+              <TableRow>
+                <TableCell
+                  align='center'
+                  sx={{
+                    width: '50px',
+                    minWidth: '50px',
+                    maxWidth: '50px',
+                  }}
+                ></TableCell>
                 <TableCell
                   align='left'
                   sx={{
-                    paddingLeft: '70px',
+                    paddingLeft: '23px',
                     width: '100px',
                     minWidth: '100px',
                     maxWidth: '100px',
@@ -92,7 +117,30 @@ const WorkoutTables = () => {
                       td: { border: '0' },
                     }}
                   >
-                    <TableCell align='left' sx={{ paddingLeft: '45px' }}>
+                    <TableCell
+                      align='center'
+                      sx={{
+                        width: '20px',
+                        minWidth: '20px',
+                        maxWidth: '20px',
+                      }}
+                    >
+                      <Tooltip
+                        title='This workout is only available to premium members.'
+                        placement='left-start'
+                      >
+                        {shouldShowLock(user, workout.access_level) && (
+                          <Lock
+                            size='small'
+                            sx={{
+                              color: 'var(--red)',
+                              fontSize: '20px',
+                            }}
+                          />
+                        )}
+                      </Tooltip>
+                    </TableCell>
+                    <TableCell align='left' sx={{ paddingLeft: '0px' }}>
                       <Box
                         sx={{
                           display: 'flex',
@@ -132,7 +180,11 @@ const WorkoutTables = () => {
                             },
                           }}
                           onClick={() => {
-                            navigate(`/workouts/${workout.id}`)
+                            if (shouldShowLock(user, workout.access_level)) {
+                              setAuthDialogOpen(true)
+                            } else {
+                              navigate(`/workouts/${workout.id}`)
+                            }
                           }}
                         >
                           {workout.title}
@@ -190,6 +242,11 @@ const WorkoutTables = () => {
             No workouts found.
           </Box>
         )}
+        <AuthDialog
+          open={authDialogOpen}
+          setOpen={setAuthDialogOpen}
+          message='Sign in to view this workout'
+        />
       </Box>
     </Fade>
   )

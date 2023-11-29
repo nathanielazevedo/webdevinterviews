@@ -1,9 +1,37 @@
 /* eslint-disable react/prop-types */
 import Box from '@mui/material/Box'
-import { Typography, IconButton } from '@mui/material'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import { Typography } from '@mui/material'
+import { useContext } from 'react'
+import { AuthContext } from '../../pages/AuthContext'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { useEffect } from 'react'
 
-const TopNav = ({ isSmall, authDialogOpen, setAuthDialogOpen }) => {
+const TopNav = ({ isSmall }) => {
+  const { user } = useContext(AuthContext)
+  const navigate = useNavigate()
+  const [attributes, setAttributes] = useState({})
+  useEffect(() => {
+    if (user) {
+      user.getUserAttributes((err, attributes) => {
+        if (err) {
+          console.error(err)
+          return
+        }
+
+        const attrs = {}
+
+        for (let attribute of attributes) {
+          const { Name, Value } = attribute
+          attrs[Name] = Value
+        }
+
+        setAttributes(attrs)
+      })
+    } else {
+      // navigate('/auth/login')
+    }
+  }, [navigate, user])
   return (
     <Box
       sx={{
@@ -29,21 +57,63 @@ const TopNav = ({ isSmall, authDialogOpen, setAuthDialogOpen }) => {
           WEB DEV INTERVIEWS
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
-        <IconButton
-          onClick={() => setAuthDialogOpen(!authDialogOpen)}
-          sx={{
-            borderRadius: '50%',
-            padding: '0px',
-            transition: 'font-size 0.3s ease-in-out',
-          }}
-        >
-          <AccountCircleIcon
+        {user ? (
+          <NavLink
+            to='/auth/account'
+            className={({ isActive, isPending }) =>
+              isActive ? 'active' : isPending ? 'pending' : 'not-active'
+            }
+          >
+            <Typography
+              sx={{
+                fontSize: '14px',
+              }}
+            >
+              {attributes.nickname}
+            </Typography>
+          </NavLink>
+        ) : (
+          <Box
             sx={{
-              fontSize: isSmall ? '15px' : '20px',
-              transition: 'font-size 0.3s ease-in-out',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: '100px',
             }}
-          />
-        </IconButton>
+          >
+            <NavLink
+              to='/auth/login'
+              className={({ isActive, isPending }) =>
+                isActive ? 'active' : isPending ? 'pending' : 'not-active'
+              }
+            >
+              <Typography
+                component='div'
+                sx={{
+                  fontSize: '14px',
+                }}
+              >
+                Login
+              </Typography>
+            </NavLink>
+            <NavLink
+              to='/auth/signup'
+              className={({ isActive, isPending }) =>
+                isActive ? 'active' : isPending ? 'pending' : 'not-active'
+              }
+            >
+              <Typography
+                component='div'
+                sx={{
+                  fontSize: '14px',
+                }}
+              >
+                Sign Up
+              </Typography>
+            </NavLink>
+          </Box>
+        )}
       </>
     </Box>
   )

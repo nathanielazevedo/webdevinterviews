@@ -1,112 +1,231 @@
 /* eslint-disable react/prop-types */
-import { CognitoUser, CognitoUserPool } from 'amazon-cognito-identity-js'
 import { createContext, useState, useEffect } from 'react'
-import cognito from '../aws-config'
+import UserPool from '../userpool'
+import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js'
+import { useNavigate } from 'react-router-dom'
 
 const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [user, setUser] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const checkSession = async () => {
-      const storedAccessToken = localStorage.getItem('accessToken')
-      const storedIdToken = localStorage.getItem('idToken')
-
-      if (storedAccessToken && storedIdToken) {
-        // Tokens exist in local storage, set the authenticated state
-        setAuthenticated(true)
-      } else {
-        // Tokens not found in local storage, check Cognito session
-        const userPoolId = 'your-user-pool-id'
-        const clientId = 'your-app-client-id'
-        const userPoolData = {
-          UserPoolId: userPoolId,
-          ClientId: clientId,
+    const currentUser = UserPool.getCurrentUser()
+    if (currentUser) {
+      currentUser.getSession((err) => {
+        if (err) {
+          console.error(err)
+        } else {
+          setAuthenticated(true)
+          setUser(currentUser)
+          const idToken = currentUser.signInUserSession.getIdToken()
+          const isAdmin = (idToken.payload['cognito:groups'] || []).includes(
+            'admin'
+          )
+          setIsAdmin(isAdmin)
+          console.log('Is user admin?', isAdmin)
         }
-
-        const userPool = new CognitoUserPool(userPoolData)
-        const userData = {
-          Username: 'username', // Replace with the user's actual username
-          Pool: userPool,
-        }
-
-        const cognitoUser = new CognitoUser(userData)
-
-        cognitoUser.getSession((err, session) => {
-          if (err) {
-            console.error('Error checking session:', err)
-            setAuthenticated(false)
-          } else {
-            // Session exists, user is authenticated
-            setAuthenticated(true)
-            // Store tokens in local storage for future sessions
-            localStorage.setItem(
-              'accessToken',
-              session.getAccessToken().getJwtToken()
-            )
-            localStorage.setItem('idToken', session.getIdToken().getJwtToken())
-          }
-        })
-      }
+      })
     }
-
-    checkSession()
   }, [])
 
-  const handleLogin = async () => {
-    const authenticationData = {
-      Username: 'username', // Replace with the user's actual username
-      Password: 'password', // Replace with the user's actual password
+  const handleLogout = () => {
+    const currentUser = UserPool.getCurrentUser()
+    if (currentUser) {
+      currentUser.signOut()
     }
 
-    const authenticationDetails = new cognito(authenticationData)
+    setAuthenticated(false)
+    setUser(null)
+    setIsAdmin(false)
+  }
 
-    const userPoolId = 'your-user-pool-id'
-    const clientId = 'your-app-client-id'
-    const userPoolData = {
-      UserPoolId: userPoolId,
-      ClientId: clientId,
-    }
+  const [loginAttempt, setLoginAttempt] = useState({ email: '', password: '' })
 
-    const userPool = new cognito.CognitoUserPool(userPoolData)
-    const userData = {
-      Username: 'username', // Replace with the user's actual username
-      Pool: userPool,
-    }
+  const handleLogin = (email, password) => {
+    // InvalidParameterException
+    return new Promise((resolve, reject) => {
+      setLoginAttempt({ email, password })
+      const user = new CognitoUser({ Username: email, Pool: UserPool })
+      const authDetails = new AuthenticationDetails({
+        Username: email,
+        Password: password,
+      })
 
-    const cognitoUser = new cognito.CognitoUser(userData)
+      user.authenticateUser(authDetails, {
+        onSuccess: (data) => {
+          navigate('auth/account')
+          setAuthenticated(true)
+          const currentUser = UserPool.getCurrentUser()
 
-    cognitoUser.authenticateUser(authenticationDetails, {
-      onSuccess: (session) => {
-        // Session is authenticated, you can set the tokens as HttpOnly cookies
-        document.cookie = `accessToken=${session
-          .getAccessToken()
-          .getJwtToken()}; path=/; HttpOnly`
-        document.cookie = `idToken=${session
-          .getIdToken()
-          .getJwtToken()}; path=/; HttpOnly`
+          if (currentUser) {
+            currentUser.getSession((err) => {
+              if (err) {
+                console.error(err)
+              } else {
+                setAuthenticated(true)
+                setUser(currentUser)
+              }
+            })
+          }
+          resolve(data)
+        },
 
-        setAuthenticated(true)
-      },
-      onFailure: (err) => {
-        console.error('Error authenticating user:', err)
-        setAuthenticated(false)
-      },
+        onFailure: (err) => {
+          // InvalidPasswordException
+          if (err.name === 'UserNotConfirmedException') {
+            navigate('auth/verify-email', { state: { email, password } })
+          } else if (err.name === 'NotAuthorizedException') {
+            const error = new Error('Incorrect password')
+            error.code = 'NotAuthorizedException'
+            reject(error)
+          } else {
+            reject(err)
+          }
+        },
+
+        newPasswordRequired: (data) => {
+          console.log('newPasswordRequired:', data)
+        },
+      })
     })
   }
 
-  const handleLogout = () => {
-    // Clear the tokens from cookies
-    document.cookie =
-      'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
-    document.cookie = 'idToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+  const handleSignup = (email, username, password) => {
+    return new Promise((resolve, reject) => {
+      UserPool.signUp(
+        email,
+        password,
+        [
+          {
+            Name: 'nickname',
+            Value: username,
+          },
+        ],
+        null,
+        (err, data) => {
+          if (err) {
+            if (err.name === 'UsernameExistsException') {
+              const error = new Error('Email already exists')
+              error.code = 'UsernameExistsException'
+              reject(error)
+            } else {
+              reject(err)
+            }
+          } else {
+            navigate('auth/verify-email', { state: { email, password } })
+            resolve(data)
+          }
+        }
+      )
+    })
+  }
 
-    setAuthenticated(false)
+  const handleDeleteAccount = () => {
+    return new Promise((resolve, reject) => {
+      const cognitoUser = UserPool.getCurrentUser()
+
+      if (cognitoUser) {
+        cognitoUser.getSession((err) => {
+          if (err) {
+            reject(err)
+          } else {
+            cognitoUser.deleteUser((err, result) => {
+              if (err) {
+                reject(err)
+              } else {
+                setAuthenticated(false)
+                setUser(null)
+                navigate('/auth/signup')
+                resolve(result)
+              }
+            })
+          }
+        })
+      } else {
+        reject(new Error('No user is currently logged in'))
+      }
+    })
+  }
+
+  const handleVerifyEmail = (email, code) => {
+    const userData = {
+      Username: email,
+      Pool: UserPool,
+    }
+
+    const cognitoUser = new CognitoUser(userData)
+
+    cognitoUser.confirmRegistration(code, true, function (err, result) {
+      if (err) {
+        console.error(err)
+        return
+      }
+      console.log('call result: ' + result)
+      handleLogin(loginAttempt.email, loginAttempt.password)
+    })
+  }
+
+  const handleForgotPassword = (email) => {
+    return new Promise((resolve, reject) => {
+      const userData = {
+        Username: email,
+        Pool: UserPool,
+      }
+
+      const cognitoUser = new CognitoUser(userData)
+
+      cognitoUser.forgotPassword({
+        onSuccess: (data) => {
+          // successfully initiated reset password request
+          console.log('CodeDeliveryData from forgotPassword: ' + data)
+          resolve(data)
+        },
+        onFailure: (err) => {
+          reject(err)
+        },
+      })
+    })
+  }
+
+  const handleResetPassword = (email, verificationCode, newPassword) => {
+    return new Promise((resolve, reject) => {
+      const userData = {
+        Username: email,
+        Pool: UserPool,
+      }
+
+      const cognitoUser = new CognitoUser(userData)
+
+      cognitoUser.confirmPassword(verificationCode, newPassword, {
+        onSuccess: () => {
+          resolve()
+        },
+        onFailure: (err) => {
+          reject(err)
+        },
+      })
+    })
   }
 
   return (
-    <AuthContext.Provider value={{ authenticated, handleLogin, handleLogout }}>
+    <AuthContext.Provider
+      value={{
+        authenticated,
+        user,
+        handleLogout,
+        handleLogin,
+        handleSignup,
+        handleVerifyEmail,
+        handleDeleteAccount,
+        handleForgotPassword,
+        handleResetPassword,
+        isAdmin,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   )
