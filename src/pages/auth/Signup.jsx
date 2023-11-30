@@ -9,6 +9,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { InputAdornment, IconButton } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { NavLink } from 'react-router-dom'
+import CircularProgress from '@mui/material/CircularProgress'
+import Fade from '@mui/material/Fade'
 
 const validationSchema = yup.object({
   email: yup
@@ -33,6 +35,7 @@ const AuthDialog = () => {
   const navigate = useNavigate()
   const { authenticated, handleSignup } = useContext(AuthContext)
   const [generalError, setGeneralError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const [showPassword, setShowPassword] = useState(false)
 
@@ -62,6 +65,7 @@ const AuthDialog = () => {
   })
 
   const onSubmit = async (data) => {
+    setLoading(true)
     try {
       await handleSignup(data.email, data.username, data.password)
     } catch (err) {
@@ -74,168 +78,181 @@ const AuthDialog = () => {
         setGeneralError('An error occurred while signing up. Please try again.')
       }
     }
+    setLoading(false)
   }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-      }}
-    >
+    <Fade in={true} timeout={1000}>
       <Box
         sx={{
-          width: '500px',
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
         }}
       >
-        <form>
-          <h1>Signup</h1>
-          <Controller
-            name='username'
-            control={control}
-            defaultValue=''
-            render={({ field }) => (
-              <TextField
-                {...field}
-                margin='dense'
-                id='username'
-                label='Username'
-                type='text'
-                fullWidth
-                variant='outlined'
-                error={!!errors.username}
-                helperText={errors?.username?.message}
-              />
-            )}
-          />
+        <Box
+          sx={{
+            width: '500px',
+          }}
+        >
+          <form>
+            <h1>Signup</h1>
+            <Controller
+              name='username'
+              control={control}
+              defaultValue=''
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  margin='dense'
+                  id='username'
+                  label='Username'
+                  type='text'
+                  fullWidth
+                  variant='outlined'
+                  error={!!errors.username}
+                  helperText={errors?.username?.message}
+                />
+              )}
+            />
 
-          <Controller
-            name='email'
-            control={control}
-            defaultValue=''
-            render={({ field }) => (
-              <TextField
-                {...field}
-                margin='dense'
-                id='email'
-                label='Email Address'
-                type='email'
-                fullWidth
-                variant='outlined'
-                error={!!errors.email}
-                helperText={errors?.email?.message}
-              />
-            )}
-          />
+            <Controller
+              name='email'
+              control={control}
+              defaultValue=''
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  margin='dense'
+                  id='email'
+                  label='Email Address'
+                  type='email'
+                  fullWidth
+                  variant='outlined'
+                  error={!!errors.email}
+                  helperText={errors?.email?.message}
+                />
+              )}
+            />
 
-          <Controller
-            name='password'
-            control={control}
-            defaultValue=''
-            render={({ field }) => (
-              <TextField
-                {...field}
-                margin='dense'
-                id='password'
-                label='Password'
-                type={showPassword ? 'text' : 'password'}
-                fullWidth
-                variant='outlined'
-                error={!!errors.password}
-                helperText={errors?.password?.message}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <IconButton onClick={handleClickShowPassword}>
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            )}
-          />
-
-          <Controller
-            name='confirmPassword'
-            control={control}
-            defaultValue=''
-            render={({ field }) => (
-              <TextField
-                {...field}
-                margin='dense'
-                id='confirmPassword'
-                label='Confirm Password'
-                type={showConfirmPassword ? 'text' : 'password'}
-                fullWidth
-                variant='outlined'
-                error={!!errors.confirmPassword}
-                helperText={errors?.confirmPassword?.message}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <IconButton onClick={handleClickShowConfirmPassword}>
-                        {showConfirmPassword ? (
-                          <Visibility />
-                        ) : (
-                          <VisibilityOff />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            )}
-          />
-          <Box sx={{ mt: 2 }}>
-            <Button
-              variant='contained'
-              color='primary'
-              onClick={handleSubmit(onSubmit)}
-              fullWidth
-            >
-              Sign Up
-            </Button>
-          </Box>
-          {generalError && (
-            <Box sx={{ mt: 2 }}>
-              <Typography color='error'>{generalError}</Typography>
-            </Box>
-          )}
-          <Box
-            sx={{
-              mt: 2,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Typography variant='body2' align='center'>
-              Already have an account?
-              <NavLink
-                to='/auth/login'
-                className={({ isActive, isPending }) =>
-                  isActive ? 'active' : isPending ? 'pending' : 'not-active'
-                }
-              >
-                <Typography
-                  component='div'
-                  sx={{
-                    fontSize: '14px',
+            <Controller
+              name='password'
+              control={control}
+              defaultValue=''
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  margin='dense'
+                  id='password'
+                  label='Password'
+                  type={showPassword ? 'text' : 'password'}
+                  fullWidth
+                  variant='outlined'
+                  error={!!errors.password}
+                  helperText={errors?.password?.message}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position='end'>
+                        <IconButton onClick={handleClickShowPassword}>
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
                   }}
+                />
+              )}
+            />
+
+            <Controller
+              name='confirmPassword'
+              control={control}
+              defaultValue=''
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  margin='dense'
+                  id='confirmPassword'
+                  label='Confirm Password'
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  fullWidth
+                  variant='outlined'
+                  error={!!errors.confirmPassword}
+                  helperText={errors?.confirmPassword?.message}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position='end'>
+                        <IconButton onClick={handleClickShowConfirmPassword}>
+                          {showConfirmPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              )}
+            />
+            <Box sx={{ mt: 2 }}>
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={handleSubmit(onSubmit)}
+                disabled={loading}
+                fullWidth
+              >
+                {loading ? (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      color: 'primary',
+                    }}
+                  />
+                ) : (
+                  'Sign Up'
+                )}
+              </Button>
+            </Box>
+            {generalError && (
+              <Box sx={{ mt: 2 }}>
+                <Typography color='error'>{generalError}</Typography>
+              </Box>
+            )}
+            <Box
+              sx={{
+                mt: 2,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Typography variant='body2' align='center'>
+                Already have an account?
+                <NavLink
+                  to='/auth/login'
+                  className={({ isActive, isPending }) =>
+                    isActive ? 'active' : isPending ? 'pending' : 'not-active'
+                  }
                 >
-                  Login
-                </Typography>
-              </NavLink>
-            </Typography>
-          </Box>
-        </form>
+                  <Typography
+                    component='div'
+                    sx={{
+                      fontSize: '14px',
+                    }}
+                  >
+                    Login
+                  </Typography>
+                </NavLink>
+              </Typography>
+            </Box>
+          </form>
+        </Box>
       </Box>
-    </Box>
+    </Fade>
   )
 }
 

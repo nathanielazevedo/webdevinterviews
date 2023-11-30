@@ -3,9 +3,11 @@ class API {
     this.baseURL = import.meta.env.DEV
       ? 'http://localhost:5000'
       : 'https://api.webdevinterviews.com'
+    this.delay = import.meta.env.DEV ? 2000 : 0
   }
 
   async get(endpoint) {
+    await new Promise((resolve) => setTimeout(resolve, this.delay))
     const response = await fetch(`${this.baseURL}${endpoint}`)
 
     if (!response.ok) {
@@ -22,6 +24,7 @@ class API {
   }
 
   async post(endpoint, body) {
+    await new Promise((resolve) => setTimeout(resolve, this.delay))
     try {
       const response = await fetch(`${this.baseURL}${endpoint}`, {
         method: 'POST',
@@ -42,6 +45,7 @@ class API {
   }
 
   async put(endpoint, body) {
+    await new Promise((resolve) => setTimeout(resolve, this.delay))
     try {
       const response = await fetch(`${this.baseURL}${endpoint}`, {
         method: 'PUT',
@@ -62,6 +66,7 @@ class API {
   }
 
   async delete(endpoint) {
+    await new Promise((resolve) => setTimeout(resolve, this.delay))
     try {
       const response = await fetch(`${this.baseURL}${endpoint}`, {
         method: 'DELETE',

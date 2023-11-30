@@ -118,27 +118,34 @@ const WorkoutTables = () => {
                     }}
                   >
                     <TableCell
-                      align='center'
                       sx={{
                         width: '20px',
                         minWidth: '20px',
                         maxWidth: '20px',
                       }}
                     >
-                      <Tooltip
-                        title='This workout is only available to premium members.'
-                        placement='left-start'
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          paddingLeft: '10px',
+                        }}
                       >
-                        {shouldShowLock(user, workout.access_level) && (
-                          <Lock
-                            size='small'
-                            sx={{
-                              color: 'var(--red)',
-                              fontSize: '20px',
-                            }}
-                          />
-                        )}
-                      </Tooltip>
+                        <Tooltip
+                          title='This workout is only available to premium members.'
+                          placement='left-start'
+                        >
+                          {shouldShowLock(user, workout.access_level) && (
+                            <Lock
+                              size='small'
+                              sx={{
+                                color: 'var(--red)',
+                                fontSize: '20px',
+                              }}
+                            />
+                          )}
+                        </Tooltip>
+                      </Box>
                     </TableCell>
                     <TableCell align='left' sx={{ paddingLeft: '0px' }}>
                       <Box

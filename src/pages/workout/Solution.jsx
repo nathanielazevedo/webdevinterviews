@@ -5,7 +5,7 @@ import { useContext } from 'react'
 
 const Solution = () => {
   const { workout } = useContext(WorkoutContext)
-  console.log(workout.solution)
+
   return (
     <Fade in={true} timeout={1000}>
       <div>

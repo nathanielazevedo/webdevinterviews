@@ -4,6 +4,10 @@ import * as yup from 'yup'
 import { TextField, Button, Box, Typography } from '@mui/material'
 import { AuthContext } from '../AuthContext'
 import { useContext } from 'react'
+import { useLocation } from 'react-router-dom'
+import { useState } from 'react'
+import { CircularProgress } from '@mui/material'
+import { NavLink } from 'react-router-dom'
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -20,6 +24,10 @@ const schema = yup.object().shape({
 
 const ResetPassword = () => {
   const { handleResetPassword } = useContext(AuthContext)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const location = useLocation()
+  const email = location?.state?.email
   const {
     handleSubmit,
     control,
@@ -29,6 +37,7 @@ const ResetPassword = () => {
   })
 
   const onSubmit = async (data) => {
+    setLoading(true)
     try {
       await handleResetPassword(
         data.email,
@@ -38,6 +47,7 @@ const ResetPassword = () => {
     } catch (err) {
       console.log(err)
     }
+    setLoading(false)
   }
 
   return (
@@ -51,78 +61,117 @@ const ResetPassword = () => {
         height: '100%',
       }}
     >
-      <Typography variant='h4' component='h1' gutterBottom>
-        Reset Password
-      </Typography>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name='email'
-          control={control}
-          defaultValue=''
-          render={({ field }) => (
-            <TextField
-              {...field}
-              margin='dense'
-              id='email'
-              label='Email Address'
-              type='email'
+      <Box sx={{ width: '500px' }}>
+        <h1>Reset Password</h1>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          <Controller
+            name='email'
+            control={control}
+            defaultValue={email || ''}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                margin='dense'
+                id='email'
+                label='Email Address'
+                type='email'
+                fullWidth
+                variant='outlined'
+                error={!!errors.email}
+                helperText={errors?.email?.message}
+              />
+            )}
+          />
+          <Controller
+            name='verificationCode'
+            control={control}
+            defaultValue=''
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label='Verification Code'
+                fullWidth
+                error={!!errors.verificationCode}
+                helperText={errors?.verificationCode?.message}
+              />
+            )}
+          />
+          <Controller
+            name='newPassword'
+            control={control}
+            defaultValue=''
+            render={({ field }) => (
+              <TextField
+                {...field}
+                type='password'
+                label='New Password'
+                fullWidth
+                error={!!errors.newPassword}
+                helperText={errors?.newPassword?.message}
+              />
+            )}
+          />
+          <Controller
+            name='confirmPassword'
+            control={control}
+            defaultValue=''
+            render={({ field }) => (
+              <TextField
+                {...field}
+                type='password'
+                label='Confirm New Password'
+                fullWidth
+                error={!!errors.confirmPassword}
+                helperText={errors?.confirmPassword?.message}
+              />
+            )}
+          />
+          <Box sx={{ mt: 2 }}>
+            <Button
+              type='submit'
+              variant='contained'
+              color='primary'
               fullWidth
-              variant='outlined'
-              error={!!errors.email}
-              helperText={errors?.email?.message}
-            />
-          )}
-        />
-        <Controller
-          name='verificationCode'
-          control={control}
-          defaultValue=''
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label='Verification Code'
-              fullWidth
-              error={!!errors.verificationCode}
-              helperText={errors?.verificationCode?.message}
-            />
-          )}
-        />
-        <Controller
-          name='newPassword'
-          control={control}
-          defaultValue=''
-          render={({ field }) => (
-            <TextField
-              {...field}
-              type='password'
-              label='New Password'
-              fullWidth
-              error={!!errors.newPassword}
-              helperText={errors?.newPassword?.message}
-            />
-          )}
-        />
-        <Controller
-          name='confirmPassword'
-          control={control}
-          defaultValue=''
-          render={({ field }) => (
-            <TextField
-              {...field}
-              type='password'
-              label='Confirm Password'
-              fullWidth
-              error={!!errors.confirmPassword}
-              helperText={errors?.confirmPassword?.message}
-            />
-          )}
-        />
-        <Box sx={{ mt: 2 }}>
-          <Button type='submit' variant='contained' color='primary' fullWidth>
-            Submit
-          </Button>
-        </Box>
-      </form>
+              disabled={loading}
+            >
+              {loading ? (
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    color: 'primary',
+                  }}
+                />
+              ) : (
+                'Reset Password'
+              )}
+            </Button>
+          </Box>
+          <NavLink
+            to='/auth/login'
+            className={({ isActive, isPending }) =>
+              isActive ? 'active' : isPending ? 'pending' : 'not-active'
+            }
+          >
+            <Typography
+              component='div'
+              sx={{
+                fontSize: '14px',
+              }}
+            >
+              Back to Login
+            </Typography>
+          </NavLink>
+        </form>
+      </Box>
     </Box>
   )
 }

@@ -4,13 +4,13 @@ import Tooltip from '@mui/material/Tooltip'
 import WorkoutContext from './WorkoutContext'
 import Rating from '../../components/Rating'
 import YouTubeIcon from '@mui/icons-material/YouTube'
-import { Box, Checkbox, Fade, Typography } from '@mui/material'
+import { Box, Fade, Typography } from '@mui/material'
 
 const Description = () => {
   const { workout } = useContext(WorkoutContext)
 
   return (
-    <Fade in={true} timeout={1500}>
+    <Fade in={true} timeout={1000}>
       <Box
         sx={{
           display: 'flex',
@@ -64,38 +64,16 @@ const Description = () => {
             gap: '1.5rem',
           }}
         >
-          {workout.gif && (
+          {workout.image_link && (
             <img
-              src={workout.gif}
+              src={workout.image_link}
               alt={workout.name}
               style={{
                 maxWidth: '500px',
-                // border: '15px solid black',
                 borderRadius: '10px',
               }}
             />
           )}
-          {/* <Box>
-            <Typography variant='h6' color='primary' fontWeight='bold'>
-              Checklist
-            </Typography>
-            {workout.checklist &&
-              workout.checklist.map((item, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Checkbox />
-                  <Typography key={index} variant='body1'>
-                    {item}
-                  </Typography>
-                </Box>
-              ))}
-          </Box> */}
         </Box>
       </Box>
     </Fade>

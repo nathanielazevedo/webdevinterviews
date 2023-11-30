@@ -13,7 +13,9 @@ import {
   Alert,
 } from '@mui/material'
 import { useContext } from 'react'
-import { LogContext } from '../../LogContext' // Replace with the actual path to LogContext
+import { LogContext } from '../../LogContext'
+import CloseIcon from '@mui/icons-material/Close'
+import IconButton from '@mui/material/IconButton'
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
@@ -66,7 +68,26 @@ const CreateWorkoutDialog = ({ open, setOpen }) => {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Create a Workout</DialogTitle>
+      <DialogTitle
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        Create Workout{' '}
+        <IconButton
+          edge='end'
+          color='inherit'
+          onClick={() => setOpen(false)}
+          aria-label='close'
+          sx={{
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
       <DialogContent>
         {errors.submission && (
           <Alert severity='error'>{errors.submission}</Alert>
@@ -94,7 +115,7 @@ const CreateWorkoutDialog = ({ open, setOpen }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button type='submit' form='create-workout-form' color='success'>
+        <Button type='submit' form='create-workout-form'>
           Create
         </Button>
       </DialogActions>

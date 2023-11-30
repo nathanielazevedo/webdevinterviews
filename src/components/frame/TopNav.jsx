@@ -1,16 +1,17 @@
 /* eslint-disable react/prop-types */
+import { useState } from 'react'
+import { useContext } from 'react'
+import { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
-import { useContext } from 'react'
 import { AuthContext } from '../../pages/AuthContext'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import { useEffect } from 'react'
 
 const TopNav = ({ isSmall }) => {
-  const { user } = useContext(AuthContext)
   const navigate = useNavigate()
+  const { user } = useContext(AuthContext)
   const [attributes, setAttributes] = useState({})
+
   useEffect(() => {
     if (user) {
       user.getUserAttributes((err, attributes) => {
@@ -32,6 +33,7 @@ const TopNav = ({ isSmall }) => {
       // navigate('/auth/login')
     }
   }, [navigate, user])
+
   return (
     <Box
       sx={{
@@ -79,7 +81,7 @@ const TopNav = ({ isSmall }) => {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
-              width: '100px',
+              width: '110px',
             }}
           >
             <NavLink
@@ -97,6 +99,9 @@ const TopNav = ({ isSmall }) => {
                 Login
               </Typography>
             </NavLink>
+            <Typography>
+              <span style={{ color: '#454950' }}>|</span>
+            </Typography>
             <NavLink
               to='/auth/signup'
               className={({ isActive, isPending }) =>

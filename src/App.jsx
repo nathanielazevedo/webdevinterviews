@@ -19,6 +19,7 @@ import Account from './pages/auth/Account'
 import VerifyEmail from './pages/auth/VerifyEmail'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ResetPassword from './pages/auth/ResetPassword'
+import EmailTemplate from './emailTemplate'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,11 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+        errorElement: <Error />,
+      },
+      {
+        path: 'email-templates',
+        element: <EmailTemplate />,
         errorElement: <Error />,
       },
       {

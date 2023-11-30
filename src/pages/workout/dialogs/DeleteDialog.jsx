@@ -1,4 +1,9 @@
+import api from '../../../api'
 import PropTypes from 'prop-types'
+import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import WorkoutContext from '../WorkoutContext'
+import { LogContext } from '../../LogContext'
 import {
   Dialog,
   DialogActions,
@@ -7,14 +12,11 @@ import {
   DialogTitle,
   Button,
 } from '@mui/material'
-import api from '../../../api'
-import { useNavigate } from 'react-router-dom'
-import WorkoutContext from '../WorkoutContext'
-import { useContext } from 'react'
 
 const DeleteDialog = ({ open, setOpen }) => {
   const navigate = useNavigate()
   const { workout } = useContext(WorkoutContext)
+  const { addLog } = useContext(LogContext)
   const handleClose = () => {
     setOpen(false)
   }
@@ -22,11 +24,11 @@ const DeleteDialog = ({ open, setOpen }) => {
   const handleConfirm = async () => {
     try {
       await api.delete(`/workouts/${workout.id}`)
+      addLog(`Workout deleted.`)
       navigate('/workouts')
       setOpen(false)
     } catch (error) {
       console.error(`Failed to delete workout: ${error.message}`)
-      // Handle the error here, e.g., by showing an error message to the user
     }
   }
 

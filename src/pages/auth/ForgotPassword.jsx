@@ -5,6 +5,9 @@ import { TextField, Button, Box, Typography } from '@mui/material'
 import { AuthContext } from '../AuthContext'
 import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useState } from 'react'
+import { CircularProgress } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -12,6 +15,10 @@ const schema = yup.object().shape({
 
 const ForgotPassword = () => {
   const { handleForgotPassword } = useContext(AuthContext)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const navigate = useNavigate()
+
   const {
     handleSubmit,
     control,
@@ -20,13 +27,17 @@ const ForgotPassword = () => {
     resolver: yupResolver(schema),
   })
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // Handle form submission
+    setLoading(true)
     try {
-      handleForgotPassword(data.email)
+      await handleForgotPassword(data.email)
+      navigate('/auth/reset-password', { state: { email: data.email } })
     } catch (err) {
       console.log(err)
+      setError(err)
     }
+    setLoading(false)
   }
 
   return (
@@ -42,6 +53,15 @@ const ForgotPassword = () => {
     >
       <Box sx={{ width: '500px' }}>
         <h1>Forgot Password</h1>
+        <Typography
+          sx={{
+            fontSize: '16px',
+            color: 'gray',
+            mb: '20px',
+          }}
+        >
+          Enter your email address. We will email you a code.
+        </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name='email'
@@ -58,9 +78,35 @@ const ForgotPassword = () => {
               />
             )}
           />
+          {error && (
+            <Typography
+              sx={{
+                fontSize: '14px',
+                color: 'red',
+                mb: '20px',
+              }}
+            >
+              {error.message}
+            </Typography>
+          )}
           <Box sx={{ mt: 2, mb: '5px' }}>
-            <Button type='submit' variant='contained' color='primary' fullWidth>
-              Submit
+            <Button
+              type='submit'
+              variant='contained'
+              color='primary'
+              fullWidth
+              disabled={loading}
+            >
+              {loading ? (
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    color: 'primary',
+                  }}
+                />
+              ) : (
+                'Send Code'
+              )}
             </Button>
           </Box>
           <NavLink

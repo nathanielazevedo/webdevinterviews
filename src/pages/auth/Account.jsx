@@ -1,28 +1,16 @@
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../AuthContext'
-import {
-  Container,
-  Typography,
-  Button,
-  Box,
-  Paper,
-  Avatar,
-} from '@mui/material'
+import { Container, Typography, Button, Box } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material'
+import DeleteAccountDialog from './dialogs/DeleteAccountDialog'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const Account = () => {
   const { user, handleLogout, handleDeleteAccount } = useContext(AuthContext)
   const [attributes, setAttributes] = useState({})
   const navigate = useNavigate()
-  console.log('wow')
   const [open, setOpen] = useState(false)
+  const [loadingLogout, setLoadingLogout] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -32,8 +20,18 @@ const Account = () => {
     setOpen(false)
   }
 
+  const handleLogoutClick = async () => {
+    setLoadingLogout(true)
+    try {
+      await handleLogout()
+      navigate('/auth/login')
+    } catch (err) {
+      console.error(err)
+    }
+    setLoadingLogout(false)
+  }
+
   const handleDelete = () => {
-    // Delete account logic here
     try {
       handleDeleteAccount()
     } catch (err) {
@@ -69,57 +67,57 @@ const Account = () => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           mt: 3,
+          ml: 3,
+          width: '50%',
         }}
       >
-        <Avatar sx={{ width: 56, height: 56 }}>U</Avatar>
-        <Typography variant='h4' component='div' sx={{ mt: 2 }}>
+        <Typography variant='h5' component='div' sx={{ mt: 2 }}>
           Account Information
         </Typography>
-        <Paper sx={{ mt: 2, p: 2, width: '100%' }}>
-          <Typography variant='body1'>
-            <strong>Username:</strong> {attributes.nickname}
+        <Box sx={{ mt: 2, p: 0, width: '100%' }}>
+          <Typography variant='body2'>
+            <strong style={{ color: 'grey' }}>Username:</strong>
+            {attributes.nickname}
           </Typography>
-          <Typography variant='body1'>
-            <strong>Email:</strong> {attributes.email}
+          <Typography variant='body2'>
+            <strong style={{ color: 'grey' }}>Email:</strong> {attributes.email}
           </Typography>
-          <Typography variant='body1'>
-            <strong>Verified:</strong> {attributes.email_verified}
-          </Typography>
-        </Paper>
+        </Box>
         <Button
           variant='contained'
           color='primary'
-          onClick={handleLogout}
-          sx={{ mt: 2 }}
+          disabled={loadingLogout}
+          onClick={handleLogoutClick}
+          sx={{ mt: 2, width: '200px' }}
         >
-          Logout
+          {loadingLogout ? (
+            <CircularProgress
+              size={24}
+              sx={{
+                color: 'primary',
+              }}
+            />
+          ) : (
+            'Log Out'
+          )}
+        </Button>
+        <Button
+          variant='contained'
+          color='error'
+          onClick={handleClickOpen}
+          sx={{ mt: 2, width: '200px' }}
+        >
+          Delete Account
         </Button>
       </Box>
-      <Button variant='contained' color='secondary' onClick={handleClickOpen}>
-        Delete Account
-      </Button>
-      <Dialog
+      <DeleteAccountDialog
+        handleClose={handleClose}
+        setOpen={setOpen}
         open={open}
-        onClose={handleClose}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
-      >
-        <DialogTitle id='alert-dialog-title'>{'Delete Account'}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
-            Are you sure you want to delete your account? This action cannot be
-            undone.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleDelete} autoFocus>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
+        handleDelete={handleDelete}
+      />
     </Container>
   )
 }

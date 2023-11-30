@@ -5,35 +5,42 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Button from '@mui/material/Button'
 import { NavLink } from 'react-router-dom'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
 
 const AuthDialog = ({ open, setOpen }) => {
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
-      <DialogTitle>
-        You need to login or signup to access this workout.
+      <DialogTitle
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        Access Denied{' '}
+        <IconButton
+          edge='end'
+          color='inherit'
+          onClick={() => setOpen(false)}
+          aria-label='close'
+          sx={{
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
       </DialogTitle>
       <DialogContent>
-        <Button
-          component={NavLink}
-          to='/auth/login'
-          color='primary'
-          variant='contained'
-          fullWidth
-        >
-          Login
-        </Button>
-        <Button
-          component={NavLink}
-          to='/auth/signup'
-          color='secondary'
-          variant='contained'
-          fullWidth
-        >
-          Signup
-        </Button>
+        You need to login or signup to access this workout.
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setOpen(false)}>Close</Button>
+        <Button component={NavLink} to='/auth/signup'>
+          Signup
+        </Button>
+        <Button component={NavLink} to='/auth/login' color='primary'>
+          Login
+        </Button>
       </DialogActions>
     </Dialog>
   )
