@@ -1,15 +1,19 @@
+const BASE_URL = import.meta.env.DEV
+  ? 'http://localhost:5000'
+  : 'https://api.webdevinterviews.com'
+const DELAY = import.meta.env.DEV ? 2000 : 0
+
 class API {
-  constructor() {
-    this.baseURL = import.meta.env.DEV
-      ? 'http://localhost:5000'
-      : 'https://api.webdevinterviews.com'
-    this.delay = import.meta.env.DEV ? 2000 : 0
-  }
-
-  async get(endpoint) {
-    await new Promise((resolve) => setTimeout(resolve, this.delay))
-    const response = await fetch(`${this.baseURL}${endpoint}`)
-
+  async fetchWithDelay(method, endpoint, body) {
+    await new Promise((resolve) => setTimeout(resolve, DELAY))
+    const options = body
+      ? {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        }
+      : { method }
+    const response = await fetch(`${BASE_URL}${endpoint}`, options)
     if (!response.ok) {
       const errorBody = await response.text()
       const error = new Error(
@@ -18,67 +22,19 @@ class API {
       error.status = response.status
       throw error
     }
-
-    const data = await response.json()
-    return { data }
+    return { data: await response.json() }
   }
 
-  async post(endpoint, body) {
-    await new Promise((resolve) => setTimeout(resolve, this.delay))
-    try {
-      const response = await fetch(`${this.baseURL}${endpoint}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      })
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const data = await response.json()
-      return data
-    } catch (error) {
-      console.error(`Fetch failed: ${error.message}`)
-      throw error
-    }
+  get(endpoint) {
+    return this.fetchWithDelay('GET', endpoint)
   }
 
-  async put(endpoint, body) {
-    await new Promise((resolve) => setTimeout(resolve, this.delay))
-    try {
-      const response = await fetch(`${this.baseURL}${endpoint}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      })
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const data = await response.json()
-      return data
-    } catch (error) {
-      console.error(`Fetch failed: ${error.message}`)
-      throw error
-    }
+  post(endpoint, body) {
+    return this.fetchWithDelay('POST', endpoint, body)
   }
 
-  async delete(endpoint) {
-    await new Promise((resolve) => setTimeout(resolve, this.delay))
-    try {
-      const response = await fetch(`${this.baseURL}${endpoint}`, {
-        method: 'DELETE',
-      })
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      return response.status
-    } catch (error) {
-      console.error(`Fetch failed: ${error.message}`)
-      throw error
-    }
+  put(endpoint, body) {
+    return this.fetchWithDelay('PUT', endpoint, body)
   }
 }
 

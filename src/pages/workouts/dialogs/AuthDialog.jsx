@@ -35,10 +35,15 @@ const AuthDialog = ({ open, setOpen }) => {
         You need to login or signup to access this workout.
       </DialogContent>
       <DialogActions>
-        <Button component={NavLink} to='/auth/signup'>
+        <Button component={NavLink} to='/auth/signup' variant='contained'>
           Signup
         </Button>
-        <Button component={NavLink} to='/auth/login' color='primary'>
+        <Button
+          component={NavLink}
+          to='/auth/login'
+          color='primary'
+          variant='contained'
+        >
           Login
         </Button>
       </DialogActions>

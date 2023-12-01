@@ -1,28 +1,85 @@
 import Box from '@mui/material/Box'
 import { useContext } from 'react'
-import { LogContext } from '../../pages/LogContext' // Replace with the actual path to LogContext
-import { Typography } from '@mui/material'
-import { useEffect } from 'react'
+import { LogContext } from '../../pages/LogContext'
+import { Button, Typography } from '@mui/material'
 import { useState } from 'react'
-import Fade from '@mui/material/Fade'
+import { ApiContext } from '../../pages/ApiContext'
+import { CircularProgress } from '@mui/material'
+import LogDialog from '../../pages/LogDialog'
 
 const Footer = () => {
-  const { logs, addLog } = useContext(LogContext)
+  const { logs } = useContext(LogContext)
+  const { apiState } = useContext(ApiContext)
   const latestLog = logs[logs.length - 1]
+  const [logDialogOpen, setLogDialogOpen] = useState(false)
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      addLog('')
-    }, 5000)
-
-    return () => clearTimeout(timer)
-  }, [latestLog, addLog])
-
-  const [key, setKey] = useState(0)
-
-  useEffect(() => {
-    setKey((prevKey) => prevKey + 1)
-  }, [latestLog])
+  const getButtonText = () => {
+    if (latestLog) {
+      if (latestLog.method === 'log') {
+        return (
+          <>
+            <Button
+              variant='contained'
+              onClick={() => {
+                setLogDialogOpen(true)
+              }}
+              sx={{
+                fontSize: '14px',
+                color: 'primary',
+              }}
+            >
+              <Typography sx={{ fontSize: '10px', color: 'black' }}>
+                {latestLog.data[0]}
+              </Typography>
+            </Button>
+          </>
+        )
+      } else if (latestLog.method === 'info') {
+        return (
+          <>
+            <Button
+              variant='contained'
+              onClick={() => {
+                setLogDialogOpen(true)
+              }}
+              sx={{
+                fontSize: '14px',
+                color: 'primary',
+              }}
+            >
+              <CircularProgress
+                size={12}
+                sx={{ marginRight: '5px', color: 'black' }}
+              />
+              <Typography sx={{ fontSize: '10px', color: 'black' }}>
+                {latestLog.data[0]}
+              </Typography>
+            </Button>
+          </>
+        )
+      } else if (latestLog.method === 'error') {
+        return (
+          <>
+            <Button
+              variant='contained'
+              color='error'
+              onClick={() => {
+                setLogDialogOpen(true)
+              }}
+              sx={{
+                fontSize: '14px',
+                color: 'primary',
+              }}
+            >
+              <Typography sx={{ fontSize: '10px', color: 'black' }}>
+                {latestLog.data[0]}
+              </Typography>
+            </Button>
+          </>
+        )
+      }
+    }
+  }
 
   return (
     <Box
@@ -30,28 +87,52 @@ const Footer = () => {
         height: '25px',
         borderTop: '0.5px solid #454950',
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '0 16px',
+        padding: '0 0px',
+        width: '100%',
       }}
     >
-      <Fade in={true} key={key}>
-        <Box
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: '100%',
+          marginLeft: '10px',
+        }}
+      >
+        <CircularProgress
+          color='primary'
+          size={15}
           sx={{
-            backgroundColor: 'white',
-            padding: '0 10px',
+            display: apiState.running ? 'block' : 'none',
+            marginRight: '5px',
+          }}
+        />
+        <Typography
+          sx={{
+            fontSize: '12px',
+            color: 'primary',
+            display: apiState.running ? 'block' : 'none',
           }}
         >
-          <Typography
-            sx={{
-              fontSize: '14px',
-              color: 'black',
-            }}
-          >
-            {latestLog}
-          </Typography>
-        </Box>
-      </Fade>
+          {apiState.call}
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          backgroundColor: 'primary',
+          // padding: '0 10px',
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          display: 'flex',
+        }}
+      >
+        {getButtonText()}
+      </Box>
+      <LogDialog open={logDialogOpen} onClose={() => setLogDialogOpen(false)} />
     </Box>
   )
 }

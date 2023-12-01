@@ -18,10 +18,18 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const currentUser = UserPool.getCurrentUser()
+    addLog({
+      method: 'error',
+      data: ['Not logged in.'],
+    })
     if (currentUser) {
       currentUser.getSession((err) => {
         if (err) {
           console.error(err)
+          addLog({
+            method: 'error',
+            data: ['Not logged in.'],
+          })
         } else {
           setAuthenticated(true)
           setUser(currentUser)

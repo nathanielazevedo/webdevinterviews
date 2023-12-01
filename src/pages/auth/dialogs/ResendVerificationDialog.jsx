@@ -117,7 +117,6 @@ const ResendVerificationDialog = ({ open, handleClose, email }) => {
           </Button>
           <Button
             onClick={handleSubmit(onSubmit)}
-            color='error'
             variant='contained'
             disabled={loadingDelete}
           >
@@ -125,7 +124,7 @@ const ResendVerificationDialog = ({ open, handleClose, email }) => {
               <CircularProgress
                 size={24}
                 sx={{
-                  color: 'error',
+                  color: 'primary',
                 }}
               />
             ) : (

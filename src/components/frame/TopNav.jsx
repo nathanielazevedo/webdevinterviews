@@ -68,7 +68,7 @@ const TopNav = ({ isSmall }) => {
           >
             <Typography
               sx={{
-                fontSize: '14px',
+                fontSize: '12px',
               }}
             >
               {attributes.nickname}
@@ -87,13 +87,15 @@ const TopNav = ({ isSmall }) => {
             <NavLink
               to='/auth/login'
               className={({ isActive, isPending }) =>
-                isActive ? 'active' : isPending ? 'pending' : 'not-active'
+                `nav-link ${
+                  isActive ? 'active' : isPending ? 'pending' : 'not-active'
+                }`
               }
             >
               <Typography
                 component='div'
                 sx={{
-                  fontSize: '14px',
+                  fontSize: '12px',
                 }}
               >
                 Login
@@ -105,13 +107,15 @@ const TopNav = ({ isSmall }) => {
             <NavLink
               to='/auth/signup'
               className={({ isActive, isPending }) =>
-                isActive ? 'active' : isPending ? 'pending' : 'not-active'
+                `nav-link ${
+                  isActive ? 'active' : isPending ? 'pending' : 'not-active'
+                }`
               }
             >
               <Typography
                 component='div'
                 sx={{
-                  fontSize: '14px',
+                  fontSize: '12px',
                 }}
               >
                 Sign Up

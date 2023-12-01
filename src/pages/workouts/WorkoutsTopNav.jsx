@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add'
 import PropTypes from 'prop-types'
 import { AuthContext } from '../AuthContext'
 import { useContext } from 'react'
+import Typography from '@mui/material/Typography'
 
 const TopNav = ({ open, setOpenDialog }) => {
   const { isAdmin } = useContext(AuthContext)
@@ -19,6 +20,16 @@ const TopNav = ({ open, setOpenDialog }) => {
         borderBottom: '0.5px solid var(--color-solid-resize-bar-handle)',
       }}
     >
+      <Typography
+        component='div'
+        color='grey.500'
+        fontWeight={'bold'}
+        sx={{
+          fontSize: '10px',
+        }}
+      >
+        WORKOUTS
+      </Typography>
       <div style={{ flexGrow: '1' }} />
       {isAdmin && (
         <IconButton size='small' onClick={() => setOpenDialog(!open)}>

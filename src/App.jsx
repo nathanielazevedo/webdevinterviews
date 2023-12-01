@@ -10,7 +10,6 @@ import WorkoutRoot from './pages/workout/WorkoutRoot'
 import WorkoutsRoot from './pages/workouts/WorkoutsRoot'
 import { loader as workoutLoader } from './pages/workout/WorkoutRoot'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { workoutsLoader } from './pages/workouts/loaders/workoutsLoader'
 import Login from './pages/auth/Login'
 import SignUp from './pages/auth/SignUp'
 import { action as editWorkoutAction } from './pages/workout/WorkoutRoot'
@@ -40,7 +39,6 @@ const router = createBrowserRouter([
         path: 'workouts',
         element: <WorkoutsRoot />,
         errorElement: <Error />,
-        loader: workoutsLoader,
       },
       {
         path: 'auth',

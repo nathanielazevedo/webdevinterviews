@@ -58,21 +58,19 @@ const Description = () => {
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'space-evenly',
-            paddingTop: '20px',
+            justifyContent: 'center',
+            alignItems: 'center',
             flexDirection: 'column',
-            gap: '1.5rem',
+            border: '1px solid white',
+            width: '400px',
+            height: '225px',
+            marginTop: '1rem',
+            borderRadius: '10px',
+            overflow: 'hidden',
           }}
         >
           {workout.image_link && (
-            <img
-              src={workout.image_link}
-              alt={workout.name}
-              style={{
-                maxWidth: '500px',
-                borderRadius: '10px',
-              }}
-            />
+            <img src={`../images/${workout.image_link}`} alt={workout.name} />
           )}
         </Box>
       </Box>

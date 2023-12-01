@@ -8,6 +8,7 @@ import { useSandpackConsole } from '@codesandbox/sandpack-react'
 
 const Console = ({ closeFilePanel, consolePanelRef }) => {
   const { logs, reset } = useSandpackConsole({})
+  console.log('editor', logs)
 
   return (
     <div

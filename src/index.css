@@ -111,7 +111,14 @@
 }
 
 .pending {
-  color: white;
+  color: var(--lightBlue);
+  text-shadow: 0 0 10px var(--lightBlue), 0 0 20px var(--lightBlue),
+    0 0 30px var(--lightBlue), 0 0 40px var(--lightBlue);
+}
+
+.nav-link:hover {
+  /* Your hover styles here */
+  color: var(--lightBlue); /* Example hover color */
 }
 
 .not-active {

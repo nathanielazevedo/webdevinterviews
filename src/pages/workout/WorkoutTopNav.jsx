@@ -2,7 +2,7 @@
 import Box from '@mui/material/Box'
 import Rating from '../../components/Rating'
 import Tooltip from '@mui/material/Tooltip'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useNavigation } from 'react-router-dom'
 import EditIcon from '@mui/icons-material/Edit'
 import { useLoaderData } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
@@ -11,6 +11,8 @@ import { IconButton, Typography } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { AuthContext } from '../AuthContext'
 import { useContext } from 'react'
+import WorkoutTooltip from '../workouts/WorkoutTooltip'
+import { CircularProgress } from '@mui/material'
 
 const WorkoutTopNav = ({
   editDialogOpen,
@@ -20,6 +22,7 @@ const WorkoutTopNav = ({
 }) => {
   const { workout } = useLoaderData()
   const navigate = useNavigate()
+  const navigation = useNavigation()
   const { isAdmin } = useContext(AuthContext)
 
   return (
@@ -46,6 +49,7 @@ const WorkoutTopNav = ({
         >
           <IconButton
             color='grey.900'
+            className='nav-link'
             sx={{
               borderRadius: '0',
               height: '35px',
@@ -57,7 +61,16 @@ const WorkoutTopNav = ({
             }}
             onClick={() => navigate('/workouts')}
           >
-            <CloseIcon />
+            {navigation.state === 'loading' ? (
+              <CircularProgress
+                size={17}
+                sx={{
+                  color: 'primary',
+                }}
+              />
+            ) : (
+              <CloseIcon />
+            )}
           </IconButton>
           <Typography variant='caption' mr={'45px'}>
             <span
@@ -78,34 +91,7 @@ const WorkoutTopNav = ({
               gap: '15px',
             }}
           >
-            <Tooltip
-              title={
-                <>
-                  {workout.gif && (
-                    <img
-                      src={workout.gif}
-                      alt={workout.name}
-                      style={{ maxWidth: '200px' }}
-                    />
-                  )}
-                </>
-              }
-              placement='bottom-start'
-            >
-              <Typography
-                sx={{
-                  cursor: 'default',
-                  fontWeight: 'bold',
-                  fontSize: '12px',
-                  color: 'grey.500',
-                  ':hover': {
-                    color: 'primary.main',
-                  },
-                }}
-              >
-                GIF
-              </Typography>
-            </Tooltip>
+            <WorkoutTooltip workout={workout} />
             {/* <Tooltip
               title={
                 <>
@@ -154,11 +140,12 @@ const WorkoutTopNav = ({
         </Box>
       </Box>
       <Box
-        pr={'20px'}
+        // pr={'20px'}
         sx={{
           display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
+          alignItems: 'flex-end',
+          justifyContent: 'flex-end',
+          pr: '20px',
         }}
       >
         <Rating rating={workout.difficulty} />

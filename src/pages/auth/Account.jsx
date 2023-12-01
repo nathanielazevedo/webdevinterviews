@@ -68,8 +68,8 @@ const Account = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          mt: 3,
-          ml: 3,
+          mt: '20px',
+          ml: '20px',
           width: '50%',
         }}
       >
