@@ -1,8 +1,8 @@
 import './index.css'
 import Root from './pages/Root'
 import Home from './pages/Home'
-import Error from './pages/Error'
-import FourOFour from './pages/FourOFour'
+import Error from './pages/misc/Error'
+import FourOFour from './pages/misc/FourOFour'
 import Details from './pages/workout/Details'
 import Template from './pages/workout/Template'
 import Solution from './pages/workout/Solution'
@@ -18,7 +18,7 @@ import VerifyEmail from './pages/auth/VerifyEmail'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ResetPassword from './pages/auth/ResetPassword'
 import EmailTemplate from './emailTemplate'
-import Help from './pages/Help'
+import Help from './pages/misc/Help'
 
 const router = createBrowserRouter([
   {

@@ -11,12 +11,14 @@ const darkTheme = createTheme({
     primary: {
       main: '#19e4ff',
     },
+    divider: '#454950',
   },
   typography: {
     fontFamily: 'Bai Jamjuree',
   },
   variables: {
-    sideNavWidth: '240px',
+    sideNavWidth: '60px',
+    topNavHeight: '35px',
   },
   components: {
     MuiTooltip: {

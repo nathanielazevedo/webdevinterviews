@@ -54,7 +54,6 @@ const AuthProvider = ({ children }) => {
             data: ['Logged in.'],
           })
           const idToken = session.getIdToken()
-          console.log(idToken.jwtToken)
           API.setAuthToken(idToken.jwtToken)
           const isAdmin = (idToken.payload['cognito:groups'] || []).includes(
             'admin'

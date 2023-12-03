@@ -29,6 +29,15 @@
   --sp-colors-accent: #19e4ff;
 }
 
+.sp-wrapper {
+  height: 100% !important;
+  max-height: 100% !important;
+}
+.sp-layout {
+  height: 100% !important;
+  max-height: 100% !important;
+}
+
 .sp-test-header-button[data-active='true'] {
   color: var(--color-solid-resize-bar) !important;
 }

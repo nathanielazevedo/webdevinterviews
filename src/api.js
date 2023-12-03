@@ -1,7 +1,7 @@
 const BASE_URL = import.meta.env.DEV
   ? 'http://localhost:5000'
   : 'https://43dn1oatja.execute-api.us-east-1.amazonaws.com/prod'
-const DELAY = import.meta.env.DEV ? 2000 : 0
+const DELAY = !import.meta.env.DEV ? 2000 : 0
 
 class API {
   constructor() {
@@ -14,7 +14,6 @@ class API {
 
   async fetchWithDelay(method, endpoint, body) {
     const token = this.authToken
-    console.log('token', token)
     await new Promise((resolve) => setTimeout(resolve, DELAY))
     const options = {
       method,

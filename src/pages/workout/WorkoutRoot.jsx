@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import Box from '@mui/material/Box'
-import { Fade } from '@mui/material'
 import WorkoutTopNav from './WorkoutTopNav'
 import WorkoutContext from './WorkoutContext'
 import WorkoutSideNav from './WorkoutSideNav'
@@ -11,22 +9,7 @@ import API from '../../api'
 import useFetch from '../hooks/useFetch'
 import { useParams } from 'react-router-dom'
 import WorkoutSkeleton from './WorkoutSkeleton'
-
-export const loader = async ({ params }) => {
-  try {
-    const { data: workout } = await API.get(`/workouts/${params.id}`)
-    workout.solution = JSON.parse(workout.solution)
-    workout.template = JSON.parse(workout.template)
-    return { workout }
-  } catch (error) {
-    console.error(`Failed to load workout: ${error.message}`)
-    if (error.response.status === 404) {
-      throw new Error('Not found')
-    } else {
-      throw error
-    }
-  }
-}
+import { MiddleContent, OutletContainer, RootFrame } from '../../styled'
 
 export const action = async ({ request, params }) => {
   try {
@@ -52,48 +35,27 @@ const WorkoutRoot = () => {
   const params = useParams()
 
   const { data: workout, loading } = useFetch(`/workouts/${params.id}`)
-  // workout.solution = JSON.parse(workout.solution)
-  // workout.template = JSON.parse(workout.template)
 
-  if (true) {
+  if (loading) {
     return <WorkoutSkeleton />
   }
 
   return (
     <WorkoutContext.Provider value={{ workout }}>
-      <Box
-        sx={{
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
+      <RootFrame>
         <WorkoutTopNav
           editDialogOpen={editDialogOpen}
           setEditDialogOpen={setEditDialogOpen}
           deleteDialogOpen={deleteDialogOpen}
           setDeleteDialogOpen={setDeleteDialogOpen}
         />
-        <Box
-          display='flex'
-          height={'100%'}
-          sx={{
-            height: '100%',
-          }}
-        >
+        <MiddleContent>
           <WorkoutSideNav />
-          <Box
-            sx={{
-              flexGrow: 1,
-              minHeight: 'calc(100vh - 120px)',
-              maxHeight: 'calc(100vh - 120px)',
-            }}
-          >
+          <OutletContainer>
             <Outlet />
-          </Box>
-        </Box>
-      </Box>
+          </OutletContainer>
+        </MiddleContent>
+      </RootFrame>
       <EditWorkoutDialog open={editDialogOpen} setOpen={setEditDialogOpen} />
       <DeleteDialog open={deleteDialogOpen} setOpen={setDeleteDialogOpen} />
     </WorkoutContext.Provider>

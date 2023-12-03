@@ -1,12 +1,12 @@
-import Box from '@mui/material/Box'
 import { Outlet } from 'react-router-dom'
 import Footer from '../components/frame/Footer'
-import TopNav from '../components/frame/TopNav'
+import TopNav from './RootTopNav'
 import SideNav from '../components/frame/SideNav'
 import FoundationIcon from '@mui/icons-material/Foundation'
 import SportsMartialArtsOutlinedIcon from '@mui/icons-material/SportsMartialArtsOutlined'
 import { AuthProvider } from './AuthContext'
 import SosOutlinedIcon from '@mui/icons-material/SosOutlined'
+import { MiddleContent, OuterBox, OutletContainer, RootFrame } from '../styled'
 
 const links = [
   {
@@ -30,50 +30,18 @@ const lastLink = {
 const Root = () => {
   return (
     <AuthProvider>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-          width: '100vw',
-        }}
-      >
-        <Box
-          sx={{
-            outline: '0.5px solid var(--divider)',
-            backgroundColor: '#121212',
-            borderRadius: '10px',
-            width: '99vw',
-            height: '99vh',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
+      <OuterBox>
+        <RootFrame>
           <TopNav />
-
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              flexGrow: 1,
-            }}
-          >
+          <MiddleContent>
             <SideNav links={links} lastLink={lastLink} />
-            <Box
-              sx={{
-                // outline: '1px solid green',
-                flexGrow: 1,
-              }}
-            >
+            <OutletContainer>
               <Outlet />
-            </Box>
-          </Box>
-
+            </OutletContainer>
+          </MiddleContent>
           <Footer />
-        </Box>
-      </Box>
+        </RootFrame>
+      </OuterBox>
     </AuthProvider>
   )
 }

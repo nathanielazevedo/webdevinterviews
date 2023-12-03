@@ -28,15 +28,12 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
   const [showTests, setShowTests] = useState(false)
   const [uploadCodeDialogOpen, setUploadCodeDialogOpen] = useState(false)
   const [files, setFiles] = useState(initialFiles)
-  // console.log(isSolution, files)
   const { isAdmin } = useContext(AuthContext)
 
   return (
     <Box
       sx={{
-        border: '1px solid purple',
-        minHeight: 'calc(99vh - 120px)',
-        maxHeight: 'calc(99vh - 120px)',
+        height: 'calc(100vh - 100px)',
       }}
     >
       <SandpackProvider
@@ -62,12 +59,12 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
             <div
               style={{
                 width: '100%',
-                minHeight: 'calc(99vh - 120px)',
-                maxHeight: 'calc(99vh - 120px)',
+                // minHeight: 'calc(99vh - 120px)',
+                // maxHeight: 'calc(99vh - 120px)',
                 display: 'flex',
                 flexDirection: 'row',
                 position: 'relative',
-                height: '50%',
+                height: '100%',
               }}
             >
               <PanelGroup
@@ -90,8 +87,6 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
                   collapsible={true}
                   style={{
                     position: 'relative',
-                    minHeight: 'calc(99vh - 120px)',
-                    maxHeight: 'calc(99vh - 120px)',
                   }}
                 >
                   <SandpackCodeEditor
@@ -159,8 +154,6 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
                   collapsible={true}
                   style={{
                     position: 'relative',
-                    minHeight: 'calc(99vh - 120px)',
-                    maxHeight: 'calc(99vh - 120px)',
                   }}
                 >
                   <Browser showTests={showTests} />

@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 import { useRouteError, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import RateLimitPage from './RateLimitError' // Import the RateLimitPage component
+import RateLimitPage from '../RateLimitError' // Import the RateLimitPage component
 
 const Error = ({ redirectPath }) => {
   const error = useRouteError()

@@ -4,18 +4,15 @@ import { Fade } from '@mui/material'
 const Home = () => {
   return (
     <Fade in={true} timeout={1000}>
-      <Box sx={{ padding: '50px', width: '100%' }}>
-        <Box
-          sx={{
-            width: '100%',
-            height: '80vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-evenly',
-          }}
-        >
-          <img src={'../images/logo.png'} alt='logo' width={'500px'} />
-        </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100%',
+        }}
+      >
+        <img src={'../images/logo.png'} alt='logo' width={'40%'} />
       </Box>
     </Fade>
   )

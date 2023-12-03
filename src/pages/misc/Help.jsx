@@ -27,7 +27,7 @@ const HelpPage = () => {
         }}
       >
         <Box>
-          <Typography variant='h4'>Did I write a bug?</Typography>
+          <Typography variant='h4'>Got Bugs?</Typography>
           <Typography variant='h5'>
             Send a message to the discord and I will help you.
           </Typography>
