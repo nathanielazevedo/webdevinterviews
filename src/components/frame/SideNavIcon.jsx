@@ -4,17 +4,8 @@ import Typography from '@mui/material/Typography'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemButton from '@mui/material/ListItemButton'
 import { NavLink } from 'react-router-dom'
-import { useState, useEffect } from 'react'
 
-const SideNavIcon = ({ link, isCollapsed, isHidden }) => {
-  const [isIncreasingOpacity, setIsIncreasingOpacity] = useState(false)
-  useEffect(() => {
-    if (isHidden) {
-      setIsIncreasingOpacity(false)
-    } else {
-      setIsIncreasingOpacity(true)
-    }
-  }, [isHidden])
+const SideNavIcon = ({ link, isCollapsed }) => {
   return (
     <NavLink
       end={link.name === 'DETAILS'}
@@ -22,15 +13,16 @@ const SideNavIcon = ({ link, isCollapsed, isHidden }) => {
       className={({ isActive, isPending }) =>
         isActive ? 'active' : isPending ? 'pending' : 'not-active'
       }
-      style={{
-        textDecoration: 'none',
-        opacity: isHidden ? '0' : '1',
-        transition: `opacity ${
-          isIncreasingOpacity ? '0.1s' : '1s'
-        } ease-in-out`,
-      }}
+      style={{ textDecoration: 'none' }}
     >
-      <ListItem key={link.name} disablePadding sx={{ display: 'block' }}>
+      <ListItem
+        key={link.name}
+        disablePadding
+        sx={{
+          display: 'flex',
+          maxWidth: '50px',
+        }}
+      >
         <ListItemButton
           onClick={link.onClick}
           sx={{
@@ -39,6 +31,8 @@ const SideNavIcon = ({ link, isCollapsed, isHidden }) => {
             flexDirection: 'column',
             justifyContent: 'center',
             transition: 'height 0.5s ease-in-out',
+            // border: link.name == '' ? '1px solid blue' : '1px solid inherit',
+            // alignSelf: link.name == '' ? 'flex-end' : '1px solid inherit',
           }}
         >
           <ListItemIcon

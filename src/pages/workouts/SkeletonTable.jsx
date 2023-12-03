@@ -1,31 +1,27 @@
 import Skeleton from '@mui/material/Skeleton'
-import { TableRow, TableCell } from '@mui/material'
+import { StyledTableRow, StyledTableCell } from './styles/tableStyles'
 
 export default function SkeletonTable() {
   return (
     <>
-      {[1, 2, 3, 4, 5, 6, 7].map((_, index) => (
-        <TableRow
-          key={index}
-          sx={{
-            width: '100%',
-            td: { border: '0' },
-            height: '30px',
-          }}
-        >
-          <TableCell>
-            <Skeleton animation='wave' />
-          </TableCell>
-          <TableCell>
-            <Skeleton animation='wave' />
-          </TableCell>
-          <TableCell>
-            <Skeleton animation='wave' />
-          </TableCell>
-          <TableCell>
-            <Skeleton animation='wave' />
-          </TableCell>
-        </TableRow>
+      {[1, 2, 3, 4, 5, 6, 7, 8].map((_, index) => (
+        <StyledTableRow key={index}>
+          <StyledTableCell>
+            <Skeleton />
+          </StyledTableCell>
+          <StyledTableCell>
+            <Skeleton />
+          </StyledTableCell>
+          <StyledTableCell>
+            <Skeleton />
+          </StyledTableCell>
+          <StyledTableCell>
+            <Skeleton />
+          </StyledTableCell>
+          <StyledTableCell>
+            <Skeleton />
+          </StyledTableCell>
+        </StyledTableRow>
       ))}
     </>
   )

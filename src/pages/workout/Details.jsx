@@ -17,7 +17,7 @@ const Description = () => {
           flexDirection: 'column',
           alignItems: 'flex-start',
           padding: '2rem 2rem',
-          height: 'calc(100vh - 97px)',
+          height: 'calc(99vh - 250px)',
         }}
       >
         <Box

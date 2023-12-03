@@ -5,9 +5,12 @@ import WorkoutTopNav from './WorkoutTopNav'
 import WorkoutContext from './WorkoutContext'
 import WorkoutSideNav from './WorkoutSideNav'
 import DeleteDialog from './dialogs/DeleteDialog'
-import { Outlet, redirect, useLoaderData } from 'react-router-dom'
+import { Outlet, redirect } from 'react-router-dom'
 import EditWorkoutDialog from './dialogs/EditWorkoutDialog'
 import API from '../../api'
+import useFetch from '../hooks/useFetch'
+import { useParams } from 'react-router-dom'
+import WorkoutSkeleton from './WorkoutSkeleton'
 
 export const loader = async ({ params }) => {
   try {
@@ -46,40 +49,51 @@ export const action = async ({ request, params }) => {
 const WorkoutRoot = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const params = useParams()
+
+  const { data: workout, loading } = useFetch(`/workouts/${params.id}`)
+  // workout.solution = JSON.parse(workout.solution)
+  // workout.template = JSON.parse(workout.template)
+
+  if (true) {
+    return <WorkoutSkeleton />
+  }
 
   return (
-    <WorkoutContext.Provider value={useLoaderData()}>
-      <Fade in={true} timeout={1000}>
+    <WorkoutContext.Provider value={{ workout }}>
+      <Box
+        sx={{
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <WorkoutTopNav
+          editDialogOpen={editDialogOpen}
+          setEditDialogOpen={setEditDialogOpen}
+          deleteDialogOpen={deleteDialogOpen}
+          setDeleteDialogOpen={setDeleteDialogOpen}
+        />
         <Box
-          flex={1}
-          height={'calc(100vh - 63px)'}
+          display='flex'
+          height={'100%'}
           sx={{
-            height: 'calc(100vh - 63px)',
-            maxHeight: 'calc(100vh - 63px)',
+            height: '100%',
           }}
         >
-          <WorkoutTopNav
-            editDialogOpen={editDialogOpen}
-            setEditDialogOpen={setEditDialogOpen}
-            deleteDialogOpen={deleteDialogOpen}
-            setDeleteDialogOpen={setDeleteDialogOpen}
-          />
+          <WorkoutSideNav />
           <Box
-            display='flex'
-            flex={1}
-            height={'100%'}
             sx={{
-              height: 'calc(100vh - 63px)',
-              maxHeight: 'calc(100vh - 63px)',
+              flexGrow: 1,
+              minHeight: 'calc(100vh - 120px)',
+              maxHeight: 'calc(100vh - 120px)',
             }}
           >
-            <WorkoutSideNav />
-            <Box flex={1}>
-              <Outlet />
-            </Box>
+            <Outlet />
           </Box>
         </Box>
-      </Fade>
+      </Box>
       <EditWorkoutDialog open={editDialogOpen} setOpen={setEditDialogOpen} />
       <DeleteDialog open={deleteDialogOpen} setOpen={setDeleteDialogOpen} />
     </WorkoutContext.Provider>

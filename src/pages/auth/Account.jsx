@@ -1,16 +1,19 @@
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../AuthContext'
-import { Container, Typography, Button, Box } from '@mui/material'
+import { Container, Typography, Button, Box, Skeleton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import DeleteAccountDialog from './dialogs/DeleteAccountDialog'
+import { LogContext } from '../LogContext'
 import CircularProgress from '@mui/material/CircularProgress'
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
 const Account = () => {
   const { user, handleLogout, handleDeleteAccount } = useContext(AuthContext)
-  const [attributes, setAttributes] = useState({})
+  const [attributes, setAttributes] = useState(null)
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const [loadingLogout, setLoadingLogout] = useState(false)
+  const { addLog } = useContext(LogContext)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -57,7 +60,11 @@ const Account = () => {
         setAttributes(attrs)
       })
     } else {
-      navigate('/auth/login')
+      // navigate('/auth/login')
+      addLog({
+        method: 'error',
+        data: ['Error fetching account info.'],
+      })
     }
   }, [navigate, user])
 
@@ -70,20 +77,47 @@ const Account = () => {
           alignItems: 'flex-start',
           mt: '20px',
           ml: '20px',
-          width: '50%',
         }}
       >
-        <Typography variant='h5' component='div' sx={{ mt: 2 }}>
-          Account Information
-        </Typography>
-        <Box sx={{ mt: 2, p: 0, width: '100%' }}>
-          <Typography variant='body2'>
-            <strong style={{ color: 'grey' }}>Username:</strong>
-            {attributes.nickname}
-          </Typography>
-          <Typography variant='body2'>
-            <strong style={{ color: 'grey' }}>Email:</strong> {attributes.email}
-          </Typography>
+        <Box sx={{ mt: '10px', width: '500px' }}>
+          {attributes ? (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: '20px',
+                width: '500px',
+              }}
+            >
+              <AccountCircleOutlinedIcon
+                sx={{
+                  fontSize: '100px',
+                  color: 'primary',
+                }}
+              />
+              <Box>
+                <Typography variant='body2'>{attributes.nickname}</Typography>
+                <Typography variant='body2'>{attributes.email}</Typography>
+              </Box>
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: '20px',
+                width: '500px',
+              }}
+            >
+              <Skeleton variant='circular' width={'80px'} height={'80px'} />
+              <Box sx={{ width: '150px' }}>
+                <Skeleton variant='text' />
+                <Skeleton variant='text' />
+              </Box>
+            </Box>
+          )}
         </Box>
         <Button
           variant='contained'

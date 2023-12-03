@@ -6,7 +6,14 @@ import Rating from '../../components/Rating'
 
 const WorkoutTooltip = ({ workout }) => {
   return (
-    <>
+    <Box
+      sx={{
+        width: '25px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <Tooltip
         title={
           <Box
@@ -53,7 +60,7 @@ const WorkoutTooltip = ({ workout }) => {
           }}
         />
       </Tooltip>
-    </>
+    </Box>
   )
 }
 

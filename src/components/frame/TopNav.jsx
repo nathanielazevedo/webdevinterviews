@@ -1,38 +1,13 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
 import { useContext } from 'react'
-import { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 import { AuthContext } from '../../pages/AuthContext'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import Skeleton from '@mui/material/Skeleton'
 
-const TopNav = ({ isSmall }) => {
-  const navigate = useNavigate()
-  const { user } = useContext(AuthContext)
-  const [attributes, setAttributes] = useState({})
-
-  useEffect(() => {
-    if (user) {
-      user.getUserAttributes((err, attributes) => {
-        if (err) {
-          console.error(err)
-          return
-        }
-
-        const attrs = {}
-
-        for (let attribute of attributes) {
-          const { Name, Value } = attribute
-          attrs[Name] = Value
-        }
-
-        setAttributes(attrs)
-      })
-    } else {
-      // navigate('/auth/login')
-    }
-  }, [navigate, user])
+const TopNav = () => {
+  const { userAttributes, user } = useContext(AuthContext)
 
   return (
     <Box
@@ -42,38 +17,34 @@ const TopNav = ({ isSmall }) => {
         padding: '0px 20px',
         alignItems: 'center',
         justifyContent: 'flex-start',
+        // outline: '1px solid green',
         borderBottom: '0.5px solid #454950',
-        transition: 'height 0.3s ease-in-out',
       }}
     >
       <>
-        <Typography
-          component='div'
-          color='grey.500'
-          fontWeight={'bold'}
-          sx={{
-            fontSize: isSmall ? '10px' : '14px',
-            transition: 'font-size 0.3s ease-in-out',
-          }}
-        >
+        <Typography color='grey.500' fontWeight={'bold'} fontSize={'12px'}>
           WEB DEV INTERVIEWS
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
         {user ? (
-          <NavLink
-            to='/auth/account'
-            className={({ isActive, isPending }) =>
-              isActive ? 'active' : isPending ? 'pending' : 'not-active'
-            }
-          >
-            <Typography
-              sx={{
-                fontSize: '12px',
-              }}
+          userAttributes ? (
+            <NavLink
+              to='/auth/account'
+              className={({ isActive, isPending }) =>
+                isActive ? 'active' : isPending ? 'pending' : 'not-active'
+              }
             >
-              {attributes.nickname}
-            </Typography>
-          </NavLink>
+              <Typography
+                sx={{
+                  fontSize: '12px',
+                }}
+              >
+                {userAttributes.nickname}
+              </Typography>
+            </NavLink>
+          ) : (
+            <Skeleton variant='text' width={100} animation='wave' />
+          )
         ) : (
           <Box
             sx={{

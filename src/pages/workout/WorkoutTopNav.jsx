@@ -4,7 +4,6 @@ import Rating from '../../components/Rating'
 import Tooltip from '@mui/material/Tooltip'
 import { useNavigate, useNavigation } from 'react-router-dom'
 import EditIcon from '@mui/icons-material/Edit'
-import { useLoaderData } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import { IconButton, Typography } from '@mui/material'
@@ -13,6 +12,7 @@ import { AuthContext } from '../AuthContext'
 import { useContext } from 'react'
 import WorkoutTooltip from '../workouts/WorkoutTooltip'
 import { CircularProgress } from '@mui/material'
+import WorkoutContext from '../../pages/workout/WorkoutContext'
 
 const WorkoutTopNav = ({
   editDialogOpen,
@@ -20,7 +20,7 @@ const WorkoutTopNav = ({
   deleteDialogOpen,
   setDeleteDialogOpen,
 }) => {
-  const { workout } = useLoaderData()
+  const { workout } = useContext(WorkoutContext)
   const navigate = useNavigate()
   const navigation = useNavigation()
   const { isAdmin } = useContext(AuthContext)

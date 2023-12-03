@@ -3,13 +3,11 @@ import { useContext } from 'react'
 import { LogContext } from '../../pages/LogContext'
 import { Button, Typography } from '@mui/material'
 import { useState } from 'react'
-import { ApiContext } from '../../pages/ApiContext'
 import { CircularProgress } from '@mui/material'
 import LogDialog from '../../pages/LogDialog'
 
 const Footer = () => {
   const { logs } = useContext(LogContext)
-  const { apiState } = useContext(ApiContext)
   const latestLog = logs[logs.length - 1]
   const [logDialogOpen, setLogDialogOpen] = useState(false)
 
@@ -20,12 +18,12 @@ const Footer = () => {
           <>
             <Button
               variant='contained'
+              color='success'
               onClick={() => {
                 setLogDialogOpen(true)
               }}
               sx={{
                 fontSize: '14px',
-                color: 'primary',
               }}
             >
               <Typography sx={{ fontSize: '10px', color: 'black' }}>
@@ -44,12 +42,11 @@ const Footer = () => {
               }}
               sx={{
                 fontSize: '14px',
-                color: 'primary',
               }}
             >
               <CircularProgress
                 size={12}
-                sx={{ marginRight: '5px', color: 'black' }}
+                sx={{ marginRight: '10px', color: 'black' }}
               />
               <Typography sx={{ fontSize: '10px', color: 'black' }}>
                 {latestLog.data[0]}
@@ -71,6 +68,18 @@ const Footer = () => {
                 color: 'primary',
               }}
             >
+              <Typography
+                sx={{
+                  fontSize: '10px',
+                  color: 'black',
+                  border: '1px solid black',
+                  marginRight: '10px',
+                  padding: '0px 5px',
+                }}
+              >
+                {latestLog.code}
+              </Typography>
+
               <Typography sx={{ fontSize: '10px', color: 'black' }}>
                 {latestLog.data[0]}
               </Typography>
@@ -84,54 +93,16 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        height: '25px',
+        height: '35px',
         borderTop: '0.5px solid #454950',
+        // outline: '1px solid green',
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         alignItems: 'center',
-        padding: '0 0px',
         width: '100%',
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          height: '100%',
-          marginLeft: '10px',
-        }}
-      >
-        <CircularProgress
-          color='primary'
-          size={15}
-          sx={{
-            display: apiState.running ? 'block' : 'none',
-            marginRight: '5px',
-          }}
-        />
-        <Typography
-          sx={{
-            fontSize: '12px',
-            color: 'primary',
-            display: apiState.running ? 'block' : 'none',
-          }}
-        >
-          {apiState.call}
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          backgroundColor: 'primary',
-          // padding: '0 10px',
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          display: 'flex',
-        }}
-      >
-        {getButtonText()}
-      </Box>
+      {getButtonText()}
       <LogDialog open={logDialogOpen} onClose={() => setLogDialogOpen(false)} />
     </Box>
   )

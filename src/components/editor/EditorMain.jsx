@@ -32,7 +32,13 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
   const { isAdmin } = useContext(AuthContext)
 
   return (
-    <>
+    <Box
+      sx={{
+        border: '1px solid purple',
+        minHeight: 'calc(99vh - 120px)',
+        maxHeight: 'calc(99vh - 120px)',
+      }}
+    >
       <SandpackProvider
         files={files}
         template='react'
@@ -56,11 +62,12 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
             <div
               style={{
                 width: '100%',
-                minHeight: 'calc(100vh - 100px)',
-                maxHeight: 'calc(100vh - 100px)',
+                minHeight: 'calc(99vh - 120px)',
+                maxHeight: 'calc(99vh - 120px)',
                 display: 'flex',
                 flexDirection: 'row',
                 position: 'relative',
+                height: '50%',
               }}
             >
               <PanelGroup
@@ -81,7 +88,11 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
                   minSize={0}
                   defaultSize={40}
                   collapsible={true}
-                  style={{ position: 'relative' }}
+                  style={{
+                    position: 'relative',
+                    minHeight: 'calc(99vh - 120px)',
+                    maxHeight: 'calc(99vh - 120px)',
+                  }}
                 >
                   <SandpackCodeEditor
                     showTabs
@@ -142,7 +153,16 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
                   )}
                 </Panel>
                 <ResizeHandle />
-                <Panel minSize={0} defaultSize={45} collapsible={true}>
+                <Panel
+                  minSize={0}
+                  defaultSize={45}
+                  collapsible={true}
+                  style={{
+                    position: 'relative',
+                    minHeight: 'calc(99vh - 120px)',
+                    maxHeight: 'calc(99vh - 120px)',
+                  }}
+                >
                   <Browser showTests={showTests} />
                 </Panel>
               </PanelGroup>
@@ -156,7 +176,7 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
           </SandpackLayout>
         </SandpackThemeProvider>
       </SandpackProvider>
-    </>
+    </Box>
   )
 }
 

@@ -1,14 +1,14 @@
 import Box from '@mui/material/Box'
 import { Outlet } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
 import Footer from '../components/frame/Footer'
 import TopNav from '../components/frame/TopNav'
 import SideNav from '../components/frame/SideNav'
 import FoundationIcon from '@mui/icons-material/Foundation'
 import SportsMartialArtsOutlinedIcon from '@mui/icons-material/SportsMartialArtsOutlined'
 import { AuthProvider } from './AuthContext'
+import SosOutlinedIcon from '@mui/icons-material/SosOutlined'
 
-const tabs = [
+const links = [
   {
     name: 'HOME',
     icon: <FoundationIcon />,
@@ -21,37 +21,61 @@ const tabs = [
   },
 ]
 
-export default function MiniDrawer() {
-  const location = useLocation()
+const lastLink = {
+  name: '',
+  icon: <SosOutlinedIcon />,
+  path: 'help',
+}
 
+const Root = () => {
   return (
     <AuthProvider>
       <Box
         sx={{
           display: 'flex',
-          minHeight: '100vh',
-          maxHeight: '100vh',
           flexDirection: 'column',
-          width: '100%',
-          overflow: 'hidden',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          width: '100vw',
         }}
       >
-        <TopNav isSmall={location.pathname !== '/'} />
         <Box
           sx={{
-            flexGrow: 1,
+            outline: '0.5px solid var(--divider)',
+            backgroundColor: '#121212',
+            borderRadius: '10px',
+            width: '99vw',
+            height: '99vh',
             display: 'flex',
-            height: 'calc(100vh - 60px)',
-            width: '100%',
+            flexDirection: 'column',
           }}
         >
-          <SideNav links={tabs} variant={'normal'} />
-          <Box flex={1}>
-            <Outlet />
+          <TopNav />
+
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              flexGrow: 1,
+            }}
+          >
+            <SideNav links={links} lastLink={lastLink} />
+            <Box
+              sx={{
+                // outline: '1px solid green',
+                flexGrow: 1,
+              }}
+            >
+              <Outlet />
+            </Box>
           </Box>
+
+          <Footer />
         </Box>
-        <Footer />
       </Box>
     </AuthProvider>
   )
 }
+
+export default Root

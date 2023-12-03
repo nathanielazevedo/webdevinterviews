@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom/client'
 import CssBaseline from '@mui/material/CssBaseline'
 import App from './App'
 import { LogProvider } from './pages/LogContext'
-import { ApiProvider } from './pages/ApiContext'
 
 const darkTheme = createTheme({
   palette: {
@@ -15,6 +14,9 @@ const darkTheme = createTheme({
   },
   typography: {
     fontFamily: 'Bai Jamjuree',
+  },
+  variables: {
+    sideNavWidth: '240px',
   },
   components: {
     MuiTooltip: {
@@ -30,12 +32,10 @@ const darkTheme = createTheme({
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
     <ThemeProvider theme={darkTheme}>
-      <ApiProvider>
-        <LogProvider>
-          <CssBaseline />
-          <App />
-        </LogProvider>
-      </ApiProvider>
+      <LogProvider>
+        <CssBaseline />
+        <App />
+      </LogProvider>
     </ThemeProvider>
   </>
 )

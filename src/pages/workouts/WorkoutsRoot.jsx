@@ -9,30 +9,22 @@ const WorkoutsRoot = () => {
   return (
     <Box
       sx={{
-        height: '100%',
         display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
       }}
     >
-      <Box
-        sx={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <TopNav
+      <TopNav
+        open={createWorkoutDialogOpen}
+        setOpenDialog={setCreateWorkoutDialogOpen}
+      />
+      <WorkoutsTable />
+      {createWorkoutDialogOpen && (
+        <CreateWorkoutDialog
           open={createWorkoutDialogOpen}
-          setOpenDialog={setCreateWorkoutDialogOpen}
+          setOpen={setCreateWorkoutDialogOpen}
         />
-        <WorkoutsTable />
-        {createWorkoutDialogOpen && (
-          <CreateWorkoutDialog
-            open={createWorkoutDialogOpen}
-            setOpen={setCreateWorkoutDialogOpen}
-          />
-        )}
-      </Box>
+      )}
     </Box>
   )
 }

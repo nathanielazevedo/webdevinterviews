@@ -51,7 +51,10 @@ const Login = () => {
     setLoading(true)
     try {
       await handleLogin(data.email, data.password)
-      addLog(`Logged in.`)
+      addLog({
+        method: 'log',
+        data: ['Logged in.'],
+      })
     } catch (err) {
       if (err.code === 'NotAuthorizedException') {
         setGeneralError('Incorrect username or password. Please try again.')

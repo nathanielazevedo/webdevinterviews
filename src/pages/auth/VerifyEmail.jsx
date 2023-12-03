@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography'
 import { NavLink } from 'react-router-dom'
 import ResendVerificationDialog from './dialogs/ResendVerificationDialog'
 import { useNavigate } from 'react-router-dom'
-import { LogContext } from '../LogContext'
 import CircularProgress from '@mui/material/CircularProgress'
 
 const schema = yup.object().shape({
@@ -20,7 +19,6 @@ const schema = yup.object().shape({
 const VerifyEmail = () => {
   const location = useLocation()
   const email = location?.state?.email
-  const { addLog } = useContext(LogContext)
   const navigate = useNavigate()
   const [generalError, setGeneralError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -40,7 +38,6 @@ const VerifyEmail = () => {
     setLoading(true)
     try {
       await handleVerifyEmail(data.email, data.code)
-      addLog(`Email verified. You may now login.`)
       navigate('/auth/login', { state: { email: data.email } })
     } catch (err) {
       setGeneralError(err.message)

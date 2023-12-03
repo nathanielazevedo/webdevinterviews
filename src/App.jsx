@@ -8,7 +8,6 @@ import Template from './pages/workout/Template'
 import Solution from './pages/workout/Solution'
 import WorkoutRoot from './pages/workout/WorkoutRoot'
 import WorkoutsRoot from './pages/workouts/WorkoutsRoot'
-import { loader as workoutLoader } from './pages/workout/WorkoutRoot'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login from './pages/auth/Login'
 import SignUp from './pages/auth/SignUp'
@@ -19,6 +18,7 @@ import VerifyEmail from './pages/auth/VerifyEmail'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ResetPassword from './pages/auth/ResetPassword'
 import EmailTemplate from './emailTemplate'
+import Help from './pages/Help'
 
 const router = createBrowserRouter([
   {
@@ -33,6 +33,11 @@ const router = createBrowserRouter([
       {
         path: 'email-templates',
         element: <EmailTemplate />,
+        errorElement: <Error />,
+      },
+      {
+        path: 'help',
+        element: <Help />,
         errorElement: <Error />,
       },
       {
@@ -80,7 +85,6 @@ const router = createBrowserRouter([
         path: 'workouts/:id',
         element: <WorkoutRoot />,
         errorElement: <Error redirectPath='/workouts' />,
-        loader: workoutLoader,
         action: editWorkoutAction,
         children: [
           {

@@ -18,6 +18,7 @@ const TopNav = ({ open, setOpenDialog }) => {
         padding: '0px 25px',
         alignItems: 'center',
         borderBottom: '0.5px solid var(--color-solid-resize-bar-handle)',
+        // outline: '1px solid red',
       }}
     >
       <Typography

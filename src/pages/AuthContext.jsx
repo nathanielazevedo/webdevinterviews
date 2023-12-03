@@ -4,6 +4,7 @@ import UserPool from '../userpool'
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js'
 import { useNavigate } from 'react-router-dom'
 import { LogContext } from './LogContext'
+import API from '../api'
 const isDev = import.meta.env.DEV
 const delay = isDev ? 2000 : 0
 
@@ -11,123 +12,154 @@ const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false)
+  const [error, setError] = useState(null)
   const { addLog } = useContext(LogContext)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [userAttributes, setUserAttributes] = useState(null)
+  const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const currentUser = UserPool.getCurrentUser()
-    addLog({
-      method: 'error',
-      data: ['Not logged in.'],
-    })
-    if (currentUser) {
-      currentUser.getSession((err) => {
+  const handleSession = (currentUser) => {
+    return new Promise((resolve, reject) => {
+      currentUser.getSession((err, session) => {
         if (err) {
           console.error(err)
+          setError(err)
           addLog({
             method: 'error',
             data: ['Not logged in.'],
           })
+          reject(err)
+          setLoading(false)
         } else {
+          currentUser.getUserAttributes((err, attributes) => {
+            if (err) {
+              console.error(err)
+              setError(err)
+              reject(err)
+            } else {
+              const userAttributes = attributes.reduce((acc, attribute) => {
+                acc[attribute.getName()] = attribute.getValue()
+                return acc
+              }, {})
+              setUserAttributes(userAttributes)
+              setLoading(false)
+            }
+          })
           setAuthenticated(true)
           setUser(currentUser)
-          addLog(`Logged in.`)
-          const idToken = currentUser.signInUserSession.getIdToken()
+          addLog({
+            method: 'log',
+            data: ['Logged in.'],
+          })
+          const idToken = session.getIdToken()
+          console.log(idToken.jwtToken)
+          API.setAuthToken(idToken.jwtToken)
           const isAdmin = (idToken.payload['cognito:groups'] || []).includes(
             'admin'
           )
           setIsAdmin(isAdmin)
+          resolve(session)
+          setLoading(false)
         }
+      })
+    })
+  }
+
+  useEffect(() => {
+    const currentUser = UserPool.getCurrentUser()
+    addLog({
+      method: 'info',
+      data: ['Checking session.'],
+    })
+    if (currentUser) {
+      if (isDev) {
+        setTimeout(() => handleSession(currentUser), 2000) // Delay of 2 seconds
+      } else {
+        handleSession(currentUser)
+      }
+    } else {
+      setLoading(false)
+      addLog({
+        method: 'error',
+        data: ['Not logged in.'],
       })
     }
   }, [])
 
-  const handleLogin = (email, password) => {
-    // InvalidParameterException
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const user = new CognitoUser({ Username: email, Pool: UserPool })
-        const authDetails = new AuthenticationDetails({
-          Username: email,
-          Password: password,
-        })
+  const handleLogin = async (email, password) => {
+    if (authenticated) {
+      return // If the user is already authenticated, don't run the function
+    }
+    addLog({
+      method: 'info',
+      data: ['Logging in.'],
+    })
+    const user = new CognitoUser({ Username: email, Pool: UserPool })
+    const authDetails = new AuthenticationDetails({
+      Username: email,
+      Password: password,
+    })
 
+    try {
+      await new Promise((resolve, reject) => {
         user.authenticateUser(authDetails, {
           onSuccess: (data) => {
-            navigate('auth/account')
-            setAuthenticated(true)
-            const currentUser = UserPool.getCurrentUser()
-
-            if (currentUser) {
-              currentUser.getSession((err) => {
-                if (err) {
-                  console.error(err)
-                } else {
-                  setAuthenticated(true)
-                  setUser(currentUser)
-                }
-              })
-            }
-            resolve(data)
+            setTimeout(() => resolve(data), 2000)
           },
-
           onFailure: (err) => {
-            // InvalidPasswordException
-            if (err.name === 'UserNotConfirmedException') {
-              navigate('auth/verify-email', { state: { email, password } })
-            } else if (err.name === 'NotAuthorizedException') {
-              const error = new Error('Incorrect password')
-              error.code = 'NotAuthorizedException'
-              reject(error)
-            } else {
-              reject(err)
-            }
-          },
-
-          newPasswordRequired: (data) => {
-            console.log('newPasswordRequired:', data)
+            reject(err)
           },
         })
-      }, delay)
-    })
+      })
+      const currentUser = UserPool.getCurrentUser()
+      if (currentUser) {
+        await handleSession(currentUser)
+        navigate('workouts')
+        setAuthenticated(true)
+      }
+    } catch (err) {
+      console.error(err)
+      setError(err)
+    }
   }
 
   const handleSignup = (email, username, password) => {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        UserPool.signUp(
-          email,
-          password,
-          [
-            {
-              Name: 'nickname',
-              Value: username,
-            },
-          ],
-          null,
-          (err, data) => {
-            if (err) {
-              if (err.name === 'UsernameExistsException') {
-                const error = new Error('This email is already in use.')
-                error.code = 'UsernameExistsException'
-                reject(error)
-              } else {
-                reject(err)
-              }
-            } else {
-              navigate('auth/verify-email', { state: { email } })
-              addLog(`Signed up.`)
-              resolve(data)
-            }
+      const attributeList = [
+        {
+          Name: 'nickname',
+          Value: username,
+        },
+      ]
+
+      UserPool.signUp(email, password, attributeList, null, (err, data) => {
+        if (err) {
+          if (err.name === 'UsernameExistsException') {
+            const error = new Error('This email is already in use.')
+            error.code = 'UsernameExistsException'
+            reject(error)
+          } else {
+            reject(err)
           }
-        )
-      }, delay)
+        } else {
+          setTimeout(() => resolve(data), 2000)
+          navigate('auth/verify-email', { state: { email } })
+          addLog({
+            method: 'log',
+            data: ['User signed up.'],
+          })
+        }
+      })
     })
   }
 
   const handleVerifyEmail = (email, code) => {
+    addLog({
+      method: 'info',
+      data: ['Verifying email.'],
+    })
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const userData = {
@@ -153,6 +185,10 @@ const AuthProvider = ({ children }) => {
             return
           }
           console.log('call result: ' + result)
+          addLog({
+            method: 'log',
+            data: ['Email verified. You may now login.'],
+          })
           resolve(result)
         })
       }, delay)
@@ -182,15 +218,23 @@ const AuthProvider = ({ children }) => {
   }
 
   const handleLogout = () => {
+    addLog({
+      method: 'info',
+      data: ['Logging out.'],
+    })
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const currentUser = UserPool.getCurrentUser()
         if (currentUser) {
           currentUser.signOut()
           setAuthenticated(false)
+          addLog({
+            method: 'log',
+            data: ['Logged out.'],
+          })
           setUser(null)
-          addLog(`Logged out.`)
           setIsAdmin(false)
+          setUserAttributes(null)
           resolve()
         } else {
           reject(new Error('No user is currently logged in'))
@@ -202,29 +246,38 @@ const AuthProvider = ({ children }) => {
   const handleDeleteAccount = () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const cognitoUser = UserPool.getCurrentUser()
+        addLog({
+          method: 'info',
+          data: ['Deleting Account.'],
+        })
+        setTimeout(() => {
+          const cognitoUser = UserPool.getCurrentUser()
 
-        if (cognitoUser) {
-          cognitoUser.getSession((err) => {
-            if (err) {
-              reject(err)
-            } else {
-              cognitoUser.deleteUser((err, result) => {
-                if (err) {
-                  reject(err)
-                } else {
-                  setAuthenticated(false)
-                  setUser(null)
-                  navigate('/auth/signup')
-                  addLog(`Account deleted.`)
-                  resolve(result)
-                }
-              })
-            }
-          })
-        } else {
-          reject(new Error('No user is currently logged in'))
-        }
+          if (cognitoUser) {
+            cognitoUser.getSession((err) => {
+              if (err) {
+                reject(err)
+              } else {
+                cognitoUser.deleteUser((err, result) => {
+                  if (err) {
+                    reject(err)
+                  } else {
+                    setAuthenticated(false)
+                    setUser(null)
+                    navigate('/auth/signup')
+                    resolve(result)
+                    addLog({
+                      method: 'log',
+                      data: ['Account deleted.'],
+                    })
+                  }
+                })
+              }
+            })
+          } else {
+            reject(new Error('No user is currently logged in'))
+          }
+        }, delay)
       }, delay)
     })
   }
@@ -288,7 +341,10 @@ const AuthProvider = ({ children }) => {
         handleForgotPassword,
         handleResetPassword,
         handleResendVerificationCode,
+        userAttributes,
         isAdmin,
+        API,
+        authLoading: loading,
       }}
     >
       {children}
