@@ -2,7 +2,7 @@
 import Tooltip from '@mui/material/Tooltip'
 import PermMediaIcon from '@mui/icons-material/PermMedia'
 import { Box, Typography } from '@mui/material'
-import Rating from '../../components/Rating'
+import Rating from '../../../components/Rating'
 
 const WorkoutTooltip = ({ workout }) => {
   return (
@@ -51,7 +51,7 @@ const WorkoutTooltip = ({ workout }) => {
             </Box>
           </Box>
         }
-        placement='right-start'
+        placement='left-start'
       >
         <PermMediaIcon
           sx={{

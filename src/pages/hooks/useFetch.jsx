@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react'
-// import API from '../../api'
-import { useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { LogContext } from '../LogContext'
 import { AuthContext } from '../AuthContext'
 
@@ -9,9 +7,10 @@ const useFetch = (url) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const { addLog } = useContext(LogContext)
-  const { API, authLoading } = useContext(AuthContext)
+  const { API, authLoading, user } = useContext(AuthContext)
 
   const fetchData = async (url) => {
+    if (authLoading) return
     setLoading(true)
     setError(null)
     addLog({
@@ -42,7 +41,7 @@ const useFetch = (url) => {
     if (!authLoading) {
       fetchData(url)
     }
-  }, [authLoading])
+  }, [authLoading, url])
 
   return { data, loading, error, fetchData }
 }

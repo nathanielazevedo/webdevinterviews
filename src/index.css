@@ -125,6 +125,10 @@
     0 0 30px var(--lightBlue), 0 0 40px var(--lightBlue);
 }
 
+.tab-nav-link {
+  text-decoration: none;
+}
+
 .nav-link:hover {
   /* Your hover styles here */
   color: var(--lightBlue); /* Example hover color */

@@ -5,7 +5,6 @@ import { useContext } from 'react'
 
 const Solution = () => {
   const { workout } = useContext(WorkoutContext)
-  workout.solution = JSON.parse(workout.solution)
 
   return (
     <Fade in={true} timeout={1000}>

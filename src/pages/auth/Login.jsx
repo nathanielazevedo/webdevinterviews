@@ -1,18 +1,22 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { TextField, Button, Box, Typography } from '@mui/material'
-import { AuthContext } from '../../pages/AuthContext'
+import { useNavigate, NavLink, useLocation } from 'react-router-dom'
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  InputAdornment,
+  IconButton,
+} from '@mui/material'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { InputAdornment, IconButton } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { NavLink } from 'react-router-dom'
-import { LogContext } from '../LogContext'
 import CircularProgress from '@mui/material/CircularProgress'
-import { useLocation } from 'react-router-dom'
 import Fade from '@mui/material/Fade'
+import { AuthContext } from '../AuthContext'
+import { LogContext } from '../LogContext'
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -64,7 +68,7 @@ const Login = () => {
   }
 
   return (
-    <Fade in={true} timeout={1000}>
+    <Fade in timeout={1000}>
       <Box
         sx={{
           display: 'flex',

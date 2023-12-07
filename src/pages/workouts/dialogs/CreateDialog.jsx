@@ -1,6 +1,4 @@
-import * as Yup from 'yup'
-import api from '../../../api'
-import { useState } from 'react'
+// import * as Yup from 'yup'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -12,57 +10,61 @@ import {
   TextField,
   Alert,
 } from '@mui/material'
-import { useContext } from 'react'
-import { LogContext } from '../../LogContext'
+import { useContext, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
+import CircularProgress from '@mui/material/CircularProgress'
+import { useForm } from 'react-hook-form'
+import MenuItem from '@mui/material/MenuItem'
+import SelectInput from '../../../components/form/Select'
+import MultiSelect from '../../../components/form/MultiSelect'
+import { LogContext } from '../../LogContext'
+import api from '../../../api'
 
-const schema = Yup.object().shape({
-  name: Yup.string().required('Name is required'),
-  title: Yup.string().required('Title is required'),
-})
+// const schema = Yup.object().shape({
+//   name: Yup.string().required('Name is required'),
+//   title: Yup.string().required('Title is required'),
+//   sp_template: Yup.string().required('Template is required'),
+// })
+
+const dependencies = ['react-router-dom', 'react-redux', 'typescript']
 
 const CreateWorkoutDialog = ({ open, setOpen }) => {
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm()
+
   const { addLog } = useContext(LogContext)
-  const [workout, setWorkout] = useState({
+  const [workout] = useState({
     name: '',
     title: '',
   })
-
-  const handleChange = (event) => {
-    setWorkout({
-      ...workout,
-      [event.target.name]: event.target.value,
-    })
-  }
 
   const handleClose = () => {
     setOpen(false)
   }
 
-  const [errors, setErrors] = useState({})
+  // const [errors, setErrors] = useState({})
 
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-    setErrors({}) // Clear the errors
-
+  const onSubmit = async (data) => {
+    setLoading(true)
     try {
-      await schema.validate(workout)
-    } catch (validationError) {
-      setErrors({ validation: validationError.message })
-      return // Stop the execution if the validation fails
-    }
-
-    try {
-      const res = await api.post('/workouts', workout)
-      addLog(`Workout created.`)
-      handleClose()
-      return navigate('/workouts/' + res.id)
-    } catch (submissionError) {
-      setErrors({
-        submission: `Failed to create workout: ${submissionError.message}`,
+      const res = await api.post('/workouts', data)
+      addLog({
+        method: 'log',
+        data: ['Workout created.'],
       })
+      handleClose()
+      setLoading(false)
+      return navigate(`/workouts/${res.data.id}`)
+    } catch (submissionError) {
+      setLoading(false)
+      return navigate('/workouts')
     }
   }
 
@@ -75,7 +77,7 @@ const CreateWorkoutDialog = ({ open, setOpen }) => {
           alignItems: 'center',
         }}
       >
-        Create Workout{' '}
+        Create Workout
         <IconButton
           edge='end'
           color='inherit'
@@ -92,7 +94,7 @@ const CreateWorkoutDialog = ({ open, setOpen }) => {
         {errors.submission && (
           <Alert severity='error'>{errors.submission}</Alert>
         )}
-        <form onSubmit={handleSubmit} id='create-workout-form'>
+        <form onSubmit={handleSubmit(onSubmit)} id='create-workout-form'>
           {Object.keys(workout).map((name) => (
             <TextField
               key={name}
@@ -102,21 +104,44 @@ const CreateWorkoutDialog = ({ open, setOpen }) => {
               type='text'
               name={name}
               fullWidth
-              variant='standard'
-              value={workout[name]}
-              onChange={handleChange}
-              required
-              autoComplete='off'
-              error={!!errors.validation && name in errors.validation}
-              helperText={errors.validation && errors.validation[name]}
+              variant='outlined'
+              {...register(name, { required: true })}
+              error={!!errors[name]}
+              helperText={errors[name]?.message}
             />
           ))}
+          <SelectInput name='sp_template' control={control} label='Template'>
+            <MenuItem value='vanilla'>Vanilla JS</MenuItem>
+            <MenuItem value='react'>React</MenuItem>
+          </SelectInput>
+          <MultiSelect
+            name='dependencies'
+            control={control}
+            options={dependencies}
+            label='Dependencies'
+          />
         </form>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button type='submit' form='create-workout-form'>
-          Create
+        <Button onClick={handleClose} variant='contained'>
+          Cancel
+        </Button>
+        <Button
+          type='submit'
+          form='create-workout-form'
+          variant='contained'
+          disabled={loading}
+        >
+          {loading ? (
+            <CircularProgress
+              size={24}
+              sx={{
+                color: 'primary',
+              }}
+            />
+          ) : (
+            'Create'
+          )}
         </Button>
       </DialogActions>
     </Dialog>

@@ -4,18 +4,16 @@ import {
   RootFrame,
   SideNavContainer,
   StyledTopNav,
-} from '../../styled'
+} from '../../rootStyledComponents'
 
-const WorkoutSkeleton = () => {
-  return (
-    <RootFrame>
-      <StyledTopNav />
-      <MiddleContent>
-        <SideNavContainer />
-        <Box id='main-content' />
-      </MiddleContent>
-    </RootFrame>
-  )
-}
+const WorkoutSkeleton = () => (
+  <RootFrame>
+    <StyledTopNav />
+    <MiddleContent>
+      <SideNavContainer />
+      <Box id='main-content' />
+    </MiddleContent>
+  </RootFrame>
+)
 
 export default WorkoutSkeleton

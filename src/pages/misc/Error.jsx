@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 import { useRouteError, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import RateLimitPage from '../RateLimitError' // Import the RateLimitPage component
+import RateLimitPage from './RateLimitError'
 
 const Error = ({ redirectPath }) => {
   const error = useRouteError()
@@ -33,11 +33,10 @@ const Error = ({ redirectPath }) => {
           paddingLeft: '50px',
         }}
       >
-        <Typography variant='h4' color={'red'}>
+        <Typography variant='h4' color='red'>
           Error
         </Typography>
         <Typography variant='h5'>
-          Error Message:{' '}
           <span
             style={{
               color: 'red',
@@ -46,10 +45,6 @@ const Error = ({ redirectPath }) => {
             {error.statusText || error.message}
           </span>
         </Typography>
-        <Typography variant='h5'>Does this keep happening?</Typography>
-        <Typography variant='h5'>Some options:</Typography>
-        <Typography variant='h5'>message me on LinkedIn</Typography>
-        <Typography variant='h5'>clear local storage</Typography>
       </Box>
     </Box>
   )
@@ -58,5 +53,5 @@ const Error = ({ redirectPath }) => {
 export default Error
 
 Error.propTypes = {
-  redirectPath: PropTypes.string,
+  redirectPath: PropTypes.string.isRequired,
 }

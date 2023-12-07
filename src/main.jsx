@@ -28,16 +28,22 @@ const darkTheme = createTheme({
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#212121',
+          backgroundImage: 'none',
+        },
+      },
+    },
   },
 })
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <>
-    <ThemeProvider theme={darkTheme}>
-      <LogProvider>
-        <CssBaseline />
-        <App />
-      </LogProvider>
-    </ThemeProvider>
-  </>
+  <ThemeProvider theme={darkTheme}>
+    <LogProvider>
+      <CssBaseline />
+      <App />
+    </LogProvider>
+  </ThemeProvider>
 )

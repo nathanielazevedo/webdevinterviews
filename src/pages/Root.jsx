@@ -1,12 +1,17 @@
 import { Outlet } from 'react-router-dom'
-import Footer from '../components/frame/Footer'
-import TopNav from './RootTopNav'
-import SideNav from '../components/frame/SideNav'
 import FoundationIcon from '@mui/icons-material/Foundation'
-import SportsMartialArtsOutlinedIcon from '@mui/icons-material/SportsMartialArtsOutlined'
-import { AuthProvider } from './AuthContext'
 import SosOutlinedIcon from '@mui/icons-material/SosOutlined'
-import { MiddleContent, OuterBox, OutletContainer, RootFrame } from '../styled'
+import SportsMartialArtsOutlinedIcon from '@mui/icons-material/SportsMartialArtsOutlined'
+import TopNav from './RootTopNav'
+import { AuthProvider } from './AuthContext'
+import Footer from '../components/frame/Footer'
+import SideNav from '../components/frame/SideNav'
+import {
+  MiddleContent,
+  OuterBox,
+  OutletContainer,
+  RootFrame,
+} from '../rootStyledComponents'
 
 const links = [
   {
@@ -17,7 +22,7 @@ const links = [
   {
     name: 'WORKOUTS',
     icon: <SportsMartialArtsOutlinedIcon />,
-    path: 'workouts',
+    path: 'workouts/official',
   },
 ]
 
@@ -27,23 +32,21 @@ const lastLink = {
   path: 'help',
 }
 
-const Root = () => {
-  return (
-    <AuthProvider>
-      <OuterBox>
-        <RootFrame>
-          <TopNav />
-          <MiddleContent>
-            <SideNav links={links} lastLink={lastLink} />
-            <OutletContainer>
-              <Outlet />
-            </OutletContainer>
-          </MiddleContent>
-          <Footer />
-        </RootFrame>
-      </OuterBox>
-    </AuthProvider>
-  )
-}
+const Root = () => (
+  <AuthProvider>
+    <OuterBox>
+      <RootFrame>
+        <TopNav />
+        <MiddleContent>
+          <SideNav links={links} lastLink={lastLink} />
+          <OutletContainer>
+            <Outlet />
+          </OutletContainer>
+        </MiddleContent>
+        <Footer />
+      </RootFrame>
+    </OuterBox>
+  </AuthProvider>
+)
 
 export default Root

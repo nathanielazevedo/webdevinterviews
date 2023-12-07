@@ -38,12 +38,9 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
     >
       <SandpackProvider
         files={files}
-        template='react'
+        template={workout.sp_template ?? 'react'}
         customSetup={{
-          dependencies: {
-            'jest-extended': '^3.0.2',
-            'react-router-dom': '^6.16.0',
-          },
+          dependencies: workout.dependencies ?? {},
         }}
         options={{
           autoReload: true,

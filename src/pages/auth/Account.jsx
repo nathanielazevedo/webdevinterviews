@@ -1,19 +1,17 @@
-import { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../AuthContext'
+import { useContext, useState } from 'react'
 import { Container, Typography, Button, Box, Skeleton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import DeleteAccountDialog from './dialogs/DeleteAccountDialog'
-import { LogContext } from '../LogContext'
 import CircularProgress from '@mui/material/CircularProgress'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
+import { AuthContext } from '../AuthContext'
+import DeleteAccountDialog from './dialogs/DeleteAccountDialog'
 
 const Account = () => {
-  const { user, handleLogout, handleDeleteAccount } = useContext(AuthContext)
-  const [attributes, setAttributes] = useState(null)
+  const { user, handleLogout, handleDeleteAccount, authLoading } =
+    useContext(AuthContext)
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const [loadingLogout, setLoadingLogout] = useState(false)
-  const { addLog } = useContext(LogContext)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -42,31 +40,41 @@ const Account = () => {
     }
   }
 
-  useEffect(() => {
-    if (user) {
-      user.getUserAttributes((err, attributes) => {
-        if (err) {
-          console.error(err)
-          return
-        }
+  if (authLoading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          mt: '20px',
+          ml: '20px',
+        }}
+      >
+        <Box sx={{ mt: '10px', width: '500px' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: '20px',
+              width: '500px',
+            }}
+          >
+            <Skeleton variant='circular' width='80px' height='80px' />
+            <Box sx={{ width: '150px' }}>
+              <Skeleton variant='text' />
+              <Skeleton variant='text' />
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    )
+  }
 
-        const attrs = {}
-
-        for (let attribute of attributes) {
-          const { Name, Value } = attribute
-          attrs[Name] = Value
-        }
-
-        setAttributes(attrs)
-      })
-    } else {
-      // navigate('/auth/login')
-      addLog({
-        method: 'error',
-        data: ['Error fetching account info.'],
-      })
-    }
-  }, [navigate, user])
+  if (!authLoading && !user) {
+    navigate('/auth/login')
+  }
 
   return (
     <Container>
@@ -80,44 +88,26 @@ const Account = () => {
         }}
       >
         <Box sx={{ mt: '10px', width: '500px' }}>
-          {attributes ? (
-            <Box
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: '20px',
+              width: '500px',
+            }}
+          >
+            <AccountCircleOutlinedIcon
               sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: '20px',
-                width: '500px',
+                fontSize: '100px',
+                color: 'primary',
               }}
-            >
-              <AccountCircleOutlinedIcon
-                sx={{
-                  fontSize: '100px',
-                  color: 'primary',
-                }}
-              />
-              <Box>
-                <Typography variant='body2'>{attributes.nickname}</Typography>
-                <Typography variant='body2'>{attributes.email}</Typography>
-              </Box>
+            />
+            <Box>
+              <Typography variant='body2'>{user.username}</Typography>
+              <Typography variant='body2'>{user.email}</Typography>
             </Box>
-          ) : (
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: '20px',
-                width: '500px',
-              }}
-            >
-              <Skeleton variant='circular' width={'80px'} height={'80px'} />
-              <Box sx={{ width: '150px' }}>
-                <Skeleton variant='text' />
-                <Skeleton variant='text' />
-              </Box>
-            </Box>
-          )}
+          </Box>
         </Box>
         <Button
           variant='contained'

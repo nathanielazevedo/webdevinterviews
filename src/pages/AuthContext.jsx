@@ -1,101 +1,80 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState, useEffect, useContext } from 'react'
-import UserPool from '../userpool'
-import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js'
 import { useNavigate } from 'react-router-dom'
-import { LogContext } from './LogContext'
+import { createContext, useState, useEffect, useContext } from 'react'
+import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js'
 import API from '../api'
+import UserPool from '../userpool'
+import { LogContext } from './LogContext'
+
 const isDev = import.meta.env.DEV
 const delay = isDev ? 2000 : 0
 
 const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
-  const [authenticated, setAuthenticated] = useState(false)
-  const [error, setError] = useState(null)
+  const navigate = useNavigate()
   const { addLog } = useContext(LogContext)
-  const [isAdmin, setIsAdmin] = useState(false)
-  const [userAttributes, setUserAttributes] = useState(null)
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
-  const navigate = useNavigate()
 
-  const handleSession = (currentUser) => {
-    return new Promise((resolve, reject) => {
+  // Gets users current session with attributes
+  const handleSession = (currentUser) =>
+    new Promise((resolve, reject) => {
       currentUser.getSession((err, session) => {
         if (err) {
-          console.error(err)
-          setError(err)
-          addLog({
-            method: 'error',
-            data: ['Not logged in.'],
-          })
+          addLog({ method: 'error', data: ['Not logged in.'] })
           reject(err)
           setLoading(false)
         } else {
           currentUser.getUserAttributes((err, attributes) => {
             if (err) {
-              console.error(err)
-              setError(err)
+              addLog({ method: 'error', data: ['Error getting attributes.'] })
               reject(err)
             } else {
               const userAttributes = attributes.reduce((acc, attribute) => {
                 acc[attribute.getName()] = attribute.getValue()
                 return acc
               }, {})
-              setUserAttributes(userAttributes)
+              const idToken = session.getIdToken()
+              API.setAuthToken(idToken.jwtToken)
+              const isAdmin = (
+                idToken.payload['cognito:groups'] || []
+              ).includes('admin')
+              setUser({
+                ...currentUser,
+                username: userAttributes.nickname,
+                email: userAttributes.email,
+                isAdmin,
+              })
+              addLog({ method: 'log', data: ['Logged in.'] })
+              resolve(session)
               setLoading(false)
             }
           })
-          setAuthenticated(true)
-          setUser(currentUser)
-          addLog({
-            method: 'log',
-            data: ['Logged in.'],
-          })
-          const idToken = session.getIdToken()
-          API.setAuthToken(idToken.jwtToken)
-          const isAdmin = (idToken.payload['cognito:groups'] || []).includes(
-            'admin'
-          )
-          setIsAdmin(isAdmin)
-          resolve(session)
-          setLoading(false)
         }
       })
     })
-  }
 
+  // Check session on load.
   useEffect(() => {
     const currentUser = UserPool.getCurrentUser()
-    addLog({
-      method: 'info',
-      data: ['Checking session.'],
-    })
+    addLog({ method: 'info', data: ['Checking session.'] })
     if (currentUser) {
       if (isDev) {
-        setTimeout(() => handleSession(currentUser), 2000) // Delay of 2 seconds
+        setTimeout(async () => handleSession(currentUser), 2000)
       } else {
         handleSession(currentUser)
       }
     } else {
       setLoading(false)
-      addLog({
-        method: 'error',
-        data: ['Not logged in.'],
-      })
+      addLog({ method: 'error', data: ['Not logged in.'] })
     }
   }, [])
 
   const handleLogin = async (email, password) => {
-    if (authenticated) {
-      return // If the user is already authenticated, don't run the function
-    }
-    addLog({
-      method: 'info',
-      data: ['Logging in.'],
-    })
-    const user = new CognitoUser({ Username: email, Pool: UserPool })
+    if (user) return
+    addLog({ method: 'info', data: ['Logging in.'] })
+    const currUser = new CognitoUser({ Username: email, Pool: UserPool })
     const authDetails = new AuthenticationDetails({
       Username: email,
       Password: password,
@@ -103,7 +82,7 @@ const AuthProvider = ({ children }) => {
 
     try {
       await new Promise((resolve, reject) => {
-        user.authenticateUser(authDetails, {
+        currUser.authenticateUser(authDetails, {
           onSuccess: (data) => {
             setTimeout(() => resolve(data), 2000)
           },
@@ -116,16 +95,14 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         await handleSession(currentUser)
         navigate('workouts')
-        setAuthenticated(true)
       }
     } catch (err) {
       console.error(err)
-      setError(err)
     }
   }
 
-  const handleSignup = (email, username, password) => {
-    return new Promise((resolve, reject) => {
+  const handleSignup = (email, username, password) =>
+    new Promise((resolve, reject) => {
       const attributeList = [
         {
           Name: 'nickname',
@@ -145,20 +122,13 @@ const AuthProvider = ({ children }) => {
         } else {
           setTimeout(() => resolve(data), 2000)
           navigate('auth/verify-email', { state: { email } })
-          addLog({
-            method: 'log',
-            data: ['User signed up.'],
-          })
+          addLog({ method: 'log', data: ['User signed up.'] })
         }
       })
     })
-  }
 
   const handleVerifyEmail = (email, code) => {
-    addLog({
-      method: 'info',
-      data: ['Verifying email.'],
-    })
+    addLog({ method: 'info', data: ['Verifying email.'] })
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const userData = {
@@ -168,7 +138,7 @@ const AuthProvider = ({ children }) => {
 
         const cognitoUser = new CognitoUser(userData)
 
-        cognitoUser.confirmRegistration(code, true, function (err, result) {
+        cognitoUser.confirmRegistration(code, true, (err, result) => {
           if (err) {
             if (err.code === 'CodeMismatchException') {
               reject(new Error('The provided code does not match our records.'))
@@ -183,7 +153,6 @@ const AuthProvider = ({ children }) => {
             }
             return
           }
-          console.log('call result: ' + result)
           addLog({
             method: 'log',
             data: ['Email verified. You may now login.'],
@@ -194,27 +163,19 @@ const AuthProvider = ({ children }) => {
     })
   }
 
-  const handleResendVerificationCode = (email) => {
-    return new Promise((resolve, reject) => {
+  const handleResendVerificationCode = (email) =>
+    new Promise((resolve, reject) => {
       setTimeout(() => {
-        const userData = {
-          Username: email,
-          Pool: UserPool,
-        }
-
-        const cognitoUser = new CognitoUser(userData)
-
+        const cognitoUser = new CognitoUser({ Username: email, Pool: UserPool })
         cognitoUser.resendConfirmationCode((err, result) => {
-          if (err) {
-            reject(err)
-          } else {
-            addLog(`Confirmation code resent to ${email}.`)
+          if (err) reject(err)
+          else {
+            // addLog(`Confirmation code resent to ${email}.`)
             resolve(result)
           }
         })
       }, delay)
     })
-  }
 
   const handleLogout = () => {
     addLog({
@@ -226,14 +187,8 @@ const AuthProvider = ({ children }) => {
         const currentUser = UserPool.getCurrentUser()
         if (currentUser) {
           currentUser.signOut()
-          setAuthenticated(false)
-          addLog({
-            method: 'log',
-            data: ['Logged out.'],
-          })
+          addLog({ method: 'log', data: ['Logged out.'] })
           setUser(null)
-          setIsAdmin(false)
-          setUserAttributes(null)
           resolve()
         } else {
           reject(new Error('No user is currently logged in'))
@@ -242,8 +197,8 @@ const AuthProvider = ({ children }) => {
     })
   }
 
-  const handleDeleteAccount = () => {
-    return new Promise((resolve, reject) => {
+  const handleDeleteAccount = () =>
+    new Promise((resolve, reject) => {
       setTimeout(() => {
         addLog({
           method: 'info',
@@ -261,7 +216,6 @@ const AuthProvider = ({ children }) => {
                   if (err) {
                     reject(err)
                   } else {
-                    setAuthenticated(false)
                     setUser(null)
                     navigate('/auth/signup')
                     resolve(result)
@@ -279,10 +233,9 @@ const AuthProvider = ({ children }) => {
         }, delay)
       }, delay)
     })
-  }
 
-  const handleForgotPassword = (email) => {
-    return new Promise((resolve, reject) => {
+  const handleForgotPassword = (email) =>
+    new Promise((resolve, reject) => {
       setTimeout(() => {
         const userData = {
           Username: email,
@@ -301,10 +254,9 @@ const AuthProvider = ({ children }) => {
         })
       }, delay)
     })
-  }
 
-  const handleResetPassword = (email, verificationCode, newPassword) => {
-    return new Promise((resolve, reject) => {
+  const handleResetPassword = (email, verificationCode, newPassword) =>
+    new Promise((resolve, reject) => {
       setTimeout(() => {
         const userData = {
           Username: email,
@@ -312,11 +264,10 @@ const AuthProvider = ({ children }) => {
         }
 
         const cognitoUser = new CognitoUser(userData)
-
         cognitoUser.confirmPassword(verificationCode, newPassword, {
           onSuccess: () => {
             navigate('/auth/login')
-            addLog(`Password reset.`)
+            addLog('Password reset.')
             resolve()
           },
           onFailure: (err) => {
@@ -325,13 +276,13 @@ const AuthProvider = ({ children }) => {
         })
       }, delay)
     })
-  }
 
   return (
     <AuthContext.Provider
       value={{
-        authenticated,
         user,
+        API,
+        authLoading: loading,
         handleLogout,
         handleLogin,
         handleSignup,
@@ -340,10 +291,6 @@ const AuthProvider = ({ children }) => {
         handleForgotPassword,
         handleResetPassword,
         handleResendVerificationCode,
-        userAttributes,
-        isAdmin,
-        API,
-        authLoading: loading,
       }}
     >
       {children}

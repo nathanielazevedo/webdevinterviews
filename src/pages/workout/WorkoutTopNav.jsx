@@ -1,29 +1,19 @@
 /* eslint-disable react/prop-types */
 import Box from '@mui/material/Box'
-import Rating from '../../components/Rating'
 import Tooltip from '@mui/material/Tooltip'
 import { useNavigate, useNavigation } from 'react-router-dom'
-import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
 import YouTubeIcon from '@mui/icons-material/YouTube'
-import { IconButton, Typography } from '@mui/material'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import { AuthContext } from '../AuthContext'
+import { IconButton, Typography, CircularProgress } from '@mui/material'
 import { useContext } from 'react'
-import WorkoutTooltip from '../workouts/WorkoutTooltip'
-import { CircularProgress } from '@mui/material'
-import WorkoutContext from '../../pages/workout/WorkoutContext'
+import Rating from '../../components/Rating'
+import WorkoutTooltip from '../workouts/components/WorkoutTooltip'
+import WorkoutContext from './WorkoutContext'
 
-const WorkoutTopNav = ({
-  editDialogOpen,
-  setEditDialogOpen,
-  deleteDialogOpen,
-  setDeleteDialogOpen,
-}) => {
+const WorkoutTopNav = () => {
   const { workout } = useContext(WorkoutContext)
   const navigate = useNavigate()
   const navigation = useNavigation()
-  const { isAdmin } = useContext(AuthContext)
 
   return (
     <Box
@@ -72,7 +62,7 @@ const WorkoutTopNav = ({
               <CloseIcon />
             )}
           </IconButton>
-          <Typography variant='caption' mr={'45px'}>
+          <Typography variant='caption' mr='45px'>
             <span
               style={{
                 color: 'grey',
@@ -92,34 +82,6 @@ const WorkoutTopNav = ({
             }}
           >
             <WorkoutTooltip workout={workout} />
-            {/* <Tooltip
-              title={
-                <>
-                  {workout.checklist &&
-                    workout.checklist.map((item, index) => (
-                      <Box
-                        key={index}
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <Checkbox />
-                        <Typography key={index} fontSize='12px'>
-                          {item}
-                        </Typography>
-                      </Box>
-                    ))}
-                </>
-              }
-              placement='bottom'
-            >
-              <FormatListNumberedIcon
-                sx={{ color: 'grey.500' }}
-                fontSize='small'
-              />
-            </Tooltip> */}
             <Tooltip title='Watch the video' placement='bottom'>
               <IconButton size='small'>
                 <a
@@ -140,7 +102,6 @@ const WorkoutTopNav = ({
         </Box>
       </Box>
       <Box
-        // pr={'20px'}
         sx={{
           display: 'flex',
           alignItems: 'flex-end',
@@ -149,33 +110,6 @@ const WorkoutTopNav = ({
         }}
       >
         <Rating rating={workout.difficulty} />
-        {isAdmin && (
-          <>
-            <Tooltip title='Edit' placement='bottom'>
-              <IconButton
-                size='small'
-                onClick={() => {
-                  setEditDialogOpen(!editDialogOpen)
-                }}
-              >
-                <EditIcon sx={{ color: 'primary.main' }} fontSize='small' />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title='Edit' placement='bottom'>
-              <IconButton
-                size='small'
-                onClick={() => {
-                  setDeleteDialogOpen(!deleteDialogOpen)
-                }}
-              >
-                <DeleteForeverIcon
-                  fontSize='small'
-                  sx={{ color: 'error.main' }}
-                />
-              </IconButton>
-            </Tooltip>
-          </>
-        )}
       </Box>
     </Box>
   )

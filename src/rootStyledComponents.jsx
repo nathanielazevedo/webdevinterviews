@@ -20,7 +20,7 @@ const StyledTopNav = styled(Box)(({ theme }) => ({
   padding: '0px 20px',
   alignItems: 'center',
   justifyContent: 'flex-start',
-  borderBottom: '0.5px solid var(--divider)',
+  borderBottom: `0.5px solid ${theme.palette.divider}`,
 }))
 
 const MiddleContent = styled(Box)(() => ({
@@ -30,7 +30,7 @@ const MiddleContent = styled(Box)(() => ({
 
 const SideNavContainer = styled(Box)(({ theme }) => ({
   width: theme.variables.sideNavWidth,
-  borderRight: '0.5px solid var(--divider)',
+  borderRight: `0.5px solid ${theme.palette.divider}`,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',

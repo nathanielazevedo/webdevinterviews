@@ -1,4 +1,5 @@
 import './index.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './pages/Root'
 import Home from './pages/Home'
 import Error from './pages/misc/Error'
@@ -6,24 +7,27 @@ import FourOFour from './pages/misc/FourOFour'
 import Details from './pages/workout/Details'
 import Template from './pages/workout/Template'
 import Solution from './pages/workout/Solution'
-import WorkoutRoot from './pages/workout/WorkoutRoot'
+import WorkoutRoot, {
+  action as editWorkoutAction,
+} from './pages/workout/WorkoutRoot'
 import WorkoutsRoot from './pages/workouts/WorkoutsRoot'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login from './pages/auth/Login'
-import SignUp from './pages/auth/SignUp'
-import { action as editWorkoutAction } from './pages/workout/WorkoutRoot'
-import { action as uploadCodeAction } from './components/editor/UploadCodeDialog'
+import SignUp from './pages/auth/Signup'
 import Account from './pages/auth/Account'
 import VerifyEmail from './pages/auth/VerifyEmail'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ResetPassword from './pages/auth/ResetPassword'
 import EmailTemplate from './emailTemplate'
 import Help from './pages/misc/Help'
+import EditWorkout from './pages/workout/EditWorkout'
+import WorkoutsTable from './pages/workouts/table/WorkoutsTable'
+import MyWorkouts from './pages/workouts/my-workouts/MyWorkouts'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    errorElement: <Error />,
     children: [
       {
         index: true,
@@ -42,8 +46,26 @@ const router = createBrowserRouter([
       },
       {
         path: 'workouts',
-        element: <WorkoutsRoot />,
         errorElement: <Error />,
+        element: <WorkoutsRoot />,
+        children: [
+          {
+            path: '',
+            element: <WorkoutsTable tab='official' />,
+          },
+          {
+            path: 'official',
+            element: <WorkoutsTable tab='official' />,
+          },
+          {
+            path: 'community',
+            element: <WorkoutsTable tab='community' />,
+          },
+          {
+            path: 'your-workouts',
+            element: <MyWorkouts />,
+          },
+        ],
       },
       {
         path: 'auth',
@@ -99,11 +121,15 @@ const router = createBrowserRouter([
                 path: 'editor',
                 element: <Template />,
                 errorElement: <Error />,
-                action: uploadCodeAction,
               },
               {
                 path: 'solution',
                 element: <Solution />,
+                errorElement: <Error />,
+              },
+              {
+                path: 'edit',
+                element: <EditWorkout />,
                 errorElement: <Error />,
               },
               {
@@ -124,8 +150,6 @@ const router = createBrowserRouter([
   },
 ])
 
-const App = () => {
-  return <RouterProvider router={router} />
-}
+const App = () => <RouterProvider router={router} />
 
 export default App

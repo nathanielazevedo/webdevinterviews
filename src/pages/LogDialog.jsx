@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton'
 
 import { LogContext } from './LogContext'
 
-function LogDialog({ open, onClose }) {
+const LogDialog = ({ open, onClose }) => {
   const { logs } = useContext(LogContext)
 
   return (

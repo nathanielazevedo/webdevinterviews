@@ -5,13 +5,14 @@ import { useContext } from 'react'
 
 const Template = () => {
   const { workout } = useContext(WorkoutContext)
-  let files
-  try {
-    const local = JSON.parse(localStorage.getItem(workout.id))
-    files = local ? local.files : JSON.parse(workout.template)
-  } catch (error) {
-    files = {}
-  }
+  // let files
+  // try {
+  //   const local = JSON.parse(localStorage.getItem(workout.id))
+  //   files = local ? local.files : JSON.parse(workout.template)
+  // } catch (error) {
+  //   files = {}
+  // }
+  const files = workout.template
 
   return (
     <Fade in={true} timeout={1000}>

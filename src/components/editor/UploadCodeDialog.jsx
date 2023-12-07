@@ -1,5 +1,4 @@
 import API from '../../api'
-import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Form, redirect } from 'react-router-dom'
 import { useSandpack } from '@codesandbox/sandpack-react'
@@ -8,54 +7,71 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
-  Button,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
   Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  TextField,
+  FormHelperText,
 } from '@mui/material'
-
-export const action = async ({ request, params }) => {
-  try {
-    const formData = await request.formData()
-    const workoutForm = Object.fromEntries(formData)
-
-    if (workoutForm.uploadAs === 'template') {
-      workoutForm.template = JSON.stringify(workoutForm.code)
-    } else {
-      workoutForm.solution = JSON.stringify(workoutForm.code)
-    }
-
-    delete workoutForm.code
-    delete workoutForm.uploadAs
-
-    await API.put(`/workouts/${params.id}`, workoutForm)
-    console.log('put now redirect')
-    return redirect(`/workouts/${params.id}`)
-  } catch (error) {
-    console.error(`Failed to update workout: ${error.message}`)
-    // Handle the error here, e.g., by showing an error message to the user
-  }
-}
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 const UploadCodeDialog = ({ open, setOpen }) => {
-  const [selectedOption, setSelectedOption] = useState('template')
   const { sandpack } = useSandpack()
 
   const handleClose = () => {
     setOpen(false)
   }
 
-  const handleChange = (event) => {
-    setSelectedOption(event.target.value)
+  // Define your schema
+  const schema = yup.object().shape({
+    uploadAs: yup.string().required(),
+    code: yup.string().required(),
+  })
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  })
+
+  const onSubmit = async ({ request, params }) => {
+    try {
+      const formData = await request.formData()
+      const workoutForm = Object.fromEntries(formData)
+
+      if (workoutForm.uploadAs === 'template') {
+        workoutForm.template = JSON.stringify(workoutForm.code)
+      } else {
+        workoutForm.solution = JSON.stringify(workoutForm.code)
+      }
+
+      delete workoutForm.code
+      delete workoutForm.uploadAs
+
+      await API.put(`/workouts/${params.id}`, workoutForm)
+      console.log('put now redirect')
+      return redirect(`/workouts/${params.id}`)
+    } catch (error) {
+      console.error(`Failed to update workout: ${error.message}`)
+      // Handle the error here, e.g., by showing an error message to the user
+    }
   }
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth>
       <DialogTitle>Upload Files</DialogTitle>
       <DialogContent>
-        <Form method='post' id='upload-code-form'>
+        <Form
+          method='post'
+          id='upload-code-form'
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <Box
             sx={{
               padding: '10px 20px 20px 20px',
@@ -81,38 +97,40 @@ const UploadCodeDialog = ({ open, setOpen }) => {
               }}
               expandLevel={1}
             />
-          </Box>
-          <input
-            type='hidden'
-            name='code'
-            value={JSON.stringify(sandpack.files)}
-          />
+            <FormControl variant='outlined' margin='normal' fullWidth>
+              <InputLabel id='uploadAs-label'>Upload As</InputLabel>
+              <Select
+                labelId='uploadAs-label'
+                id='uploadAs'
+                {...register('uploadAs')}
+                error={!!errors.uploadAs}
+              >
+                <MenuItem value='template'>Template</MenuItem>
+                <MenuItem value='solution'>Solution</MenuItem>
+              </Select>
+              {errors.uploadAs && (
+                <FormHelperText error>{errors.uploadAs.message}</FormHelperText>
+              )}
+            </FormControl>
 
-          <RadioGroup
-            value={selectedOption}
-            onChange={handleChange}
-            name='uploadAs'
-            row
-          >
-            <FormControlLabel
-              value='template'
-              control={<Radio />}
-              label='Template'
-            />
-            <FormControlLabel
-              value='solution'
-              control={<Radio />}
-              label='Solution'
-            />
-          </RadioGroup>
+            <FormControl variant='outlined' margin='normal' fullWidth>
+              <InputLabel id='code-label'>Code</InputLabel>
+              <TextField
+                id='code'
+                type='text'
+                {...register('code')}
+                error={!!errors.code}
+                helperText={errors.code?.message}
+              />
+            </FormControl>
+            <input {...register('uploadAs')} />
+            <input {...register('code')} />
+            {/* Display errors */}
+            {errors.uploadAs && <p>{errors.uploadAs.message}</p>}
+            {errors.code && <p>{errors.code.message}</p>}
+          </Box>
         </Form>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button color='primary' form='upload-code-form' type='submit'>
-          Confirm
-        </Button>
-      </DialogActions>
     </Dialog>
   )
 }
