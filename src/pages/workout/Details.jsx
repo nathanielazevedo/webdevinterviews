@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useContext } from 'react'
 import Tooltip from '@mui/material/Tooltip'
-import WorkoutContext from './WorkoutContext'
-import Rating from '../../components/Rating'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import { Box, Fade, Typography } from '@mui/material'
+import WorkoutContext from './WorkoutContext'
+import Rating from '../../components/Rating'
 
 const Description = () => {
   const { workout } = useContext(WorkoutContext)
 
   return (
-    <Fade in={true} timeout={1000}>
+    <Fade in timeout={1000}>
       <Box
         sx={{
           display: 'flex',
@@ -27,7 +27,7 @@ const Description = () => {
             alignItems: 'flex-end',
           }}
         >
-          <Typography fontWeight={'bold'} color='grey.600'>
+          <Typography fontWeight='bold' color='grey.600'>
             WORKOUT #{workout.id}
           </Typography>
           <Rating rating={workout.difficulty} />

@@ -1,9 +1,6 @@
-import api from '../../../api'
 import PropTypes from 'prop-types'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import WorkoutContext from '../WorkoutContext'
-import { LogContext } from '../../LogContext'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 import {
@@ -14,8 +11,10 @@ import {
   DialogTitle,
   Button,
 } from '@mui/material'
-import { useState } from 'react'
 import CircularProgress from '@mui/material/CircularProgress'
+import { LogContext } from '../../LogContext'
+import WorkoutContext from '../WorkoutContext'
+import api from '../../../api'
 
 const DeleteDialog = ({ open, setOpen }) => {
   const navigate = useNavigate()

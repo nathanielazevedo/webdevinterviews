@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  DomainName:
+    Type: String
+    Description: The domain name for your React application (e.g., webdevinterviews.com)
+
+Resources:
+  ReactAppBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName:
+        Fn::Sub: '${DomainName}-react-app'
+      AccessControl: BucketOwnerFullControl
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: index.html
+
+  CloudFrontOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment:
+          Fn::Sub: 'CloudFront origin access identity for ${DomainName}'
+
+  ReactAppDistribution:
+    Type: AWS::CloudFront::Distribution
+    DependsOn: CloudFrontOriginAccessIdentity
+    Properties:
+      DistributionConfig:
+        Origins:
+          - Id: ReactAppOrigin
+            DomainName:
+              Fn::GetAtt:
+                - ReactAppBucket
+                - DomainName
+            S3OriginConfig:
+              OriginAccessIdentity:
+                Fn::Sub: 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
+        Enabled: true
+        DefaultRootObject: index.html
+        DefaultCacheBehavior:
+          TargetOriginId: ReactAppOrigin
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods:
+            - GET
+            - HEAD
+          CachedMethods:
+            - GET
+            - HEAD
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+        PriceClass: PriceClass_All
+        ViewerCertificate:
+          AcmCertificateArn: 'arn:aws:acm:us-east-1:130741839775:certificate/d30472fa-e1a9-4ec4-af45-7800865d6095'
+          SslSupportMethod: sni-only
+        Aliases:
+          - Fn::Sub: '${DomainName}'
+          - Fn::Sub: 'www.${DomainName}'
+
+Outputs:
+  CloudFrontDistributionURL:
+    Description: URL of the CloudFront distribution
+    Value:
+      Fn::GetAtt:
+        - ReactAppDistribution
+        - DomainName
+    Export:
+      Name:
+        Fn::Sub: 'cloudfront-url-${AWS::StackName}'
