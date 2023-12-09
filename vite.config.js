@@ -7,6 +7,12 @@ import rollupNodePolyFill from 'rollup-plugin-node-polyfills'
 
 export default defineConfig({
   plugins: [react()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    css: true,
+    setupFiles: './setup.js',
+  },
   optimizeDeps: {
     esbuildOptions: {
       // Node.js global to browser globalThis
