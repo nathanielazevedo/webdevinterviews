@@ -43,7 +43,7 @@ jobs:
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws configure set default.region us-east-1  # Replace with your region
-          aws cloudfront create-invalidation --distribution-id E3EBTKO9268GJO--paths "/*"
+          aws cloudfront create-invalidation --distribution-id E3EBTKO9268GJO --paths "/*"
 
 # name: Build and Deploy to S3
 # on:
