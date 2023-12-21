@@ -3,7 +3,7 @@
 
 const BASE_URL = import.meta.env.DEV
   ? 'http://localhost:5000'
-  : 'http://54.205.196.167'
+  : 'https://api.webdevinterviews.com'
 const DELAY = import.meta.env.DEV ? 0 : 0
 
 class API {
