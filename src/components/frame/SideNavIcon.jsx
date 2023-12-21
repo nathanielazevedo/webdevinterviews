@@ -34,8 +34,9 @@ const SideNavIcon = ({ link }) => {
 
   return (
     <NavLink
-      end={link.name === 'DETAILS'}
+      end={link.end}
       to={link.path}
+      replace={link.replace}
       className={({ isActive, isPending }) => getClassName(isActive, isPending)}
       style={{ textDecoration: 'none' }}
     >
@@ -63,6 +64,8 @@ SideNavIcon.propTypes = {
     path: PropTypes.string.isRequired,
     icon: PropTypes.node.isRequired,
     onClick: PropTypes.func,
+    end: PropTypes.bool,
+    replace: PropTypes.bool,
   }).isRequired,
 }
 

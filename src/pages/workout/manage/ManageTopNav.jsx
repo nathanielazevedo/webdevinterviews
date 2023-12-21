@@ -3,9 +3,12 @@ import { NavLink } from 'react-router-dom'
 import TuneIcon from '@mui/icons-material/Tune'
 import PropTypes from 'prop-types'
 import Typography from '@mui/material/Typography'
+import { useContext } from 'react'
 import { StyledTopNav } from '../../../rootStyledComponents'
+import WorkoutContext from '../root/WorkoutContext'
 
 const TopNav = ({ open, setOpen }) => {
+  const { workoutData } = useContext(WorkoutContext)
   const filter = 'all'
   return (
     <StyledTopNav>
@@ -16,46 +19,38 @@ const TopNav = ({ open, setOpen }) => {
         }}
       >
         <NavLink
-          to='/workouts/official'
+          to={`/workouts/${workoutData.id}/manage`}
+          replace
+          end
           className={({ isActive, isPending }) =>
             `nav-link tab-nav-link ${
               isActive ? 'active' : isPending ? 'pending' : 'not-active'
             }`
           }
         >
-          <Typography sx={{ fontSize: '12px' }}>OFFICIAL</Typography>
+          <Typography sx={{ fontSize: '12px' }}>MANAGE META</Typography>
         </NavLink>
         <Divider orientation='vertical' flexItem />
         <NavLink
-          to='/workouts/community'
+          to={`/workouts/${workoutData.id}/manage/code`}
+          replace
           className={({ isActive, isPending }) =>
             `nav-link tab-nav-link ${
               isActive ? 'active' : isPending ? 'pending' : 'not-active'
             }`
           }
         >
-          <Typography sx={{ fontSize: '12px' }}>COMMUNITY</Typography>
-        </NavLink>
-        <Divider orientation='vertical' flexItem />
-        <NavLink
-          to='/workouts/your-workouts'
-          className={({ isActive, isPending }) =>
-            `nav-link tab-nav-link ${
-              isActive ? 'active' : isPending ? 'pending' : 'not-active'
-            }`
-          }
-        >
-          <Typography sx={{ fontSize: '12px' }}>YOUR WORKOUTS</Typography>
+          <Typography sx={{ fontSize: '12px' }}>MANAGE CODE</Typography>
         </NavLink>
       </Box>
       <div style={{ flexGrow: '1' }} />
-      <Button
+      {/* <Button
         size='small'
         startIcon={<TuneIcon />}
         onClick={() => setOpen(!open)}
       >
         FILTER
-      </Button>
+      </Button> */}
     </StyledTopNav>
   )
 }

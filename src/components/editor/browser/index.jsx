@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
+import { useRef } from 'react'
+import { Panel, PanelGroup } from 'react-resizable-panels'
 import Preview from './Preview'
 import Console from './Console'
-import { useRef } from 'react'
 import ResizeHandle from '../../HorizontalResizeHandle'
-import { Panel, PanelGroup } from 'react-resizable-panels'
 
 const Browser = ({ showTests }) => {
   const consolePanelRef = useRef()

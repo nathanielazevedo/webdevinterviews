@@ -1,13 +1,32 @@
 /* eslint-disable react/prop-types */
 import { Console as ConsoleFeed } from 'console-feed'
+import { useEffect } from 'react'
+import { useSandpack, useSandpackConsole } from '@codesandbox/sandpack-react'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import { Typography, Box, Tooltip, Button } from '@mui/material'
 import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt'
-import { useSandpackConsole } from '@codesandbox/sandpack-react'
 
 const Console = ({ closeFilePanel, consolePanelRef }) => {
   const { logs, reset } = useSandpackConsole({})
+  const { listen } = useSandpack()
+
+  useEffect(() => {
+    // listens for any message dispatched between sandpack and the bundler
+    const stopListening = listen((msg) => {
+      if (msg.type === 'status' && msg.status === 'transpiling') {
+        logs.push({
+          method: 'log',
+          data: ['Auto Saved'],
+        })
+      }
+    })
+
+    return () => {
+      // unsubscribe
+      stopListening()
+    }
+  }, [listen])
 
   return (
     <div
@@ -60,7 +79,7 @@ const Console = ({ closeFilePanel, consolePanelRef }) => {
                 )}
               </Tooltip>
             </Button>
-            <Typography fontSize={'small'}>
+            <Typography fontSize='small'>
               Console {`(${logs.length})`}
             </Typography>
           </Box>
@@ -80,6 +99,7 @@ const Console = ({ closeFilePanel, consolePanelRef }) => {
             styles={{
               LOG_BACKGROUND: '#121212',
               BASE_BACKGROUND_COLOR: '#121212',
+              LOG_AMOUNT_BACKGROUND: 'black',
             }}
           />
         </Box>

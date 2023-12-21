@@ -1,5 +1,9 @@
+/* eslint-disable indent */
+/* eslint-disable operator-linebreak */
 /* eslint-disable react/prop-types */
 import TableBody from '@mui/material/TableBody'
+import Box from '@mui/material/Box'
+import { Typography } from '@mui/material'
 import Rating from '../../../components/Rating'
 import WorkoutTooltip from '../components/WorkoutTooltip'
 import SkeletonTable from './SkeletonTable'
@@ -17,45 +21,88 @@ import {
 } from './tableStyledComponents'
 import NoWorkouts from '../components/NoWorkouts'
 import TableHead from './TableHead'
+import Workout from '../../../models/workout'
+import Heading from '../components/Heading'
+import TemplateToSvg from '../components/TemplateToSvg'
+import DependencyToSvg from '../components/DependencyToSvg'
 
 const WorkoutTables = ({ tab }) => {
-  const url = `/workouts/${tab}`
-  const { data: workouts, loading, error, fetchData } = useFetch(url)
-  console.log(workouts)
+  const url = `/workouts${tab ? `/${tab}` : ''}`
+  const { data: workoutsData, loading, error, fetchData } = useFetch(url)
+
+  const fetchWorkouts = () => fetchData(`/workouts${tab ? `/${tab}` : ''}`)
+
+  const renderTableBodyContent = () => {
+    if (error || !workoutsData) {
+      return null
+    }
+
+    if (workoutsData.length === 0) {
+      return null
+    }
+
+    return workoutsData.map((workoutData, index) => {
+      const workout = new Workout(workoutData)
+      return (
+        <StyledTableRow key={workout.id} index={index}>
+          <StyledIconTableCell align='center'>
+            <WorkoutTooltip workout={workout} />
+          </StyledIconTableCell>
+          <StyledTableCell align='left'>
+            <TextLink workout={workout} />
+          </StyledTableCell>
+
+          <StyledIconTableCell align='center'>
+            <TemplateToSvg template={workout.spTemplate.name} />
+          </StyledIconTableCell>
+
+          <StyledTableCell align='center'>
+            {workout.dependencies &&
+            Object.keys(workout.dependencies).length > 0 ? (
+              Object.keys(workout.dependencies).map((key) => (
+                <DependencyToSvg key={key} template={key} />
+              ))
+            ) : (
+              <Typography sx={{ fontSize: '14px' }}>None</Typography>
+            )}
+          </StyledTableCell>
+
+          <StyledIconTableCell align='center'>
+            <Rating rating={workout.difficulty} />
+          </StyledIconTableCell>
+          <StyledTableCell align='center'>
+            {workout.author.username}
+          </StyledTableCell>
+          <StyledTableCell align='center'>{workout.createdAt}</StyledTableCell>
+          <StyledIconTableCell align='center'>
+            {workout.youtubeLink && <YouTube workout={workout} />}
+          </StyledIconTableCell>
+        </StyledTableRow>
+      )
+    })
+  }
+
+  const renderFailedStateContent = () => {
+    if (error || !workoutsData) {
+      return <ErrorRow fetchWorkouts={fetchWorkouts} />
+    }
+
+    if (workoutsData.length === 0) {
+      return <NoWorkouts />
+    }
+
+    return null
+  }
 
   if (loading) return <SkeletonTable />
-
-  const fetchWorkouts = () => fetchData('/workouts')
-  if (error || !workouts) return <ErrorRow fetchWorkouts={fetchWorkouts} />
-
-  if (workouts.length === 0) return <NoWorkouts />
 
   return (
     <StyledTableContainer>
       <StyledTable size='small'>
         <TableHead />
-        <TableBody>
-          {workouts.map((workout, index) => (
-            <StyledTableRow key={workout.id} index={index}>
-              <StyledTableCell align='left'>
-                <TextLink workout={workout} />
-              </StyledTableCell>
-              <StyledIconTableCell align='center'>
-                <WorkoutTooltip workout={workout} />
-              </StyledIconTableCell>
-              <StyledIconTableCell align='center'>
-                {workout.youtube_link && <YouTube workout={workout} />}
-              </StyledIconTableCell>
-              <StyledIconTableCell align='center'>
-                {workout.filters && <Tags workout={workout} />}
-              </StyledIconTableCell>
-              <StyledIconTableCell align='center'>
-                <Rating rating={workout.difficulty} />
-              </StyledIconTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
+        <TableBody>{renderTableBodyContent()}</TableBody>
       </StyledTable>
+      <Box>{renderFailedStateContent()}</Box>
     </StyledTableContainer>
   )
 }

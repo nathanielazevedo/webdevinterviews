@@ -3,11 +3,13 @@ import { useContext } from 'react'
 import Tooltip from '@mui/material/Tooltip'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import { Box, Fade, Typography } from '@mui/material'
-import WorkoutContext from './WorkoutContext'
+import WorkoutContext from './root/WorkoutContext'
 import Rating from '../../components/Rating'
+import Workout from '../../models/workout'
 
 const Description = () => {
-  const { workout } = useContext(WorkoutContext)
+  const { workoutData } = useContext(WorkoutContext)
+  const workout = new Workout(workoutData)
 
   return (
     <Fade in timeout={1000}>
@@ -24,12 +26,12 @@ const Description = () => {
           sx={{
             display: 'flex',
             gap: '15px',
-            alignItems: 'flex-end',
+            alignItems: 'flex-start',
           }}
         >
-          <Typography fontWeight='bold' color='grey.600'>
+          {/* <Typography fontWeight='bold' color='grey.600'>
             WORKOUT #{workout.id}
-          </Typography>
+          </Typography> */}
           <Rating rating={workout.difficulty} />
         </Box>
         <Box

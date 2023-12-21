@@ -1,7 +1,10 @@
-const BASE_URL = import.meta.env.DEV
+// THIS FILE SHOULD NEVER BE IMPORTED DIRECTLY
+// IMPORT FROM AUTHCONTEXT
+
+const BASE_URL = !import.meta.env.DEV
   ? 'http://localhost:5000'
-  : 'https://43dn1oatja.execute-api.us-east-1.amazonaws.com/prod'
-const DELAY = import.meta.env.DEV ? 2000 : 0
+  : 'http://54.205.196.167'
+const DELAY = import.meta.env.DEV ? 0 : 0
 
 class API {
   constructor() {
@@ -52,6 +55,7 @@ class API {
   }
 
   delete(endpoint, body) {
+    console.log('delete')
     return this.fetchWithDelay('DELETE', endpoint, body)
   }
 }

@@ -21,9 +21,10 @@ const StyledTableContainer = styled(TableContainer)({
 const StyledTable = styled(Table)({
   '& .MuiTableCell-head': {
     lineHeight: '30px',
-    color: 'grey',
+    // color: (theme) => theme.palette.grey[900],
+    color: '#454950',
     border: 0,
-    fontSize: '14px',
+    fontSize: '11px',
   },
   '& .MuiTableCell-body': {
     lineHeight: '35px',
@@ -36,7 +37,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   boxSizing: 'border-box',
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
-    color: theme.palette.grey[400],
+    color: theme.palette.grey[500],
   },
 }))
 
@@ -45,8 +46,13 @@ const StyledIconTableCell = styled(TableCell)(({ theme }) => ({
   width: '50px',
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
-    color: theme.palette.grey[400],
+    color: theme.palette.grey[500],
   },
+}))
+
+const StyledNameTableCell = styled(TableCell)(({ theme }) => ({
+  boxSizing: 'border-box',
+  width: '100px',
 }))
 
 export {
@@ -55,4 +61,5 @@ export {
   StyledTableCell,
   StyledTableRow,
   StyledIconTableCell,
+  StyledNameTableCell,
 }

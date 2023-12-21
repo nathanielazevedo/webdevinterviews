@@ -7,7 +7,7 @@ import UserPool from '../userpool'
 import { LogContext } from './LogContext'
 
 const isDev = import.meta.env.DEV
-const delay = isDev ? 2000 : 0
+const delay = isDev ? 0 : 0
 
 const AuthContext = createContext()
 
@@ -189,6 +189,7 @@ const AuthProvider = ({ children }) => {
           currentUser.signOut()
           addLog({ method: 'log', data: ['Logged out.'] })
           setUser(null)
+          API.setAuthToken(null)
           resolve()
         } else {
           reject(new Error('No user is currently logged in'))

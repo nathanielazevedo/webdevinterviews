@@ -2,11 +2,11 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Box from '@mui/material/Box'
-import TopNav from './components/WorkoutsTopNav'
-import CreateWorkoutDialog from './dialogs/CreateDialog'
-import { RootFrame } from '../../rootStyledComponents'
-import FilterDialog from './dialogs/FilterDialog'
-import Heading from './components/Heading'
+import TopNav from './WorkoutsTopNav'
+import CreateWorkoutDialog from '../dialogs/CreateDialog'
+import { RootFrame } from '../../../rootStyledComponents'
+import FilterDialog from '../dialogs/FilterDialog'
+import Heading from '../components/Heading'
 
 const WorkoutsRoot = () => {
   const [createWorkoutDialogOpen, setCreateWorkoutDialogOpen] = useState(false)
@@ -19,8 +19,8 @@ const WorkoutsRoot = () => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '15px',
-            margin: '20px 20px',
+            gap: '25px',
+            margin: '30px 30px',
           }}
         >
           <Heading />

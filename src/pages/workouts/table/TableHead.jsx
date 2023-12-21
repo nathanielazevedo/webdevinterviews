@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { TableHead as MuiTableHead } from '@mui/material'
 import {
   StyledTableCell,
@@ -5,14 +6,19 @@ import {
   StyledTableRow,
 } from './tableStyledComponents'
 
-const TableHead = () => (
+const TableHead = ({ isYours }) => (
   <MuiTableHead>
     <StyledTableRow>
-      <StyledTableCell align='left'>Name</StyledTableCell>
-      <StyledIconTableCell align='center'>Info</StyledIconTableCell>
-      <StyledIconTableCell align='left'>Video</StyledIconTableCell>
-      <StyledIconTableCell align='center'>Tags</StyledIconTableCell>
-      <StyledTableCell align='center'>Difficulty</StyledTableCell>
+      <StyledIconTableCell align='center'>IMAGE</StyledIconTableCell>
+      <StyledTableCell align='left'>NAME</StyledTableCell>
+      <StyledIconTableCell align='center'>TEMPLATE</StyledIconTableCell>
+      <StyledTableCell align='center'>DEPENDENCIES</StyledTableCell>
+      <StyledTableCell align='center'>DIFFICULTY</StyledTableCell>
+      <StyledTableCell align='center'>
+        {isYours ? 'PUBLIC STATUS' : 'CREATOR'}
+      </StyledTableCell>
+      <StyledTableCell align='center'>DATE CREATED</StyledTableCell>
+      <StyledIconTableCell align='left'>VIDEO</StyledIconTableCell>
     </StyledTableRow>
   </MuiTableHead>
 )

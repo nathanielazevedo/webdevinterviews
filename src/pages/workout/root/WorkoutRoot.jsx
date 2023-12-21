@@ -2,14 +2,15 @@ import { Outlet, redirect, useParams } from 'react-router-dom'
 import WorkoutTopNav from './WorkoutTopNav'
 import WorkoutContext from './WorkoutContext'
 import WorkoutSideNav from './WorkoutSideNav'
-import API from '../../api'
-import useFetch from '../hooks/useFetch'
-import WorkoutSkeleton from './WorkoutSkeleton'
+import API from '../../../api'
+import useFetch from '../../hooks/useFetch'
+import WorkoutSkeleton from '../WorkoutSkeleton'
+import Workout from '../../../models/workout'
 import {
   MiddleContent,
   OutletContainer,
   RootFrame,
-} from '../../rootStyledComponents'
+} from '../../../rootStyledComponents'
 
 export const action = async ({ request, params }) => {
   try {
@@ -30,7 +31,7 @@ export const action = async ({ request, params }) => {
 const WorkoutRoot = () => {
   const params = useParams()
 
-  const { data: workout, loading } = useFetch(`/workouts/${params.id}`)
+  const { data: workoutData, loading } = useFetch(`/workouts/${params.id}`)
 
   if (loading) {
     return <WorkoutSkeleton />
@@ -38,7 +39,7 @@ const WorkoutRoot = () => {
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <WorkoutContext.Provider value={{ workout }}>
+    <WorkoutContext.Provider value={{ workoutData }}>
       <RootFrame>
         <WorkoutTopNav />
         <MiddleContent>

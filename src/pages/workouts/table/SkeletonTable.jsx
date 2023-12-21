@@ -1,40 +1,50 @@
+/* eslint-disable react/prop-types */
 import Skeleton from '@mui/material/Skeleton'
 import { TableBody, Box, Fade } from '@mui/material'
 import {
   StyledTableRow,
-  StyledTableCell,
+  StyledNameTableCell,
   StyledTableContainer,
   StyledIconTableCell,
   StyledTable,
 } from './tableStyledComponents'
 import TableHead from './TableHead'
 
-const SkeletonTable = () => {
-  const getRandomWidth = () => `${Math.floor(Math.random() * 10) + 20}%`
+const SkeletonTable = ({ isYours }) => {
+  const getRandomWidth = () => `${Math.floor(Math.random() * 10) + 40}%`
   return (
     <Box>
       <Fade in timeout={1000}>
         <Box>
           <StyledTableContainer>
             <StyledTable size='small'>
-              <TableHead />
+              <TableHead isYours={isYours} />
               <TableBody>
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
                   <StyledTableRow key={item} index={item}>
-                    <StyledTableCell align='left'>
+                    <StyledIconTableCell align='center' id='icon'>
+                      <Skeleton variant='text' width='100%' />
+                    </StyledIconTableCell>
+                    <StyledNameTableCell align='left' id='name'>
                       <Skeleton variant='text' width={getRandomWidth()} />
-                    </StyledTableCell>
-                    <StyledIconTableCell align='center'>
+                    </StyledNameTableCell>
+                    <StyledIconTableCell align='center' id='template'>
                       <Skeleton variant='text' width='100%' />
                     </StyledIconTableCell>
-                    <StyledIconTableCell align='center'>
+                    <StyledIconTableCell align='center' id='dependency'>
                       <Skeleton variant='text' width='100%' />
                     </StyledIconTableCell>
-                    <StyledIconTableCell align='center'>
-                      <Skeleton variant='text' width='100px' />
+                    <StyledIconTableCell align='center' id='difficulty'>
+                      <Skeleton variant='text' width='100%' />
                     </StyledIconTableCell>
-                    <StyledIconTableCell align='center'>
-                      <Skeleton variant='text' width='60px' />
+                    <StyledIconTableCell align='center' id='creator'>
+                      <Skeleton variant='text' width='100%' />
+                    </StyledIconTableCell>
+                    <StyledIconTableCell align='center' id='date'>
+                      <Skeleton variant='text' width='100$' />
+                    </StyledIconTableCell>
+                    <StyledIconTableCell align='center' id='video'>
+                      <Skeleton variant='text' width='100%' />
                     </StyledIconTableCell>
                   </StyledTableRow>
                 ))}

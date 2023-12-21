@@ -1,9 +1,7 @@
 import Box from '@mui/material/Box'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
+import { Button, Tooltip, Typography, CircularProgress } from '@mui/material'
 import { LogContext } from '../../pages/LogContext'
-import { Button, Tooltip, Typography } from '@mui/material'
-import { useState } from 'react'
-import { CircularProgress } from '@mui/material'
 import LogDialog from '../../pages/LogDialog'
 
 const Footer = () => {
@@ -16,7 +14,7 @@ const Footer = () => {
       if (latestLog.method === 'log') {
         return (
           <Button
-            variant='contained'
+            variant='text'
             color='success'
             onClick={() => {
               setLogDialogOpen(true)
@@ -25,15 +23,16 @@ const Footer = () => {
               fontSize: '14px',
             }}
           >
-            <Typography sx={{ fontSize: '10px', color: 'black' }}>
+            <Typography sx={{ fontSize: '10px' }}>
               {latestLog.data[0]}
             </Typography>
           </Button>
         )
-      } else if (latestLog.method === 'info') {
+      }
+      if (latestLog.method === 'info') {
         return (
           <Button
-            variant='contained'
+            variant='text'
             onClick={() => {
               setLogDialogOpen(true)
             }}
@@ -43,17 +42,18 @@ const Footer = () => {
           >
             <CircularProgress
               size={12}
-              sx={{ marginRight: '10px', color: 'black' }}
+              sx={{ marginRight: '10px', color: 'primary.main' }}
             />
-            <Typography sx={{ fontSize: '10px', color: 'black' }}>
+            <Typography sx={{ fontSize: '10px' }}>
               {latestLog.data[0]}
             </Typography>
           </Button>
         )
-      } else if (latestLog.method === 'error') {
+      }
+      if (latestLog.method === 'error') {
         return (
           <Button
-            variant='contained'
+            variant='text'
             color='error'
             onClick={() => {
               setLogDialogOpen(true)
@@ -63,19 +63,7 @@ const Footer = () => {
               color: 'primary',
             }}
           >
-            <Typography
-              sx={{
-                fontSize: '10px',
-                color: 'black',
-                border: '1px solid black',
-                marginRight: '10px',
-                padding: '0px 5px',
-              }}
-            >
-              {latestLog.code}
-            </Typography>
-
-            <Typography sx={{ fontSize: '10px', color: 'black' }}>
+            <Typography sx={{ fontSize: '10px' }}>
               {latestLog.data[0]}
             </Typography>
           </Button>
@@ -94,6 +82,7 @@ const Footer = () => {
         justifyContent: 'flex-end',
         alignItems: 'center',
         width: '100%',
+        padding: '0px 20px',
       }}
     >
       <Tooltip title='View Logs' placement='left'>

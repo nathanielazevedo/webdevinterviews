@@ -26,14 +26,22 @@ const useFetch = (url) => {
         data: [`Successfully loaded ${url}`],
         code: 200,
       })
-    } catch (error) {
-      setError(error)
+    } catch (thisError) {
+      setError(thisError)
       setLoading(false)
-      addLog({
-        method: 'error',
-        data: [`Error loading ${url}`],
-        code: 500,
-      })
+      if (thisError.status === 401) {
+        addLog({
+          method: 'error',
+          data: [`Unauthorized to load ${url}`],
+          code: 401,
+        })
+      } else {
+        addLog({
+          method: 'error',
+          data: [`Error loading ${url}`],
+          code: 500,
+        })
+      }
     }
   }
 

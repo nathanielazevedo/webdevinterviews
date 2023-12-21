@@ -1,23 +1,42 @@
-import EditorMain from '../../components/editor/EditorMain'
-import { Fade } from '@mui/material'
-import WorkoutContext from './WorkoutContext'
+import { Fade, Box } from '@mui/material'
 import { useContext } from 'react'
+import { SandpackProvider } from '@codesandbox/sandpack-react'
+import EditorMain from '../../components/editor/EditorMain'
+import WorkoutContext from './root/WorkoutContext'
+import Workout from '../../models/workout'
 
 const Template = () => {
-  const { workout } = useContext(WorkoutContext)
-  // let files
-  // try {
-  //   const local = JSON.parse(localStorage.getItem(workout.id))
-  //   files = local ? local.files : JSON.parse(workout.template)
-  // } catch (error) {
-  //   files = {}
-  // }
-  const files = workout.template
+  const { workoutData } = useContext(WorkoutContext)
+  const workout = new Workout(workoutData)
+  let files
+  try {
+    // here we will merge the template with the user's code
+    const local = JSON.parse(localStorage.getItem(workout.id))
+    // files = local || workout.dynamo_data.template
+    files = workoutData.dynamo_data.template
+  } catch (error) {
+    files = {}
+  }
 
   return (
-    <Fade in={true} timeout={1000}>
+    <Fade in timeout={1000}>
       <div>
-        <EditorMain files={files} isSolution={false} />
+        <Box sx={{ height: 'calc(100vh - 100px)' }}>
+          <SandpackProvider
+            files={files}
+            template={workout.spTemplate.name}
+            customSetup={{
+              dependencies: workout.dependencies ?? {},
+            }}
+            options={{
+              autoReload: true,
+              activeFile: '/Instructions.txt',
+              visibleFiles: ['/Instructions.txt'],
+            }}
+          >
+            <EditorMain files={files} isSolution={false} />
+          </SandpackProvider>
+        </Box>
       </div>
     </Fade>
   )

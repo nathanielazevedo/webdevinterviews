@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 const colors = {
   lightBlue: '#9cdcfe',
   yellow: '#dcdcaa',
@@ -36,8 +37,8 @@ export const theme = {
     string: colors.orange,
   },
   font: {
-    size: '13px',
-    lineHeight: '17px',
+    size: '12px',
+    lineHeight: '16px',
     mono: 'Fira Code, monospace',
   },
 }

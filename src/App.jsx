@@ -9,8 +9,8 @@ import Template from './pages/workout/Template'
 import Solution from './pages/workout/Solution'
 import WorkoutRoot, {
   action as editWorkoutAction,
-} from './pages/workout/WorkoutRoot'
-import WorkoutsRoot from './pages/workouts/WorkoutsRoot'
+} from './pages/workout/root/WorkoutRoot'
+import WorkoutsRoot from './pages/workouts/root/WorkoutsRoot'
 import Login from './pages/auth/Login'
 import SignUp from './pages/auth/Signup'
 import Account from './pages/auth/Account'
@@ -22,6 +22,8 @@ import Help from './pages/misc/Help'
 import EditWorkout from './pages/workout/EditWorkout'
 import WorkoutsTable from './pages/workouts/table/WorkoutsTable'
 import MyWorkouts from './pages/workouts/my-workouts/MyWorkouts'
+import ManageCode from './pages/workout/manage/ManageCode'
+import ManageRoot from './pages/workout/manage/ManageRoot'
 
 const router = createBrowserRouter([
   {
@@ -33,39 +35,6 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
         errorElement: <Error />,
-      },
-      {
-        path: 'email-templates',
-        element: <EmailTemplate />,
-        errorElement: <Error />,
-      },
-      {
-        path: 'help',
-        element: <Help />,
-        errorElement: <Error />,
-      },
-      {
-        path: 'workouts',
-        errorElement: <Error />,
-        element: <WorkoutsRoot />,
-        children: [
-          {
-            path: '',
-            element: <WorkoutsTable tab='official' />,
-          },
-          {
-            path: 'official',
-            element: <WorkoutsTable tab='official' />,
-          },
-          {
-            path: 'community',
-            element: <WorkoutsTable tab='community' />,
-          },
-          {
-            path: 'your-workouts',
-            element: <MyWorkouts />,
-          },
-        ],
       },
       {
         path: 'auth',
@@ -104,6 +73,35 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: 'email-templates',
+        element: <EmailTemplate />,
+        errorElement: <Error />,
+      },
+      {
+        path: 'help',
+        element: <Help />,
+        errorElement: <Error />,
+      },
+      {
+        path: 'workouts',
+        errorElement: <Error />,
+        element: <WorkoutsRoot />,
+        children: [
+          {
+            path: '',
+            element: <WorkoutsTable tab='' />,
+          },
+          {
+            path: 'community',
+            element: <WorkoutsTable tab='community' />,
+          },
+          {
+            path: 'your-workouts',
+            element: <MyWorkouts />,
+          },
+        ],
+      },
+      {
         path: 'workouts/:id',
         element: <WorkoutRoot />,
         errorElement: <Error redirectPath='/workouts' />,
@@ -114,23 +112,35 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <Details />,
-                errorElement: <Error />,
-              },
-              {
-                path: 'editor',
                 element: <Template />,
                 errorElement: <Error />,
               },
+              // {
+              //   path: 'editor',
+              //   element: <Template />,
+              //   errorElement: <Error />,
+              // },
               {
                 path: 'solution',
                 element: <Solution />,
                 errorElement: <Error />,
               },
               {
-                path: 'edit',
-                element: <EditWorkout />,
+                path: 'manage',
+                element: <ManageRoot />,
                 errorElement: <Error />,
+                children: [
+                  {
+                    path: '',
+                    element: <EditWorkout />,
+                    errorElement: <Error />,
+                  },
+                  {
+                    path: 'code',
+                    element: <ManageCode />,
+                    errorElement: <Error />,
+                  },
+                ],
               },
               {
                 path: '*',

@@ -4,40 +4,40 @@ import { Typography } from '@mui/material'
 const Rating = ({ rating }) => {
   const getIcon = (rating) => {
     switch (rating) {
-      case '1':
+      case 'junior':
         return (
           <Typography
             variant='caption'
             sx={{ color: 'var(--green)' }}
             fontWeight='bolder'
             noWrap
-            width='100px'
-            textAlign={'end'}
+            width='65px'
+            textAlign='center'
           >
             JUNIOR
           </Typography>
         )
-      case '2':
+      case 'mid':
         return (
           <Typography
             variant='caption'
             sx={{ color: 'var(--orange)' }}
             fontWeight='bolder'
-            width='100px'
-            textAlign={'end'}
+            width='65px'
+            textAlign='center'
             noWrap
           >
             MID-LEVEL
           </Typography>
         )
-      case '3':
+      case 'senior':
         return (
           <Typography
             variant='caption'
             sx={{ color: 'var(--red)' }}
             fontWeight='bolder'
-            textAlign={'end'}
-            width='100px'
+            textAlign='center'
+            width='65px'
           >
             SENIOR
           </Typography>

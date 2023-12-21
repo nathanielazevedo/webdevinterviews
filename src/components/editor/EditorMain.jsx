@@ -1,115 +1,97 @@
 /* eslint-disable react/prop-types */
-import { theme } from './theme'
-import AutoSave from './AutoSave'
-import SpeedDial from './SpeedDial'
-import Box from '@mui/material/Box'
-import { useRef, useState } from 'react'
-import ResizeHandle from '../../components/ResizeHandle'
+import { useRef, useState, useContext } from 'react'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import { SandpackFileExplorer } from 'sandpack-file-explorer'
-import UploadIcon from '@mui/icons-material/Upload'
 import {
   SandpackLayout,
   SandpackCodeEditor,
   SandpackThemeProvider,
-  SandpackProvider,
 } from '@codesandbox/sandpack-react'
-import { IconButton, Tooltip } from '@mui/material'
+import UploadIcon from '@mui/icons-material/Upload'
+import { IconButton } from '@mui/material'
+import ResizeHandle from '../ResizeHandle'
 import Browser from './browser'
-import { AuthContext } from '../../pages/AuthContext'
-import { useContext } from 'react'
-import WorkoutContext from '../../pages/workout/WorkoutContext'
+import SpeedDial from './SpeedDial'
+import AutoSave from './AutoSave'
+import { theme } from './theme'
+import WorkoutContext from '../../pages/workout/root/WorkoutContext'
 import UploadCodeDialog from './UploadCodeDialog'
+import Workout from '../../models/workout'
 
 const EditorMain = ({ files: initialFiles, isSolution }) => {
   const filePanelRef = useRef()
   const codemirrorInstance = useRef()
-  const { workout } = useContext(WorkoutContext)
+  const { workoutData } = useContext(WorkoutContext)
+  const workout = new Workout(workoutData)
   const [showTests, setShowTests] = useState(false)
   const [uploadCodeDialogOpen, setUploadCodeDialogOpen] = useState(false)
   const [files, setFiles] = useState(initialFiles)
-  const { isAdmin } = useContext(AuthContext)
 
   return (
-    <Box
-      sx={{
-        height: 'calc(100vh - 100px)',
-      }}
-    >
-      <SandpackProvider
-        files={files}
-        template={workout.sp_template ?? 'react'}
-        customSetup={{
-          dependencies: workout.dependencies ?? {},
-        }}
-        options={{
-          autoReload: true,
-          activeFile: '/App.js',
-          visibleFiles: ['/App.js'],
-        }}
-      >
-        {!isSolution && (
-          <AutoSave workout={workout} files={files} setFiles={setFiles} />
-        )}
-        <SandpackThemeProvider theme={theme}>
-          <SandpackLayout>
-            <div
-              style={{
-                width: '100%',
-                // minHeight: 'calc(99vh - 120px)',
-                // maxHeight: 'calc(99vh - 120px)',
-                display: 'flex',
-                flexDirection: 'row',
-                position: 'relative',
-                height: '100%',
-              }}
+    <>
+      {!isSolution && (
+        <AutoSave workout={workout} files={files} setFiles={setFiles} />
+      )}
+      <SandpackThemeProvider theme={theme}>
+        <SandpackLayout>
+          <div
+            style={{
+              width: '100%',
+              // minHeight: 'calc(99vh - 120px)',
+              // maxHeight: 'calc(99vh - 120px)',
+              display: 'flex',
+              flexDirection: 'row',
+              position: 'relative',
+              height: '100%',
+            }}
+          >
+            <PanelGroup
+              direction='horizontal'
+              autoSaveId='editor-prefs'
+              disablePointerEventsDuringResize
             >
-              <PanelGroup
-                direction='horizontal'
-                autoSaveId='editor-prefs'
-                disablePointerEventsDuringResize
+              <Panel
+                minSize={0}
+                defaultSize={15}
+                collapsible
+                ref={filePanelRef}
               >
-                <Panel
-                  minSize={0}
-                  defaultSize={15}
-                  collapsible={true}
-                  ref={filePanelRef}
-                >
-                  <SandpackFileExplorer />
-                </Panel>
-                <ResizeHandle />
-                <Panel
-                  minSize={0}
-                  defaultSize={40}
-                  collapsible={true}
-                  style={{
-                    position: 'relative',
-                  }}
-                >
-                  <SandpackCodeEditor
-                    showTabs
-                    closableTabs
-                    showLineNumbers
-                    showInlineErrors
-                    showRunButton={true}
-                    ref={codemirrorInstance}
-                    style={{ height: '100%' }}
-                  />
-                  {isAdmin && (
-                    <IconButton
-                      onClick={() => setUploadCodeDialogOpen(true)}
-                      fontSize='large'
-                      sx={{
-                        position: 'absolute',
-                        top: '0px',
-                        right: '50px',
-                        zIndex: '100',
-                      }}
-                    >
-                      <UploadIcon />
-                    </IconButton>
-                  )}
-                  {!isSolution && (
+                <SandpackFileExplorer />
+              </Panel>
+              <ResizeHandle />
+              <Panel
+                minSize={0}
+                defaultSize={40}
+                collapsible
+                style={{
+                  position: 'relative',
+                }}
+              >
+                <SandpackCodeEditor
+                  showTabs
+                  closableTabs
+                  showLineNumbers
+                  showInlineErrors
+                  showRunButton
+                  wrapContent
+                  ref={codemirrorInstance}
+                  style={{ height: '100%' }}
+                />
+                {workoutData.is_owner && (
+                  <IconButton
+                    onClick={() => setUploadCodeDialogOpen(true)}
+                    fontSize='large'
+                    sx={{
+                      position: 'absolute',
+                      top: '0px',
+                      right: '5px',
+                      zIndex: '100',
+                    }}
+                  >
+                    <UploadIcon />
+                  </IconButton>
+                )}
+                {/* {!isSolution && (
                     <Box>
                       <Tooltip title={<>Changes Saved.</>} placement='left'>
                         <Box
@@ -131,42 +113,41 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
                               color: 'primary.main',
                             },
                           }}
-                        ></Box>
+                        />
                       </Tooltip>
                     </Box>
-                  )}
-                  {!isSolution && (
-                    <SpeedDial
-                      codemirrorInstance={codemirrorInstance}
-                      workout={workout}
-                      setShowTests={setShowTests}
-                      showTests={showTests}
-                    />
-                  )}
-                </Panel>
-                <ResizeHandle />
-                <Panel
-                  minSize={0}
-                  defaultSize={45}
-                  collapsible={true}
-                  style={{
-                    position: 'relative',
-                  }}
-                >
-                  <Browser showTests={showTests} />
-                </Panel>
-              </PanelGroup>
-            </div>
-            {uploadCodeDialogOpen && (
-              <UploadCodeDialog
-                open={uploadCodeDialogOpen}
-                setOpen={setUploadCodeDialogOpen}
-              />
-            )}
-          </SandpackLayout>
-        </SandpackThemeProvider>
-      </SandpackProvider>
-    </Box>
+                  )} */}
+                {!isSolution && (
+                  <SpeedDial
+                    codemirrorInstance={codemirrorInstance}
+                    workout={workout}
+                    setShowTests={setShowTests}
+                    showTests={showTests}
+                  />
+                )}
+              </Panel>
+              <ResizeHandle />
+              <Panel
+                minSize={0}
+                defaultSize={45}
+                collapsible
+                style={{
+                  position: 'relative',
+                }}
+              >
+                <Browser showTests={showTests} />
+              </Panel>
+            </PanelGroup>
+          </div>
+          {uploadCodeDialogOpen && (
+            <UploadCodeDialog
+              open={uploadCodeDialogOpen}
+              setOpen={setUploadCodeDialogOpen}
+            />
+          )}
+        </SandpackLayout>
+      </SandpackThemeProvider>
+    </>
   )
 }
 

@@ -1,6 +1,4 @@
-import API from '../../api'
 import PropTypes from 'prop-types'
-import { Form, redirect } from 'react-router-dom'
 import { useSandpack } from '@codesandbox/sandpack-react'
 import { ObjectInspector, chromeDark } from 'react-inspector'
 import {
@@ -8,70 +6,67 @@ import {
   DialogTitle,
   DialogContent,
   Box,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TextField,
-  FormHelperText,
+  Button,
+  DialogContentText,
+  DialogActions,
 } from '@mui/material'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
+import { useContext, useState } from 'react'
+import CloseIcon from '@mui/icons-material/Close'
+import IconButton from '@mui/material/IconButton'
+import CircularProgress from '@mui/material/CircularProgress'
+import WorkoutContext from '../../pages/workout/root/WorkoutContext'
+import { AuthContext } from '../../pages/AuthContext'
 
 const UploadCodeDialog = ({ open, setOpen }) => {
   const { sandpack } = useSandpack()
+  const [loading, setLoading] = useState(false)
+  const { workoutData } = useContext(WorkoutContext)
+  const { API } = useContext(AuthContext)
 
   const handleClose = () => {
     setOpen(false)
   }
 
-  // Define your schema
-  const schema = yup.object().shape({
-    uploadAs: yup.string().required(),
-    code: yup.string().required(),
-  })
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  })
-
-  const onSubmit = async ({ request, params }) => {
+  const onSubmit = async () => {
+    setLoading(true)
     try {
-      const formData = await request.formData()
-      const workoutForm = Object.fromEntries(formData)
-
-      if (workoutForm.uploadAs === 'template') {
-        workoutForm.template = JSON.stringify(workoutForm.code)
-      } else {
-        workoutForm.solution = JSON.stringify(workoutForm.code)
-      }
-
-      delete workoutForm.code
-      delete workoutForm.uploadAs
-
-      await API.put(`/workouts/${params.id}`, workoutForm)
-      console.log('put now redirect')
-      return redirect(`/workouts/${params.id}`)
+      console.log(sandpack.files)
+      // console.log(typeof sandpack.files)
+      await API.put(
+        `/workouts/${workoutData.id}/upload-solution`,
+        JSON.stringify(sandpack.files)
+      )
+      setLoading(false)
+      // return redirect(`/workouts/${params.id}`)
     } catch (error) {
       console.error(`Failed to update workout: ${error.message}`)
       // Handle the error here, e.g., by showing an error message to the user
+      setLoading(false)
     }
   }
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth>
-      <DialogTitle>Upload Files</DialogTitle>
-      <DialogContent>
-        <Form
-          method='post'
-          id='upload-code-form'
-          onSubmit={handleSubmit(onSubmit)}
+      <DialogTitle>
+        Upload Files
+        <IconButton
+          aria-label='close'
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
         >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText mb='20px'>
+          You will be uploading the following files to your workout:
+        </DialogContentText>
+        <form onSubmit={onSubmit} id='upload-code-form'>
           <Box
             sx={{
               padding: '10px 20px 20px 20px',
@@ -97,40 +92,24 @@ const UploadCodeDialog = ({ open, setOpen }) => {
               }}
               expandLevel={1}
             />
-            <FormControl variant='outlined' margin='normal' fullWidth>
-              <InputLabel id='uploadAs-label'>Upload As</InputLabel>
-              <Select
-                labelId='uploadAs-label'
-                id='uploadAs'
-                {...register('uploadAs')}
-                error={!!errors.uploadAs}
-              >
-                <MenuItem value='template'>Template</MenuItem>
-                <MenuItem value='solution'>Solution</MenuItem>
-              </Select>
-              {errors.uploadAs && (
-                <FormHelperText error>{errors.uploadAs.message}</FormHelperText>
-              )}
-            </FormControl>
-
-            <FormControl variant='outlined' margin='normal' fullWidth>
-              <InputLabel id='code-label'>Code</InputLabel>
-              <TextField
-                id='code'
-                type='text'
-                {...register('code')}
-                error={!!errors.code}
-                helperText={errors.code?.message}
-              />
-            </FormControl>
-            <input {...register('uploadAs')} />
-            <input {...register('code')} />
             {/* Display errors */}
-            {errors.uploadAs && <p>{errors.uploadAs.message}</p>}
-            {errors.code && <p>{errors.code.message}</p>}
           </Box>
-        </Form>
+        </form>
       </DialogContent>
+      <DialogActions>
+        <Button onClick={onSubmit} variant='outlined' disabled={loading}>
+          {loading ? (
+            <CircularProgress
+              size={24}
+              sx={{
+                color: 'primary.main',
+              }}
+            />
+          ) : (
+            'Upload'
+          )}
+        </Button>
+      </DialogActions>
     </Dialog>
   )
 }

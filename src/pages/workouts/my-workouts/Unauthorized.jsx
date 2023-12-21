@@ -15,8 +15,10 @@ const Unauthorized = () => {
         gap: '10px',
       }}
     >
-      <Typography variant='h4'>401 Unauthorized</Typography>
-      <Typography>
+      <Typography variant='h4' color='error'>
+        401 Unauthorized
+      </Typography>
+      <Typography color='grey.400'>
         Login or sign up to create your own coding challenges for the community
         to solve.
       </Typography>
@@ -30,10 +32,10 @@ const Unauthorized = () => {
           marginTop: '1rem',
         }}
       >
-        <Button onClick={() => navigate('/auth/login')} variant='contained'>
+        <Button onClick={() => navigate('/auth/login')} variant='outlined'>
           Log in
         </Button>
-        <Button onClick={() => navigate('/auth/signup')} variant='contained'>
+        <Button onClick={() => navigate('/auth/signup')} variant='outlined'>
           Sign up
         </Button>
       </Box>

@@ -17,6 +17,7 @@ const RootFrame = styled(Box)(() => ({
 const StyledTopNav = styled(Box)(({ theme }) => ({
   display: 'flex',
   height: theme.variables.topNavHeight,
+  minHeight: theme.variables.topNavHeight,
   padding: '0px 20px',
   alignItems: 'center',
   justifyContent: 'flex-start',
@@ -30,6 +31,7 @@ const MiddleContent = styled(Box)(() => ({
 
 const SideNavContainer = styled(Box)(({ theme }) => ({
   width: theme.variables.sideNavWidth,
+  minWidth: theme.variables.sideNavWidth,
   borderRight: `0.5px solid ${theme.palette.divider}`,
   display: 'flex',
   flexDirection: 'column',

@@ -1,29 +1,39 @@
 /* eslint-disable react/prop-types */
-import { TextField, Button, Box } from '@mui/material'
+import { TextField, Button, Box, ButtonBase } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useContext, useState } from 'react'
-import WorkoutContext from './WorkoutContext'
+import { useNavigate } from 'react-router-dom'
+import WorkoutContext from './root/WorkoutContext'
 import MultiSelect from '../../components/form/MultiSelect'
 import DeleteDialog from './dialogs/DeleteDialog'
 import api from '../../api'
+import TemplateDependencies from '../workouts/components/TemplateDependencies'
+import { GET_DEPENDENCIES } from '../../quieres'
+import useFetch from '../hooks/useFetch'
+import ManageTopNav from './manage/ManageTopNav'
 
-const keyOrder = ['name', 'title', 'image_link', 'youtube_link']
+const keyOrder = ['title', 'image_link', 'youtube_link', 'is_public']
 
-const dependencies = ['react-router-dom', 'react-redux', 'typescript']
 const tags = ['react', 'redux', 'router']
 const difficulty = ['junior', 'mid-level', 'senior']
 
 const EditWorkoutDialog = () => {
-  const { workout } = useContext(WorkoutContext)
+  const { workoutData: workout } = useContext(WorkoutContext)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  const {
+    data: templateData,
+    loading: loadingTemplates,
+    error: loadingTemplatesError,
+  } = useFetch(GET_DEPENDENCIES)
 
   const defaultValues = keyOrder.reduce((obj, key) => {
     obj[key] = workout[key]
     return obj
   }, {})
   defaultValues.dependencies = Object.keys(workout.dependencies)
-  defaultValues.tags = workout.tags
+  defaultValues.sp_template_id = workout.sp_template.id
 
   const {
     register,
@@ -44,13 +54,16 @@ const EditWorkoutDialog = () => {
     setLoading(false)
   }
 
+  if (loadingTemplates) return <p>Loading...</p>
+
   return (
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        width: '70%',
       }}
     >
       <Box
@@ -58,11 +71,14 @@ const EditWorkoutDialog = () => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          width: '90%',
+          marginLeft: '40px',
+          marginTop: '10px',
+          width: '100%',
+          // padding: '20px',
         }}
       >
         <Box>
-          <h1>Edit Workout</h1>
+          <h2>Manage Your Workouts Meta Data</h2>
         </Box>
         <form onSubmit={handleSubmit(onSubmit)} id='edit-workout-form'>
           {keyOrder.map((name) => (
@@ -80,17 +96,12 @@ const EditWorkoutDialog = () => {
               helperText={errors[name]?.message}
             />
           ))}
-          <MultiSelect
-            name='dependencies'
+          <TemplateDependencies
             control={control}
-            options={dependencies}
-            label='Dependencies'
-          />
-          <MultiSelect
-            name='tags'
-            control={control}
-            options={tags}
-            label='Tags'
+            data={templateData}
+            loading={loadingTemplates}
+            error={loadingTemplatesError}
+            workout={workout}
           />
         </form>
         <Button
