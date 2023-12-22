@@ -38,7 +38,7 @@ const TopNav = ({ open, setOpen }) => {
           <Typography sx={{ fontSize: '12px' }}>COMMUNITY</Typography>
         </NavLink>
         <Divider orientation='vertical' flexItem />
-        <NavLink
+        {/* <NavLink
           to='/workouts/your-workouts'
           className={({ isActive, isPending }) =>
             `nav-link tab-nav-link ${
@@ -47,7 +47,7 @@ const TopNav = ({ open, setOpen }) => {
           }
         >
           <Typography sx={{ fontSize: '12px' }}>YOUR WORKOUTS</Typography>
-        </NavLink>
+        </NavLink> */}
       </Box>
       <div style={{ flexGrow: '1' }} />
       {/* <Button

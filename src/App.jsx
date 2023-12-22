@@ -89,7 +89,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: '',
-            element: <WorkoutsTable tab='' />,
+            element: <WorkoutsTable tab='official' />,
           },
           {
             path: 'community',

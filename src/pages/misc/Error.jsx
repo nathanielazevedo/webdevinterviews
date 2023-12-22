@@ -7,6 +7,7 @@ import RateLimitPage from './RateLimitError'
 const Error = ({ redirectPath }) => {
   const error = useRouteError()
   const navigate = useNavigate()
+  console.log('error', error)
 
   useEffect(() => {
     if (redirectPath) {
