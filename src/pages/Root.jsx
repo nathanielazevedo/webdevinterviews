@@ -22,7 +22,7 @@ const links = [
   {
     name: 'WORKOUTS',
     icon: <SportsMartialArtsOutlinedIcon />,
-    path: 'workouts',
+    path: 'workouts/official',
   },
 ]
 
