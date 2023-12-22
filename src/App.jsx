@@ -88,7 +88,7 @@ const router = createBrowserRouter([
         element: <WorkoutsRoot />,
         children: [
           {
-            path: '',
+            path: 'official',
             element: <WorkoutsTable tab='official' />,
           },
           {

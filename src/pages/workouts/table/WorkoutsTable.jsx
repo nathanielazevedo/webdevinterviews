@@ -27,10 +27,10 @@ import TemplateToSvg from '../components/TemplateToSvg'
 import DependencyToSvg from '../components/DependencyToSvg'
 
 const WorkoutTables = ({ tab }) => {
-  const url = tab ? `/workouts/${tab}` : '/workouts'
+  const url = `/workouts/${tab}`
   const { data: workoutsData, loading, error, fetchData } = useFetch(url)
 
-  const fetchWorkouts = () => fetchData(tab ? `/workouts/${tab}` : '/workouts')
+  const fetchWorkouts = () => fetchData(`/workouts/${tab}`)
 
   const renderTableBodyContent = () => {
     if (error || !workoutsData) {
