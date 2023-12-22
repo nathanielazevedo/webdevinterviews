@@ -16,7 +16,7 @@ const TopNav = ({ open, setOpen }) => {
         }}
       >
         <NavLink
-          to='/workouts'
+          to='/workouts/official'
           end
           className={({ isActive, isPending }) =>
             `nav-link tab-nav-link ${
