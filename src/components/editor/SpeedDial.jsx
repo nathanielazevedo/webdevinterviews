@@ -2,26 +2,25 @@
 import * as prettier from 'prettier'
 import { useState, useEffect } from 'react'
 import parserBabel from 'prettier/parser-babel'
-import { useSandpack } from '@codesandbox/sandpack-react'
-import { useActiveCode } from '@codesandbox/sandpack-react'
-//mui
+import { useSandpack, useActiveCode } from '@codesandbox/sandpack-react'
+// mui
 import Box from '@mui/material/Box'
 import SpeedDial from '@mui/material/SpeedDial'
 import SpeedDialIcon from '@mui/material/SpeedDialIcon'
 import SpeedDialAction from '@mui/material/SpeedDialAction'
-//icons
-import Alert from '../../components/Alert'
+// icons
 import BoltIcon from '@mui/icons-material/Bolt'
 import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun'
+import Alert from '../Alert'
 
-export default function BasicSpeedDial({
+const BasicSpeedDial = ({
   codemirrorInstance,
   workout,
   setShowTests,
   showTests,
-}) {
+}) => {
   const [prettierCode, setPrettierCode] = useState('')
   const [showWarning, setShowWarning] = useState(false)
   const { sandpack } = useSandpack()
@@ -73,14 +72,14 @@ export default function BasicSpeedDial({
       name: 'Reset Code',
       onClick: () => setShowWarning(true),
     },
-    {
-      icon: <BoltIcon />,
-      name: showTests ? 'Close Tests' : 'Run Tests',
-      onClick: () => {
-        setShowTests((prev) => !prev)
-        sandpack.runSandpack()
-      },
-    },
+    // {
+    //   icon: <BoltIcon />,
+    //   name: showTests ? 'Close Tests' : 'Run Tests',
+    //   onClick: () => {
+    //     setShowTests((prev) => !prev)
+    //     sandpack.runSandpack()
+    //   },
+    // },
   ]
 
   return (
@@ -115,3 +114,5 @@ export default function BasicSpeedDial({
     </Box>
   )
 }
+
+export default BasicSpeedDial

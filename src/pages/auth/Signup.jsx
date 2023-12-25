@@ -1,16 +1,15 @@
 /* eslint-disable react/prop-types */
 import { TextField, Button, Box, Typography } from '@mui/material'
 import { useEffect, useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../pages/AuthContext'
+import { useNavigate, NavLink } from 'react-router-dom'
 import * as yup from 'yup'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { InputAdornment, IconButton } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { NavLink } from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress'
 import Fade from '@mui/material/Fade'
+import { AuthContext } from '../AuthContext'
 
 const validationSchema = yup.object({
   email: yup
@@ -74,6 +73,12 @@ const AuthDialog = () => {
           type: 'manual',
           message: 'Email already exists',
         })
+      } else if (err.code === 'InvalidPasswordException') {
+        setError('password', {
+          type: 'manual',
+          message:
+            'Password must be at least 8 characters, contain a number, an uppercase letter, and a special character.',
+        })
       } else {
         setGeneralError('An error occurred while signing up. Please try again.')
       }
@@ -82,7 +87,7 @@ const AuthDialog = () => {
   }
 
   return (
-    <Fade in={true} timeout={1000}>
+    <Fade in timeout={1000}>
       <Box
         sx={{
           display: 'flex',

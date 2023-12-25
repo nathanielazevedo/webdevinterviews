@@ -12,8 +12,8 @@ const Template = () => {
   try {
     // here we will merge the template with the user's code
     const local = JSON.parse(localStorage.getItem(workout.id))
-    // files = local || workout.dynamo_data.template
-    files = workoutData.dynamo_data.template
+    files = local || workout.dynamo_data.template
+    // files = workoutData.dynamo_data.template
   } catch (error) {
     files = {}
   }
@@ -27,11 +27,12 @@ const Template = () => {
             template={workout.spTemplate.name}
             customSetup={{
               dependencies: workout.dependencies ?? {},
+              entry: '/index.js',
             }}
             options={{
               autoReload: true,
-              activeFile: '/Instructions.txt',
-              visibleFiles: ['/Instructions.txt'],
+              activeFile: '/App.js',
+              visibleFiles: ['/App.js'],
             }}
           >
             <EditorMain files={files} isSolution={false} />

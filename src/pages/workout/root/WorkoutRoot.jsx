@@ -24,7 +24,7 @@ export const action = async ({ request, params }) => {
     await API.put(`/workouts/${params.id}`, workoutForm)
     return redirect(`/workouts/${params.id}`)
   } catch (error) {
-    return redirect('/workouts')
+    return redirect('/workouts/official')
   }
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable react/prop-types */
 import { useRef, useState, useContext } from 'react'
 import { Panel, PanelGroup } from 'react-resizable-panels'
@@ -27,11 +28,32 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
   const [uploadCodeDialogOpen, setUploadCodeDialogOpen] = useState(false)
   const [files, setFiles] = useState(initialFiles)
 
+  // if owner always render AutoSave
+  // if not owner and not solution render AutoSave
+  // if solution and owner render AutoSave
+  // if solution and not owner don't render AutoSave
+
+  const renderAutoSave = () => {
+    if (workoutData.is_owner) {
+      return true
+    }
+    if (!isSolution) {
+      return true
+    }
+    return false
+  }
+
   return (
     <>
-      {!isSolution && (
-        <AutoSave workout={workout} files={files} setFiles={setFiles} />
+      {renderAutoSave() && (
+        <AutoSave
+          workout={workout}
+          files={files}
+          setFiles={setFiles}
+          isSolution={isSolution}
+        />
       )}
+
       <SandpackThemeProvider theme={theme}>
         <SandpackLayout>
           <div
@@ -80,15 +102,16 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
                 {workoutData.is_owner && (
                   <IconButton
                     onClick={() => setUploadCodeDialogOpen(true)}
-                    fontSize='large'
+                    fontSize='small'
                     sx={{
                       position: 'absolute',
                       top: '0px',
                       right: '5px',
                       zIndex: '100',
+                      color: 'primary.main',
                     }}
                   >
-                    <UploadIcon />
+                    <UploadIcon fontSize='small' />
                   </IconButton>
                 )}
                 {/* {!isSolution && (
@@ -117,7 +140,7 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
                       </Tooltip>
                     </Box>
                   )} */}
-                {!isSolution && (
+                {renderAutoSave() && (
                   <SpeedDial
                     codemirrorInstance={codemirrorInstance}
                     workout={workout}
@@ -135,7 +158,7 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
                   position: 'relative',
                 }}
               >
-                <Browser showTests={showTests} />
+                <Browser showTests={showTests} files={files} />
               </Panel>
             </PanelGroup>
           </div>
@@ -143,6 +166,7 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
             <UploadCodeDialog
               open={uploadCodeDialogOpen}
               setOpen={setUploadCodeDialogOpen}
+              isSolution={isSolution}
             />
           )}
         </SandpackLayout>

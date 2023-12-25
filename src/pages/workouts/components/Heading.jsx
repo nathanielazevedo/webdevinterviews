@@ -9,7 +9,7 @@ const Heading = () => {
   const location = useLocation()
 
   useEffect(() => {
-    if (location.pathname === '/workouts') {
+    if (location.pathname === '/workouts/official') {
       setHeaderText(headerTexts.official)
     } else if (location.pathname === '/workouts/community') {
       setHeaderText(headerTexts.community)

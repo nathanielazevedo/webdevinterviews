@@ -63,7 +63,8 @@ const EditWorkoutDialog = () => {
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        width: '70%',
+        width: '100%',
+        padding: '30px',
       }}
     >
       <Box
@@ -71,8 +72,6 @@ const EditWorkoutDialog = () => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          marginLeft: '40px',
-          marginTop: '10px',
           width: '100%',
           // padding: '20px',
         }}

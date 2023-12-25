@@ -40,7 +40,7 @@ const TopNav = ({ open, setOpen }) => {
             }`
           }
         >
-          <Typography sx={{ fontSize: '12px' }}>MANAGE CODE</Typography>
+          <Typography sx={{ fontSize: '12px' }}>CODE VIEWER</Typography>
         </NavLink>
       </Box>
       <div style={{ flexGrow: '1' }} />

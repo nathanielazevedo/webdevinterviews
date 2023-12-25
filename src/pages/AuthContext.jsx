@@ -94,7 +94,7 @@ const AuthProvider = ({ children }) => {
       const currentUser = UserPool.getCurrentUser()
       if (currentUser) {
         await handleSession(currentUser)
-        navigate('workouts')
+        navigate('workouts/official')
       }
     } catch (err) {
       console.error(err)

@@ -5,7 +5,7 @@ import Preview from './Preview'
 import Console from './Console'
 import ResizeHandle from '../../HorizontalResizeHandle'
 
-const Browser = ({ showTests }) => {
+const Browser = ({ showTests, files }) => {
   const consolePanelRef = useRef()
 
   const closeFilePanel = () => {
@@ -26,7 +26,7 @@ const Browser = ({ showTests }) => {
         disablePointerEventsDuringResize
       >
         <Panel>
-          <Preview showTests={showTests} />
+          <Preview showTests={showTests} files={files} />
         </Panel>
         <ResizeHandle />
         <Panel minSize={4.3} collapsible={false} ref={consolePanelRef}>

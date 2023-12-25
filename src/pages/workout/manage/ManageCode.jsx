@@ -1,50 +1,85 @@
 import { useContext } from 'react'
 import { Box, Typography } from '@mui/material'
+import { ObjectInspector, chromeDark } from 'react-inspector'
 import WorkoutContext from '../root/WorkoutContext'
 
 const ManageCode = () => {
   const { workoutData: workout } = useContext(WorkoutContext)
-  const templateFile = JSON.parse(workout.dynamo_data.template)
-  const solutionFile = JSON.parse(workout.dynamo_data.solution)
+  const templateFile = workout.dynamo_data.template
+  const solutionFile = workout.dynamo_data.solution
 
   return (
     <Box
       sx={{
         display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
+        flexDirection: 'column',
+        padding: '30px',
+        gap: '30px',
+        height: '100%',
       }}
     >
       <Box>
-        <Typography variant='h6' sx={{ color: 'grey.400' }}>
-          Template Files
+        <Typography variant='h4'>Code Viewer</Typography>
+        <Typography variant='body2' sx={{ color: 'grey.400' }}>
+          This is the code for both the template and solution files. This page
+          just shows the code, you can't edit it here. <br /> To edit the code,
+          go to the EDITOR and SOLUTION pages.
         </Typography>
-        {Object.keys(templateFile).map((file) => (
-          <Box
-            sx={{
-              border: '1px solid',
-              borderColor: 'grey.700',
-              padding: '10px 20px',
-              margin: '10px 0px',
-              borderRadius: '5px',
-            }}
-          >
-            <Typography sx={{ fontSize: '14px' }}>{file}</Typography>
-          </Box>
-        ))}
       </Box>
-      <Box>
+      <Box
+        sx={{
+          width: '100%',
+        }}
+      >
+        <Typography variant='h6'>Template Files</Typography>
+        <ObjectInspector
+          data={templateFile}
+          // name='files'
+          theme={{
+            ...chromeDark,
+            ...{
+              TREENODE_PADDING_LEFT: 15,
+              BASE_FONT_SIZE: '15px',
+              BASE_FONT_FAMILY: 'Bai jamjuree',
+              BASE_BACKGROUND_COLOR: 'transparent',
+              TREENODE_FONT_FAMILY: 'Bai jamjuree',
+              TREENODE_LINE_HEIGHT: 1.5,
+              ARROW_FONT_SIZE: 10,
+              OBJECT_NAME_COLOR: 'white',
+              OBJECT_PREVIEW_OBJECT_MAX_PROPERTIES: 3,
+              OBJECT_VALUE_STRING_COLOR: '#19e4ff',
+            },
+          }}
+          expandLevel={2}
+        />
+      </Box>
+
+      <Box
+        sx={{
+          width: '100%',
+        }}
+      >
         <Typography variant='h6'>Solution Files</Typography>
-        {Object.keys(solutionFile).map((file) => (
-          <Box
-            sx={{
-              border: '1px solid white',
-            }}
-          >
-            {file}
-          </Box>
-        ))}
+        <ObjectInspector
+          data={solutionFile}
+          // name='files'
+          theme={{
+            ...chromeDark,
+            ...{
+              TREENODE_PADDING_LEFT: 15,
+              BASE_FONT_SIZE: '15px',
+              BASE_FONT_FAMILY: 'Bai jamjuree',
+              BASE_BACKGROUND_COLOR: 'transparent',
+              TREENODE_FONT_FAMILY: 'Bai jamjuree',
+              TREENODE_LINE_HEIGHT: 1.5,
+              ARROW_FONT_SIZE: 10,
+              OBJECT_NAME_COLOR: 'white',
+              OBJECT_PREVIEW_OBJECT_MAX_PROPERTIES: 3,
+              OBJECT_VALUE_STRING_COLOR: '#19e4ff',
+            },
+          }}
+          expandLevel={2}
+        />
       </Box>
     </Box>
   )

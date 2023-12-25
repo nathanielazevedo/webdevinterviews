@@ -6,7 +6,15 @@ import ManageTopNav from './ManageTopNav'
 const ManageRoot = () => (
   <Box>
     <ManageTopNav />
-    <Outlet />
+    <Box
+      sx={{
+        width: '100%',
+        maxWidth: '100%',
+        maxHeight: '85vh',
+      }}
+    >
+      <Outlet />
+    </Box>
   </Box>
 )
 

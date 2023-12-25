@@ -16,12 +16,14 @@ import IconButton from '@mui/material/IconButton'
 import CircularProgress from '@mui/material/CircularProgress'
 import WorkoutContext from '../../pages/workout/root/WorkoutContext'
 import { AuthContext } from '../../pages/AuthContext'
+import { LogContext } from '../../pages/LogContext'
 
-const UploadCodeDialog = ({ open, setOpen }) => {
+const UploadCodeDialog = ({ open, setOpen, isSolution }) => {
   const { sandpack } = useSandpack()
   const [loading, setLoading] = useState(false)
   const { workoutData } = useContext(WorkoutContext)
   const { API } = useContext(AuthContext)
+  const { addLog } = useContext(LogContext)
 
   const handleClose = () => {
     setOpen(false)
@@ -30,17 +32,24 @@ const UploadCodeDialog = ({ open, setOpen }) => {
   const onSubmit = async () => {
     setLoading(true)
     try {
-      console.log(sandpack.files)
       // console.log(typeof sandpack.files)
-      await API.put(
-        `/workouts/${workoutData.id}/upload-solution`,
-        JSON.stringify(sandpack.files)
-      )
+      if (isSolution) {
+        await API.put(
+          `/workouts/${workoutData.id}/upload-solution`,
+          JSON.stringify(sandpack.files)
+        )
+      } else {
+        await API.put(
+          `/workouts/${workoutData.id}/upload-template`,
+          JSON.stringify(sandpack.files)
+        )
+      }
       setLoading(false)
+      setOpen(false)
       // return redirect(`/workouts/${params.id}`)
     } catch (error) {
-      console.error(`Failed to update workout: ${error.message}`)
       // Handle the error here, e.g., by showing an error message to the user
+      addLog({ method: 'log', data: ['Code uploaded.'] })
       setLoading(false)
     }
   }

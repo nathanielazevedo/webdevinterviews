@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import Typography from '@mui/material/Typography'
 import { StyledTopNav } from '../../../rootStyledComponents'
 
+const isDev = import.meta.env.DEV
+
 const TopNav = ({ open, setOpen }) => {
   const filter = 'all'
   return (
@@ -37,17 +39,21 @@ const TopNav = ({ open, setOpen }) => {
         >
           <Typography sx={{ fontSize: '12px' }}>COMMUNITY</Typography>
         </NavLink>
-        <Divider orientation='vertical' flexItem />
-        {/* <NavLink
-          to='/workouts/your-workouts'
-          className={({ isActive, isPending }) =>
-            `nav-link tab-nav-link ${
-              isActive ? 'active' : isPending ? 'pending' : 'not-active'
-            }`
-          }
-        >
-          <Typography sx={{ fontSize: '12px' }}>YOUR WORKOUTS</Typography>
-        </NavLink> */}
+        {isDev && (
+          <>
+            <Divider orientation='vertical' flexItem />
+            <NavLink
+              to='/workouts/your-workouts'
+              className={({ isActive, isPending }) =>
+                `nav-link tab-nav-link ${
+                  isActive ? 'active' : isPending ? 'pending' : 'not-active'
+                }`
+              }
+            >
+              <Typography sx={{ fontSize: '12px' }}>YOUR WORKOUTS</Typography>
+            </NavLink>
+          </>
+        )}
       </Box>
       <div style={{ flexGrow: '1' }} />
       {/* <Button

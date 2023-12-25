@@ -9,12 +9,22 @@ const Solution = () => {
   const { workoutData } = useContext(WorkoutContext)
   const workout = new Workout(workoutData)
 
+  let files
+  try {
+    // here we will merge the template with the user's code
+    const local = JSON.parse(localStorage.getItem(`${workout.id}-solution`))
+    files = local || workoutData.dynamo_data.solution
+    // files = workoutData.dynamo_data.template
+  } catch (error) {
+    files = workoutData.dynamo_data.solution
+  }
+
   return (
     <Fade in timeout={1000}>
       <div>
         <Box sx={{ height: 'calc(100vh - 100px)' }}>
           <SandpackProvider
-            files={workoutData.dynamo_data.solution}
+            files={files}
             template={workout.spTemplate.name}
             customSetup={{
               dependencies: workout.dependencies ?? {},
