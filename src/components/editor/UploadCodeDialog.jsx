@@ -24,6 +24,7 @@ const UploadCodeDialog = ({ open, setOpen, isSolution }) => {
   const { workoutData } = useContext(WorkoutContext)
   const { API } = useContext(AuthContext)
   const { addLog } = useContext(LogContext)
+  console.log(sandpack.files)
 
   const handleClose = () => {
     setOpen(false)
@@ -126,6 +127,7 @@ const UploadCodeDialog = ({ open, setOpen, isSolution }) => {
 UploadCodeDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
+  isSolution: PropTypes.bool.isRequired,
 }
 
 export default UploadCodeDialog

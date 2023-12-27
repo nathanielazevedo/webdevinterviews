@@ -12,7 +12,7 @@ const Template = () => {
   try {
     // here we will merge the template with the user's code
     const local = JSON.parse(localStorage.getItem(workout.id))
-    files = local || workout.dynamo_data.template
+    files = local || workoutData.dynamo_data.template
     // files = workoutData.dynamo_data.template
   } catch (error) {
     files = {}

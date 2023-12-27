@@ -11,6 +11,7 @@ const ManageRoot = () => (
         width: '100%',
         maxWidth: '100%',
         maxHeight: '85vh',
+        overflow: 'scroll',
       }}
     >
       <Outlet />
