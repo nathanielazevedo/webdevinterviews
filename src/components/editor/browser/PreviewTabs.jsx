@@ -70,6 +70,7 @@ const BasicTabs = ({ files }) => {
           />
           <Tab
             label='Tests'
+            onClick={() => sandpack.runSandpack()}
             sx={{
               fontSize: '12px',
               padding: '0',

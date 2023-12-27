@@ -9,18 +9,12 @@ import SpeedDial from '@mui/material/SpeedDial'
 import SpeedDialIcon from '@mui/material/SpeedDialIcon'
 import SpeedDialAction from '@mui/material/SpeedDialAction'
 // icons
-import BoltIcon from '@mui/icons-material/Bolt'
 import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun'
 import Alert from '../Alert'
 
-const BasicSpeedDial = ({
-  codemirrorInstance,
-  workout,
-  setShowTests,
-  showTests,
-}) => {
+const BasicSpeedDial = ({ codemirrorInstance, workout }) => {
   const [prettierCode, setPrettierCode] = useState('')
   const [showWarning, setShowWarning] = useState(false)
   const { sandpack } = useSandpack()

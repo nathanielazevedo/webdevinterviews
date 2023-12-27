@@ -15,6 +15,7 @@ const Console = ({ closeFilePanel, consolePanelRef }) => {
     // listens for any message dispatched between sandpack and the bundler
     const stopListening = listen((msg) => {
       if (msg.type === 'status' && msg.status === 'transpiling') {
+        logs.splice(0, logs.length)
         logs.push({
           method: 'log',
           data: ['Auto Saved'],

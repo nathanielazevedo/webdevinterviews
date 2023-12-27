@@ -31,6 +31,7 @@ const Template = () => {
             }}
             options={{
               autoReload: true,
+              autorun: true,
               activeFile: '/App.js',
               visibleFiles: ['/App.js'],
             }}

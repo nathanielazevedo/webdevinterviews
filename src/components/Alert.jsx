@@ -9,15 +9,15 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 
-export default function AlertDialog({ setOpen, workout }) {
+const AlertDialog = ({ setOpen, workout }) => {
   const navigate = useNavigate()
 
   const handleCloseDeny = () => setOpen(false)
 
   const handleCloseAgree = () => {
     setOpen(false)
-    localStorage.removeItem(workout.name)
-    navigate(`/workout/${workout.name}/editor`)
+    localStorage.removeItem(workout.id)
+    navigate(`/workouts/${workout.id}`)
   }
 
   return (
@@ -27,7 +27,7 @@ export default function AlertDialog({ setOpen, workout }) {
       aria-labelledby='alert-dialog-title'
       aria-describedby='alert-dialog-description'
     >
-      <DialogTitle id='alert-dialog-title'>{'Are you sure?'}</DialogTitle>
+      <DialogTitle id='alert-dialog-title'>Are you sure?</DialogTitle>
       <DialogContent>
         <DialogContentText id='alert-dialog-description'>
           This will reset your code to the original template. <br /> Anything
@@ -44,3 +44,5 @@ export default function AlertDialog({ setOpen, workout }) {
     </Dialog>
   )
 }
+
+export default AlertDialog
