@@ -11,7 +11,6 @@ import {
   SandpackThemeProvider,
   useSandpack,
 } from '@codesandbox/sandpack-react'
-import { Divider } from '@mui/material'
 import { theme } from '../theme'
 import WorkoutContext from '../../../pages/workout/root/WorkoutContext'
 import Workout from '../../../models/workout'
@@ -117,12 +116,12 @@ const BasicTabs = ({ files }) => {
           template={workout.spTemplate.name}
           customSetup={{
             dependencies: workout.dependencies ?? {},
-            entry: '/Instructions.js',
+            entry: '/shared/Instructions.js',
           }}
           options={{
             autoReload: true,
-            activeFile: '/Instructions.js',
-            visibleFiles: ['/Instructions.js'],
+            activeFile: '/shared/Instructions.js',
+            visibleFiles: ['/shared/Instructions.js'],
           }}
         >
           <SandpackThemeProvider theme={theme}>
@@ -143,8 +142,8 @@ const BasicTabs = ({ files }) => {
           }}
           options={{
             autoReload: true,
-            activeFile: '/Instructions.js',
-            visibleFiles: ['/Instructions.js'],
+            activeFile: '/shared/Instructions.jsx',
+            visibleFiles: ['/shared/Instructions.jsx'],
           }}
         >
           <SandpackThemeProvider theme={theme}>

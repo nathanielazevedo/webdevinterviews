@@ -11,6 +11,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@codemirror/closebrackets": "^0.19.2",
+    "@codemirror/lint": "^6.4.2",
     "@codesandbox/sandpack-react": "^2.9.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",

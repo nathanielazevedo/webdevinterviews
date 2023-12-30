@@ -13,7 +13,13 @@ const Solution = () => {
   try {
     // here we will merge the template with the user's code
     const local = JSON.parse(localStorage.getItem(`${workout.id}-solution`))
+    const shared = JSON.parse(localStorage.getItem(`${workout.id}-shared`))
     files = local || workoutData.dynamo_data.solution
+    if (shared) {
+      files = { ...files, ...shared }
+    } else {
+      files = { ...files, ...workoutData.dynamo_data.shared }
+    }
     // files = workoutData.dynamo_data.template
   } catch (error) {
     files = workoutData.dynamo_data.solution

@@ -2,7 +2,7 @@
 const colors = {
   lightBlue: '#9cdcfe',
   yellow: '#dcdcaa',
-  purple: '#d16dce',
+  purple: '#fa39f0',
   green: '#4ec9b0',
   orange: '#ce9178',
   comment: '#6a9956',
@@ -37,8 +37,8 @@ export const theme = {
     string: colors.orange,
   },
   font: {
-    size: '12px',
-    lineHeight: '16px',
-    mono: 'Fira Code, monospace',
+    // size: '12px',
+    // lineHeight: '16px',
+    // mono: 'Fira Code, monospace',
   },
 }
