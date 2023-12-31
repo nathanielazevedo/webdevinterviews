@@ -5,7 +5,6 @@ import WorkoutSideNav from './WorkoutSideNav'
 import API from '../../../api'
 import useFetch from '../../hooks/useFetch'
 import WorkoutSkeleton from '../WorkoutSkeleton'
-import Workout from '../../../models/workout'
 import {
   MiddleContent,
   OutletContainer,
