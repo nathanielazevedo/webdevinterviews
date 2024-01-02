@@ -26,9 +26,7 @@ const SelectInput = ({ name, control, label, children, ...props }) => (
     {props.error ? (
       <FormHelperText error>{props.error.message}</FormHelperText>
     ) : (
-      <FormHelperText>
-        Is this a vanilla JS question or a react question?
-      </FormHelperText>
+      <FormHelperText>What framework are you using?</FormHelperText>
     )}
   </FormControl>
 )

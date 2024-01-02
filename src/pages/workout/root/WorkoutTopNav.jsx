@@ -8,10 +8,8 @@ import YouTubeIcon from '@mui/icons-material/YouTube'
 import { IconButton, Typography, CircularProgress } from '@mui/material'
 import { useContext } from 'react'
 import Rating from '../../../components/Rating'
-import WorkoutTooltip from '../../workouts/components/WorkoutTooltip'
 import WorkoutContext from './WorkoutContext'
 import TemplateToSvg from '../../workouts/components/TemplateToSvg'
-import DependencyToSvg from '../../workouts/components/DependencyToSvg'
 
 const WorkoutTopNav = () => {
   const { workoutData: workout } = useContext(WorkoutContext)
@@ -99,27 +97,6 @@ const WorkoutTopNav = () => {
               Template:
             </Typography>
             <TemplateToSvg template={workout.sp_template.name} />
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: '12px',
-                color: 'grey.500',
-              }}
-            >
-              Dependencies:
-            </Typography>
-            {workout.dependencies &&
-              Object.keys(workout.dependencies).length > 0 &&
-              Object.keys(workout.dependencies).map((key) => (
-                <DependencyToSvg key={key} template={key} />
-              ))}
           </Box>
           <Box
             sx={{

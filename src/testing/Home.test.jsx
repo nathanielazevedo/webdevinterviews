@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import Home from '../Home'
+import Home from '../pages/Home'
 
 describe('Home component', () => {
   test('renders Home component and checks if logo is present', () => {

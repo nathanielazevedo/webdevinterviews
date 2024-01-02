@@ -5,16 +5,15 @@ import Box from '@mui/material/Box'
 import TopNav from './WorkoutsTopNav'
 import CreateWorkoutDialog from '../dialogs/CreateDialog'
 import { RootFrame } from '../../../rootStyledComponents'
-import FilterDialog from '../dialogs/FilterDialog'
 import Heading from '../components/Heading'
 
 const WorkoutsRoot = () => {
   const [createWorkoutDialogOpen, setCreateWorkoutDialogOpen] = useState(false)
-  const [filterDialogOpen, setFilterDialogOpen] = useState(false)
+
   return (
     <>
       <RootFrame>
-        <TopNav open={filterDialogOpen} setOpen={setFilterDialogOpen} />
+        <TopNav />
         <Box
           sx={{
             display: 'flex',
@@ -32,9 +31,6 @@ const WorkoutsRoot = () => {
           open={createWorkoutDialogOpen}
           setOpen={setCreateWorkoutDialogOpen}
         />
-      )}
-      {filterDialogOpen && (
-        <FilterDialog open={filterDialogOpen} setOpen={setFilterDialogOpen} />
       )}
     </>
   )

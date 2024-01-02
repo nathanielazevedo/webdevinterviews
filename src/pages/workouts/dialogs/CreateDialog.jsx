@@ -1,6 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
-/* eslint-disable consistent-return */
-// import * as Yup from 'yup'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -33,13 +32,7 @@ const schema = Yup.object().shape({
   dependencies: Yup.array().of(Yup.string()),
 })
 
-const CreateWorkoutDialog = ({
-  open,
-  setOpen,
-  data,
-  loading: loadingTemplates,
-  error,
-}) => {
+const CreateWorkoutDialog = ({ open, setOpen, data, error }) => {
   const [loading, setLoading] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
 
@@ -169,12 +162,10 @@ const CreateWorkoutDialog = ({
                 error={!!errors.title}
                 helperText={errors.title?.message ?? 'Title of your workout.'}
               />
-
               <TemplateDependencies
                 control={control}
                 setValue={setValue}
                 data={data}
-                loading={loadingTemplates}
                 error={error}
                 errors={errors}
               />
@@ -193,7 +184,7 @@ const CreateWorkoutDialog = ({
             form='create-workout-form'
             variant='outlined'
             fullWidth
-            disabled={loading && loadingTemplates}
+            disabled={loading}
           >
             {loading ? (
               <CircularProgress

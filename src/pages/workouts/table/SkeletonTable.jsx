@@ -22,16 +22,10 @@ const SkeletonTable = ({ isYours }) => {
               <TableBody>
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
                   <StyledTableRow key={item} index={item}>
-                    <StyledIconTableCell align='center' id='icon'>
-                      <Skeleton variant='text' width='100%' />
-                    </StyledIconTableCell>
                     <StyledNameTableCell align='left' id='name'>
                       <Skeleton variant='text' width={getRandomWidth()} />
                     </StyledNameTableCell>
                     <StyledIconTableCell align='center' id='template'>
-                      <Skeleton variant='text' width='100%' />
-                    </StyledIconTableCell>
-                    <StyledIconTableCell align='center' id='dependency'>
                       <Skeleton variant='text' width='100%' />
                     </StyledIconTableCell>
                     <StyledIconTableCell align='center' id='difficulty'>

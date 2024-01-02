@@ -2,7 +2,6 @@ import { Box, Typography } from '@mui/material'
 import { useRouteError, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import RateLimitPage from './RateLimitError'
 
 const Error = ({ redirectPath }) => {
   const error = useRouteError()
@@ -13,10 +12,6 @@ const Error = ({ redirectPath }) => {
       navigate(redirectPath)
     }
   }, [redirectPath, navigate])
-
-  if (error.status === 429) {
-    return <RateLimitPage />
-  }
 
   return (
     <Box
@@ -53,5 +48,9 @@ const Error = ({ redirectPath }) => {
 export default Error
 
 Error.propTypes = {
-  redirectPath: PropTypes.string.isRequired,
+  redirectPath: PropTypes.string,
+}
+
+Error.defaultProps = {
+  redirectPath: '/workouts',
 }

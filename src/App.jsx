@@ -6,6 +6,7 @@ import Error from './pages/misc/Error'
 import FourOFour from './pages/misc/FourOFour'
 import Template from './pages/workout/Template'
 import Solution from './pages/workout/Solution'
+import MyWorkouts from './pages/workouts/my-workouts/MyWorkouts'
 import WorkoutRoot, {
   action as editWorkoutAction,
 } from './pages/workout/root/WorkoutRoot'
@@ -19,7 +20,6 @@ import ResetPassword from './pages/auth/ResetPassword'
 import Help from './pages/misc/Help'
 import EditWorkout from './pages/workout/EditWorkout'
 import WorkoutsTable from './pages/workouts/table/WorkoutsTable'
-import MyWorkouts from './pages/workouts/my-workouts/MyWorkouts'
 import ManageCode from './pages/workout/manage/ManageCode'
 import ManageRoot from './pages/workout/manage/ManageRoot'
 

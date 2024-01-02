@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Button from '@mui/material/Button'
 import { Box, Skeleton } from '@mui/material'
-import MyWorkoutsTable from '../table/MyWorkoutsTable'
+import WorkoutsTable from '../table/WorkoutsTable'
 import Unauthorized from './Unauthorized'
 import CreateDialog from '../dialogs/CreateDialog'
 import useFetch from '../../hooks/useFetch'
@@ -11,16 +11,13 @@ import { GET_DEPENDENCIES } from '../../../quieres'
 
 const ManageWorkouts = () => {
   const [open, setOpen] = useState(false)
-  const url = '/workouts/your-workouts'
-  const { data: workoutsData, loading, error, fetchData } = useFetch(url)
   const {
     data: templateData,
     loading: loadingTemplates,
     error: loadingTemplatesError,
   } = useFetch(GET_DEPENDENCIES)
 
-  const fetchWorkouts = () => fetchData('/workouts/your-workouts')
-  if (loading) {
+  if (loadingTemplates) {
     return (
       <>
         <Box
@@ -32,14 +29,13 @@ const ManageWorkouts = () => {
         >
           <Skeleton variant='rectangular' width={130} height={25} />
         </Box>
-
         <SkeletonTable />
       </>
     )
   }
 
-  if (error) {
-    if (error.status === 401) {
+  if (loadingTemplatesError) {
+    if (loadingTemplatesError.status === 401) {
       return <Unauthorized />
     }
   }
@@ -47,7 +43,6 @@ const ManageWorkouts = () => {
   return (
     <Box>
       <Box
-        id='your-workouts-above-table'
         sx={{
           display: 'flex',
           justifyContent: 'flex-end',
@@ -57,19 +52,14 @@ const ManageWorkouts = () => {
       >
         <Button
           size='small'
-          disabled={error || loadingTemplatesError}
+          disabled={loadingTemplatesError || loadingTemplatesError}
           variant='outlined'
           onClick={() => setOpen(!open)}
         >
           CREATE WORKOUT
         </Button>
       </Box>
-      <MyWorkoutsTable
-        workoutsData={workoutsData}
-        error={error}
-        fetchWorkouts={fetchWorkouts}
-        loading={loading}
-      />
+      <WorkoutsTable tab='your-workouts' />
       {open && !loadingTemplates && (
         <CreateDialog
           open={open}
