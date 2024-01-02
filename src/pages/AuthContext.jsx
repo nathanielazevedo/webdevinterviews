@@ -20,10 +20,10 @@ const AuthProvider = ({ children }) => {
   // Gets users current session with attributes
   const handleSession = (currentUser) =>
     new Promise((resolve, reject) => {
-      currentUser.getSession((err, session) => {
-        if (err) {
+      currentUser.getSession((error, session) => {
+        if (error) {
           addLog({ method: 'error', data: ['Not logged in.'] })
-          reject(err)
+          reject(error)
           setLoading(false)
         } else {
           currentUser.getUserAttributes((err, attributes) => {
@@ -209,9 +209,9 @@ const AuthProvider = ({ children }) => {
           const cognitoUser = UserPool.getCurrentUser()
 
           if (cognitoUser) {
-            cognitoUser.getSession((err) => {
-              if (err) {
-                reject(err)
+            cognitoUser.getSession((error) => {
+              if (error) {
+                reject(error)
               } else {
                 cognitoUser.deleteUser((err, result) => {
                   if (err) {

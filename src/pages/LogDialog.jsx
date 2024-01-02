@@ -67,7 +67,6 @@ const LogDialog = ({ open, onClose }) => {
           logs={logs}
           variant='dark'
           styles={{
-            // BASE_FONT_SIZE: '12px',
             BASE_BACKGROUND_COLOR: '#121212',
           }}
         />

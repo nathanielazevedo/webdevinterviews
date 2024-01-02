@@ -9,7 +9,7 @@ import {
 const TableHead = ({ isYours }) => (
   <MuiTableHead>
     <StyledTableRow>
-      <StyledIconTableCell align='center'>IMAGE</StyledIconTableCell>
+      <StyledIconTableCell align='center' />
       <StyledTableCell align='left'>NAME</StyledTableCell>
       <StyledIconTableCell align='center'>TEMPLATE</StyledIconTableCell>
       <StyledTableCell align='center'>DEPENDENCIES</StyledTableCell>

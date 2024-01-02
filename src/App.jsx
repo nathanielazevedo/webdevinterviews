@@ -4,7 +4,6 @@ import Root from './pages/Root'
 import Home from './pages/Home'
 import Error from './pages/misc/Error'
 import FourOFour from './pages/misc/FourOFour'
-import Details from './pages/workout/Details'
 import Template from './pages/workout/Template'
 import Solution from './pages/workout/Solution'
 import WorkoutRoot, {
@@ -17,7 +16,6 @@ import Account from './pages/auth/Account'
 import VerifyEmail from './pages/auth/VerifyEmail'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ResetPassword from './pages/auth/ResetPassword'
-import EmailTemplate from './emailTemplate'
 import Help from './pages/misc/Help'
 import EditWorkout from './pages/workout/EditWorkout'
 import WorkoutsTable from './pages/workouts/table/WorkoutsTable'
@@ -73,11 +71,6 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: 'email-templates',
-        element: <EmailTemplate />,
-        errorElement: <Error />,
-      },
-      {
         path: 'help',
         element: <Help />,
         errorElement: <Error />,
@@ -115,11 +108,6 @@ const router = createBrowserRouter([
                 element: <Template />,
                 errorElement: <Error />,
               },
-              // {
-              //   path: 'editor',
-              //   element: <Template />,
-              //   errorElement: <Error />,
-              // },
               {
                 path: 'solution',
                 element: <Solution />,

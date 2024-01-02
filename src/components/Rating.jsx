@@ -2,7 +2,7 @@ import { Typography } from '@mui/material'
 
 // eslint-disable-next-line react/prop-types
 const Rating = ({ rating }) => {
-  const getIcon = (rating) => {
+  const getIcon = () => {
     switch (rating) {
       case 'junior':
         return (

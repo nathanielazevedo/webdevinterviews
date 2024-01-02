@@ -30,7 +30,6 @@ class API {
     if (body) {
       options.body = JSON.stringify(body)
     }
-    console.log(`${BASE_URL}${endpoint}`)
     const response = await fetch(`${BASE_URL}${endpoint}`, options)
     if (!response.ok) {
       const errorBody = await response.text()

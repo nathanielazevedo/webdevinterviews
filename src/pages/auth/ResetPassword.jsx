@@ -1,13 +1,16 @@
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { TextField, Button, Box, Typography } from '@mui/material'
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  CircularProgress,
+} from '@mui/material'
+import { useContext, useState } from 'react'
+import { useLocation, NavLink } from 'react-router-dom'
 import { AuthContext } from '../AuthContext'
-import { useContext } from 'react'
-import { useLocation } from 'react-router-dom'
-import { useState } from 'react'
-import { CircularProgress } from '@mui/material'
-import { NavLink } from 'react-router-dom'
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -25,7 +28,6 @@ const schema = yup.object().shape({
 const ResetPassword = () => {
   const { handleResetPassword } = useContext(AuthContext)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
   const location = useLocation()
   const email = location?.state?.email
   const {

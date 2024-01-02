@@ -42,7 +42,7 @@ const CreateWorkoutDialog = ({
 }) => {
   const [loading, setLoading] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
-  console.log('data', data)
+
   const navigate = useNavigate()
   const {
     register,
@@ -63,8 +63,6 @@ const CreateWorkoutDialog = ({
   const handleClose = () => {
     setOpen(false)
   }
-
-  // const [errors, setErrors] = useState({})
 
   const onSubmit = async (datas) => {
     setLoading(true)

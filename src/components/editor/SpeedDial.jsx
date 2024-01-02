@@ -12,7 +12,7 @@ import SpeedDialAction from '@mui/material/SpeedDialAction'
 import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun'
-import Alert from '../Alert'
+import Alert from './Alert'
 
 const BasicSpeedDial = ({ codemirrorInstance, workout }) => {
   const [prettierCode, setPrettierCode] = useState('')
@@ -70,14 +70,6 @@ const BasicSpeedDial = ({ codemirrorInstance, workout }) => {
       name: 'Reset Code',
       onClick: () => setShowWarning(true),
     },
-    // {
-    //   icon: <BoltIcon />,
-    //   name: showTests ? 'Close Tests' : 'Run Tests',
-    //   onClick: () => {
-    //     setShowTests((prev) => !prev)
-    //     sandpack.runSandpack()
-    //   },
-    // },
   ]
 
   return (

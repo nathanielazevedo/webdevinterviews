@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import Dependency from './dependency'
 
 export default class SpTemplate {

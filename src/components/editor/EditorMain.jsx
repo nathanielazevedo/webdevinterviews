@@ -100,11 +100,6 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
     return false
   }
 
-  // useEffect(() => {
-  //   const cmInstance = codemirrorInstance.current.getCodemirror()
-  //   if (!cmInstance) return
-  // }, [])
-
   return (
     <>
       {renderAutoSave() && (
@@ -178,32 +173,6 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
                       <UploadIcon fontSize='small' />
                     </IconButton>
                   )}
-                {/* {!isSolution && (
-                    <Box>
-                      <Tooltip title={<>Changes Saved.</>} placement='left'>
-                        <Box
-                          fontSize='large'
-                          sx={{
-                            position: 'absolute',
-                            top: '13px',
-                            right: '10px',
-                            color: 'grey.600',
-                            boxShadow: '0px 0px 2px 1px grey',
-                            cursor: 'pointer',
-                            backgroundColor: 'var(--green)',
-                            opacity: '0.7',
-                            height: '15px',
-                            width: '15px',
-                            borderRadius: '50%',
-                            zIndex: '100',
-                            ':hover': {
-                              color: 'primary.main',
-                            },
-                          }}
-                        />
-                      </Tooltip>
-                    </Box>
-                  )} */}
                 {renderAutoSave() && (
                   <SpeedDial
                     codemirrorInstance={codemirrorInstance}

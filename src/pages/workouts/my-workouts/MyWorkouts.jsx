@@ -1,15 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useContext, useState } from 'react'
-import AddIcon from '@mui/icons-material/Add'
+import { useState } from 'react'
 import Button from '@mui/material/Button'
-import { Box, Skeleton, Typography } from '@mui/material'
-import { AuthContext } from '../../AuthContext'
+import { Box, Skeleton } from '@mui/material'
 import MyWorkoutsTable from '../table/MyWorkoutsTable'
 import Unauthorized from './Unauthorized'
 import CreateDialog from '../dialogs/CreateDialog'
 import useFetch from '../../hooks/useFetch'
 import SkeletonTable from '../table/SkeletonTable'
-import ErrorRow from '../components/ErrorRow'
 import { GET_DEPENDENCIES } from '../../../quieres'
 
 const ManageWorkouts = () => {
@@ -31,7 +28,6 @@ const ManageWorkouts = () => {
             display: 'flex',
             justifyContent: 'flex-end',
             alignItems: 'center',
-            // mb: 2,
           }}
         >
           <Skeleton variant='rectangular' width={130} height={25} />
@@ -48,7 +44,6 @@ const ManageWorkouts = () => {
     }
   }
 
-  // if (!user) return <Unauthorized />
   return (
     <Box>
       <Box
@@ -62,7 +57,6 @@ const ManageWorkouts = () => {
       >
         <Button
           size='small'
-          // startIcon={<AddIcon />}
           disabled={error || loadingTemplatesError}
           variant='outlined'
           onClick={() => setOpen(!open)}

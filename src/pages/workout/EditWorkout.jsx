@@ -1,27 +1,20 @@
 /* eslint-disable react/prop-types */
-import { TextField, Button, Box, ButtonBase } from '@mui/material'
+import { TextField, Button, Box } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import WorkoutContext from './root/WorkoutContext'
-import MultiSelect from '../../components/form/MultiSelect'
 import DeleteDialog from './dialogs/DeleteDialog'
 import api from '../../api'
 import TemplateDependencies from '../workouts/components/TemplateDependencies'
 import { GET_DEPENDENCIES } from '../../quieres'
 import useFetch from '../hooks/useFetch'
-import ManageTopNav from './manage/ManageTopNav'
 
 const keyOrder = ['title', 'image_link', 'youtube_link', 'is_public']
-
-const tags = ['react', 'redux', 'router']
-const difficulty = ['junior', 'mid-level', 'senior']
 
 const EditWorkoutDialog = () => {
   const { workoutData: workout } = useContext(WorkoutContext)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
   const {
     data: templateData,
     loading: loadingTemplates,

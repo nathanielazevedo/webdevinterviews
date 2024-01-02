@@ -11,7 +11,6 @@ import useFetch from '../../hooks/useFetch'
 import YouTube from '../../../components/YouTubeIcon'
 import ErrorRow from '../components/ErrorRow'
 import TextLink from '../components/TextLink'
-import Tags from '../components/Tags'
 import {
   StyledTableContainer,
   StyledTable,
@@ -22,7 +21,6 @@ import {
 import NoWorkouts from '../components/NoWorkouts'
 import TableHead from './TableHead'
 import Workout from '../../../models/workout'
-import Heading from '../components/Heading'
 import TemplateToSvg from '../components/TemplateToSvg'
 import DependencyToSvg from '../components/DependencyToSvg'
 
