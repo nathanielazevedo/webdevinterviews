@@ -18,13 +18,13 @@ const handleSharedFiles = (files) => {
   return { sharedFiles, otherFiles }
 }
 
-const AutoSave = ({ workout, isSolution }) => {
+const AutoSave = ({ workout, isSolution, cmInstance }) => {
   const { sandpack, listen } = useSandpack()
-
+  console.log(sandpack.files)
   useEffect(() => {
     // listens for any message dispatched between sandpack and the bundler
     const stopListening = listen((msg) => {
-      if (msg.type === 'status' && msg.status === 'transpiling') {
+      if (msg.type === 'done' && !msg?.compilationErro) {
         const { sharedFiles, otherFiles } = handleSharedFiles(sandpack.files)
         if (!isSolution) {
           localStorage.setItem(workout.id, JSON.stringify(otherFiles))
@@ -42,7 +42,6 @@ const AutoSave = ({ workout, isSolution }) => {
     })
 
     return () => {
-      // unsubscribe
       stopListening()
     }
   }, [listen])

@@ -52,5 +52,5 @@ Error.propTypes = {
 }
 
 Error.defaultProps = {
-  redirectPath: '/workouts',
+  redirectPath: '/workouts/official',
 }

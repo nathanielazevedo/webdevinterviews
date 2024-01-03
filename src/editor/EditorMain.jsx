@@ -4,7 +4,7 @@
 /* eslint-disable react/prop-types */
 import { useRef, useState, useContext } from 'react'
 import { Panel, PanelGroup } from 'react-resizable-panels'
-import { SandpackFileExplorer } from 'sandpack-file-explorer'
+import { SandpackFileExplorer, useSandpackFiles } from 'sandpack-file-explorer'
 import {
   SandpackLayout,
   SandpackCodeEditor,
@@ -12,15 +12,17 @@ import {
   useSandpack,
 } from '@codesandbox/sandpack-react'
 import UploadIcon from '@mui/icons-material/Upload'
-import { IconButton } from '@mui/material'
-import ResizeHandle from '../ResizeHandle'
+import { Box, IconButton, Typography } from '@mui/material'
+import ResizeHandle from './components/ResizeHandle'
 import Browser from './browser'
 import SpeedDial from './SpeedDial'
 import AutoSave from './AutoSave'
 import { theme } from './theme'
-import WorkoutContext from '../../pages/workout/root/WorkoutContext'
+import { WorkoutContext } from '../pages/workout/root/WorkoutContext'
 import UploadCodeDialog from './UploadCodeDialog'
-import Workout from '../../models/workout'
+import Workout from '../models/workout'
+import HorizontalResizeHandle from './components/HorizontalResizeHandle'
+import Prettier from './components/Prettier'
 
 function deepEqual(obj1, obj2) {
   if (obj1 === obj2) {
@@ -71,6 +73,8 @@ const handleSharedFiles = (files) => {
 }
 
 const EditorMain = ({ files: initialFiles, isSolution }) => {
+  const { spFiles } = useSandpackFiles()
+  console.log(spFiles)
   const filePanelRef = useRef()
   const codemirrorInstance = useRef()
   const { workoutData } = useContext(WorkoutContext)
@@ -108,6 +112,7 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
           files={files}
           setFiles={setFiles}
           isSolution={isSolution}
+          cmInstance={codemirrorInstance.current}
         />
       )}
 
@@ -116,8 +121,6 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
           <div
             style={{
               width: '100%',
-              // minHeight: 'calc(99vh - 120px)',
-              // maxHeight: 'calc(99vh - 120px)',
               display: 'flex',
               flexDirection: 'row',
               position: 'relative',
@@ -135,7 +138,36 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
                 collapsible
                 ref={filePanelRef}
               >
-                <SandpackFileExplorer />
+                <PanelGroup
+                  direction='vertical'
+                  autoSaveId='editor-prefs-file-explorer'
+                  disablePointerEventsDuringResize
+                >
+                  <Panel>
+                    <SandpackFileExplorer />
+                  </Panel>
+                  <HorizontalResizeHandle />
+                  <Panel>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        height: '35px',
+                        alignItems: 'center',
+                        borderBottom: '1px solid black',
+                        backgroundColor: 'black',
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: '12px',
+                        }}
+                      >
+                        SOURCE CONTROL
+                      </Typography>
+                    </Box>
+                  </Panel>
+                </PanelGroup>
               </Panel>
               <ResizeHandle />
               <Panel
@@ -152,12 +184,12 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
                   showLineNumbers
                   showInlineErrors
                   showRunButton
-                  wrapContent
+                  // wrapContent
                   ref={codemirrorInstance}
-                  // extensions={[linter(), closeBrackets()]}
                   style={{ height: '100%' }}
                 />
-                {workoutData.is_owner &&
+                <Prettier codemirrorInstance={codemirrorInstance} />
+                {/* {workoutData.is_owner &&
                   areDataSetsDifferent(otherFiles, otherFiles2) && (
                     <IconButton
                       onClick={() => setUploadCodeDialogOpen(true)}
@@ -172,7 +204,7 @@ const EditorMain = ({ files: initialFiles, isSolution }) => {
                     >
                       <UploadIcon fontSize='small' />
                     </IconButton>
-                  )}
+                  )} */}
                 {renderAutoSave() && (
                   <SpeedDial
                     codemirrorInstance={codemirrorInstance}

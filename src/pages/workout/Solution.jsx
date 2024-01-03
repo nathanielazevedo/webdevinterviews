@@ -1,8 +1,8 @@
 import { Fade, Box } from '@mui/material'
 import { SandpackProvider } from '@codesandbox/sandpack-react'
 import { useContext } from 'react'
-import EditorMain from '../../components/editor/EditorMain'
-import WorkoutContext from './root/WorkoutContext'
+import EditorMain from '../../editor/EditorMain'
+import { WorkoutContext } from './root/WorkoutContext'
 import Workout from '../../models/workout'
 
 const Solution = () => {
@@ -11,7 +11,6 @@ const Solution = () => {
 
   let files
   try {
-    // here we will merge the template with the user's code
     const local = JSON.parse(localStorage.getItem(`${workout.id}-solution`))
     const shared = JSON.parse(localStorage.getItem(`${workout.id}-shared`))
     files = local || workoutData.dynamo_data.solution
@@ -20,7 +19,6 @@ const Solution = () => {
     } else {
       files = { ...files, ...workoutData.dynamo_data.shared }
     }
-    // files = workoutData.dynamo_data.template
   } catch (error) {
     files = workoutData.dynamo_data.solution
   }
@@ -32,9 +30,6 @@ const Solution = () => {
           <SandpackProvider
             files={files}
             template={workout.spTemplate.name}
-            customSetup={{
-              dependencies: workout.dependencies ?? {},
-            }}
             options={{
               autoReload: true,
               activeFile: '/Instructions.txt',

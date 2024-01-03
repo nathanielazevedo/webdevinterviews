@@ -69,6 +69,7 @@ const Footer = () => {
           </Button>
         )
       }
+      return null
     }
   }
 
@@ -86,7 +87,7 @@ const Footer = () => {
       }}
     >
       <Tooltip title='View Logs' placement='left'>
-        {getButtonText()}
+        <>{getButtonText()}</>
       </Tooltip>
       <LogDialog open={logDialogOpen} onClose={() => setLogDialogOpen(false)} />
     </Box>

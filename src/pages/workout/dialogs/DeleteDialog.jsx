@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 import { LogContext } from '../../LogContext'
-import WorkoutContext from '../root/WorkoutContext'
+import { WorkoutContext } from '../root/WorkoutContext'
 import { AuthContext } from '../../AuthContext'
 
 const DeleteDialog = ({ open, setOpen }) => {

@@ -15,9 +15,9 @@ import { useContext, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 import CircularProgress from '@mui/material/CircularProgress'
-import WorkoutContext from '../../pages/workout/root/WorkoutContext'
-import { AuthContext } from '../../pages/AuthContext'
-import { LogContext } from '../../pages/LogContext'
+import { WorkoutContext } from '../pages/workout/root/WorkoutContext'
+import { AuthContext } from '../pages/AuthContext'
+import { LogContext } from '../pages/LogContext'
 
 const handleSharedFiles = (files) => {
   const sharedFiles = {}

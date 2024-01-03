@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { TextField, Button, Box } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useContext, useState } from 'react'
-import WorkoutContext from './root/WorkoutContext'
+import { WorkoutContext } from './root/WorkoutContext'
 import DeleteDialog from './dialogs/DeleteDialog'
 import api from '../../api'
 import TemplateDependencies from '../workouts/components/TemplateDependencies'

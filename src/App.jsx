@@ -7,9 +7,6 @@ import FourOFour from './pages/misc/FourOFour'
 import Template from './pages/workout/Template'
 import Solution from './pages/workout/Solution'
 import MyWorkouts from './pages/workouts/my-workouts/MyWorkouts'
-import WorkoutRoot, {
-  action as editWorkoutAction,
-} from './pages/workout/root/WorkoutRoot'
 import WorkoutsRoot from './pages/workouts/root/WorkoutsRoot'
 import Login from './pages/auth/Login'
 import SignUp from './pages/auth/Signup'
@@ -22,6 +19,8 @@ import EditWorkout from './pages/workout/EditWorkout'
 import WorkoutsTable from './pages/workouts/table/WorkoutsTable'
 import ManageCode from './pages/workout/manage/ManageCode'
 import ManageRoot from './pages/workout/manage/ManageRoot'
+import WorkoutRoot from './pages/workout/root/WorkoutRoot'
+import RootRedirect from './components/RootRedirect'
 
 const router = createBrowserRouter([
   {
@@ -81,6 +80,10 @@ const router = createBrowserRouter([
         element: <WorkoutsRoot />,
         children: [
           {
+            index: true,
+            element: <RootRedirect />,
+          },
+          {
             path: 'official',
             element: <WorkoutsTable tab='official' />,
           },
@@ -98,7 +101,6 @@ const router = createBrowserRouter([
         path: 'workouts/:id',
         element: <WorkoutRoot />,
         errorElement: <Error redirectPath='/workouts' />,
-        action: editWorkoutAction,
         children: [
           {
             errorElement: <Error />,

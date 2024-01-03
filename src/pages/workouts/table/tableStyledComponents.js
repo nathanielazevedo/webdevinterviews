@@ -16,6 +16,8 @@ const StyledTableRow = styled(TableRow)(({ _, index }) => ({
 
 const StyledTableContainer = styled(TableContainer)({
   width: '100%',
+  height: 'calc(100vh - 300px)',
+  overflowY: 'auto',
 })
 
 const StyledTable = styled(Table)({

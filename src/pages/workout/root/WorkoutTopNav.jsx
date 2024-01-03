@@ -8,7 +8,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube'
 import { IconButton, Typography, CircularProgress } from '@mui/material'
 import { useContext } from 'react'
 import Rating from '../../../components/Rating'
-import WorkoutContext from './WorkoutContext'
+import { WorkoutContext } from './WorkoutContext'
 import TemplateToSvg from '../../workouts/components/TemplateToSvg'
 
 const WorkoutTopNav = () => {

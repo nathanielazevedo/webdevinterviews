@@ -1,4 +1,3 @@
-/* eslint-disable react/require-default-props */
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import Tabs from '@mui/material/Tabs'
@@ -12,8 +11,8 @@ import {
   useSandpack,
 } from '@codesandbox/sandpack-react'
 import { theme } from '../theme'
-import WorkoutContext from '../../../pages/workout/root/WorkoutContext'
-import Workout from '../../../models/workout'
+import { WorkoutContext } from '../../pages/workout/root/WorkoutContext'
+import Workout from '../../models/workout'
 
 const CustomTabPanel = (props) => {
   const { children, value, index, ...other } = props
@@ -26,12 +25,12 @@ const CustomTabPanel = (props) => {
 }
 
 CustomTabPanel.propTypes = {
-  children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
+  children: PropTypes.node.isRequired,
 }
 
-const BasicTabs = ({ files }) => {
+const BasicTabs = () => {
   const [value, setValue] = React.useState(0)
   const { workoutData } = React.useContext(WorkoutContext)
   const workout = new Workout(workoutData)
@@ -58,7 +57,9 @@ const BasicTabs = ({ files }) => {
         >
           <Tab
             label='Browser'
-            onClick={() => sandpack.runSandpack()}
+            onClick={() => {
+              sandpack.runSandpack()
+            }}
             sx={{
               fontSize: '12px',
               padding: '0',
@@ -80,6 +81,7 @@ const BasicTabs = ({ files }) => {
           />
           <Tab
             label='Instructions'
+            onClick={() => sandpack.runSandpack()}
             sx={{
               fontSize: '12px',
               margin: 0,

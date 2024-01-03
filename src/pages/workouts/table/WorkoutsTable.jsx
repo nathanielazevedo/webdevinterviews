@@ -75,7 +75,7 @@ const WorkoutTables = ({ tab }) => {
 
   return (
     <StyledTableContainer>
-      <StyledTable size='small'>
+      <StyledTable size='small' stickyHeader>
         <TableHead />
         <TableBody>{renderTableBodyContent()}</TableBody>
       </StyledTable>

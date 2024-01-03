@@ -1,15 +1,13 @@
-import { Box, Button, Divider } from '@mui/material'
+import { Box, Divider } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import TuneIcon from '@mui/icons-material/Tune'
-import PropTypes from 'prop-types'
 import Typography from '@mui/material/Typography'
 import { useContext } from 'react'
 import { StyledTopNav } from '../../../rootStyledComponents'
-import WorkoutContext from '../root/WorkoutContext'
+import { WorkoutContext } from '../root/WorkoutContext'
 
-const TopNav = ({ open, setOpen }) => {
+const TopNav = () => {
   const { workoutData } = useContext(WorkoutContext)
-  const filter = 'all'
+
   return (
     <StyledTopNav>
       <Box
@@ -44,20 +42,8 @@ const TopNav = ({ open, setOpen }) => {
         </NavLink>
       </Box>
       <div style={{ flexGrow: '1' }} />
-      {/* <Button
-        size='small'
-        startIcon={<TuneIcon />}
-        onClick={() => setOpen(!open)}
-      >
-        FILTER
-      </Button> */}
     </StyledTopNav>
   )
 }
 
 export default TopNav
-
-TopNav.propTypes = {
-  open: PropTypes.bool.isRequired,
-  setOpen: PropTypes.func.isRequired,
-}

@@ -1,55 +1,25 @@
-import { Outlet, redirect, useParams } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import WorkoutTopNav from './WorkoutTopNav'
-import WorkoutContext from './WorkoutContext'
+import { WorkoutProvider } from './WorkoutContext'
 import WorkoutSideNav from './WorkoutSideNav'
-import API from '../../../api'
-import useFetch from '../../hooks/useFetch'
-import WorkoutSkeleton from '../WorkoutSkeleton'
 import {
   MiddleContent,
   OutletContainer,
   RootFrame,
 } from '../../../rootStyledComponents'
 
-export const action = async ({ request, params }) => {
-  try {
-    const formData = await request.formData()
-    const workoutForm = Object.fromEntries(formData)
-    if (workoutForm.filter) {
-      workoutForm.filter = workoutForm.filter
-        .split(',')
-        .map((word) => word.trim())
-    }
-    await API.put(`/workouts/${params.id}`, workoutForm)
-    return redirect(`/workouts/${params.id}`)
-  } catch (error) {
-    return redirect('/workouts/official')
-  }
-}
-
-const WorkoutRoot = () => {
-  const params = useParams()
-
-  const { data: workoutData, loading } = useFetch(`/workouts/${params.id}`)
-
-  if (loading) {
-    return <WorkoutSkeleton />
-  }
-
-  return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <WorkoutContext.Provider value={{ workoutData }}>
-      <RootFrame>
-        <WorkoutTopNav />
-        <MiddleContent>
-          <WorkoutSideNav />
-          <OutletContainer>
-            <Outlet />
-          </OutletContainer>
-        </MiddleContent>
-      </RootFrame>
-    </WorkoutContext.Provider>
-  )
-}
+const WorkoutRoot = () => (
+  <WorkoutProvider>
+    <RootFrame>
+      <WorkoutTopNav />
+      <MiddleContent>
+        <WorkoutSideNav />
+        <OutletContainer>
+          <Outlet />
+        </OutletContainer>
+      </MiddleContent>
+    </RootFrame>
+  </WorkoutProvider>
+)
 
 export default WorkoutRoot

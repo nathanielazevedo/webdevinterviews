@@ -1,7 +1,8 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useContext } from 'react'
 import { Box, Typography } from '@mui/material'
 import { ObjectInspector, chromeDark } from 'react-inspector'
-import WorkoutContext from '../root/WorkoutContext'
+import { WorkoutContext } from '../root/WorkoutContext'
 
 const ManageCode = () => {
   const { workoutData: workout } = useContext(WorkoutContext)
@@ -35,7 +36,6 @@ const ManageCode = () => {
         <Typography variant='h6'>Template Files</Typography>
         <ObjectInspector
           data={templateFile}
-          // name='files'
           theme={{
             ...chromeDark,
             ...{
@@ -63,7 +63,6 @@ const ManageCode = () => {
         <Typography variant='h6'>Solution Files</Typography>
         <ObjectInspector
           data={solutionFile}
-          // name='files'
           theme={{
             ...chromeDark,
             ...{
@@ -90,7 +89,6 @@ const ManageCode = () => {
         <Typography variant='h6'>Shared Files</Typography>
         <ObjectInspector
           data={sharedFile}
-          // name='files'
           theme={{
             ...chromeDark,
             ...{
