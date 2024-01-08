@@ -77,7 +77,7 @@ const WorkoutTopNav = () => {
                 color: 'grey.500',
               }}
             >
-              Workout:
+              Workout #{workout.id}:
             </Typography>
             <Typography sx={{ fontSize: '12px' }}>{workout.title}</Typography>
           </Box>
@@ -94,7 +94,7 @@ const WorkoutTopNav = () => {
                 color: 'grey.500',
               }}
             >
-              Template:
+              Framework:
             </Typography>
             <TemplateToSvg template={workout.sp_template.name} />
           </Box>
@@ -164,15 +164,15 @@ const WorkoutTopNav = () => {
             pr: '20px',
           }}
         >
-          <Typography
+          {/* <Typography
             sx={{
               fontSize: '12px',
               color: 'grey.500',
             }}
           >
             Completion Status:
-          </Typography>
-          <span
+          </Typography> */}
+          {/* <span
             style={{
               height: '10px',
               width: '10px',
@@ -180,7 +180,7 @@ const WorkoutTopNav = () => {
               borderRadius: '50%',
               marginLeft: '5px',
             }}
-          />
+          /> */}
         </Box>
       </Box>
     </Box>

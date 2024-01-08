@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useRef } from 'react'
 import { Panel, PanelGroup } from 'react-resizable-panels'
-import Preview from './Preview'
+import PreviewTabs from './PreviewTabs'
 import Console from './Console'
 import ResizeHandle from '../components/HorizontalResizeHandle'
 
-const Browser = ({ showTests, files }) => {
+const Browser = () => {
   const consolePanelRef = useRef()
 
   const closeFilePanel = () => {
@@ -26,7 +26,7 @@ const Browser = ({ showTests, files }) => {
         disablePointerEventsDuringResize
       >
         <Panel>
-          <Preview showTests={showTests} files={files} />
+          <PreviewTabs />
         </Panel>
         <ResizeHandle />
         <Panel minSize={4.3} collapsible={false} ref={consolePanelRef}>

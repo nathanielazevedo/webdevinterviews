@@ -105,7 +105,7 @@ const BasicTabs = () => {
       <CustomTabPanel value={value} index={0}>
         <SandpackPreview
           showNavigator
-          style={{ height: '100%' }}
+          style={{ height: '90%' }}
           showOpenInCodeSandbox={false}
         />
       </CustomTabPanel>
@@ -115,9 +115,7 @@ const BasicTabs = () => {
       <CustomTabPanel value={value} index={2}>
         <SandpackProvider
           files={sandpack.files}
-          template={workout.spTemplate.name}
           customSetup={{
-            dependencies: workout.dependencies ?? {},
             entry: '/shared/Instructions.js',
           }}
           options={{

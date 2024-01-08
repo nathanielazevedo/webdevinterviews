@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
+import { useContext } from 'react'
 import { Box } from '@mui/material'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -8,16 +9,17 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
+import { WorkoutContext } from '../pages/workout/root/WorkoutContext'
 
-const AlertDialog = ({ setOpen, workout }) => {
+const AlertDialog = ({ setOpen }) => {
   const navigate = useNavigate()
-
+  const { workoutData } = useContext(WorkoutContext)
   const handleCloseDeny = () => setOpen(false)
 
   const handleCloseAgree = () => {
     setOpen(false)
-    localStorage.removeItem(workout.id)
-    navigate(`/workouts/${workout.id}`)
+    localStorage.removeItem(workoutData.id)
+    navigate(`/workouts/${workoutData.id}`)
   }
 
   return (

@@ -1,26 +1,37 @@
+/* eslint-disable operator-linebreak */
 import { Fade, Box } from '@mui/material'
 import { SandpackProvider } from '@codesandbox/sandpack-react'
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import EditorMain from '../../editor/EditorMain'
 import { WorkoutContext } from './root/WorkoutContext'
 import Workout from '../../models/workout'
 
+const mergeFiles = (workout) => {
+  const local =
+    JSON.parse(localStorage.getItem(`${workout.id}-solution`)) ||
+    workout.dynamoData.solution
+  const shared =
+    JSON.parse(localStorage.getItem(`${workout.id}-shared`)) ||
+    workout.dynamoData.shared
+  const packageJson =
+    JSON.parse(localStorage.getItem(`${workout.id}-package.json`)) ||
+    workout.dynamoData.packageJson
+
+  return { ...local, ...shared, ...packageJson }
+}
+
 const Solution = () => {
   const { workoutData } = useContext(WorkoutContext)
   const workout = new Workout(workoutData)
+  const navigate = useNavigate()
 
   let files
+
   try {
-    const local = JSON.parse(localStorage.getItem(`${workout.id}-solution`))
-    const shared = JSON.parse(localStorage.getItem(`${workout.id}-shared`))
-    files = local || workoutData.dynamo_data.solution
-    if (shared) {
-      files = { ...files, ...shared }
-    } else {
-      files = { ...files, ...workoutData.dynamo_data.shared }
-    }
+    files = mergeFiles(workout)
   } catch (error) {
-    files = workoutData.dynamo_data.solution
+    navigate('/workouts/official')
   }
 
   return (

@@ -14,11 +14,11 @@ const Prettier = ({ codemirrorInstance }) => {
   const activeCode = useActiveCode()
   const runPrettier = () => {
     if (activeCode.code) {
-      console.log('activeCode', sandpack)
+      const fileType = sandpack.activeFile.split('.')[1]
       try {
         const formatted = prettier.format(activeCode.code, {
-          parser: true ? 'css' : 'babel',
-          plugins: true ? [parserPostcss] : [parserBabel],
+          parser: fileType === 'css' ? 'css' : 'babel',
+          plugins: fileType === 'css' ? [parserPostcss] : [parserBabel],
         })
 
         setPrettierCode(formatted)

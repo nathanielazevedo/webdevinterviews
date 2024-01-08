@@ -2,7 +2,7 @@
 const colors = {
   lightBlue: '#9cdcfe',
   yellow: '#dcdcaa',
-  purple: '#fa39f0',
+  purple: '#c586c0',
   green: '#4ec9b0',
   orange: '#ce9178',
   comment: '#6a9956',
@@ -19,8 +19,8 @@ export const theme = {
     disabled: '#4D4D4D',
     hover: '#C5C5C5',
     accent: '',
-    error: 'white',
-    errorSurface: '#5c0600',
+    error: 'black',
+    errorSurface: '#FFCCCC',
   },
   syntax: {
     plain: '#C5C5C5',
@@ -37,7 +37,7 @@ export const theme = {
     string: colors.orange,
   },
   font: {
-    // size: '12px',
+    size: '14px',
     // lineHeight: '16px',
     // mono: 'Fira Code, monospace',
   },

@@ -2,7 +2,7 @@ import { Box, Button, Typography } from '@mui/material'
 
 const HelpPage = () => {
   const handleButtonClick = () => {
-    window.open('https://discord.gg/9JsM7tfp', '_blank')
+    window.open('https://discord.gg/wjH8W9JFY6', '_blank')
   }
 
   return (

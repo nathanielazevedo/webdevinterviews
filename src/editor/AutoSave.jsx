@@ -1,31 +1,23 @@
+/* eslint-disable operator-linebreak */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable function-paren-newline */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react'
 import { useSandpack } from '@codesandbox/sandpack-react'
+import { separateFiles } from './utils'
 
-const handleSharedFiles = (files) => {
-  const sharedFiles = {}
-  const otherFiles = {}
-
-  Object.keys(files).forEach((key) => {
-    if (key.startsWith('/shared')) {
-      sharedFiles[key] = files[key]
-    } else {
-      otherFiles[key] = files[key]
-    }
-  })
-  return { sharedFiles, otherFiles }
-}
-
-const AutoSave = ({ workout, isSolution, cmInstance }) => {
+const AutoSave = ({ workout, isSolution }) => {
   const { sandpack, listen } = useSandpack()
-  console.log(sandpack.files)
+
   useEffect(() => {
-    // listens for any message dispatched between sandpack and the bundler
     const stopListening = listen((msg) => {
-      if (msg.type === 'done' && !msg?.compilationErro) {
-        const { sharedFiles, otherFiles } = handleSharedFiles(sandpack.files)
+      if (msg.type === 'done' && !msg?.compilationError) {
+        const { sharedFiles, otherFiles, packageJson } = separateFiles(
+          sandpack.files
+        )
         if (!isSolution) {
           localStorage.setItem(workout.id, JSON.stringify(otherFiles))
         } else {
@@ -38,15 +30,15 @@ const AutoSave = ({ workout, isSolution, cmInstance }) => {
           `${workout.id}-shared`,
           JSON.stringify(sharedFiles)
         )
+        localStorage.setItem(
+          `${workout.id}-package.json`,
+          JSON.stringify(packageJson)
+        )
       }
     })
 
-    return () => {
-      stopListening()
-    }
+    return () => stopListening()
   }, [listen])
-
-  return <></>
 }
 
 export default AutoSave

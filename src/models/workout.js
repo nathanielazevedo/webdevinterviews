@@ -15,6 +15,8 @@ export default class Workout {
     title,
     updatedAt,
     youtube_link: youtubeLink,
+    dynamo_data: dynamoData,
+    is_owner: isOwner,
   }) {
     this.accessLevel = accessLevel
     this.authorId = authorId
@@ -29,5 +31,7 @@ export default class Workout {
     this.title = title
     this.updatedAt = updatedAt
     this.youtubeLink = youtubeLink
+    this.dynamoData = dynamoData
+    this.isOwner = isOwner
   }
 }

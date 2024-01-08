@@ -1,15 +1,15 @@
 import { useState, useEffect, useContext } from 'react'
-import { LogContext } from '../LogContext'
-import { AuthContext } from '../AuthContext'
+import { LogContext } from '../pages/LogContext'
+import { AuthContext } from '../pages/AuthContext'
 
 const useFetch = (url) => {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const { addLog } = useContext(LogContext)
-  const { API, authLoading, user } = useContext(AuthContext)
+  const { API, authLoading } = useContext(AuthContext)
 
-  const fetchData = async (url) => {
+  const fetchData = async () => {
     if (authLoading) return
     setLoading(true)
     setError(null)
@@ -18,8 +18,8 @@ const useFetch = (url) => {
       data: [`Loading ${url}`],
     })
     try {
-      const { data } = await API.get(url)
-      setData(data)
+      const { data: responseData } = await API.get(url)
+      setData(responseData)
       setLoading(false)
       addLog({
         method: 'log',
@@ -51,7 +51,7 @@ const useFetch = (url) => {
     }
   }, [authLoading, url])
 
-  return { data, loading, error, fetchData }
+  return { data, loading, error, fetchData, setData }
 }
 
 export default useFetch
