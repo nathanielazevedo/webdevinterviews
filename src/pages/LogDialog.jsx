@@ -46,9 +46,7 @@ const LogDialog = ({ open, onClose }) => {
           color='inherit'
           onClick={onClose}
           aria-label='close'
-          sx={{
-            color: (theme) => theme.palette.grey[500],
-          }}
+          sx={{ color: (theme) => theme.palette.grey[500] }}
         >
           <CloseIcon />
         </IconButton>
@@ -66,9 +64,7 @@ const LogDialog = ({ open, onClose }) => {
         <Console
           logs={logs}
           variant='dark'
-          styles={{
-            BASE_BACKGROUND_COLOR: '#121212',
-          }}
+          styles={{ BASE_BACKGROUND_COLOR: '#121212' }}
         />
       </DialogContent>
     </Dialog>

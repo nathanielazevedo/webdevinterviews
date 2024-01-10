@@ -1,8 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { TextField, Button, Box } from '@mui/material'
+import MenuItem from '@mui/material/MenuItem'
+import Typography from '@mui/material/Typography'
 import { useForm } from 'react-hook-form'
 import { useContext, useState } from 'react'
+import SelectInput from '../../../components/form/Select'
 import { WorkoutContext } from '../root/WorkoutContext'
 import DeleteDialog from '../dialogs/DeleteDialog'
 import api from '../../../api'
@@ -11,11 +14,19 @@ import { GET_DEPENDENCIES } from '../../../quieres'
 import useFetch from '../../../hooks/useFetch'
 import Workout from '../../../models/workout'
 
-const keyOrder = ['title', 'image_link', 'youtube_link', 'is_public']
+const keyOrder = [
+  'title',
+  'youtubeLink',
+  'isPublic',
+  'difficulty',
+  'sp_template_id',
+]
 
 const EditWorkoutDialog = () => {
   const { workoutData } = useContext(WorkoutContext)
   const workout = new Workout(workoutData)
+  console.log(workout)
+
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const {
@@ -29,16 +40,18 @@ const EditWorkoutDialog = () => {
     return obj
   }, {})
 
-  defaultValues.sp_template_id = workout.spTemplateId
+  console.log(defaultValues)
 
   const {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues,
   })
+
   const onSubmit = async (data) => {
     setLoading(true)
     try {
@@ -59,34 +72,38 @@ const EditWorkoutDialog = () => {
           flexDirection: 'column',
           justifyContent: 'center',
           width: '100%',
+          padding: '10px 30px',
         }}
       >
         <Box>
           <h2>Manage Your Workouts Meta Data</h2>
         </Box>
         <form onSubmit={handleSubmit(onSubmit)} id='edit-workout-form'>
-          {keyOrder.map((name) => (
-            <TextField
-              key={name}
-              margin='dense'
-              id={name}
-              label={name.charAt(0).toUpperCase() + name.slice(1)}
-              type='text'
-              name={name}
-              fullWidth
-              variant='outlined'
-              {...register(name)}
-              error={!!errors[name]}
-              helperText={errors[name]?.message}
-            />
-          ))}
-          {/* <TemplateDependencies
+          <TextField
+            margin='dense'
+            id='title'
+            label='Title'
+            type='text'
+            name='title'
+            fullWidth
+            variant='outlined'
+            {...register('title')}
+            error={!!errors.title}
+            helperText={errors.title?.message}
+          />
+          <SelectInput
+            name='isPublic'
             control={control}
-            data={templateData}
-            loading={loadingTemplates}
-            error={loadingTemplatesError}
-            workout={workout}
-          /> */}
+            label='Public'
+            onChange={(event) => setValue('isPublic', event.target.value)}
+          >
+            <MenuItem value>
+              <Typography>True</Typography>
+            </MenuItem>
+            <MenuItem value={false}>
+              <Typography>False</Typography>
+            </MenuItem>
+          </SelectInput>
         </form>
         <Button
           type='submit'

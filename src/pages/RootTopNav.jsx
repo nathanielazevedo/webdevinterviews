@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import Divider from '@mui/material/Divider'
 import { AuthContext } from './AuthContext'
 import { StyledTopNav } from '../rootStyledComponents'
 
@@ -23,13 +24,7 @@ const RootTopNav = () => {
               isActive ? 'active' : isPending ? 'pending' : 'not-active'
             }
           >
-            <Typography
-              sx={{
-                fontSize: '12px',
-              }}
-            >
-              {user.username}
-            </Typography>
+            <Typography sx={{ fontSize: '12px' }}>{user.username}</Typography>
           </NavLink>
         ) : (
           <Box
@@ -49,18 +44,11 @@ const RootTopNav = () => {
                 }`
               }
             >
-              <Typography
-                component='div'
-                sx={{
-                  fontSize: '12px',
-                }}
-              >
+              <Typography component='div' sx={{ fontSize: '12px' }}>
                 Login
               </Typography>
             </NavLink>
-            <Typography>
-              <span style={{ color: '#454950' }}>|</span>
-            </Typography>
+            <Divider orientation='vertical' flexItem />
             <NavLink
               to='/auth/signup'
               className={({ isActive, isPending }) =>
