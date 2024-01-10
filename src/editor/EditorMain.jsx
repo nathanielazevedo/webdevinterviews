@@ -12,7 +12,6 @@ import {
 import {
   SandpackLayout,
   SandpackCodeEditor,
-  // SandpackFileExplorer,
   SandpackThemeProvider,
 } from '@codesandbox/sandpack-react'
 import { Box, Typography } from '@mui/material'

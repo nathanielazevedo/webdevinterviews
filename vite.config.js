@@ -36,25 +36,3 @@ export default defineConfig({
     },
   },
 })
-
-// https://vitejs.dev/config/
-// export default defineConfig({
-//   plugins: [react()],
-//   optimizeDeps: {
-//     esbuildOptions: {
-//       // Node.js global to browser globalThis
-//       define: {
-//         global: 'globalThis',
-//       },
-//     },
-//   },
-// test: {
-//   globals: true,
-//   environment: 'jsdom',
-//   css: true,
-//   setupFiles: './setup.js',
-// },
-// define: {
-//   global: { cache: {} },
-// },
-// })

@@ -15,9 +15,8 @@ import VerifyEmail from './pages/auth/VerifyEmail'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ResetPassword from './pages/auth/ResetPassword'
 import Help from './pages/misc/Help'
-import EditWorkout from './pages/workout/EditWorkout'
+import EditWorkout from './pages/workout/manage/EditWorkout'
 import WorkoutsTable from './pages/workouts/table/WorkoutsTable'
-import ManageCode from './pages/workout/manage/ManageCode'
 import ManageRoot from './pages/workout/manage/ManageRoot'
 import WorkoutRoot from './pages/workout/root/WorkoutRoot'
 import RootRedirect from './components/RootRedirect'
@@ -123,11 +122,6 @@ const router = createBrowserRouter([
                   {
                     path: '',
                     element: <EditWorkout />,
-                    errorElement: <Error />,
-                  },
-                  {
-                    path: 'code',
-                    element: <ManageCode />,
                     errorElement: <Error />,
                   },
                 ],

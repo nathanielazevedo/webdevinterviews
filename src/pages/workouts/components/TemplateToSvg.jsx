@@ -17,7 +17,7 @@ const TemplateToSvg = ({ template }) => {
   const image = getImage(template)
 
   return (
-    <Tooltip title={template} placement='right'>
+    <Tooltip title={template} placement='bottom'>
       <Box
         sx={{
           display: 'flex',

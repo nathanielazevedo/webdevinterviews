@@ -1,4 +1,4 @@
-import { Box, Divider } from '@mui/material'
+import { Box } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import { useContext } from 'react'
@@ -27,18 +27,6 @@ const TopNav = () => {
           }
         >
           <Typography sx={{ fontSize: '12px' }}>MANAGE META</Typography>
-        </NavLink>
-        <Divider orientation='vertical' flexItem />
-        <NavLink
-          to={`/workouts/${workoutData.id}/manage/code`}
-          replace
-          className={({ isActive, isPending }) =>
-            `nav-link tab-nav-link ${
-              isActive ? 'active' : isPending ? 'pending' : 'not-active'
-            }`
-          }
-        >
-          <Typography sx={{ fontSize: '12px' }}>CODE VIEWER</Typography>
         </NavLink>
       </Box>
       <div style={{ flexGrow: '1' }} />

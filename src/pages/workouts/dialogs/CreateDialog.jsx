@@ -29,7 +29,6 @@ import TemplateDependencies from '../components/TemplateDependencies'
 const schema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
   sp_template_id: Yup.string().required('Template is required'),
-  dependencies: Yup.array().of(Yup.string()),
 })
 
 const CreateWorkoutDialog = ({ open, setOpen, data, error }) => {

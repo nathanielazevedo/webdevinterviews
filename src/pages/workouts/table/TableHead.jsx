@@ -9,8 +9,8 @@ import {
 const TableHead = ({ isYours }) => (
   <MuiTableHead>
     <StyledTableRow>
-      <StyledTableCell align='left'>NAME</StyledTableCell>
       <StyledIconTableCell align='center'>FRAMEWORK</StyledIconTableCell>
+      <StyledTableCell align='left'>NAME</StyledTableCell>
       <StyledTableCell align='center'>DIFFICULTY</StyledTableCell>
       <StyledTableCell align='center'>
         {isYours ? 'PUBLIC STATUS' : 'CREATOR'}

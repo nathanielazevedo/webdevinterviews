@@ -24,7 +24,7 @@ const TopNav = () => (
       >
         <Typography sx={{ fontSize: '12px' }}>OFFICIAL</Typography>
       </NavLink>
-      <Divider orientation='vertical' flexItem />
+      {/* <Divider orientation='vertical' flexItem />
       <NavLink
         to='/workouts/community'
         className={({ isActive, isPending }) =>
@@ -34,7 +34,7 @@ const TopNav = () => (
         }
       >
         <Typography sx={{ fontSize: '12px' }}>COMMUNITY</Typography>
-      </NavLink>
+      </NavLink> */}
       {isDev && (
         <>
           <Divider orientation='vertical' flexItem />

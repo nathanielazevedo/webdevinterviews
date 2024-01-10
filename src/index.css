@@ -138,28 +138,6 @@
   color: grey;
 }
 
-.MuiTreeItem-label {
-  color: rgb(222, 221, 221);
-  font-size: 14px !important;
-}
-
-.MuiTreeItem-iconContainer {
-  margin-right: 0px !important;
-}
-
-.workouts-nav {
-  color: 'green';
-}
-
-.MuiTreeItem-content.Mui-selected {
-  background-color: #19e4ff4b !important;
-  border-radius: 5px;
-}
-
-.MuiTreeItem-content {
-  padding: 0px !important;
-}
-
 /* width */
 ::-webkit-scrollbar {
   width: 5px;

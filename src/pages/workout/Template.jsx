@@ -7,37 +7,6 @@ import EditorMain from '../../editor/EditorMain'
 import { WorkoutContext } from './root/WorkoutContext'
 import Workout from '../../models/workout'
 
-const config = {
-  env: {
-    browser: true,
-    es6: true,
-    node: true,
-  },
-  extends: ['eslint:recommended', 'plugin:react/recommended'],
-  parser: 'babel-eslint',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 2018,
-    sourceType: 'module',
-  },
-  plugins: ['react'],
-  rules: {
-    // Add your project-specific rules here
-    indent: ['error', 2],
-    'linebreak-style': ['error', 'unix'],
-    quotes: ['error', 'single'],
-    semi: ['error', 'always'],
-    // Additional rules...
-  },
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
-}
-
 const mergeFiles = (workout) => {
   const local =
     JSON.parse(localStorage.getItem(workout.id)) || workout.dynamoData.template

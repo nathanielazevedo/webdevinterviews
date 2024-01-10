@@ -19,6 +19,28 @@ import TableHead from './TableHead'
 import Workout from '../../../models/workout'
 import TemplateToSvg from '../components/TemplateToSvg'
 
+const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
+
+const formatDate = (date) => {
+  const d = new Date(date)
+  const month = monthNames[d.getMonth()]
+  const year = d.getFullYear()
+  return `${month} ${year}`
+}
+
 const WorkoutTables = ({ tab }) => {
   const url = `/workouts/${tab}`
   const { data: workoutsData, loading, error, fetchData } = useFetch(url)
@@ -38,19 +60,21 @@ const WorkoutTables = ({ tab }) => {
       const workout = new Workout(workoutData)
       return (
         <StyledTableRow key={workout.id} index={index}>
-          <StyledTableCell align='left'>
-            <TextLink workout={workout} />
-          </StyledTableCell>
           <StyledIconTableCell align='center'>
             <TemplateToSvg template={workout.spTemplate.name} />
           </StyledIconTableCell>
+          <StyledTableCell align='left'>
+            <TextLink workout={workout} />
+          </StyledTableCell>
           <StyledIconTableCell align='center'>
             <Rating rating={workout.difficulty} />
           </StyledIconTableCell>
           <StyledTableCell align='center'>
             {workout.author.username}
           </StyledTableCell>
-          <StyledTableCell align='center'>{workout.createdAt}</StyledTableCell>
+          <StyledTableCell align='center'>
+            {formatDate(workout.createdAt)}
+          </StyledTableCell>
           <StyledIconTableCell align='center'>
             {workout.youtubeLink && <YouTube workout={workout} />}
           </StyledIconTableCell>

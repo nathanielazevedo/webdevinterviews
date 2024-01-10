@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box'
-import { CircularProgress, Skeleton, Typography } from '@mui/material'
+import { CircularProgress, Typography } from '@mui/material'
 import {
   MiddleContent,
   RootFrame,

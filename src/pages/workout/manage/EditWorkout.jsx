@@ -3,17 +3,19 @@
 import { TextField, Button, Box } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useContext, useState } from 'react'
-import { WorkoutContext } from './root/WorkoutContext'
-import DeleteDialog from './dialogs/DeleteDialog'
-import api from '../../api'
-import TemplateDependencies from '../workouts/components/TemplateDependencies'
-import { GET_DEPENDENCIES } from '../../quieres'
-import useFetch from '../../hooks/useFetch'
+import { WorkoutContext } from '../root/WorkoutContext'
+import DeleteDialog from '../dialogs/DeleteDialog'
+import api from '../../../api'
+import TemplateDependencies from '../../workouts/components/TemplateDependencies'
+import { GET_DEPENDENCIES } from '../../../quieres'
+import useFetch from '../../../hooks/useFetch'
+import Workout from '../../../models/workout'
 
 const keyOrder = ['title', 'image_link', 'youtube_link', 'is_public']
 
 const EditWorkoutDialog = () => {
-  // const { workoutData: workout } = useContext(WorkoutContext)
+  const { workoutData } = useContext(WorkoutContext)
+  const workout = new Workout(workoutData)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const {
@@ -21,54 +23,48 @@ const EditWorkoutDialog = () => {
     loading: loadingTemplates,
     error: loadingTemplatesError,
   } = useFetch(GET_DEPENDENCIES)
-  // const defaultValues = keyOrder.reduce((obj, key) => {
-  //   obj[key] = workout[key]
-  //   return obj
-  // }, {})
-  // defaultValues.dependencies = Object.keys(workout.dependencies)
-  // defaultValues.sp_template_id = workout.sp_template.id
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   control,
-  //   formState: { errors },
-  // } = useForm({
-  //   defaultValues,
-  // })
-  // const onSubmit = async (data) => {
-  //   setLoading(true)
-  //   try {
-  //     await api.put(`/workouts/${workout.id}`, data)
-  //   } catch {
-  //     console.log('error')
-  //   }
-  //   setLoading(false)
-  // }
+
+  const defaultValues = keyOrder.reduce((obj, key) => {
+    obj[key] = workout[key]
+    return obj
+  }, {})
+
+  defaultValues.sp_template_id = workout.spTemplateId
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues,
+  })
+  const onSubmit = async (data) => {
+    setLoading(true)
+    try {
+      await api.put(`/workouts/${workout.id}`, data)
+    } catch {
+      console.log('error')
+    }
+    setLoading(false)
+  }
+
   if (loadingTemplates) return <p>Loading...</p>
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        width: '100%',
-        padding: '30px',
-      }}
-    >
+    <>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           width: '100%',
-          // padding: '20px',
         }}
       >
         <Box>
           <h2>Manage Your Workouts Meta Data</h2>
         </Box>
-        {/* <form onSubmit={handleSubmit(onSubmit)} id='edit-workout-form'>
+        <form onSubmit={handleSubmit(onSubmit)} id='edit-workout-form'>
           {keyOrder.map((name) => (
             <TextField
               key={name}
@@ -84,14 +80,14 @@ const EditWorkoutDialog = () => {
               helperText={errors[name]?.message}
             />
           ))}
-          <TemplateDependencies
+          {/* <TemplateDependencies
             control={control}
             data={templateData}
             loading={loadingTemplates}
             error={loadingTemplatesError}
             workout={workout}
-          />
-        </form> */}
+          /> */}
+        </form>
         <Button
           type='submit'
           form='edit-workout-form'
@@ -114,7 +110,7 @@ const EditWorkoutDialog = () => {
         </Button>
       </Box>
       <DeleteDialog open={deleteDialogOpen} setOpen={setDeleteDialogOpen} />
-    </Box>
+    </>
   )
 }
 

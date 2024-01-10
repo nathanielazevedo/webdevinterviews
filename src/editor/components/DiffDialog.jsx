@@ -1,11 +1,5 @@
 /* eslint-disable react/prop-types */
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Icon,
-  IconButton,
-} from '@mui/material'
+import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material'
 import { useSandpack } from '@codesandbox/sandpack-react'
 import { useContext } from 'react'
 import ReactDiffViewer from 'react-diff-viewer'
@@ -30,7 +24,6 @@ const DiffDialog = ({ onClose, selectedFile, isSolution }) => {
   const { sandpack } = useSandpack()
   const { workoutData } = useContext(WorkoutContext)
   const workout = new Workout(workoutData)
-  console.log(workout)
 
   const localFile = sandpack.files[selectedFile]?.code
   let serverFile

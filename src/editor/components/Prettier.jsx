@@ -4,7 +4,6 @@ import { Box, Tooltip } from '@mui/material'
 import { useSandpack, useActiveCode } from '@codesandbox/sandpack-react'
 import * as prettier from 'prettier'
 import parserBabel from 'prettier/parser-babel'
-// import * from 'stylelint-prettier'
 import parserPostcss from 'prettier/parser-postcss'
 import PrettierSvg from '../../assets/prettier.svg'
 
@@ -54,6 +53,7 @@ const Prettier = ({ codemirrorInstance }) => {
       console.error('Prettier failed to format the code')
     }
   }, [prettierCode])
+
   return (
     <Tooltip
       title='Format'
