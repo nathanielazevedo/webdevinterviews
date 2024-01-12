@@ -38,6 +38,7 @@ const ChangedFiles = ({ isSolution }) => {
     setChangedFiles(_changedFiles)
   }, [sandpack?.files, workoutData])
 
+  console.log('changedFiles', changedFiles)
   return (
     <Box sx={sourceControlStyles}>
       <Box

@@ -10,7 +10,7 @@ import { WorkoutContext } from '../root/WorkoutContext'
 import DeleteDialog from '../dialogs/DeleteDialog'
 import api from '../../../api'
 import TemplateDependencies from '../../workouts/components/TemplateDependencies'
-import { GET_DEPENDENCIES } from '../../../quieres'
+import { GET_DEPENDENCIES } from '../../../queries'
 import useFetch from '../../../hooks/useFetch'
 import Workout from '../../../models/workout'
 
@@ -25,7 +25,6 @@ const keyOrder = [
 const EditWorkoutDialog = () => {
   const { workoutData } = useContext(WorkoutContext)
   const workout = new Workout(workoutData)
-  console.log(workout)
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -39,8 +38,6 @@ const EditWorkoutDialog = () => {
     obj[key] = workout[key]
     return obj
   }, {})
-
-  console.log(defaultValues)
 
   const {
     register,

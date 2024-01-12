@@ -7,7 +7,7 @@ import Unauthorized from './Unauthorized'
 import CreateDialog from '../dialogs/CreateDialog'
 import useFetch from '../../../hooks/useFetch'
 import SkeletonTable from '../table/SkeletonTable'
-import { GET_DEPENDENCIES } from '../../../quieres'
+import { GET_DEPENDENCIES } from '../../../queries'
 
 const ManageWorkouts = () => {
   const [open, setOpen] = useState(false)

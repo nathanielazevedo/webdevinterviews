@@ -19,6 +19,7 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
     const { sharedFiles, otherFiles, packageJson } = separateFiles(
       sandpack.files
     )
+    console.log(sharedFiles)
     setLoading(true)
     try {
       if (isSolution) {
@@ -46,17 +47,19 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
           },
         }))
       }
-      await API.put(
-        `/workouts/${workoutData.id}/upload-shared`,
-        JSON.stringify(sharedFiles)
-      )
-      setData((prev) => ({
-        ...prev,
-        dynamo_data: {
-          ...prev.dynamo_data,
-          shared: sharedFiles,
-        },
-      }))
+      if (sharedFiles) {
+        await API.put(
+          `/workouts/${workoutData.id}/upload-shared`,
+          JSON.stringify(sharedFiles)
+        )
+        setData((prev) => ({
+          ...prev,
+          dynamo_data: {
+            ...prev.dynamo_data,
+            shared: sharedFiles,
+          },
+        }))
+      }
       if (changedFiles.indexOf('/package.json')) {
         await API.put(
           `/workouts/${workoutData.id}/upload-package`,
@@ -72,10 +75,7 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
       }
       addLog({ method: 'log', data: ['Code uploaded.'] })
       setLoading(false)
-      // return redirect(`/workouts/${params.id}`)
     } catch (error) {
-      console.log(error)
-      // Handle the error here, e.g., by showing an error message to the user
       addLog({ method: 'error', data: ['Error uploading code.'] })
       setLoading(false)
     }

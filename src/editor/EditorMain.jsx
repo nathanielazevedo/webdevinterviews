@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable indent */
@@ -5,10 +6,7 @@
 /* eslint-disable react/prop-types */
 import { useRef, useContext } from 'react'
 import { Panel, PanelGroup } from 'react-resizable-panels'
-import {
-  SandpackFileExplorer,
-  SandpackFilesProvider,
-} from 'sandpack-file-explorer'
+import { SandpackFileExplorer } from 'sandpack-file-explorer'
 import {
   SandpackLayout,
   SandpackCodeEditor,
@@ -16,14 +14,13 @@ import {
 } from '@codesandbox/sandpack-react'
 import { Box, Typography } from '@mui/material'
 import ResizeHandle from './components/ResizeHandle'
-import Browser from './browser'
+import Browser from './browser/Root'
 import AutoSave from './AutoSave'
 import { theme } from './theme'
 import { WorkoutContext } from '../pages/workout/root/WorkoutContext'
 import Workout from '../models/workout'
 import HorizontalResizeHandle from './components/HorizontalResizeHandle'
 import Prettier from './components/Prettier'
-import Files from './Files'
 import { layoutStyles, sourceControlHeaderStyles } from './editorStyles'
 import ChangedFiles from './components/ChangedFiles'
 
@@ -67,10 +64,7 @@ const EditorMain = ({ isSolution }) => {
                   disablePointerEventsDuringResize
                 >
                   <Panel>
-                    <SandpackFilesProvider>
-                      <Files />
-                      <SandpackFileExplorer autoHiddenFiles />
-                    </SandpackFilesProvider>
+                    <SandpackFileExplorer />
                   </Panel>
                   {workout.isOwner && (
                     <>

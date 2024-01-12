@@ -20,6 +20,7 @@
     "@mui/icons-material": "^5.14.12",
     "@mui/material": "^5.14.12",
     "amazon-cognito-identity-js": "^6.3.7",
+    "angular-html-parser": "^5.2.0",
     "console-feed": "^3.5.0",
     "eslint-linter-browserify": "^8.56.0",
     "lodash": "^4.17.21",

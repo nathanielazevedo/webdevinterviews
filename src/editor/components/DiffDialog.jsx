@@ -28,13 +28,29 @@ const DiffDialog = ({ onClose, selectedFile, isSolution }) => {
   const localFile = sandpack.files[selectedFile]?.code
   let serverFile
   if (selectedFile === '/package.json') {
-    serverFile = workout.dynamoData.packageJson[selectedFile]?.code
+    try {
+      serverFile = workout?.dynamoData?.packageJson[selectedFile]?.code
+    } catch {
+      serverFile = ''
+    }
   } else if (selectedFile.split('/')[1] === 'shared') {
-    serverFile = workout.dynamoData.shared[selectedFile]?.code
+    try {
+      serverFile = workout.dynamoData.shared[selectedFile]?.code
+    } catch {
+      serverFile = ''
+    }
   } else if (isSolution) {
-    serverFile = workout.dynamoData.solution[selectedFile]?.code
+    try {
+      serverFile = workout.dynamoData.solution[selectedFile]?.code
+    } catch {
+      serverFile = ''
+    }
   } else {
-    serverFile = workout.dynamoData.template[selectedFile]?.code
+    try {
+      serverFile = workout.dynamoData.template[selectedFile]?.code
+    } catch {
+      serverFile = ''
+    }
   }
 
   return (

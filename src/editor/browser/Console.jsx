@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useSandpack, useSandpackConsole } from '@codesandbox/sandpack-react'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
-import { Typography, Box, Tooltip, Button } from '@mui/material'
+import { Typography, Box, Tooltip, Button, IconButton } from '@mui/material'
 import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt'
 
 const Console = ({ closeFilePanel, consolePanelRef }) => {
@@ -12,7 +12,6 @@ const Console = ({ closeFilePanel, consolePanelRef }) => {
   const { listen } = useSandpack()
 
   useEffect(() => {
-    // listens for any message dispatched between sandpack and the bundler
     const stopListening = listen((msg) => {
       if (msg.type === 'status' && msg.status === 'transpiling') {
         logs.splice(0, logs.length)
@@ -24,7 +23,6 @@ const Console = ({ closeFilePanel, consolePanelRef }) => {
     })
 
     return () => {
-      // unsubscribe
       stopListening()
     }
   }, [listen])
@@ -84,14 +82,11 @@ const Console = ({ closeFilePanel, consolePanelRef }) => {
               Console {`(${logs.length})`}
             </Typography>
           </Box>
-          <Button
-            onClick={reset}
-            sx={{ height: '20px', color: '#C5C5C5', minWidth: '30px' }}
-          >
+          <IconButton onClick={reset}>
             <Tooltip title='Clear'>
               <DoNotDisturbAltIcon fontSize='small' />
             </Tooltip>
-          </Button>
+          </IconButton>
         </Box>
         <Box sx={{ overflowY: 'scroll', height: '100%' }}>
           <ConsoleFeed
@@ -101,6 +96,10 @@ const Console = ({ closeFilePanel, consolePanelRef }) => {
               LOG_BACKGROUND: '#121212',
               BASE_BACKGROUND_COLOR: '#121212',
               LOG_AMOUNT_BACKGROUND: 'black',
+              BASE_FONT_SIZE: '14px',
+              BASE_FONT_FAMILY: 'monospace',
+              BASE_LINE_HEIGHT: '10px',
+              TREENODE_LINE_HEIGHT: '20px',
             }}
           />
         </Box>

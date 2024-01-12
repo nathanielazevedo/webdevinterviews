@@ -11,27 +11,7 @@ const LogDialog = ({ open, onClose }) => {
   const { logs } = useContext(LogContext)
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      sx={{
-        '& .MuiDialog-paper': {
-          backgroundColor: '#121212',
-          color: '#C5C5C5',
-          width: '80%',
-          height: '80%',
-          borderRadius: '10px',
-          border: '1px solid #454950',
-          boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)',
-          padding: '0px',
-          margin: '0px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-        },
-      }}
-    >
+    <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle
         sx={{
           display: 'flex',
@@ -51,16 +31,7 @@ const LogDialog = ({ open, onClose }) => {
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent
-        sx={{
-          backgroundColor: '#121212',
-          width: '100%',
-          height: '100%',
-          padding: '0px',
-          margin: '0px',
-          paddingTop: '10px !important',
-        }}
-      >
+      <DialogContent sx={{ backgroundColor: '#121212' }}>
         <Console
           logs={logs}
           variant='dark'
