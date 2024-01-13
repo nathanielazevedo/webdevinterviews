@@ -38,7 +38,11 @@ const Template = () => {
         <Box sx={{ height: 'calc(100vh - 100px)' }}>
           <SandpackProvider
             files={files}
-            template={workout.spTemplate.name}
+            template={
+              workout.spTemplate.name === 'vanilla'
+                ? 'static'
+                : workout.spTemplate.name
+            }
             options={{
               autoReload: true,
               autorun: true,
