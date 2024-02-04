@@ -1,0 +1,80 @@
+[
+  {
+    "title": "Deck 1",
+    "to": "1",
+    "questions": [
+      "1.1 > 2",
+      "true > false",
+      "\"dog\" > \"cat\"",
+      "\"1\" == 1",
+      "\"true\" == true"
+    ],
+    "language": "javascript",
+    "answers": ["false", "true", "false", "true", "false"]
+  },
+  {
+    "title": "Deck 2",
+    "to": "2",
+    "questions": [
+      "[] > {}",
+      "1 > \"1\"",
+      "\"true\" > true",
+      "1.0 > 1.00",
+      "\"a\" > 0"
+    ],
+    "language": "javascript",
+    "answers": ["false", "false", "false", "false", "false"]
+  },
+  {
+    "title": "Deck 3",
+    "to": "3",
+    "questions": [
+      "(100 / \"10\") === 10",
+      "10 + \"10\" === 1010",
+      "10 - \"10\" === 1010",
+      "true + 10 === 11",
+      "0.1 + 0.2 === 0.3"
+    ],
+    "language": "javascript",
+    "answers": ["true", "false", "false", "true", "false"]
+  },
+  {
+    "title": "Deck 4",
+    "to": "4",
+    "questions": [
+      "(100 / \"10\") === 10",
+      "10 + \"10\" === 1010",
+      "10 - \"10\" === 1010",
+      "true + 10 === 11",
+      "0.1 + 0.2 === 0.3"
+    ],
+    "language": "php",
+    "answers": ["true", "false", "false", "true", "false"]
+  },
+  {
+    "title": "Deck 5",
+    "to": "5",
+    "questions": [
+      "({}).toString() == \"[object Object]\"",
+      "[].toString() === \"\"",
+      "let dog = {}; let cat = dog; \ndog === cat",
+      "false + 10 === 9",
+      "undefined == 0"
+    ],
+    "language": "javascript",
+    "answers": ["true", "true", "true", "false", "false"]
+  },
+  {
+    "title": "Deck 6",
+    "to": "6",
+    "questions": [
+      "{} + [] === 0",
+      "Math.min() > Math.max()",
+      "{} === []",
+      "null >= 0",
+      "NaN === NaN"
+    ],
+    "language": "javascript",
+    "answers": ["true", "true", "false", "true", "false"]
+  }
+]

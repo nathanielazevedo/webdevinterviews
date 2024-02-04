@@ -149,3 +149,101 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/* game */
+.gameEditor-container {
+  width: 350px;
+  margin: 0 auto;
+  background-color: #151515;
+  color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.025);
+  border: solid white 1px;
+}
+
+.code-container {
+  position: relative;
+  min-height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid grey;
+  font-size: large;
+}
+
+.output-container {
+  color: #fff;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.true-or-false-radio {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  font-size: small;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 10px;
+  align-items: center;
+}
+
+.radio {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.score-circle {
+  height: 20px;
+  width: 20px;
+  border: 1px solid grey;
+  margin-bottom: 10px;
+  border-radius: 50%;
+}
+
+.score-circles-container {
+  display: flex;
+  gap: 10px;
+}
+
+.correct-score-circle {
+  background-color: green;
+}
+
+.incorrect-score-circle {
+  background-color: red;
+}
+
+.shorts-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+  gap: 50px
+}
+
+.layout-container {
+  margin: 0 auto;
+  width: 50%
+}
+
+.shorts-container {
+  height: 550px;
+  padding: 25px;
+  width: 400px;
+  margin: auto;
+  margin-top: 40px
+}
+
+.shorts-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.shorts-editor {
+  height: 200px;
+}

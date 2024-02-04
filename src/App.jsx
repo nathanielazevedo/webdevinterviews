@@ -20,6 +20,10 @@ import WorkoutsTable from './pages/workouts/table/WorkoutsTable'
 import ManageRoot from './pages/workout/manage/ManageRoot'
 import WorkoutRoot from './pages/workout/root/WorkoutRoot'
 import RootRedirect from './components/RootRedirect'
+import Games from './pages/games/GamesTable'
+import TrueOrFalseList from './pages/trueOrFalse/TrueOrFalseList'
+import TrueOrFalse from './pages/trueOrFalse/TrueOrFalse'
+import ShortsEditor from './pages/shortsEditor/ShortsEditor'
 
 const router = createBrowserRouter([
   {
@@ -31,6 +35,11 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
         errorElement: <Error />,
+      },
+      {
+        path: 'shorts-editor',
+        errorElement: <Error />,
+        element: <ShortsEditor />,
       },
       {
         path: 'auth',
@@ -130,6 +139,29 @@ const router = createBrowserRouter([
                 path: '*',
                 element: <FourOFour />,
                 errorElement: <Error />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: 'games',
+        errorElement: <Error />,
+        children: [
+          {
+            index: true,
+            element: <Games />,
+          },
+          {
+            path: 'true-or-false',
+            children: [
+              {
+                index: true,
+                element: <TrueOrFalseList />,
+              },
+              {
+                path: ':id',
+                element: <TrueOrFalse />,
               },
             ],
           },
