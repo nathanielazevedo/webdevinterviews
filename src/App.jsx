@@ -24,6 +24,8 @@ import Games from './pages/games/GamesTable'
 import TrueOrFalseList from './pages/trueOrFalse/TrueOrFalseList'
 import TrueOrFalse from './pages/trueOrFalse/TrueOrFalse'
 import ShortsEditor from './pages/shortsEditor/ShortsEditor'
+import WillItThrowList from './pages/willItThrow/WillItThrowList'
+import WillItThrow from './pages/willItThrow/Will_ItThrow'
 
 const router = createBrowserRouter([
   {
@@ -146,7 +148,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'games',
-        errorElement: <Error />,
+        // errorElement: <Error />,
         children: [
           {
             index: true,
@@ -162,6 +164,19 @@ const router = createBrowserRouter([
               {
                 path: ':id',
                 element: <TrueOrFalse />,
+              },
+            ],
+          },
+          {
+            path: 'will-it-throw',
+            children: [
+              {
+                index: true,
+                element: <WillItThrowList />,
+              },
+              {
+                path: ':id',
+                element: <WillItThrow />,
               },
             ],
           },

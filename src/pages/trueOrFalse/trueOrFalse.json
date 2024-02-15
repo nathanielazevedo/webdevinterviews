@@ -76,5 +76,96 @@
     ],
     "language": "javascript",
     "answers": ["true", "true", "false", "true", "false"]
+  },
+  {
+    "title": "Deck 7",
+    "to": "7",
+    "questions": [
+      "'a' > 'b'",
+      "2 + 2 + '2' == 42",
+      "'2' + 2 + 2 == 24",
+      "2 > 'a'",
+      "2 > '1'"
+    ],
+    "language": "javascript",
+    "answers": ["false", "true", "false", "false", "true"]
+  },
+  {
+    "title": "Deck 8",
+    "to": "8",
+    "questions": [
+      "+true == 1",
+      "+[] == 0",
+      "+'123' == 123",
+      "+{} == 0",
+      "+['1', '2'] == [1, 2]"
+    ],
+    "language": "javascript",
+    "answers": ["true", "true", "true", "false", "false"]
+  },
+  {
+    "title": "Deck 9",
+    "to": "9",
+    "questions": [
+      "typeof null == 'null'",
+      "typeof null == 'undefined'",
+      "typeof null == 'object'",
+      "typeof undefined == 'undefined'",
+      "typeof typeof 1 == 'string'"
+    ],
+    "language": "javascript",
+    "answers": ["false", "false", "true", "true", "true"]
+  },
+  {
+    "title": "Deck 10",
+    "to": "10",
+    "questions": [
+      "typeof Boolean() == 'boolean'",
+      "Boolean(' ') == true",
+      "Boolean(NaN.toString()) == true",
+      "Boolean('undefined') == false",
+      "Boolean([] = ['a'])"
+    ],
+    "language": "javascript",
+    "answers": ["true", "true", "true", "false", "true"]
+  },
+  {
+    "title": "Deck 11",
+    "to": "11",
+    "questions": [
+      "true == false + 1",
+      "true == 1",
+      "0 == ''",
+      "Number('     ') == 0",
+      "'1' + 1 + 1 + 1 == 13"
+    ],
+    "language": "javascript",
+    "answers": ["true", "true", "true", "true", "false"]
+  },
+  {
+    "title": "Deck 12",
+    "to": "12",
+    "questions": [
+      "null == undefined",
+      "0 == undefined",
+      "false == undefined",
+      "!(3 > 5)",
+      "true && false"
+    ],
+    "language": "javascript",
+    "answers": ["true", "true", "true", "true", "false"]
+  },
+  {
+    "title": "Deck 13",
+    "to": "13",
+    "questions": [
+      "undefined == 1",
+      "null == 0",
+      "false.toString() == 'false'",
+      "!!(3 > 5)",
+      "0 ? true : false"
+    ],
+    "language": "javascript",
+    "answers": ["true", "true", "true", "true", "false"]
   }
 ]

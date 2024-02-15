@@ -1,0 +1,41 @@
+[
+  {
+    "title": "Deck 1",
+    "to": "1",
+    "questions": [
+      "const arr = [1,2,3]; arr[5]",
+      "const obj = {1: true}; obj[2]",
+      "let str = 'dog'; str[4] = 'a'",
+      "dog = 4; dog[5]",
+      "hello"
+    ],
+    "language": "javascript",
+    "answers": ["no", "no", "no", "no", "yes"]
+  },
+  {
+    "title": "Deck 2",
+    "to": "2",
+    "questions": [
+      "let obj = {}; console.log(obj.prop);",
+      "let result = 10 / 0;",
+      "let func; func();",
+      "let arr = [1, 2, 3]; console.log(arr[10]);",
+      "let unusedVar;"
+    ],
+    "language": "javascript",
+    "answers": ["yes", "yes", "yes", "no", "no"]
+  },
+  {
+    "title": "Deck 3",
+    "to": "3",
+    "questions": [
+      "JSON.parse('hello world');",
+      "document.querySelector('.nonexistent-element').classList",
+      "parseInt('abc');",
+      "let map = new Map(); map.get('dog');",
+      "let dog = 5; dog();"
+    ],
+    "language": "javascript",
+    "answers": ["yes", "yes", "no", "no", "yes"]
+  }
+]

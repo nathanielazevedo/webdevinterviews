@@ -1,20 +1,20 @@
 import { useState } from 'react'
-import decks from './trueOrFalse.json'
+import decks from './willItThrow.json'
 import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 
-const TrueOrFalse = () => {
+const WillItThrow = () => {
   const { id } = useParams()
   const deck = decks[id - 1]
   const [currentQuestion, setCurrentQuestion] = useState(0)
-  const [guess, setGuess] = useState(null)
+  const [guess, setGuess] = useState('')
   const [output, setOutput] = useState('')
   const [scores, setScores] = useState([])
   const gameOver = currentQuestion >= deck.questions.length
 
   const onSubmit = (evt) => {
     evt.preventDefault()
-    if (guess == eval(deck.questions[currentQuestion])) {
+    if (guess === deck.answers[currentQuestion]) {
       setOutput('correct')
       scores.push(true)
       setScores([...scores])
@@ -37,7 +37,6 @@ const TrueOrFalse = () => {
   }
 
   const handleGuessChange = (evt) => {
-    console.log(evt.target.value)
     setGuess(evt.target.value)
   }
 
@@ -46,7 +45,7 @@ const TrueOrFalse = () => {
     setCurrentQuestion(0)
     setScores([])
     setOutput('')
-    setGuess(null)
+    setGuess('')
   }
 
   const countOccurances = () => {
@@ -107,11 +106,11 @@ const TrueOrFalse = () => {
                       <input
                         type='radio'
                         name='guess'
-                        value={1}
-                        checked={guess === '1'}
+                        value='yes'
+                        checked={guess === 'yes'}
                         onChange={handleGuessChange}
                       />
-                      True
+                      Yes
                     </label>
                   </div>
                   <div>
@@ -119,11 +118,11 @@ const TrueOrFalse = () => {
                       <input
                         type='radio'
                         name='guess'
-                        value={0}
-                        checked={guess === '0'}
+                        value='no'
+                        checked={guess === 'no'}
                         onChange={handleGuessChange}
                       />
-                      False
+                      No
                     </label>
                   </div>
                 </div>
@@ -150,4 +149,4 @@ const TrueOrFalse = () => {
   )
 }
 
-export default TrueOrFalse
+export default WillItThrow
