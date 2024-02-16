@@ -167,5 +167,18 @@
     ],
     "language": "javascript",
     "answers": ["true", "true", "true", "true", "false"]
+  },
+  {
+    "title": "Deck 14",
+    "to": "14",
+    "questions": [
+      "+[] === 0",
+      "typeof function(){} == 'object'",
+      "typeof [] == 'array'",
+      "Array.isArray([])",
+      "2 === +'1' + 1"
+    ],
+    "language": "javascript",
+    "answers": ["true", "true", "true", "true", "false"]
   }
 ]
