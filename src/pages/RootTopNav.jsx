@@ -16,7 +16,7 @@ const RootTopNav = () => {
         WEB DEV INTERVIEWS
       </Typography>
       <Box sx={{ flexGrow: 1 }} />
-      {!authLoading ? (
+      {/* {!authLoading ? (
         user ? (
           <NavLink
             to='/auth/account'
@@ -65,7 +65,7 @@ const RootTopNav = () => {
         )
       ) : (
         <Skeleton variant='text' width={100} animation='wave' />
-      )}
+      )} */}
     </StyledTopNav>
   )
 }
