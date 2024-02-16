@@ -6,9 +6,8 @@ import {
   StyledNameTableCell,
   StyledTableContainer,
   StyledIconTableCell,
-  StyledTable,
 } from './tableStyledComponents'
-import TableHead from './TableHead'
+// import TableHead from './TableHead'
 
 const SkeletonTable = ({ isYours }) => {
   const getRandomWidth = () => `${Math.floor(Math.random() * 10) + 40}%`
@@ -17,8 +16,8 @@ const SkeletonTable = ({ isYours }) => {
       <Fade in timeout={1000}>
         <Box>
           <StyledTableContainer>
-            <StyledTable size='small'>
-              <TableHead isYours={isYours} />
+            <table size='small'>
+              {/* <TableHead isYours={isYours} /> */}
               <TableBody>
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
                   <StyledTableRow key={item} index={item}>
@@ -43,7 +42,7 @@ const SkeletonTable = ({ isYours }) => {
                   </StyledTableRow>
                 ))}
               </TableBody>
-            </StyledTable>
+            </table>
           </StyledTableContainer>
         </Box>
       </Fade>

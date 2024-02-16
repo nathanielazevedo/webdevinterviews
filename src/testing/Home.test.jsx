@@ -6,7 +6,7 @@ describe('Home component', () => {
     render(<Home />)
 
     // Check if the logo image is rendered
-    const logo = screen.getByAltText('logo')
+    const logo = screen.getByText('Learn')
     expect(logo).toBeInTheDocument()
   })
 })

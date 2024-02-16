@@ -2,9 +2,9 @@ import { Outlet } from 'react-router-dom'
 import FoundationIcon from '@mui/icons-material/Foundation'
 import SosOutlinedIcon from '@mui/icons-material/SosOutlined'
 import SportsMartialArtsOutlinedIcon from '@mui/icons-material/SportsMartialArtsOutlined'
-import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
-import AppShortcutIcon from '@mui/icons-material/AppShortcut';
-import SportsMmaIcon from '@mui/icons-material/SportsMma';
+import VideogameAssetIcon from '@mui/icons-material/VideogameAsset'
+import AppShortcutIcon from '@mui/icons-material/AppShortcut'
+import SportsMmaIcon from '@mui/icons-material/SportsMma'
 import TopNav from './RootTopNav'
 import { AuthProvider } from './AuthContext'
 import Footer from '../components/frame/Footer'
@@ -52,18 +52,14 @@ const lastLink = {
 
 const Root = () => (
   <AuthProvider>
-    <OuterBox>
-      <RootFrame>
-        <TopNav />
-        <MiddleContent>
-          <SideNav links={links} lastLink={lastLink} />
-          <OutletContainer>
-            <Outlet />
-          </OutletContainer>
-        </MiddleContent>
-        <Footer />
-      </RootFrame>
-    </OuterBox>
+    <TopNav />
+    <main className='main'>
+      <SideNav links={links} lastLink={lastLink} />
+      <div>
+        <Outlet />
+      </div>
+    </main>
+    <Footer />
   </AuthProvider>
 )
 

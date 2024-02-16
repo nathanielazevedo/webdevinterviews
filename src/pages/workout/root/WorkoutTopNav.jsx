@@ -51,7 +51,7 @@ const WorkoutTopNav = () => {
               borderRight: '0.5px solid #454950',
               // marginRight: '13px',
             }}
-            onClick={() => navigate('/workouts/official')}
+            onClick={() => navigate('/workouts')}
           >
             {navigation.state === 'loading' ? (
               <CircularProgress

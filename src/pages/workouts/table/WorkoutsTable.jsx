@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import TableBody from '@mui/material/TableBody'
-import Box from '@mui/material/Box'
+import { Typography, Box } from '@mui/material'
 import Rating from '../../../components/Rating'
 import SkeletonTable from './SkeletonTable'
 import useFetch from '../../../hooks/useFetch'
@@ -9,43 +9,22 @@ import ErrorRow from '../components/ErrorRow'
 import TextLink from '../components/TextLink'
 import {
   StyledTableContainer,
-  StyledTable,
   StyledTableCell,
   StyledIconTableCell,
   StyledTableRow,
 } from './tableStyledComponents'
 import NoWorkouts from '../components/NoWorkouts'
-import TableHead from './TableHead'
 import Workout from '../../../models/workout'
 import TemplateToSvg from '../components/TemplateToSvg'
+import { TableHead as MuiTableHead } from '@mui/material'
+import { useState } from 'react'
 
-const monthNames = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
-
-const formatDate = (date) => {
-  const d = new Date(date)
-  const month = monthNames[d.getMonth()]
-  const year = d.getFullYear()
-  return `${month} ${year}`
-}
-
-const WorkoutTables = ({ tab }) => {
-  const url = `/workouts/${tab}`
+const WorkoutTables = () => {
+  const url = `/workouts/official`
   const { data: workoutsData, loading, error, fetchData } = useFetch(url)
+  const [createWorkoutDialogOpen, setCreateWorkoutDialogOpen] = useState(false)
 
-  const fetchWorkouts = () => fetchData(`/workouts/${tab}`)
+  const fetchWorkouts = () => fetchData(`/workouts/official`)
 
   const renderTableBodyContent = () => {
     if (error || !workoutsData) {
@@ -59,26 +38,20 @@ const WorkoutTables = ({ tab }) => {
     return workoutsData.map((workoutData, index) => {
       const workout = new Workout(workoutData)
       return (
-        <StyledTableRow key={workout.id} index={index}>
-          <StyledIconTableCell align='center'>
+        <tr key={workout.id}>
+          <td align='left' width={'75px'}>
             <TemplateToSvg template={workout.spTemplate.name} />
-          </StyledIconTableCell>
-          <StyledTableCell align='left'>
+          </td>
+          <td align='left'>
             <TextLink workout={workout} />
-          </StyledTableCell>
-          <StyledIconTableCell align='center'>
+          </td>
+          <td align='center'>
             <Rating rating={workout.difficulty} />
-          </StyledIconTableCell>
-          <StyledTableCell align='center'>
-            {workout.author.username}
-          </StyledTableCell>
-          <StyledTableCell align='center'>
-            {formatDate(workout.createdAt)}
-          </StyledTableCell>
-          <StyledIconTableCell align='center'>
+          </td>
+          <td align='center'>
             {workout.youtubeLink && <YouTube workout={workout} />}
-          </StyledIconTableCell>
-        </StyledTableRow>
+          </td>
+        </tr>
       )
     })
   }
@@ -98,13 +71,32 @@ const WorkoutTables = ({ tab }) => {
   if (loading) return <SkeletonTable />
 
   return (
-    <StyledTableContainer>
-      <StyledTable size='small' stickyHeader>
-        <TableHead />
-        <TableBody>{renderTableBodyContent()}</TableBody>
-      </StyledTable>
+    <div className='workout-table-wrapper'>
+      <Box>
+        <Typography variant='h5' color='grey.400'>
+          Workouts
+        </Typography>
+        <Typography variant='subtitle1' color='grey.600'>
+          Coding challenges to sharpen your skills.
+        </Typography>
+      </Box>
+      <table size='small'>
+        <tr>
+          <th align='center'>TYPE</th>
+          <th align='left'>NAME</th>
+          <th align='center'>DIFFICULTY</th>
+          <th align='center'>VIDEO</th>
+        </tr>
+        <tbody>{renderTableBodyContent()}</tbody>
+      </table>
       <Box>{renderFailedStateContent()}</Box>
-    </StyledTableContainer>
+      {createWorkoutDialogOpen && (
+        <CreateWorkoutDialog
+          open={createWorkoutDialogOpen}
+          setOpen={setCreateWorkoutDialogOpen}
+        />
+      )}
+    </div>
   )
 }
 

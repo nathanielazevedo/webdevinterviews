@@ -11,11 +11,10 @@ const RootTopNav = () => {
   const { user, authLoading } = useContext(AuthContext)
 
   return (
-    <StyledTopNav>
+    <div className='top-nav'>
       <Typography color='grey.500' fontWeight='bold' fontSize='12px'>
         WEB DEV INTERVIEWS
       </Typography>
-      <Box sx={{ flexGrow: 1 }} />
       {/* {!authLoading ? (
         user ? (
           <NavLink
@@ -24,7 +23,7 @@ const RootTopNav = () => {
               isActive ? 'active' : isPending ? 'pending' : 'not-active'
             }
           >
-            <Typography sx={{ fontSize: '12px' }}>{user.username}</Typography>
+            <Typography>{user.username}</Typography>
           </NavLink>
         ) : (
           <Box
@@ -66,7 +65,7 @@ const RootTopNav = () => {
       ) : (
         <Skeleton variant='text' width={100} animation='wave' />
       )} */}
-    </StyledTopNav>
+    </div>
   )
 }
 

@@ -247,3 +247,65 @@
 .shorts-editor {
   height: 400px !important;
 }
+
+/* new */
+
+#root {
+  height: 100vh;
+  max-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-nav {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  justify-content: space-between;
+  border-bottom: 0.5px solid var(--color-solid-resize-bar);
+}
+
+.main {
+  display: flex;
+  flex-grow: 1;
+}
+
+.main > :nth-child(2) {
+  flex-grow: 1;
+}
+
+.workout-table-wrapper {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+table {
+  height: 100%;
+  overflow-y: scroll;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  font-size: 12px;
+  background-color: black;
+  padding: 10px;
+  color: grey;
+}
+
+tr {
+  height: 45px;
+}
+
+td {
+  padding: 5px 0;
+  margin: 0;
+}
+
+tr:nth-child(even) {
+  background-color: #1a1a1a;
+}

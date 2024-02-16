@@ -7,7 +7,6 @@ import FourOFour from './pages/misc/FourOFour'
 import Template from './pages/workout/Template'
 import Solution from './pages/workout/Solution'
 import MyWorkouts from './pages/workouts/my-workouts/MyWorkouts'
-import WorkoutsRoot from './pages/workouts/root/WorkoutsRoot'
 import Login from './pages/auth/Login'
 import SignUp from './pages/auth/Signup'
 import Account from './pages/auth/Account'
@@ -87,25 +86,7 @@ const router = createBrowserRouter([
       {
         path: 'workouts',
         errorElement: <Error />,
-        element: <WorkoutsRoot />,
-        children: [
-          {
-            index: true,
-            element: <RootRedirect />,
-          },
-          {
-            path: 'official',
-            element: <WorkoutsTable tab='official' />,
-          },
-          {
-            path: 'community',
-            element: <WorkoutsTable tab='community' />,
-          },
-          {
-            path: 'your-workouts',
-            element: <MyWorkouts />,
-          },
-        ],
+        element: <WorkoutsTable />,
       },
       {
         path: 'workouts/:id',

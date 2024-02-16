@@ -4,12 +4,10 @@ import List from '@mui/material/List'
 
 const OuterBox = styled(Box)(() => ({
   height: '100vh',
-  width: '100%',
 }))
 
 const RootFrame = styled(Box)(() => ({
-  width: '100%',
-  height: '100%',
+  height: '100vh',
   display: 'flex',
   flexDirection: 'column',
 }))
@@ -20,13 +18,12 @@ const StyledTopNav = styled(Box)(({ theme }) => ({
   minHeight: theme.variables.topNavHeight,
   padding: '0px 20px',
   alignItems: 'center',
-  justifyContent: 'flex-start',
   borderBottom: `0.5px solid ${theme.palette.divider}`,
 }))
 
 const MiddleContent = styled(Box)(() => ({
-  height: '100%',
   display: 'flex',
+  height: 'calc(100vh - 130px)',
 }))
 
 const SideNavContainer = styled(Box)(({ theme }) => ({

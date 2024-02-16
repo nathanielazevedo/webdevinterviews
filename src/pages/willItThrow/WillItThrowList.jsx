@@ -14,7 +14,7 @@ import TableBody from '@mui/material/TableBody'
 
 const Games = () => {
   return (
-    <RootFrame>
+    <>
       <Box
         sx={{
           display: 'flex',
@@ -52,7 +52,7 @@ const Games = () => {
           <StyledTable size='small' stickyHeader>
             <TableBody>
               {decks.map((deck, index) => (
-                <StyledTableRow>
+                <StyledTableRow key={index} index={index}>
                   <StyledTableCell>
                     <NavLink
                       variant='subtitle'
@@ -99,7 +99,7 @@ const Games = () => {
           </StyledTable>
         </StyledTableContainer>
       </Box>
-    </RootFrame>
+    </>
   )
 }
 

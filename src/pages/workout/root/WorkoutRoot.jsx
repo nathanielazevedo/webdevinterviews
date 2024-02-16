@@ -10,15 +10,15 @@ import {
 
 const WorkoutRoot = () => (
   <WorkoutProvider>
-    <RootFrame>
+    <>
       <WorkoutTopNav />
-      <MiddleContent>
+      <div className='main'>
         <WorkoutSideNav />
         <OutletContainer>
           <Outlet />
         </OutletContainer>
-      </MiddleContent>
-    </RootFrame>
+      </div>
+    </>
   </WorkoutProvider>
 )
 

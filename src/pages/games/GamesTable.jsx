@@ -30,7 +30,7 @@ const games = [
 
 const Games = ({ tab }) => {
   return (
-    <RootFrame>
+    <>
       <Box
         sx={{
           display: 'flex',
@@ -50,8 +50,8 @@ const Games = ({ tab }) => {
         <StyledTableContainer>
           <StyledTable size='small' stickyHeader>
             <TableBody>
-              {games.map((game) => (
-                <StyledTableRow>
+              {games.map((game, key) => (
+                <StyledTableRow key={game.name} index={key}>
                   <StyledTableCell align='left'>
                     <NavLink
                       variant='subtitle'
@@ -98,7 +98,7 @@ const Games = ({ tab }) => {
           </StyledTable>
         </StyledTableContainer>
       </Box>
-    </RootFrame>
+    </>
   )
 }
 
