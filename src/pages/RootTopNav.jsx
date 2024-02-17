@@ -15,7 +15,7 @@ const RootTopNav = () => {
       <Typography color='grey.500' fontWeight='bold' fontSize='12px'>
         WEB DEV INTERVIEWS
       </Typography>
-      {/* {!authLoading ? (
+      {!authLoading ? (
         user ? (
           <NavLink
             to='/auth/account'
@@ -64,7 +64,7 @@ const RootTopNav = () => {
         )
       ) : (
         <Skeleton variant='text' width={100} animation='wave' />
-      )} */}
+      )}
     </div>
   )
 }

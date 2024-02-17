@@ -1,15 +1,15 @@
 // components
 import { NavLink } from 'react-router-dom'
-import decks from './trueOrFalse.json'
+import decks from './willItThrow.json'
 import { Box, Typography } from '@mui/material'
-import { RootFrame } from '../../rootStyledComponents'
+import { RootFrame } from '../../../rootStyledComponents'
 import {
   StyledTableContainer,
   StyledTable,
   StyledTableCell,
   StyledIconTableCell,
   StyledTableRow,
-} from '../workouts/table/tableStyledComponents'
+} from '../../workouts/table/tableStyledComponents'
 import TableBody from '@mui/material/TableBody'
 
 const Games = () => {
@@ -56,7 +56,7 @@ const Games = () => {
                   <StyledTableCell>
                     <NavLink
                       variant='subtitle'
-                      to={`/games/true-or-false/${deck.to}`}
+                      to={`/games/will-it-throw/${deck.to}`}
                       className={({ isActive, isPending }) =>
                         `nav-link ${
                           isActive

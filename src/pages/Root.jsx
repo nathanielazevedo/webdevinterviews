@@ -1,20 +1,17 @@
 import { Outlet } from 'react-router-dom'
+
+// icons
 import FoundationIcon from '@mui/icons-material/Foundation'
 import SosOutlinedIcon from '@mui/icons-material/SosOutlined'
 import SportsMartialArtsOutlinedIcon from '@mui/icons-material/SportsMartialArtsOutlined'
 import VideogameAssetIcon from '@mui/icons-material/VideogameAsset'
 import AppShortcutIcon from '@mui/icons-material/AppShortcut'
 import SportsMmaIcon from '@mui/icons-material/SportsMma'
-import TopNav from './RootTopNav'
+
 import { AuthProvider } from './AuthContext'
-import Footer from '../components/frame/Footer'
+import TopNav from './RootTopNav'
 import SideNav from '../components/frame/SideNav'
-import {
-  MiddleContent,
-  OuterBox,
-  OutletContainer,
-  RootFrame,
-} from '../rootStyledComponents'
+import Footer from '../components/frame/Footer'
 
 const links = [
   {

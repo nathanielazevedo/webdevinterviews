@@ -1,4 +1,3 @@
-/* eslint-disable operator-linebreak */
 import { Fade, Box } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'

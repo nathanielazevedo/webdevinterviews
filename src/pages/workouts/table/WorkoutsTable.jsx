@@ -6,7 +6,7 @@ import SkeletonTable from './SkeletonTable'
 import useFetch from '../../../hooks/useFetch'
 import YouTube from '../../../components/YouTubeIcon'
 import ErrorRow from '../components/ErrorRow'
-import TextLink from '../components/TextLink'
+import TextLink from '../../../components/TextLink'
 import {
   StyledTableContainer,
   StyledTableCell,
@@ -27,6 +27,10 @@ const WorkoutTables = () => {
   const fetchWorkouts = () => fetchData(`/workouts/official`)
 
   const renderTableBodyContent = () => {
+    if (loading) {
+      return <SkeletonTable />
+    }
+
     if (error || !workoutsData) {
       return null
     }
@@ -39,11 +43,11 @@ const WorkoutTables = () => {
       const workout = new Workout(workoutData)
       return (
         <tr key={workout.id}>
-          <td align='left' width={'75px'}>
+          <td align='left' width={'100px'}>
             <TemplateToSvg template={workout.spTemplate.name} />
           </td>
           <td align='left'>
-            <TextLink workout={workout} />
+            <TextLink to={`/workouts/${workout.id}`} text={workout.title} />
           </td>
           <td align='center'>
             <Rating rating={workout.difficulty} />
@@ -57,6 +61,7 @@ const WorkoutTables = () => {
   }
 
   const renderFailedStateContent = () => {
+    if (loading) return
     if (error || !workoutsData) {
       return <ErrorRow fetchWorkouts={fetchWorkouts} />
     }
@@ -67,8 +72,6 @@ const WorkoutTables = () => {
 
     return null
   }
-
-  if (loading) return <SkeletonTable />
 
   return (
     <div className='workout-table-wrapper'>

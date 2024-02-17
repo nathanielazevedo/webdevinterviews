@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Console as ConsoleFeed } from 'console-feed'
 import { useEffect } from 'react'
 import { useSandpack, useSandpackConsole } from '@codesandbox/sandpack-react'

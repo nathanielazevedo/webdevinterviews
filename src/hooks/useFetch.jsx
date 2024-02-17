@@ -13,34 +13,19 @@ const useFetch = (url) => {
     if (authLoading) return
     setLoading(true)
     setError(null)
-    addLog({
-      method: 'info',
-      data: [`Loading ${url}`],
-    })
+    addLog({ method: 'info', data: [`Loading ${url}`] })
     try {
       const { data: responseData } = await API.get(url)
       setData(responseData)
       setLoading(false)
-      addLog({
-        method: 'log',
-        data: [`Successfully loaded ${url}`],
-        code: 200,
-      })
+      addLog({ method: 'log', data: [`Successfully loaded ${url}`], code: 200 })
     } catch (thisError) {
       setError(thisError)
       setLoading(false)
       if (thisError.status === 401) {
-        addLog({
-          method: 'error',
-          data: [`Unauthorized to load ${url}`],
-          code: 401,
-        })
+        addLog({ method: 'error', data: [`Unauthorized`], code: 401 })
       } else {
-        addLog({
-          method: 'error',
-          data: [`Error loading ${url}`],
-          code: 500,
-        })
+        addLog({ method: 'error', data: [`Error loading ${url}`], code: 500 })
       }
     }
   }

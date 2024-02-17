@@ -5,7 +5,7 @@ import { Typography } from '@mui/material'
 import SkeletonTable from '../workouts/table/WorkoutsTable'
 import useFetch from '../../hooks/useFetch'
 import ErrorRow from '../workouts/components/ErrorRow'
-import TextLink from '../workouts/components/TextLink'
+import TextLink from '../../components/TextLink'
 import { NavLink } from 'react-router-dom'
 import {
   StyledTableContainer,
@@ -47,56 +47,26 @@ const Games = ({ tab }) => {
             Some cool games I've made that will test your knowledge.
           </Typography>
         </Box>
-        <StyledTableContainer>
-          <StyledTable size='small' stickyHeader>
-            <TableBody>
-              {games.map((game, key) => (
-                <StyledTableRow key={game.name} index={key}>
-                  <StyledTableCell align='left'>
-                    <NavLink
-                      variant='subtitle'
-                      to={`/games/${game.to}`}
-                      className={({ isActive, isPending }) =>
-                        `nav-link ${
-                          isActive
-                            ? 'active'
-                            : isPending
-                            ? 'pending'
-                            : 'not-active'
-                        }`
-                      }
-                      style={{
-                        ':hover': {
-                          textDecoration: 'underline',
-                          color: 'primary.main',
-                          cursor: 'pointer !important',
-                        },
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: 'text.secondary',
-                          fontSize: '14px',
-                          textTransform: 'capitalize',
-                          ':hover': {
-                            textDecoration: 'underline',
-                            color: 'primary.main',
-                            cursor: 'pointer !important',
-                          },
-                        }}
-                      >
-                        {game.title}
-                      </Typography>
-                    </NavLink>
-                  </StyledTableCell>
-                  <StyledIconTableCell align='center'>
-                    JavaScript
-                  </StyledIconTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </StyledTable>
-        </StyledTableContainer>
+        <table size='small' stickyHeader>
+          <thead>
+            <tr>
+              <th align='left'>Name</th>
+              <th align='right'>Language</th>
+            </tr>
+          </thead>
+          <tbody>
+            {games.map((game, key) => (
+              <tr key={game.name}>
+                <td align='left' style={{ paddingLeft: '15px' }}>
+                  <TextLink to={game.to} text={game.title} />
+                </td>
+                <td align='right' style={{ paddingRight: '15px' }}>
+                  <Typography color='grey.500'>JavaScript</Typography>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </Box>
     </>
   )

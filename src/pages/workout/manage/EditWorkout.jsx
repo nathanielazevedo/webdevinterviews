@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import { TextField, Button, Box } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { createContext } from 'react'
 import { useParams } from 'react-router-dom'
 import useFetch from '../../../hooks/useFetch'

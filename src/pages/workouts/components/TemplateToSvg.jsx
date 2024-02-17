@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Box, Tooltip } from '@mui/material'
 import { react, vanilla } from '../../../assets/template'
 

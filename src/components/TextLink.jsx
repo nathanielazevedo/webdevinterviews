@@ -2,10 +2,11 @@
 import { Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
-const TextLink = ({ workout, toManage }) => (
+const TextLink = ({ to, text }) => (
   <NavLink
     variant='subtitle'
-    to={`/workouts/${workout.id}${toManage ? '/manage' : ''}`}
+    end
+    to={to}
     className={({ isActive, isPending }) =>
       `nav-link ${isActive ? 'active' : isPending ? 'pending' : 'not-active'}`
     }
@@ -29,7 +30,7 @@ const TextLink = ({ workout, toManage }) => (
         },
       }}
     >
-      {workout.title}
+      {text}
     </Typography>
   </NavLink>
 )
