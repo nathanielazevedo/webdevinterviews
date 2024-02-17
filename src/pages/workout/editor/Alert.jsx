@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable react/prop-types */
 import { useContext } from 'react'
 import { Box } from '@mui/material'
 import Button from '@mui/material/Button'
@@ -9,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
-import { WorkoutContext } from '../pages/workout/root/WorkoutContext'
+import { WorkoutContext } from '../root/WorkoutContext'
 
 const AlertDialog = ({ setOpen }) => {
   const navigate = useNavigate()
