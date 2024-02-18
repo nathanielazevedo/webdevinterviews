@@ -1,13 +1,17 @@
-import Box from '@mui/material/Box'
-import Tooltip from '@mui/material/Tooltip'
+import { useContext } from 'react'
+import { WorkoutContext } from '../../../contexts/WorkoutContext'
 import { useNavigate, useNavigation } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
-import YouTubeIcon from '@mui/icons-material/YouTube'
-import { IconButton, Typography, CircularProgress } from '@mui/material'
-import { useContext } from 'react'
-import Rating from '../../../components/Rating'
-import { WorkoutContext } from '../../../contexts/WorkoutContext'
+import {
+  IconButton,
+  Typography,
+  CircularProgress,
+  Box,
+  Tooltip,
+} from '@mui/material'
 import TemplateToSvg from '../../workouts/components/TemplateToSvg'
+import YouTube from '../../../components/YouTubeIcon'
+import Rating from '../../../components/Rating'
 
 const WorkoutTopNav = () => {
   const { workout } = useContext(WorkoutContext)
@@ -22,48 +26,25 @@ const WorkoutTopNav = () => {
         borderBottom: '0.5px solid #454950',
       }}
     >
-      <Box
+      <IconButton
+        color='grey.900'
+        className='nav-link'
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '15px',
+          borderRadius: '0',
+          height: '35px',
+          maxHeight: '35px',
+          width: '67px',
+          color: 'grey.500',
+          borderRight: '0.5px solid #454950',
         }}
+        onClick={() => navigate('/workouts')}
       >
-        <IconButton
-          color='grey.900'
-          className='nav-link'
-          sx={{
-            borderRadius: '0',
-            height: '35px',
-            maxHeight: '35px',
-            width: '60px',
-            color: 'grey.500',
-            borderRight: '0.5px solid #454950',
-          }}
-          onClick={() => navigate('/workouts')}
-        >
-          <CloseIcon />
-        </IconButton>
-        <TemplateToSvg template={workout.type} />
-        <Typography variant='caption'>{workout.title}</Typography>
-        <Rating rating={workout.difficulty} />
-        <Tooltip title='Watch the video' placement='bottom'>
-          <IconButton size='small' sx={{ height: '30px', width: '30px' }}>
-            <a
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              href={workout.youtubeLink}
-              target='_blank'
-              rel='noreferrer'
-            >
-              <YouTubeIcon sx={{ color: 'darkred' }} fontSize='small' />
-            </a>
-          </IconButton>
-        </Tooltip>
-      </Box>
+        <CloseIcon />
+      </IconButton>
+      <TemplateToSvg template={workout.type} />
+      <Typography variant='caption'>{workout.title}</Typography>
+      <Rating rating={workout.difficulty} />
+      <YouTube workout={workout} />
     </Box>
   )
 }

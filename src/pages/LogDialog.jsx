@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useContext } from 'react'
 import { Dialog, DialogTitle, DialogContent } from '@mui/material'
 import { Console } from 'console-feed'

@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from 'react'
 import { Box, Typography } from '@mui/material'
 import { useSandpack } from '@codesandbox/sandpack-react'
-import { sourceControlStyles } from '../editorStyles'
 import { WorkoutContext } from '../../../../contexts/WorkoutContext'
 import { checkCodeDifferences } from '../utils'
 import SyncChanges from './SyncChanges'
@@ -35,9 +34,16 @@ const ChangedFiles = ({ isSolution }) => {
     setChangedFiles(_changedFiles)
   }, [sandpack?.files, workout])
 
-  console.log('changedFiles', changedFiles)
   return (
-    <Box sx={sourceControlStyles}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        flexDirection: 'column',
+        padding: '0 10px',
+      }}
+    >
       <Box
         sx={{
           padding: '10px 0',

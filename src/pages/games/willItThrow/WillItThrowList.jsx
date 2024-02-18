@@ -2,14 +2,6 @@
 import { NavLink } from 'react-router-dom'
 import decks from './willItThrow.json'
 import { Box, Typography } from '@mui/material'
-import {
-  StyledTableContainer,
-  StyledTable,
-  StyledTableCell,
-  StyledIconTableCell,
-  StyledTableRow,
-} from '../../workouts/table/tableStyledComponents'
-import TableBody from '@mui/material/TableBody'
 
 const Games = () => {
   return (
@@ -47,12 +39,12 @@ const Games = () => {
             Each deck contains 5 true or false questions.
           </Typography>
         </Box>
-        <StyledTableContainer>
-          <StyledTable size='small' stickyHeader>
-            <TableBody>
+        <div>
+          <table>
+            <tbody>
               {decks.map((deck, index) => (
-                <StyledTableRow key={index} index={index}>
-                  <StyledTableCell>
+                <tr key={index}>
+                  <td style={{ paddingLeft: '15px' }}>
                     <NavLink
                       variant='subtitle'
                       to={`/games/will-it-throw/${deck.to}`}
@@ -88,15 +80,15 @@ const Games = () => {
                         {deck.title}
                       </Typography>
                     </NavLink>
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    <span>{deck.language}</span>
-                  </StyledTableCell>
-                </StyledTableRow>
+                  </td>
+                  <td align='right' style={{ paddingRight: '15px' }}>
+                    <Typography color='grey.500'>{deck.language}</Typography>
+                  </td>
+                </tr>
               ))}
-            </TableBody>
-          </StyledTable>
-        </StyledTableContainer>
+            </tbody>
+          </table>
+        </div>
       </Box>
     </>
   )

@@ -2,18 +2,10 @@
 import TableBody from '@mui/material/TableBody'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
-import SkeletonTable from '../workouts/table/WorkoutsTable'
 import useFetch from '../../hooks/useFetch'
 import ErrorRow from '../workouts/components/ErrorRow'
 import TextLink from '../../components/TextLink'
 import { NavLink } from 'react-router-dom'
-import {
-  StyledTableContainer,
-  StyledTable,
-  StyledTableCell,
-  StyledIconTableCell,
-  StyledTableRow,
-} from '../workouts/table/tableStyledComponents'
 import NoWorkouts from '../workouts/components/NoWorkouts'
 
 const games = [

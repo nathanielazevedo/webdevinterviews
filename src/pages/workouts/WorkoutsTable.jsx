@@ -1,21 +1,13 @@
-/* eslint-disable react/prop-types */
-import TableBody from '@mui/material/TableBody'
 import { Typography, Box } from '@mui/material'
-import Rating from '../../../components/Rating'
-import SkeletonTable from './SkeletonTable'
-import useFetch from '../../../hooks/useFetch'
-import YouTube from '../../../components/YouTubeIcon'
-import ErrorRow from '../components/ErrorRow'
-import TextLink from '../../../components/TextLink'
-import {
-  StyledTableContainer,
-  StyledTableCell,
-  StyledIconTableCell,
-  StyledTableRow,
-} from './tableStyledComponents'
-import NoWorkouts from '../components/NoWorkouts'
-import Workout from '../../../models/workout'
-import TemplateToSvg from '../components/TemplateToSvg'
+import Rating from '../../components/Rating'
+import SkeletonTable from './components/SkeletonTable'
+import useFetch from '../../hooks/useFetch'
+import YouTube from '../../components/YouTubeIcon'
+import ErrorRow from './components/ErrorRow'
+import TextLink from '../../components/TextLink'
+import NoWorkouts from './components/NoWorkouts'
+import Workout from '../../models/workout'
+import TemplateToSvg from './components/TemplateToSvg'
 import { TableHead as MuiTableHead } from '@mui/material'
 import { useState } from 'react'
 

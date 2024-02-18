@@ -1,66 +1,25 @@
 import { useContext } from 'react'
-import { NavLink } from 'react-router-dom'
-import Skeleton from '@mui/material/Skeleton'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import Divider from '@mui/material/Divider'
 import { AuthContext } from './AuthContext'
-import { StyledTopNav } from '../rootStyledComponents'
+import { Typography, Box, Skeleton, Divider } from '@mui/material'
+import TextLink from '../components/TextLink'
 
 const RootTopNav = () => {
   const { user, authLoading } = useContext(AuthContext)
 
   return (
     <div className='top-nav'>
-      <Typography color='grey.500' fontWeight='bold' fontSize='12px'>
+      <Typography color='grey.500' variant='button'>
         WEB DEV INTERVIEWS
       </Typography>
       {!authLoading ? (
         user ? (
-          <NavLink
-            to='/auth/account'
-            className={({ isActive, isPending }) =>
-              isActive ? 'active' : isPending ? 'pending' : 'not-active'
-            }
-          >
-            <Typography>{user.username}</Typography>
-          </NavLink>
+          <TextLink to='/auth/account' text={user.username} />
         ) : (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              width: '110px',
-            }}
-          >
-            <NavLink
-              to='/auth/login'
-              className={({ isActive, isPending }) =>
-                `nav-link ${
-                  isActive ? 'active' : isPending ? 'pending' : 'not-active'
-                }`
-              }
-            >
-              <Typography component='div' sx={{ fontSize: '12px' }}>
-                Login
-              </Typography>
-            </NavLink>
+          <div className='top-nav-auth-wrapper'>
+            <TextLink to='/auth/login' text='Login' />
             <Divider orientation='vertical' flexItem />
-            <NavLink
-              to='/auth/signup'
-              className={({ isActive, isPending }) =>
-                `nav-link ${
-                  isActive ? 'active' : isPending ? 'pending' : 'not-active'
-                }`
-              }
-            >
-              <Typography component='div' sx={{ fontSize: '12px' }}>
-                Sign Up
-              </Typography>
-            </NavLink>
-          </Box>
+            <TextLink to='/auth/signup' text='Signup' />
+          </div>
         )
       ) : (
         <Skeleton variant='text' width={100} animation='wave' />

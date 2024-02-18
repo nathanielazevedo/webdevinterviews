@@ -1,6 +1,6 @@
 import Skeleton from '@mui/material/Skeleton'
 
-const SkeletonTable = ({ isYours }) => {
+const SkeletonTable = () => {
   const getRandomWidth = () => `${Math.floor(Math.random() * 10) + 40}%`
   return (
     <>

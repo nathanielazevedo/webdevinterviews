@@ -52,7 +52,7 @@ const Root = () => (
     <TopNav />
     <main className='main'>
       <SideNav links={links} lastLink={lastLink} />
-      <div>
+      <div className='main-container'>
         <Outlet />
       </div>
     </main>

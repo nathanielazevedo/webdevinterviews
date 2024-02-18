@@ -2,14 +2,13 @@ import { Box } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import { useContext } from 'react'
-import { StyledTopNav } from '../../../rootStyledComponents'
 import { WorkoutContext } from '../../../contexts/WorkoutContext'
 
 const TopNav = () => {
   const { workoutData } = useContext(WorkoutContext)
 
   return (
-    <StyledTopNav>
+    <div className='top-nav'>
       <Box
         sx={{
           display: 'flex',
@@ -30,7 +29,7 @@ const TopNav = () => {
         </NavLink>
       </Box>
       <div style={{ flexGrow: '1' }} />
-    </StyledTopNav>
+    </div>
   )
 }
 

@@ -1,4 +1,5 @@
 import { useRef, useContext } from 'react'
+import { WorkoutContext } from '../../../contexts/WorkoutContext'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import { SandpackFileExplorer } from 'sandpack-file-explorer'
 import {
@@ -12,12 +13,9 @@ import ResizeHandle from '../../../components/ResizeHandle'
 import Browser from './browser/Root'
 import AutoSave from './AutoSave'
 import { theme } from './theme'
-import { WorkoutContext } from '../../../contexts/WorkoutContext'
 import HorizontalResizeHandle from '../../../components/HorizontalResizeHandle'
 import Prettier from './components/Prettier'
-import { layoutStyles, sourceControlHeaderStyles } from './editorStyles'
 import ChangedFiles from './components/ChangedFiles'
-import { CircularProgress } from '@mui/material'
 
 const mergeFiles = (workout, isSolution) => {
   const local = isSolution ? workout.files.solution : workout.files.template
@@ -57,10 +55,17 @@ const EditorMain = ({ isSolution }) => {
           cmInstance={codemirrorInstance.current}
         />
       )}
-
       <SandpackThemeProvider theme={theme}>
         <SandpackLayout>
-          <div style={layoutStyles}>
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'row',
+              position: 'relative',
+              height: '100%',
+            }}
+          >
             <PanelGroup
               direction='horizontal'
               autoSaveId='editor-prefs'
@@ -79,10 +84,18 @@ const EditorMain = ({ isSolution }) => {
                     <>
                       <HorizontalResizeHandle />
                       <Panel>
-                        <Box sx={sourceControlHeaderStyles}>
-                          <Typography sx={{ fontSize: '12px' }}>
-                            SOURCE CONTROL
-                          </Typography>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-start',
+                            height: '35px',
+                            alignItems: 'center',
+                            backgroundColor: 'black',
+                            width: '100%',
+                            paddingLeft: '10px',
+                          }}
+                        >
+                          <Typography>SOURCE CONTROL</Typography>
                         </Box>
                         <ChangedFiles isSolution={isSolution} />
                       </Panel>
@@ -114,9 +127,7 @@ const EditorMain = ({ isSolution }) => {
                 minSize={0}
                 defaultSize={45}
                 collapsible
-                style={{
-                  position: 'relative',
-                }}
+                style={{ position: 'relative' }}
               >
                 <Browser />
               </Panel>

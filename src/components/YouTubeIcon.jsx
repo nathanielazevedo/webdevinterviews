@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import YouTubeIcon from '@mui/icons-material/YouTube'

@@ -1,17 +1,11 @@
 import Box from '@mui/material/Box'
 import { CircularProgress, Typography } from '@mui/material'
-import {
-  MiddleContent,
-  SideNavContainer,
-  StyledTopNav,
-} from '../../rootStyledComponents'
 
 const WorkoutSkeleton = () => (
   <>
-    <StyledTopNav />
-    <SideNavContainer />
+    <div className='top-nav' />
+    <div className='side-nav-wrapper' />
     <Box
-      id='main-content'
       sx={{
         display: 'flex',
         flexDirection: 'column',

@@ -267,6 +267,11 @@
   border-bottom: 0.5px solid var(--color-solid-resize-bar);
 }
 
+.top-nav-auth-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
 .main {
   display: flex;
   flex-grow: 1;
@@ -311,4 +316,20 @@ td {
 
 tr:nth-child(even) {
   background-color: #1a1a1a;
+}
+
+.side-nav-wrapper {
+  width: var(--side-nav-width);
+  border-right: 0.5px solid var(--color-solid-resize-bar);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.editor-container {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.025);
+  min-height: calc(100vh - 120px);
+  max-height: calc(100vh - 120px);
 }

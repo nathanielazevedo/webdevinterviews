@@ -23,17 +23,17 @@ const Games = () => {
             Each deck contains 5 true or false questions.
           </Typography>
         </Box>
-        <table size='small' stickyHeader>
+        <table>
           <tbody>
             {decks.map((deck, index) => (
-              <tr key={index} index={index}>
-                <td align='left'>
+              <tr key={index}>
+                <td align='left' style={{ paddingLeft: '15px' }}>
                   <TextLink
                     to={`/games/true-or-false/${deck.to}`}
                     text={deck.title}
                   />
                 </td>
-                <td align='right'>
+                <td align='right' style={{ paddingRight: '15px' }}>
                   <Typography color='grey.500'>{deck.language}</Typography>
                 </td>
               </tr>
