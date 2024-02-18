@@ -2,7 +2,6 @@ import Box from '@mui/material/Box'
 import { CircularProgress, Typography } from '@mui/material'
 import {
   MiddleContent,
-  RootFrame,
   SideNavContainer,
   StyledTopNav,
 } from '../../rootStyledComponents'

@@ -6,11 +6,11 @@ import YouTubeIcon from '@mui/icons-material/YouTube'
 import { IconButton, Typography, CircularProgress } from '@mui/material'
 import { useContext } from 'react'
 import Rating from '../../../components/Rating'
-import { WorkoutContext } from './WorkoutContext'
+import { WorkoutContext } from '../../../contexts/WorkoutContext'
 import TemplateToSvg from '../../workouts/components/TemplateToSvg'
 
 const WorkoutTopNav = () => {
-  const { workoutData: workout } = useContext(WorkoutContext)
+  const { workout } = useContext(WorkoutContext)
   const navigate = useNavigate()
   const navigation = useNavigation()
 
@@ -44,7 +44,7 @@ const WorkoutTopNav = () => {
         >
           <CloseIcon />
         </IconButton>
-        <TemplateToSvg template={workout.sp_template.name} />
+        <TemplateToSvg template={workout.type} />
         <Typography variant='caption'>{workout.title}</Typography>
         <Rating rating={workout.difficulty} />
         <Tooltip title='Watch the video' placement='bottom'>
@@ -55,7 +55,7 @@ const WorkoutTopNav = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              href={workout.youtube_link}
+              href={workout.youtubeLink}
               target='_blank'
               rel='noreferrer'
             >

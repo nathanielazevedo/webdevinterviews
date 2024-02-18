@@ -3,9 +3,9 @@ import { Button } from '@mui/material'
 import { useSandpack } from '@codesandbox/sandpack-react'
 import { useContext, useState } from 'react'
 import CircularProgress from '@mui/material/CircularProgress'
-import { WorkoutContext } from '../../pages/workout/root/WorkoutContext'
-import { LogContext } from '../../pages/LogContext'
-import { AuthContext } from '../../pages/AuthContext'
+import { WorkoutContext } from '../../../../contexts/WorkoutContext'
+import { LogContext } from '../../../LogContext'
+import { AuthContext } from '../../../AuthContext'
 import { separateFiles } from '../utils'
 
 const SyncChanges = ({ changedFiles, isSolution }) => {

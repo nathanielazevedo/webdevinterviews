@@ -44,7 +44,7 @@ const WorkoutTables = () => {
       return (
         <tr key={workout.id}>
           <td align='left' width={'100px'}>
-            <TemplateToSvg template={workout.spTemplate.name} />
+            <TemplateToSvg template={workout.type} />
           </td>
           <td align='left'>
             <TextLink to={`/workouts/${workout.id}`} text={workout.title} />

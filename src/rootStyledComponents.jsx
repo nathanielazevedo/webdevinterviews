@@ -2,16 +2,6 @@ import { styled } from '@mui/system'
 import { Box } from '@mui/material'
 import List from '@mui/material/List'
 
-const OuterBox = styled(Box)(() => ({
-  height: '100vh',
-}))
-
-const RootFrame = styled(Box)(() => ({
-  height: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-}))
-
 const StyledTopNav = styled(Box)(({ theme }) => ({
   display: 'flex',
   height: theme.variables.topNavHeight,
@@ -49,8 +39,6 @@ const OutletContainer = styled(Box)(() => ({
 }))
 
 export {
-  OuterBox,
-  RootFrame,
   StyledTopNav,
   MiddleContent,
   SideNavContainer,

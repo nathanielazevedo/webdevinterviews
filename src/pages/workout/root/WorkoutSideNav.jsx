@@ -3,32 +3,32 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined'
 import { useContext } from 'react'
 import SideNav from '../../../components/frame/SideNav'
-import { WorkoutContext } from './WorkoutContext'
+import { WorkoutContext } from '../../../contexts/WorkoutContext'
 
 const WorkoutSideNav = () => {
-  const { workoutData } = useContext(WorkoutContext)
+  const { workout } = useContext(WorkoutContext)
 
   const editorLinks = [
     {
       name: 'EDITOR',
       icon: <CodeIcon />,
-      path: `/workouts/${workoutData.id}`,
+      path: `/workouts/${workout.id}`,
       end: true,
       replace: true,
     },
     {
       name: 'SOLUTION',
       icon: <VisibilityOutlinedIcon />,
-      path: `/workouts/${workoutData.id}/solution`,
+      path: `/workouts/${workout.id}/solution`,
       replace: true,
     },
   ]
 
-  if (workoutData.is_owner) {
+  if (workout.isOwner) {
     editorLinks.unshift({
       name: 'MANAGE',
       icon: <AdminPanelSettingsOutlinedIcon />,
-      path: `/workouts/${workoutData.id}/manage`,
+      path: `/workouts/${workout.id}/manage`,
       replace: true,
     })
   }

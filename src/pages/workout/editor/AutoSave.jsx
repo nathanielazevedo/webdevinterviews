@@ -1,10 +1,3 @@
-/* eslint-disable operator-linebreak */
-/* eslint-disable guard-for-in */
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable function-paren-newline */
-/* eslint-disable react/prop-types */
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react'
 import { useSandpack } from '@codesandbox/sandpack-react'
 import { separateFiles } from './utils'

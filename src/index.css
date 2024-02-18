@@ -16,7 +16,7 @@
   --divider: rgba(255, 255, 255, 0.2);
   --side-bar-1-width: 65px;
   --side-nav-width-collapsed: 40px;
-  --side-nav-width: 60px;
+  --side-nav-width: 80px;
 }
 
 *:focus {
@@ -259,7 +259,7 @@
 }
 
 .top-nav {
-  height: 35px;
+  height: 45px;
   display: flex;
   align-items: center;
   padding: 0 20px;
@@ -274,6 +274,8 @@
 
 .main > :nth-child(2) {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .workout-table-wrapper {

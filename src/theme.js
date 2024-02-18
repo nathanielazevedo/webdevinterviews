@@ -12,8 +12,8 @@ export default createTheme({
     fontFamily: 'Bai Jamjuree',
   },
   variables: {
-    sideNavWidth: '60px',
-    topNavHeight: '35px',
+    sideNavWidth: '70px',
+    topNavHeight: '45px',
   },
   components: {
     MuiTooltip: {

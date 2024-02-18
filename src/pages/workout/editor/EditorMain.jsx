@@ -5,26 +5,33 @@ import {
   SandpackLayout,
   SandpackCodeEditor,
   SandpackThemeProvider,
+  SandpackProvider,
 } from '@codesandbox/sandpack-react'
 import { Box, Typography } from '@mui/material'
-import ResizeHandle from './components/ResizeHandle'
+import ResizeHandle from '../../../components/ResizeHandle'
 import Browser from './browser/Root'
 import AutoSave from './AutoSave'
 import { theme } from './theme'
-import { WorkoutContext } from '../pages/workout/root/WorkoutContext'
-import Workout from '../models/workout'
-import HorizontalResizeHandle from './components/HorizontalResizeHandle'
+import { WorkoutContext } from '../../../contexts/WorkoutContext'
+import HorizontalResizeHandle from '../../../components/HorizontalResizeHandle'
 import Prettier from './components/Prettier'
 import { layoutStyles, sourceControlHeaderStyles } from './editorStyles'
 import ChangedFiles from './components/ChangedFiles'
+import { CircularProgress } from '@mui/material'
+
+const mergeFiles = (workout, isSolution) => {
+  const local = isSolution ? workout.files.solution : workout.files.template
+  const shared = workout.files.shared
+  const packageJson = workout.files.packageJson
+  return { ...local, ...shared, ...packageJson }
+}
 
 const EditorMain = ({ isSolution }) => {
   const codemirrorInstance = useRef()
-  const { workoutData } = useContext(WorkoutContext)
-  const workout = new Workout(workoutData)
+  const { workout } = useContext(WorkoutContext)
 
   const renderAutoSave = () => {
-    if (workoutData.is_owner) {
+    if (workout?.isOwner) {
       return true
     }
     if (!isSolution) {
@@ -34,7 +41,15 @@ const EditorMain = ({ isSolution }) => {
   }
 
   return (
-    <>
+    <SandpackProvider
+      files={mergeFiles(workout, isSolution)}
+      template={workout.type === 'vanilla' ? 'static' : workout.type}
+      options={{
+        autoReload: true,
+        visibleFiles: ['/App.js'],
+        activeFile: '/App.js',
+      }}
+    >
       {renderAutoSave() && (
         <AutoSave
           workout={workout}
@@ -109,7 +124,7 @@ const EditorMain = ({ isSolution }) => {
           </div>
         </SandpackLayout>
       </SandpackThemeProvider>
-    </>
+    </SandpackProvider>
   )
 }
 

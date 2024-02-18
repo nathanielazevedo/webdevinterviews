@@ -7,7 +7,7 @@ import * as prettier from 'prettier'
 import parserBabel from 'prettier/parser-babel'
 import parserPostcss from 'prettier/parser-postcss'
 import htmlParser from 'prettier/parser-html'
-import PrettierSvg from '../../assets/prettier.svg'
+import PrettierSvg from '../../../../assets/prettier.svg'
 
 const Prettier = ({ codemirrorInstance }) => {
   const [prettierCode, setPrettierCode] = useState('')

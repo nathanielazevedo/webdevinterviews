@@ -15,7 +15,6 @@ import {
   StyledTableRow,
 } from '../workouts/table/tableStyledComponents'
 import NoWorkouts from '../workouts/components/NoWorkouts'
-import { RootFrame } from '../../rootStyledComponents'
 
 const games = [
   {

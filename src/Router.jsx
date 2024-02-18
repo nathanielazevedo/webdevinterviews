@@ -4,8 +4,6 @@ import Root from './pages/Root'
 import Home from './pages/Home'
 import Error from './pages/misc/Error'
 import FourOFour from './pages/misc/FourOFour'
-import Template from './pages/workout/Template'
-import Solution from './pages/workout/Solution'
 import Login from './pages/auth/Login'
 import SignUp from './pages/auth/Signup'
 import Account from './pages/auth/Account'
@@ -16,7 +14,7 @@ import Help from './pages/misc/Help'
 import EditWorkout from './pages/workout/manage/EditWorkout'
 import WorkoutsTable from './pages/workouts/table/WorkoutsTable'
 import ManageRoot from './pages/workout/manage/ManageRoot'
-import WorkoutRoot from './pages/workout/root/WorkoutRoot'
+import WorkoutRoot from './pages/workout/WorkoutRoot'
 import RootRedirect from './components/RootRedirect'
 import Games from './pages/games/GamesTable'
 import TrueOrFalseList from './pages/games/trueOrFalse/TrueOrFalseList'
@@ -24,6 +22,7 @@ import TrueOrFalse from './pages/games/trueOrFalse/TrueOrFalse'
 import ShortsEditor from './pages/shortsEditor/ShortsEditor'
 import WillItThrowList from './pages/games/willItThrow/WillItThrowList'
 import WillItThrow from './pages/games/willItThrow/Will_ItThrow'
+import EditorMain from './pages/workout/editor/EditorMain'
 
 const router = createBrowserRouter([
   {
@@ -90,19 +89,19 @@ const router = createBrowserRouter([
       {
         path: 'workouts/:id',
         element: <WorkoutRoot />,
-        errorElement: <Error redirectPath='/workouts' />,
+        errorElement: <Error />,
         children: [
           {
             errorElement: <Error />,
             children: [
               {
                 index: true,
-                element: <Template />,
+                element: <EditorMain key='challenge' isSolution={false} />,
                 errorElement: <Error />,
               },
               {
                 path: 'solution',
-                element: <Solution />,
+                element: <EditorMain key='solution' isSolution={true} />,
                 errorElement: <Error />,
               },
               {

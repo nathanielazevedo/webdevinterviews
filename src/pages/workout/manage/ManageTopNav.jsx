@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import { useContext } from 'react'
 import { StyledTopNav } from '../../../rootStyledComponents'
-import { WorkoutContext } from '../root/WorkoutContext'
+import { WorkoutContext } from '../../../contexts/WorkoutContext'
 
 const TopNav = () => {
   const { workoutData } = useContext(WorkoutContext)

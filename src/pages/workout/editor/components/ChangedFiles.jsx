@@ -1,11 +1,8 @@
-/* eslint-disable indent */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-underscore-dangle */
 import { useEffect, useState, useContext } from 'react'
 import { Box, Typography } from '@mui/material'
 import { useSandpack } from '@codesandbox/sandpack-react'
 import { sourceControlStyles } from '../editorStyles'
-import { WorkoutContext } from '../../pages/workout/root/WorkoutContext'
+import { WorkoutContext } from '../../../../contexts/WorkoutContext'
 import { checkCodeDifferences } from '../utils'
 import SyncChanges from './SyncChanges'
 import ResetChanges from './ResetChanges'
@@ -13,21 +10,21 @@ import DiffDialog from './DiffDialog'
 
 const ChangedFiles = ({ isSolution }) => {
   const [changedFiles, setChangedFiles] = useState([])
-  const { workoutData } = useContext(WorkoutContext)
+  const { workout } = useContext(WorkoutContext)
   const { sandpack } = useSandpack()
   const [diffDialogOpen, setDiffDialogOpen] = useState(false)
   const [selectedFile, setSelectedFile] = useState('')
 
   const serverFiles = isSolution
     ? {
-        ...workoutData.dynamo_data.solution,
-        ...workoutData.dynamo_data.shared,
-        ...workoutData.dynamo_data.packageJson,
+        ...workout.files.solution,
+        ...workout.files.shared,
+        ...workout.files.packageJson,
       }
     : {
-        ...workoutData.dynamo_data.template,
-        ...workoutData.dynamo_data.shared,
-        ...workoutData.dynamo_data.packageJson,
+        ...workout.files.template,
+        ...workout.files.shared,
+        ...workout.files.packageJson,
       }
 
   const localFiles = sandpack?.files
@@ -36,7 +33,7 @@ const ChangedFiles = ({ isSolution }) => {
     if (!sandpack?.files) return
     const _changedFiles = checkCodeDifferences(serverFiles, localFiles)
     setChangedFiles(_changedFiles)
-  }, [sandpack?.files, workoutData])
+  }, [sandpack?.files, workout])
 
   console.log('changedFiles', changedFiles)
   return (

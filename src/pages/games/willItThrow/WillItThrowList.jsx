@@ -2,7 +2,6 @@
 import { NavLink } from 'react-router-dom'
 import decks from './willItThrow.json'
 import { Box, Typography } from '@mui/material'
-import { RootFrame } from '../../../rootStyledComponents'
 import {
   StyledTableContainer,
   StyledTable,

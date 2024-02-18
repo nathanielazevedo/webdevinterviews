@@ -8,7 +8,7 @@ import {
 } from '@codesandbox/sandpack-react'
 import React from 'react'
 import { PanelGroup, Panel } from 'react-resizable-panels'
-import HorizontalResizeHandle from '../../editor/components/HorizontalResizeHandle'
+import HorizontalResizeHandle from '../../components/HorizontalResizeHandle'
 
 const ShortsEditor = () => {
   return (

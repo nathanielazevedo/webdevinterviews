@@ -1,37 +1,19 @@
-import SpTemplate from './spTemplate'
-
 export default class Workout {
   constructor({
-    accessLevel,
-    author_id: authorId,
-    author,
-    created_at: createdAt,
-    difficulty,
     id,
-    image_link: imageLink,
-    public: isPublic,
-    sp_template: spTemplate,
-    sp_template_id: spTemplateId,
     title,
-    updatedAt,
+    difficulty,
+    sp_template: type,
     youtube_link: youtubeLink,
-    dynamo_data: dynamoData,
+    dynamo_data: files,
     is_owner: isOwner,
   }) {
-    this.accessLevel = accessLevel
-    this.authorId = authorId
-    this.author = author
-    this.createdAt = createdAt
-    this.difficulty = difficulty
     this.id = id
-    this.imageLink = imageLink
-    this.isPublic = isPublic
-    this.spTemplate = new SpTemplate(spTemplate)
-    this.spTemplateId = spTemplateId
     this.title = title
-    this.updatedAt = updatedAt
+    this.difficulty = difficulty
+    this.type = type.name
     this.youtubeLink = youtubeLink
-    this.dynamoData = dynamoData
+    this.files = files
     this.isOwner = isOwner
   }
 }

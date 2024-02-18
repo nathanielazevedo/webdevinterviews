@@ -1,12 +1,8 @@
 import { Outlet } from 'react-router-dom'
-import WorkoutTopNav from './WorkoutTopNav'
-import { WorkoutProvider } from './WorkoutContext'
-import WorkoutSideNav from './WorkoutSideNav'
-import {
-  MiddleContent,
-  OutletContainer,
-  RootFrame,
-} from '../../../rootStyledComponents'
+import WorkoutTopNav from './root/WorkoutTopNav'
+import { WorkoutProvider } from '../../contexts/WorkoutContext'
+import WorkoutSideNav from './root/WorkoutSideNav'
+import { OutletContainer } from '../../rootStyledComponents'
 
 const WorkoutRoot = () => (
   <WorkoutProvider>

@@ -11,13 +11,11 @@ import {
   useSandpack,
 } from '@codesandbox/sandpack-react'
 import { theme } from '../theme'
-import { WorkoutContext } from '../../pages/workout/root/WorkoutContext'
-import Workout from '../../models/workout'
+import { WorkoutContext } from '../../../../contexts/WorkoutContext'
 
 const BasicTabs = () => {
   const [value, setValue] = React.useState(0)
-  const { workoutData } = React.useContext(WorkoutContext)
-  const workout = new Workout(workoutData)
+  const { workout } = React.useContext(WorkoutContext)
   const { sandpack } = useSandpack()
 
   const handleChange = (event, newValue) => {

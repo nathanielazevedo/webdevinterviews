@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import PreviewTabs from './Preview'
 import Console from './Console'
-import ResizeHandle from '../components/HorizontalResizeHandle'
+import ResizeHandle from '../../../../components/HorizontalResizeHandle'
 
 const Browser = () => {
   const consolePanelRef = useRef()

@@ -4,8 +4,7 @@ import { useSandpack } from '@codesandbox/sandpack-react'
 import { useContext } from 'react'
 import ReactDiffViewer from 'react-diff-viewer'
 import { Close } from '@mui/icons-material'
-import { WorkoutContext } from '../../pages/workout/root/WorkoutContext'
-import Workout from '../../models/workout'
+import { WorkoutContext } from '../../../../contexts/WorkoutContext'
 
 const newStyles = {
   variables: {
@@ -22,8 +21,7 @@ const newStyles = {
 
 const DiffDialog = ({ onClose, selectedFile, isSolution }) => {
   const { sandpack } = useSandpack()
-  const { workoutData } = useContext(WorkoutContext)
-  const workout = new Workout(workoutData)
+  const { workout } = useContext(WorkoutContext)
 
   const localFile = sandpack.files[selectedFile]?.code
   let serverFile
