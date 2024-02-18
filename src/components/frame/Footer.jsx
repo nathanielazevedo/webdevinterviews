@@ -74,22 +74,27 @@ const Footer = () => {
   }
 
   return (
-    <Box
-      sx={{
-        height: '35px',
-        borderTop: '0.5px solid #454950',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        width: '100%',
-        padding: '0px 20px',
-      }}
-    >
-      <Tooltip title='View Logs' placement='left'>
-        <>{getButtonText()}</>
-      </Tooltip>
-      <LogDialog open={logDialogOpen} onClose={() => setLogDialogOpen(false)} />
-    </Box>
+    <>
+      <Box
+        sx={{
+          height: '35px',
+          borderTop: '0.5px solid #454950',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          width: '100%',
+          padding: '0px 20px',
+        }}
+      >
+        <Tooltip title='View Logs' placement='left'>
+          <>{getButtonText()}</>
+        </Tooltip>
+        <LogDialog
+          open={logDialogOpen}
+          onClose={() => setLogDialogOpen(false)}
+        />
+      </Box>
+    </>
   )
 }
 

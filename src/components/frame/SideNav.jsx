@@ -1,7 +1,7 @@
 import SideNavIcon from './SideNavIcon'
 
-const SideNav = ({ links, lastLink }) => (
-  <div className='side-nav-wrapper'>
+const SideNav = ({ links, lastLink, main }) => (
+  <div className={`side-nav-wrapper ${main ? 'root-side-nav' : ''}`}>
     <div>
       {links.map((link) => (
         <SideNavIcon key={link.path} link={link} />

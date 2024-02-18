@@ -325,6 +325,7 @@ tr:nth-child(even) {
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
+  height: 100%;
 }
 
 .editor-container {
@@ -343,4 +344,18 @@ tr:nth-child(even) {
 .editor-main {
   display: flex;
   height: 100%;
+}
+
+.menu-icon {
+  display: none !important;
+}
+
+@media screen and (max-width: 765px) {
+  .root-side-nav {
+    display: none;
+  }
+
+  .menu-icon {
+    display: inline !important;
+  }
 }

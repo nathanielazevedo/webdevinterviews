@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 const RootRedirect = () => {
   const navigate = useNavigate()
   useEffect(() => {
-    navigate('/workouts/official')
+    navigate('/workouts')
   }, [])
 
   return <div />
