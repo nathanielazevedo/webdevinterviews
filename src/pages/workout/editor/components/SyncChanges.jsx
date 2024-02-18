@@ -11,7 +11,7 @@ import { separateFiles } from '../utils'
 const SyncChanges = ({ changedFiles, isSolution }) => {
   const [loading, setLoading] = useState(false)
   const { sandpack } = useSandpack()
-  const { workoutData, setData } = useContext(WorkoutContext)
+  const { workout, setData } = useContext(WorkoutContext)
   const { addLog } = useContext(LogContext)
   const { API } = useContext(AuthContext)
 
@@ -24,7 +24,7 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
     try {
       if (isSolution) {
         await API.put(
-          `/workouts/${workoutData.id}/upload-solution`,
+          `/workouts/${workout.id}/upload-solution`,
           JSON.stringify(otherFiles)
         )
         setData((prev) => ({
@@ -36,7 +36,7 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
         }))
       } else {
         await API.put(
-          `/workouts/${workoutData.id}/upload-template`,
+          `/workouts/${workout.id}/upload-template`,
           JSON.stringify(otherFiles)
         )
         setData((prev) => ({
@@ -49,7 +49,7 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
       }
       if (sharedFiles) {
         await API.put(
-          `/workouts/${workoutData.id}/upload-shared`,
+          `/workouts/${workout.id}/upload-shared`,
           JSON.stringify(sharedFiles)
         )
         setData((prev) => ({
@@ -62,7 +62,7 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
       }
       if (changedFiles.indexOf('/package.json')) {
         await API.put(
-          `/workouts/${workoutData.id}/upload-package`,
+          `/workouts/${workout.id}/upload-package`,
           JSON.stringify(packageJson)
         )
         setData((prev) => ({

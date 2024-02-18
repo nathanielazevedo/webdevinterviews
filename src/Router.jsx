@@ -12,7 +12,7 @@ import ForgotPassword from './pages/auth/ForgotPassword'
 import ResetPassword from './pages/auth/ResetPassword'
 import Help from './pages/misc/Help'
 import EditWorkout from './pages/workout/manage/EditWorkout'
-import WorkoutsTable from './pages/workouts/WorkoutsTable'
+import Workouts from './pages/workouts/Workouts'
 import ManageRoot from './pages/workout/manage/ManageRoot'
 import WorkoutRoot from './pages/workout/WorkoutRoot'
 import RootRedirect from './components/RootRedirect'
@@ -84,7 +84,7 @@ const router = createBrowserRouter([
       {
         path: 'workouts',
         errorElement: <Error />,
-        element: <WorkoutsTable />,
+        element: <Workouts />,
       },
       {
         path: 'workouts/:id',

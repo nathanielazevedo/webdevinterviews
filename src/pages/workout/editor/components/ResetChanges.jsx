@@ -8,13 +8,10 @@ const ResetChanges = ({ changedFiles }) => {
   return (
     <>
       <Button
-        variant='outlined'
         onClick={() => setShowWarning(true)}
         size='small'
-        color='error'
+        color='inherit'
         fullWidth
-        sx={{ mt: 1 }}
-        disabled={changedFiles?.length === 0}
       >
         RESET CHANGES
       </Button>

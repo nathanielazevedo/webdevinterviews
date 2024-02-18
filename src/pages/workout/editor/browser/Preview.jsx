@@ -1,5 +1,4 @@
-/* eslint-disable react/no-danger */
-import * as React from 'react'
+import { useContext, useState } from 'react'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
@@ -10,12 +9,11 @@ import {
   SandpackThemeProvider,
   useSandpack,
 } from '@codesandbox/sandpack-react'
-import { theme } from '../theme'
 import { WorkoutContext } from '../../../../contexts/WorkoutContext'
 
 const BasicTabs = () => {
-  const [value, setValue] = React.useState(0)
-  const { workout } = React.useContext(WorkoutContext)
+  const [value, setValue] = useState(0)
+  const { workout } = useContext(WorkoutContext)
   const { sandpack } = useSandpack()
 
   const handleChange = (event, newValue) => {
@@ -64,10 +62,10 @@ const BasicTabs = () => {
 
       {value === 3 && (
         <SandpackProvider
-          files={workoutData.dynamo_data.solution}
-          template={workout.spTemplate.name}
+          files={workout.files.solution}
+          template={workout.type}
         >
-          <SandpackThemeProvider theme={theme}>
+          <SandpackThemeProvider theme={'dark'}>
             <SandpackPreview
               showNavigator
               style={{ height: 'calc(100% - 40px)' }}

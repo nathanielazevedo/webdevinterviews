@@ -7,11 +7,8 @@ import ListItemButton from '@mui/material/ListItemButton'
 import { NavLink } from 'react-router-dom'
 
 const StyledListItemButton = styled(ListItemButton)(() => ({
-  px: 2.5,
-  height: 48,
   flexDirection: 'column',
   justifyContent: 'center',
-  transition: 'height 0.5s ease-in-out',
 }))
 
 const StyledListItemIcon = styled(ListItemIcon)(() => ({
@@ -22,7 +19,7 @@ const StyledListItemIcon = styled(ListItemIcon)(() => ({
 
 const StyledTypography = styled(Typography)(() => ({
   fontSize: '8px',
-  transition: 'opacity 0.5s ease-in-out',
+  // transition: 'opacity 0.5s ease-in-out',
 }))
 
 const SideNavIcon = ({ link }) => {
@@ -50,7 +47,6 @@ const SideNavIcon = ({ link }) => {
       >
         <StyledListItemButton onClick={link.onClick}>
           <StyledListItemIcon>{link.icon}</StyledListItemIcon>
-
           <StyledTypography>{link.name}</StyledTypography>
         </StyledListItemButton>
       </ListItem>

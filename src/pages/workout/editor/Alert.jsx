@@ -11,13 +11,14 @@ import { WorkoutContext } from '../../../contexts/WorkoutContext'
 
 const AlertDialog = ({ setOpen }) => {
   const navigate = useNavigate()
-  const { workoutData } = useContext(WorkoutContext)
+  const { workout, setFromLocal } = useContext(WorkoutContext)
   const handleCloseDeny = () => setOpen(false)
 
   const handleCloseAgree = () => {
     setOpen(false)
-    localStorage.removeItem(workoutData.id)
-    navigate(`/workouts/${workoutData.id}`)
+    localStorage.removeItem(workout.id)
+    navigate(`/workouts/${workout.id}`)
+    setFromLocal(false)
   }
 
   return (

@@ -78,7 +78,6 @@ const Footer = () => {
       sx={{
         height: '35px',
         borderTop: '0.5px solid #454950',
-        // outline: '1px solid green',
         display: 'flex',
         justifyContent: 'flex-end',
         alignItems: 'center',

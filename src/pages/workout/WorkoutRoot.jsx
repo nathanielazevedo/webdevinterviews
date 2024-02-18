@@ -5,10 +5,10 @@ import WorkoutSideNav from './root/WorkoutSideNav'
 
 const WorkoutRoot = () => (
   <WorkoutProvider>
-    <WorkoutTopNav />
-    <div className='main'>
+    <div className='editor-main'>
       <WorkoutSideNav />
       <div className='editor-container'>
+        <WorkoutTopNav />
         <Outlet />
       </div>
     </div>

@@ -14,9 +14,8 @@
   --lightBlue: #19e4ff;
   --lightBlueOpacity: #19e4ff4f;
   --divider: rgba(255, 255, 255, 0.2);
-  --side-bar-1-width: 65px;
-  --side-nav-width-collapsed: 40px;
-  --side-nav-width: 80px;
+  --side-nav-width: 70px;
+  --top-nav-height: 50px;
 }
 
 *:focus {
@@ -25,9 +24,9 @@
 
 * {
   --sp-layout-height: 94vh;
-  --sp-colors-disabled: grey;
+  /* --sp-colors-disabled: grey;
   --sp-colors-surface1: #121212;
-  --sp-colors-accent: #19e4ff;
+  --sp-colors-accent: #19e4ff; */
 }
 
 .sp-wrapper {
@@ -259,7 +258,7 @@
 }
 
 .top-nav {
-  height: 45px;
+  height: 50px;
   display: flex;
   align-items: center;
   padding: 0 20px;
@@ -291,7 +290,7 @@
 }
 
 table {
-  height: 100%;
+  max-height: calc(40vh - 700px);
   overflow-y: scroll;
   width: 100%;
   border-collapse: collapse;
@@ -330,6 +329,18 @@ tr:nth-child(even) {
 
 .editor-container {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.025);
-  min-height: calc(100vh - 120px);
-  max-height: calc(100vh - 120px);
+  min-height: calc(100vh - 135px);
+  max-height: calc(100vh - 135px);
+  flex-grow: 1;
+}
+
+.exit-button {
+  width: 70px;
+  color: grey !important;
+  border-right: 0.5px solid #454950 !important;
+}
+
+.editor-main {
+  display: flex;
+  height: 100%;
 }
