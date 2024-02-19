@@ -1,12 +1,6 @@
-/* eslint-disable react/prop-types */
-import TableBody from '@mui/material/TableBody'
-import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
-import useFetch from '../../hooks/useFetch'
-import ErrorRow from '../workouts/components/ErrorRow'
 import TextLink from '../../components/TextLink'
-import { NavLink } from 'react-router-dom'
-import NoWorkouts from '../workouts/components/NoWorkouts'
+import Header from '../../components/Header'
 
 const games = [
   {
@@ -22,15 +16,11 @@ const games = [
 const Games = ({ tab }) => {
   return (
     <div className='fit-wrapper'>
-      <Box>
-        <Typography variant='h5' color='grey.400'>
-          Games
-        </Typography>
-        <Typography variant='subtitle1' color='grey.600'>
-          Some cool games I've made that will test your knowledge.
-        </Typography>
-      </Box>
-      <table size='small' stickyHeader>
+      <Header
+        title='Games'
+        subtext="Some cool games I've made that will test your knowledge."
+      />
+      <table>
         <thead>
           <tr>
             <th align='left'>Name</th>

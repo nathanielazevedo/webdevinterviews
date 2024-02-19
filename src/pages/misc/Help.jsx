@@ -6,42 +6,24 @@ const HelpPage = () => {
   }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-        gap: '30px',
-      }}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%',
-          gap: '20px',
-        }}
-      >
-        <Box>
-          <Typography variant='h4'>Got Bugs?</Typography>
-          <Typography variant='h5'>
-            Send a message to the discord and I will help you.
-          </Typography>
-        </Box>
-        <Button
-          fullWidth
-          variant='contained'
-          color='primary'
-          onClick={handleButtonClick}
-        >
-          Go to Discord
-        </Button>
+    <div className='fit-wrapper'>
+      <Box>
+        <Typography variant='h4' sx={{}}>
+          Got Bugs?
+        </Typography>
+        <Typography variant='h5'>
+          Send a message to the discord and I will help you.
+        </Typography>
       </Box>
-    </Box>
+      <Button
+        fullWidth
+        variant='contained'
+        color='primary'
+        onClick={handleButtonClick}
+      >
+        Go to Discord
+      </Button>
+    </div>
   )
 }
 

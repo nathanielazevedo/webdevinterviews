@@ -23,7 +23,7 @@ const WorkoutProvider = ({ children }) => {
       </WorkoutContext.Provider>
     )
   } catch {
-    return 'bad boy'
+    return 'Error'
   }
 }
 

@@ -1,55 +1,44 @@
 import Box from '@mui/material/Box'
 import { Fade, Typography, colors } from '@mui/material'
 import { YouTube } from '@mui/icons-material'
+import Card from '../components/Card'
+import featureCards from '../components/marketing/featuresCards'
+import jungle from '../components/marketing/jungle.jpg'
 
-const Home = () => (
-  <Fade in timeout={1000}>
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '30px',
-        padding: '50px',
-      }}
-    >
-      <Box>
-        <Typography variant='h2'>Learn</Typography>
-        <Typography variant='h5' color='grey'>
-          Sharpen your web development skills in the workouts page.
-        </Typography>
-        <Typography
-          variant='h5'
-          color='grey'
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '20px',
+const Home = () => {
+  return (
+    <Fade in timeout={1000}>
+      <div className='fit-wrapper'>
+        <div
+          style={{
+            borderRadius: '10px',
+            padding: '40px 0px',
+            backgroundImage: jungle,
           }}
         >
-          Checkout the YouTube videos!
-          <a
-            target='_blank'
-            href='https://www.youtube.com/channel/UC-4Ij6StciJgYzbxLyxHMPw'
-          >
-            <YouTube sx={{ color: 'red' }} fontSize='large' />
-          </a>
-        </Typography>
-      </Box>
-      <Box>
-        <Typography variant='h2'>Play</Typography>
-        <Typography variant='h5' color='grey'>
-          Play JavaScript games in the games page.
-        </Typography>
-      </Box>
-      <Box>
-        <Typography variant='h2'>Compete</Typography>
-        <Typography variant='h5' color='grey'>
-          Compete against other developers for prizes in the compete page.
-        </Typography>
-      </Box>
-      <Typography></Typography>
-    </Box>
-  </Fade>
-)
+          <Typography variant='h3' textAlign='center' color={'grey.500'}>
+            Welcome to WDI.
+          </Typography>
+          <Typography variant='h5' textAlign='center' color={'grey.300'}>
+            We've got fun and games.
+          </Typography>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '50px',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+          }}
+        >
+          {featureCards.map((card) => (
+            <Card card={card} />
+          ))}
+        </div>
+      </div>
+    </Fade>
+  )
+}
 
 export default Home

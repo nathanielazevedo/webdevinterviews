@@ -30,7 +30,7 @@ const Console = ({ closeFilePanel, consolePanelRef }) => {
     <div
       style={{
         height: '100%',
-        backgroundColor: '#121212',
+        backgroundColor: '#151515',
       }}
     >
       <Box
@@ -40,7 +40,7 @@ const Console = ({ closeFilePanel, consolePanelRef }) => {
           display: 'flex',
           color: '#C5C5C5',
           flexDirection: 'column',
-          backgroundColor: '#121212',
+          backgroundColor: '#151515',
         }}
       >
         <Box
@@ -92,12 +92,12 @@ const Console = ({ closeFilePanel, consolePanelRef }) => {
             logs={logs}
             variant='dark'
             styles={{
-              LOG_BACKGROUND: '#121212',
-              BASE_BACKGROUND_COLOR: '#121212',
+              LOG_BACKGROUND: '#151515',
+              BASE_BACKGROUND_COLOR: '#151515',
               LOG_AMOUNT_BACKGROUND: 'black',
-              BASE_FONT_SIZE: '14px',
+              // BASE_FONT_SIZE: '14px',
               BASE_FONT_FAMILY: 'monospace',
-              BASE_LINE_HEIGHT: '10px',
+              // BASE_LINE_HEIGHT: '10px',
               TREENODE_LINE_HEIGHT: '20px',
             }}
           />

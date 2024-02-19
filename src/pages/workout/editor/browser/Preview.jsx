@@ -26,7 +26,7 @@ const BasicTabs = () => {
         sx={{
           borderBottom: 1,
           borderColor: 'divider',
-          backgroundColor: '#121212',
+          backgroundColor: '#151515',
         }}
       >
         <Tabs

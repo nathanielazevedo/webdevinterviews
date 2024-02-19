@@ -13,10 +13,12 @@ import {
 import TextLink from '../components/TextLink'
 import MenuIcon from '@mui/icons-material/Menu'
 import Drawer from '../components/Drawer'
+import { useNavigate } from 'react-router'
 
 const RootTopNav = () => {
   const { user, authLoading } = useContext(AuthContext)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const navigate = useNavigate()
 
   return (
     <AppBar elevation={1}>
@@ -24,7 +26,15 @@ const RootTopNav = () => {
         <Typography
           variant=''
           component='div'
-          sx={{ flexGrow: 1, color: 'grey.300' }}
+          sx={{
+            flexGrow: 1,
+            color: 'grey.300',
+            ':hover': {
+              cursor: 'pointer',
+              color: 'primary.main',
+            },
+          }}
+          onClick={() => navigate('/')}
         >
           WEB DEV INTERVIEWS
         </Typography>

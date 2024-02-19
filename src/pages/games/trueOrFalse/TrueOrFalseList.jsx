@@ -2,19 +2,16 @@ import { NavLink } from 'react-router-dom'
 import decks from './trueOrFalse.json'
 import { Box, Typography } from '@mui/material'
 import TextLink from '../../../components/TextLink'
+import Header from '../../../components/Header'
 
 const Games = () => {
   return (
     <div className='fit-wrapper'>
       <TextLink to='/games' text='Back to games' />
-      <Box>
-        <Typography variant='h5' color='grey.400'>
-          Choose a deck
-        </Typography>
-        <Typography variant='subtitle1' color='grey.600'>
-          Each deck contains 5 true or false questions.
-        </Typography>
-      </Box>
+      <Header
+        title='Choose a deck'
+        subtext='Each deck contains 5 true or false questions.'
+      />
       <div style={{ height: 'calc(100vh - 215px)', overflowY: 'scroll' }}>
         <table>
           <tbody>

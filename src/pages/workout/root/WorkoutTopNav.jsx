@@ -28,11 +28,17 @@ const WorkoutTopNav = () => {
           display: 'flex',
           alignItems: 'center',
           padding: '0 20px',
-          gap: '10px',
+          gap: '20px',
         }}
       >
         <TemplateToSvg template={workout.type} />
-        <Typography variant='caption'>{workout.title}</Typography>
+        <Typography
+          sx={{
+            color: 'grey.300',
+          }}
+        >
+          {workout.title}
+        </Typography>
         <Rating rating={workout.difficulty} />
         <YouTube workout={workout} />
       </div>

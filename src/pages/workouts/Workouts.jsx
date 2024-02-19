@@ -11,6 +11,7 @@ import TemplateToSvg from './components/TemplateToSvg'
 import { TableHead as MuiTableHead } from '@mui/material'
 import { useState } from 'react'
 import WorkoutsTable from './WorkoutsTable'
+import Header from '../../components/Header'
 
 const Workouts = () => {
   const url = `/workouts`
@@ -50,14 +51,10 @@ const Workouts = () => {
 
   return (
     <div className='fit-wrapper'>
-      <Box>
-        <Typography variant='h5' color='grey.300'>
-          Workouts
-        </Typography>
-        <Typography variant='subtitle1' color='grey.500'>
-          Coding challenges to sharpen your skills.
-        </Typography>
-      </Box>
+      <Header
+        title='Workouts'
+        subtext='Coding challenges to sharpen your skills.'
+      />
       <div style={{ height: 'calc(100vh - 175px)', overflowY: 'scroll' }}>
         <table>
           <thead>

@@ -2,10 +2,6 @@ import TextLink from '../components/TextLink'
 
 const links = [
   {
-    name: 'HOME',
-    path: '/',
-  },
-  {
     name: 'WORKOUTS',
     path: 'workouts',
   },

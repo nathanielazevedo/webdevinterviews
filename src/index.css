@@ -89,24 +89,6 @@
   border-bottom: solid 0.5px var(--color-solid-resize-bar);
 }
 
-/* table */
-.even {
-  background-color: #212121;
-}
-
-.even {
-  cursor: pointer !important;
-}
-
-.even:hover {
-  background-color: #1a1a1a !important;
-  cursor: pointer !important;
-}
-
-.odd:hover {
-  background-color: #121212 !important;
-}
-
 /* side nav icons */
 .active {
   color: var(--lightBlue) !important;
@@ -116,6 +98,10 @@
   color: var(--lightBlue);
   text-shadow: 0 0 10px var(--lightBlue), 0 0 20px var(--lightBlue),
     0 0 30px var(--lightBlue), 0 0 40px var(--lightBlue);
+}
+
+.nav-link {
+  text-decoration: none;
 }
 
 .tab-nav-link {
@@ -128,25 +114,6 @@
 
 .not-active {
   color: lightgrey;
-}
-
-/* scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: #121212;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
 }
 
 /* game */
@@ -239,8 +206,6 @@
 /* new */
 
 #root {
-  height: 100vh;
-  max-height: 100vh;
   width: 100vw;
   max-width: 100vw;
   overflow: hidden;
@@ -280,6 +245,7 @@
   gap: 20px;
   width: 765px;
   margin: 0 auto;
+  padding-bottom: 35px;
 }
 
 table {
@@ -312,7 +278,6 @@ tr:nth-child(even) {
 .side-nav-wrapper {
   width: var(--side-nav-width);
   min-width: var(--side-nav-width);
-  /* border-right: 0.5px solid var(--color-solid-resize-bar); */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -326,6 +291,8 @@ tr:nth-child(even) {
   min-height: calc(100vh - 135px);
   max-height: calc(100vh - 135px);
   flex-grow: 1;
+  padding-right: 20px;
+  padding-bottom: 10px;
 }
 
 .exit-button {
