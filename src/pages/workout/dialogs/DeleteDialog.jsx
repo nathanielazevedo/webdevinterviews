@@ -29,10 +29,6 @@ const DeleteDialog = ({ open, setOpen }) => {
     try {
       await API.delete(`/workouts/${workout.id}`)
       setLoading(false)
-      addLog({
-        method: 'log',
-        data: ['Workout deleted.'],
-      })
       navigate('/workouts/your-workouts')
       setOpen(false)
     } catch (error) {

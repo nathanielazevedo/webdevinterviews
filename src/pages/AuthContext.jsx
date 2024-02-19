@@ -52,7 +52,6 @@ const AuthProvider = ({ children }) => {
       handleSession(currentUser)
     } else {
       setLoading(false)
-      addLog({ method: 'error', data: ['Not logged in.'] })
     }
   }, [])
 
@@ -148,10 +147,6 @@ const AuthProvider = ({ children }) => {
           }
           return
         }
-        addLog({
-          method: 'log',
-          data: ['Email verified. You may now login.'],
-        })
         resolve(result)
       })
     })
@@ -230,7 +225,6 @@ const AuthProvider = ({ children }) => {
       cognitoUser.confirmPassword(verificationCode, newPassword, {
         onSuccess: () => {
           navigate('/auth/login')
-          addLog('Password reset.')
           resolve()
         },
         onFailure: (err) => {

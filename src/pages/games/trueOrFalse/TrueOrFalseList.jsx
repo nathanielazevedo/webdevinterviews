@@ -5,14 +5,7 @@ import TextLink from '../../../components/TextLink'
 
 const Games = () => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '25px',
-        padding: '30px 30px',
-      }}
-    >
+    <div className='fit-wrapper'>
       <TextLink to='/games' text='Back to games' />
       <Box>
         <Typography variant='h5' color='grey.400'>

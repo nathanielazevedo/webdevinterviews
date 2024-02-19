@@ -59,14 +59,7 @@ const TrueOrFalse = () => {
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '25px',
-        padding: '30px 30px',
-      }}
-    >
+    <div className='fit-wrapper'>
       <TextLink to='/games/true-or-false' text='Back to decks' />
       <div className='gameEditor-container'>
         <div className='score-circles-container'>

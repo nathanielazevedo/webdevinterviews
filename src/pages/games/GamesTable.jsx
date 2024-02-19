@@ -21,45 +21,36 @@ const games = [
 
 const Games = ({ tab }) => {
   return (
-    <>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '25px',
-          margin: '30px 30px',
-        }}
-      >
-        <Box>
-          <Typography variant='h5' color='grey.400'>
-            Games
-          </Typography>
-          <Typography variant='subtitle1' color='grey.600'>
-            Some cool games I've made that will test your knowledge.
-          </Typography>
-        </Box>
-        <table size='small' stickyHeader>
-          <thead>
-            <tr>
-              <th align='left'>Name</th>
-              <th align='right'>Language</th>
-            </tr>
-          </thead>
-          <tbody>
-            {games.map((game, key) => (
-              <tr key={game.name}>
-                <td align='left' style={{ paddingLeft: '15px' }}>
-                  <TextLink to={game.to} text={game.title} />
-                </td>
-                <td align='right' style={{ paddingRight: '15px' }}>
-                  <Typography color='grey.500'>JavaScript</Typography>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className='fit-wrapper'>
+      <Box>
+        <Typography variant='h5' color='grey.400'>
+          Games
+        </Typography>
+        <Typography variant='subtitle1' color='grey.600'>
+          Some cool games I've made that will test your knowledge.
+        </Typography>
       </Box>
-    </>
+      <table size='small' stickyHeader>
+        <thead>
+          <tr>
+            <th align='left'>Name</th>
+            <th align='right'>Language</th>
+          </tr>
+        </thead>
+        <tbody>
+          {games.map((game, key) => (
+            <tr key={game.name}>
+              <td align='left' style={{ paddingLeft: '15px' }}>
+                <TextLink to={game.to} text={game.title} />
+              </td>
+              <td align='right' style={{ paddingRight: '15px' }}>
+                <Typography color='grey.500'>JavaScript</Typography>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }
 

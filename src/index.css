@@ -109,7 +109,7 @@
 
 /* side nav icons */
 .active {
-  color: var(--lightBlue);
+  color: var(--lightBlue) !important;
 }
 
 .pending {
@@ -127,7 +127,7 @@
 }
 
 .not-active {
-  color: grey;
+  color: lightgrey;
 }
 
 /* scrollbar */
@@ -216,13 +216,6 @@
   background-color: red;
 }
 
-.shorts-container {
-  display: flex;
-  flex-direction: column;
-  padding-top: 50px;
-  gap: 50px;
-}
-
 .layout-container {
   margin: 0 auto;
   width: 50%;
@@ -236,6 +229,7 @@
 .shorts-layout {
   display: flex;
   flex-direction: column;
+  height: 500px;
 }
 
 .shorts-editor {
@@ -259,9 +253,8 @@
   min-height: 50px;
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 25px;
   justify-content: space-between;
-  border-bottom: 0.5px solid var(--color-solid-resize-bar);
 }
 
 .top-nav-auth-wrapper {
@@ -270,8 +263,8 @@
 }
 
 .main {
-  display: flex;
-  height: calc(100vh - 50px);
+  min-height: calc(100vh - 64px);
+  margin-top: 64px;
 }
 
 .main > :nth-child(2) {
@@ -280,15 +273,16 @@
   flex-direction: column;
 }
 
-.workout-table-wrapper {
-  padding: 30px;
+.fit-wrapper {
+  padding: 50px 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 765px;
+  margin: 0 auto;
 }
 
 table {
-  max-height: calc(40vh - 700px);
   overflow-y: scroll;
   width: 100%;
   border-collapse: collapse;
@@ -318,12 +312,12 @@ tr:nth-child(even) {
 .side-nav-wrapper {
   width: var(--side-nav-width);
   min-width: var(--side-nav-width);
-  border-right: 0.5px solid var(--color-solid-resize-bar);
+  /* border-right: 0.5px solid var(--color-solid-resize-bar); */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 7px 0;
   height: 100%;
 }
 
@@ -345,8 +339,15 @@ tr:nth-child(even) {
   height: 100%;
 }
 
-.menu-icon {
+/* .menu-icon {
   display: none !important;
+} */
+
+.drawer-links-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 50px;
 }
 
 @media screen and (max-width: 765px) {
@@ -356,5 +357,9 @@ tr:nth-child(even) {
 
   .menu-icon {
     display: inline !important;
+  }
+
+  .fit-wrapper {
+    width: 90%;
   }
 }

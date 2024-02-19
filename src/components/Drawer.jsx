@@ -4,10 +4,11 @@ import RootSideNav from '../pages/RootSideNav'
 const SideDrawer = ({ open, setOpen }) => {
   return (
     <Drawer
-      anchor='left'
+      anchor='right'
       open={true}
       onClose={() => setOpen(false)}
-      elevation={0}
+      elevation={1}
+      onClick={() => setOpen(false)}
     >
       <RootSideNav />
     </Drawer>

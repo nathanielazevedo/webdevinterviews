@@ -11,7 +11,7 @@ const WorkoutSideNav = () => {
 
   const editorLinks = [
     {
-      name: 'Exit',
+      name: '',
       icon: <CloseIcon />,
       path: `/workouts`,
       end: true,
