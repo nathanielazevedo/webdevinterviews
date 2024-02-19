@@ -56,7 +56,7 @@ const Root = () => (
         <Outlet />
       </div>
     </main>
-    <Footer />
+    {/* <Footer /> */}
   </AuthProvider>
 )
 

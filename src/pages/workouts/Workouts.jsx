@@ -58,7 +58,7 @@ const Workouts = () => {
           Coding challenges to sharpen your skills.
         </Typography>
       </Box>
-      <div style={{ height: 'calc(100vh - 250px)', overflowY: 'scroll' }}>
+      <div style={{ height: 'calc(100vh - 175px)', overflowY: 'scroll' }}>
         <table>
           <thead>
             <tr>

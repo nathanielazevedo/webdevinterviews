@@ -5,24 +5,24 @@ import TextLink from '../../../components/TextLink'
 
 const Games = () => {
   return (
-    <>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '25px',
-          padding: '30px 30px',
-        }}
-      >
-        <TextLink to='/games' text='Back to games' />
-        <Box>
-          <Typography variant='h5' color='grey.400'>
-            Choose a deck
-          </Typography>
-          <Typography variant='subtitle1' color='grey.600'>
-            Each deck contains 5 true or false questions.
-          </Typography>
-        </Box>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '25px',
+        padding: '30px 30px',
+      }}
+    >
+      <TextLink to='/games' text='Back to games' />
+      <Box>
+        <Typography variant='h5' color='grey.400'>
+          Choose a deck
+        </Typography>
+        <Typography variant='subtitle1' color='grey.600'>
+          Each deck contains 5 true or false questions.
+        </Typography>
+      </Box>
+      <div style={{ height: 'calc(100vh - 215px)', overflowY: 'scroll' }}>
         <table>
           <tbody>
             {decks.map((deck, index) => (
@@ -41,7 +41,7 @@ const Games = () => {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   )
 }
 
