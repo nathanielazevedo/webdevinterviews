@@ -1,8 +1,6 @@
 import Rating from '../../components/Rating'
 import YouTube from '../../components/YouTubeIcon'
-import ErrorRow from './components/ErrorRow'
 import TextLink from '../../components/TextLink'
-import NoWorkouts from './components/NoWorkouts'
 import Workout from '../../models/workout'
 import TemplateToSvg from './components/TemplateToSvg'
 

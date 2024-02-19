@@ -55,19 +55,17 @@ const Workouts = () => {
         title='Workouts'
         subtext='Coding challenges to sharpen your skills.'
       />
-      <div style={{ height: 'calc(100vh - 175px)', overflowY: 'scroll' }}>
-        <table>
-          <thead>
-            <tr>
-              <th align='center'>TYPE</th>
-              <th align='left'>NAME</th>
-              <th align='center'>DIFFICULTY</th>
-              <th align='center'>VIDEO</th>
-            </tr>
-          </thead>
-          <tbody>{renderTableBodyContent()}</tbody>
-        </table>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th align='center'>TYPE</th>
+            <th align='left'>NAME</th>
+            <th align='center'>DIFFICULTY</th>
+            <th align='center'>VIDEO</th>
+          </tr>
+        </thead>
+        <tbody>{renderTableBodyContent()}</tbody>
+      </table>
       <Box>{renderFailedStateContent()}</Box>
       {createWorkoutDialogOpen && (
         <CreateWorkoutDialog
