@@ -33,7 +33,7 @@ const RootTopNav = () => {
           WEB DEV INTERVIEWS
         </Typography>
       </div>
-      {/* {!authLoading ? (
+      {!authLoading ? (
         user ? (
           <TextLink to='/auth/account' text={user.username} />
         ) : (
@@ -45,7 +45,7 @@ const RootTopNav = () => {
         )
       ) : (
         <Skeleton variant='text' width={100} animation='wave' />
-      )} */}
+      )}
       {drawerOpen && <Drawer open={drawerOpen} setOpen={setDrawerOpen} />}
     </div>
   )

@@ -33,7 +33,7 @@ const WorkoutSideNav = () => {
   ]
 
   if (workout.isOwner) {
-    editorLinks.unshift({
+    editorLinks.push({
       name: 'MANAGE',
       icon: <AdminPanelSettingsOutlinedIcon />,
       path: `/workouts/${workout.id}/manage`,

@@ -13,11 +13,11 @@ import { useState } from 'react'
 import WorkoutsTable from './WorkoutsTable'
 
 const Workouts = () => {
-  const url = `/workouts/official`
+  const url = `/workouts`
   const { data: workoutsData, loading, error, fetchData } = useFetch(url)
   const [createWorkoutDialogOpen, setCreateWorkoutDialogOpen] = useState(false)
 
-  const fetchWorkouts = () => fetchData(`/workouts/official`)
+  const fetchWorkouts = () => fetchData(`/workouts`)
 
   const renderTableBodyContent = () => {
     if (loading) {

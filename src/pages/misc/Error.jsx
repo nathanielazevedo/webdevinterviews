@@ -1,17 +1,8 @@
 import { Box, Typography } from '@mui/material'
-import { useRouteError, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
-import PropTypes from 'prop-types'
+import { useRouteError } from 'react-router-dom'
 
-const Error = ({ redirectPath }) => {
+const Error = () => {
   const error = useRouteError()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (redirectPath) {
-      navigate(redirectPath)
-    }
-  }, [redirectPath, navigate])
 
   return (
     <Box
@@ -46,11 +37,3 @@ const Error = ({ redirectPath }) => {
 }
 
 export default Error
-
-Error.propTypes = {
-  redirectPath: PropTypes.string,
-}
-
-Error.defaultProps = {
-  redirectPath: '/workouts',
-}

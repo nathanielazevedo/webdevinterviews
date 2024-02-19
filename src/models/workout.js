@@ -3,15 +3,15 @@ export default class Workout {
     id,
     title,
     difficulty,
-    sp_template: type,
+    type,
     youtube_link: youtubeLink,
-    dynamo_data: files,
+    files,
     is_owner: isOwner,
   }) {
     this.id = id
     this.title = title
     this.difficulty = difficulty
-    this.type = type.name
+    this.type = type
     this.youtubeLink = youtubeLink
     this.files = files
     this.isOwner = isOwner

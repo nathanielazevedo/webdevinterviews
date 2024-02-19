@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Button } from '@mui/material'
 import { useSandpack } from '@codesandbox/sandpack-react'
 import { useContext, useState } from 'react'
@@ -7,6 +6,7 @@ import { WorkoutContext } from '../../../../contexts/WorkoutContext'
 import { LogContext } from '../../../LogContext'
 import { AuthContext } from '../../../AuthContext'
 import { separateFiles } from '../utils'
+import { useNavigate } from 'react-router'
 
 const SyncChanges = ({ changedFiles, isSolution }) => {
   const [loading, setLoading] = useState(false)
@@ -14,12 +14,12 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
   const { workout, setData } = useContext(WorkoutContext)
   const { addLog } = useContext(LogContext)
   const { API } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const onSubmit = async () => {
     const { sharedFiles, otherFiles, packageJson } = separateFiles(
       sandpack.files
     )
-    console.log(sharedFiles)
     setLoading(true)
     try {
       if (isSolution) {
@@ -27,54 +27,30 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
           `/workouts/${workout.id}/upload-solution`,
           JSON.stringify(otherFiles)
         )
-        setData((prev) => ({
-          ...prev,
-          dynamo_data: {
-            ...prev.dynamo_data,
-            solution: otherFiles,
-          },
-        }))
       } else {
         await API.put(
           `/workouts/${workout.id}/upload-template`,
           JSON.stringify(otherFiles)
         )
-        setData((prev) => ({
-          ...prev,
-          dynamo_data: {
-            ...prev.dynamo_data,
-            template: otherFiles,
-          },
-        }))
       }
       if (sharedFiles) {
         await API.put(
           `/workouts/${workout.id}/upload-shared`,
           JSON.stringify(sharedFiles)
         )
-        setData((prev) => ({
-          ...prev,
-          dynamo_data: {
-            ...prev.dynamo_data,
-            shared: sharedFiles,
-          },
-        }))
       }
       if (changedFiles.indexOf('/package.json')) {
         await API.put(
           `/workouts/${workout.id}/upload-package`,
           JSON.stringify(packageJson)
         )
-        setData((prev) => ({
-          ...prev,
-          dynamo_data: {
-            ...prev.dynamo_data,
-            packageJson,
-          },
-        }))
       }
-      addLog({ method: 'log', data: ['Code uploaded.'] })
-      setLoading(false)
+      localStorage.removeItem(workout.id)
+      localStorage.removeItem(workout.id + '-shared')
+      localStorage.removeItem(workout.id + '-package.json')
+      setTimeout(() => {
+        navigate(`/workouts`)
+      }, 1000)
     } catch (error) {
       addLog({ method: 'error', data: ['Error uploading code.'] })
       setLoading(false)
