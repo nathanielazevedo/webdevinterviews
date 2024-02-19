@@ -4,13 +4,11 @@ import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js'
 import PropTypes from 'prop-types'
 import API from '../api'
 import UserPool from '../userpool'
-import { LogContext } from './LogContext'
 
 const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate()
-  const { addLog } = useContext(LogContext)
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
 
@@ -18,13 +16,11 @@ const AuthProvider = ({ children }) => {
     new Promise((resolve, reject) => {
       currentUser.getSession((error, session) => {
         if (error) {
-          addLog({ method: 'error', data: ['Not logged in.'] })
           reject(error)
           setLoading(false)
         } else {
           currentUser.getUserAttributes((err, attributes) => {
             if (err) {
-              addLog({ method: 'error', data: ['Error getting attributes.'] })
               reject(err)
             } else {
               const userAttributes = attributes.reduce((acc, attribute) => {
@@ -42,7 +38,6 @@ const AuthProvider = ({ children }) => {
                 email: userAttributes.email,
                 isAdmin,
               })
-              addLog({ method: 'log', data: ['Logged in.'] })
               resolve(session)
               setLoading(false)
             }
@@ -53,7 +48,6 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const currentUser = UserPool.getCurrentUser()
-    addLog({ method: 'info', data: ['Checking session.'] })
     if (currentUser) {
       handleSession(currentUser)
     } else {
@@ -67,11 +61,9 @@ const AuthProvider = ({ children }) => {
       const currentUser = UserPool.getCurrentUser()
       currentUser.getSession(async (error, session) => {
         if (error) {
-          addLog({ method: 'error', data: ['Failed to refresh token.'] })
           reject(error)
         } else {
           const idToken = session.getIdToken()
-          addLog({ method: 'log', data: ['Successfully refreshed token.'] })
           API.setAuthToken(idToken.jwtToken)
           resolve()
         }
@@ -82,7 +74,6 @@ const AuthProvider = ({ children }) => {
 
   const handleLogin = async (email, password) => {
     if (user) return
-    addLog({ method: 'info', data: ['Logging in.'] })
     const currUser = new CognitoUser({ Username: email, Pool: UserPool })
     const authDetails = new AuthenticationDetails({
       Username: email,
@@ -131,13 +122,11 @@ const AuthProvider = ({ children }) => {
         } else {
           setTimeout(() => resolve(data), 2000)
           navigate('auth/verify-email', { state: { email } })
-          addLog({ method: 'log', data: ['User signed up.'] })
         }
       })
     })
 
   const handleVerifyEmail = (email, code) => {
-    addLog({ method: 'info', data: ['Verifying email.'] })
     return new Promise((resolve, reject) => {
       const userData = {
         Username: email,
@@ -178,12 +167,10 @@ const AuthProvider = ({ children }) => {
     })
 
   const handleLogout = () => {
-    addLog({ method: 'info', data: ['Logging out.'] })
     return new Promise((resolve, reject) => {
       const currentUser = UserPool.getCurrentUser()
       if (currentUser) {
         currentUser.signOut()
-        addLog({ method: 'log', data: ['Logged out.'] })
         setUser(null)
         API.setAuthToken(null)
         resolve()
@@ -195,7 +182,6 @@ const AuthProvider = ({ children }) => {
 
   const handleDeleteAccount = () =>
     new Promise((resolve, reject) => {
-      addLog({ method: 'info', data: ['Deleting Account.'] })
       const cognitoUser = UserPool.getCurrentUser()
       if (cognitoUser) {
         cognitoUser.getSession((error) => {
@@ -207,7 +193,6 @@ const AuthProvider = ({ children }) => {
                 setUser(null)
                 navigate('/auth/signup')
                 resolve(result)
-                addLog({ method: 'log', data: ['Account deleted.'] })
               }
             })
           }

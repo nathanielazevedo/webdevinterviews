@@ -3,7 +3,6 @@ import { useSandpack } from '@codesandbox/sandpack-react'
 import { useContext, useState } from 'react'
 import CircularProgress from '@mui/material/CircularProgress'
 import { WorkoutContext } from '../../../../contexts/WorkoutContext'
-import { LogContext } from '../../../LogContext'
 import { AuthContext } from '../../../AuthContext'
 import { separateFiles } from '../utils'
 import { useNavigate } from 'react-router'
@@ -12,7 +11,6 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
   const [loading, setLoading] = useState(false)
   const { sandpack } = useSandpack()
   const { workout, setData } = useContext(WorkoutContext)
-  const { addLog } = useContext(LogContext)
   const { API } = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -52,7 +50,6 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
         navigate(`/workouts`)
       }, 1000)
     } catch (error) {
-      addLog({ method: 'error', data: ['Error uploading code.'] })
       setLoading(false)
     }
   }

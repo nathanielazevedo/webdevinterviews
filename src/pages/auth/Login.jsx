@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect, useContext } from 'react'
 import { useNavigate, NavLink, useLocation } from 'react-router-dom'
 import {
@@ -16,7 +15,6 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import CircularProgress from '@mui/material/CircularProgress'
 import Fade from '@mui/material/Fade'
 import { AuthContext } from '../AuthContext'
-import { LogContext } from '../LogContext'
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -30,7 +28,6 @@ const Login = () => {
   const [generalError, setGeneralError] = useState('')
   const { authenticated, handleLogin } = useContext(AuthContext)
   const [showPassword, setShowPassword] = useState(false)
-  const { addLog } = useContext(LogContext)
   const [loading, setLoading] = useState(false)
 
   const handleClickShowPassword = () => {
@@ -55,10 +52,6 @@ const Login = () => {
     setLoading(true)
     try {
       await handleLogin(data.email, data.password)
-      addLog({
-        method: 'log',
-        data: ['Logged in.'],
-      })
     } catch (err) {
       if (err.code === 'NotAuthorizedException') {
         setGeneralError('Incorrect username or password. Please try again.')

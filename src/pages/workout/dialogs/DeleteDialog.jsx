@@ -12,7 +12,6 @@ import {
   Button,
 } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
-import { LogContext } from '../../LogContext'
 import { WorkoutContext } from '../../../contexts/WorkoutContext'
 import { AuthContext } from '../../AuthContext'
 
@@ -21,17 +20,12 @@ const DeleteDialog = ({ open, setOpen }) => {
   const { workoutData: workout } = useContext(WorkoutContext)
   const [loading, setLoading] = useState(false)
   const { API } = useContext(AuthContext)
-  const { addLog } = useContext(LogContext)
   const handleClose = () => {
     setOpen(false)
   }
 
   const handleConfirm = async () => {
     setLoading(true)
-    addLog({
-      method: 'info',
-      data: ['Deleting workout.'],
-    })
     try {
       await API.delete(`/workouts/${workout.id}`)
       setLoading(false)
@@ -43,10 +37,6 @@ const DeleteDialog = ({ open, setOpen }) => {
       setOpen(false)
     } catch (error) {
       setLoading(false)
-      addLog({
-        method: 'error',
-        data: ['Failed to delete.'],
-      })
     }
   }
 

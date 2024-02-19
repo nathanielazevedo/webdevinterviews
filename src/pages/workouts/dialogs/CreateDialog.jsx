@@ -20,7 +20,6 @@ import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useForm } from 'react-hook-form'
-import { LogContext } from '../../LogContext'
 import { AuthContext } from '../../AuthContext'
 import TemplateDependencies from '../components/TemplateDependencies'
 
@@ -47,7 +46,6 @@ const CreateWorkoutDialog = ({ open, setOpen, data, error }) => {
     },
   })
 
-  const { addLog } = useContext(LogContext)
   const { API } = useContext(AuthContext)
 
   const handleClose = () => {
@@ -58,10 +56,6 @@ const CreateWorkoutDialog = ({ open, setOpen, data, error }) => {
     setLoading(true)
     try {
       const res = await API.post('/workouts', datas)
-      addLog({
-        method: 'log',
-        data: ['Workout created.'],
-      })
       setLoading(false)
       setShowSuccess(true)
       setTimeout(() => {
