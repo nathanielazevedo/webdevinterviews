@@ -1,33 +1,112 @@
 @import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500&family=Coming+Soon&family=Fira+Code:wght@600&family=Poppins:wght@200;300;500&display=swap');
 
 :root {
-  --color-panel-background: #192230;
-  --color-panel-background-alternate: #202124;
   --color-solid-resize-bar: #454950;
   --color-solid-resize-bar-handle: rgba(255, 255, 255, 0.2);
-  --row-bg: grey.900;
   --green: rgb(151, 199, 132);
-  --blue: rgb(9, 151, 188);
-  --pink: rgb(255, 99, 132);
   --orange: rgb(243, 164, 78);
   --red: rgb(194, 24, 7);
   --lightBlue: #19e4ff;
-  --lightBlueOpacity: #19e4ff4f;
   --divider: rgba(255, 255, 255, 0.2);
   --side-nav-width: 70px;
   --top-nav-height: 50px;
-}
-
-*:focus {
-  outline: none;
-}
-
-* {
   --sp-layout-height: 94vh;
-  /* --sp-colors-disabled: grey;
-  --sp-colors-surface1: #121212;
-  --sp-colors-accent: #19e4ff; */
 }
+
+/* layout */
+
+#root {
+  width: 100vw;
+  max-width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  min-height: calc(100vh - 64px);
+  margin-top: 64px;
+}
+
+.main > :nth-child(2) {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.fit-wrapper {
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 765px;
+  margin: 0 auto;
+  padding-bottom: 35px;
+}
+
+/* Navigation */
+
+.active {
+  color: var(--lightBlue) !important;
+}
+
+.nav-link {
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: var(--lightBlue);
+}
+
+.not-active {
+  color: lightgrey;
+}
+
+.top-nav {
+  height: 50px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 25px;
+  justify-content: space-between;
+}
+
+.top-nav-auth-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.side-nav-wrapper {
+  width: var(--side-nav-width);
+  min-width: var(--side-nav-width);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  height: 100%;
+}
+
+.drawer-links-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 50px;
+}
+
+.app-bar-section {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  gap: 25px;
+}
+
+.app-bar-links {
+  display: flex;
+  gap: 25px;
+}
+
+/* Editor */
 
 .sp-wrapper {
   height: 100% !important;
@@ -43,11 +122,27 @@
   color: var(--color-solid-resize-bar) !important;
 }
 
+.editor-main {
+  display: flex;
+  height: 100%;
+}
+
+.editor-container {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.025);
+  min-height: calc(100vh - 135px);
+  max-height: calc(100vh - 135px);
+  flex-grow: 1;
+  padding-right: 20px;
+  padding-bottom: 10px;
+}
+
+/* Misc */
+
 .ResizeHandleOuter {
   cursor: col-resize;
-  width: 3px;
+  width: 5px;
   position: relative;
-  --background-color: transparent;
+  --background-color: black;
 }
 
 .ResizeHandleOuter[data-resize-handle-active] {
@@ -61,8 +156,7 @@
   left: 0;
   right: 0;
   background-color: var(--background-color);
-  transition: background-color 0.2s linear;
-  border-right: solid 0.5px var(--color-solid-resize-bar);
+  transition: background-color 0.3s linear;
 }
 
 .HorizontalResizeHandleOuter {
@@ -70,53 +164,15 @@
   height: 5px;
   min-height: 3px;
   position: relative;
-  --background-color: rgba(255, 255, 255, 0.2);
-  border-top: solid 0.5px black;
+  --background-color: black;
 }
 
 .HorizontalResizeHandleOuter[data-resize-handle-active] {
   --background-color: var(--lightBlue);
 }
 
-.HorizontalResizeHandleInner {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: var(--background-color);
-  transition: background-color 0.2s linear;
-  border-bottom: solid 0.5px var(--color-solid-resize-bar);
-}
-
-/* side nav icons */
-.active {
-  color: var(--lightBlue) !important;
-}
-
-.pending {
-  color: var(--lightBlue);
-  text-shadow: 0 0 10px var(--lightBlue), 0 0 20px var(--lightBlue),
-    0 0 30px var(--lightBlue), 0 0 40px var(--lightBlue);
-}
-
-.nav-link {
-  text-decoration: none;
-}
-
-.tab-nav-link {
-  text-decoration: none;
-}
-
-.nav-link:hover {
-  color: var(--lightBlue);
-}
-
-.not-active {
-  color: lightgrey;
-}
-
 /* game */
+
 .gameEditor-container {
   width: 340px;
   margin: 0 auto;
@@ -203,116 +259,6 @@
   height: 400px !important;
 }
 
-/* new */
-
-#root {
-  width: 100vw;
-  max-width: 100vw;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.top-nav {
-  height: 50px;
-  min-height: 50px;
-  display: flex;
-  align-items: center;
-  padding: 0 25px;
-  justify-content: space-between;
-}
-
-.top-nav-auth-wrapper {
-  display: flex;
-  gap: 20px;
-}
-
-.main {
-  min-height: calc(100vh - 64px);
-  margin-top: 64px;
-}
-
-.main > :nth-child(2) {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.fit-wrapper {
-  padding: 50px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 765px;
-  margin: 0 auto;
-  padding-bottom: 35px;
-}
-
-table {
-  overflow-y: scroll;
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th {
-  font-size: 12px;
-  background-color: black;
-  padding: 10px;
-  color: grey;
-}
-
-tr {
-  border-top: 12px solid transparent;
-  border-bottom: 12px solid transparent;
-}
-
-td {
-  padding: 5px 0;
-  margin: 0;
-}
-
-tr:nth-child(even) {
-  background-color: #1a1a1a;
-}
-
-.side-nav-wrapper {
-  width: var(--side-nav-width);
-  min-width: var(--side-nav-width);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 7px 0;
-  height: 100%;
-}
-
-.editor-container {
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.025);
-  min-height: calc(100vh - 135px);
-  max-height: calc(100vh - 135px);
-  flex-grow: 1;
-  padding-right: 20px;
-  padding-bottom: 10px;
-}
-
-.exit-button {
-  width: 70px;
-  color: grey !important;
-  border-right: 0.5px solid #454950 !important;
-}
-
-.editor-main {
-  display: flex;
-  height: 100%;
-}
-
-.drawer-links-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 50px;
-}
-
 .item-container {
   border: solid grey 1px;
   padding: 20px;
@@ -330,5 +276,9 @@ tr:nth-child(even) {
 @media screen and (max-width: 765px) {
   .fit-wrapper {
     width: 90%;
+    padding-top: 25px;
+  }
+  .app-bar-links {
+    display: none;
   }
 }

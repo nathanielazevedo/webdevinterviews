@@ -8,7 +8,7 @@ import {
 } from '@codesandbox/sandpack-react'
 import React from 'react'
 import { PanelGroup, Panel } from 'react-resizable-panels'
-import HorizontalResizeHandle from '../../components/HorizontalResizeHandle'
+import ResizeHandle from '../../components/ResizeHandle'
 
 const ShortsEditor = () => {
   return (
@@ -27,7 +27,7 @@ const ShortsEditor = () => {
                     <SandpackCodeEditor className='shorts-editor' showTabs />
                   </div>
                 </Panel>
-                <HorizontalResizeHandle />
+                <ResizeHandle horz={true} />
                 <Panel>
                   <div hidden>
                     <SandpackPreview className='shorts' />

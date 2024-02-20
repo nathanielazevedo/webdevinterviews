@@ -1,15 +1,18 @@
 import { Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
-const TextLink = ({ to, text }) => (
+const TextLink = ({ to, text, end = true, icon }) => (
   <NavLink
-    end
+    end={end}
     to={to}
-    className={({ isActive, isPending }) =>
-      `nav-link ${isActive ? 'active' : isPending ? 'pending' : 'not-active'}`
+    className={({ isActive }) =>
+      `nav-link ${isActive ? 'active' : 'not-active'}`
     }
   >
-    <Typography sx={{ fontSize: '16px' }}>{text}</Typography>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+      {icon && icon}
+      <Typography sx={{ fontSize: '16px' }}>{text}</Typography>
+    </div>
   </NavLink>
 )
 

@@ -3,6 +3,7 @@ import { WorkoutContext } from '../../../contexts/WorkoutContext'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import { SandpackFileExplorer } from 'sandpack-file-explorer'
 import { amethyst } from '@codesandbox/sandpack-themes'
+import { mergeFiles, mergeFilesAsOwner } from './utils'
 import {
   SandpackLayout,
   SandpackCodeEditor,
@@ -13,48 +14,8 @@ import { Box, Typography } from '@mui/material'
 import ResizeHandle from '../../../components/ResizeHandle'
 import Browser from './browser/Root'
 import AutoSave from './AutoSave'
-import HorizontalResizeHandle from '../../../components/HorizontalResizeHandle'
 import Prettier from './components/Prettier'
 import ChangedFiles from './components/ChangedFiles'
-
-const mergeFiles = (workout, isSolution, setFromLocal) => {
-  let local
-  if (isSolution) {
-    setFromLocal(false)
-    local = workout.files.solution
-  } else {
-    if (JSON.parse(localStorage.getItem(`${workout.id}`))) {
-      setFromLocal(true)
-      local = JSON.parse(localStorage.getItem(`${workout.id}`))
-    } else {
-      local = workout.files.template
-    }
-  }
-  const shared = workout.files.shared
-  const packageJson = workout.files.packageJson
-  return { ...local, ...shared, ...packageJson }
-}
-
-const mergeFilesAsOwner = (workout, isSolution) => {
-  let local
-  if (isSolution) {
-    local =
-      JSON.parse(localStorage.getItem(`${workout.id}-solution`)) ??
-      workout.files.solution
-  } else {
-    local =
-      JSON.parse(localStorage.getItem(`${workout.id}`)) ??
-      workout.files.template
-  }
-  const shared =
-    JSON.parse(localStorage.getItem(`${workout.id}-shared`)) ??
-    workout.files.shared
-  const packageJson =
-    JSON.parse(localStorage.getItem(`${workout.id}-package.json`)) ??
-    workout.files.packageJson
-
-  return { ...local, ...shared, ...packageJson }
-}
 
 const EditorMain = ({ isSolution }) => {
   const codemirrorInstance = useRef()
@@ -118,7 +79,7 @@ const EditorMain = ({ isSolution }) => {
                   </Panel>
                   {workout.isOwner && (
                     <>
-                      <HorizontalResizeHandle />
+                      <ResizeHandle horz={true} />
                       <Panel>
                         <Box
                           sx={{

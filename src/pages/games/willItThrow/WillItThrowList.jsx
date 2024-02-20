@@ -4,33 +4,51 @@ import decks from './willItThrow.json'
 import { Box, Typography } from '@mui/material'
 import TextLink from '../../../components/TextLink'
 import Header from '../../../components/Header'
+import { useNavigate } from 'react-router-dom'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 
 const Games = () => {
+  const navigate = useNavigate()
   return (
     <div className='fit-wrapper'>
-      <TextLink to='/games' text='Back to games' />
+      <TextLink
+        to='/games'
+        text='Back to games'
+        icon={<ArrowBackIosIcon fontSize='5px' />}
+      />
       <Header
         title='Choose a deck'
-        subtext='Each deck contains 5 true or false questions.'
+        subtext='Determine if the code provided will throw an error.'
       />
-      <div>
-        <table>
-          <tbody>
-            {decks.map((deck, index) => (
-              <tr key={index}>
-                <td style={{ paddingLeft: '15px' }}>
-                  <TextLink
-                    to={`/games/will-it-throw/${deck.to}`}
-                    text={deck.title}
-                  />
-                </td>
-                <td align='right' style={{ paddingRight: '15px' }}>
-                  <Typography color='grey.500'>{deck.language}</Typography>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+        }}
+      >
+        {decks.map((deck, index) => {
+          return (
+            <div
+              className='item-container'
+              onClick={() => navigate(`/games/will-it-throw/${deck.to}`)}
+            >
+              <div>
+                <div
+                  style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
+                >
+                  {deck.title}
+                </div>
+              </div>
+              <ArrowForwardIosIcon
+                sx={{
+                  color: 'grey.400',
+                }}
+              />
+            </div>
+          )
+        })}
       </div>
     </div>
   )

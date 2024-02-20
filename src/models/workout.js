@@ -11,7 +11,8 @@ export default class Workout {
   }) {
     this.id = id
     this.title = title
-    ;(this.description = description), (this.difficulty = difficulty)
+    this.description = description
+    this.difficulty = difficulty
     this.type = type
     this.youtubeLink = youtubeLink
     this.files = files

@@ -1,4 +1,3 @@
-/* eslint-disable operator-linebreak */
 const checkCodeDifferences = (serverFiles, localFiles) => {
   const serverKeys = Object.keys(serverFiles)
   const localKeys = Object.keys(localFiles)
@@ -11,7 +10,6 @@ const checkCodeDifferences = (serverFiles, localFiles) => {
   })
 
   localKeys.forEach((key) => {
-    // eslint-disable-next-line no-prototype-builtins
     if (
       !serverFiles.hasOwnProperty(key) &&
       localFiles[key]?.code !== '.emptyDir'
@@ -23,15 +21,41 @@ const checkCodeDifferences = (serverFiles, localFiles) => {
   return diffKeys
 }
 
-const mergeFiles = (workout) => {
-  const local =
-    JSON.parse(localStorage.getItem(workout.id)) || workout.dynamoData.template
+const mergeFiles = (workout, isSolution, setFromLocal) => {
+  let local
+  if (isSolution) {
+    setFromLocal(false)
+    local = workout.files.solution
+  } else {
+    if (JSON.parse(localStorage.getItem(`${workout.id}`))) {
+      setFromLocal(true)
+      local = JSON.parse(localStorage.getItem(`${workout.id}`))
+    } else {
+      local = workout.files.template
+    }
+  }
+  const shared = workout.files.shared
+  const packageJson = workout.files.packageJson
+  return { ...local, ...shared, ...packageJson }
+}
+
+const mergeFilesAsOwner = (workout, isSolution) => {
+  let local
+  if (isSolution) {
+    local =
+      JSON.parse(localStorage.getItem(`${workout.id}-solution`)) ??
+      workout.files.solution
+  } else {
+    local =
+      JSON.parse(localStorage.getItem(`${workout.id}`)) ??
+      workout.files.template
+  }
   const shared =
-    JSON.parse(localStorage.getItem(`${workout.id}-shared`)) ||
-    workout.dynamoData.shared
+    JSON.parse(localStorage.getItem(`${workout.id}-shared`)) ??
+    workout.files.shared
   const packageJson =
-    JSON.parse(localStorage.getItem(`${workout.id}-package.json`)) ||
-    workout.dynamoData.packageJson
+    JSON.parse(localStorage.getItem(`${workout.id}-package.json`)) ??
+    workout.files.packageJson
 
   return { ...local, ...shared, ...packageJson }
 }
@@ -53,4 +77,10 @@ const separateFiles = (files) => {
   return { sharedFiles, otherFiles, packageJson }
 }
 
-export { checkCodeDifferences, mergeFiles, separateFiles }
+export {
+  checkCodeDifferences,
+  mergeFiles,
+  separateFiles,
+  mergeFilesAsOwner,
+  mergeFiles,
+}

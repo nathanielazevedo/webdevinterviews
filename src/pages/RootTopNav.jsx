@@ -14,6 +14,7 @@ import TextLink from '../components/TextLink'
 import MenuIcon from '@mui/icons-material/Menu'
 import Drawer from '../components/Drawer'
 import { useNavigate } from 'react-router'
+import logo from '../assets/logo.png'
 
 const RootTopNav = () => {
   const { user, authLoading } = useContext(AuthContext)
@@ -23,21 +24,21 @@ const RootTopNav = () => {
   return (
     <AppBar elevation={1}>
       <Toolbar>
-        <Typography
-          variant=''
-          component='div'
-          sx={{
-            flexGrow: 1,
-            color: 'grey.300',
-            ':hover': {
+        <div className='app-bar-section'>
+          <img
+            onClick={() => navigate('/')}
+            src={logo}
+            width={'40px'}
+            style={{
+              borderRadius: '10px',
               cursor: 'pointer',
-              color: 'primary.main',
-            },
-          }}
-          onClick={() => navigate('/')}
-        >
-          WEB DEV INTERVIEWS
-        </Typography>
+            }}
+          />
+          <div className='app-bar-links'>
+            <TextLink to='/workouts' text='Workouts' end={false} />
+            <TextLink to='/games' text='Games' end={false} />
+          </div>
+        </div>
         <IconButton
           size='large'
           edge='start'
