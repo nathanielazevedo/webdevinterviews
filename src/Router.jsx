@@ -11,9 +11,7 @@ import VerifyEmail from './pages/auth/VerifyEmail'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ResetPassword from './pages/auth/ResetPassword'
 import Help from './pages/misc/Help'
-import EditWorkout from './pages/workout/manage/EditWorkout'
 import Workouts from './pages/workouts/Workouts'
-import ManageRoot from './pages/workout/manage/ManageRoot'
 import WorkoutRoot from './pages/workout/WorkoutRoot'
 import Games from './pages/games/GamesTable'
 import TrueOrFalseList from './pages/games/trueOrFalse/TrueOrFalseList'
@@ -104,18 +102,6 @@ const router = createBrowserRouter([
                 errorElement: <Error />,
               },
               {
-                path: 'manage',
-                element: <ManageRoot />,
-                errorElement: <Error />,
-                children: [
-                  {
-                    path: '',
-                    element: <EditWorkout />,
-                    errorElement: <Error />,
-                  },
-                ],
-              },
-              {
                 path: '*',
                 element: <FourOFour />,
                 errorElement: <Error />,
@@ -126,7 +112,6 @@ const router = createBrowserRouter([
       },
       {
         path: 'games',
-        // errorElement: <Error />,
         children: [
           {
             index: true,

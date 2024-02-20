@@ -306,10 +306,6 @@ tr:nth-child(even) {
   height: 100%;
 }
 
-/* .menu-icon {
-  display: none !important;
-} */
-
 .drawer-links-container {
   display: flex;
   flex-direction: column;
@@ -317,15 +313,21 @@ tr:nth-child(even) {
   margin-top: 50px;
 }
 
+.item-container {
+  border: solid grey 1px;
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item-container:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
 @media screen and (max-width: 765px) {
-  .root-side-nav {
-    display: none;
-  }
-
-  .menu-icon {
-    display: inline !important;
-  }
-
   .fit-wrapper {
     width: 90%;
   }

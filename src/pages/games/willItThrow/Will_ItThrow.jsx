@@ -15,14 +15,29 @@ const WillItThrow = () => {
 
   const onSubmit = (evt) => {
     evt.preventDefault()
-    if (guess === deck.answers[currentQuestion]) {
-      setOutput('correct')
-      scores.push(true)
-      setScores([...scores])
-    } else {
-      setOutput('incorrect')
-      scores.push(false)
-      setScores([...scores])
+    try {
+      console.log(deck.questions[currentQuestion])
+      eval(deck.questions[currentQuestion])
+      if (guess === 'no') {
+        setOutput('correct')
+        scores.push(true)
+        setScores([...scores])
+      } else {
+        setOutput('incorrect')
+        scores.push(false)
+        setScores([...scores])
+      }
+    } catch (e) {
+      console.log(e)
+      if (guess === 'yes') {
+        setOutput('correct')
+        scores.push(true)
+        setScores([...scores])
+      } else {
+        setOutput('incorrect')
+        scores.push(false)
+        setScores([...scores])
+      }
     }
 
     setTimeout(() => {
@@ -59,7 +74,7 @@ const WillItThrow = () => {
 
   return (
     <div className='fit-wrapper'>
-      <TextLink to='/games/true-or-false' text='Back to decks' />
+      <TextLink to='/games/will-it-throw' text='Back to decks' />
       <div className='gameEditor-container'>
         <div className='score-circles-container'>
           {Array(deck.questions.length)

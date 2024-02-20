@@ -38,7 +38,6 @@ const TrueOrFalse = () => {
   }
 
   const handleGuessChange = (evt) => {
-    console.log(evt.target.value)
     setGuess(evt.target.value)
   }
 

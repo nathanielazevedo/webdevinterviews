@@ -17,7 +17,7 @@ const Rating = ({ rating }) => {
             JUNIOR
           </Typography>
         )
-      case 'mid':
+      case 'mid-level':
         return (
           <Typography
             variant='caption'

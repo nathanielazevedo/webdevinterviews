@@ -1,26 +1,30 @@
 import Skeleton from '@mui/material/Skeleton'
 
 const SkeletonTable = () => {
-  const getRandomWidth = () => `${Math.floor(Math.random() * 10) + 40}%`
   return (
-    <>
-      {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-        <tr key={item} index={item}>
-          <td align='center' id='type'>
-            <Skeleton variant='text' width='30%' />
-          </td>
-          <td align='left' id='template'>
-            <Skeleton variant='text' width={getRandomWidth()} />
-          </td>
-          <td align='center' id='difficulty'>
-            <Skeleton variant='text' width='50%' />
-          </td>
-          <td align='center' id='creator'>
-            <Skeleton variant='text' width='90%' />
-          </td>
-        </tr>
-      ))}
-    </>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+      }}
+    >
+      {[1, 2, 3, 4, 5].map((workoutData) => {
+        return (
+          <div className='item-container'>
+            <div>
+              <div
+                style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
+              >
+                <Skeleton width='100px' />
+                <Skeleton width='100px' />
+              </div>
+              <Skeleton />
+            </div>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 
