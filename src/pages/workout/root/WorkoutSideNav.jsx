@@ -1,10 +1,11 @@
 import { useContext } from 'react'
 import { WorkoutContext } from '../../../contexts/WorkoutContext'
+
 import CodeIcon from '@mui/icons-material/Code'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
-import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined'
-import SideNav from '../../../components/frame/SideNav'
 import CloseIcon from '@mui/icons-material/Close'
+
+import SideNav from '../../../components/frame/SideNav'
 
 const WorkoutSideNav = () => {
   const { workout } = useContext(WorkoutContext)

@@ -77,10 +77,4 @@ const separateFiles = (files) => {
   return { sharedFiles, otherFiles, packageJson }
 }
 
-export {
-  checkCodeDifferences,
-  mergeFiles,
-  separateFiles,
-  mergeFilesAsOwner,
-  mergeFiles,
-}
+export { checkCodeDifferences, mergeFiles, separateFiles, mergeFilesAsOwner }

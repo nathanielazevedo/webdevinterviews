@@ -12,13 +12,13 @@ import {
 } from '@mui/material'
 import TextLink from '../components/TextLink'
 import MenuIcon from '@mui/icons-material/Menu'
-import Drawer from '../components/Drawer'
 import { useNavigate } from 'react-router'
 import logo from '../assets/logo.png'
+import RootSideNav from './RootSideNav'
 
 const RootTopNav = () => {
   const { user, authLoading } = useContext(AuthContext)
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [sideNavOpen, setSideNavOpen] = useState(false)
   const navigate = useNavigate()
 
   return (
@@ -44,12 +44,14 @@ const RootTopNav = () => {
           edge='start'
           color='inherit'
           aria-label='menu'
-          onClick={() => setDrawerOpen(true)}
+          onClick={() => setSideNavOpen(true)}
         >
           <MenuIcon sx={{ color: 'grey.400' }} />
         </IconButton>
       </Toolbar>
-      {drawerOpen && <Drawer open={drawerOpen} setOpen={setDrawerOpen} />}
+      {sideNavOpen && (
+        <RootSideNav open={sideNavOpen} setOpen={setSideNavOpen} />
+      )}
     </AppBar>
   )
 }

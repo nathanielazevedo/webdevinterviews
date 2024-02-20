@@ -1,4 +1,3 @@
-import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './pages/Root'
 import Home from './pages/Home'
@@ -154,6 +153,6 @@ const router = createBrowserRouter([
   },
 ])
 
-const App = () => <RouterProvider router={router} />
+const Router = () => <RouterProvider router={router} />
 
-export default App
+export default Router

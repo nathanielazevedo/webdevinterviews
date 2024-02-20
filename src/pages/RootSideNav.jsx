@@ -1,4 +1,5 @@
 import TextLink from '../components/TextLink'
+import Drawer from '@mui/material/Drawer'
 
 const links = [
   {
@@ -23,14 +24,22 @@ const links = [
   },
 ]
 
-const RootSideNav = ({ main }) => (
-  <div style={{ width: '250px' }}>
-    <ul className='drawer-links-container'>
-      {links.map((link) => {
-        return <TextLink text={link.name} to={link.path} />
-      })}
-    </ul>
-  </div>
+const RootSideNav = ({ setOpen }) => (
+  <Drawer
+    anchor='right'
+    open
+    onClose={() => setOpen(false)}
+    elevation={1}
+    onClick={() => setOpen(false)}
+  >
+    <div style={{ width: '250px' }}>
+      <ul className='drawer-links-container'>
+        {links.map((link) => {
+          return <TextLink text={link.name} to={link.path} />
+        })}
+      </ul>
+    </div>
+  </Drawer>
 )
 
 export default RootSideNav

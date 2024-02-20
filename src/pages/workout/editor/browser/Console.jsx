@@ -14,10 +14,6 @@ const Console = ({ closeFilePanel, consolePanelRef }) => {
     const stopListening = listen((msg) => {
       if (msg.type === 'status' && msg.status === 'transpiling') {
         logs.splice(0, logs.length)
-        logs.push({
-          method: 'log',
-          data: ['Auto Saved'],
-        })
       }
     })
 

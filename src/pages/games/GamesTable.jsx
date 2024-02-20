@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router'
 
 const games = [
   {
-    title: 'true or false',
+    title: 'True or False',
     to: 'true-or-false',
     description: 'Test your understanding of JavaScript types and comparisons.',
   },
   {
-    title: 'Will it throw?',
+    title: 'Will it throw',
     to: 'will-it-throw',
     description: 'Determine if the provided code will throw an error.',
   },

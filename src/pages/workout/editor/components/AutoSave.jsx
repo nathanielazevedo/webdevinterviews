@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSandpack } from '@codesandbox/sandpack-react'
-import { separateFiles } from './utils'
+import { separateFiles } from '../utils'
 
 const AutoSave = ({ workout, isSolution }) => {
   const { sandpack, listen } = useSandpack()

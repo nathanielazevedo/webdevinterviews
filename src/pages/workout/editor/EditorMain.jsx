@@ -13,7 +13,7 @@ import {
 import { Box, Typography } from '@mui/material'
 import ResizeHandle from '../../../components/ResizeHandle'
 import Browser from './browser/Root'
-import AutoSave from './AutoSave'
+import AutoSave from './components/AutoSave'
 import Prettier from './components/Prettier'
 import ChangedFiles from './components/ChangedFiles'
 
@@ -54,15 +54,7 @@ const EditorMain = ({ isSolution }) => {
       )}
       <SandpackThemeProvider theme={'dark'}>
         <SandpackLayout>
-          <div
-            style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'row',
-              position: 'relative',
-              height: '100%',
-            }}
-          >
+          <div className='editor-layout'>
             <PanelGroup
               direction='horizontal'
               autoSaveId='editor-prefs'
@@ -81,17 +73,7 @@ const EditorMain = ({ isSolution }) => {
                     <>
                       <ResizeHandle horz={true} />
                       <Panel>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-start',
-                            height: '35px',
-                            alignItems: 'center',
-                            backgroundColor: 'black',
-                            width: '100%',
-                            paddingLeft: '10px',
-                          }}
-                        >
+                        <Box className='source-control-wrapper'>
                           <Typography>SOURCE CONTROL</Typography>
                         </Box>
                         <ChangedFiles isSolution={isSolution} />

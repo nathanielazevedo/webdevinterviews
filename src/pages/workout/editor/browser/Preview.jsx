@@ -29,11 +29,7 @@ const BasicTabs = () => {
           backgroundColor: '#151515',
         }}
       >
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          sx={{ height: '20px', minHeight: '40px' }}
-        >
+        <Tabs value={value} onChange={handleChange} sx={{ minHeight: '40px' }}>
           {['Browser', 'Tests', 'Instructions', 'Example'].map((label) => (
             <Tab
               key={label}
@@ -51,7 +47,9 @@ const BasicTabs = () => {
           showOpenInCodeSandbox={false}
         />
       )}
+
       {value === 1 && <SandpackTests style={{ height: 'calc(100% - 40px)' }} />}
+
       {value === 2 && (
         <div
           dangerouslySetInnerHTML={{
@@ -61,18 +59,20 @@ const BasicTabs = () => {
       )}
 
       {value === 3 && (
-        <SandpackProvider
-          files={workout.files.solution}
-          template={workout.type}
-        >
-          <SandpackThemeProvider theme={'dark'}>
-            <SandpackPreview
-              showNavigator
-              style={{ height: 'calc(100% - 40px)' }}
-              showOpenInCodeSandbox={false}
-            />
-          </SandpackThemeProvider>
-        </SandpackProvider>
+        <div style={{ height: '100%' }}>
+          <SandpackProvider
+            files={workout.files.solution}
+            template={workout.type}
+          >
+            <SandpackThemeProvider theme={'dark'}>
+              <SandpackPreview
+                showNavigator
+                style={{ height: 'calc(100% - 40px)' }}
+                showOpenInCodeSandbox={false}
+              />
+            </SandpackThemeProvider>
+          </SandpackProvider>
+        </div>
       )}
     </Box>
   )

@@ -3,7 +3,7 @@
 // IMPORT FROM AUTHCONTEXT
 
 const BASE_URL = import.meta.env.DEV
-  ? 'https://api.webdevinterviews.com'
+  ? 'http://localhost:80'
   : 'https://api.webdevinterviews.com'
 
 class API {
@@ -28,19 +28,18 @@ class API {
 
     try {
       const decodedToken = JSON.parse(atob(this.authToken.split('.')[1]))
-      const expirationTime = decodedToken.exp * 1000 // Convert to milliseconds
+      const expirationTime = decodedToken.exp * 1000
       const currentTime = new Date().getTime()
 
       return currentTime > expirationTime
     } catch (error) {
       console.error('Error decoding or parsing token:', error)
-      return true // Treat decoding or parsing errors as expired
+      return true
     }
   }
 
   async fetch(method, endpoint, body) {
     if (this.isTokenExpired()) {
-      // Handle token expiration, e.g., trigger a refresh or redirect to login
       await this.refreshAuthToken()
     }
     const options = {
