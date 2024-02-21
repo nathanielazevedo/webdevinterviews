@@ -47,6 +47,7 @@ const Workouts = () => {
           const workout = new Workout(workoutData)
           return (
             <div
+              key={workout.id}
               className='item-container'
               onClick={() => navigate(`/workouts/${workout.id}`)}
             >

@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Root from './pages/Root'
+import Root from './root/Root'
+
 import Home from './pages/Home'
 import Error from './pages/misc/Error'
 import FourOFour from './pages/misc/FourOFour'
@@ -9,16 +10,19 @@ import Account from './pages/auth/Account'
 import VerifyEmail from './pages/auth/VerifyEmail'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ResetPassword from './pages/auth/ResetPassword'
-import Help from './pages/misc/Help'
+import Contact from './pages/misc/Contact'
+
 import Workouts from './pages/workouts/Workouts'
-import WorkoutRoot from './pages/workout/WorkoutRoot'
-import Games from './pages/games/GamesTable'
+import Workout from './pages/workout/Workout'
+import EditorMain from './pages/workout/editor/EditorMain'
+
+import GamesList from './pages/games/GamesList'
 import TrueOrFalseList from './pages/games/trueOrFalse/TrueOrFalseList'
 import TrueOrFalse from './pages/games/trueOrFalse/TrueOrFalse'
 import ShortsEditor from './pages/shortsEditor/ShortsEditor'
 import WillItThrowList from './pages/games/willItThrow/WillItThrowList'
 import WillItThrow from './pages/games/willItThrow/Will_ItThrow'
-import EditorMain from './pages/workout/editor/EditorMain'
+import Contests from './pages/contests/ContestsList'
 
 const router = createBrowserRouter([
   {
@@ -73,8 +77,8 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: 'help',
-        element: <Help />,
+        path: 'contact',
+        element: <Contact />,
         errorElement: <Error />,
       },
       {
@@ -84,7 +88,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'workouts/:id',
-        element: <WorkoutRoot />,
+        element: <Workout />,
         errorElement: <Error />,
         children: [
           {
@@ -114,7 +118,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Games />,
+            element: <GamesList />,
           },
           {
             path: 'true-or-false',
@@ -125,7 +129,11 @@ const router = createBrowserRouter([
               },
               {
                 path: ':id',
-                element: <TrueOrFalse />,
+                element: (
+                  <div className='fit-wrapper'>
+                    <TrueOrFalse />
+                  </div>
+                ),
               },
             ],
           },
@@ -143,6 +151,10 @@ const router = createBrowserRouter([
             ],
           },
         ],
+      },
+      {
+        path: 'contests',
+        element: <Contests />,
       },
       {
         path: '*',

@@ -1,8 +1,7 @@
-/* eslint-disable react/prop-types */
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { AuthContext } from '../../AuthContext'
+import { AuthContext } from '../../../contexts/AuthContext'
 import { useContext } from 'react'
 import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'

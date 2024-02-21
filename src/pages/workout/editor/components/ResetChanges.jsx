@@ -13,7 +13,7 @@ const ResetChanges = ({ changedFiles }) => {
         color='inherit'
         fullWidth
       >
-        RESET CHANGES
+        RESET
       </Button>
       {showWarning && <Alert setOpen={setShowWarning} />}
     </>

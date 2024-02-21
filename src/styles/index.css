@@ -169,14 +169,15 @@
   --background-color: var(--lightBlue);
 }
 
-/* game */
+/* GAME */
 
 .gameEditor-container {
   width: 340px;
   margin: 0 auto;
-  background-color: #151515;
   color: white;
-  padding: 30px;
+  margin-top: 50px;
+  border: solid rgb(57, 56, 56) 1px;
+  padding: 20px;
   border-radius: 10px;
 }
 
@@ -184,10 +185,19 @@
   position: relative;
   min-height: 150px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid grey;
   font-size: large;
+}
+
+.true-or-false-radio {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 10px;
+  align-items: center;
+  padding: 10px;
 }
 
 .output-container {
@@ -198,35 +208,15 @@
   align-items: center;
 }
 
-.true-or-false-radio {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  font-size: small;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 10px;
-  align-items: center;
-}
-
-.radio {
+.score-circles-container {
   display: flex;
   gap: 10px;
-  align-items: center;
 }
 
 .score-circle {
   height: 20px;
   width: 20px;
-  border: 1px solid grey;
-  margin-bottom: 10px;
-  border-radius: 50%;
-}
-
-.score-circles-container {
-  display: flex;
-  gap: 10px;
+  border: 1px solid rgba(128, 128, 128, 0.44);
 }
 
 .correct-score-circle {
@@ -237,25 +227,37 @@
   background-color: red;
 }
 
-.layout-container {
-  margin: 0 auto;
-  width: 50%;
+.guess-form {
+  width: 100%;
+}
+
+.radio {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .shorts-container {
   height: 600px;
-  width: 450px;
+  max-width: 450px;
 }
 
 .shorts-layout {
   display: flex;
   flex-direction: column;
   height: 500px;
+  max-width: 450px;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
 .shorts-editor {
   height: 400px !important;
 }
+
+/* ITEMS */
 
 .item-container {
   border: solid grey 1px;
@@ -269,6 +271,17 @@
 .item-container:hover {
   background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
+}
+
+.marketing-section {
+  padding: 50px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.marketing-button {
+  margin-top: 20px !important;
 }
 
 @media screen and (max-width: 765px) {

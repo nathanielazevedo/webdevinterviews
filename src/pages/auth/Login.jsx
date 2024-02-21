@@ -14,7 +14,7 @@ import * as yup from 'yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import CircularProgress from '@mui/material/CircularProgress'
 import Fade from '@mui/material/Fade'
-import { AuthContext } from '../AuthContext'
+import { AuthContext } from '../../contexts/AuthContext'
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),

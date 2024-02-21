@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { useContext, useState } from 'react'
 import { useLocation, NavLink } from 'react-router-dom'
-import { AuthContext } from '../AuthContext'
+import { AuthContext } from '../../contexts/AuthContext'
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),

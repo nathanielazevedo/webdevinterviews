@@ -9,7 +9,7 @@ import { InputAdornment, IconButton } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import CircularProgress from '@mui/material/CircularProgress'
 import Fade from '@mui/material/Fade'
-import { AuthContext } from '../AuthContext'
+import { AuthContext } from '../../contexts/AuthContext'
 
 const validationSchema = yup.object({
   email: yup

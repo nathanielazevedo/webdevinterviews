@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import { AuthContext } from './AuthContext'
+import { AuthContext } from '../contexts/AuthContext'
 import {
   Typography,
   Box,
@@ -37,6 +37,7 @@ const RootTopNav = () => {
           <div className='app-bar-links'>
             <TextLink to='/workouts' text='Workouts' end={false} />
             <TextLink to='/games' text='Games' end={false} />
+            <TextLink to='/contests' text='Contests' end={false} />
           </div>
         </div>
         <IconButton

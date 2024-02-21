@@ -1,18 +1,18 @@
 import { useState, useEffect, useContext } from 'react'
-import { AuthContext } from '../pages/AuthContext'
+import { AuthContext } from '../contexts/AuthContext'
+import useApi from './useApi'
 
 const useFetch = (url) => {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const { API, authLoading } = useContext(AuthContext)
+  const { getIt } = useApi()
 
   const fetchData = async () => {
-    if (authLoading) return
     setLoading(true)
     setError(null)
     try {
-      const { data: responseData } = await API.get(url)
+      const { data: responseData } = await getIt(url)
       setData(responseData)
       setLoading(false)
     } catch (thisError) {
@@ -22,10 +22,8 @@ const useFetch = (url) => {
   }
 
   useEffect(() => {
-    if (!authLoading) {
-      fetchData(url)
-    }
-  }, [authLoading, url])
+    fetchData(url)
+  }, [])
 
   return { data, loading, error, fetchData, setData }
 }

@@ -32,7 +32,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      './runtimeConfig': './runtimeConfig.browser', // <-- Fix from above
+      './runtimeConfig': './runtimeConfig.browser',
     },
   },
 })

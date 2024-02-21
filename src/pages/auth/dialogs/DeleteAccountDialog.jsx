@@ -12,7 +12,7 @@ import Button from '@mui/material/Button'
 import { useState } from 'react'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useContext } from 'react'
-import { AuthContext } from '../../AuthContext'
+import { AuthContext } from '../../../contexts/AuthContext'
 
 const DeleteAccount = ({ handleClose, setOpen, open }) => {
   const { handleDeleteAccount } = useContext(AuthContext)

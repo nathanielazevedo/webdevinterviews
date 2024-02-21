@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import { AuthProvider } from './AuthContext'
+import { AuthProvider } from '../contexts/AuthContext'
 import TopNav from './RootTopNav'
 
 const Root = () => (

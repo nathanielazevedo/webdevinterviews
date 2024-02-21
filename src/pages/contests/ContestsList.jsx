@@ -5,24 +5,20 @@ import { useNavigate } from 'react-router'
 
 const games = [
   {
-    title: 'True or False',
-    to: 'true-or-false',
-    description: 'Test your understanding of JavaScript types and comparisons.',
-  },
-  {
-    title: 'Will it throw',
-    to: 'will-it-throw',
-    description: 'Determine if the provided code will throw an error.',
+    title: 'To be announced.',
+    to: '',
+    description:
+      'Subscribe to my youtube channel to get notified when the next contest starts.',
   },
 ]
 
-const Games = ({ tab }) => {
+const ContestsList = ({ tab }) => {
   const navigate = useNavigate()
   return (
     <div className='fit-wrapper'>
       <Header
-        title='Games'
-        subtext="Some cool games I've made that will test your knowledge."
+        title='Contests'
+        subtext='Win prizes by being the first to complete a challenge.'
       />
       <div
         style={{
@@ -34,8 +30,9 @@ const Games = ({ tab }) => {
         {games.map((game, index) => {
           return (
             <div
+              key={index}
               className='item-container'
-              onClick={() => navigate(`/games/${game.to}`)}
+              // onClick={() => navigate(`/games/${game.to}`)}
             >
               <div>
                 <div
@@ -60,4 +57,4 @@ const Games = ({ tab }) => {
   )
 }
 
-export default Games
+export default ContestsList

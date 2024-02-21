@@ -3,7 +3,7 @@ import { Container, Typography, Button, Box, Skeleton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
-import { AuthContext } from '../AuthContext'
+import { AuthContext } from '../../contexts/AuthContext'
 import DeleteAccountDialog from './dialogs/DeleteAccountDialog'
 
 const Account = () => {

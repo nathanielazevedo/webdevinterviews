@@ -3,7 +3,7 @@ import { useSandpack } from '@codesandbox/sandpack-react'
 import { useContext, useState } from 'react'
 import CircularProgress from '@mui/material/CircularProgress'
 import { WorkoutContext } from '../../../../contexts/WorkoutContext'
-import { AuthContext } from '../../../AuthContext'
+// import { AuthContext } from '../../../AuthContext'
 import { separateFiles } from '../utils'
 import { useNavigate } from 'react-router'
 
@@ -11,7 +11,7 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
   const [loading, setLoading] = useState(false)
   const { sandpack } = useSandpack()
   const { workout, setData } = useContext(WorkoutContext)
-  const { API } = useContext(AuthContext)
+  // const { API } = useContext(AuthContext)
   const navigate = useNavigate()
 
   const onSubmit = async () => {
@@ -21,27 +21,27 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
     setLoading(true)
     try {
       if (isSolution) {
-        await API.put(
-          `/workouts/${workout.id}/upload-solution`,
-          JSON.stringify(otherFiles)
-        )
+        // await API.put(
+        //   `/workouts/${workout.id}/upload-solution`,
+        //   JSON.stringify(otherFiles)
+        // )
       } else {
-        await API.put(
-          `/workouts/${workout.id}/upload-template`,
-          JSON.stringify(otherFiles)
-        )
+        // await API.put(
+        //   `/workouts/${workout.id}/upload-template`,
+        //   JSON.stringify(otherFiles)
+        // )
       }
       if (sharedFiles) {
-        await API.put(
-          `/workouts/${workout.id}/upload-shared`,
-          JSON.stringify(sharedFiles)
-        )
+        // await API.put(
+        //   `/workouts/${workout.id}/upload-shared`,
+        //   JSON.stringify(sharedFiles)
+        // )
       }
       if (changedFiles.indexOf('/package.json')) {
-        await API.put(
-          `/workouts/${workout.id}/upload-package`,
-          JSON.stringify(packageJson)
-        )
+        // await API.put(
+        //   `/workouts/${workout.id}/upload-package`,
+        //   JSON.stringify(packageJson)
+        // )
       }
       localStorage.removeItem(workout.id)
       localStorage.removeItem(workout.id + '-shared')

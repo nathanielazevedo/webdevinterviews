@@ -15,12 +15,12 @@ const links = [
     path: 'shorts-editor',
   },
   {
-    name: 'COMPETE',
-    path: 'competitions',
+    name: 'CONTESTS',
+    path: 'contests',
   },
   {
-    name: 'HELP',
-    path: 'help',
+    name: 'CONTACT',
+    path: 'contact',
   },
 ]
 

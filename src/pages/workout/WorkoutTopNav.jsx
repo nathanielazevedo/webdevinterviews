@@ -1,25 +1,13 @@
 import { useContext } from 'react'
-import { WorkoutContext } from '../../../contexts/WorkoutContext'
-import { useNavigate, useNavigation } from 'react-router-dom'
-import CloseIcon from '@mui/icons-material/Close'
-import {
-  IconButton,
-  Button,
-  Typography,
-  CircularProgress,
-  Box,
-  Tooltip,
-  Alert,
-} from '@mui/material'
-import TemplateToSvg from '../../workouts/components/TemplateToSvg'
-import YouTube from '../../../components/YouTubeIcon'
-import Rating from '../../../components/Rating'
-import ResetChanges from '../editor/components/ResetChanges'
+import { WorkoutContext } from '../../contexts/WorkoutContext'
+import { Typography, Alert } from '@mui/material'
+import TemplateToSvg from '../workouts/components/TemplateToSvg'
+import YouTube from '../../components/YouTubeIcon'
+import Rating from '../../components/Rating'
+import ResetChanges from './editor/components/ResetChanges'
 
 const WorkoutTopNav = () => {
   const { workout, fromLocal } = useContext(WorkoutContext)
-  const navigate = useNavigate()
-  const navigation = useNavigation()
 
   return (
     <div className='top-nav'>

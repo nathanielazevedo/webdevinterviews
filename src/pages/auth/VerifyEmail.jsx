@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import { TextField, Button, Box } from '@mui/material'
-import { AuthContext } from '../AuthContext'
+import { AuthContext } from '../../contexts/AuthContext'
 import { useLocation } from 'react-router-dom'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'

@@ -9,9 +9,9 @@ const SkeletonTable = () => {
         gap: '10px',
       }}
     >
-      {[1, 2, 3, 4, 5].map((workoutData) => {
+      {[1, 2, 3, 4, 5].map((index) => {
         return (
-          <div className='item-container'>
+          <div className='item-container' key={index}>
             <div>
               <div
                 style={{ display: 'flex', gap: '10px', alignItems: 'center' }}

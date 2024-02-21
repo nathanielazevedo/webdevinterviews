@@ -2,14 +2,14 @@ import { useNavigate } from 'react-router-dom'
 import { createContext, useState, useEffect, useContext } from 'react'
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js'
 import PropTypes from 'prop-types'
-import API from '../api'
-import UserPool from '../userpool'
+import UserPool from './userpool'
 
 const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
+  const [token, setToken] = useState(null)
   const [user, setUser] = useState(null)
 
   const handleSession = (currentUser) =>
@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
                 return acc
               }, {})
               const idToken = session.getIdToken()
-              API.setAuthToken(idToken.jwtToken)
+              setToken(idToken)
               const isAdmin = (
                 idToken.payload['cognito:groups'] || []
               ).includes('admin')
@@ -36,7 +36,6 @@ const AuthProvider = ({ children }) => {
                 ...currentUser,
                 username: userAttributes.nickname,
                 email: userAttributes.email,
-                isAdmin,
               })
               resolve(session)
               setLoading(false)
@@ -63,13 +62,11 @@ const AuthProvider = ({ children }) => {
           reject(error)
         } else {
           const idToken = session.getIdToken()
-          API.setAuthToken(idToken.jwtToken)
+          setToken(idToken)
           resolve()
         }
       })
     })
-
-  API.refreshAuthToken = refreshAuthToken
 
   const handleLogin = async (email, password) => {
     if (user) return
@@ -167,7 +164,7 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         currentUser.signOut()
         setUser(null)
-        API.setAuthToken(null)
+        setToken(null)
         resolve()
       } else {
         reject(new Error('No user is currently logged in'))
@@ -237,7 +234,6 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
-        API,
         authLoading: loading,
         handleLogout,
         handleLogin,

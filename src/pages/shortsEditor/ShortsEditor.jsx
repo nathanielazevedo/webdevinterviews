@@ -9,10 +9,15 @@ import {
 import React from 'react'
 import { PanelGroup, Panel } from 'react-resizable-panels'
 import ResizeHandle from '../../components/ResizeHandle'
+import Header from '.././../components/Header'
 
 const ShortsEditor = () => {
   return (
     <div className='fit-wrapper'>
+      <Header
+        title='Shorts Editor'
+        subtext='This is the editor I use for YouTube shorts. You might find it useful.'
+      />
       <div style={{ height: '700px' }}>
         <SandpackProvider
           options={{ autoReload: false }}

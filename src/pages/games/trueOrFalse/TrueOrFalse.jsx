@@ -3,10 +3,12 @@ import decks from './trueOrFalse.json'
 import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import TextLink from '../../../components/TextLink'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 
 const TrueOrFalse = () => {
   const { id } = useParams()
-  const deck = decks[id - 1]
+  console.log(id)
+  const deck = id ? decks[id - 1] : decks[0]
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [guess, setGuess] = useState(null)
   const [output, setOutput] = useState('')
@@ -58,8 +60,14 @@ const TrueOrFalse = () => {
   }
 
   return (
-    <div className='fit-wrapper'>
-      <TextLink to='/games/true-or-false' text='Back to decks' />
+    <>
+      {id && (
+        <TextLink
+          to='/games/true-or-false'
+          text='Back to decks'
+          icon={<ArrowBackIosIcon fontSize='5px' />}
+        />
+      )}
       <div className='gameEditor-container'>
         <div className='score-circles-container'>
           {Array(deck.questions.length)
@@ -80,55 +88,60 @@ const TrueOrFalse = () => {
               )
             })}
         </div>
+
         <div className='code-container'>
           <code>{deck.questions[currentQuestion]}</code>
-          <form onSubmit={onSubmit} name='guess-form'>
-            <div className='true-or-false-radio'>
-              <div className='radio'>
-                <div>
-                  <label>
-                    <input
-                      type='radio'
-                      name='guess'
-                      value={1}
-                      checked={guess === '1'}
-                      onChange={handleGuessChange}
-                    />
-                    True
-                  </label>
-                </div>
-                <div>
-                  <label>
-                    <input
-                      type='radio'
-                      name='guess'
-                      value={0}
-                      checked={guess === '0'}
-                      onChange={handleGuessChange}
-                    />
-                    False
-                  </label>
-                </div>
-              </div>
-              {gameOver ? (
-                <button type='button' onClick={newGame}>
-                  Play Again
-                </button>
-              ) : (
-                <button type='submit' disabled={guess === ''}>
-                  Submit
-                </button>
-              )}
-            </div>
-          </form>
         </div>
+
+        <form
+          onSubmit={onSubmit}
+          name='guess-form'
+          className='true-or-false-radio'
+        >
+          <div className='radio'>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <label>
+                <input
+                  type='radio'
+                  name='guess'
+                  value={1}
+                  checked={guess === '1'}
+                  onChange={handleGuessChange}
+                />
+                True
+              </label>
+
+              <label>
+                <input
+                  type='radio'
+                  name='guess'
+                  value={0}
+                  checked={guess === '0'}
+                  onChange={handleGuessChange}
+                />
+                False
+              </label>
+            </div>
+
+            {gameOver ? (
+              <button type='button' onClick={newGame}>
+                Play Again
+              </button>
+            ) : (
+              <button type='submit' disabled={guess === ''}>
+                Submit
+              </button>
+            )}
+          </div>
+        </form>
+
         <div className='output-container'>
           <p>
             <samp>{output}</samp>
           </p>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
