@@ -9,7 +9,7 @@ describe('Home component', () => {
     })
 
     // Check if the logo image is rendered
-    const logo = screen.getByText('Welcome to WDI.')
+    const logo = screen.getByText('WEB DEV INTERVIEWS')
     expect(logo).toBeInTheDocument()
   })
 })
