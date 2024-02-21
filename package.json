@@ -11,10 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@codemirror/closebrackets": "^0.19.2",
-    "@codemirror/lint": "^6.4.2",
     "@codesandbox/sandpack-react": "^2.9.0",
-    "@codesandbox/sandpack-themes": "^2.0.21",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.3.2",
@@ -23,8 +20,6 @@
     "amazon-cognito-identity-js": "^6.3.7",
     "angular-html-parser": "^5.2.0",
     "console-feed": "^3.5.0",
-    "eslint-linter-browserify": "^8.56.0",
-    "lodash": "^4.17.21",
     "postcss": "^8.4.32",
     "prettier": "2.5.1",
     "prop-types": "^15.8.1",

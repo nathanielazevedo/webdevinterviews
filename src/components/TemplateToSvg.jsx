@@ -1,5 +1,5 @@
 import { Box, Tooltip } from '@mui/material'
-import { react, vanilla } from '../../../assets/template'
+import { react, vanilla } from '../assets/template'
 
 const TemplateToSvg = ({ template }) => {
   const getImage = (templateName) => {

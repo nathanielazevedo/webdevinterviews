@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
-import { WorkoutContext } from '../../../contexts/WorkoutContext'
+import { WorkoutContext } from '../../../../contexts/WorkoutContext'
 
 const AlertDialog = ({ setOpen }) => {
   const navigate = useNavigate()

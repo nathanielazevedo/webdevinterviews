@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
 
 const BASE_URL = import.meta.env.DEV
-  ? 'http://localhost:80'
+  ? 'https://api.webdevinterviews.com'
   : 'https://api.webdevinterviews.com'
 
 const isTokenExpired = (token) => {
@@ -27,9 +27,9 @@ const useApi = () => {
     useContext(AuthContext)
 
   const makeRequest = async (method, endpoint, body) => {
-    if (isTokenExpired(token)) {
-      await refreshAuthToken()
-    }
+    // if (isTokenExpired(token)) {
+    //   await refreshAuthToken()
+    // }
     const options = {
       method,
       headers: {

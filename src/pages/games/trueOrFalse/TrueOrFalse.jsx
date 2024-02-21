@@ -12,9 +12,13 @@ import {
   RadioGroup,
   Radio,
   Typography,
+  Box,
 } from '@mui/material'
+import ScoreCircles from '../components/ScoreCircles'
+import { useNavigate } from 'react-router-dom'
 
 const TrueOrFalse = () => {
+  const navigate = useNavigate()
   const { id } = useParams()
   const [number, setNumber] = useState(id ? id - 1 : 0)
   const [deck, setDeck] = useState(decks[number])
@@ -27,11 +31,11 @@ const TrueOrFalse = () => {
   const onSubmit = (evt) => {
     evt.preventDefault()
     if (guess == eval(deck.questions[currentQuestion])) {
-      setOutput('correct')
+      setOutput('You are right.')
       scores.push(true)
       setScores([...scores])
     } else {
-      setOutput('incorrect')
+      setOutput('You are wrong.')
       scores.push(false)
       setScores([...scores])
     }
@@ -52,8 +56,7 @@ const TrueOrFalse = () => {
     setGuess(evt.target.value)
   }
 
-  const newGame = (evt) => {
-    evt.preventDefault()
+  const newGame = () => {
     setCurrentQuestion(0)
     setScores([])
     setOutput('')
@@ -77,6 +80,7 @@ const TrueOrFalse = () => {
           icon={<ArrowBackIosIcon fontSize='5px' />}
         />
       )}
+
       <div className='gameEditor-container'>
         <Typography
           sx={{
@@ -87,25 +91,7 @@ const TrueOrFalse = () => {
         >
           Deck {number + 1}
         </Typography>
-        <div className='score-circles-container'>
-          {Array(deck.questions.length)
-            .fill()
-            .map((_, index) => {
-              return (
-                <div
-                  key={index}
-                  className={
-                    'score-circle ' +
-                    (scores[index] === undefined
-                      ? ''
-                      : scores[index]
-                      ? 'correct-score-circle'
-                      : 'incorrect-score-circle')
-                  }
-                ></div>
-              )
-            })}
-        </div>
+        <ScoreCircles deck={deck} scores={scores} />
 
         <div className='code-container'>
           <code>{deck.questions[currentQuestion]}</code>
@@ -116,8 +102,12 @@ const TrueOrFalse = () => {
           name='guess-form'
           className='true-or-false-radio'
         >
-          <div className='radio'>
-            <FormControl>
+          <Box className='radio'>
+            <FormControl
+              sx={{
+                display: gameOver ? 'none' : 'inherit',
+              }}
+            >
               <RadioGroup
                 aria-labelledby='demo-radio-buttons-group-label'
                 defaultValue='female'
@@ -142,7 +132,12 @@ const TrueOrFalse = () => {
             </FormControl>
 
             {gameOver ? (
-              <Button type='button' variant='outlined' onClick={newGame}>
+              <Button
+                type='button'
+                variant='outlined'
+                fullWidth
+                onClick={newGame}
+              >
                 Play Again
               </Button>
             ) : (
@@ -150,14 +145,10 @@ const TrueOrFalse = () => {
                 Submit
               </Button>
             )}
-          </div>
+          </Box>
         </form>
 
-        <div className='output-container'>
-          <p>
-            <samp>{output}</samp>
-          </p>
-        </div>
+        <div className='output-container'>{output}</div>
       </div>
       <Button
         variant='outlined'
@@ -165,9 +156,7 @@ const TrueOrFalse = () => {
         disabled={number >= decks.length - 1}
         onClick={() => {
           let newNumber = number + 1
-          setNumber(newNumber)
-          setDeck(decks[newNumber])
-          newGame()
+          navigate(`/games/true-or-false/${newNumber}`)
         }}
       >
         Next Deck

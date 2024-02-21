@@ -14,7 +14,7 @@ import Contact from './pages/misc/Contact'
 
 import Workouts from './pages/workouts/Workouts'
 import Workout from './pages/workout/Workout'
-import EditorMain from './pages/workout/editor/EditorMain'
+import EditorRoot from './pages/workout/editor/EditorRoot'
 
 import GamesList from './pages/games/GamesList'
 import TrueOrFalseList from './pages/games/trueOrFalse/TrueOrFalseList'
@@ -96,12 +96,12 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <EditorMain key='challenge' isSolution={false} />,
+                element: <EditorRoot key='challenge' isSolution={false} />,
                 errorElement: <Error />,
               },
               {
                 path: 'solution',
-                element: <EditorMain key='solution' isSolution={true} />,
+                element: <EditorRoot key='solution' isSolution={true} />,
                 errorElement: <Error />,
               },
               {

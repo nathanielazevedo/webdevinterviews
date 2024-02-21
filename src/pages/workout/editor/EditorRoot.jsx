@@ -2,7 +2,6 @@ import { useRef, useContext } from 'react'
 import { WorkoutContext } from '../../../contexts/WorkoutContext'
 import { Panel, PanelGroup } from 'react-resizable-panels'
 import { SandpackFileExplorer } from 'sandpack-file-explorer'
-import { amethyst } from '@codesandbox/sandpack-themes'
 import { mergeFiles, mergeFilesAsOwner } from './utils'
 import {
   SandpackLayout,
@@ -17,7 +16,7 @@ import AutoSave from './components/AutoSave'
 import Prettier from './components/Prettier'
 import ChangedFiles from './components/ChangedFiles'
 
-const EditorMain = ({ isSolution }) => {
+const EditorRoot = ({ isSolution }) => {
   const codemirrorInstance = useRef()
   const { workout, setFromLocal } = useContext(WorkoutContext)
 
@@ -118,4 +117,4 @@ const EditorMain = ({ isSolution }) => {
   )
 }
 
-export default EditorMain
+export default EditorRoot

@@ -19,14 +19,16 @@ const AutoSave = ({ workout, isSolution }) => {
             JSON.stringify(otherFiles)
           )
         }
-        localStorage.setItem(
-          `${workout.id}-shared`,
-          JSON.stringify(sharedFiles)
-        )
-        localStorage.setItem(
-          `${workout.id}-package.json`,
-          JSON.stringify(packageJson)
-        )
+        if (workout.isOwner) {
+          localStorage.setItem(
+            `${workout.id}-shared`,
+            JSON.stringify(sharedFiles)
+          )
+          localStorage.setItem(
+            `${workout.id}-package.json`,
+            JSON.stringify(packageJson)
+          )
+        }
       }
     })
 

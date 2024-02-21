@@ -175,7 +175,6 @@
   width: 340px;
   margin: 0 auto;
   color: white;
-  margin-top: 50px;
   border: solid rgb(57, 56, 56) 1px;
   padding: 20px;
   border-radius: 10px;
@@ -274,6 +273,12 @@
 .item-container:hover {
   background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
+}
+
+.item-text-wrapper {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
 }
 
 .marketing-section {

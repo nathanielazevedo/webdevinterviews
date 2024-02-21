@@ -1,12 +1,10 @@
-import { Console as ConsoleFeed } from 'console-feed'
 import { useEffect } from 'react'
+import { Typography, Box, Tooltip, IconButton } from '@mui/material'
+import { Console as ConsoleFeed } from 'console-feed'
 import { useSandpack, useSandpackConsole } from '@codesandbox/sandpack-react'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import ExpandLessIcon from '@mui/icons-material/ExpandLess'
-import { Typography, Box, Tooltip, Button, IconButton } from '@mui/material'
 import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt'
 
-const Console = ({ closeFilePanel, consolePanelRef }) => {
+const Console = () => {
   const { logs, reset } = useSandpackConsole({})
   const { listen } = useSandpack()
 
@@ -16,88 +14,44 @@ const Console = ({ closeFilePanel, consolePanelRef }) => {
         logs.splice(0, logs.length)
       }
     })
-
     return () => {
       stopListening()
     }
   }, [listen])
 
   return (
-    <div
-      style={{
-        height: '100%',
-        backgroundColor: '#151515',
-      }}
-    >
+    <div style={{ height: '100%', backgroundColor: '#151515' }}>
       <Box
         sx={{
-          width: '100%',
-          height: '100%',
+          padding: '0 10px',
           display: 'flex',
-          color: '#C5C5C5',
-          flexDirection: 'column',
-          backgroundColor: '#151515',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderBottom: '0.5px solid var(--color-solid-resize-bar)',
+          height: '35px',
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            borderBottom: '0.5px solid var(--color-solid-resize-bar)',
-            height: '35px',
-            minHeight: '35px',
-            marginTop: '5px',
+        <Typography fontSize='small'>Console {`(${logs.length})`}</Typography>
+        <IconButton onClick={reset}>
+          <Tooltip title='Clear'>
+            <DoNotDisturbAltIcon fontSize='small' />
+          </Tooltip>
+        </IconButton>
+      </Box>
+      <Box sx={{ overflowY: 'scroll', height: '100%' }}>
+        <ConsoleFeed
+          logs={logs}
+          variant='dark'
+          styles={{
+            LOG_BACKGROUND: '#151515',
+            BASE_BACKGROUND_COLOR: '#151515',
+            LOG_AMOUNT_BACKGROUND: 'black',
+            // BASE_FONT_SIZE: '14px',
+            BASE_FONT_FAMILY: 'monospace',
+            // BASE_LINE_HEIGHT: '10px',
+            TREENODE_LINE_HEIGHT: '20px',
           }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Button
-              onClick={closeFilePanel}
-              sx={{ height: '20px', color: '#C5C5C5', minWidth: '30px' }}
-            >
-              <Tooltip title='Collapse'>
-                {consolePanelRef.current ? (
-                  consolePanelRef.current.getSize() >= 3.3 ? (
-                    <ExpandMoreIcon fontSize='small' />
-                  ) : (
-                    <ExpandLessIcon fontSize='small' />
-                  )
-                ) : (
-                  <ExpandMoreIcon fontSize='small' />
-                )}
-              </Tooltip>
-            </Button>
-            <Typography fontSize='small'>
-              Console {`(${logs.length})`}
-            </Typography>
-          </Box>
-          <IconButton onClick={reset}>
-            <Tooltip title='Clear'>
-              <DoNotDisturbAltIcon fontSize='small' />
-            </Tooltip>
-          </IconButton>
-        </Box>
-        <Box sx={{ overflowY: 'scroll', height: '100%' }}>
-          <ConsoleFeed
-            logs={logs}
-            variant='dark'
-            styles={{
-              LOG_BACKGROUND: '#151515',
-              BASE_BACKGROUND_COLOR: '#151515',
-              LOG_AMOUNT_BACKGROUND: 'black',
-              // BASE_FONT_SIZE: '14px',
-              BASE_FONT_FAMILY: 'monospace',
-              // BASE_LINE_HEIGHT: '10px',
-              TREENODE_LINE_HEIGHT: '20px',
-            }}
-          />
-        </Box>
+        />
       </Box>
     </div>
   )

@@ -5,18 +5,6 @@ import Console from './Console'
 import ResizeHandle from '../../../../components/ResizeHandle'
 
 const Browser = () => {
-  const consolePanelRef = useRef()
-
-  const closeFilePanel = () => {
-    if (consolePanelRef.current) {
-      if (consolePanelRef.current.getSize() === 4.3) {
-        consolePanelRef.current.resize(50)
-        return
-      }
-      consolePanelRef.current.resize(4.3)
-    }
-  }
-
   return (
     <div style={{ height: '100%', maxHeight: '100%' }}>
       <PanelGroup
@@ -28,11 +16,8 @@ const Browser = () => {
           <PreviewTabs />
         </Panel>
         <ResizeHandle horz={true} />
-        <Panel minSize={4.3} collapsible={false} ref={consolePanelRef}>
-          <Console
-            closeFilePanel={closeFilePanel}
-            consolePanelRef={consolePanelRef}
-          />
+        <Panel>
+          <Console />
         </Panel>
       </PanelGroup>
     </div>

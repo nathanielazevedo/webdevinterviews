@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { WorkoutContext } from '../../contexts/WorkoutContext'
 import { Typography, Alert } from '@mui/material'
-import TemplateToSvg from '../workouts/components/TemplateToSvg'
+import TemplateToSvg from '../../components/TemplateToSvg'
 import YouTube from '../../components/YouTubeIcon'
 import Rating from '../../components/Rating'
 import ResetChanges from './editor/components/ResetChanges'
@@ -18,14 +18,14 @@ const WorkoutTopNav = () => {
           gap: '20px',
         }}
       >
-        <TemplateToSvg template={workout.type} />
         <Typography sx={{ color: 'grey.300' }}>{workout.title}</Typography>
+        <TemplateToSvg template={workout.type} />
         <Rating rating={workout.difficulty} />
         <YouTube workout={workout} />
       </div>
       {fromLocal && (
         <Alert icon={false} action={<ResetChanges />}>
-          Files Uploaded from local.
+          Files uploaded from local.
         </Alert>
       )}
     </div>

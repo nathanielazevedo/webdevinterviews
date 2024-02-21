@@ -1,38 +1,32 @@
-import { Typography, Box } from '@mui/material'
-import Rating from '../../components/Rating'
-import SkeletonTable from './components/SkeletonTable'
-import useFetch from '../../hooks/useFetch'
-import YouTube from '../../components/YouTubeIcon'
-import ErrorRow from './components/ErrorRow'
-import TextLink from '../../components/TextLink'
-import NoWorkouts from './components/NoWorkouts'
-import Workout from '../../models/workout'
-import TemplateToSvg from './components/TemplateToSvg'
-import { TableHead as MuiTableHead } from '@mui/material'
-import { useState } from 'react'
-import Header from '../../components/Header'
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { useNavigate } from 'react-router'
+import useFetch from '../../hooks/useFetch'
+import { Typography } from '@mui/material'
+import Workout from '../../models/workout'
+
+import WorkoutsSkeleton from './WorkoutsSkeleton'
+import Header from '../../components/Header'
+import Rating from '../../components/Rating'
+import YouTube from '../../components/YouTubeIcon'
+
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 
 const Workouts = () => {
-  const url = `/workouts`
-  const { data: workoutsData, loading, error, fetchData } = useFetch(url)
-  const [createWorkoutDialogOpen, setCreateWorkoutDialogOpen] = useState(false)
   const navigate = useNavigate()
 
-  const fetchWorkouts = () => fetchData(`/workouts`)
+  const url = `/workouts`
+  const { data: workoutsData, loading, error } = useFetch(url)
 
-  const renderTableBodyContent = () => {
+  const renderBodyContent = () => {
     if (loading) {
-      return <SkeletonTable />
+      return <WorkoutsSkeleton />
     }
 
     if (error || !workoutsData) {
-      return null
+      return 'Error. Refresh the page.'
     }
 
     if (workoutsData.length === 0) {
-      return null
+      return 'No workouts found.'
     }
 
     const sortedWorkouts = workoutsData.sort((a, b) =>
@@ -50,39 +44,20 @@ const Workouts = () => {
               onClick={() => navigate(`/workouts/${workout.id}`)}
             >
               <div>
-                <div
-                  style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
-                >
-                  {workout.title}
+                <div className='item-text-wrapper'>
+                  <Typography>{workout.title}</Typography>
                   <Rating rating={workout.difficulty} />
                 </div>
                 <Typography sx={{ color: 'grey.500' }}>
                   {workout.description}
                 </Typography>
               </div>
-              <ArrowForwardIosIcon
-                sx={{
-                  color: 'grey.400',
-                }}
-              />
+              <ArrowForwardIosIcon sx={{ color: 'grey.400' }} />
             </div>
           )
         })}
       </div>
     )
-  }
-
-  const renderFailedStateContent = () => {
-    if (loading) return
-    if (error || !workoutsData) {
-      return <ErrorRow fetchWorkouts={fetchWorkouts} />
-    }
-
-    if (workoutsData.length === 0) {
-      return <NoWorkouts />
-    }
-
-    return null
   }
 
   return (
@@ -91,14 +66,7 @@ const Workouts = () => {
         title='Workouts'
         subtext='React coding challenges to sharpen your skills.'
       />
-      {renderTableBodyContent()}
-      <Box>{renderFailedStateContent()}</Box>
-      {createWorkoutDialogOpen && (
-        <CreateWorkoutDialog
-          open={createWorkoutDialogOpen}
-          setOpen={setCreateWorkoutDialogOpen}
-        />
-      )}
+      {renderBodyContent()}
     </div>
   )
 }

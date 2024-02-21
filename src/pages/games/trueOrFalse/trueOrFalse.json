@@ -178,5 +178,17 @@
       "14 == true * 14"
     ],
     "language": "javascript"
+  },
+  {
+    "title": "Deck 16",
+    "to": "16",
+    "questions": [
+      "12 % 2 == []",
+      "[] - true === -1",
+      "'1' - '1' === 0",
+      "Boolean('null') === false",
+      "'you liked and subscribed'"
+    ],
+    "language": "javascript"
   }
 ]

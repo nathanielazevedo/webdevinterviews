@@ -2,20 +2,12 @@ import Skeleton from '@mui/material/Skeleton'
 
 const SkeletonTable = () => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '10px',
-      }}
-    >
+    <div>
       {[1, 2, 3, 4, 5].map((index) => {
         return (
           <div className='item-container' key={index}>
             <div>
-              <div
-                style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
-              >
+              <div style={{ display: 'flex', gap: '10px' }}>
                 <Skeleton width='100px' />
                 <Skeleton width='100px' />
               </div>

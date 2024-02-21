@@ -1,7 +1,6 @@
-/* eslint-disable react/prop-types */
 import { useState } from 'react'
 import { Button } from '@mui/material'
-import Alert from '../Alert'
+import Alert from './Alert'
 
 const ResetChanges = ({ changedFiles }) => {
   const [showWarning, setShowWarning] = useState(false)

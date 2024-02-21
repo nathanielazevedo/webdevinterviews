@@ -22,15 +22,9 @@ const BasicTabs = () => {
 
   return (
     <Box sx={{ width: '100%', height: '100%' }}>
-      <Box
-        sx={{
-          borderBottom: 1,
-          borderColor: 'divider',
-          backgroundColor: '#151515',
-        }}
-      >
+      <Box sx={{ backgroundColor: '#151515' }}>
         <Tabs value={value} onChange={handleChange} sx={{ minHeight: '40px' }}>
-          {['Browser', 'Tests', 'Instructions', 'Example'].map((label) => (
+          {['Instructions', 'Browser', 'Tests', 'Example'].map((label) => (
             <Tab
               key={label}
               label={label}
@@ -41,6 +35,14 @@ const BasicTabs = () => {
       </Box>
 
       {value === 0 && (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: sandpack?.files['/shared/Instructions.html']?.code ?? '',
+          }}
+        />
+      )}
+
+      {value === 1 && (
         <SandpackPreview
           showNavigator
           style={{ height: 'calc(100% - 40px)' }}
@@ -48,15 +50,7 @@ const BasicTabs = () => {
         />
       )}
 
-      {value === 1 && <SandpackTests style={{ height: 'calc(100% - 40px)' }} />}
-
-      {value === 2 && (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: sandpack?.files['/shared/Instructions.html']?.code ?? '',
-          }}
-        />
-      )}
+      {value === 2 && <SandpackTests style={{ height: 'calc(100% - 40px)' }} />}
 
       {value === 3 && (
         <div style={{ height: '100%' }}>

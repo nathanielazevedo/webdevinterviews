@@ -28,6 +28,7 @@ const AuthProvider = ({ children }) => {
                 return acc
               }, {})
               const idToken = session.getIdToken()
+              console.log(idToken)
               setToken(idToken)
               const isAdmin = (
                 idToken.payload['cognito:groups'] || []
@@ -229,7 +230,7 @@ const AuthProvider = ({ children }) => {
         },
       })
     })
-
+  if (loading) return null
   return (
     <AuthContext.Provider
       value={{
