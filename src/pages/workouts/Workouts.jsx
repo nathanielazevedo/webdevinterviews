@@ -35,15 +35,13 @@ const Workouts = () => {
       return null
     }
 
+    const sortedWorkouts = workoutsData.sort((a, b) =>
+      a.difficulty.localeCompare(b.difficulty)
+    )
+
     return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-        }}
-      >
-        {workoutsData.map((workoutData) => {
+      <div>
+        {sortedWorkouts.map((workoutData) => {
           const workout = new Workout(workoutData)
           return (
             <div

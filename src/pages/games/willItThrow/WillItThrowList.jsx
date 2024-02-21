@@ -21,13 +21,7 @@ const Games = () => {
         title='Choose a deck'
         subtext='Determine if the code provided will throw an error.'
       />
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-        }}
-      >
+      <div>
         {decks.map((deck, index) => {
           return (
             <div

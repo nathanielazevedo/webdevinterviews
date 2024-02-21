@@ -4,11 +4,20 @@ import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import TextLink from '../../../components/TextLink'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
+  Typography,
+} from '@mui/material'
 
 const TrueOrFalse = () => {
   const { id } = useParams()
-  console.log(id)
-  const deck = id ? decks[id - 1] : decks[0]
+  const [number, setNumber] = useState(id ? id - 1 : 0)
+  const [deck, setDeck] = useState(decks[number])
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [guess, setGuess] = useState(null)
   const [output, setOutput] = useState('')
@@ -69,6 +78,15 @@ const TrueOrFalse = () => {
         />
       )}
       <div className='gameEditor-container'>
+        <Typography
+          sx={{
+            position: 'absolute',
+            right: 15,
+            color: 'grey.500',
+          }}
+        >
+          Deck {number + 1}
+        </Typography>
         <div className='score-circles-container'>
           {Array(deck.questions.length)
             .fill()
@@ -99,38 +117,38 @@ const TrueOrFalse = () => {
           className='true-or-false-radio'
         >
           <div className='radio'>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <label>
-                <input
-                  type='radio'
-                  name='guess'
+            <FormControl>
+              <RadioGroup
+                aria-labelledby='demo-radio-buttons-group-label'
+                defaultValue='female'
+                name='radio-buttons-group'
+                row
+              >
+                <FormControlLabel
                   value={1}
+                  control={<Radio />}
+                  label='True'
                   checked={guess === '1'}
                   onChange={handleGuessChange}
                 />
-                True
-              </label>
-
-              <label>
-                <input
-                  type='radio'
-                  name='guess'
+                <FormControlLabel
                   value={0}
+                  control={<Radio />}
+                  label='False'
                   checked={guess === '0'}
                   onChange={handleGuessChange}
                 />
-                False
-              </label>
-            </div>
+              </RadioGroup>
+            </FormControl>
 
             {gameOver ? (
-              <button type='button' onClick={newGame}>
+              <Button type='button' variant='outlined' onClick={newGame}>
                 Play Again
-              </button>
+              </Button>
             ) : (
-              <button type='submit' disabled={guess === ''}>
+              <Button type='submit' variant='outlined' disabled={!guess}>
                 Submit
-              </button>
+              </Button>
             )}
           </div>
         </form>
@@ -141,6 +159,19 @@ const TrueOrFalse = () => {
           </p>
         </div>
       </div>
+      <Button
+        variant='outlined'
+        sx={{ width: '300px', margin: '0 auto' }}
+        disabled={number >= decks.length - 1}
+        onClick={() => {
+          let newNumber = number + 1
+          setNumber(newNumber)
+          setDeck(decks[newNumber])
+          newGame()
+        }}
+      >
+        Next Deck
+      </Button>
     </>
   )
 }

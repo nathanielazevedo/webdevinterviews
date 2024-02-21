@@ -24,13 +24,7 @@ const GamesList = ({ tab }) => {
         title='Games'
         subtext="Some cool games I've made that will test your knowledge."
       />
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-        }}
-      >
+      <div>
         {games.map((game, index) => {
           return (
             <div

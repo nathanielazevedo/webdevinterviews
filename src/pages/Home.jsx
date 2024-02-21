@@ -1,8 +1,6 @@
 import Box from '@mui/material/Box'
 import { Fade, Typography, colors, Button, Divider } from '@mui/material'
 import { YouTube } from '@mui/icons-material'
-import Card from '../components/Card'
-import featureCards from '../components/marketing/featuresCards'
 import TrueOrFalse from '../pages/games/trueOrFalse/TrueOrFalse'
 import live from '../assets/live.png'
 import { useNavigate } from 'react-router'

@@ -1,28 +1,26 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
+import Header from '../../components/Header'
 
 const HelpPage = () => {
-  const handleButtonClick = () => {
-    window.open('https://discord.gg/wjH8W9JFY6', '_blank')
-  }
-
   return (
     <div className='fit-wrapper'>
-      <Box>
-        <Typography variant='h4' sx={{}}>
-          Got Bugs?
-        </Typography>
-        <Typography variant='h5'>
-          Send a message to the discord and I will help you.
-        </Typography>
-      </Box>
-      <Button
-        fullWidth
-        variant='contained'
-        color='primary'
-        onClick={handleButtonClick}
-      >
-        Go to Discord
-      </Button>
+      <Header
+        title='Contact'
+        subtext='You can contact me in a few different ways.'
+      />
+      <Typography sx={{ color: 'grey.500' }}>
+        Email: webdevinterviews@gmail.com
+      </Typography>
+      <a href='https://discord.gg/wjH8W9JFY6' target='_blank'>
+        <Button fullWidth variant='outlined' color='primary'>
+          Discord
+        </Button>
+      </a>
+      <a href='https://www.linkedin.com/in/nateazevedo/' target='_blank'>
+        <Button fullWidth variant='outlined' color='primary'>
+          LinkedIn
+        </Button>
+      </a>
     </div>
   )
 }

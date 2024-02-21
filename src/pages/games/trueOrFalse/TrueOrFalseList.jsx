@@ -20,13 +20,7 @@ const Games = () => {
         title='Choose a deck'
         subtext='Test your understanding of JavaScript types and comparisons.'
       />
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-        }}
-      >
+      <div>
         {decks.map((deck, index) => {
           return (
             <div

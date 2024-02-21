@@ -179,6 +179,7 @@
   border: solid rgb(57, 56, 56) 1px;
   padding: 20px;
   border-radius: 10px;
+  position: relative;
 }
 
 .code-container {
@@ -217,14 +218,15 @@
   height: 20px;
   width: 20px;
   border: 1px solid rgba(128, 128, 128, 0.44);
+  border-radius: 50%;
 }
 
 .correct-score-circle {
-  background-color: green;
+  background-color: var(--green);
 }
 
 .incorrect-score-circle {
-  background-color: red;
+  background-color: var(--red);
 }
 
 .guess-form {
@@ -266,6 +268,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 15px 0;
 }
 
 .item-container:hover {
