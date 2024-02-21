@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import decks from './trueOrFalse.json'
 import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
@@ -156,7 +156,12 @@ const TrueOrFalse = () => {
         disabled={number >= decks.length - 1}
         onClick={() => {
           let newNumber = number + 1
-          navigate(`/games/true-or-false/${newNumber}`)
+          setNumber(newNumber)
+          setDeck(decks[newNumber])
+          newGame()
+          navigate(`/games/true-or-false/${newNumber + 1}`, {
+            replace: true,
+          })
         }}
       >
         Next Deck

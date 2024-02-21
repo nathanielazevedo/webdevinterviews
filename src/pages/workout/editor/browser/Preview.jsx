@@ -24,7 +24,7 @@ const BasicTabs = () => {
     <Box sx={{ width: '100%', height: '100%' }}>
       <Box sx={{ backgroundColor: '#151515' }}>
         <Tabs value={value} onChange={handleChange} sx={{ minHeight: '40px' }}>
-          {['Instructions', 'Browser', 'Tests', 'Example'].map((label) => (
+          {['Details', 'Browser', 'Tests', 'Example'].map((label) => (
             <Tab
               key={label}
               label={label}
