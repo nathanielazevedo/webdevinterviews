@@ -16,7 +16,6 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.12",
     "@mui/material": "^5.14.12",
-    "angular-html-parser": "^5.2.0",
     "console-feed": "^3.5.0",
     "postcss": "^8.4.32",
     "prettier": "2.5.1",
@@ -26,7 +25,6 @@
     "react-hook-form": "^7.48.2",
     "react-resizable-panels": "^0.0.55",
     "react-router-dom": "^6.16.0",
-    "rollup-plugin-node-polyfills": "^0.2.1",
     "sandpack-file-explorer": "^0.0.4"
   },
   "devDependencies": {

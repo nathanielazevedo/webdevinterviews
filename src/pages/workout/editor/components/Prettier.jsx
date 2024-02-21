@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 import { Box, Tooltip } from '@mui/material'
 import { useSandpack, useActiveCode } from '@codesandbox/sandpack-react'
-import { parse } from 'angular-html-parser'
 import * as prettier from 'prettier'
 import parserBabel from 'prettier/parser-babel'
 import parserPostcss from 'prettier/parser-postcss'
