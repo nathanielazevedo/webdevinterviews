@@ -22,6 +22,10 @@ const links = [
     name: 'CONTACT',
     path: 'contact',
   },
+  {
+    name: 'LOGIN',
+    path: '/auth/login',
+  },
 ]
 
 const RootSideNav = ({ setOpen }) => (

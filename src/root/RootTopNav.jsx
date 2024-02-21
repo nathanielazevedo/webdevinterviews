@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react'
-import { AuthContext } from '../contexts/AuthContext'
 import {
   Typography,
   Box,
@@ -17,7 +16,6 @@ import logo from '../assets/logo.png'
 import RootSideNav from './RootSideNav'
 
 const RootTopNav = () => {
-  const { user, authLoading } = useContext(AuthContext)
   const [sideNavOpen, setSideNavOpen] = useState(false)
   const navigate = useNavigate()
 

@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from 'react'
-import { AuthContext } from '../contexts/AuthContext'
 import useApi from './useApi'
 
 const useFetch = (url) => {

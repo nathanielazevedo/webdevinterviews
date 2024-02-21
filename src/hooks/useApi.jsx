@@ -1,40 +1,15 @@
 import { useState, useEffect, useContext } from 'react'
-import { AuthContext } from '../contexts/AuthContext'
 
 const BASE_URL = import.meta.env.DEV
   ? 'https://api.webdevinterviews.com'
   : 'https://api.webdevinterviews.com'
 
-const isTokenExpired = (token) => {
-  if (!token) {
-    return false
-  }
-
-  try {
-    const decodedToken = JSON.parse(atob(token.split('.')[1]))
-    const expirationTime = decodedToken.exp * 1000
-    const currentTime = new Date().getTime()
-
-    return currentTime > expirationTime
-  } catch (error) {
-    console.error('Error decoding or parsing token:', error)
-    return true
-  }
-}
-
 const useApi = () => {
-  const { API, authLoading, token, baseUrl, refreshAuthToken } =
-    useContext(AuthContext)
-
   const makeRequest = async (method, endpoint, body) => {
-    // if (isTokenExpired(token)) {
-    //   await refreshAuthToken()
-    // }
     const options = {
       method,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token,
       },
     }
 

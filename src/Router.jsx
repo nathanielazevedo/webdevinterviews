@@ -4,12 +4,6 @@ import Root from './root/Root'
 import Home from './pages/Home'
 import Error from './pages/misc/Error'
 import FourOFour from './pages/misc/FourOFour'
-import Login from './pages/auth/Login'
-import SignUp from './pages/auth/Signup'
-import Account from './pages/auth/Account'
-import VerifyEmail from './pages/auth/VerifyEmail'
-import ForgotPassword from './pages/auth/ForgotPassword'
-import ResetPassword from './pages/auth/ResetPassword'
 import Contact from './pages/misc/Contact'
 
 import Workouts from './pages/workouts/Workouts'
@@ -39,42 +33,6 @@ const router = createBrowserRouter([
         path: 'shorts-editor',
         errorElement: <Error />,
         element: <ShortsEditor />,
-      },
-      {
-        path: 'auth',
-        errorElement: <Error />,
-        children: [
-          {
-            path: 'login',
-            element: <Login />,
-            errorElement: <Error />,
-          },
-          {
-            path: 'signup',
-            element: <SignUp />,
-            errorElement: <Error />,
-          },
-          {
-            path: 'account',
-            element: <Account />,
-            errorElement: <Error />,
-          },
-          {
-            path: 'verify-email',
-            element: <VerifyEmail />,
-            errorElement: <Error />,
-          },
-          {
-            path: 'forgot-password',
-            element: <ForgotPassword />,
-            errorElement: <Error />,
-          },
-          {
-            path: 'reset-password',
-            element: <ResetPassword />,
-            errorElement: <Error />,
-          },
-        ],
       },
       {
         path: 'contact',
