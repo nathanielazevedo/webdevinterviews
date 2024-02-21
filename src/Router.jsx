@@ -4,7 +4,7 @@ import Root from './root/Root'
 import Home from './pages/Home'
 import Error from './pages/misc/Error'
 import FourOFour from './pages/misc/FourOFour'
-import Contact from './pages/misc/Contact'
+import Contact from './pages/Contact'
 
 import Workouts from './pages/workouts/Workouts'
 import Workout from './pages/workout/Workout'
@@ -116,7 +116,7 @@ const router = createBrowserRouter([
       },
       {
         path: '*',
-        element: <Home />,
+        element: <FourOFour />,
         errorElement: <Error />,
       },
     ],

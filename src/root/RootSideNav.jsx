@@ -3,6 +3,10 @@ import Drawer from '@mui/material/Drawer'
 
 const links = [
   {
+    name: 'HOME',
+    path: '',
+  },
+  {
     name: 'WORKOUTS',
     path: 'workouts',
   },
@@ -22,10 +26,6 @@ const links = [
     name: 'CONTACT',
     path: 'contact',
   },
-  {
-    name: 'LOGIN',
-    path: '/auth/login',
-  },
 ]
 
 const RootSideNav = ({ setOpen }) => (
@@ -39,7 +39,7 @@ const RootSideNav = ({ setOpen }) => (
     <div style={{ width: '250px' }}>
       <ul className='drawer-links-container'>
         {links.map((link) => {
-          return <TextLink text={link.name} to={link.path} />
+          return <TextLink text={link.name} to={link.path} end={false} />
         })}
       </ul>
     </div>
