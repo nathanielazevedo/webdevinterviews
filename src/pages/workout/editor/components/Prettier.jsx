@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
 import { Box, Tooltip } from '@mui/material'
 import { useSandpack, useActiveCode } from '@codesandbox/sandpack-react'
