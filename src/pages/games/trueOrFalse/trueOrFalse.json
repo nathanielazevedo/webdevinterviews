@@ -190,5 +190,17 @@
       "'you liked and subscribed'"
     ],
     "language": "javascript"
+  },
+  {
+    "title": "Deck 17",
+    "to": "17",
+    "questions": [
+      "Infinity === Infinity - 1",
+      "-Infinity === Infinity * -1",
+      "Infinity === Infinity + 1",
+      "0 / 0 == Infinity",
+      "12 / 0 == Infinity"
+    ],
+    "language": "javascript"
   }
 ]

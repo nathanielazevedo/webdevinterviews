@@ -1,7 +1,6 @@
 import { createContext, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useFetch from '../hooks/useFetch'
-import Workout from '../models/workout'
 
 const WorkoutContext = createContext()
 
@@ -12,18 +11,13 @@ const WorkoutProvider = ({ children }) => {
 
   if (loading) return null
 
-  try {
-    const workout = new Workout(data)
-    return (
-      <WorkoutContext.Provider
-        value={{ workout, setData, fromLocal, setFromLocal }}
-      >
-        {children}
-      </WorkoutContext.Provider>
-    )
-  } catch {
-    return 'Error'
-  }
+  return (
+    <WorkoutContext.Provider
+      value={{ workout: data, setData, fromLocal, setFromLocal }}
+    >
+      {children}
+    </WorkoutContext.Provider>
+  )
 }
 
 export { WorkoutContext, WorkoutProvider }

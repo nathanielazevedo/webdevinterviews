@@ -17,6 +17,9 @@ import {
 import ScoreCircles from '../components/ScoreCircles'
 import { useNavigate } from 'react-router-dom'
 
+import ToggleButton from '@mui/material/ToggleButton'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+
 const TrueOrFalse = () => {
   const navigate = useNavigate()
   const { id } = useParams()
@@ -28,14 +31,13 @@ const TrueOrFalse = () => {
   const [scores, setScores] = useState([])
   const gameOver = currentQuestion >= deck.questions.length
 
-  const onSubmit = (evt) => {
-    evt.preventDefault()
+  const onSubmit = () => {
     if (guess == eval(deck.questions[currentQuestion])) {
-      setOutput('You are right.')
+      setOutput('&#128077;')
       scores.push(true)
       setScores([...scores])
     } else {
-      setOutput('You are wrong.')
+      setOutput('&#128078;')
       scores.push(false)
       setScores([...scores])
     }
@@ -82,90 +84,79 @@ const TrueOrFalse = () => {
       )}
 
       <div className='gameEditor-container'>
-        <Typography
-          sx={{
-            position: 'absolute',
-            right: 15,
-            color: 'grey.500',
-          }}
-        >
-          Deck {number + 1}
-        </Typography>
-        <ScoreCircles deck={deck} scores={scores} />
-
-        <div className='code-container'>
-          <code>{deck.questions[currentQuestion]}</code>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography
+            sx={{
+              color: 'grey.500',
+            }}
+          >
+            Deck {number + 1}
+          </Typography>
+          <ScoreCircles deck={deck} scores={scores} />
         </div>
 
-        <form
-          onSubmit={onSubmit}
-          name='guess-form'
-          className='true-or-false-radio'
-        >
+        <div className='code-container'>
+          {output ? (
+            <div
+              className='output-container'
+              dangerouslySetInnerHTML={{
+                __html: output,
+              }}
+            ></div>
+          ) : (
+            <code>{deck.questions[currentQuestion]}</code>
+          )}
+        </div>
+
+        <div className='true-or-false-radio'>
           <Box className='radio'>
-            <FormControl
+            <ToggleButtonGroup
+              value={guess}
+              exclusive
+              onChange={handleGuessChange}
+              size='small'
               sx={{
                 display: gameOver ? 'none' : 'inherit',
               }}
             >
-              <RadioGroup
-                aria-labelledby='demo-radio-buttons-group-label'
-                defaultValue='female'
-                name='radio-buttons-group'
-                row
-              >
-                <FormControlLabel
-                  value={1}
-                  control={<Radio />}
-                  label='True'
-                  checked={guess === '1'}
-                  onChange={handleGuessChange}
-                />
-                <FormControlLabel
-                  value={0}
-                  control={<Radio />}
-                  label='False'
-                  checked={guess === '0'}
-                  onChange={handleGuessChange}
-                />
-              </RadioGroup>
-            </FormControl>
-
-            {gameOver ? (
-              <Button
-                type='button'
-                variant='outlined'
-                fullWidth
-                onClick={newGame}
-              >
-                Play Again
-              </Button>
-            ) : (
-              <Button type='submit' variant='outlined' disabled={!guess}>
-                Submit
-              </Button>
-            )}
+              <ToggleButton value={'1'}>True</ToggleButton>
+              <ToggleButton value={'0'}>False</ToggleButton>
+            </ToggleButtonGroup>
           </Box>
-        </form>
-
-        <div className='output-container'>{output}</div>
+          {gameOver ? (
+            <Button
+              type='button'
+              variant='outlined'
+              fullWidth
+              onClick={newGame}
+            >
+              Play Again
+            </Button>
+          ) : (
+            <Button variant='outlined' disabled={!guess} onClick={onSubmit}>
+              Submit
+            </Button>
+          )}
+        </div>
       </div>
-      <Button
-        variant='outlined'
-        sx={{ width: '300px', margin: '0 auto' }}
-        disabled={number >= decks.length - 1}
-        onClick={() => {
-          let newNumber = number + 1
-          setNumber(newNumber)
-          setDeck(decks[newNumber])
-          newGame()
-          navigate(`/games/true-or-false/${newNumber + 1}`, {
-            replace: true,
-          })
-        }}
-      >
-        Next Deck
-      </Button>
+      {id && (
+        <Button
+          variant='outlined'
+          sx={{ width: '300px', margin: '0 auto' }}
+          disabled={number >= decks.length - 1}
+          onClick={() => {
+            let newNumber = number + 1
+            setNumber(newNumber)
+            setDeck(decks[newNumber])
+            newGame()
+            navigate(`/games/true-or-false/${newNumber + 1}`, {
+              replace: true,
+            })
+          }}
+        >
+          Next Deck
+        </Button>
+      )}
     </>
   )
 }

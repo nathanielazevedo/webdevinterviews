@@ -19,7 +19,7 @@ const WorkoutTopNav = () => {
         }}
       >
         <Typography sx={{ color: 'grey.300' }}>{workout.title}</Typography>
-        <TemplateToSvg template={workout.type} />
+        <TemplateToSvg template={workout.sp_template} />
         <Rating rating={workout.difficulty} />
         <YouTube workout={workout} />
       </div>

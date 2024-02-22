@@ -194,18 +194,16 @@
 .true-or-false-radio {
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  padding: 0 10px;
   align-items: center;
-  padding: 10px;
 }
 
 .output-container {
   color: #fff;
-  height: 150px;
+  /* height: 15ma0px; */
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 40px;
 }
 
 .score-circles-container {
@@ -289,7 +287,8 @@
 }
 
 .marketing-button {
-  margin-top: 20px !important;
+  margin: 20px 0 !important;
+  width: 300px;
 }
 
 @media screen and (max-width: 765px) {

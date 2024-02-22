@@ -19,7 +19,7 @@ const Games = () => {
       />
       <Header
         title='Choose a deck'
-        subtext='Determine if the code provided will throw an error.'
+        subtext='Determine if the code provided will throw an error. Remember, strict mode is on.'
       />
       <div>
         {decks.map((deck, index) => {

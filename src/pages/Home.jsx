@@ -33,7 +33,6 @@ const Home = () => {
             size='large'
             onClick={() => navigate('/games')}
             variant='outlined'
-            fullWidth
             className='marketing-button'
           >
             Play

@@ -3,52 +3,48 @@ import { useSandpack } from '@codesandbox/sandpack-react'
 import { useContext, useState } from 'react'
 import CircularProgress from '@mui/material/CircularProgress'
 import { WorkoutContext } from '../../../../contexts/WorkoutContext'
-// import { AuthContext } from '../../../AuthContext'
-import { separateFiles } from '../utils'
+import { getChangedCode } from '../utils'
 import { useNavigate } from 'react-router'
+import useApi from '../../../../hooks/useApi'
 
 const SyncChanges = ({ changedFiles, isSolution }) => {
-  const [loading, setLoading] = useState(false)
-  const { sandpack } = useSandpack()
-  const { workout, setData } = useContext(WorkoutContext)
-  // const { API } = useContext(AuthContext)
+  const { putIt } = useApi()
   const navigate = useNavigate()
+  const { sandpack } = useSandpack()
+  const [loading, setLoading] = useState(false)
+  const { workout, setData } = useContext(WorkoutContext)
 
   const onSubmit = async () => {
-    const { sharedFiles, otherFiles, packageJson } = separateFiles(
-      sandpack.files
-    )
+    const { sharedFiles, otherFiles, packageJson } = getChangedCode(changedFiles, sandpack.files)
+    console.log(sharedFiles)
+    console.log(otherFiles)
+    console.log(packageJson)
     setLoading(true)
+
     try {
-      if (isSolution) {
-        // await API.put(
-        //   `/workouts/${workout.id}/upload-solution`,
-        //   JSON.stringify(otherFiles)
-        // )
-      } else {
-        // await API.put(
-        //   `/workouts/${workout.id}/upload-template`,
-        //   JSON.stringify(otherFiles)
-        // )
+      if (Object.keys(otherFiles).length > 0) {
+        if (isSolution) {
+          console.log('solution')
+        } else {
+          console.log('template')
+          // await putIt(`/workouts/${workout.id}/upload-template`, JSON.stringify(otherFiles))
+        }
       }
-      if (sharedFiles) {
-        // await API.put(
-        //   `/workouts/${workout.id}/upload-shared`,
-        //   JSON.stringify(sharedFiles)
-        // )
+      if (Object.keys(sharedFiles).length > 0) {
+        console.log('shared')
+        await putIt(`/workouts/${workout.id}/upload-shared`, JSON.stringify(sharedFiles))
       }
-      if (changedFiles.indexOf('/package.json')) {
-        // await API.put(
-        //   `/workouts/${workout.id}/upload-package`,
-        //   JSON.stringify(packageJson)
-        // )
+      if (Object.keys(packageJson).length > 0) {
+        console.log('package')
+        // await putIt(`/workouts/${workout.id}/upload-package`, JSON.stringify(packageJson))
       }
-      localStorage.removeItem(workout.id)
-      localStorage.removeItem(workout.id + '-shared')
-      localStorage.removeItem(workout.id + '-package.json')
-      setTimeout(() => {
-        navigate(`/workouts`)
-      }, 1000)
+      // localStorage.removeItem(workout.id)
+      // localStorage.removeItem(workout.id + '-shared')
+      // localStorage.removeItem(workout.id + '-package.json')
+      setLoading(false)
+      // setTimeout(() => {
+      //   navigate(`/workouts`)
+      // }, 1000)
     } catch (error) {
       setLoading(false)
     }

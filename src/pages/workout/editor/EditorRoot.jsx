@@ -21,7 +21,7 @@ const EditorRoot = ({ isSolution }) => {
   const { workout, setFromLocal } = useContext(WorkoutContext)
 
   const renderAutoSave = () => {
-    if (workout?.isOwner) {
+    if (false) {
       return true
     }
     if (!isSolution) {
@@ -37,7 +37,7 @@ const EditorRoot = ({ isSolution }) => {
           ? mergeFilesAsOwner(workout, isSolution)
           : mergeFiles(workout, isSolution, setFromLocal)
       }
-      template={workout.type === 'vanilla' ? 'static' : workout.type}
+      template={workout.sp_template ?? 'react'}
       options={{
         autoReload: true,
         visibleFiles: ['/App.js'],
@@ -68,7 +68,7 @@ const EditorRoot = ({ isSolution }) => {
                   <Panel>
                     <SandpackFileExplorer />
                   </Panel>
-                  {workout.isOwner && (
+                  {false && (
                     <>
                       <ResizeHandle horz={true} />
                       <Panel>

@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router'
 import useFetch from '../../hooks/useFetch'
 import { Typography } from '@mui/material'
-import Workout from '../../models/workout'
 
 import WorkoutsSkeleton from './WorkoutsSkeleton'
 import Header from '../../components/Header'
@@ -14,29 +13,28 @@ const Workouts = () => {
   const navigate = useNavigate()
 
   const url = `/workouts`
-  const { data: workoutsData, loading, error } = useFetch(url)
+  const { data: workouts, loading, error } = useFetch(url)
 
   const renderBodyContent = () => {
     if (loading) {
       return <WorkoutsSkeleton />
     }
 
-    if (error || !workoutsData) {
+    if (error || !workouts) {
       return 'Error. Refresh the page.'
     }
 
-    if (workoutsData.length === 0) {
+    if (workouts.length === 0) {
       return 'No workouts found.'
     }
 
-    const sortedWorkouts = workoutsData.sort((a, b) =>
+    const sortedWorkouts = workouts.sort((a, b) =>
       a.difficulty.localeCompare(b.difficulty)
     )
 
     return (
       <div>
-        {sortedWorkouts.map((workoutData) => {
-          const workout = new Workout(workoutData)
+        {sortedWorkouts.map((workout) => {
           return (
             <div
               key={workout.id}

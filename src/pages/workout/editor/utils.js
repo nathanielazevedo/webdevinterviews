@@ -25,17 +25,17 @@ const mergeFiles = (workout, isSolution, setFromLocal) => {
   let local
   if (isSolution) {
     setFromLocal(false)
-    local = workout.files.solution
+    local = workout.solution
   } else {
     if (JSON.parse(localStorage.getItem(`${workout.id}`))) {
       setFromLocal(true)
       local = JSON.parse(localStorage.getItem(`${workout.id}`))
     } else {
-      local = workout.files.template
+      local = workout.template
     }
   }
-  const shared = workout.files.shared
-  const packageJson = workout.files.packageJson
+  const shared = workout.shared
+  const packageJson = workout.packageJson
   return { ...local, ...shared, ...packageJson }
 }
 
@@ -44,18 +44,18 @@ const mergeFilesAsOwner = (workout, isSolution) => {
   if (isSolution) {
     local =
       JSON.parse(localStorage.getItem(`${workout.id}-solution`)) ??
-      workout.files.solution
+      workout.solution
   } else {
     local =
       JSON.parse(localStorage.getItem(`${workout.id}`)) ??
-      workout.files.template
+      workout.template
   }
   const shared =
     JSON.parse(localStorage.getItem(`${workout.id}-shared`)) ??
-    workout.files.shared
+    workout.shared
   const packageJson =
     JSON.parse(localStorage.getItem(`${workout.id}-package.json`)) ??
-    workout.files.packageJson
+    workout.packageJson
 
   return { ...local, ...shared, ...packageJson }
 }
@@ -77,4 +77,26 @@ const separateFiles = (files) => {
   return { sharedFiles, otherFiles, packageJson }
 }
 
-export { checkCodeDifferences, mergeFiles, separateFiles, mergeFilesAsOwner }
+const getChangedCode = (changedFiles, files) => {
+  const sharedFiles = {}
+  const otherFiles = {}
+  const packageJson = {}
+  changedFiles.forEach((key) => {
+    if (key.startsWith('/shared')) {
+      sharedFiles[key] = files[key]
+    } else if (key.startsWith('/package.json')) {
+      packageJson[key] = files[key]
+    } else {
+      otherFiles[key] = files[key]
+    }
+  })
+  return { sharedFiles, otherFiles, packageJson }
+}
+
+export {
+  checkCodeDifferences,
+  mergeFiles,
+  separateFiles,
+  mergeFilesAsOwner,
+  getChangedCode,
+}

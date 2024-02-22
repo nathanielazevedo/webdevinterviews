@@ -42,6 +42,7 @@ const WorkoutSideNav = () => {
     <List className='side-nav-wrapper'>
       {links.map((link) => (
         <NavLink
+          key={link.path}
           end={link.end}
           to={link.path}
           replace={link.replace}

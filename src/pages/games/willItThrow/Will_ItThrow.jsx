@@ -4,10 +4,27 @@ import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import TextLink from '../../../components/TextLink'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
+  Typography,
+  Box,
+} from '@mui/material'
+
+import ToggleButton from '@mui/material/ToggleButton'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+import ScoreCircles from '../components/ScoreCircles'
+import { useNavigate } from 'react-router-dom'
 
 const WillItThrow = () => {
+  const navigate = useNavigate()
   const { id } = useParams()
-  const deck = decks[id - 1]
+  const [number, setNumber] = useState(id ? id - 1 : 0)
+  const [deck, setDeck] = useState(decks[number])
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [guess, setGuess] = useState('')
   const [output, setOutput] = useState('')
@@ -20,22 +37,22 @@ const WillItThrow = () => {
       console.log(deck.questions[currentQuestion])
       eval(deck.questions[currentQuestion])
       if (guess === 'no') {
-        setOutput('correct')
+        setOutput('&#128077;')
         scores.push(true)
         setScores([...scores])
       } else {
-        setOutput('incorrect')
+        setOutput('&#128078;')
         scores.push(false)
         setScores([...scores])
       }
     } catch (e) {
       console.log(e)
       if (guess === 'yes') {
-        setOutput('correct')
+        setOutput('&#128077;')
         scores.push(true)
         setScores([...scores])
       } else {
-        setOutput('incorrect')
+        setOutput('&#128078;')
         scores.push(false)
         setScores([...scores])
       }
@@ -81,77 +98,85 @@ const WillItThrow = () => {
         icon={<ArrowBackIosIcon fontSize='5px' />}
       />
       <div className='gameEditor-container'>
-        <div className='score-circles-container'>
-          {Array(deck.questions.length)
-            .fill()
-            .map((_, index) => {
-              return (
-                <div
-                  key={index}
-                  className={
-                    'score-circle ' +
-                    (scores[index] === undefined
-                      ? ''
-                      : scores[index]
-                      ? 'correct-score-circle'
-                      : 'incorrect-score-circle')
-                  }
-                ></div>
-              )
-            })}
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography
+            sx={{
+              color: 'grey.500',
+            }}
+          >
+            Deck {number + 1}
+          </Typography>
+          <ScoreCircles deck={deck} scores={scores} />
         </div>
 
         <div className='code-container'>
-          <code>{deck.questions[currentQuestion]}</code>
+          {output ? (
+            <div
+              className='output-container'
+              dangerouslySetInnerHTML={{
+                __html: output,
+              }}
+            ></div>
+          ) : (
+            <p
+              style={{
+                fontFamily: 'monospace',
+              }}
+              dangerouslySetInnerHTML={{
+                __html: deck.questions[currentQuestion],
+              }}
+            ></p>
+          )}
         </div>
 
-        <form
-          onSubmit={onSubmit}
-          name='guess-form'
-          className='true-or-false-radio'
-        >
+        <div className='true-or-false-radio'>
           <div className='radio'>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <label>
-                <input
-                  type='radio'
-                  name='guess'
-                  value='yes'
-                  checked={guess === 'yes'}
-                  onChange={handleGuessChange}
-                />
-                Yes
-              </label>
-              <label>
-                <input
-                  type='radio'
-                  name='guess'
-                  value='no'
-                  checked={guess === 'no'}
-                  onChange={handleGuessChange}
-                />
-                No
-              </label>
-            </div>
-
-            {gameOver ? (
-              <button type='button' onClick={newGame}>
-                Play Again
-              </button>
-            ) : (
-              <button type='submit' disabled={guess === ''}>
-                Submit
-              </button>
-            )}
+            <ToggleButtonGroup
+              value={guess}
+              exclusive
+              onChange={handleGuessChange}
+              size='small'
+              sx={{
+                display: gameOver ? 'none' : 'inherit',
+              }}
+            >
+              <ToggleButton value={'yes'}>&nbsp; Yes &nbsp;</ToggleButton>
+              <ToggleButton value={'no'}>&nbsp; No &nbsp;</ToggleButton>
+            </ToggleButtonGroup>
           </div>
-        </form>
 
-        <div className='output-container'>
-          <p>
-            <samp>{output}</samp>
-          </p>
+          {gameOver ? (
+            <Button
+              type='button'
+              variant='outlined'
+              fullWidth
+              onClick={newGame}
+            >
+              Play Again
+            </Button>
+          ) : (
+            <Button variant='outlined' disabled={!guess} onClick={onSubmit}>
+              Submit
+            </Button>
+          )}
         </div>
       </div>
+      <Button
+        variant='outlined'
+        sx={{ width: '300px', margin: '0 auto' }}
+        disabled={number >= decks.length - 1}
+        onClick={() => {
+          let newNumber = number + 1
+          setNumber(newNumber)
+          setDeck(decks[newNumber])
+          newGame()
+          navigate(`/games/wil-it-throw/${newNumber + 1}`, {
+            replace: true,
+          })
+        }}
+      >
+        Next Deck
+      </Button>
     </div>
   )
 }

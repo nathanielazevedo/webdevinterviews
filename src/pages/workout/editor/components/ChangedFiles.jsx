@@ -16,14 +16,14 @@ const ChangedFiles = ({ isSolution }) => {
 
   const serverFiles = isSolution
     ? {
-        ...workout.files.solution,
-        ...workout.files.shared,
-        ...workout.files.packageJson,
+        ...workout.solution,
+        ...workout.shared,
+        ...workout.package,
       }
     : {
-        ...workout.files.template,
-        ...workout.files.shared,
-        ...workout.files.packageJson,
+        ...workout.template,
+        ...workout.shared,
+        ...workout.package,
       }
 
   const localFiles = sandpack?.files
@@ -82,16 +82,6 @@ const ChangedFiles = ({ isSolution }) => {
             >
               {file}
             </Typography>
-            {/* <Tooltip title='Undo Changes'>
-              <IconButton size='small'>
-                <ReplayIcon
-                  sx={{
-                    fontSize: '13px',
-                    color: 'grey.400',
-                  }}
-                />
-              </IconButton>
-            </Tooltip> */}
           </Box>
         ))}
       </Box>
