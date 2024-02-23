@@ -35,7 +35,7 @@ const RootTopNav = () => {
           <div className='app-bar-links'>
             <TextLink to='/workouts' text='Workouts' end={false} />
             <TextLink to='/games' text='Games' end={false} />
-            <TextLink to='/contests' text='Contests' end={false} />
+            {/* <TextLink to='/contests' text='Contests' end={false} /> */}
           </div>
         </div>
         <IconButton

@@ -16,12 +16,14 @@ import AutoSave from './components/AutoSave'
 import Prettier from './components/Prettier'
 import ChangedFiles from './components/ChangedFiles'
 
+const isDev = import.meta.env.DEV
+
 const EditorRoot = ({ isSolution }) => {
   const codemirrorInstance = useRef()
   const { workout, setFromLocal } = useContext(WorkoutContext)
 
   const renderAutoSave = () => {
-    if (false) {
+    if (isDev) {
       return true
     }
     if (!isSolution) {
@@ -68,13 +70,10 @@ const EditorRoot = ({ isSolution }) => {
                   <Panel>
                     <SandpackFileExplorer />
                   </Panel>
-                  {false && (
+                  {isDev && (
                     <>
                       <ResizeHandle horz={true} />
                       <Panel>
-                        <Box className='source-control-wrapper'>
-                          <Typography>SOURCE CONTROL</Typography>
-                        </Box>
                         <ChangedFiles isSolution={isSolution} />
                       </Panel>
                     </>

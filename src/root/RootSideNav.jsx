@@ -18,10 +18,10 @@ const links = [
     name: 'SHORTS EDITOR',
     path: 'shorts-editor',
   },
-  {
-    name: 'CONTESTS',
-    path: 'contests',
-  },
+  // {
+  //   name: 'CONTESTS',
+  //   path: 'contests',
+  // },
   {
     name: 'CONTACT',
     path: 'contact',

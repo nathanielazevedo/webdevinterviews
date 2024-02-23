@@ -15,7 +15,10 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
   const { workout, setData } = useContext(WorkoutContext)
 
   const onSubmit = async () => {
-    const { sharedFiles, otherFiles, packageJson } = getChangedCode(changedFiles, sandpack.files)
+    const { sharedFiles, otherFiles, packageJson } = getChangedCode(
+      changedFiles,
+      sandpack.files
+    )
     console.log(sharedFiles)
     console.log(otherFiles)
     console.log(packageJson)
@@ -32,7 +35,7 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
       }
       if (Object.keys(sharedFiles).length > 0) {
         console.log('shared')
-        await putIt(`/workouts/${workout.id}/upload-shared`, JSON.stringify(sharedFiles))
+        await putIt(`/workouts/${workout.id}/upload-shared`, sharedFiles)
       }
       if (Object.keys(packageJson).length > 0) {
         console.log('package')
@@ -43,8 +46,9 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
       // localStorage.removeItem(workout.id + '-package.json')
       setLoading(false)
       // setTimeout(() => {
-      //   navigate(`/workouts`)
+      //   navigate(`/workouts/${workout.id}`)
       // }, 1000)
+      window.location.reload()
     } catch (error) {
       setLoading(false)
     }

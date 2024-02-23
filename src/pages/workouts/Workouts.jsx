@@ -6,6 +6,7 @@ import WorkoutsSkeleton from './WorkoutsSkeleton'
 import Header from '../../components/Header'
 import Rating from '../../components/Rating'
 import YouTube from '../../components/YouTubeIcon'
+import Footer from '../../components/Footer'
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 
@@ -59,13 +60,16 @@ const Workouts = () => {
   }
 
   return (
-    <div className='fit-wrapper'>
-      <Header
-        title='Workouts'
-        subtext='React coding challenges to sharpen your skills.'
-      />
-      {renderBodyContent()}
-    </div>
+    <>
+      <div className='fit-wrapper'>
+        <Header
+          title='Workouts'
+          subtext='React coding challenges to sharpen your skills.'
+        />
+        {renderBodyContent()}
+      </div>
+      <Footer />
+    </>
   )
 }
 

@@ -4,20 +4,22 @@ import { YouTube } from '@mui/icons-material'
 import TrueOrFalse from '../pages/games/trueOrFalse/TrueOrFalse'
 import live from '../assets/live.png'
 import { useNavigate } from 'react-router'
+import Footer from '../components/Footer'
 
 const Home = () => {
   const navigate = useNavigate()
   return (
-    <Fade in timeout={1000}>
+    <>
       <div className='fit-wrapper'>
         <div className='marketing-section'>
           <Typography variant='h3' color={'grey.500'}>
             WEB DEV INTERVIEWS
           </Typography>
           <Typography variant='h6' color={'grey.300'}>
-            The best learning is done when you are engaged with the material. On
-            this site you can play games, complete workouts and enter
-            competitions; all while becoming a better programmer.
+            The best learning is done when you are engaged. <br />
+            Here you can play games, complete workouts and enter competitions;
+            <br />
+            While becoming a better programmer.
           </Typography>
         </div>
         <Divider />
@@ -33,6 +35,7 @@ const Home = () => {
             size='large'
             onClick={() => navigate('/games')}
             variant='outlined'
+            fullWidth
             className='marketing-button'
           >
             Play
@@ -107,7 +110,8 @@ const Home = () => {
           </a>
         </div>
       </div>
-    </Fade>
+      <Footer />
+    </>
   )
 }
 
