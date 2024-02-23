@@ -4,7 +4,7 @@ import logo from '../assets/logo.png'
 
 const Footer = () => {
   return (
-    <Paper className='footer'>
+    <Paper className='footer' elevation={1}>
       <div className='fit-wrapper'>
         <div className='footer-wrapper'>
           <img src={logo} width='100px' style={{ borderRadius: '10px' }} />

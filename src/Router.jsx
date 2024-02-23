@@ -17,6 +17,7 @@ import ShortsEditor from './pages/shortsEditor/ShortsEditor'
 import WillItThrowList from './pages/games/willItThrow/WillItThrowList'
 import WillItThrow from './pages/games/willItThrow/Will_ItThrow'
 import Contests from './pages/contests/ContestsList'
+import NewMemberForm from './pages/NewMemberForm'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
         errorElement: <Error />,
+      },
+      {
+        path: 'new-member',
+        element: <NewMemberForm />,
       },
       {
         path: 'shorts-editor',
@@ -109,10 +114,6 @@ const router = createBrowserRouter([
             ],
           },
         ],
-      },
-      {
-        path: 'contests',
-        element: <Contests />,
       },
       {
         path: '*',

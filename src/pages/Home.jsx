@@ -17,7 +17,7 @@ const Home = () => {
           </Typography>
           <Typography variant='h6' color={'grey.300'}>
             The best learning is done when you are engaged. <br />
-            Here you can play games, complete workouts and enter competitions;
+            Here you can play games and complete workouts;
             <br />
             While becoming a better programmer.
           </Typography>
@@ -61,30 +61,6 @@ const Home = () => {
             Workout
           </Button>
           <img src={live} style={{ marginTop: '30px' }} />
-        </div>
-        <Divider />
-        <div className='marketing-section'>
-          <Typography variant='h3' color={'grey.500'}>
-            Contests
-          </Typography>
-          <Typography variant='h6' color={'grey.300'}>
-            I take my YouTube advertising money and give it away in coding
-            challenges. Subscribe to channel to get notified when a new contest
-            is released.
-          </Typography>
-          <a
-            href='https://www.youtube.com/channel/UC-4Ij6StciJgYzbxLyxHMPw'
-            target='_blank'
-          >
-            <Button
-              size='large'
-              variant='outlined'
-              fullWidth
-              className='marketing-button'
-            >
-              Go To Youtube
-            </Button>
-          </a>
         </div>
         <Divider />
         <div className='marketing-section'>
