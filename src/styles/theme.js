@@ -7,19 +7,35 @@ export default createTheme({
       main: '#19e4ff',
     },
     divider: '#454950',
+    background: {
+      paper: 'black',
+      default: 'black',
+    },
   },
   typography: {
     fontFamily: 'Bai Jamjuree',
-  },
-  variables: {
-    sideNavWidth: '70px',
-    topNavHeight: '45px',
   },
   components: {
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
           backgroundColor: '#212121',
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: {
+          backgroundColor: 'black',
+          // borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'black',
+          backgroundImage: 'none',
         },
       },
     },

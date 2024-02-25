@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import { AuthContext } from '../../../contexts/AuthContext'
+import Screen from '../components/Screen'
 
 const TrueOrFalse = () => {
   const navigate = useNavigate()
@@ -39,8 +40,8 @@ const TrueOrFalse = () => {
     }
   }, [displayName])
 
-  const onSubmit = () => {
-    if (guess == eval(deck.questions[currentQuestion])) {
+  const onSubmit = (evt) => {
+    if (evt.target.value == eval(deck.questions[currentQuestion])) {
       setOutput('&#128077;')
       scores.push(true)
       setScores([...scores])
@@ -51,26 +52,22 @@ const TrueOrFalse = () => {
     }
 
     setTimeout(() => {
-      setGuess('')
       setOutput('')
       if (currentQuestion + 1 === deck.questions.length) {
         setOutput(
-          `Game Over. Score ${countOccurances()} / ${deck.questions.length}`
+          `Game Over. <br> Score ${countOccurances()} / ${
+            deck.questions.length
+          }`
         )
       }
       setCurrentQuestion(currentQuestion + 1)
     }, 1500)
   }
 
-  const handleGuessChange = (evt) => {
-    setGuess(evt.target.value)
-  }
-
   const newGame = () => {
     setCurrentQuestion(0)
     setScores([])
     setOutput('')
-    setGuess(null)
   }
 
   const countOccurances = () => {
@@ -93,91 +90,67 @@ const TrueOrFalse = () => {
 
       <div className='gameEditor-container'>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography
-            sx={{
-              color: 'grey.500',
-            }}
-          >
-            Deck {number + 1}
-          </Typography>
+          <Typography sx={{ color: 'grey.500' }}>Deck {number + 1}</Typography>
           <ScoreCircles deck={deck} scores={scores} />
         </div>
 
-        <div className='code-container'>
-          {output ? (
-            <div
-              className='output-container'
-              dangerouslySetInnerHTML={{
-                __html: output,
-              }}
-            ></div>
-          ) : (
-            <code>{deck.questions[currentQuestion]}</code>
-          )}
-        </div>
+        <Screen output={output} code={deck.questions[currentQuestion]} />
 
         <div className='true-or-false-radio'>
-          <Box className='radio'>
-            <ToggleButtonGroup
-              value={guess}
-              exclusive
-              onChange={handleGuessChange}
-              size='small'
-              sx={{
-                display: gameOver ? 'none' : 'inherit',
-              }}
-            >
-              <ToggleButton value={'1'}>True</ToggleButton>
-              <ToggleButton value={'0'}>False</ToggleButton>
-            </ToggleButtonGroup>
-          </Box>
           {gameOver ? (
-            <Button
-              type='button'
-              variant='outlined'
-              fullWidth
-              onClick={newGame}
-            >
-              Play Again
-            </Button>
+            <>
+              <Box>
+                <ToggleButtonGroup value={guess} exclusive size='small'>
+                  <ToggleButton onClick={newGame}>Play Again</ToggleButton>
+                  {!displayName && number >= 4 ? (
+                    <ToggleButton
+                      variant='outlined'
+                      onClick={() => {
+                        let newNumber = number + 1
+                        setNumber(newNumber)
+                        setDeck(decks[newNumber])
+                        newGame()
+                        navigate(`/new-member`)
+                      }}
+                    >
+                      Become a Member
+                    </ToggleButton>
+                  ) : (
+                    <ToggleButton
+                      variant='outlined'
+                      disabled={number >= decks.length - 1}
+                      onClick={() => {
+                        let newNumber = number + 1
+                        setNumber(newNumber)
+                        setDeck(decks[newNumber])
+                        newGame()
+                        navigate(`/games/true-or-false/${newNumber + 1}`)
+                      }}
+                    >
+                      Next Deck
+                    </ToggleButton>
+                  )}
+                </ToggleButtonGroup>
+              </Box>
+            </>
           ) : (
-            <Button variant='outlined' disabled={!guess} onClick={onSubmit}>
-              Submit
-            </Button>
+            <Box>
+              <ToggleButtonGroup
+                exclusive
+                onChange={onSubmit}
+                size='small'
+                disabled={output}
+                sx={{
+                  display: gameOver ? 'none' : 'inherit',
+                }}
+              >
+                <ToggleButton value={'1'}>True</ToggleButton>
+                <ToggleButton value={'0'}>False</ToggleButton>
+              </ToggleButtonGroup>
+            </Box>
           )}
         </div>
       </div>
-      {!displayName && number >= 4 ? (
-        <Button
-          variant='outlined'
-          sx={{ width: '300px', margin: '0 auto' }}
-          disabled={number >= decks.length - 1}
-          onClick={() => {
-            let newNumber = number + 1
-            setNumber(newNumber)
-            setDeck(decks[newNumber])
-            newGame()
-            navigate(`/new-member`)
-          }}
-        >
-          Become a Member
-        </Button>
-      ) : (
-        <Button
-          variant='outlined'
-          sx={{ width: '300px', margin: '0 auto' }}
-          disabled={number >= decks.length - 1}
-          onClick={() => {
-            let newNumber = number + 1
-            setNumber(newNumber)
-            setDeck(decks[newNumber])
-            newGame()
-            navigate(`/games/true-or-false/${newNumber + 1}`)
-          }}
-        >
-          Next Deck
-        </Button>
-      )}
     </>
   )
 }

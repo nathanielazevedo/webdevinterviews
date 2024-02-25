@@ -5,6 +5,42 @@ import TrueOrFalse from '../pages/games/trueOrFalse/TrueOrFalse'
 import live from '../assets/live.png'
 import { useNavigate } from 'react-router'
 import Footer from '../components/Footer'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import Rating from '../components/Rating'
+import Will_ItThrow from './games/willItThrow/Will_ItThrow'
+
+const workouts = [
+  {
+    description: 'Improve the re-rendering of this component.',
+    difficulty: 'junior',
+    id: 15,
+    public: true,
+    sp_template: 'react',
+    title: 'Optimize React Rerenders',
+    visible: true,
+    youtube_link: 'https://youtu.be/MabHyCR8mHY',
+  },
+  {
+    description: 'Fetch, render, sort, filter. This ones tough.',
+    difficulty: 'senior',
+    id: 22,
+    public: true,
+    sp_template: 'react',
+    title: 'Build a table with functionality.',
+    visible: true,
+    youtube_link: 'https://youtu.be/EgLIblcyLpM',
+  },
+  {
+    description: 'Good luck. This will take a while.',
+    difficulty: 'senior',
+    id: 40,
+    public: true,
+    sp_template: 'react',
+    title: 'Checked Tree',
+    visible: true,
+    youtube_link: 'https://youtu.be/WX8Oplyd3Ag',
+  },
+]
 
 const Home = () => {
   const navigate = useNavigate()
@@ -15,32 +51,99 @@ const Home = () => {
           <Typography variant='h3' color={'grey.500'}>
             WEB DEV INTERVIEWS
           </Typography>
-          <Typography variant='h6' color={'grey.300'}>
-            The best learning is done when you are engaged. <br />
-            Here you can play games and complete workouts;
-            <br />
-            While becoming a better programmer.
+          <Typography variant='h6' color={'grey.300'} textAlign={'left'}>
+            Learning hinges on capturing your brain's interest. Through the use
+            of games, dynamic workouts, and engaging contests, I strive to
+            inspire continuous exploration and learning.
           </Typography>
+          <div className='home-buttons'>
+            <Button
+              variant='outlined'
+              onClick={() => navigate('/workouts')}
+              size='large'
+              fullWidth
+              sx={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+              }}
+            >
+              15+ WORKOUTS
+            </Button>
+            <Button
+              variant='outlined'
+              onClick={() => navigate('/games')}
+              fullWidth
+              size='large'
+              sx={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+              }}
+            >
+              50+ GAMES
+            </Button>
+            <Button
+              variant='outlined'
+              href='https://www.youtube.com/channel/UC-4Ij6StciJgYzbxLyxHMPw/join'
+              target='_blank'
+              fullWidth
+              size='large'
+              sx={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+              }}
+            >
+              50+ Videos
+            </Button>
+          </div>
         </div>
         <Divider />
         <div className='marketing-section'>
           <Typography variant='h3' color={'grey.500'}>
-            GAMES
+            TRUE OR FALSE
           </Typography>
           <Typography variant='h6' color={'grey.300'}>
-            JavaScript is tricky. These games will expose you to concepts you
-            maybe hadn't thought of.
+            Exercise your understanding of JavaScript comparison operators, type
+            coercion and so much more.
           </Typography>
+
           <Button
-            size='large'
-            onClick={() => navigate('/games')}
+            onClick={() => navigate('/games/true-or-false')}
             variant='outlined'
-            fullWidth
+            size='large'
+            sx={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+            }}
             className='marketing-button'
           >
-            Play
+            Play True or False
           </Button>
           <TrueOrFalse />
+        </div>
+        <Divider />
+        <div className='marketing-section'>
+          <Typography variant='h3' color={'grey.500'}>
+            WILL IT THROW
+          </Typography>
+          <Typography variant='h6' color={'grey.300'}>
+            JavaScript doesn't like to throw errors but it is very important to
+            know when it will. This game will test your understanding of
+            JavaScript error handling.
+          </Typography>
+
+          <Button
+            onClick={() => navigate('/games/will-it-throw')}
+            variant='outlined'
+            size='large'
+            sx={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+            }}
+            className='marketing-button'
+          >
+            Play Will It Throw
+          </Button>
+          <Will_ItThrow />
         </div>
         <Divider />
         <div className='marketing-section'>
@@ -48,42 +151,68 @@ const Home = () => {
             WORKOUTS
           </Typography>
           <Typography variant='h6' color={'grey.300'}>
-            Being a programmer is like being an athlete of the mind, you need to
-            workout.
+            A programmer is an athlete of the mind. An athlete workouts out
+            their body; a programmer workouts out their mind.
           </Typography>
           <Button
-            size='large'
-            onClick={() => navigate('/workouts')}
             variant='outlined'
-            fullWidth
+            size='large'
+            sx={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+            }}
             className='marketing-button'
           >
-            Workout
+            Go to Workouts
           </Button>
-          <img src={live} style={{ marginTop: '30px' }} />
+          <div>
+            {workouts.map((workout) => {
+              return (
+                <div
+                  key={workout.id}
+                  className='item-container'
+                  onClick={() => navigate(`/workouts/${workout.id}`)}
+                >
+                  <div>
+                    <div className='item-text-wrapper'>
+                      <Typography>{workout.title}</Typography>
+                      <Rating rating={workout.difficulty} />
+                    </div>
+                    <Typography sx={{ color: 'grey.500' }}>
+                      {workout.description}
+                    </Typography>
+                  </div>
+                  <ArrowForwardIosIcon sx={{ color: 'grey.400' }} />
+                </div>
+              )
+            })}
+          </div>
         </div>
         <Divider />
         <div className='marketing-section'>
           <Typography variant='h3' color={'grey.500'}>
-            YouTube
+            BECOME A MEMBER
           </Typography>
           <Typography variant='h6' color={'grey.300'}>
-            I make an in-depth video for every workout. You might also enjoy my
-            shorts where I play games.
+            Members of my YouTube channel get all access to workouts, True or
+            False, and Will It Throw games. It costs 99 cents a month. Your
+            support allows me to improve my content and continue to produce cool
+            stuff.
           </Typography>
-          <a
-            href='https://www.youtube.com/channel/UC-4Ij6StciJgYzbxLyxHMPw'
+
+          <Button
+            variant='outlined'
+            href='https://www.youtube.com/channel/UC-4Ij6StciJgYzbxLyxHMPw/join'
             target='_blank'
+            size='large'
+            sx={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+            }}
+            className='marketing-button'
           >
-            <Button
-              size='large'
-              variant='outlined'
-              fullWidth
-              className='marketing-button'
-            >
-              Go To Youtube
-            </Button>
-          </a>
+            Become a member
+          </Button>
         </div>
       </div>
       <Footer />

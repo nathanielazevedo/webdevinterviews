@@ -109,7 +109,11 @@ const router = createBrowserRouter([
               },
               {
                 path: ':id',
-                element: <WillItThrow />,
+                element: (
+                  <div className='fit-wrapper'>
+                    <WillItThrow />
+                  </div>
+                ),
               },
             ],
           },

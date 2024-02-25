@@ -10,7 +10,9 @@ import {
   Button,
   Menu,
   MenuItem,
+  Link,
 } from '@mui/material'
+import { Link as routerLink } from 'react-router-dom'
 import TextLink from '../components/TextLink'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useNavigate } from 'react-router'
@@ -32,7 +34,7 @@ const RootTopNav = () => {
   }
 
   return (
-    <AppBar elevation={1}>
+    <AppBar elevation={0}>
       <Toolbar>
         <div className='app-bar-section'>
           <img
@@ -44,6 +46,7 @@ const RootTopNav = () => {
               cursor: 'pointer',
             }}
           />
+          {/* <TextLink to='/' text='WEB DEV INTERVIEWS' end={false} /> */}
           <div className='app-bar-links'>
             <TextLink to='/workouts' text='Workouts' end={false} />
             <TextLink to='/games' text='Games' end={false} />

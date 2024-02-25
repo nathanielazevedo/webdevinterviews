@@ -81,7 +81,8 @@ const Workouts = () => {
       <div className='fit-wrapper'>
         <Header
           title='Workouts'
-          subtext='React coding challenges to sharpen your skills.'
+          subtext='A programmer is an athlete of the mind. These workouts will train your abilities 
+          with React, JavaScript, HTML, CSS and DSA.'
         />
         {renderBodyContent()}
       </div>
