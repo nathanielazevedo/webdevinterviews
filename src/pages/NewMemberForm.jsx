@@ -17,6 +17,7 @@ import displayNameImage from '../assets/display_name.png'
 import accessCode from '../assets/access_code.png'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
+import Faq from '../components/Faq'
 
 const NewMemberForm = () => {
   const [display_name, setDisplayName] = useState('')
@@ -56,105 +57,118 @@ const NewMemberForm = () => {
   return (
     <>
       <div className='fit-wrapper'>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '20px',
-            paddingBottom: '20px',
-          }}
-        >
-          <Typography variant='h4'>Become a member!</Typography>
-          <Typography variant='subtitle1' color='grey.400'>
-            If you want full access to games and workouts please become a member
-            of my YouTube channel. It's my way of thanking my supporters. 99
-            cents a month.
+        <div className='marketing-section'>
+          <Typography variant='h3' color='grey.500'>
+            BECOME A MEMBER
           </Typography>
-          <Link
+          <Typography variant='h6' color='grey.300'>
+            Members of my YouTube channel get all access to workouts, True or
+            False, and Will It Throw games. It costs 99 cents a month. Your
+            support allows me to improve my content and continue to produce cool
+            stuff.
+          </Typography>
+          <Button
+            variant='outlined'
             href='https://www.youtube.com/channel/UC-4Ij6StciJgYzbxLyxHMPw/join'
             target='_blank'
+            size='large'
+            sx={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+            }}
+            className='marketing-button'
           >
             Become a member
-          </Link>
+          </Button>
         </div>
         <Divider />
-        <FormControl>
-          <FormGroup sx={{ gap: '20px', marginTop: '20px' }}>
-            <Typography variant='h4'>Already a member?</Typography>
-            <TextField
-              label='YouTube Display Name'
-              variant='outlined'
-              value={display_name}
-              error={error?.display_name}
-              helperText={
-                error?.access_code
-                  ? 'Required.'
-                  : 'Enter your display name. Look at the first picture on this page for help. It is case sensitive.'
-              }
-              onChange={(evt) => {
-                setError(null)
-                setDisplayName(evt.target.value)
-              }}
-            />
+        <div className='marketing-section'>
+          <FormControl>
+            <FormGroup sx={{ gap: '20px' }}>
+              <Typography variant='h3' color='grey.500'>
+                ALREADY A MEMBER?
+              </Typography>
+              <TextField
+                label='YouTube Display Name'
+                variant='outlined'
+                value={display_name}
+                error={error?.display_name}
+                helperText={
+                  error?.access_code
+                    ? 'Required.'
+                    : 'Enter your YouTube display name. It is case sensitive. Scroll to the bottom of this page for help.'
+                }
+                onChange={(evt) => {
+                  setError(null)
+                  setDisplayName(evt.target.value)
+                }}
+              />
 
-            <TextField
-              label='Access Code'
-              variant='outlined'
-              value={access_code}
-              error={error?.access_code}
-              helperText={
-                error?.access_code
-                  ? 'Required.'
-                  : 'Find this in the YouTube channel membership tab. Scroll to bottom. Read the first post. Still need help? Look at the last picture of this page.'
-              }
-              onChange={(evt) => {
-                setError(null)
-                setAccessCode(evt.target.value)
-              }}
-            />
-          </FormGroup>
-        </FormControl>
-        <Button variant='contained' onClick={verifyName} disabled={loading}>
-          {loading ? (
-            <CircularProgress
-              sx={{
-                color: 'colors.primary',
-              }}
-            />
-          ) : (
-            'Submit'
-          )}
-        </Button>
-        {submitError && (
-          <Typography color='error'>
-            Could not verify membership. Access code incorrect or member not
-            found.
+              <TextField
+                label='Access Code'
+                variant='outlined'
+                value={access_code}
+                error={error?.access_code}
+                helperText={
+                  error?.access_code
+                    ? 'Required.'
+                    : 'Find this in the YouTube channel membership tab. Scroll to bottom. Read the first post. Scroll to the bottom of this page for help.'
+                }
+                onChange={(evt) => {
+                  setError(null)
+                  setAccessCode(evt.target.value)
+                }}
+              />
+              <Button
+                variant='outlined'
+                onClick={verifyName}
+                disabled={loading}
+                size='large'
+                sx={{
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                }}
+              >
+                {loading ? (
+                  <CircularProgress
+                    sx={{
+                      color: 'colors.primary',
+                    }}
+                  />
+                ) : (
+                  'Submit'
+                )}
+              </Button>
+              {submitError && (
+                <Typography color='error'>
+                  Could not verify membership. Access code incorrect or member
+                  not found.
+                </Typography>
+              )}
+            </FormGroup>
+          </FormControl>
+          <Typography>
+            By submitting this form you agree to our
+            <Link
+              target='_blank'
+              sx={{ padding: '0 10px' }}
+              href='https://app.termly.io/document/privacy-policy/6d782f95-1dec-49a3-aca0-17e628b85bc0'
+            >
+              Privacy Policy
+            </Link>
+            and
+            <Link
+              target='_blank'
+              sx={{ padding: '0 10px' }}
+              href='https://app.termly.io/document/terms-of-service/fc74560a-b49f-4bd6-9cfd-f230faa97b98'
+            >
+              Terms of Service
+            </Link>
+            .
           </Typography>
-        )}
-        <Typography>
-          By submitting this form you agree to our
-          <Link
-            target='_blank'
-            sx={{ padding: '0 10px' }}
-            href='https://app.termly.io/document/privacy-policy/6d782f95-1dec-49a3-aca0-17e628b85bc0'
-          >
-            Privacy Policy
-          </Link>
-          and
-          <Link
-            target='_blank'
-            sx={{ padding: '0 10px' }}
-            href='https://app.termly.io/document/terms-of-service/fc74560a-b49f-4bd6-9cfd-f230faa97b98'
-          >
-            Terms of Service
-          </Link>
-          .
-        </Typography>
+        </div>
         <Divider sx={{ margin: '40px 0' }} />
-        <Typography variant='h4'>How to find your display name:</Typography>
-        <img src={displayNameImage} />
-        <Typography variant='h4'>How to find the access code:</Typography>
-        <img src={accessCode} />
+        <Faq />
       </div>
       <Footer />
     </>
