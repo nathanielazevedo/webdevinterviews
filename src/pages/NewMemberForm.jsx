@@ -82,11 +82,15 @@ const NewMemberForm = () => {
           <FormGroup sx={{ gap: '20px', marginTop: '20px' }}>
             <Typography variant='h4'>Already a member?</Typography>
             <TextField
-              label='Enter your YouTube display name.'
+              label='YouTube Display Name'
               variant='outlined'
               value={display_name}
               error={error?.display_name}
-              helperText={'Required.'}
+              helperText={
+                error?.access_code
+                  ? 'Required.'
+                  : 'Enter your display name. Look at the first picture on this page for help. It is case sensitive.'
+              }
               onChange={(evt) => {
                 setError(null)
                 setDisplayName(evt.target.value)
@@ -94,14 +98,14 @@ const NewMemberForm = () => {
             />
 
             <TextField
-              label='Access Code.'
+              label='Access Code'
               variant='outlined'
               value={access_code}
               error={error?.access_code}
               helperText={
                 error?.access_code
                   ? 'Required.'
-                  : 'Find this in the channel membership tab. Scroll to bottom. Read first post.'
+                  : 'Find this in the YouTube channel membership tab. Scroll to bottom. Read the first post. Still need help? Look at the last picture of this page.'
               }
               onChange={(evt) => {
                 setError(null)
