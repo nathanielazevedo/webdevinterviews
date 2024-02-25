@@ -150,14 +150,11 @@ const NewMemberForm = () => {
           </Link>
           .
         </Typography>
-        <Typography>How to find your display name:</Typography>
-        <img
-          src={displayNameImage}
-          width={'400px'}
-          style={{ margin: '0 auto' }}
-        />
-        <Typography>How to find the access code:</Typography>
-        <img src={accessCode} width={'400px'} style={{ margin: '0 auto' }} />
+        <Divider sx={{ margin: '40px 0' }} />
+        <Typography variant='h4'>How to find your display name:</Typography>
+        <img src={displayNameImage} />
+        <Typography variant='h4'>How to find the access code:</Typography>
+        <img src={accessCode} />
       </div>
       <Footer />
     </>
