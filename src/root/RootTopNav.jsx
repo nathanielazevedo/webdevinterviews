@@ -57,7 +57,7 @@ const RootTopNav = () => {
             }}
             variant='outlined'
           >
-            Become a member
+            New Member
           </Button>
         ) : (
           <>

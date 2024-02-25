@@ -30,9 +30,9 @@ const links = [
 const RootSideNav = ({ setOpen }) => {
   const { displayName } = useContext(AuthContext)
   if (!displayName) {
-    if (links[0].name !== 'BECOME A MEMBER') {
+    if (links[0].name !== 'NEW MEMBER') {
       links.unshift({
-        name: 'BECOME A MEMBER',
+        name: 'NEW MEMBER',
         path: 'new-member',
       })
     }

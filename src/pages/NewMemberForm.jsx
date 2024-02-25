@@ -14,6 +14,7 @@ import {
 } from '@mui/material'
 import Footer from '../components/Footer'
 import displayNameImage from '../assets/display_name.png'
+import accessCode from '../assets/access_code.png'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 
@@ -98,7 +99,9 @@ const NewMemberForm = () => {
               value={access_code}
               error={error?.access_code}
               helperText={
-                error ? 'Required.' : 'Find this in the channel posts.'
+                error?.access_code
+                  ? 'Required.'
+                  : 'Find this in the channel membership tab. Scroll to bottom. Read first post.'
               }
               onChange={(evt) => {
                 setError(null)
@@ -143,11 +146,14 @@ const NewMemberForm = () => {
           </Link>
           .
         </Typography>
-        {/* <img
+        <Typography>How to find your display name:</Typography>
+        <img
           src={displayNameImage}
           width={'400px'}
           style={{ margin: '0 auto' }}
-        /> */}
+        />
+        <Typography>How to find the access code:</Typography>
+        <img src={accessCode} width={'400px'} style={{ margin: '0 auto' }} />
       </div>
       <Footer />
     </>
