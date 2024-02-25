@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import decks from './trueOrFalse.json'
 import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
@@ -19,9 +19,11 @@ import { useNavigate } from 'react-router-dom'
 
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+import { AuthContext } from '../../../contexts/AuthContext'
 
 const TrueOrFalse = () => {
   const navigate = useNavigate()
+  const { displayName } = useContext(AuthContext)
   const { id } = useParams()
   const [number, setNumber] = useState(id ? id - 1 : 0)
   const [deck, setDeck] = useState(decks[number])
@@ -30,6 +32,12 @@ const TrueOrFalse = () => {
   const [output, setOutput] = useState('')
   const [scores, setScores] = useState([])
   const gameOver = currentQuestion >= deck.questions.length
+
+  useEffect(() => {
+    if (number >= 4 && !displayName) {
+      navigate('/new-member')
+    }
+  }, [displayName])
 
   const onSubmit = () => {
     if (guess == eval(deck.questions[currentQuestion])) {
@@ -139,7 +147,7 @@ const TrueOrFalse = () => {
           )}
         </div>
       </div>
-      {id && (
+      {!displayName && number >= 4 ? (
         <Button
           variant='outlined'
           sx={{ width: '300px', margin: '0 auto' }}
@@ -149,9 +157,22 @@ const TrueOrFalse = () => {
             setNumber(newNumber)
             setDeck(decks[newNumber])
             newGame()
-            navigate(`/games/true-or-false/${newNumber + 1}`, {
-              replace: true,
-            })
+            navigate(`/new-member`)
+          }}
+        >
+          Become a Member
+        </Button>
+      ) : (
+        <Button
+          variant='outlined'
+          sx={{ width: '300px', margin: '0 auto' }}
+          disabled={number >= decks.length - 1}
+          onClick={() => {
+            let newNumber = number + 1
+            setNumber(newNumber)
+            setDeck(decks[newNumber])
+            newGame()
+            navigate(`/games/true-or-false/${newNumber + 1}`)
           }}
         >
           Next Deck

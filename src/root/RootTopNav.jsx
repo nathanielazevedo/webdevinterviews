@@ -8,16 +8,28 @@ import {
   AppBar,
   Toolbar,
   Button,
+  Menu,
+  MenuItem,
 } from '@mui/material'
 import TextLink from '../components/TextLink'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useNavigate } from 'react-router'
 import logo from '../assets/logo.png'
 import RootSideNav from './RootSideNav'
+import { AuthContext } from '../contexts/AuthContext'
 
 const RootTopNav = () => {
   const [sideNavOpen, setSideNavOpen] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(null)
   const navigate = useNavigate()
+  const { displayName, setDisplayName } = useContext(AuthContext)
+  const open = Boolean(anchorEl)
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   return (
     <AppBar elevation={1}>
@@ -35,10 +47,46 @@ const RootTopNav = () => {
           <div className='app-bar-links'>
             <TextLink to='/workouts' text='Workouts' end={false} />
             <TextLink to='/games' text='Games' end={false} />
-            <TextLink to='/new-member' text='New Member' end={false} />
           </div>
         </div>
+        {!displayName ? (
+          <Button
+            className='display-name'
+            onClick={() => {
+              navigate('/new-member')
+            }}
+            variant='outlined'
+          >
+            Become a member
+          </Button>
+        ) : (
+          <>
+            <Button className='display-name' onClick={handleClick}>
+              {displayName}
+            </Button>
+            <Menu
+              id='basic-menu'
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+              <MenuItem
+                onClick={() => {
+                  handleClose()
+                  setDisplayName('')
+                  localStorage.removeItem('access_token')
+                }}
+              >
+                Logout
+              </MenuItem>
+            </Menu>
+          </>
+        )}
         <IconButton
+          className='menu-icon'
           size='large'
           edge='start'
           color='inherit'

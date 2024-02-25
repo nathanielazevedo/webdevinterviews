@@ -7,9 +7,19 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { useNavigate } from 'react-router-dom'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import Footer from '../../../components/Footer'
+import { useContext } from 'react'
+import { AuthContext } from '../../../contexts/AuthContext'
+import LockIcon from '@mui/icons-material/Lock'
 
 const Games = () => {
   const navigate = useNavigate()
+  const { displayName } = useContext(AuthContext)
+  decks.forEach((deck) => {
+    if (displayName) {
+      deck.public = true
+    }
+  })
+
   return (
     <>
       <div className='fit-wrapper'>
@@ -24,7 +34,7 @@ const Games = () => {
         />
         <div>
           {decks.map((deck, index) => {
-            return (
+            return deck.public ? (
               <div
                 className='item-container'
                 onClick={() => navigate(`/games/true-or-false/${deck.to}`)}
@@ -45,6 +55,31 @@ const Games = () => {
                     color: 'grey.400',
                   }}
                 />
+              </div>
+            ) : (
+              <div className='hidden-item-wrapper'>
+                <div className='hidden-item-overlay'></div>
+                <div
+                  className='item-container'
+                  onClick={() => navigate(`/games/true-or-false/${deck.to}`)}
+                >
+                  <div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        gap: '10px',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {deck.title}
+                    </div>
+                  </div>
+                  <LockIcon
+                    sx={{
+                      color: 'grey.400',
+                    }}
+                  />
+                </div>
               </div>
             )
           })}

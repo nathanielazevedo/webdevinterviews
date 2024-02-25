@@ -1,5 +1,8 @@
 import TextLink from '../components/TextLink'
+import { useContext } from 'react'
 import Drawer from '@mui/material/Drawer'
+import { AuthContext } from '../contexts/AuthContext'
+import { Typography } from '@mui/material'
 
 const links = [
   {
@@ -18,32 +21,41 @@ const links = [
     name: 'SHORTS EDITOR',
     path: 'shorts-editor',
   },
-  // {
-  //   name: 'CONTESTS',
-  //   path: 'contests',
-  // },
   {
     name: 'CONTACT',
     path: 'contact',
   },
 ]
 
-const RootSideNav = ({ setOpen }) => (
-  <Drawer
-    anchor='right'
-    open
-    onClose={() => setOpen(false)}
-    elevation={1}
-    onClick={() => setOpen(false)}
-  >
-    <div style={{ width: '250px' }}>
-      <ul className='drawer-links-container'>
-        {links.map((link) => {
-          return <TextLink text={link.name} to={link.path} end={false} />
-        })}
-      </ul>
-    </div>
-  </Drawer>
-)
+const RootSideNav = ({ setOpen }) => {
+  const { displayName } = useContext(AuthContext)
+  if (!displayName) {
+    if (links[0].name !== 'BECOME A MEMBER') {
+      links.unshift({
+        name: 'BECOME A MEMBER',
+        path: 'new-member',
+      })
+    }
+  }
+
+  return (
+    <Drawer
+      anchor='right'
+      open
+      onClose={() => setOpen(false)}
+      elevation={1}
+      onClick={() => setOpen(false)}
+    >
+      <div style={{ width: '250px' }}>
+        <ul className='drawer-links-container'>
+          {links.map((link) => {
+            return <TextLink text={link.name} to={link.path} end={false} />
+          })}
+          {displayName && <Typography>{displayName}</Typography>}
+        </ul>
+      </div>
+    </Drawer>
+  )
+}
 
 export default RootSideNav

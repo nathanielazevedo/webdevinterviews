@@ -9,7 +9,7 @@
       "\"1\" == 1",
       "\"true\" == true"
     ],
-    "language": "javascript"
+    "public": true
   },
   {
     "title": "Deck 2",
@@ -21,7 +21,7 @@
       "1.0 > 1.00",
       "\"a\" > 0"
     ],
-    "language": "javascript"
+    "public": true
   },
   {
     "title": "Deck 3",
@@ -33,7 +33,7 @@
       "true + 10 === 11",
       "0.1 + 0.2 === 0.3"
     ],
-    "language": "javascript"
+    "public": true
   },
   {
     "title": "Deck 4",
@@ -45,7 +45,7 @@
       "true + 10 === 11",
       "0.1 + 0.2 === 0.3"
     ],
-    "language": "javascript"
+    "public": true
   },
   {
     "title": "Deck 5",
@@ -57,7 +57,7 @@
       "false + 10 === 9",
       "undefined == 0"
     ],
-    "language": "javascript"
+    "public": true
   },
   {
     "title": "Deck 6",
@@ -69,7 +69,7 @@
       "null >= 0",
       "NaN === NaN"
     ],
-    "language": "javascript"
+    "public": false
   },
   {
     "title": "Deck 7",
@@ -81,7 +81,7 @@
       "2 > 'a'",
       "2 > '1'"
     ],
-    "language": "javascript"
+    "public": false
   },
   {
     "title": "Deck 8",
@@ -93,7 +93,7 @@
       "+{} == 0",
       "+['1', '2'] == [1, 2]"
     ],
-    "language": "javascript"
+    "public": false
   },
   {
     "title": "Deck 9",
@@ -105,7 +105,7 @@
       "typeof undefined == 'undefined'",
       "typeof typeof 1 == 'string'"
     ],
-    "language": "javascript"
+    "public": false
   },
   {
     "title": "Deck 10",
@@ -117,7 +117,7 @@
       "Boolean('undefined') == false",
       "Boolean([] = ['a'])"
     ],
-    "language": "javascript"
+    "public": false
   },
   {
     "title": "Deck 11",
@@ -129,7 +129,7 @@
       "Number('     ') == 0",
       "'1' + 1 + 1 + 1 == 13"
     ],
-    "language": "javascript"
+    "public": false
   },
   {
     "title": "Deck 12",
@@ -141,7 +141,7 @@
       "!(3 > 5)",
       "true && false"
     ],
-    "language": "javascript"
+    "public": false
   },
   {
     "title": "Deck 13",
@@ -153,7 +153,7 @@
       "!!(3 > 5)",
       "0 ? true : false"
     ],
-    "language": "javascript"
+    "public": false
   },
   {
     "title": "Deck 14",
@@ -165,7 +165,7 @@
       "Array.isArray([])",
       "2 === +'1' + 1"
     ],
-    "language": "javascript"
+    "public": false
   },
   {
     "title": "Deck 15",
@@ -177,7 +177,7 @@
       "3 == 4 - true",
       "14 == true * 14"
     ],
-    "language": "javascript"
+    "public": false
   },
   {
     "title": "Deck 16",
@@ -189,7 +189,7 @@
       "Boolean('null') === false",
       "'you liked and subscribed'"
     ],
-    "language": "javascript"
+    "public": false
   },
   {
     "title": "Deck 17",
@@ -201,6 +201,6 @@
       "0 / 0 == Infinity",
       "12 / 0 == Infinity"
     ],
-    "language": "javascript"
+    "public": false
   }
 ]

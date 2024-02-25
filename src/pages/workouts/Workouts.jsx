@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router'
 import useFetch from '../../hooks/useFetch'
-import { Typography } from '@mui/material'
+import { Typography, Backdrop } from '@mui/material'
 
 import WorkoutsSkeleton from './WorkoutsSkeleton'
 import Header from '../../components/Header'
@@ -9,6 +9,7 @@ import YouTube from '../../components/YouTubeIcon'
 import Footer from '../../components/Footer'
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import LockIcon from '@mui/icons-material/Lock'
 
 const Workouts = () => {
   const navigate = useNavigate()
@@ -36,7 +37,7 @@ const Workouts = () => {
     return (
       <div>
         {sortedWorkouts.map((workout) => {
-          return (
+          return workout.visible ? (
             <div
               key={workout.id}
               className='item-container'
@@ -52,6 +53,22 @@ const Workouts = () => {
                 </Typography>
               </div>
               <ArrowForwardIosIcon sx={{ color: 'grey.400' }} />
+            </div>
+          ) : (
+            <div className='hidden-item-wrapper'>
+              <div className='hidden-item-overlay'></div>
+              <div key={workout.id} className='item-container'>
+                <div>
+                  <div className='item-text-wrapper'>
+                    <Typography>{workout.title}</Typography>
+                    <Rating rating={workout.difficulty} />
+                  </div>
+                  <Typography sx={{ color: 'grey.500' }}>
+                    {workout.description}
+                  </Typography>
+                </div>
+                <LockIcon sx={{ color: 'grey.400' }} />
+              </div>
             </div>
           )
         })}

@@ -63,6 +63,10 @@
   justify-content: space-between;
 }
 
+.menu-icon {
+  display: none !important;
+}
+
 .nav-link {
   text-decoration: none;
 }
@@ -266,6 +270,17 @@
   margin: 15px 0;
 }
 
+.hidden-item-wrapper {
+  position: relative;
+}
+
+.hidden-item-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.419);
+}
+
 .item-container:hover {
   background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
@@ -315,5 +330,13 @@
   }
   .app-bar-links {
     display: none;
+  }
+
+  .menu-icon {
+    display: inherit !important;
+  }
+
+  .display-name {
+    display: none !important;
   }
 }

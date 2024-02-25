@@ -12,7 +12,11 @@ const useApi = () => {
         'Content-Type': 'application/json',
       },
     }
-
+    if (localStorage.getItem('access_token')) {
+      options.headers.Authorization = `Bearer ${localStorage.getItem(
+        'access_token'
+      )}`
+    }
     if (body) options.body = JSON.stringify(body)
     const response = await fetch(`${BASE_URL}${endpoint}`, options)
 
