@@ -14,7 +14,7 @@
       "In JavaScript, true is considered greater than false, so this comparison is true.",
       "When comparing strings, JavaScript compares their Unicode values. 'dog' has a greater Unicode value than 'cat', so this comparison is true.",
       "JavaScript performs type coercion and converts the string '1' to a number before comparison. Since the values are equal after coercion, this comparison is true.",
-      "JavaScript converts the string 'true' to a boolean value true during comparison. However, the strict comparison operator '===' would yield false, but with '==', it coerces types and compares loosely. Since both operands are truthy, the comparison is true."
+      "The second true is converted to the number 1. The first 'true' is then converted to a number, resulting in NaN. NaN !== 1."
     ],
     "public": true
   },
