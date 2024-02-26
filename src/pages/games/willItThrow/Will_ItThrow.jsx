@@ -21,6 +21,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import ScoreCircles from '../components/ScoreCircles'
 import { useNavigate } from 'react-router-dom'
 import Screen from '../components/Screen'
+import Explanation from '../components/Explanation'
 
 const WillItThrow = () => {
   const navigate = useNavigate()
@@ -30,6 +31,7 @@ const WillItThrow = () => {
   const [deck, setDeck] = useState(decks[number])
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [output, setOutput] = useState('')
+  const [error, setError] = useState('')
   const [scores, setScores] = useState([])
   const gameOver = currentQuestion >= deck.questions.length
 
@@ -42,7 +44,8 @@ const WillItThrow = () => {
   const onSubmit = (evt) => {
     const guess = evt.target.value
     try {
-      eval(deck.questions[currentQuestion])
+      const question = deck.questions[currentQuestion].replaceAll('<br>', '')
+      eval(question)
       if (guess === 'no') {
         setOutput('&#128077;')
         scores.push(true)
@@ -62,10 +65,12 @@ const WillItThrow = () => {
         scores.push(false)
         setScores([...scores])
       }
+      setError(e)
     }
 
     setTimeout(() => {
       setOutput('')
+      setError('')
       if (currentQuestion + 1 === deck.questions.length) {
         setOutput(
           `Game Over. <br> Score ${countOccurances()} / ${
@@ -74,7 +79,7 @@ const WillItThrow = () => {
         )
       }
       setCurrentQuestion(currentQuestion + 1)
-    }, 1500)
+    }, 2000)
   }
 
   const newGame = () => {
@@ -167,6 +172,8 @@ const WillItThrow = () => {
           )}
         </div>
       </div>
+      <Typography color='error'>{error && error.toString()}</Typography>
+      {!gameOver && <Explanation text={deck.explanations[currentQuestion]} />}
     </>
   )
 }

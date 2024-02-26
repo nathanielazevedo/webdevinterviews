@@ -21,6 +21,7 @@ import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import { AuthContext } from '../../../contexts/AuthContext'
 import Screen from '../components/Screen'
+import Explanation from '../components/Explanation'
 
 const TrueOrFalse = () => {
   const navigate = useNavigate()
@@ -151,6 +152,7 @@ const TrueOrFalse = () => {
           )}
         </div>
       </div>
+      {!gameOver && <Explanation text={deck.explanations[currentQuestion]} />}
     </>
   )
 }

@@ -31,21 +31,21 @@ export default createTheme({
         },
       },
     },
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          backgroundColor: 'black',
-          backgroundImage: 'none',
-        },
-      },
-    },
-    MuiDialog: {
-      styleOverrides: {
-        paper: {
-          backgroundColor: '#212121',
-          backgroundImage: 'none',
-        },
-      },
-    },
+    // MuiPaper: {
+    //   styleOverrides: {
+    //     root: {
+    //       backgroundColor: 'black',
+    //       backgroundImage: 'none',
+    //     },
+    //   },
+    // },
+    // MuiDialog: {
+    //   styleOverrides: {
+    //     paper: {
+    //       backgroundColor: '#212121',
+    //       backgroundImage: 'none',
+    //     },
+    //   },
+    // },
   },
 })

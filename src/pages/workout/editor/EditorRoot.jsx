@@ -70,13 +70,33 @@ const EditorRoot = ({ isSolution }) => {
                   <Panel>
                     <SandpackFileExplorer />
                   </Panel>
-                  {isDev && (
+                  {isDev ? (
                     <>
                       <ResizeHandle horz={true} />
                       <Panel>
                         <ChangedFiles isSolution={isSolution} />
                       </Panel>
                     </>
+                  ) : (
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '5vh',
+                        backgroundColor: 'black',
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          color: 'grey.800',
+                        }}
+                        noWrap
+                        fontWeight='bold'
+                      >
+                        WEB DEV INTERVIEWS
+                      </Typography>
+                    </div>
                   )}
                 </PanelGroup>
               </Panel>
