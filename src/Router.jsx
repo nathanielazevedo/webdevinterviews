@@ -18,6 +18,8 @@ import WillItThrowList from './pages/games/willItThrow/WillItThrowList'
 import WillItThrow from './pages/games/willItThrow/Will_ItThrow'
 import Contests from './pages/contests/ContestsList'
 import NewMemberForm from './pages/NewMemberForm'
+import Ccc from './pages/games/ccc/Ccc'
+import CccList from './pages/games/ccc/CccList'
 
 const router = createBrowserRouter([
   {
@@ -112,6 +114,23 @@ const router = createBrowserRouter([
                 element: (
                   <div className='fit-wrapper'>
                     <WillItThrow />
+                  </div>
+                ),
+              },
+            ],
+          },
+          {
+            path: 'ccc',
+            children: [
+              {
+                index: true,
+                element: <CccList />,
+              },
+              {
+                path: ':id',
+                element: (
+                  <div className='fit-wrapper'>
+                    <Ccc />
                   </div>
                 ),
               },

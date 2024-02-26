@@ -19,15 +19,15 @@ const games = [
     visible: true,
   },
   {
+    title: 'Choose Correct Comparison Operator',
+    to: 'ccc',
+    description: 'You choose the correct comparison operator. > < == ===',
+    visible: true,
+  },
+  {
     title: 'Does It Mutate',
     to: '',
     description: 'Does the code mutate or create a new array?',
-    visible: false,
-  },
-  {
-    title: 'Choose Correct Comparison Operator',
-    to: '',
-    description: 'You choose the correct comparison operator. > < == ===',
     visible: false,
   },
   {
@@ -57,7 +57,7 @@ const GamesList = ({ tab }) => {
       <div className='fit-wrapper'>
         <Header
           title='Games'
-          subtext="Some cool games I've made that will test your knowledge."
+          subtext='Improve your understanding of JavaScript with games.'
         />
         <div>
           {games.map((game, index) => {
