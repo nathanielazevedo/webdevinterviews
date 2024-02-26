@@ -2,10 +2,11 @@ const checkCodeDifferences = (serverFiles, localFiles) => {
   const serverKeys = Object.keys(serverFiles)
   const localKeys = Object.keys(localFiles)
   const diffKeys = []
-
+  console.log(serverFiles)
   serverKeys.forEach((key) => {
     if (serverFiles[key]?.code !== localFiles?.[key]?.code) {
       diffKeys.push(key)
+      console.log(1)
     }
   })
 
@@ -15,6 +16,7 @@ const checkCodeDifferences = (serverFiles, localFiles) => {
       localFiles[key]?.code !== '.emptyDir'
     ) {
       diffKeys.push(key)
+      console.log(2)
     }
   })
 
@@ -35,7 +37,7 @@ const mergeFiles = (workout, isSolution, setFromLocal) => {
     }
   }
   const shared = workout.shared
-  const packageJson = workout.packageJson
+  const packageJson = workout.package
   return { ...local, ...shared, ...packageJson }
 }
 
@@ -47,12 +49,10 @@ const mergeFilesAsOwner = (workout, isSolution) => {
       workout.solution
   } else {
     local =
-      JSON.parse(localStorage.getItem(`${workout.id}`)) ??
-      workout.template
+      JSON.parse(localStorage.getItem(`${workout.id}`)) ?? workout.template
   }
   const shared =
-    JSON.parse(localStorage.getItem(`${workout.id}-shared`)) ??
-    workout.shared
+    JSON.parse(localStorage.getItem(`${workout.id}-shared`)) ?? workout.shared
   const packageJson =
     JSON.parse(localStorage.getItem(`${workout.id}-package.json`)) ??
     workout.packageJson

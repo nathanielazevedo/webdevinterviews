@@ -28,9 +28,10 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
       if (Object.keys(otherFiles).length > 0) {
         if (isSolution) {
           console.log('solution')
+          await putIt(`/workouts/${workout.id}/upload-solution`, otherFiles)
         } else {
           console.log('template')
-          // await putIt(`/workouts/${workout.id}/upload-template`, JSON.stringify(otherFiles))
+          await putIt(`/workouts/${workout.id}/upload-template`, otherFiles)
         }
       }
       if (Object.keys(sharedFiles).length > 0) {
@@ -39,7 +40,7 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
       }
       if (Object.keys(packageJson).length > 0) {
         console.log('package')
-        // await putIt(`/workouts/${workout.id}/upload-package`, JSON.stringify(packageJson))
+        await putIt(`/workouts/${workout.id}/upload-package`, packageJson)
       }
       // localStorage.removeItem(workout.id)
       // localStorage.removeItem(workout.id + '-shared')
@@ -48,7 +49,7 @@ const SyncChanges = ({ changedFiles, isSolution }) => {
       // setTimeout(() => {
       //   navigate(`/workouts/${workout.id}`)
       // }, 1000)
-      window.location.reload()
+      // window.location.reload()
     } catch (error) {
       setLoading(false)
     }

@@ -3,6 +3,7 @@ import { Panel, PanelGroup } from 'react-resizable-panels'
 import PreviewTabs from './Preview'
 import Console from './Console'
 import ResizeHandle from '../../../../components/ResizeHandle'
+import { SandpackPreview } from '@codesandbox/sandpack-react'
 
 const Browser = () => {
   return (
@@ -13,11 +14,15 @@ const Browser = () => {
         disablePointerEventsDuringResize
       >
         <Panel>
-          <PreviewTabs />
+          <SandpackPreview
+            showNavigator
+            style={{ height: '100%' }}
+            showOpenInCodeSandbox={false}
+          />
         </Panel>
         <ResizeHandle horz={true} />
         <Panel>
-          <Console />
+          <PreviewTabs />
         </Panel>
       </PanelGroup>
     </div>

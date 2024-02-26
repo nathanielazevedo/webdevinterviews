@@ -48,24 +48,48 @@ const Workouts = () => {
                   <Typography>{workout.title}</Typography>
                   <Rating rating={workout.difficulty} />
                 </div>
-                <Typography sx={{ color: 'grey.500' }}>
+                <Typography sx={{ color: 'grey.500' }} variant='subtitle2'>
                   {workout.description}
                 </Typography>
+                <div className='skills-wrapper'>
+                  {workout?.skills?.map((skill) => {
+                    return (
+                      <Typography
+                        sx={{ color: 'grey.500' }}
+                        variant='subtitle2'
+                      >
+                        #{skill}
+                      </Typography>
+                    )
+                  })}
+                </div>
               </div>
               <ArrowForwardIosIcon sx={{ color: 'grey.400' }} />
             </div>
           ) : (
-            <div className='hidden-item-wrapper'>
+            <div className='hidden-item-wrapper' key={workout.id}>
               <div className='hidden-item-overlay'></div>
-              <div key={workout.id} className='item-container'>
+              <div className='item-container'>
                 <div>
                   <div className='item-text-wrapper'>
                     <Typography>{workout.title}</Typography>
                     <Rating rating={workout.difficulty} />
                   </div>
-                  <Typography sx={{ color: 'grey.500' }}>
+                  <Typography sx={{ color: 'grey.500' }} variant='subtitle2'>
                     {workout.description}
                   </Typography>
+                  <div className='skills-wrapper'>
+                    {workout?.skills?.map((skill) => {
+                      return (
+                        <Typography
+                          sx={{ color: 'grey.500' }}
+                          variant='subtitle2'
+                        >
+                          #{skill}
+                        </Typography>
+                      )
+                    })}
+                  </div>
                 </div>
                 <LockIcon sx={{ color: 'grey.400' }} />
               </div>

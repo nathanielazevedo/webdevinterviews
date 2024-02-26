@@ -27,25 +27,25 @@ const DiffDialog = ({ onClose, selectedFile, isSolution }) => {
   let serverFile
   if (selectedFile === '/package.json') {
     try {
-      serverFile = workout?.dynamoData?.packageJson[selectedFile]?.code
+      serverFile = workout?.package[selectedFile]?.code
     } catch {
       serverFile = ''
     }
   } else if (selectedFile.split('/')[1] === 'shared') {
     try {
-      serverFile = workout.dynamoData.shared[selectedFile]?.code
+      serverFile = workout.shared[selectedFile]?.code
     } catch {
       serverFile = ''
     }
   } else if (isSolution) {
     try {
-      serverFile = workout.dynamoData.solution[selectedFile]?.code
+      serverFile = workout.solution[selectedFile]?.code
     } catch {
       serverFile = ''
     }
   } else {
     try {
-      serverFile = workout.dynamoData.template[selectedFile]?.code
+      serverFile = workout.template[selectedFile]?.code
     } catch {
       serverFile = ''
     }

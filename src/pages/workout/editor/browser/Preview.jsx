@@ -10,6 +10,7 @@ import {
   useSandpack,
 } from '@codesandbox/sandpack-react'
 import { WorkoutContext } from '../../../../contexts/WorkoutContext'
+import Console from './Console'
 
 const BasicTabs = () => {
   const [value, setValue] = useState(0)
@@ -21,10 +22,10 @@ const BasicTabs = () => {
   }
 
   return (
-    <Box sx={{ width: '100%', height: '100%' }}>
+    <Box sx={{ width: '100%', height: 'calc(100% - 40px)' }}>
       <Box sx={{ backgroundColor: '#151515' }}>
         <Tabs value={value} onChange={handleChange} sx={{ minHeight: '40px' }}>
-          {['Details', 'Browser', 'Tests', 'Example'].map((label) => (
+          {['Details', 'Console', 'Tests', 'Example', 'Video'].map((label) => (
             <Tab
               key={label}
               label={label}
@@ -42,31 +43,37 @@ const BasicTabs = () => {
         />
       )}
 
-      {value === 1 && (
-        <SandpackPreview
-          showNavigator
-          style={{ height: 'calc(100% - 40px)' }}
-          showOpenInCodeSandbox={false}
-        />
-      )}
+      {value === 1 && <Console />}
 
-      {value === 2 && <SandpackTests style={{ height: 'calc(100% - 40px)' }} />}
+      {value === 2 && <SandpackTests style={{ height: '100%' }} />}
 
       {value === 3 && (
         <div style={{ height: '100%' }}>
           <SandpackProvider
-            files={workout.files.solution}
-            template={workout.type}
+            files={workout.solution}
+            template={workout.sp_template}
           >
             <SandpackThemeProvider theme={'dark'}>
               <SandpackPreview
                 showNavigator
-                style={{ height: 'calc(100% - 40px)' }}
+                style={{ height: '100%' }}
                 showOpenInCodeSandbox={false}
               />
             </SandpackThemeProvider>
           </SandpackProvider>
         </div>
+      )}
+
+      {value === 4 && (
+        <iframe
+          width='100%'
+          height='100%'
+          src={workout.embed_link}
+          title='YouTube video player'
+          frameborder='0'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+          allowfullscreen
+        ></iframe>
       )}
     </Box>
   )
