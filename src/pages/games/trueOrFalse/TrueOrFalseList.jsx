@@ -14,6 +14,7 @@ import LockIcon from '@mui/icons-material/Lock'
 const Games = () => {
   const navigate = useNavigate()
   const { displayName } = useContext(AuthContext)
+
   decks.forEach((deck) => {
     if (displayName) {
       deck.public = true
