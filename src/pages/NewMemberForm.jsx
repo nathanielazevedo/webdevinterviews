@@ -21,7 +21,7 @@ import Faq from '../components/Faq'
 
 const NewMemberForm = () => {
   const [display_name, setDisplayName] = useState('')
-  const [access_code, setAccessCode] = useState('')
+  // const [access_code, setAccessCode] = useState('webdev5')
   const [submitError, setSubmitError] = useState('')
   const { postIt } = useApi()
   const [error, setError] = useState({})
@@ -35,15 +35,14 @@ const NewMemberForm = () => {
       setError({ display_name: 'Required.' })
       return
     }
-    if (!access_code) {
-      setError({ access_code: 'Required.' })
-      return
-    }
+    // if (!access_code) {
+    //   setError({ access_code: 'Required.' })
+    //   return
+    // }
     setLoading(true)
     try {
       const response = await postIt('/verify-member', {
         display_name,
-        access_code,
       })
       setContext(display_name)
       localStorage.setItem('access_token', response.data.access_token)
@@ -104,7 +103,7 @@ const NewMemberForm = () => {
                 }}
               />
 
-              <TextField
+              {/* <TextField
                 label='Access Code'
                 variant='outlined'
                 value={access_code}
@@ -118,7 +117,7 @@ const NewMemberForm = () => {
                   setError(null)
                   setAccessCode(evt.target.value)
                 }}
-              />
+              /> */}
               <Button
                 variant='outlined'
                 onClick={verifyName}
@@ -141,8 +140,7 @@ const NewMemberForm = () => {
               </Button>
               {submitError && (
                 <Typography color='error'>
-                  Could not verify membership. Access code incorrect or member
-                  not found.
+                  Could not verify membership. Member not found.
                 </Typography>
               )}
             </FormGroup>
