@@ -157,13 +157,15 @@ const Ccc = () => {
                 <ToggleButton value={'<'}>&nbsp; &lt; &nbsp;</ToggleButton>
                 <ToggleButton value={'=='}>&nbsp; == &nbsp;</ToggleButton>
                 <ToggleButton value={'==='}>&nbsp; === &nbsp;</ToggleButton>
+                <ToggleButton value={'!='}>&nbsp; != &nbsp;</ToggleButton>
+                <ToggleButton value={'!=='}>&nbsp; !== &nbsp;</ToggleButton>
               </ToggleButtonGroup>
             </div>
           )}
         </div>
       </div>
       <Typography color='error'>{error && error.toString()}</Typography>
-      {/* {!gameOver && <Explanation text={deck.explanations[currentQuestion]} />} */}
+      {!gameOver && <Explanation text={deck?.explanations[currentQuestion]} />}
     </>
   )
 }

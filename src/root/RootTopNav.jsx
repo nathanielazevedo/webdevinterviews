@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router'
 import logo from '../assets/logo.png'
 import RootSideNav from './RootSideNav'
 import { AuthContext } from '../contexts/AuthContext'
+import { YouTube } from '@mui/icons-material'
 
 const RootTopNav = () => {
   const [sideNavOpen, setSideNavOpen] = useState(false)
@@ -46,10 +47,17 @@ const RootTopNav = () => {
               cursor: 'pointer',
             }}
           />
-          {/* <TextLink to='/' text='WEB DEV INTERVIEWS' end={false} /> */}
+          {/* <TextLink to='/' text='WDI' end={false} /> */}
           <div className='app-bar-links'>
             <TextLink to='/workouts' text='Workouts' end={false} />
             <TextLink to='/games' text='Games' end={false} />
+            <TextLink
+              to='https://www.youtube.com/@webdevinterviews'
+              target='_blank'
+              text='YouTube'
+              end={false}
+              icon={<YouTube />}
+            />
           </div>
         </div>
         {!displayName ? (

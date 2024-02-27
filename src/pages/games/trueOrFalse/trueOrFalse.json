@@ -10,11 +10,11 @@
       "'true' == true"
     ],
     "explanations": [
-      "In this comparison, 1.1 is not greater than 2, hence it's false.",
-      "In JavaScript, true is considered greater than false, so this comparison is true.",
-      "When comparing strings, JavaScript compares their Unicode values. 'dog' has a greater Unicode value than 'cat', so this comparison is true.",
-      "JavaScript performs type coercion and converts the string '1' to a number before comparison. Since the values are equal after coercion, this comparison is true.",
-      "The second true is converted to the number 1. The first 'true' is then converted to a number, resulting in NaN. NaN !== 1."
+      "Basic math question to warm up.",
+      "When comparing booleans, JavaScript turns both booleans to numbers. True as a number is 1. False as a number is 0. The comparison after type coercion is 1 > 0. Which is true.",
+      "When comparing strings, JavaScript compares their Unicode values letter by letter. For the most part, letters later in the alphabet are considered greater than letters early in the alphabet. In this question 'd' is larger than 'c'. Therefore it is true.",
+      "When comparing strings to numbers, JavaScript attempts to turn strings to numbers. So JS converts the string '1' to the number 1. The comparison after coercion the is 1 == 1, which is true.",
+      "The second true is converted to the number 1. JavaScript then tries to convert the string 'true' to a number, resulting in NaN. After coercion the comparison is NaN == 1, which is false."
     ],
     "public": true
   },
@@ -26,14 +26,14 @@
       "1 > '1'",
       "'true' > true",
       "1.0 > 1.00",
-      "\"a\" > 0"
+      "'a' > 0"
     ],
     "explanations": [
-      "In JavaScript, when comparing different types like an array and an object, the abstract relational comparison algorithm is applied. This converts the operands to primitives and then compares them. An empty array ([]) gets coerced to the empty string (''), while an empty object ({}) gets coerced to '[object Object]'. Comparing these strings, '' > '[object Object]', which evaluates to false.",
-      "In JavaScript, when comparing different types like a number and a string, JavaScript may perform type coercion. In this case, '1' gets converted to a number, and the comparison becomes 1 > 1, which is false.",
-      "In JavaScript, when comparing a string and a boolean, JavaScript may perform type coercion. 'true' gets converted to NaN (not a number), while true gets converted to 1. Since NaN is not greater than 1, the comparison is false.",
-      "In JavaScript, when comparing numbers, the number of trailing zeros doesn't matter. Both 1.0 and 1.00 are the same numeric value, so the comparison evaluates to false.",
-      "In JavaScript, when comparing a string and a number, JavaScript may perform type coercion. The string 'a' gets converted to NaN (not a number). Since NaN is not greater than 0, the comparison is false."
+      "When comparing different types like an array and an object, the abstract relational comparison algorithm is applied. This converts the operands to primitives and then compares them. An empty array ([]) gets coerced to the empty string (''), while an empty object ({}) gets coerced to '[object Object]'. Comparing these strings, '' > '[object Object]', which evaluates to false. If all else is equal, the shorter string is considered less than the longer string.",
+      "When comparing a number to a string, JavaScript attempts to turn strings to numbers. In this case, '1' gets converted to a number, and the comparison becomes 1 > 1, which is false.",
+      "JavaScript attempts to coerce the string 'true' to a number, resulting in NaN (not a number), while the boolean true gets converted to 1. After coercion the comparison is NaN > 1, which is false.",
+      "When comparing numbers, the number of trailing zeros doesn't matter. Both 1.0 and 1.00 are the same numeric value, so the comparison evaluates to false.",
+      "When comparing a string and a number, JavaScript attempts to turn strings to numbers. The string 'a' gets converted to NaN. After coercion the comparison is NaN > 0, which is false."
     ],
     "public": true
   },
@@ -48,7 +48,7 @@
       "0.1 + 0.2 === 0.3"
     ],
     "explanations": [
-      "In JavaScript, when dividing a number by a string, JavaScript may perform type coercion. The string '10' is converted to a number, resulting in 100 / 10 which is 10. The strict comparison checks both value and type, and in this case, 10 (a number) is strictly equal to 10. Thus, the expression evaluates to true.",
+      "When dividing a number by a string, JavaScript performs type coercion. The string '10' is converted to a number, resulting in 100 / 10 which is 10. The strict comparison checks both value and type, and in this case, 10 (a number) is strictly equal to 10. Thus, the expression evaluates to true.",
       "When using the + operator with a number and a string, JavaScript performs string concatenation. In this case, '10' is concatenated to 10, resulting in '1010'. The strict equality operator checks both value and type, and since '1010' is not strictly equal to 1010, the expression evaluates to false.",
       "The subtraction operator (-) in JavaScript coerces the string '10' into a number, and the expression becomes 10 - 10, which equals 0. However, 0 is not equal to 1010, so the expression evaluates to false.",
       "In JavaScript, when a boolean value (true) is used with the + operator, it's converted to a number (1). Thus, the expression becomes 1 + 10, which equals 11.",
@@ -510,6 +510,58 @@
       "true + false === true: This expression evaluates to false because the addition operator (+) is used between true and false. In JavaScript, when you add a boolean value to another value, it gets converted to a number. true is converted to 1, and false is converted to 0. So, 1 + 0 equals 1, not true.",
       "NaN !== NaN: This expression evaluates to true because NaN (Not a Number) is a special value in JavaScript, and according to the IEEE 754 standard, NaN is not equal to any other value, including itself. Hence, NaN !== NaN."
     ],
+    "public": false
+  },
+  {
+    "title": "Deck 28",
+    "to": "28",
+    "questions": [
+      "Infinity == undefined",
+      "Infinity == Infinity",
+      "0 / 0 == NaN",
+      "NaN == NaN",
+      "Boolean('false')"
+    ],
+    "explanations": [],
+    "public": false
+  },
+  {
+    "title": "Deck 29",
+    "to": "29",
+    "questions": [
+      "'' || true",
+      "null || true",
+      "undefined || true",
+      "'2' < '12'",
+      "'2' > '12'"
+    ],
+    "explanations": [],
+    "public": false
+  },
+  {
+    "title": "Deck 30",
+    "to": "30",
+    "questions": [
+      "false ?? true",
+      "false || true",
+      "null || true",
+      "null ?? true",
+      "true ?? false"
+    ],
+    "explanations": [],
+    "public": false
+  },
+  {
+    "title": "Deck 31",
+    "to": "31",
+    "questions": [
+      "[] ? true : false",
+      "({}) ? true : false",
+      "({}).key ? true : false",
+      "'' ? true : false",
+      "' ' ? true : false"
+    ],
+    "explanations": [],
     "public": false
   }
 ]

@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Typography, Alert } from '@mui/material'
 import Header from '../../components/Header'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { useNavigate } from 'react-router'
@@ -60,6 +60,13 @@ const GamesList = ({ tab }) => {
           subtext='Improve your understanding of JavaScript with games.'
         />
         <div>
+          <Alert
+            variant='outlined'
+            severity='info'
+            sx={{ color: 'primary.main' }}
+          >
+            Games are added, updated and audited daily! Last update: 2-27-24
+          </Alert>
           {games.map((game, index) => {
             return game.visible ? (
               <div

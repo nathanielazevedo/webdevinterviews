@@ -178,5 +178,113 @@
     ],
     "language": "javascript",
     "public": false
+  },
+  {
+    "title": "Deck 10",
+    "to": "10",
+    "questions": [
+      "let x = 5; <br> let { y } = x;",
+      "let obj = { nate: 'cool' }; <br> for(const p of obj) { <br> console.log(p) <br> } ",
+      "null.foo",
+      "const foo = undefined; <br> foo.substring(1);",
+      "const foo = 'bar'; <br> Object.create(foo);"
+    ],
+    "explanations": [
+      "Bad destructure. But will it throw?",
+      "not iterable",
+      "TypeError, no property"
+    ],
+    "language": "javascript",
+    "public": false
+  },
+  {
+    "title": "Deck 11",
+    "to": "11",
+    "questions": [
+      "const x = document.getElementByID('foo');",
+      "const x = document.getElementById('foo');",
+      "const obj = {}; <br> obj.map(Number);",
+      "const obj = {foo: () => {}; foo: 1}; <br> obj.foo();",
+      "2 x 5"
+    ],
+    "explanations": [
+      "Bad destructure. But will it throw?",
+      "not iterable",
+      "TypeError, no property"
+    ],
+    "language": "javascript",
+    "public": false
+  },
+  {
+    "title": "Deck 12",
+    "to": "12",
+    "questions": [
+      "const s = new Set(); <br> s.add({})",
+      "new Array(-1)",
+      "const obj = {num: 1}; <br> console.log(num);",
+      "const obj = {num: 1}; <br> console.log(obj[num]);",
+      "const obj = {num: 1}; <br> console.log(obj['num']);"
+    ],
+    "explanations": [
+      "Bad destructure. But will it throw?",
+      "not iterable",
+      "TypeError, no property"
+    ],
+    "language": "javascript",
+    "public": false
+  },
+  {
+    "title": "Deck 13",
+    "to": "13",
+    "questions": [
+      "bar = true",
+      "const x = {}; <br> delete x;",
+      "function getUser(user){ <br> return user && user.id ?? null <br> };",
+      "const str = “This looks like a string”;",
+      "const colors = ['#000', #333', '#555'];"
+    ],
+    "explanations": [
+      "Bad destructure. But will it throw?",
+      "not iterable",
+      "TypeError, no property"
+    ],
+    "language": "javascript",
+    "public": false
+  },
+  {
+    "title": "Deck 14",
+    "to": "14",
+    "questions": [
+      "(() => {})()",
+      "-1 ?? throw new Error()",
+      "const arr = []; <br> arr.5",
+      "if([] > {}){ <br> throw new Error() <br> }",
+      "let x; <br> x == 1;"
+    ],
+    "explanations": [
+      "Bad destructure. But will it throw?",
+      "not iterable",
+      "TypeError, no property"
+    ],
+    "language": "javascript",
+    "public": false
+  },
+  {
+    "title": "Deck 15",
+    "to": "15",
+    "questions": [
+      "Number('dog')",
+      "Number('5).toString()",
+      "Number(typeof 'string')",
+      "'14'.toString()",
+      "let x ='string', x.map(Number)"
+    ],
+    "explanations": [
+      "Bad destructure. But will it throw?",
+      "not iterable",
+      "TypeError, no property"
+    ],
+    "language": "javascript",
+    "public": false
   }
 ]

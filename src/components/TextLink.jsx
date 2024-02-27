@@ -1,10 +1,11 @@
 import { Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
-const TextLink = ({ to, text, end = true, icon }) => (
+const TextLink = ({ to, text, end = true, icon, target }) => (
   <NavLink
     end={end}
     to={to}
+    target={target ? target : ''}
     className={({ isActive }) =>
       `nav-link ${isActive ? 'active' : 'not-active'}`
     }
