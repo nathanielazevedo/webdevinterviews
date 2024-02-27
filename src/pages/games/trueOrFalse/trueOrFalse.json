@@ -11,10 +11,10 @@
     ],
     "explanations": [
       "Basic math question to warm up.",
-      "When comparing booleans, JavaScript turns both booleans to numbers. True as a number is 1. False as a number is 0. The comparison after type coercion is 1 > 0. Which is true.",
+      "When comparing booleans, JavaScript turns both booleans to numbers. True coerced to a number is 1. False coerced to a number is 0. The comparison after type coercion is 1 > 0. Which is true.",
       "When comparing strings, JavaScript compares their Unicode values letter by letter. For the most part, letters later in the alphabet are considered greater than letters early in the alphabet. In this question 'd' is larger than 'c'. Therefore it is true.",
-      "When comparing strings to numbers, JavaScript attempts to turn strings to numbers. So JS converts the string '1' to the number 1. The comparison after coercion the is 1 == 1, which is true.",
-      "The second true is converted to the number 1. JavaScript then tries to convert the string 'true' to a number, resulting in NaN. After coercion the comparison is NaN == 1, which is false."
+      "When comparing strings to numbers, JavaScript attempts to turn strings to numbers. The string '1' is coerced to the number 1. The comparison after coercion the is 1 == 1. Therefore it is true.",
+      "The second true is converted to the number 1. JavaScript then tries to convert the string 'true' to a number, resulting in NaN. After coercion the comparison is NaN == 1. Therefore it is false."
     ],
     "public": true
   },

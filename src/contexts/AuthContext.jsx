@@ -4,7 +4,8 @@ import { jwtDecode } from 'jwt-decode'
 const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
-  const [displayName, setDisplayName] = useState()
+  const token = localStorage.getItem('access_token')
+  const [displayName, setDisplayName] = useState(token ? 'loading' : '')
 
   useEffect(() => {
     const token = localStorage.getItem('access_token')

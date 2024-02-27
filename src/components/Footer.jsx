@@ -1,12 +1,33 @@
 import { Link, Paper, Typography } from '@mui/material'
 import { Link as routerLink } from 'react-router-dom'
 import TextLink from './TextLink'
-import logo from '../assets/logo.png'
+import AddToHomeScreenIcon from '@mui/icons-material/AddToHomeScreen'
 
-const Footer = () => {
+const Footer = ({ bannerOpen = false }) => {
   return (
-    <div className='footer-wrapper'>
-      <img src={logo} width='75px' style={{ borderRadius: '10px' }} />
+    <div
+      className='footer-wrapper'
+      style={{
+        marginBottom: bannerOpen ? '120px' : 0,
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          gap: '10px',
+          alignItems: 'center',
+        }}
+      >
+        <AddToHomeScreenIcon sx={{ fontSize: '45px', color: 'grey.400' }} />
+        <div>
+          <Typography variant='caption' sx={{ color: 'grey.400' }}>
+            Make this site feel native.
+          </Typography>
+          <Typography sx={{ color: 'grey.400' }}>
+            Add it to your homescreen.
+          </Typography>
+        </div>
+      </div>
       <div className='legal-wrapper'>
         <Link
           target='_blank'

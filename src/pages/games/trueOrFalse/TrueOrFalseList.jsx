@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom'
+import { Link as routerLink, NavLink } from 'react-router-dom'
+import { Link } from '@mui/material'
 import decks from './trueOrFalse.json'
 import { Box, Typography } from '@mui/material'
 import TextLink from '../../../components/TextLink'
@@ -10,6 +11,7 @@ import Footer from '../../../components/Footer'
 import { useContext } from 'react'
 import { AuthContext } from '../../../contexts/AuthContext'
 import LockIcon from '@mui/icons-material/Lock'
+import { Alert } from '@mui/material'
 
 const Games = () => {
   const navigate = useNavigate()
@@ -34,6 +36,19 @@ const Games = () => {
           subtext='Test your understanding of JavaScript types and comparisons.'
         />
         <div>
+          <Alert severity='info'>
+            Explanations are a constant work in progress. Part of the fun of
+            this game is debating why JavaScript does what it does. See an
+            issue?
+            <Link
+              component={routerLink}
+              to='/contact'
+              className='nav-link'
+              style={{ marginLeft: '10px' }}
+            >
+              Contact Me
+            </Link>
+          </Alert>
           {decks.map((deck, index) => {
             return deck.public ? (
               <div

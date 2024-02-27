@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 
 const BASE_URL = import.meta.env.DEV
-  ? 'http://localhost'
+  ? 'https://api.webdevinterviews.com'
   : 'https://api.webdevinterviews.com'
 
 const useApi = () => {

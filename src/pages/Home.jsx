@@ -7,6 +7,9 @@ import Footer from '../components/Footer'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import Rating from '../components/Rating'
 import Will_ItThrow from './games/willItThrow/Will_ItThrow'
+import Modal from '../components/Modal'
+import { useState, useContext } from 'react'
+import { AuthContext } from '../contexts/AuthContext'
 
 const workouts = [
   {
@@ -43,6 +46,12 @@ const workouts = [
 
 const Home = () => {
   const navigate = useNavigate()
+  const { displayName } = useContext(AuthContext)
+  const [bannerOpen, setBannerOpen] = useState(displayName ? false : true)
+
+  const closeBanner = () => {
+    setBannerOpen(false)
+  }
   return (
     <>
       <div className='fit-wrapper'>
@@ -194,7 +203,7 @@ const Home = () => {
           </Typography>
           <Typography variant='h6' color={'grey.300'}>
             Members of my YouTube channel get all access to workouts, True or
-            False, and Will It Throw games. It costs 99 cents a month. Your
+            False, and Will It Throw games. It costs 0.99&#162; / month. Your
             support allows me to improve my content and continue to produce cool
             stuff.
           </Typography>
@@ -214,7 +223,8 @@ const Home = () => {
           </Button>
         </div>
       </div>
-      <Footer />
+      <Modal bannerOpen={bannerOpen} setBannerOpen={setBannerOpen} />
+      <Footer bannerOpen={bannerOpen} />
     </>
   )
 }

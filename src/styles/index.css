@@ -314,6 +314,7 @@
 .legal-wrapper {
   display: flex;
   flex-direction: column;
+  font-size: 14px;
 }
 
 @media screen and (max-width: 765px) {
@@ -338,5 +339,19 @@
 
   .home-buttons {
     flex-direction: column !important;
+  }
+
+  .footer-wrapper {
+    padding: 0 5px;
+    font-size: 10px !important;
+    flex-direction: column;
+    justify-content: center;
+    gap: 25px;
+  }
+
+  .legal-wrapper {
+    font-size: 14px;
+    flex-direction: row;
+    gap: 20px;
   }
 }

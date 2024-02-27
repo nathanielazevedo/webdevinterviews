@@ -60,11 +60,7 @@ const GamesList = ({ tab }) => {
           subtext='Improve your understanding of JavaScript with games.'
         />
         <div>
-          <Alert
-            variant='outlined'
-            severity='info'
-            sx={{ color: 'primary.main' }}
-          >
+          <Alert severity='info'>
             Games are added, updated and audited daily! Last update: 2-27-24
           </Alert>
           {games.map((game, index) => {
