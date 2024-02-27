@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router'
 import useFetch from '../../hooks/useFetch'
-import { Typography, Backdrop } from '@mui/material'
+import { Typography, Backdrop, Alert } from '@mui/material'
 
 import WorkoutsSkeleton from './WorkoutsSkeleton'
 import Header from '../../components/Header'
@@ -36,6 +36,10 @@ const Workouts = () => {
 
     return (
       <div>
+        <Alert severity='info' className='workout-alert' icon={false}>
+          There is no value in these workouts being mobile friendly. Therefore,
+          there is currenly no intention to do so.
+        </Alert>
         {sortedWorkouts.map((workout) => {
           return workout.visible ? (
             <div

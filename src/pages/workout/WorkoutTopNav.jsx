@@ -24,9 +24,24 @@ const WorkoutTopNav = () => {
         <YouTube workout={workout} />
       </div>
       {fromLocal && (
-        <Alert icon={false} action={<ResetChanges />}>
-          Files uploaded from local.
-        </Alert>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '20px',
+            height: '40px',
+            overflow: 'hidden',
+            borderRadius: '5px',
+          }}
+        >
+          <Alert
+            severity='info'
+            action={<ResetChanges />}
+            sx={{ margin: '10px 0', fontSize: 'small' }}
+          >
+            Files uploaded from local.
+          </Alert>
+        </div>
       )}
     </div>
   )

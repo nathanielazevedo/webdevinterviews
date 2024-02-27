@@ -317,6 +317,10 @@
   font-size: 14px;
 }
 
+.workout-alert {
+  display: none !important;
+}
+
 @media screen and (max-width: 765px) {
   .main {
     margin-top: 56px;
@@ -353,5 +357,9 @@
     font-size: 14px;
     flex-direction: row;
     gap: 20px;
+  }
+
+  .workout-alert {
+    display: inherit !important;
   }
 }
