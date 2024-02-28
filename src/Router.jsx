@@ -20,6 +20,7 @@ import Contests from './pages/contests/ContestsList'
 import NewMemberForm from './pages/NewMemberForm'
 import Ccc from './pages/games/ccc/Ccc'
 import CccList from './pages/games/ccc/CccList'
+import Runner from './pages/games/runner/Runner'
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'games',
+        errorElement: <Error />,
         children: [
           {
             index: true,
@@ -131,6 +133,23 @@ const router = createBrowserRouter([
                 element: (
                   <div className='fit-wrapper'>
                     <Ccc />
+                  </div>
+                ),
+              },
+            ],
+          },
+          {
+            path: 'runner',
+            children: [
+              {
+                index: true,
+                element: <Runner />,
+              },
+              {
+                path: ':id',
+                element: (
+                  <div className='fit-wrapper'>
+                    <Runner />
                   </div>
                 ),
               },

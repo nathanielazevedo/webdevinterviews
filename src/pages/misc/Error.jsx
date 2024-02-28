@@ -1,38 +1,28 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { useRouteError } from 'react-router-dom'
+import SmartToyIcon from '@mui/icons-material/SmartToy'
+import TextLink from '../../components/TextLink'
 
 const Error = () => {
   const error = useRouteError()
 
   return (
-    <Box
-      sx={{
-        padding: '50px',
-        display: 'flex',
-      }}
-    >
+    <div style={{ paddingTop: '50px' }}>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
+          alignItems: 'center',
           paddingLeft: '50px',
         }}
       >
-        <Typography variant='h4' color='red'>
-          Error
-        </Typography>
-        <Typography variant='h5'>
-          <span
-            style={{
-              color: 'red',
-            }}
-          >
-            {error.statusText || error.message}
-          </span>
-        </Typography>
+        <SmartToyIcon sx={{ color: 'red', fontSize: '100px' }} />
+        <Typography variant='h5'>You broke me.</Typography>
+        <Typography color='error'>Tell me how you did this.</Typography>
+        <TextLink text={'Contact'} to='/contact' />
       </Box>
-    </Box>
+    </div>
   )
 }
 

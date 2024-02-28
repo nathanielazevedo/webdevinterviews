@@ -25,6 +25,12 @@ const games = [
     visible: true,
   },
   {
+    title: 'Runner',
+    to: 'runner',
+    description: 'How far can you run?',
+    visible: true,
+  },
+  {
     title: 'Does It Mutate',
     to: '',
     description: 'Does the code mutate or create a new array?',
