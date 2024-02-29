@@ -16,7 +16,8 @@ import { Link as routerLink } from 'react-router-dom'
 import TextLink from '../components/TextLink'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useNavigate } from 'react-router'
-import logo from '../assets/logo.png'
+// import logo from '../assets/logo.png'
+import logo from '../assets/letter_logo.png'
 import RootSideNav from './RootSideNav'
 import { AuthContext } from '../contexts/AuthContext'
 import { YouTube } from '@mui/icons-material'
@@ -41,12 +42,13 @@ const RootTopNav = () => {
           <img
             onClick={() => navigate('/')}
             src={logo}
-            width={'40px'}
+            width={'70px'}
             style={{
               borderRadius: '10px',
               cursor: 'pointer',
             }}
           />
+
           {/* <TextLink to='/' text='WDI' end={false} /> */}
           <div className='app-bar-links'>
             <TextLink to='/workouts' text='Workouts' end={false} />

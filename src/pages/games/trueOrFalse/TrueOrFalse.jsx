@@ -141,7 +141,7 @@ const TrueOrFalse = () => {
                 exclusive
                 onChange={onSubmit}
                 size='small'
-                disabled={output}
+                disabled={output ? true : false}
                 sx={{
                   display: gameOver ? 'none' : 'inherit',
                 }}

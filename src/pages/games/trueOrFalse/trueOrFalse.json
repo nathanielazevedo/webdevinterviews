@@ -326,11 +326,11 @@
     "title": "Deck 18",
     "to": "18",
     "questions": [
-      "'bab' > 'aba",
+      "'bab' > 'aba'",
       "4.5 + 5.5 == 10",
       "typeof new Date() == 'date'",
       "typeof 'aaa' == 'string'",
-      "{} == {}"
+      "({}) == ({})"
     ],
     "explanations": [
       "In lexicographical order, 'bab' comes after 'aba', so 'bab' > 'aba' evaluates to true.",
