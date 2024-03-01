@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
-import decks from './trueOrFalse.json'
+import structuredDecks from './structured.json'
+import freeForAllDecks from './freeForAll.json'
 import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import TextLink from '../../../components/TextLink'
@@ -24,11 +25,12 @@ import Screen from '../components/Screen'
 import Explanation from '../components/Explanation'
 import FireWorks from '../../../components/fireworks/Fireworks'
 
-const TrueOrFalse = () => {
+const TrueOrFalse = ({ freeForAll }) => {
   const navigate = useNavigate()
   const { displayName } = useContext(AuthContext)
   const { id } = useParams()
   const [number, setNumber] = useState(id ? id - 1 : 0)
+  const decks = freeForAll ? freeForAllDecks : structuredDecks
   const [deck, setDeck] = useState(decks[number])
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [guess, setGuess] = useState(null)
@@ -63,7 +65,7 @@ const TrueOrFalse = () => {
         )
       }
       setCurrentQuestion(currentQuestion + 1)
-    }, 1500)
+    }, 500)
   }
 
   const newGame = () => {
@@ -80,6 +82,15 @@ const TrueOrFalse = () => {
     return count
   }
 
+  const goBack = () => {
+    setCurrentQuestion((prev) => prev - 1)
+    setOutput('')
+    setScores((prev) => {
+      prev.pop()
+      return [...prev]
+    })
+  }
+
   return (
     <>
       {id && (
@@ -92,13 +103,16 @@ const TrueOrFalse = () => {
 
       <div className='gameEditor-container'>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography sx={{ color: 'grey.500' }}>Deck {number + 1}</Typography>
+          <Typography sx={{ color: 'grey.500' }}>{deck.title}</Typography>
           <ScoreCircles deck={deck} scores={scores} />
         </div>
 
         <Screen output={output} code={deck.questions[currentQuestion]} />
 
         <div className='true-or-false-radio'>
+          <Button disabled={currentQuestion == 0} onClick={goBack}>
+            Go Back
+          </Button>
           {gameOver ? (
             <>
               <Box>

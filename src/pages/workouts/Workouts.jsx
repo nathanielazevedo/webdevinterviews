@@ -59,6 +59,7 @@ const Workouts = () => {
                   {workout?.skills?.map((skill) => {
                     return (
                       <Typography
+                        key={skill}
                         sx={{ color: 'grey.500' }}
                         variant='subtitle2'
                       >
@@ -86,6 +87,7 @@ const Workouts = () => {
                     {workout?.skills?.map((skill) => {
                       return (
                         <Typography
+                          key={skill}
                           sx={{ color: 'grey.500' }}
                           variant='subtitle2'
                         >

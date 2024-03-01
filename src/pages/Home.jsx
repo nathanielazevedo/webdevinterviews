@@ -163,6 +163,7 @@ const Home = () => {
             their body; a programmer workouts out their mind.
           </Typography>
           <Button
+            onClick={() => navigate('/workouts')}
             variant='outlined'
             size='large'
             sx={{

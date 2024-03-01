@@ -9,7 +9,8 @@ const games = [
   {
     title: 'True or False',
     to: 'true-or-false',
-    description: 'Test your understanding of JavaScript types and comparisons.',
+    description:
+      'Improve your understanding of JavaScript types and comparisons.',
     visible: true,
   },
   {
@@ -22,7 +23,13 @@ const games = [
     title: 'Choose Correct Comparison Operator',
     to: 'ccc',
     description: 'You choose the correct comparison operator. > < == ===',
-    visible: true,
+    visible: false,
+  },
+  {
+    title: 'Choose Correct Error Type',
+    to: 'ccc',
+    description: 'This code will throw an error, but what type or error?',
+    visible: false,
   },
   {
     title: 'Does It Mutate',

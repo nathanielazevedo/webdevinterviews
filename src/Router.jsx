@@ -12,7 +12,7 @@ import EditorRoot from './pages/workout/editor/EditorRoot'
 
 import GamesList from './pages/games/GamesList'
 import TrueOrFalseList from './pages/games/trueOrFalse/TrueOrFalseList'
-import TrueOrFalse from './pages/games/trueOrFalse/TrueOrFalse'
+import TrueOrFalse from './pages/games/trueOrFalse/TrueOrFalse.jsx'
 import ShortsEditor from './pages/shortsEditor/ShortsEditor'
 import WillItThrowList from './pages/games/willItThrow/WillItThrowList'
 import WillItThrow from './pages/games/willItThrow/Will_ItThrow'
@@ -94,11 +94,24 @@ const router = createBrowserRouter([
               },
               {
                 path: ':id',
-                element: (
-                  <div className='fit-wrapper'>
-                    <TrueOrFalse />
-                  </div>
-                ),
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <div className='fit-wrapper'>
+                        <TrueOrFalse />
+                      </div>
+                    ),
+                  },
+                  {
+                    path: 'random',
+                    element: (
+                      <div className='fit-wrapper'>
+                        <TrueOrFalse freeForAll={true} />
+                      </div>
+                    ),
+                  },
+                ],
               },
             ],
           },

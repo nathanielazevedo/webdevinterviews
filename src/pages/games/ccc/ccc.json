@@ -154,7 +154,7 @@
       "Boolean(' ') ??? true",
       "Boolean(NaN.toString()) ??? true",
       "Boolean('undefined') ??? false",
-      "Boolean([] = ['a'])"
+      "Boolean([]) === 'a'"
     ],
     "explanations": [],
     "public": false
