@@ -9,6 +9,7 @@
       "'1' ??? 1",
       "'true' ??? true"
     ],
+    "allowNots": [false, false, false, false, false],
     "explanations": [
       "Basic math question to warm up.",
       "When comparing booleans, JavaScript turns both booleans to numbers. True coerced to a number is 1. False coerced to a number is 0. The comparison becomes 1 ??? 0. There are multiple correct answers including >, != and !==.",

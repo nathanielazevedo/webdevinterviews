@@ -104,7 +104,7 @@ const TrueOrFalse = ({ freeForAll }) => {
       <div className='gameEditor-container'>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography sx={{ color: 'grey.500' }}>{deck.title}</Typography>
-          <ScoreCircles deck={deck} scores={scores} />
+          <ScoreCircles length={deck.questions.length} scores={scores} />
         </div>
 
         <Screen output={output} code={deck.questions[currentQuestion]} />
@@ -140,7 +140,11 @@ const TrueOrFalse = ({ freeForAll }) => {
                         setNumber(newNumber)
                         setDeck(decks[newNumber])
                         newGame()
-                        navigate(`/games/true-or-false/${newNumber + 1}`)
+                        navigate(
+                          freeForAll
+                            ? `/games/true-or-false/${newNumber + 1}/random`
+                            : `/games/true-or-false/${newNumber + 1}`
+                        )
                       }}
                     >
                       Next Deck

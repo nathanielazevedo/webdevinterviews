@@ -43,18 +43,6 @@ const games = [
     description: 'Predict the returned value.',
     visible: false,
   },
-  {
-    title: 'Small DSA',
-    to: '',
-    description: 'DSA, but small.',
-    visible: false,
-  },
-  {
-    title: 'SQL Squeal',
-    to: '',
-    description: 'How well do you know SQL?',
-    visible: false,
-  },
 ]
 
 const GamesList = ({ tab }) => {
@@ -68,7 +56,7 @@ const GamesList = ({ tab }) => {
         />
         <div>
           <Alert severity='info'>
-            Games are added, updated and audited daily! Last update: 2-27-24
+            Games are added, updated and audited daily! Last update: 3-1-24
           </Alert>
           {games.map((game, index) => {
             return game.visible ? (

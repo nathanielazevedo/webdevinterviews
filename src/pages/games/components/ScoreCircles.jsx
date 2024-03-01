@@ -1,7 +1,7 @@
-const ScoreCircles = ({ deck, scores }) => {
+const ScoreCircles = ({ length, scores }) => {
   return (
     <div className='score-circles-container'>
-      {Array(deck.questions.length)
+      {Array(length)
         .fill()
         .map((_, index) => {
           return (

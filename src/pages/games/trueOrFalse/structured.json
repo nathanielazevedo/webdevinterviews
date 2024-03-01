@@ -231,23 +231,15 @@
     "questions": [
       "({} == '[object Object]')",
       "({}.toString() == '[object Object]')",
-      "({} == 0)",
+      "({}) == 0",
       "Number({}) == 0",
-      "[] == ''",
-      "[].toString() == ''",
-      "[] == 0",
-      "Number([]) == 0",
-      "{} + [] === 0"
+      "({}) + [] === 0"
     ],
     "explanations": [
       "When comparing an object to a string, the object will be coerced into a string. The string respresentation of an object is '[object Object]'. This expression evaluates to true.",
       "In JavaScript, when an object is converted to a string, its default string representation is '[object Object]'. So, `({}).toString() == '[object Object]'` evaluates to true.",
       "JavaScript will coerce the {} into a number. The numerical respresentation of an {} is NaN. This expression evaluates to false",
       "The numerical respresentation of an {} is NaN. The comparison becomes NaN == 0. This expression evaluates to false.",
-      "JavaScript will coerce the [] into a string. The string representation of [] is ''. The comparison becomes '' == ''. This expression evaluates to true.",
-      "Again, The string respresentation of an [] is ''. This expression evaluates to true.",
-      "JavaScript will coerce the [] into a number. [] as a number is 0. This expression evaluates to true.",
-      "Again, The numerical respresentation of an [] is 0. This expression evaluates to true.",
       "The expression '{}' + [] results in the string '[object Object]' concatenated with an empty array, which becomes the string '[object Object]'. When compared with the number 0, it evaluates to false."
     ]
   },
@@ -275,7 +267,7 @@
     "description": "Learn how objects and arrays compare to strings",
     "public": false,
     "questions": [
-      "{} === []",
+      "({} === [])",
       "({} == {})",
       "[] + {} == '[object Object]'",
       "[] + 1 == 1"

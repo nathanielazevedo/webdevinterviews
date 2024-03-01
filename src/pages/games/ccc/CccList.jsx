@@ -1,6 +1,7 @@
 // components
 import { NavLink } from 'react-router-dom'
 import decks from './ccc.json'
+import transformed from './transformedData.json'
 import { Box, Typography } from '@mui/material'
 import TextLink from '../../../components/TextLink'
 import Header from '../../../components/Header'
@@ -15,11 +16,15 @@ import { AuthContext } from '../../../contexts/AuthContext'
 const Games = () => {
   const navigate = useNavigate()
   const { displayName } = useContext(AuthContext)
-  decks.forEach((deck) => {
-    if (displayName) {
-      deck.public = true
+
+  function chunkArray(array) {
+    const chunkedArray = []
+    for (let i = 0; i < array.length; i += 5) {
+      chunkedArray.push(array.slice(i, i + 5))
     }
-  })
+    return chunkedArray
+  }
+
   return (
     <>
       <div className='fit-wrapper'>
@@ -29,15 +34,36 @@ const Games = () => {
           icon={<ArrowBackIosIcon fontSize='5px' />}
         />
         <Header
-          title='Choose a deck'
-          subtext='Determine if the code provided will throw an error. Remember, strict mode is on.'
+          title='Choose Correct Comparison Operator'
+          subtext='Choose the correct comparison operator.'
         />
         <div>
-          {decks.map((deck, index) => {
-            return deck.public ? (
+          <div
+            className='item-container'
+            onClick={() => navigate(`/games/ccc/random`)}
+          >
+            <div>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '10px',
+                  alignItems: 'center',
+                }}
+              >
+                Random Questions
+              </div>
+            </div>
+            <ArrowForwardIosIcon
+              sx={{
+                color: 'grey.400',
+              }}
+            />
+          </div>
+          {chunkArray(transformed).map((deck, index) => {
+            return displayName || index <= 4 ? (
               <div
                 className='item-container'
-                onClick={() => navigate(`/games/ccc/${deck.to}`)}
+                onClick={() => navigate(`/games/ccc/${index}`)}
               >
                 <div>
                   <div
@@ -47,7 +73,7 @@ const Games = () => {
                       alignItems: 'center',
                     }}
                   >
-                    {deck.title}
+                    Deck #{index + 1}
                   </div>
                 </div>
                 <ArrowForwardIosIcon
@@ -59,10 +85,7 @@ const Games = () => {
             ) : (
               <div className='hidden-item-wrapper'>
                 <div className='hidden-item-overlay'></div>
-                <div
-                  className='item-container'
-                  onClick={() => navigate(`/games/ccc/${deck.to}`)}
-                >
+                <div className='item-container'>
                   <div>
                     <div
                       style={{
@@ -71,7 +94,7 @@ const Games = () => {
                         alignItems: 'center',
                       }}
                     >
-                      {deck.title}
+                      Deck #{index + 1}
                     </div>
                   </div>
                   <LockIcon

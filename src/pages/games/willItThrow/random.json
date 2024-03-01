@@ -190,9 +190,11 @@
       "const foo = 'bar'; <br> Object.create(foo);"
     ],
     "explanations": [
-      "Bad destructure. But will it throw?",
-      "not iterable",
-      "TypeError, no property"
+      "Attempting to destructure a non-object value (`x`). TypeError expected.",
+      "Trying to iterate over a non-iterable object (`obj`). TypeError expected.",
+      "Attempting to access a property (`foo`) of null. TypeError expected.",
+      "Calling `substring()` on undefined (`foo`). TypeError expected.",
+      "Attempting to create an object using `Object.create()` with a non-object argument (`foo`). TypeError expected."
     ],
     "language": "javascript",
     "public": false
@@ -208,9 +210,11 @@
       "2 x 5"
     ],
     "explanations": [
-      "Bad destructure. But will it throw?",
-      "not iterable",
-      "TypeError, no property"
+      "Incorrect method name. 'getElementByID' should be 'getElementById'.",
+      "Correct usage of 'getElementById' method to retrieve DOM elements.",
+      "Attempting to use the 'map' method on an empty object (`obj`). TypeError expected.",
+      "Syntax error in object definition. Object literals should have unique keys. Unexpected token `;`.",
+      "Syntax error. Expression '2 x 5' is not valid JavaScript syntax."
     ],
     "language": "javascript",
     "public": false
@@ -226,9 +230,11 @@
       "const obj = {num: 1}; <br> console.log(obj['num']);"
     ],
     "explanations": [
-      "Bad destructure. But will it throw?",
-      "not iterable",
-      "TypeError, no property"
+      "Attempting to add an object to a Set. The Set will accept it, but it may not behave as expected due to object uniqueness in Set.",
+      "Trying to create an array with a negative length. RangeError expected.",
+      "Trying to access an undeclared variable (`num`). ReferenceError expected.",
+      "Trying to access a non-existent property using bracket notation. The result will be undefined.",
+      "Accessing a property (`num`) of the object (`obj`) using bracket notation. Expected output is the value associated with the key 'num' in the object."
     ],
     "language": "javascript",
     "public": false
@@ -244,9 +250,11 @@
       "const colors = ['#000', #333', '#555'];"
     ],
     "explanations": [
-      "Bad destructure. But will it throw?",
-      "not iterable",
-      "TypeError, no property"
+      "Assigning a value to a variable (`bar`) without declaring it. May result in a global variable or a ReferenceError in strict mode.",
+      "Trying to delete a variable (`x`) that was declared with `const`. This operation will throw a SyntaxError.",
+      "Using the nullish coalescing operator (`??`) without proper syntax. Unexpected token error expected.",
+      "Invalid quotes used in defining a string (`str`). This will result in a SyntaxError.",
+      "Invalid array syntax. Missing quotes around the second color (`#333`) in the `colors` array."
     ],
     "language": "javascript",
     "public": false
@@ -262,9 +270,11 @@
       "let x; <br> x == 1;"
     ],
     "explanations": [
-      "Bad destructure. But will it throw?",
-      "not iterable",
-      "TypeError, no property"
+      "Immediately Invoked Function Expression (IIFE) with an empty arrow function. This code will execute without errors.",
+      "Using the nullish coalescing operator (`??`) incorrectly. A syntax error is expected. The `throw` statement cannot be used in this context.",
+      "Trying to access the 6th element (`arr.5`) of an array (`arr`) that doesn't have it. This will return `undefined` but will not throw an error.",
+      "Comparison between an empty array and an empty object. JavaScript doesn't define a comparison between arrays and objects, so this expression will not throw an error but will return `false`.",
+      "Variable `x` is declared but not initialized. Comparison (`==`) with a number (`1`) will return `false` but will not throw an error."
     ],
     "language": "javascript",
     "public": false
@@ -280,9 +290,11 @@
       "let x ='string', x.map(Number)"
     ],
     "explanations": [
-      "Bad destructure. But will it throw?",
-      "not iterable",
-      "TypeError, no property"
+      "Attempting to convert a non-numeric string ('dog') to a number using the Number constructor. This will result in NaN (Not-a-Number).",
+      "Invalid syntax. Missing closing single quote in the string ('5).toString()'). This will result in a SyntaxError.",
+      "Using the typeof operator to get the data type of a string ('string'), and then attempting to convert it to a number. This will result in NaN.",
+      "Converting the string '14' to a string (which it already is). This operation will not throw any errors and will return the same string ('14').",
+      "Trying to call the `map` method on a string (`x`) which is not an array. This will result in a TypeError."
     ],
     "language": "javascript",
     "public": false

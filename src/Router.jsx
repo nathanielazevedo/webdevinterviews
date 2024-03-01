@@ -117,6 +117,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'will-it-throw',
+            errorElement: <Error />,
             children: [
               {
                 index: true,
@@ -124,11 +125,24 @@ const router = createBrowserRouter([
               },
               {
                 path: ':id',
-                element: (
-                  <div className='fit-wrapper'>
-                    <WillItThrow />
-                  </div>
-                ),
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <div className='fit-wrapper'>
+                        <WillItThrow />
+                      </div>
+                    ),
+                  },
+                  {
+                    path: 'random',
+                    element: (
+                      <div className='fit-wrapper'>
+                        <WillItThrow random={true} />
+                      </div>
+                    ),
+                  },
+                ],
               },
             ],
           },

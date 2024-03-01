@@ -1,0 +1,59 @@
+[
+  {
+    "to": "1",
+    "title": "Syntax Error",
+    "description": "A look at different Syntax Errors.",
+    "public": true,
+    "questions": [
+      "let str = 'This is a string with a syntax error;",
+      "let num = 10; <br> let x = num.toFixed(2;",
+      "var array = [1, 2, 3, 4, 5;",
+      "var obj = {name: 'John' age: 30, city: 'New York'};",
+      "var new = 'newThing';",
+      "if (x > 5 {}"
+    ],
+    "explanations": []
+  },
+  {
+    "to": "2",
+    "title": "ReferenceError",
+    "description": "A look at different ReferenceErrors.",
+    "public": true,
+    "questions": [
+      "console.log(variable);",
+      "var userName = 'John'; <br> console.log(userNam); ",
+      "function outerFunction() {<br> &nbsp; var innerVariable = 'Hello';<br>}<br> console.log(innerVariable); ",
+      "var obj = { name: 'John' }; <br> console.log(obj.age);",
+      "someFunction();"
+    ],
+    "explanations": []
+  },
+  {
+    "to": "3",
+    "title": "TypeError",
+    "description": "A look at different TypeErrors.",
+    "public": true,
+    "questions": [
+      "var obj = { <br> &nbsp; name: 'John',<br> &nbsp; greet: function() {<br> &nbsp; console.log('Hello, ' + this.name);<br> }};<br> var greetFunction = obj.greet;<br> greetFunction();",
+      "var num = 10; <br> num();",
+      "var obj = null; <br> console.log(obj.property);",
+      "var arr = [1, 2, 3]; <br> arr.toUpperCase();",
+      "var str = null; <br> console.log(str[0]);",
+      "var num = 10; <br> console.log(num.map(Number));"
+    ],
+    "explanations": []
+  },
+  {
+    "to": "3",
+    "title": "RangeError",
+    "description": "A look at different RangeErrors.",
+    "public": true,
+    "questions": [
+      "var arr = new Array(-1);",
+      "Number.MAX_SAFE_INTEGER + 1;",
+      "'abc'.repeat(Infinity);",
+      "new Date(2022, 12, 32);"
+    ],
+    "explanations": []
+  }
+]

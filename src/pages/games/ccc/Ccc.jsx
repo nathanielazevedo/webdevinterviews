@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react'
-import decks from './ccc.json'
+import questions from './transformedData.json'
 import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import TextLink from '../../../components/TextLink'
@@ -23,20 +23,39 @@ import { useNavigate } from 'react-router-dom'
 import Screen from '../components/Screen'
 import Explanation from '../components/Explanation'
 
+function selectRandomItems() {
+  const shuffledArray = questions.sort(() => Math.random() - 0.5)
+  return shuffledArray.slice(0, 5)
+}
+
+function getPage(paramsId) {
+  if (!paramsId) return 0
+  else if (paramsId == 'random') return 'random'
+  else return paramsId
+}
+
+function getDeck(page) {
+  if (page == 'random') {
+    return selectRandomItems()
+  } else {
+    return questions.slice(page * 5, page * 5 + 5)
+  }
+}
+
 const Ccc = () => {
   const navigate = useNavigate()
-  const { id } = useParams()
-  const [number, setNumber] = useState(id ? id - 1 : 0)
   const { displayName } = useContext(AuthContext)
-  const [deck, setDeck] = useState(decks[number])
+  const { id: paramsId } = useParams()
+
+  const [page, setPage] = useState(getPage(paramsId))
+  const [deck, setDeck] = useState(getDeck(page))
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [output, setOutput] = useState('')
-  const [error, setError] = useState('')
   const [scores, setScores] = useState([])
-  const gameOver = currentQuestion >= deck.questions.length
+  const gameOver = currentQuestion >= deck.length
 
   useEffect(() => {
-    if (number >= 4 && !displayName) {
+    if (page >= 4 && !displayName) {
       navigate('/new-member')
     }
   }, [displayName])
@@ -44,7 +63,7 @@ const Ccc = () => {
   const onSubmit = (evt) => {
     const guess = evt.target.value
 
-    const question = deck.questions[currentQuestion].replaceAll('???', guess)
+    const question = deck[currentQuestion].question.replaceAll('???', guess)
     const result = eval(question)
     if (result) {
       setOutput('&#128077;')
@@ -58,13 +77,8 @@ const Ccc = () => {
 
     setTimeout(() => {
       setOutput('')
-      setError('')
-      if (currentQuestion + 1 === deck.questions.length) {
-        setOutput(
-          `Game Over. <br> Score ${countOccurances()} / ${
-            deck.questions.length
-          }`
-        )
+      if (currentQuestion + 1 === deck.length) {
+        setOutput(`Game Over. <br> Score ${countOccurances()} / ${deck.length}`)
       }
       setCurrentQuestion(currentQuestion + 1)
     }, 2000)
@@ -84,9 +98,18 @@ const Ccc = () => {
     return count
   }
 
+  const goBack = () => {
+    setCurrentQuestion((prev) => prev - 1)
+    setOutput('')
+    setScores((prev) => {
+      prev.pop()
+      return [...prev]
+    })
+  }
+
   return (
     <>
-      {id && (
+      {paramsId && (
         <TextLink
           to='/games/ccc'
           text='Back to decks'
@@ -100,25 +123,28 @@ const Ccc = () => {
               color: 'grey.500',
             }}
           >
-            Deck {number + 1}
+            Deck {page}
           </Typography>
-          <ScoreCircles deck={deck} scores={scores} />
+          <ScoreCircles length={deck.length} scores={scores} />
         </div>
-        <Screen output={output} code={deck.questions[currentQuestion]} />
+        <Screen output={output} code={deck[currentQuestion].question} />
 
         <div className='true-or-false-radio'>
+          <Button disabled={currentQuestion == 0} onClick={goBack}>
+            Go Back
+          </Button>
           {gameOver ? (
             <Box>
               <ToggleButtonGroup exclusive size='small'>
                 <ToggleButton onClick={newGame}>Play Again</ToggleButton>
-                {!displayName && number >= 4 ? (
+                {!displayName && page >= 4 ? (
                   <ToggleButton
                     variant='outlined'
-                    disabled={number >= decks.length - 1}
+                    disabled={page >= questions.length - 1}
                     onClick={() => {
-                      let newNumber = number + 1
-                      setNumber(newNumber)
-                      setDeck(decks[newNumber])
+                      let newNumber = page + 1
+                      setPage(page)
+                      setDeck(questions[page])
                       newGame()
                       navigate(`/new-member`)
                     }}
@@ -128,13 +154,13 @@ const Ccc = () => {
                 ) : (
                   <ToggleButton
                     variant='outlined'
-                    disabled={number >= decks.length - 1}
+                    disabled={number >= questions.length - 1}
                     onClick={() => {
-                      let newNumber = number + 1
-                      setNumber(newNumber)
-                      setDeck(decks[newNumber])
+                      let newPage = page + 1
+                      setPage(newPage)
+                      setDeck(questions[newPage])
                       newGame()
-                      navigate(`/games/will-it-throw/${newNumber + 1}`)
+                      navigate(`/games/will-it-throw/${newPage + 1}`)
                     }}
                   >
                     Next Deck
@@ -157,15 +183,18 @@ const Ccc = () => {
                 <ToggleButton value={'<'}>&nbsp; &lt; &nbsp;</ToggleButton>
                 <ToggleButton value={'=='}>&nbsp; == &nbsp;</ToggleButton>
                 <ToggleButton value={'==='}>&nbsp; === &nbsp;</ToggleButton>
-                <ToggleButton value={'!='}>&nbsp; != &nbsp;</ToggleButton>
-                <ToggleButton value={'!=='}>&nbsp; !== &nbsp;</ToggleButton>
+                {/* {deck?.allowNots[currentQuestion] && (
+                  <ToggleButton value={'!='}>&nbsp; != &nbsp;</ToggleButton>
+                )}
+                {deck?.allowNots[currentQuestion] && (
+                  <ToggleButton value={'!=='}>&nbsp; !== &nbsp;</ToggleButton>
+                )} */}
               </ToggleButtonGroup>
             </div>
           )}
         </div>
       </div>
-      <Typography color='error'>{error && error.toString()}</Typography>
-      {!gameOver && <Explanation text={deck?.explanations[currentQuestion]} />}
+      {/* {!gameOver && <Explanation text={deck?.explanations[currentQuestion]} />} */}
     </>
   )
 }

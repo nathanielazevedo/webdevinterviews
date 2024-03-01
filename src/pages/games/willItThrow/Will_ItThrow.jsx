@@ -1,7 +1,8 @@
 import { useState, useContext, useEffect } from 'react'
-import decks from './willItThrow.json'
 import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
+import structuredDecks from './structured.json'
+import randomDecks from './random.json'
 import TextLink from '../../../components/TextLink'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import {
@@ -23,10 +24,11 @@ import { useNavigate } from 'react-router-dom'
 import Screen from '../components/Screen'
 import Explanation from '../components/Explanation'
 
-const WillItThrow = () => {
+const WillItThrow = ({ random }) => {
   const navigate = useNavigate()
   const { id } = useParams()
   const [number, setNumber] = useState(id ? id - 1 : 0)
+  const decks = random ? randomDecks : structuredDecks
   const { displayName } = useContext(AuthContext)
   const [deck, setDeck] = useState(decks[number])
   const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -44,7 +46,9 @@ const WillItThrow = () => {
   const onSubmit = (evt) => {
     const guess = evt.target.value
     try {
-      const question = deck.questions[currentQuestion].replaceAll('<br>', '')
+      const question = deck.questions[currentQuestion]
+        .replaceAll('<br>', '')
+        .replaceAll('&nbsp;', '')
       eval(question)
       if (guess === 'no') {
         setOutput('&#128077;')
@@ -96,6 +100,15 @@ const WillItThrow = () => {
     return count
   }
 
+  const goBack = () => {
+    setCurrentQuestion((prev) => prev - 1)
+    setOutput('')
+    setScores((prev) => {
+      prev.pop()
+      return [...prev]
+    })
+  }
+
   return (
     <>
       {id && (
@@ -112,13 +125,16 @@ const WillItThrow = () => {
               color: 'grey.500',
             }}
           >
-            Deck {number + 1}
+            {deck.title}
           </Typography>
-          <ScoreCircles deck={deck} scores={scores} />
+          <ScoreCircles length={deck.questions.length} scores={scores} />
         </div>
         <Screen output={output} code={deck.questions[currentQuestion]} />
 
         <div className='true-or-false-radio'>
+          <Button disabled={currentQuestion == 0} onClick={goBack}>
+            Go Back
+          </Button>
           {gameOver ? (
             <Box>
               <ToggleButtonGroup exclusive size='small'>
