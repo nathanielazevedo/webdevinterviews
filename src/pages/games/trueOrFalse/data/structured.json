@@ -1,9 +1,8 @@
 [
   {
-    "to": "1",
+    "id": "1",
     "title": "JavaScript is weird.",
     "description": "Get exposed to all of JavaScripts weirdness.",
-    "public": true,
     "questions": [
       "[1,2] + [1,2] == '1,21,2'",
       "[] + 1 === '1'",
@@ -22,10 +21,10 @@
     ]
   },
   {
-    "to": "2",
+    "id": "2",
     "title": "Numbers",
     "description": "Learn how numbers behave.",
-    "public": false,
+
     "questions": [
       "1.1 > 2",
       "1.0 == 1.00",
@@ -42,10 +41,10 @@
     ]
   },
   {
-    "to": "3",
+    "id": "3",
     "title": "Strings",
     "description": "Learn how strings behave.",
-    "public": false,
+
     "questions": [
       "'a' > 'b'",
       "'dog' > 'cat'",
@@ -68,10 +67,10 @@
     ]
   },
   {
-    "to": "4",
+    "id": "4",
     "title": "Numbers vs. Strings",
     "description": "Learn how numbers compare to strings.",
-    "public": false,
+
     "questions": [
       "'1' == 1",
       "'a' > 0",
@@ -90,10 +89,10 @@
     ]
   },
   {
-    "to": "5",
+    "id": "5",
     "title": "Booleans",
     "description": "Learn how booleans behave.",
-    "public": false,
+
     "questions": [
       "true > false",
       "true === true",
@@ -114,10 +113,10 @@
     ]
   },
   {
-    "to": "6",
+    "id": "6",
     "title": "Booleans vs. Numbers",
     "description": "Learn how booleans compare to numbers.",
-    "public": false,
+
     "questions": [
       "true == 1",
       "true + 10 === 11",
@@ -134,10 +133,10 @@
     ]
   },
   {
-    "to": "7",
+    "id": "7",
     "title": "Booleans vs Strings",
     "description": "Learn how booleans compare to strings.",
-    "public": false,
+
     "questions": ["true == 'a'", "true === 'true'", "true > 'a'"],
     "explanations": [
       "When comparing a boolean to a string, both will be coerced to a number. true coerced to a number is 1. 'a' coerced to a number is NaN. After coercion the comparison becomes 1 == NaN. This comparison evaluates to false.",
@@ -146,10 +145,10 @@
     ]
   },
   {
-    "to": "8",
+    "id": "8",
     "title": "Null and Undefined",
     "description": "Learn how null and undefined behave.",
-    "public": false,
+
     "questions": [
       "null === null",
       "undefined === undefined",
@@ -164,10 +163,10 @@
     ]
   },
   {
-    "to": "9",
+    "id": "9",
     "title": "Null and Undefined vs Numbers",
     "description": "Learn how null and undefined compare to numbers.",
-    "public": false,
+
     "questions": [
       "null == 0",
       "Number(null) === 0",
@@ -186,10 +185,10 @@
     ]
   },
   {
-    "to": "10",
+    "id": "10",
     "title": "Null and Undefined vs. Strings",
     "description": "Learn how null and undefined compare to strings.",
-    "public": false,
+
     "questions": [
       "null + 'a' === 'nulla'",
       "String(null) == 'null'",
@@ -204,10 +203,10 @@
     ]
   },
   {
-    "to": "11",
+    "id": "11",
     "title": "Arrays",
     "description": "Learn how arrays behave.",
-    "public": false,
+
     "questions": [
       "[1,2] + [1,2] == '1,21,2'",
       "[] == ''",
@@ -224,10 +223,10 @@
     ]
   },
   {
-    "to": "12",
+    "id": "12",
     "title": "Objects",
     "description": "Learn how objects.",
-    "public": false,
+
     "questions": [
       "({} == '[object Object]')",
       "({}.toString() == '[object Object]')",
@@ -244,10 +243,10 @@
     ]
   },
   {
-    "to": "13",
+    "id": "13",
     "title": "Objects and Arrays vs Numbers",
     "description": "Learn how objects and arrays compare to numbers.",
-    "public": false,
+
     "questions": [
       "({} === [])",
       "({} == {})",
@@ -262,10 +261,10 @@
     ]
   },
   {
-    "to": "14",
+    "id": "14",
     "title": "Objects and Arrays vs Strings",
     "description": "Learn how objects and arrays compare to strings",
-    "public": false,
+
     "questions": [
       "({} === [])",
       "({} == {})",
@@ -280,10 +279,10 @@
     ]
   },
   {
-    "to": "15",
+    "id": "15",
     "title": "Infinity",
     "description": "Learn how Infinity behaves.",
-    "public": false,
+
     "questions": [
       "Infinity == Infinity",
       "-Infinity == -Infinity",
@@ -302,10 +301,10 @@
     ]
   },
   {
-    "to": "16",
+    "id": "16",
     "title": "NaN",
     "description": "Learn how NaN behaves.",
-    "public": false,
+
     "questions": [
       "NaN == NaN",
       "NaN + 1 == 1",

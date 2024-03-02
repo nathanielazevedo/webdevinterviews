@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
-import structuredDecks from './structured.json'
-import randomDecks from './random.json'
+import structuredDecks from './data/structured.json'
+import randomDecks from './data/random.json'
 import TextLink from '../../../components/TextLink'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import {
@@ -143,6 +143,7 @@ const WillItThrow = ({ random }) => {
                   <ToggleButton
                     variant='outlined'
                     disabled={number >= decks.length - 1}
+                    value={''}
                     onClick={() => {
                       let newNumber = number + 1
                       setNumber(newNumber)
@@ -157,6 +158,7 @@ const WillItThrow = ({ random }) => {
                   <ToggleButton
                     variant='outlined'
                     disabled={number >= decks.length - 1}
+                    value={''}
                     onClick={() => {
                       let newNumber = number + 1
                       setNumber(newNumber)
@@ -175,7 +177,8 @@ const WillItThrow = ({ random }) => {
               <ToggleButtonGroup
                 exclusive
                 onChange={onSubmit}
-                disabled={output}
+                value={''}
+                disabled={output ? true : false}
                 size='small'
                 sx={{
                   display: gameOver ? 'none' : 'inherit',

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
-import structuredDecks from './structured.json'
-import freeForAllDecks from './freeForAll.json'
+import structuredDecks from './data/structured.json'
+import randomDecks from './data/random.json'
 import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import TextLink from '../../../components/TextLink'
@@ -17,7 +17,6 @@ import {
 } from '@mui/material'
 import ScoreCircles from '../components/ScoreCircles'
 import { useNavigate } from 'react-router-dom'
-
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import { AuthContext } from '../../../contexts/AuthContext'
@@ -25,18 +24,18 @@ import Screen from '../components/Screen'
 import Explanation from '../components/Explanation'
 import FireWorks from '../../../components/fireworks/Fireworks'
 
-const TrueOrFalse = ({ freeForAll }) => {
+const TrueOrFalse = ({ random }) => {
   const navigate = useNavigate()
   const { displayName } = useContext(AuthContext)
   const { id } = useParams()
   const [number, setNumber] = useState(id ? id - 1 : 0)
-  const decks = freeForAll ? freeForAllDecks : structuredDecks
+  const decks = random ? freeForAllDecks : structuredDecks
   const [deck, setDeck] = useState(decks[number])
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [guess, setGuess] = useState(null)
   const [output, setOutput] = useState('')
   const [scores, setScores] = useState([])
-  const gameOver = currentQuestion >= deck.questions.length
+  const [gameOver, setGameOver] = useState(false)
 
   useEffect(() => {
     if (number >= 4 && !displayName) {
@@ -58,6 +57,7 @@ const TrueOrFalse = ({ freeForAll }) => {
     setTimeout(() => {
       setOutput('')
       if (currentQuestion + 1 === deck.questions.length) {
+        setGameOver(true)
         setOutput(
           `Game Over. <br> Score ${countOccurances()} / ${
             deck.questions.length
@@ -116,11 +116,14 @@ const TrueOrFalse = ({ freeForAll }) => {
           {gameOver ? (
             <>
               <Box>
-                <ToggleButtonGroup value={guess} exclusive size='small'>
-                  <ToggleButton onClick={newGame}>Play Again</ToggleButton>
+                <ToggleButtonGroup value={guess ?? ''} exclusive size='small'>
+                  <ToggleButton onClick={newGame} value=''>
+                    Play Again
+                  </ToggleButton>
                   {!displayName && number >= 4 ? (
                     <ToggleButton
                       variant='outlined'
+                      value={''}
                       onClick={() => {
                         let newNumber = number + 1
                         setNumber(newNumber)
@@ -134,11 +137,13 @@ const TrueOrFalse = ({ freeForAll }) => {
                   ) : (
                     <ToggleButton
                       variant='outlined'
+                      value={''}
                       disabled={number >= decks.length - 1}
                       onClick={() => {
                         let newNumber = number + 1
                         setNumber(newNumber)
                         setDeck(decks[newNumber])
+                        setGameOver(false)
                         newGame()
                         navigate(
                           freeForAll
@@ -147,7 +152,7 @@ const TrueOrFalse = ({ freeForAll }) => {
                         )
                       }}
                     >
-                      Next Deck
+                      {number >= decks.length - 1 ? 'All done' : 'Next Deck'}
                     </ToggleButton>
                   )}
                 </ToggleButtonGroup>

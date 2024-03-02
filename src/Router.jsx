@@ -11,11 +11,11 @@ import Workout from './pages/workout/Workout'
 import EditorRoot from './pages/workout/editor/EditorRoot'
 
 import GamesList from './pages/games/GamesList'
-import TrueOrFalseList from './pages/games/trueOrFalse/TrueOrFalseList'
+import TrueOrFalseMain from './pages/games/trueOrFalse/TrueOrFalseMain'
 import TrueOrFalse from './pages/games/trueOrFalse/TrueOrFalse.jsx'
 import ShortsEditor from './pages/shortsEditor/ShortsEditor'
-import WillItThrowList from './pages/games/willItThrow/WillItThrowList'
-import WillItThrow from './pages/games/willItThrow/Will_ItThrow'
+import WillItThrowMain from './pages/games/willItThrow/WillItThrowMain'
+import WillItThrow from './pages/games/willItThrow/WillItThrow'
 import Contests from './pages/contests/ContestsList'
 import NewMemberForm from './pages/NewMemberForm'
 import Ccc from './pages/games/ccc/Ccc'
@@ -90,28 +90,23 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <TrueOrFalseList />,
+                element: <TrueOrFalseMain />,
               },
               {
-                path: ':id',
-                children: [
-                  {
-                    index: true,
-                    element: (
-                      <div className='fit-wrapper'>
-                        <TrueOrFalse />
-                      </div>
-                    ),
-                  },
-                  {
-                    path: 'random',
-                    element: (
-                      <div className='fit-wrapper'>
-                        <TrueOrFalse freeForAll={true} />
-                      </div>
-                    ),
-                  },
-                ],
+                path: 'structured/:id',
+                element: (
+                  <div className='fit-wrapper'>
+                    <TrueOrFalse />
+                  </div>
+                ),
+              },
+              {
+                path: 'random/:id',
+                element: (
+                  <div className='fit-wrapper'>
+                    <TrueOrFalse random={true} />
+                  </div>
+                ),
               },
             ],
           },
@@ -121,28 +116,23 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <WillItThrowList />,
+                element: <WillItThrowMain />,
               },
               {
-                path: ':id',
-                children: [
-                  {
-                    index: true,
-                    element: (
-                      <div className='fit-wrapper'>
-                        <WillItThrow />
-                      </div>
-                    ),
-                  },
-                  {
-                    path: 'random',
-                    element: (
-                      <div className='fit-wrapper'>
-                        <WillItThrow random={true} />
-                      </div>
-                    ),
-                  },
-                ],
+                path: 'structured/:id',
+                element: (
+                  <div className='fit-wrapper'>
+                    <WillItThrow />
+                  </div>
+                ),
+              },
+              {
+                path: 'random/:id',
+                element: (
+                  <div className='fit-wrapper'>
+                    <WillItThrow random={true} />
+                  </div>
+                ),
               },
             ],
           },

@@ -1,188 +1,133 @@
 [
   {
-    "to": "1",
+    "id": "1",
     "title": "Deck 1",
-    "description": "JavaScript is weird.",
-    "public": true,
-    "questions": [],
-    "explanations": []
-  },
-  {
-    "to": "2",
-    "title": "Deck 2",
-    "description": "Numbers and Strings",
-    "public": true,
     "questions": [
       "1.1 > 2",
-      "1.0 > 1.00",
-      "0.1 + 0.2 === 0.3",
-      "'a' > 'b'",
-      "'dog' > 'cat'"
-    ],
-    "explanations": [
-      "JavaScript compares numbers just as you would expect. Larger numbers are less than smaller numbers.",
-      "When comparing numbers, the number of trailing zeros doesn't matter. Both 1.0 and 1.00 are the same numeric value, so the comparison evaluates to false.",
-      "Floating-point arithmetic in JavaScript can sometimes lead to unexpected results due to how floating-point numbers are represented. In this case, 0.1 + 0.2 results in 0.30000000000000004, not 0.3. This expression evaluates to false.",
-      "In JavaScript, string comparison is done based on Unicode values. Since 'b' comes after 'a' in the Unicode table, 'a' > 'b' evaluates to false.",
-      "When comparing strings, JavaScript compares their Unicode values letter by letter. Letters later in the alphabet are considered greater than letters earlier in the alphabet. In this question 'd' is larger than 'c'. The comparison evaluates true."
-    ]
-  },
-  {
-    "to": "3",
-    "title": "Deck 3",
-    "description": "Numbers vs Strings",
-    "public": true,
-    "questions": [
-      "'1' == 1",
-      "'a' > 0",
-      "10 + '10' === 1010",
-      "(100 / '10') === 10"
-    ],
-    "explanations": [
-      "When comparing strings to numbers, JavaScript coerces strings into numbers. The string '1' is coerced to the number 1. The comparison after coercion is 1 == 1. This comparison evaluates true.",
-      "When comparing a string and a number, JavaScript coerces strings to numbers. The string 'a' gets coerced to NaN. After coercion the comparison is NaN > 0. This comparision evaluates to false.",
-      "When using the + operator with a number and a string, JavaScript performs string concatenation. In this case, '10' is concatenated to 10, resulting in '1010'. The strict equality operator checks both value and type, and since '1010' is not strictly equal to 1010. This expression evaluates to false.",
-      "When dividing a number by a string, JavaScript performs type coercion. The string '10' is converted to a number, resulting in 100 / 10 which is 10. The strict comparison checks both value and type, and in this case, 10 (a number) is strictly equal to 10. This expression evaluates to true."
-    ]
-  },
-  {
-    "to": "4",
-    "title": "Deck 4",
-    "description": "Booleans",
-    "public": true,
-    "questions": [
       "true > false",
-      "true === true",
-      "false === false",
-      "true - true == false",
-      "true * true == true"
+      "'dog' > 'cat'",
+      "'1' == 1",
+      "'true' == true"
     ],
     "explanations": [
-      "When comparing booleans, JavaScript turns both booleans to numbers. true coerced to a number is 1. false coerced to a number is 0. The comparison after type coercion is 1 > 0. This comparison evaluates to true.",
-      "In JavaScript, true is considered strictly equal to true.",
-      "In JavaScript, false is considered strictly equal to false.",
-      "When preforming mathmatical operations on booleans, booleans will be coerced to numbers. true coerced to a number is 1. false coerced to a number is 0. The comparison after coercion is 1 - 1 == 0. This comparison evalutes to true.",
-      "When preforming mathmatical operations on booleans, booleans will be coerced to numbers. true coerced to a number is 1. The comparison after coercion is 1 * 1 == 1. This comparison evalutes to true."
+      "Basic math question to warm up.",
+      "When comparing booleans, JavaScript turns both booleans to numbers. True coerced to a number is 1. False coerced to a number is 0. The comparison after type coercion is 1 > 0. Which is true.",
+      "When comparing strings, JavaScript compares their Unicode values letter by letter. For the most part, letters later in the alphabet are considered greater than letters early in the alphabet. In this question 'd' is larger than 'c'. Therefore it is true.",
+      "When comparing strings to numbers, JavaScript attempts to turn strings to numbers. The string '1' is coerced to the number 1. The comparison after coercion the is 1 == 1. Therefore it is true.",
+      "The second true is converted to the number 1. JavaScript then tries to convert the string 'true' to a number, resulting in NaN. After coercion the comparison is NaN == 1. Therefore it is false."
     ]
   },
   {
-    "to": "5",
-    "title": "Deck 5",
-    "description": "Booleans vs Numbers and Strings",
-    "public": true,
+    "id": "2",
+    "title": "Deck 2",
     "questions": [
-      "true === 'a'",
-      "true == 1",
-      "true === 'true'",
+      "[] > {}",
+      "1 > '1'",
+      "'true' > true",
+      "1.0 > 1.00",
+      "'a' > 0"
+    ],
+    "explanations": [
+      "When comparing different types like an array and an object, the abstract relational comparison algorithm is applied. This converts the operands to primitives and then compares them. An empty array ([]) gets coerced to the empty string (''), while an empty object ({}) gets coerced to '[object Object]'. Comparing these strings, '' > '[object Object]', which evaluates to false. If all else is equal, the shorter string is considered less than the longer string.",
+      "When comparing a number to a string, JavaScript attempts to turn strings to numbers. In this case, '1' gets converted to a number, and the comparison becomes 1 > 1, which is false.",
+      "JavaScript attempts to coerce the string 'true' to a number, resulting in NaN (not a number), while the boolean true gets converted to 1. After coercion the comparison is NaN > 1, which is false.",
+      "When comparing numbers, the number of trailing zeros doesn't matter. Both 1.0 and 1.00 are the same numeric value, so the comparison evaluates to false.",
+      "When comparing a string and a number, JavaScript attempts to turn strings to numbers. The string 'a' gets converted to NaN. After coercion the comparison is NaN > 0, which is false."
+    ]
+  },
+  {
+    "id": "3",
+    "title": "Deck 3",
+    "questions": [
+      "(100 / '10') === 10",
+      "10 + '10' === 1010",
+      "10 - '10' === 1010",
       "true + 10 === 11",
-      "false + 10 === 9"
+      "0.1 + 0.2 === 0.3"
     ],
     "explanations": [
-      "When comparing a boolean to a string, both will be coerced to a number. true coerced to a number is 1. 'a' coerced to a number is NaN. After coercion the comparison becomes 1 === NaN. This comparison evaluates to false.",
-      "When comparing a boolean to a number, the boolean will be coerced to a number. true coerced to a number is 1. After coercion the comparison becomes 1 == 1. This comparison evaluates to true.",
-      "When comparing a boolean to a string, JavaScript coerces both booleans into numbers. true coerced to a number is 1. The string 'true' coerced to a number is NaN.  After coercion the comparison is 1 == NaN. This comparison evaluates to false.",
+      "When dividing a number by a string, JavaScript performs type coercion. The string '10' is converted to a number, resulting in 100 / 10 which is 10. The strict comparison checks both value and type, and in this case, 10 (a number) is strictly equal to 10. Thus, the expression evaluates to true.",
+      "When using the + operator with a number and a string, JavaScript performs string concatenation. In this case, '10' is concatenated to 10, resulting in '1010'. The strict equality operator checks both value and type, and since '1010' is not strictly equal to 1010, the expression evaluates to false.",
+      "The subtraction operator (-) in JavaScript coerces the string '10' into a number, and the expression becomes 10 - 10, which equals 0. However, 0 is not equal to 1010, so the expression evaluates to false.",
       "In JavaScript, when a boolean value (true) is used with the + operator, it's converted to a number (1). Thus, the expression becomes 1 + 10, which equals 11.",
-      "In JavaScript, `false` is coerced to the number 0 when used with the `+` operator. So, `false + 10` equals 10. Since 10 is not equal to 9, `false + 10 === 9` evaluates to false."
+      "Floating-point arithmetic in JavaScript can sometimes lead to unexpected results due to how floating-point numbers are represented. In this case, 0.1 + 0.2 results in 0.30000000000000004, not 0.3. Hence, the expression evaluates to false."
     ]
   },
   {
-    "to": "6",
-    "title": "Deck 6",
-    "description": "Null and Undefined",
-    "public": true,
-    "questions": [
-      "null == undefined",
-      "null === undefined",
-      "null == 0",
-      "undefined === undefined",
-      "null === null"
-    ],
-    "explanations": [
-      "In JavaScript, null and undefined are loosely equal (==) but not strictly equal (===). This expression evaluates to true.",
-      "In JavaScript, null is loosely equal to undefined but not stricly. This expresion evaluates to false.",
-      "null is not equal to zero. Athough Number(null) is equal to 0. This expression evaluates to false.",
-      "undefined is strictly equal to undefined.",
-      "null is strictly equal to null."
-    ]
-  },
-  {
-    "to": "7",
-    "title": "Deck 7",
-    "description": "Objects and Arrays",
-    "public": true,
-    "questions": [
-      "({}).toString() == '[object Object]'",
-      "[].toString() === ''",
-      "{} + [] === 0",
-      "{} === []",
-      "({}) == ({})"
-    ],
-    "explanations": [
-      "In JavaScript, when an object is converted to a string, its default string representation is '[object Object]'. So, `({}).toString() == '[object Object]'` evaluates to true.",
-      "The `toString()` method of an empty array returns an empty string. The strict equality operator `===` checks both value and type, so `[].toString() === ''` evaluates to true.",
-      "The expression '{}' + [] results in the string '[object Object]' concatenated with an empty array, which becomes the string '[object Object]'. When compared with the number 0, it evaluates to false.",
-      "An object and an array are different types and have different memory references, so '{}' === [] evaluates to false.",
-      "Two different objects have different memory references. This expression evaluates to false."
-    ]
-  },
-  {
-    "title": "Deck 7",
-    "to": "7",
+    "id": "4",
+    "title": "Deck 4",
     "questions": [
       "typeof NaN === 'number'",
+      "null == undefined",
       "NaN === NaN",
       "Infinity > 1000",
       "Boolean('false') === false"
     ],
     "explanations": [
       "The typeof operator in JavaScript returns 'number' for NaN (Not a Number). Although NaN represents an invalid number, it is still considered a numeric data type.",
+      "In JavaScript, null and undefined are loosely equal (==) but not strictly equal (===). So, null == undefined is true, but null === undefined is false.",
       "In JavaScript, NaN (Not a Number) is considered to be unequal to every value, including itself. So NaN === NaN evaluates to false.",
       "In JavaScript, Infinity represents a value greater than any other number. So, Infinity > 1000 evaluates to true.",
       "The expression Boolean('false') evaluates to true because any non-empty string, including 'false', evaluates to true in a Boolean context. However, when compared strictly, Boolean('false') === false evaluates to false because the string 'false' is coerced into true by the Boolean constructor, but false is false."
-    ],
-    "public": true
+    ]
   },
   {
+    "id": "5",
     "title": "Deck 5",
-    "to": "5",
-    "questions": ["let dog = {}; let cat = dog; dog === cat", "undefined == 0"],
-    "explanations": [
-      "In JavaScript, objects are reference types. When `cat` is assigned the value of `dog`, they refer to the same object. Hence, `dog === cat` evaluates to true.",
-      "In JavaScript, when comparing `undefined` with a number using loose equality (`==`), `undefined` is coerced to `NaN` (Not a Number), and `NaN` is not equal to 0. Therefore, `undefined == 0` evaluates to false."
+    "questions": [
+      "({}).toString() == '[object Object]'",
+      "[].toString() === ''",
+      "let dog = {}; let cat = dog; dog === cat",
+      "false + 10 === 9",
+      "undefined == 0"
     ],
-    "public": true
+    "explanations": [
+      "In JavaScript, when an object is converted to a string, its default string representation is '[object Object]'. So, `({}).toString() == '[object Object]'` evaluates to true.",
+      "The `toString()` method of an empty array returns an empty string. The strict equality operator `===` checks both value and type, so `[].toString() === ''` evaluates to true.",
+      "In JavaScript, objects are reference types. When `cat` is assigned the value of `dog`, they refer to the same object. Hence, `dog === cat` evaluates to true.",
+      "In JavaScript, `false` is coerced to the number 0 when used with the `+` operator. So, `false + 10` equals 10. Since 10 is not equal to 9, `false + 10 === 9` evaluates to false.",
+      "In JavaScript, when comparing `undefined` with a number using loose equality (`==`), `undefined` is coerced to `NaN` (Not a Number), and `NaN` is not equal to 0. Therefore, `undefined == 0` evaluates to false."
+    ]
   },
   {
+    "id": "6",
     "title": "Deck 6",
-    "to": "6",
-    "questions": ["Math.min() > Math.max()", "null >= 0", "NaN === NaN"],
+    "questions": [
+      "({} + [] === 0)",
+      "Math.min() > Math.max()",
+      "({} === [])",
+      "null >= 0",
+      "NaN === NaN"
+    ],
     "explanations": [
+      "The expression '{}' + [] results in the string '[object Object]' concatenated with an empty array, which becomes the string '[object Object]'. When compared with the number 0, it evaluates to false.",
       "Math.min() returns Infinity, and Math.max() returns -Infinity. Hence, Math.min() > Math.max() evaluates to false.",
+      "An object and an array are different types and have different memory references, so '{}' === [] evaluates to false.",
       "In JavaScript, null is not greater than or equal to 0, so null >= 0 evaluates to false.",
       "NaN is a special value in JavaScript that represents 'Not a Number'. It is not equal to itself, so NaN === NaN evaluates to false."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "7",
     "title": "Deck 7",
-    "to": "7",
     "questions": [
+      "'a' > 'b'",
       "2 + 2 + '2' == 42",
       "'2' + 2 + 2 == 24",
       "2 > 'a'",
       "2 > '1'"
     ],
     "explanations": [
+      "In JavaScript, string comparison is done based on Unicode values. Since 'b' comes after 'a' in the Unicode table, 'a' > 'b' evaluates to false.",
       "The expression is evaluated left-to-right. First, 2 + 2 results in 4. Then, 4 is concatenated with the string '2', resulting in '42'. Since '42' is not equal to 42, the expression evaluates to false.",
       "The expression is evaluated left-to-right. First, '2' is concatenated with 2, resulting in '22'. Then, '22' is concatenated with 2, resulting in '222'. Since '222' is not equal to 24, the expression evaluates to false.",
       "In JavaScript, when comparing a number to a string, the string is converted to a number. Since 'a' cannot be converted to a number, the comparison evaluates to false.",
       "In JavaScript, when comparing a number to a string, both operands are converted to numbers. '2' is converted to 2, and '1' is converted to 1. Therefore, 2 > 1 evaluates to true."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "8",
     "title": "Deck 8",
-    "to": "8",
     "questions": [
       "+true == 1",
       "+[] == 0",
@@ -196,12 +141,11 @@
       "The unary plus operator converts the string '123' to the number 123. Hence, +'123' == 123 evaluates to true.",
       "The unary plus operator cannot directly convert an object to a number. Hence, +{} == 0 evaluates to false.",
       "The unary plus operator converts the array to a string, which results in '1,2'. Since '1,2' is not equal to [1, 2], +['1', '2'] == [1, 2] evaluates to false."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "9",
     "title": "Deck 9",
-    "to": "9",
     "questions": [
       "typeof null == 'null'",
       "typeof null == 'undefined'",
@@ -215,12 +159,11 @@
       "typeof null returns 'object' in JavaScript, not 'null'. Therefore, typeof null == 'object' evaluates to true.",
       "typeof undefined returns 'undefined' in JavaScript. Hence, typeof undefined == 'undefined' evaluates to true.",
       "typeof typeof 1 returns 'string' because typeof returns a string indicating the type of the unevaluated operand. Therefore, typeof typeof 1 == 'string' evaluates to true."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "10",
     "title": "Deck 10",
-    "to": "10",
     "questions": [
       "typeof Boolean() == 'boolean'",
       "Boolean(' ') == true",
@@ -234,12 +177,11 @@
       "NaN.toString() returns the string 'NaN'. Since 'NaN' is a non-empty string, Boolean(NaN.toString()) evaluates to true.",
       "The string 'undefined' is not an empty string, so Boolean('undefined') evaluates to true.",
       "The expression [] = ['a'] is an assignment expression, not a comparison. It assigns the array ['a'] to the empty array [], and the result of the assignment (the value of the left-hand side) is ['a']. When converted to a boolean, it evaluates to true."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "11",
     "title": "Deck 11",
-    "to": "11",
     "questions": [
       "true == false + 1",
       "true == 1",
@@ -253,29 +195,29 @@
       "In JavaScript, 0 is loosely equal to an empty string (''). So, 0 == '' evaluates to true.",
       "Number('     ') returns 0 after parsing because leading and trailing spaces are ignored. So, Number('     ') == 0 evaluates to true.",
       "'1' + 1 + 1 + 1 results in '1111' as it performs string concatenation. Hence, '1111' == 13 evaluates to false."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "12",
     "title": "Deck 12",
-    "to": "12",
     "questions": [
+      "null == undefined",
       "0 == undefined",
       "false == undefined",
       "!(3 > 5)",
       "true && false"
     ],
     "explanations": [
+      "In JavaScript, null is loosely equal to undefined. So, null == undefined evaluates to true.",
       "0 is loosely equal to undefined. So, 0 == undefined evaluates to false.",
       "Similarly, false is loosely equal to undefined. So, false == undefined evaluates to false.",
       "The expression !(3 > 5) negates the result of the expression 3 > 5, which is false. Therefore, !(3 > 5) evaluates to true.",
       "The logical AND operator && returns true only if both operands are true. Since one of the operands, false, is false, the result is false."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "13",
     "title": "Deck 13",
-    "to": "13",
     "questions": [
       "undefined == 1",
       "null == 0",
@@ -289,12 +231,11 @@
       "The toString() method converts the boolean value false to the string 'false'. So, false.toString() == 'false' evaluates to true.",
       "The !! operator is used to convert any value to its corresponding boolean value. In this case, !!(3 > 5) evaluates to !!false, which is false.",
       "In JavaScript, the expression 0 is considered a falsy value. So, 0 ? true : false evaluates to false."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "14",
     "title": "Deck 14",
-    "to": "14",
     "questions": [
       "+[] === 0",
       "typeof function(){} == 'object'",
@@ -308,12 +249,11 @@
       "The typeof operator returns 'object' for arrays in JavaScript. So, typeof [] == 'array' evaluates to false.",
       "The Array.isArray() method is used to check if a value is an array. So, Array.isArray([]) evaluates to true.",
       "The expression '2 === +'1' + 1' is evaluated as '2 === (1 + 1)', which is '2 === 2', resulting in true."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "15",
     "title": "Deck 15",
-    "to": "15",
     "questions": [
       "+{} == 0",
       "typeof true == 'object'",
@@ -327,12 +267,11 @@
       "The unary plus operator converts an empty array to 0. So, +[] + 1 == 1 evaluates to true.",
       "The expression '4 - true' is evaluated as '4 - 1', resulting in 3. So, 3 == 3 evaluates to true.",
       "The expression 'true * 14' is evaluated as '1 * 14', resulting in 14. So, 14 == 14 evaluates to true."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "16",
     "title": "Deck 16",
-    "to": "16",
     "questions": [
       "12 % 2 == []",
       "[] - true === -1",
@@ -346,12 +285,11 @@
       "When subtracting strings, JavaScript tries to convert them to numbers. '1' - '1' results in 0 because both strings are converted to numbers. Hence, '1' - '1' === 0 evaluates to true.",
       "The string 'null' is not empty, so Boolean('null') returns true. Therefore, Boolean('null') === false evaluates to false.",
       "This statement is incomplete and lacks a comparison, so it is not a valid JavaScript expression."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "17",
     "title": "Deck 17",
-    "to": "17",
     "questions": [
       "Infinity === Infinity - 1",
       "-Infinity === Infinity * -1",
@@ -365,12 +303,11 @@
       "Infinity + 1 is still Infinity. Therefore, Infinity === Infinity + 1 evaluates to true.",
       "The result of 0 divided by 0 is NaN (Not a Number), not Infinity. So, 0 / 0 == Infinity evaluates to false.",
       "Division by 0 in JavaScript results in Infinity. So, 12 / 0 == Infinity evaluates to true."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "18",
     "title": "Deck 18",
-    "to": "18",
     "questions": [
       "'bab' > 'aba'",
       "4.5 + 5.5 == 10",
@@ -384,12 +321,11 @@
       "The typeof operator returns 'object' for instances of Date in JavaScript. Therefore, typeof new Date() == 'date' evaluates to false.",
       "The typeof operator returns 'string' for string literals in JavaScript. Therefore, typeof 'aaa' == 'string' evaluates to true.",
       "Objects are compared by reference in JavaScript. {} and {} refer to different memory locations, so {} == {} evaluates to false."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "19",
     "title": "Deck 19",
-    "to": "19",
     "questions": [
       "({}).toString() == '[object Object]'",
       "NaN === NaN",
@@ -403,12 +339,11 @@
       "4 divided by 2 is 2. Then, 2 multiplied by 2 is 4. So, 4 / 2 * 2 === 1 evaluates to false.",
       "false is coerced to 0 when used in a numerical context. So, false + 1 is 0 + 1, which equals 1. Therefore, false + 1 === 2 evaluates to false.",
       "The join() method returns a string representation of the array elements joined by a separator. However, the comparison attempts to equate a string to an array, which evaluates to false."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "20",
     "title": "Deck 20",
-    "to": "20",
     "questions": [
       "null == null",
       "undefined == 0",
@@ -422,12 +357,11 @@
       "The strict equality operator (===) checks for both value and type equality. undefined is strictly equal to itself. So, undefined === undefined evaluates to true.",
       "The boolean value false is not equal to the empty string ''. So, false == '' evaluates to false.",
       "In JavaScript, when comparing different types, they are converted to numbers. 'a' is NaN when converted to a number, and true is converted to 1. Since NaN is not greater than 1, 'a' > true evaluates to false."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "21",
     "title": "Deck 21",
-    "to": "21",
     "questions": [
       "'nate' > 'cool'",
       "'a' > 'z'",
@@ -441,17 +375,16 @@
       "Boolean() returns false because the Boolean constructor without arguments returns false.",
       "'1' == 2 - 1 evaluates to true because 2 - 1 equals 1, which is equal to the string '1'.",
       "3 == '2' + '1' evaluates to true because '2' + '1' results in the string '21', which is then converted to the number 21."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "22",
     "title": "Deck 22",
-    "to": "22",
     "questions": [
       "3 == 2 + '1'",
       "45 === '4' + '5'",
       "[] == []",
-      "{} == {}",
+      "({} == {})",
       "(5 == 5 || 3 == 5)"
     ],
     "explanations": [
@@ -460,12 +393,11 @@
       "[] == [] evaluates to false because arrays in JavaScript are compared by reference, and these two arrays are stored in different memory locations.",
       "{} == {} evaluates to false because objects in JavaScript are compared by reference, and these two objects are stored in different memory locations.",
       "(5 == 5 || 3 == 5) evaluates to true because the expression (5 == 5) is true, and in a logical OR operation, if one expression is true, the whole expression is true."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "23",
     "title": "Deck 23",
-    "to": "23",
     "questions": [
       "!([] == [])",
       "typeof [] !== 'array'",
@@ -479,12 +411,11 @@
       "'2' > '1' evaluates to true because in lexicographical order, '2' comes after '1'.",
       "2 < 'John' evaluates to false because the comparison between a number and a string results in the string being converted to NaN, which is not less than any number.",
       "Number('3.14') === 3.14 evaluates to true because Number('3.14') converts the string '3.14' to the number 3.14, which is strictly equal to 3.14."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "24",
     "title": "Deck 24",
-    "to": "24",
     "questions": [
       "Number(5) == 5",
       "typeof Number('Nate') == 'number'",
@@ -498,12 +429,11 @@
       "typeof NaN == 'number' evaluates to true because NaN is classified as a number type in JavaScript.",
       "Number([]) === 0 evaluates to true because the empty array [] is converted to 0 when using the Number function.",
       "Number([]) === NaN evaluates to false because an empty array [] is converted to 0 by the Number function, not NaN."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "25",
     "title": "Deck 25",
-    "to": "25",
     "questions": [
       "parseInt([]) === 0",
       "Number([]) === 0",
@@ -517,12 +447,11 @@
       "+[] === 0 evaluates to true because the unary plus operator converts the empty array [] to 0.",
       "Number.isInteger(5) evaluates to true because 5 is an integer.",
       "typeof Math.random() === 'string' evaluates to false because Math.random() returns a number between 0 (inclusive) and 1 (exclusive)."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "26",
     "title": "Deck 26",
-    "to": "26",
     "questions": [
       "Number((() => {})) == 1",
       "(() => 1)() == 1",
@@ -536,12 +465,11 @@
       "Boolean(3 - 3 / 3) evaluates to false because the expression 3 - 3 / 3 results in 2, and Boolean(2) returns true.",
       "typeof Number() == 'number' evaluates to true because Number() returns 0, which is of type 'number'.",
       "typeof String(55) == '55' evaluates to false because the typeof operator returns 'string' for string values, not their content."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "27",
     "title": "Deck 27",
-    "to": "27",
     "questions": [
       "[] == ![]",
       "{} + [] === {}",
@@ -555,12 +483,11 @@
       "NaN === NaN: This expression evaluates to false because NaN (Not a Number) is a special value in JavaScript, and according to the IEEE 754 standard, NaN is not equal to any other value, including itself.",
       "true + false === true: This expression evaluates to false because the addition operator (+) is used between true and false. In JavaScript, when you add a boolean value to another value, it gets converted to a number. true is converted to 1, and false is converted to 0. So, 1 + 0 equals 1, not true.",
       "NaN !== NaN: This expression evaluates to true because NaN (Not a Number) is a special value in JavaScript, and according to the IEEE 754 standard, NaN is not equal to any other value, including itself. Hence, NaN !== NaN."
-    ],
-    "public": false
+    ]
   },
   {
+    "id": "28",
     "title": "Deck 28",
-    "to": "28",
     "questions": [
       "Infinity == undefined",
       "Infinity == Infinity",
@@ -568,12 +495,11 @@
       "NaN == NaN",
       "Boolean('false')"
     ],
-    "explanations": [],
-    "public": false
+    "explanations": []
   },
   {
+    "id": "29",
     "title": "Deck 29",
-    "to": "29",
     "questions": [
       "'' || true",
       "null || true",
@@ -581,12 +507,11 @@
       "'2' < '12'",
       "'2' > '12'"
     ],
-    "explanations": [],
-    "public": false
+    "explanations": []
   },
   {
+    "id": "30",
     "title": "Deck 30",
-    "to": "30",
     "questions": [
       "false ?? true",
       "false || true",
@@ -594,12 +519,11 @@
       "null ?? true",
       "true ?? false"
     ],
-    "explanations": [],
-    "public": false
+    "explanations": []
   },
   {
+    "id": "31",
     "title": "Deck 31",
-    "to": "31",
     "questions": [
       "[] ? true : false",
       "({}) ? true : false",
@@ -607,23 +531,6 @@
       "'' ? true : false",
       "' ' ? true : false"
     ],
-    "explanations": [],
-    "public": false
-  },
-  {
-    "questions": ["[] > {}"],
-    "explanations": [
-      "When comparing different types like an array and an object, the abstract relational comparison algorithm is applied. This converts the operands to primitives and then compares them. An empty array ([]) gets coerced to the empty string (''), while an empty object ({}) gets coerced to '[object Object]'. Comparing these strings, '' > '[object Object]', which evaluates to false. If all else is equal, the shorter string is considered less than the longer string."
-    ]
-  },
-  {
-    "title": "Deck 3",
-    "to": "3",
-    "questions": ["10 - '10' === 1010"],
-    "explanations": [
-      "The subtraction operator (-) in JavaScript coerces the string '10' into a number, and the expression becomes 10 - 10, which equals 0. However, 0 is not equal to 1010, so the expression evaluates to false."
-    ],
-    "description": "Strings",
-    "public": true
+    "explanations": []
   }
 ]

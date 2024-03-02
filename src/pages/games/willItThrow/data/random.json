@@ -1,7 +1,7 @@
 [
   {
+    "id": "1",
     "title": "Deck 1",
-    "to": "1",
     "questions": [
       "const arr = [1,2,3]; <br> arr[4];",
       "const obj = {1: true}; <br> obj[3];",
@@ -15,13 +15,11 @@
       "A string 'str' is defined as 'dog'. The statement 'str[4] = 'a';' attempts to change the character at index 4 to 'a', but strings in JavaScript are immutable, so this line won't change the string. However, it won't throw an error.",
       "A variable 'dog' is assigned the value '4'. The expression 'dog[5];' tries to access index 5 of the variable 'dog', but 'dog' is not an array, it's a number. Accessing an index of a number as if it were an array will throw an error: 'TypeError: Cannot read property '5' of undefined'.",
       "This is not valid JavaScript syntax on its own. It's just the string 'hello'. It won't throw an error because it's not even an executable statement."
-    ],
-    "language": "javascript",
-    "public": true
+    ]
   },
   {
+    "id": "2",
     "title": "Deck 2",
-    "to": "2",
     "questions": [
       "let obj = {}; <br> console.log(obj.prop);",
       "let result = 10 / 0;",
@@ -35,13 +33,11 @@
       "This code declares a variable 'func' without assigning a value to it, so it's 'undefined'. Then, it tries to invoke 'func()' as a function. Invoking an undefined variable as a function will result in a TypeError: 'func is not a function'.",
       "An array 'arr' is defined with three elements. Then, it tries to access the element at index 10, which is out of bounds since arrays are zero-indexed. This will result in 'undefined', but it won't throw an error.",
       "This line declares a variable 'unusedVar' but doesn't initialize it with any value. Since it's declared but not used, it won't throw any errors."
-    ],
-    "language": "javascript",
-    "public": true
+    ]
   },
   {
+    "id": "3",
     "title": "Deck 3",
-    "to": "3",
     "questions": [
       "JSON.parse('hello world');",
       "document.querySelector('.nonexistent-element').classList",
@@ -55,13 +51,11 @@
       "The parseInt() function attempts to parse the string 'abc' into an integer. Since 'abc' is not a valid integer, parseInt() will return NaN (Not a Number).",
       "A new Map object 'map' is created. Then, it tries to get the value associated with the key 'dog', but no such key exists in the map. This will return 'undefined'.",
       "This line declares a variable 'dog' and assigns it the value '5'. Then, it tries to invoke 'dog' as a function. Since 'dog' is not a function, this will throw a TypeError: 'dog is not a function'."
-    ],
-    "language": "javascript",
-    "public": true
+    ]
   },
   {
+    "id": "4",
     "title": "Deck 4",
-    "to": "4",
     "questions": [
       "++3",
       "3 ++ 4",
@@ -75,13 +69,11 @@
       "The string 'aa' does not have a 'map' method. This will throw a TypeError: 'aa.map is not a function'.",
       "The expression `Number()` is a function call. However, `map()` expects a function as an argument, not a function call. This will throw a TypeError: 'Number is not a function'.",
       "The expression `[].map(Number)` attempts to call the `map` method on an empty array `[]`, passing `Number` as a callback function. This will return an empty array because there are no elements to map over."
-    ],
-    "language": "javascript",
-    "public": true
+    ]
   },
   {
+    "id": "5",
     "title": "Deck 5",
-    "to": "5",
     "questions": [
       "[][2]",
       "{}[4]",
@@ -95,13 +87,11 @@
       "The 'toPrecision()' method of numbers in JavaScript expects a value between 1 and 21 as an argument. Providing 500 as the argument exceeds this range and will throw a RangeError: 'toPrecision() argument must be between 1 and 21'.",
       "The `toString()` method called on an empty object `{}` will return '[object Object]'.",
       "The expression `[].map(Number)` attempts to call the `map` method on an empty array `[]`, passing `Number` as a callback function. This will return an empty array because there are no elements to map over."
-    ],
-    "language": "javascript",
-    "public": true
+    ]
   },
   {
+    "id": "6",
     "title": "Deck 6",
-    "to": "6",
     "questions": [
       "let x = 10; <br> x.toUpperCase();",
       "let arr = [1, 2, 3]; <br> arr.push(4, 5);",
@@ -115,13 +105,11 @@
       "This code tries to access a property 'prop' of an empty object 'obj', but since 'prop' is not defined, it will return 'undefined'.",
       "This code tries to parse the string 'Hello' into an integer using 'parseInt()', but since 'Hello' is not a valid number, it will return 'NaN' (Not a Number).",
       "This code tries to access an element of the array 'arr' using a string key, which is not valid. It will return 'undefined'."
-    ],
-    "language": "javascript",
-    "public": false
+    ]
   },
   {
+    "id": "7",
     "title": "Deck 7",
-    "to": "7",
     "questions": [
       "let x = {}; <br> x.y.z;",
       "let arr = [1, 2, 3]; <br> arr.slice('a');",
@@ -140,8 +128,8 @@
     "public": false
   },
   {
+    "id": "8",
     "title": "Deck 8",
-    "to": "8",
     "questions": [
       "let obj = {}; <br> obj.prop.method();",
       "let arr = [1, 2, 3]; <br> arr.find('a');",
@@ -155,13 +143,11 @@
       "This code tries to access the property 'age' from the object 'person'. Since 'age' is not a property of 'person', it will return 'undefined'.",
       "This code tries to slice the string 'hello' using '1' as the starting index and 'a' as the ending index, which is not valid. It will throw a TypeError.",
       "This code tries to convert the string '5' to a number using 'Number()', which will successfully convert it into the number 5."
-    ],
-    "language": "javascript",
-    "public": false
+    ]
   },
   {
+    "id": "9",
     "title": "Deck 9",
-    "to": "9",
     "questions": [
       "let obj = {}; <br> obj.prop.method();",
       "let arr = [1, 2, 3]; <br> arr.includes('a');",
@@ -175,13 +161,11 @@
       "This code tries to get a substring of the string 'hello' starting from index 5, which is out of bounds. It will return an empty string.",
       "This code tries to parse the string '5' into an integer using 'parseInt()', specifying base 10. It will successfully parse it into the integer 5.",
       "This code tries to invoke an undefined function 'func'. It will throw a TypeError: 'func is not a function'."
-    ],
-    "language": "javascript",
-    "public": false
+    ]
   },
   {
+    "id": "10",
     "title": "Deck 10",
-    "to": "10",
     "questions": [
       "let x = 5; <br> let { y } = x;",
       "let obj = { nate: 'cool' }; <br> for(const p of obj) { <br> console.log(p) <br> } ",
@@ -195,13 +179,11 @@
       "Attempting to access a property (`foo`) of null. TypeError expected.",
       "Calling `substring()` on undefined (`foo`). TypeError expected.",
       "Attempting to create an object using `Object.create()` with a non-object argument (`foo`). TypeError expected."
-    ],
-    "language": "javascript",
-    "public": false
+    ]
   },
   {
+    "id": "11",
     "title": "Deck 11",
-    "to": "11",
     "questions": [
       "const x = document.getElementByID('foo');",
       "const x = document.getElementById('foo');",
@@ -215,13 +197,11 @@
       "Attempting to use the 'map' method on an empty object (`obj`). TypeError expected.",
       "Syntax error in object definition. Object literals should have unique keys. Unexpected token `;`.",
       "Syntax error. Expression '2 x 5' is not valid JavaScript syntax."
-    ],
-    "language": "javascript",
-    "public": false
+    ]
   },
   {
+    "id": "12",
     "title": "Deck 12",
-    "to": "12",
     "questions": [
       "const s = new Set(); <br> s.add({})",
       "new Array(-1)",
@@ -235,13 +215,11 @@
       "Trying to access an undeclared variable (`num`). ReferenceError expected.",
       "Trying to access a non-existent property using bracket notation. The result will be undefined.",
       "Accessing a property (`num`) of the object (`obj`) using bracket notation. Expected output is the value associated with the key 'num' in the object."
-    ],
-    "language": "javascript",
-    "public": false
+    ]
   },
   {
+    "id": "13",
     "title": "Deck 13",
-    "to": "13",
     "questions": [
       "bar = true",
       "const x = {}; <br> delete x;",
@@ -255,13 +233,11 @@
       "Using the nullish coalescing operator (`??`) without proper syntax. Unexpected token error expected.",
       "Invalid quotes used in defining a string (`str`). This will result in a SyntaxError.",
       "Invalid array syntax. Missing quotes around the second color (`#333`) in the `colors` array."
-    ],
-    "language": "javascript",
-    "public": false
+    ]
   },
   {
+    "id": "14",
     "title": "Deck 14",
-    "to": "14",
     "questions": [
       "(() => {})()",
       "-1 ?? throw new Error()",
@@ -275,13 +251,11 @@
       "Trying to access the 6th element (`arr.5`) of an array (`arr`) that doesn't have it. This will return `undefined` but will not throw an error.",
       "Comparison between an empty array and an empty object. JavaScript doesn't define a comparison between arrays and objects, so this expression will not throw an error but will return `false`.",
       "Variable `x` is declared but not initialized. Comparison (`==`) with a number (`1`) will return `false` but will not throw an error."
-    ],
-    "language": "javascript",
-    "public": false
+    ]
   },
   {
+    "id": "15",
     "title": "Deck 15",
-    "to": "15",
     "questions": [
       "Number('dog')",
       "Number('5).toString()",
@@ -295,8 +269,6 @@
       "Using the typeof operator to get the data type of a string ('string'), and then attempting to convert it to a number. This will result in NaN.",
       "Converting the string '14' to a string (which it already is). This operation will not throw any errors and will return the same string ('14').",
       "Trying to call the `map` method on a string (`x`) which is not an array. This will result in a TypeError."
-    ],
-    "language": "javascript",
-    "public": false
+    ]
   }
 ]

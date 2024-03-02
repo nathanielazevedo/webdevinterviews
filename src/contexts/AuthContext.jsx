@@ -8,11 +8,16 @@ const AuthProvider = ({ children }) => {
   const [displayName, setDisplayName] = useState(token ? 'loading' : '')
 
   useEffect(() => {
-    const token = localStorage.getItem('access_token')
     if (token) {
-      const decoded = jwtDecode(token)
-      const display = decoded?.sub
-      setDisplayName(display)
+      console.log(token)
+      try {
+        const decoded = jwtDecode(token)
+        console.log('decoded', decoded)
+        const display = decoded?.sub
+        setDisplayName(display)
+      } catch {
+        setDisplayName('')
+      }
     }
   }, [])
 

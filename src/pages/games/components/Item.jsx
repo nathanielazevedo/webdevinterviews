@@ -13,10 +13,13 @@ import { AuthContext } from '../../../contexts/AuthContext'
 import LockIcon from '@mui/icons-material/Lock'
 import { Alert } from '@mui/material'
 
-const Deck = ({ deck, to }) => {
+const Item = ({ item, basePath }) => {
   const navigate = useNavigate()
-  return deck.public ? (
-    <div className='item-container' onClick={() => navigate(to)}>
+  return item.public ? (
+    <div
+      className='item-container'
+      onClick={() => navigate(basePath + item.id)}
+    >
       <div>
         <div
           style={{
@@ -25,9 +28,9 @@ const Deck = ({ deck, to }) => {
             alignItems: 'center',
           }}
         >
-          <Typography color='grey.500'>{deck.title}</Typography>
+          <Typography color='grey.500'>{item.title}</Typography>
         </div>
-        <Typography color='grey.300'>{deck?.description}</Typography>
+        <Typography color='grey.300'>{item?.description}</Typography>
       </div>
       <ArrowForwardIosIcon
         sx={{
@@ -38,7 +41,7 @@ const Deck = ({ deck, to }) => {
   ) : (
     <div className='hidden-item-wrapper'>
       <div className='hidden-item-overlay'></div>
-      <div className='item-container' onClick={() => navigate(to)}>
+      <div className='item-container'>
         <div>
           <div
             style={{
@@ -47,9 +50,9 @@ const Deck = ({ deck, to }) => {
               alignItems: 'center',
             }}
           >
-            <Typography color='grey.500'>{deck.title}</Typography>
+            <Typography color='grey.500'>{item.title}</Typography>
           </div>
-          <Typography color='grey.300'>{deck?.description}</Typography>
+          <Typography color='grey.300'>{item?.description}</Typography>
         </div>
         <LockIcon
           sx={{
@@ -61,4 +64,4 @@ const Deck = ({ deck, to }) => {
   )
 }
 
-export default Deck
+export default Item
