@@ -1,19 +1,9 @@
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-  Typography,
-  Box,
-  ToggleButtonGroup,
-  ToggleButton,
-} from '@mui/material'
+import { Box, ToggleButtonGroup, ToggleButton } from '@mui/material'
 
-const GameButtons = ({ onSubmit, disabled }) => {
-  return (
-    <Box>
+const GameButtons = ({ onSubmit, disabled, gameName }) => {
+  let buttons
+  if (gameName == 'true-or-false') {
+    buttons = (
       <ToggleButtonGroup
         exclusive
         onChange={onSubmit}
@@ -23,8 +13,21 @@ const GameButtons = ({ onSubmit, disabled }) => {
         <ToggleButton value={'1'}>True</ToggleButton>
         <ToggleButton value={'0'}>False</ToggleButton>
       </ToggleButtonGroup>
-    </Box>
-  )
+    )
+  } else if (gameName == 'will-it-throw') {
+    buttons = (
+      <ToggleButtonGroup
+        exclusive
+        onChange={onSubmit}
+        size='small'
+        disabled={disabled}
+      >
+        <ToggleButton value={'yes'}>Yes</ToggleButton>
+        <ToggleButton value={'no'}>No</ToggleButton>
+      </ToggleButtonGroup>
+    )
+  }
+  return <Box>{buttons}</Box>
 }
 
 export default GameButtons

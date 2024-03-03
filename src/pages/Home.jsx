@@ -1,12 +1,8 @@
-import Box from '@mui/material/Box'
-import { Fade, Typography, colors, Button, Divider } from '@mui/material'
-import { YouTube } from '@mui/icons-material'
-import TrueOrFalse from '../pages/games/trueOrFalse/TrueOrFalse'
+import { Typography, Button, Divider } from '@mui/material'
 import { useNavigate } from 'react-router'
 import Footer from '../components/Footer'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import Rating from '../components/Rating'
-import Will_ItThrow from './games/willItThrow/WillItThrow'
 import Modal from '../components/Modal'
 import { useState, useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
@@ -49,9 +45,6 @@ const Home = () => {
   const { displayName } = useContext(AuthContext)
   const [bannerOpen, setBannerOpen] = useState(displayName ? false : true)
 
-  const closeBanner = () => {
-    setBannerOpen(false)
-  }
   return (
     <>
       <div className='fit-wrapper'>

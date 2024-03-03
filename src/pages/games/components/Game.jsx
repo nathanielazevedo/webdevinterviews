@@ -33,53 +33,40 @@ const Game = ({ deck, pastFreeDecks, goNextDeck, isLastDeck, gameName }) => {
     })
   }
 
-  let onSubmit
-  if (gameName == 'true-or-false') {
-    onSubmit = (evt) => {
-      if (evt.target.value == eval(currentQuestion)) {
-        setOutput(true)
-        setScores((prev) => [...prev, true])
-      } else {
-        setOutput(false)
-        setScores((prev) => [...prev, false])
-      }
+  const handleCorrectInput = () => {
+    setOutput(true)
+    setScores((prev) => [...prev, true])
+  }
 
-      setTimeout(() => {
-        setOutput(null)
-        setCurrentQuestionIndex(currentQuestionIndex + 1)
-      }, 500)
-    }
-  } else if (gameName == 'will-it-throw') {
-    onSubmit = (evt) => {
-      const guess = evt.target.value
+  const handleIncorrectInput = () => {
+    setOutput(false)
+    setScores((prev) => [...prev, false])
+  }
+
+  const onSubmit = (evt) => {
+    const input = evt.target.value
+    const cleanedQuestion = currentQuestion
+      .replaceAll('<br>', '')
+      .replaceAll('&nbsp;', '')
+
+    if (gameName == 'true-or-false') {
+      if (input == eval(cleanedQuestion)) handleCorrectInput()
+      else handleIncorrectInput()
+    } else if (gameName == 'will-it-throw') {
       try {
-        currentQuestion.replaceAll('<br>', '').replaceAll('&nbsp;', '')
-        eval(currentQuestion)
-        if (guess === 'no') {
-          setOutput('&#128077;')
-          scores.push(true)
-          setScores([...scores])
-        } else {
-          setOutput('&#128078;')
-          scores.push(false)
-          setScores([...scores])
-        }
+        eval(cleanedQuestion)
+        if (input === 'no') handleCorrectInput()
+        else handleIncorrectInput()
       } catch (e) {
-        if (guess === 'yes') {
-          setOutput('&#128077;' + e.toString())
-          scores.push(true)
-          setScores([...scores])
-        } else {
-          setOutput('&#128078;' + e.toString())
-          scores.push(false)
-          setScores([...scores])
-        }
+        if (input === 'yes') handleCorrectInput()
+        else handleIncorrectInput()
       }
-      setTimeout(() => {
-        setOutput(null)
-        setCurrentQuestionIndex(currentQuestionIndex + 1)
-      }, 500)
     }
+
+    setTimeout(() => {
+      setOutput(null)
+      setCurrentQuestionIndex(currentQuestionIndex + 1)
+    }, 500)
   }
 
   return (
@@ -103,7 +90,11 @@ const Game = ({ deck, pastFreeDecks, goNextDeck, isLastDeck, gameName }) => {
               pastFreeDecks={pastFreeDecks}
             />
           ) : (
-            <GameButtons onSubmit={onSubmit} disabled={output != null} />
+            <GameButtons
+              gameName={gameName}
+              onSubmit={onSubmit}
+              disabled={output != null}
+            />
           )}
         </div>
       </div>

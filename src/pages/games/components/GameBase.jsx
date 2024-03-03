@@ -4,19 +4,17 @@ import { AuthContext } from '../../../contexts/AuthContext'
 import TextLink from '../../../components/TextLink'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import Game from '../components/Game'
+import getProperDecks from './getProperDecks'
 
-import structuredDecks from './data/structured.json'
-import randomDecks from './data/random.json'
-
-const TrueOrFalse = ({ random }) => {
+const GameBase = ({ gameName, random }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { displayName } = useContext(AuthContext)
 
-  const decks = random ? randomDecks : structuredDecks
+  const decks = getProperDecks(gameName, random)
   const { deckNumber } = useParams()
   const [deck, setDeck] = useState(decks[Number(deckNumber) - 1])
-  const lastDeck = deckNumber >= decks.length - 1
+  const isLastDeck = deckNumber >= decks.length - 1
 
   useEffect(() => {
     if (Number(deckNumber) >= 4 && !displayName) {
@@ -24,11 +22,10 @@ const TrueOrFalse = ({ random }) => {
     }
   }, [displayName])
 
-  const nextDeck = () => {
+  const goNextDeck = () => {
     const nextDeckNumber = Number(deckNumber) + 1
-    const newPath = pathname.split('/')
-    newPath.pop()
-    newPath.push(nextDeckNumber)
+    const newPath = [...pathname.split('/').slice(0, -1), nextDeckNumber]
+
     setDeck(decks[nextDeckNumber - 1])
     navigate(newPath.join('/'))
   }
@@ -36,19 +33,19 @@ const TrueOrFalse = ({ random }) => {
   return (
     <div className='fit-wrapper' key={deckNumber}>
       <TextLink
-        to='/games/true-or-false'
+        to={`/games/${gameName}`}
         text='Back to decks'
         icon={<ArrowBackIosIcon fontSize='5px' />}
       />
       <Game
         deck={deck}
-        lastDeck={lastDeck}
-        nextDeck={nextDeck}
-        gameName={'true-or-false'}
+        isLastDeck={isLastDeck}
+        goNextDeck={goNextDeck}
+        gameName={gameName}
         showMemberButton={deckNumber >= 4 && !displayName}
       />
     </div>
   )
 }
 
-export default TrueOrFalse
+export default GameBase

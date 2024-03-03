@@ -11,11 +11,11 @@ import Workout from './pages/workout/Workout'
 import EditorRoot from './pages/workout/editor/EditorRoot'
 
 import GamesList from './pages/games/GamesList'
+import GameBase from './pages/games/components/GameBase.jsx'
+
 import TrueOrFalseMain from './pages/games/trueOrFalse/TrueOrFalseMain'
-import TrueOrFalse from './pages/games/trueOrFalse/TrueOrFalse.jsx'
 import ShortsEditor from './pages/shortsEditor/ShortsEditor'
 import WillItThrowMain from './pages/games/willItThrow/WillItThrowMain'
-import WillItThrow from './pages/games/willItThrow/WillItThrow'
 import NewMemberForm from './pages/NewMemberForm'
 import Ccc from './pages/games/ccc/Ccc'
 import CccList from './pages/games/ccc/CccList'
@@ -93,11 +93,11 @@ const router = createBrowserRouter([
               },
               {
                 path: 'structured/:deckNumber',
-                element: <TrueOrFalse />,
+                element: <GameBase gameName={'true-or-false'} random={false} />,
               },
               {
                 path: 'random/:deckNumber',
-                element: <TrueOrFalse random={true} />,
+                element: <GameBase gameName={'true-or-false'} random={true} />,
               },
             ],
           },
@@ -110,11 +110,11 @@ const router = createBrowserRouter([
               },
               {
                 path: 'structured/:deckNumber',
-                element: <WillItThrow />,
+                element: <GameBase gameName={'will-it-throw'} random={false} />,
               },
               {
                 path: 'random/:deckNumber',
-                element: <WillItThrow random={true} />,
+                element: <GameBase gameName={'will-it-throw'} random={false} />,
               },
             ],
           },
