@@ -114,7 +114,7 @@ const router = createBrowserRouter([
               },
               {
                 path: 'random/:deckNumber',
-                element: <GameBase gameName={'will-it-throw'} random={false} />,
+                element: <GameBase gameName={'will-it-throw'} random={true} />,
               },
             ],
           },
