@@ -16,7 +16,6 @@ import TrueOrFalse from './pages/games/trueOrFalse/TrueOrFalse.jsx'
 import ShortsEditor from './pages/shortsEditor/ShortsEditor'
 import WillItThrowMain from './pages/games/willItThrow/WillItThrowMain'
 import WillItThrow from './pages/games/willItThrow/WillItThrow'
-import Contests from './pages/contests/ContestsList'
 import NewMemberForm from './pages/NewMemberForm'
 import Ccc from './pages/games/ccc/Ccc'
 import CccList from './pages/games/ccc/CccList'
@@ -93,46 +92,29 @@ const router = createBrowserRouter([
                 element: <TrueOrFalseMain />,
               },
               {
-                path: 'structured/:id',
-                element: (
-                  <div className='fit-wrapper'>
-                    <TrueOrFalse />
-                  </div>
-                ),
+                path: 'structured/:deckNumber',
+                element: <TrueOrFalse />,
               },
               {
-                path: 'random/:id',
-                element: (
-                  <div className='fit-wrapper'>
-                    <TrueOrFalse random={true} />
-                  </div>
-                ),
+                path: 'random/:deckNumber',
+                element: <TrueOrFalse random={true} />,
               },
             ],
           },
           {
             path: 'will-it-throw',
-            errorElement: <Error />,
             children: [
               {
                 index: true,
                 element: <WillItThrowMain />,
               },
               {
-                path: 'structured/:id',
-                element: (
-                  <div className='fit-wrapper'>
-                    <WillItThrow />
-                  </div>
-                ),
+                path: 'structured/:deckNumber',
+                element: <WillItThrow />,
               },
               {
-                path: 'random/:id',
-                element: (
-                  <div className='fit-wrapper'>
-                    <WillItThrow random={true} />
-                  </div>
-                ),
+                path: 'random/:deckNumber',
+                element: <WillItThrow random={true} />,
               },
             ],
           },

@@ -126,7 +126,7 @@ const Home = () => {
           >
             Play True or False
           </Button>
-          <TrueOrFalse />
+          {/* <TrueOrFalse decks={}/> */}
         </div>
         <Divider />
         <div className='marketing-section'>
@@ -151,7 +151,7 @@ const Home = () => {
           >
             Play Will It Throw
           </Button>
-          <Will_ItThrow />
+          {/* <Will_ItThrow /> */}
         </div>
         <Divider />
         <div className='marketing-section'>

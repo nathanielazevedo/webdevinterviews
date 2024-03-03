@@ -32,21 +32,13 @@ const useApi = () => {
     return { data: await response.json() }
   }
 
-  const getIt = (endpoint) => {
-    return makeRequest('GET', endpoint)
-  }
+  const getIt = (endpoint) => makeRequest('GET', endpoint)
 
-  const postIt = (endpoint, body) => {
-    return makeRequest('POST', endpoint, body)
-  }
+  const postIt = (endpoint, body) => makeRequest('POST', endpoint, body)
 
-  const putIt = (endpoint, body) => {
-    return makeRequest('PUT', endpoint, body)
-  }
+  const putIt = (endpoint, body) => makeRequest('PUT', endpoint, body)
 
-  const deleteIt = (endpoint, body) => {
-    return makeRequest('DELETE', endpoint, body)
-  }
+  const deleteIt = (endpoint, body) => makeRequest('DELETE', endpoint, body)
 
   return { getIt, postIt, putIt, deleteIt }
 }

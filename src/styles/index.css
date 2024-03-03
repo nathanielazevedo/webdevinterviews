@@ -167,7 +167,7 @@
 
 /* GAME */
 
-.gameEditor-container {
+.game-container {
   color: white;
   border: solid rgb(57, 56, 56) 1px;
   padding: 20px;
@@ -184,7 +184,7 @@
   font-size: large;
 }
 
-.true-or-false-radio {
+.game-buttons {
   display: flex;
   justify-content: space-between;
   align-items: center;
