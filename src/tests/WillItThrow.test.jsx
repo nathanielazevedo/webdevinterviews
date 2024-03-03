@@ -89,4 +89,37 @@ describe('Will It Throw Component', () => {
 
     expect(allDoneText).toBeInTheDocument()
   })
+
+  it('ensure the play again button is working', async () => {
+    render(
+      <AuthProvider>
+        <Router />
+      </AuthProvider>
+    )
+
+    let gamesButton = screen.queryByText('Back to decks')
+    fireEvent.click(gamesButton)
+    let randomTab = screen.queryByText('Random')
+    fireEvent.click(randomTab)
+    let firstGame = screen.queryByText('Deck 1')
+    fireEvent.click(firstGame)
+
+    let playAgainButton = screen.queryByText('Play Again')
+    while (!playAgainButton) {
+      await act(async () => {
+        let trueButton = screen.queryByText('Yes')
+        expect(trueButton).toBeTruthy('Yes button not found')
+
+        fireEvent.click(trueButton)
+        vi.runAllTimers()
+      })
+      playAgainButton = screen.queryByText('Play Again')
+    }
+    await act(async () => {
+      fireEvent.click(playAgainButton)
+      vi.runAllTimers()
+    })
+    let trueButton = screen.queryByText('Yes')
+    expect(trueButton).toBeInTheDocument()
+  })
 })

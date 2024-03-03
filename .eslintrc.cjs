@@ -9,6 +9,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
+  ignorePatterns: ['**test*'],
   plugins: ['react'],
   rules: {
     'react/react-in-jsx-scope': 'off',

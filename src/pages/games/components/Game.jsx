@@ -21,7 +21,7 @@ const Game = ({ deck, pastFreeDecks, goNextDeck, isLastDeck, gameName }) => {
   const newGame = () => {
     setCurrentQuestionIndex(0)
     setScores([])
-    setOutput('')
+    setOutput(null)
   }
 
   const goBack = () => {
