@@ -15,9 +15,10 @@ const GameBase = ({ gameName, random }) => {
   const { deckNumber } = useParams()
   const [deck, setDeck] = useState(decks[Number(deckNumber) - 1])
   const isLastDeck = deckNumber >= decks.length - 1
+  const pastFreeDecks = Number(deckNumber) >= 5 && !displayName
 
   useEffect(() => {
-    if (Number(deckNumber) >= 4 && !displayName) {
+    if (Number(deckNumber) >= 6 && !displayName) {
       navigate('/new-member')
     }
   }, [displayName])
@@ -42,6 +43,7 @@ const GameBase = ({ gameName, random }) => {
         isLastDeck={isLastDeck}
         goNextDeck={goNextDeck}
         gameName={gameName}
+        pastFreeDecks={pastFreeDecks}
         showMemberButton={deckNumber >= 4 && !displayName}
       />
     </div>
