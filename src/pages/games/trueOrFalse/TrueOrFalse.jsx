@@ -29,7 +29,7 @@ const TrueOrFalse = ({ random }) => {
   const { displayName } = useContext(AuthContext)
   const { id } = useParams()
   const [number, setNumber] = useState(id ? id - 1 : 0)
-  const decks = random ? freeForAllDecks : structuredDecks
+  const decks = random ? randomDecks : structuredDecks
   const [deck, setDeck] = useState(decks[number])
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [guess, setGuess] = useState(null)
@@ -146,9 +146,9 @@ const TrueOrFalse = ({ random }) => {
                         setGameOver(false)
                         newGame()
                         navigate(
-                          freeForAll
-                            ? `/games/true-or-false/${newNumber + 1}/random`
-                            : `/games/true-or-false/${newNumber + 1}`
+                          random
+                            ? `/games/true-or-false/random/${newNumber + 1}`
+                            : `/games/true-or-false/structured/${newNumber + 1}`
                         )
                       }}
                     >

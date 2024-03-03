@@ -164,10 +164,14 @@ const WillItThrow = ({ random }) => {
                       setNumber(newNumber)
                       setDeck(decks[newNumber])
                       newGame()
-                      navigate(`/games/will-it-throw/${newNumber + 1}`)
+                      navigate(
+                        random
+                          ? `/games/will-it-throw/random/${newNumber + 1}`
+                          : `/games/will-it-throw/structured/${newNumber + 1}`
+                      )
                     }}
                   >
-                    Next Deck
+                    {number >= decks.length - 1 ? 'All done' : 'Next Deck'}
                   </ToggleButton>
                 )}
               </ToggleButtonGroup>

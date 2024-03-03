@@ -9,10 +9,8 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      console.log(token)
       try {
         const decoded = jwtDecode(token)
-        console.log('decoded', decoded)
         const display = decoded?.sub
         setDisplayName(display)
       } catch {
