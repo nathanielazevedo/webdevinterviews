@@ -3,10 +3,10 @@
     "id": "1",
     "title": "Deck 1",
     "questions": [
-      "const arr = [1,2,3]; <br> arr[4];",
-      "const obj = {1: true}; <br> obj[3];",
-      "let str = 'dog'; <br> str[4] = 'a';",
-      "let dog = 4; <br> dog[5];",
+      "const arr = [1,2,3]; \narr[4];",
+      "const obj = {1: true}; \nobj[3];",
+      "let str = 'dog'; \nstr[4] = 'a';",
+      "let dog = 4; \ndog[5];",
       "hello"
     ],
     "explanations": [
@@ -21,10 +21,10 @@
     "id": "2",
     "title": "Deck 2",
     "questions": [
-      "let obj = {}; <br> console.log(obj.prop);",
+      "let obj = {}; \nconsole.log(obj.prop);",
       "let result = 10 / 0;",
-      "let func; <br> func();",
-      "let arr = [1, 2, 3]; <br> console.log(arr[10]);",
+      "let func; \nfunc();",
+      "let arr = [1, 2, 3]; \nconsole.log(arr[10]);",
       "let unusedVar;"
     ],
     "explanations": [
@@ -42,8 +42,8 @@
       "JSON.parse('hello world');",
       "document.querySelector('.nonexistent-element').classList",
       "parseInt('abc');",
-      "let map = new Map(); <br> map.get('dog');",
-      "let dog = 5; <br> dog();"
+      "let map = new Map(); \nmap.get('dog');",
+      "let dog = 5; \ndog();"
     ],
     "explanations": [
       "The line attempts to parse the string 'hello world' as JSON, but it's not valid JSON syntax. This will throw a SyntaxError: 'Unexpected token h in JSON at position 0'.",
@@ -77,7 +77,7 @@
     "questions": [
       "[][2]",
       "{}[4]",
-      "let num = 1; <br> num.toPrecision(500);",
+      "let num = 1; \nnum.toPrecision(500);",
       "({}).toString()",
       "[].map(Number)"
     ],
@@ -93,11 +93,11 @@
     "id": "6",
     "title": "Deck 6",
     "questions": [
-      "let x = 10; <br> x.toUpperCase();",
-      "let arr = [1, 2, 3]; <br> arr.push(4, 5);",
-      "const obj = {}; <br> obj.prop;",
-      "let num = 'Hello'; <br> parseInt(num);",
-      "let arr = [1, 2, 3]; <br> arr['foo'];"
+      "let x = 10; \nx.toUpperCase();",
+      "let arr = [1, 2, 3]; \narr.push(4, 5);",
+      "const obj = {}; \nobj.prop;",
+      "let num = 'Hello'; \nparseInt(num);",
+      "let arr = [1, 2, 3]; \narr['foo'];"
     ],
     "explanations": [
       "This code tries to call the 'toUpperCase()' method on a number, which is not valid. It will result in a TypeError: 'x.toUpperCase is not a function'.",
@@ -111,11 +111,11 @@
     "id": "7",
     "title": "Deck 7",
     "questions": [
-      "let x = {}; <br> x.y.z;",
-      "let arr = [1, 2, 3]; <br> arr.slice('a');",
-      "let obj = { name: 'John' }; <br> delete obj.age;",
-      "let str = '123'; <br> str.map(Number);",
-      "let arr = [1, 2, 3]; <br> arr.splice(0, 1, 'a', 'b');"
+      "let x = {}; \nx.y.z;",
+      "let arr = [1, 2, 3]; \narr.slice('a');",
+      "let obj = { name: 'John' }; \ndelete obj.age;",
+      "let str = '123'; \nstr.map(Number);",
+      "let arr = [1, 2, 3]; \narr.splice(0, 1, 'a', 'b');"
     ],
     "explanations": [
       "This code tries to access the property 'z' of property 'y' of object 'x'. Since 'y' is not defined, it will throw a TypeError: 'Cannot read property 'z' of undefined'.",
@@ -131,11 +131,11 @@
     "id": "8",
     "title": "Deck 8",
     "questions": [
-      "let obj = {}; <br> obj.prop.method();",
-      "let arr = [1, 2, 3]; <br> arr.find('a');",
-      "let person = { name: 'John' }; <br> person.age;",
-      "let str = 'hello'; <br> str.slice(1, 'a');",
-      "let num = '5'; <br> Number(num);"
+      "let obj = {}; \nobj.prop.method();",
+      "let arr = [1, 2, 3]; \narr.find('a');",
+      "let person = { name: 'John' }; \nperson.age;",
+      "let str = 'hello'; \nstr.slice(1, 'a');",
+      "let num = '5'; \nNumber(num);"
     ],
     "explanations": [
       "This code tries to call the method 'method()' on the property 'prop' of object 'obj'. Since 'method()' does not exist, it will throw a TypeError: 'Cannot read property 'method' of undefined'.",
@@ -149,11 +149,11 @@
     "id": "9",
     "title": "Deck 9",
     "questions": [
-      "let obj = {}; <br> obj.prop.method();",
-      "let arr = [1, 2, 3]; <br> arr.includes('a');",
-      "let str = 'hello'; <br> str.substring(5);",
-      "let num = '5'; <br> parseInt(num, 10);",
-      "let func; <br> func();"
+      "let obj = {}; \nobj.prop.method();",
+      "let arr = [1, 2, 3]; \narr.includes('a');",
+      "let str = 'hello'; \nstr.substring(5);",
+      "let num = '5'; \nparseInt(num, 10);",
+      "let func; \nfunc();"
     ],
     "explanations": [
       "This code tries to call the method 'method()' on the property 'prop' of object 'obj'. Since 'prop' is not defined, it will throw a TypeError: 'Cannot read property 'method' of undefined'.",
@@ -167,11 +167,11 @@
     "id": "10",
     "title": "Deck 10",
     "questions": [
-      "let x = 5; <br> let { y } = x;",
-      "let obj = { nate: 'cool' }; <br> for(const p of obj) { <br> console.log(p) <br> } ",
+      "let x = 5; \nlet { y } = x;",
+      "let obj = { nate: 'cool' }; \nfor(const p of obj) { \n console.log(p) \n} ",
       "null.foo",
-      "const foo = undefined; <br> foo.substring(1);",
-      "const foo = 'bar'; <br> Object.create(foo);"
+      "const foo = undefined; \nfoo.substring(1);",
+      "const foo = 'bar'; \nObject.create(foo);"
     ],
     "explanations": [
       "Attempting to destructure a non-object value (`x`). TypeError expected.",
@@ -187,8 +187,8 @@
     "questions": [
       "const x = document.getElementByID('foo');",
       "const x = document.getElementById('foo');",
-      "const obj = {}; <br> obj.map(Number);",
-      "const obj = {foo: () => {}; foo: 1}; <br> obj.foo();",
+      "const obj = {}; \nobj.map(Number);",
+      "const obj = {foo: () => {}; foo: 1}; \nobj.foo();",
       "2 x 5"
     ],
     "explanations": [
@@ -203,11 +203,11 @@
     "id": "12",
     "title": "Deck 12",
     "questions": [
-      "const s = new Set(); <br> s.add({})",
+      "const s = new Set(); \ns.add({})",
       "new Array(-1)",
-      "const obj = {num: 1}; <br> console.log(num);",
-      "const obj = {num: 1}; <br> console.log(obj[num]);",
-      "const obj = {num: 1}; <br> console.log(obj['num']);"
+      "const obj = {num: 1}; \nconsole.log(num);",
+      "const obj = {num: 1}; \nconsole.log(obj[num]);",
+      "const obj = {num: 1}; \nconsole.log(obj['num']);"
     ],
     "explanations": [
       "Attempting to add an object to a Set. The Set will accept it, but it may not behave as expected due to object uniqueness in Set.",
@@ -222,8 +222,8 @@
     "title": "Deck 13",
     "questions": [
       "bar = true",
-      "const x = {}; <br> delete x;",
-      "function getUser(user){ <br> return user && user.id ?? null <br> };",
+      "const x = {}; \ndelete x;",
+      "function getUser(user){ \n return user && user.id ?? null \n};",
       "const str = “This looks like a string”;",
       "const colors = ['#000', #333', '#555'];"
     ],
@@ -241,9 +241,9 @@
     "questions": [
       "(() => {})()",
       "-1 ?? throw new Error()",
-      "const arr = []; <br> arr.5",
-      "if([] > {}){ <br> throw new Error() <br> }",
-      "let x; <br> x == 1;"
+      "const arr = []; \narr.5",
+      "if([] > {}){ \n throw new Error() \n}",
+      "let x; \nx == 1;"
     ],
     "explanations": [
       "Immediately Invoked Function Expression (IIFE) with an empty arrow function. This code will execute without errors.",

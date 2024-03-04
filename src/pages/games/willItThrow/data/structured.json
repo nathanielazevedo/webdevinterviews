@@ -5,13 +5,16 @@
     "description": "A look at different Syntax Errors.",
     "questions": [
       "let str = 'This is a string with a syntax error;",
-      "let num = 10; <br> let x = num.toFixed(2;",
+      "let num = 10; \nlet x = num.toFixed(2;",
       "var array = [1, 2, 3, 4, 5;",
-      "var obj = {name: 'John' age: 30, city: 'New York'};",
+      "var obj = {\n name: 'John' \n age: 30, \n city: 'New York'\n};",
       "var new = 'newThing';",
       "if (x > 5 {}"
     ],
-    "explanations": []
+    "explanations": [
+      "Syntax errors are very common but also very obvious. The string in this question is missing a closing quotation mark.",
+      "The method .toFixed is missing a closing parentheses."
+    ]
   },
   {
     "id": "2",
@@ -19,29 +22,31 @@
     "description": "A look at different ReferenceErrors.",
     "questions": [
       "console.log(variable);",
-      "var userName = 'John'; <br> console.log(userNam); ",
-      "function outerFunction() {<br> &nbsp; var innerVariable = 'Hello';<br>}<br> console.log(innerVariable); ",
-      "var obj = { name: 'John' }; <br> console.log(obj.age);",
+      "var userName = 'John'; \nconsole.log(userNam); ",
+      "function outerFunction() {\n var innerVariable = 'Hello';\n}\nconsole.log(innerVariable); ",
+      "var obj = { name: 'John' }; \nconsole.log(obj.age);",
       "someFunction();"
     ],
-    "explanations": []
+    "explanations": [
+      "Here, we are trying to reference a variable that has not been declared. Therefore, this code will throw a Reference Error."
+    ]
   },
   {
     "id": "3",
     "title": "TypeError",
     "description": "A look at different TypeErrors.",
     "questions": [
-      "var obj = { <br> &nbsp; name: 'John',<br> &nbsp; greet: function() {<br> &nbsp; console.log('Hello, ' + this.name);<br> }};<br> var greetFunction = obj.greet;<br> greetFunction();",
-      "var num = 10; <br> num();",
-      "var obj = null; <br> console.log(obj.property);",
-      "var arr = [1, 2, 3]; <br> arr.toUpperCase();",
-      "var str = null; <br> console.log(str[0]);",
-      "var num = 10; <br> console.log(num.map(Number));"
+      "var obj = { \n name: 'John',\n greet: function() {\n  console.log('Hello, ' + this.name);\n }\n};\nvar greetFunction = obj.greet;\ngreetFunction();",
+      "var num = 10; \nnum();",
+      "var obj = null; \nconsole.log(obj.property);",
+      "var arr = [1, 2, 3]; \narr.toUpperCase();",
+      "var str = null; \nconsole.log(str[0]);",
+      "var num = 10; \nconsole.log(num.map(Number));"
     ],
     "explanations": []
   },
   {
-    "id": "3",
+    "id": "4",
     "title": "RangeError",
     "description": "A look at different RangeErrors.",
     "questions": [

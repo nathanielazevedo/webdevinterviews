@@ -35,7 +35,7 @@ const Games = () => {
             {
               basePath: '/games/will-it-throw/random/',
               headerText:
-                "You will receive random questions in no logical order. It's best to do this after completing the structured path.",
+                'Receive random questions from our question pool in no logical order.',
               items: random,
             },
           ]}

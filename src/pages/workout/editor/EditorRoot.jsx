@@ -9,7 +9,7 @@ import {
   SandpackThemeProvider,
   SandpackProvider,
 } from '@codesandbox/sandpack-react'
-import { Box, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import ResizeHandle from '../../../components/ResizeHandle'
 import Browser from './browser/Root'
 import AutoSave from './components/AutoSave'

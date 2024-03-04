@@ -1,19 +1,9 @@
 import { useState, useContext, useEffect } from 'react'
 import questions from './transformedData.json'
 import { useParams } from 'react-router-dom'
-import { NavLink } from 'react-router-dom'
 import TextLink from '../../../components/TextLink'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-  Typography,
-  Box,
-} from '@mui/material'
+import { Button, Typography, Box } from '@mui/material'
 import { AuthContext } from '../../../contexts/AuthContext'
 
 import ToggleButton from '@mui/material/ToggleButton'
@@ -21,7 +11,6 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import ScoreCircles from '../components/ScoreCircles'
 import { useNavigate } from 'react-router-dom'
 import Screen from '../components/Screen'
-import Explanation from '../components/Explanation'
 
 function selectRandomItems() {
   const shuffledArray = questions.sort(() => Math.random() - 0.5)

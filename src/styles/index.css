@@ -204,23 +204,46 @@
   gap: 10px;
 }
 
-.score-circle {
-  height: 20px;
-  width: 20px;
-  border: 1px solid rgba(128, 128, 128, 0.44);
-  border-radius: 50%;
+/* The animation code */
+@keyframes example {
+  from {
+    top: 40px;
+    right: 200px;
+  }
+  to {
+    top: -50px;
+    right: 0px;
+  }
 }
 
-.correct-score-circle {
-  background-color: var(--green);
+/* The element to apply the animation to */
+.thing {
+  width: 100px;
+  height: 100px;
+  font-size: 12px;
+  position: absolute;
+  top: 40px;
+  right: 200px;
+  animation-name: example;
+  animation-duration: 0.75s;
 }
 
-.incorrect-score-circle {
-  background-color: var(--red);
+@keyframes pulse {
+  from {
+    font-size: 45px;
+  }
+  to {
+    font-size: 35px;
+  }
 }
 
-.guess-form {
-  width: 100%;
+.score {
+  font-size: 45px;
+  animation-name: pulse;
+  animation-duration: 1.5s;
+  animation-direction: alternate;
+  animation-iteration-count: 10;
+  animation-timing-function: ease-in-out;
 }
 
 .shorts-container {

@@ -10,8 +10,12 @@ const GameButtons = ({ onSubmit, disabled, gameName }) => {
         size='small'
         disabled={disabled}
       >
-        <ToggleButton value={'1'}>True</ToggleButton>
-        <ToggleButton value={'0'}>False</ToggleButton>
+        <ToggleButton value={'1'} sx={{ padding: '8px 20px' }}>
+          True
+        </ToggleButton>
+        <ToggleButton value={'0'} sx={{ padding: '8px 20px' }}>
+          False
+        </ToggleButton>
       </ToggleButtonGroup>
     )
   } else if (gameName == 'will-it-throw') {
@@ -22,8 +26,12 @@ const GameButtons = ({ onSubmit, disabled, gameName }) => {
         size='small'
         disabled={disabled}
       >
-        <ToggleButton value={'yes'}>Yes</ToggleButton>
-        <ToggleButton value={'no'}>No</ToggleButton>
+        <ToggleButton value={'yes'} sx={{ padding: '8px 20px' }}>
+          Yes
+        </ToggleButton>
+        <ToggleButton value={'no'} sx={{ padding: '8px 20px' }}>
+          No
+        </ToggleButton>
       </ToggleButtonGroup>
     )
   }

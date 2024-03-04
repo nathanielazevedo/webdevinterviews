@@ -7,7 +7,17 @@ import BackButton from './BackButton'
 import GameOverButtons from './GameOverButtons'
 import GameButtons from './GameButtons'
 
-const Game = ({ deck, pastFreeDecks, goNextDeck, isLastDeck, gameName }) => {
+import correctSound from '../sounds/correctSound.wav'
+import incorrectSound from '../sounds/incorrectSound.mp3'
+
+const Game = ({
+  deck,
+  pastFreeDecks,
+  goNextDeck,
+  isLastDeck,
+  gameName,
+  playSound,
+}) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [output, setOutput] = useState(null)
   const [scores, setScores] = useState([])
@@ -34,11 +44,19 @@ const Game = ({ deck, pastFreeDecks, goNextDeck, isLastDeck, gameName }) => {
   }
 
   const handleCorrectInput = () => {
+    if (playSound) {
+      var audio = new Audio(correctSound)
+      audio.play()
+    }
     setOutput(true)
     setScores((prev) => [...prev, true])
   }
 
   const handleIncorrectInput = () => {
+    if (playSound) {
+      var audio = new Audio(incorrectSound)
+      audio.play()
+    }
     setOutput(false)
     setScores((prev) => [...prev, false])
   }
