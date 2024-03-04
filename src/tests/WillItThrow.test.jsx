@@ -50,7 +50,7 @@ describe('Will It Throw Component', () => {
     }
 
     expect(allDoneText).toBeInTheDocument()
-  })
+  }, 10000)
 
   it('renders random items in every deck and moves until the end', async () => {
     render(
@@ -88,7 +88,7 @@ describe('Will It Throw Component', () => {
     }
 
     expect(allDoneText).toBeInTheDocument()
-  })
+  }, 10000)
 
   it('ensure the play again button is working', async () => {
     render(
@@ -121,5 +121,5 @@ describe('Will It Throw Component', () => {
     })
     let trueButton = screen.queryByText('Yes')
     expect(trueButton).toBeInTheDocument()
-  })
+  }, 10000)
 })

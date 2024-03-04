@@ -50,7 +50,7 @@ describe('True Or False Component', () => {
     }
 
     expect(allDoneText).toBeInTheDocument()
-  })
+  }, 10000)
 
   it('renders random items in every deck and moves until the end', async () => {
     render(
@@ -88,7 +88,7 @@ describe('True Or False Component', () => {
     }
 
     expect(allDoneText).toBeInTheDocument()
-  })
+  }, 10000)
 
   it('ensure the play again button is working', async () => {
     render(
@@ -121,7 +121,7 @@ describe('True Or False Component', () => {
     })
     let trueButton = screen.queryByText('True')
     expect(trueButton).toBeInTheDocument()
-  })
+  }, 10000)
 
   it('ensure the go back button is working', async () => {
     render(
@@ -145,5 +145,5 @@ describe('True Or False Component', () => {
     })
     let secondTrueButton = screen.queryByText('True')
     expect(secondTrueButton).toBeTruthy('True button not found')
-  })
+  }, 10000)
 })

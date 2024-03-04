@@ -13,7 +13,6 @@ const Screen = ({ output, code, gameOver, currentScore, deckLength }) => {
 
   const getGameOverText = () => {
     const score = (currentScore / deckLength) * 100
-    console.log(score)
     if (score > 80) {
       return "You're master at this!"
     } else if (score > 65) {
