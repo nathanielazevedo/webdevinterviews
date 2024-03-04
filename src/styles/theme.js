@@ -6,7 +6,6 @@ export default createTheme({
     primary: {
       main: '#19e4ff',
     },
-    divider: '#454950',
     background: {
       paper: 'black',
       default: 'black',
@@ -16,13 +15,6 @@ export default createTheme({
     fontFamily: 'Bai Jamjuree',
   },
   components: {
-    MuiTooltip: {
-      styleOverrides: {
-        tooltip: {
-          backgroundColor: '#212121',
-        },
-      },
-    },
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {

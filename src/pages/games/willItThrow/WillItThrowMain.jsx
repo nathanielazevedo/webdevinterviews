@@ -1,4 +1,3 @@
-import Alert from '@mui/material/Alert'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 
 import TextLink from '../../../components/TextLink'
@@ -19,10 +18,10 @@ const Games = () => {
           icon={<ArrowBackIosIcon fontSize='5px' />}
         />
         <Header
-          title='Will It Throw'
-          subtext='Choose the structured path or get random questions.'
+          title='Will It Throw?'
+          subtext="Welcome to 'Will It Throw?' Can you predict if JavaScript code will throw an error? Test your skills by choosing 'Yes' or 'No' for each snippet. Explore JavaScript's nuances and error handling. Ready to play?"
         />
-        <Alert severity='info'>Explanations are a work in progress</Alert>
+
         <Tabs
           labels={['Structured', 'Random']}
           listsInfo={[

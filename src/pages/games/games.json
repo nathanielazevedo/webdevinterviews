@@ -7,7 +7,7 @@
   },
   {
     "id": "will-it-throw",
-    "title": "Will It Throw",
+    "title": "Will It Throw?",
     "public": true,
     "description": "Determine if the provided code will throw an error."
   },

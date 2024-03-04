@@ -12,10 +12,10 @@ const GamesList = () => {
           title='Games'
           subtext='Improve your understanding of JavaScript with games.'
         />
-        <div>
-          <Alert severity='info'>
-            Games are added, updated and audited daily! Last update: 3-1-24
-          </Alert>
+        <Alert severity='info'>
+          Games are added, updated and audited daily!
+        </Alert>
+        <div style={{ marginTop: '10px' }}>
           {games.map((game, index) => (
             <Item key={index} item={game} basePath={'/games/'} />
           ))}

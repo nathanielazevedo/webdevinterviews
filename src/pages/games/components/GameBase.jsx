@@ -14,7 +14,9 @@ const GameBase = ({ gameName, random }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { displayName } = useContext(AuthContext)
-  const [playSound, setPlaySound] = useState(localStorage.getItem('playSounds'))
+  const [playSound, setPlaySound] = useState(
+    localStorage.getItem('playSounds') == 'true'
+  )
 
   const decks = getProperDecks(gameName, random)
   const { deckNumber } = useParams()
@@ -53,7 +55,13 @@ const GameBase = ({ gameName, random }) => {
 
   return (
     <div className='fit-wrapper' key={key}>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <TextLink
           to={`/games/${gameName}`}
           text='Back to decks'

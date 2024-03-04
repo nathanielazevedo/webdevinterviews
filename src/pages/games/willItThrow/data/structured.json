@@ -18,7 +18,7 @@
   },
   {
     "id": "2",
-    "title": "ReferenceError",
+    "title": "Reference Error",
     "description": "A look at different ReferenceErrors.",
     "questions": [
       "console.log(variable);",
@@ -33,7 +33,7 @@
   },
   {
     "id": "3",
-    "title": "TypeError",
+    "title": "Type Error",
     "description": "A look at different TypeErrors.",
     "questions": [
       "var obj = { \n name: 'John',\n greet: function() {\n  console.log('Hello, ' + this.name);\n }\n};\nvar greetFunction = obj.greet;\ngreetFunction();",
@@ -47,7 +47,7 @@
   },
   {
     "id": "4",
-    "title": "RangeError",
+    "title": "Range Error",
     "description": "A look at different RangeErrors.",
     "questions": [
       "var arr = new Array(-1);",

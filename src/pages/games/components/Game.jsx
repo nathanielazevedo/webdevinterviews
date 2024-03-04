@@ -9,6 +9,7 @@ import GameButtons from './GameButtons'
 
 import correctSound from '../sounds/correctSound.wav'
 import incorrectSound from '../sounds/incorrectSound.mp3'
+import { Typography } from '@mui/material'
 
 const Game = ({
   deck,
@@ -21,6 +22,7 @@ const Game = ({
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [output, setOutput] = useState(null)
   const [scores, setScores] = useState([])
+  const [errorType, setErrorType] = useState()
 
   const deckLength = deck.questions.length
   const gameOver = currentQuestionIndex >= deckLength
@@ -76,6 +78,7 @@ const Game = ({
         if (input === 'no') handleCorrectInput()
         else handleIncorrectInput()
       } catch (e) {
+        setErrorType(e.toString())
         if (input === 'yes') handleCorrectInput()
         else handleIncorrectInput()
       }
@@ -83,6 +86,7 @@ const Game = ({
 
     setTimeout(() => {
       setOutput(null)
+      setErrorType('')
       setCurrentQuestionIndex(currentQuestionIndex + 1)
     }, 500)
   }
@@ -117,6 +121,7 @@ const Game = ({
         </div>
       </div>
       {!gameOver && <Explanation text={currentDeckExplanation} />}
+      {errorType && <Typography color='error'>{errorType}</Typography>}
     </>
   )
 }

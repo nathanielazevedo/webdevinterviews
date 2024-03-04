@@ -25,23 +25,22 @@ const Screen = ({ output, code, gameOver, currentScore, deckLength }) => {
   const getScreen = () => {
     if (gameOver) {
       return (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Typography variant='subtitle1' sx={{ color: 'grey.300' }}>
-            {getGameOverText()}
-          </Typography>
-          <Typography
-            sx={{ color: 'grey.300', fontSize: '45px' }}
-            className='score'
+        <Zoom in={true}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
           >
-            {currentScore} / {deckLength}
-          </Typography>
-        </div>
+            <Typography variant='subtitle1' sx={{ color: 'grey.300' }}>
+              {getGameOverText()}
+            </Typography>
+            <Typography sx={{ color: 'grey.300', fontSize: '45px' }}>
+              {currentScore} / {deckLength}
+            </Typography>
+          </div>
+        </Zoom>
       )
     } else if (output !== null) {
       return (
@@ -74,6 +73,9 @@ const Screen = ({ output, code, gameOver, currentScore, deckLength }) => {
             <SandpackProvider
               theme={{
                 ...amethyst,
+                colors: {
+                  surface1: 'black',
+                },
                 font: { size: '20px', lineHeight: '30px' },
                 syntax: {
                   tag: '#5833ff',

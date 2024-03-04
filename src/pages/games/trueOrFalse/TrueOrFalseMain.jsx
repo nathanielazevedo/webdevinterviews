@@ -1,8 +1,4 @@
-import { Link as routerLink } from 'react-router-dom'
-
-import Alert from '@mui/material/Alert'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
-import Link from '@mui/material/Link'
 
 import TextLink from '../../../components/TextLink'
 import Header from '../../../components/Header'
@@ -21,25 +17,27 @@ const TrueOrFalseMain = () => {
           text='Back to games'
           icon={<ArrowBackIosIcon fontSize='5px' />}
         />
+
         <Header
           title='True or False'
-          subtext='Choose the structured path or get random questions.'
+          subtext="Welcome to True or False, the JavaScript game where you'll face a series of comparisons and decide if they're true or false. From simple math equations to curious facts, challenge your intuition and logic with each choice. Are you ready to play?"
         />
-        <Alert severity='info'>
+
+        {/* <Alert severity='info'>
           Want to challenge an explanation? &nbsp;
           <div style={{ display: 'inline-block' }}>
             <Link component={routerLink} to='/contact' className='nav-link'>
               Contact Us
             </Link>
           </div>
-        </Alert>
+        </Alert> */}
         <Tabs
           labels={['Structured', 'Random']}
           listsInfo={[
             {
               basePath: '/games/true-or-false/structured/',
               headerText:
-                'This is the structured path. This series of questions will slowly introduce you to the different JavaScript types and how they behave. Each series of questions builds upon the previous questions. This is a great place to start.',
+                'This series of questions will slowly introduce you to the different JavaScript types and how they behave. Each series of questions builds upon the previous questions. This is a great place to start.',
               items: structured,
             },
             {

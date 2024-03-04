@@ -18,15 +18,33 @@ const List = ({ headerText, items, basePath }) => {
   if (isRandom) {
     return (
       <>
-        <Typography sx={{ color: 'grey.500' }}>{headerText}</Typography>
         <Item
-          item={{ title: 'Random Questions', public: displayName, id: 'r' }}
+          item={{
+            title: 'Random Questions',
+            public: displayName,
+            id: 'r',
+            description: 'From our question pool .',
+          }}
           basePath={basePath}
+          className='no-line'
         />
-        <Divider>OR</Divider>
-        <Typography sx={{ color: 'grey.500' }} mt={'20px'}>
-          Get random questions in a semi-organized fashion.
-        </Typography>
+        <Divider sx={{ marginTop: '20px' }}>OR</Divider>
+        <div
+          style={{
+            marginTop: '20px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+          }}
+        >
+          <Typography sx={{ color: 'grey.500' }}>
+            Random questions deck by deck.
+          </Typography>
+          <Typography variant='caption' sx={{ color: 'grey.500' }} noWrap>
+            {items.length} decks
+          </Typography>
+        </div>
+
         <div style={{ margin: '20px 0' }}>
           {items.map((item, index) => {
             return <Item key={index} item={item} basePath={basePath} />

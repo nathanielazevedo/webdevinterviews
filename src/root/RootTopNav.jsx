@@ -1,22 +1,15 @@
 import { useContext, useState } from 'react'
 import {
-  Typography,
-  Box,
-  Skeleton,
-  Divider,
   IconButton,
   AppBar,
   Toolbar,
   Button,
   Menu,
   MenuItem,
-  Link,
 } from '@mui/material'
-import { Link as routerLink } from 'react-router-dom'
 import TextLink from '../components/TextLink'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useNavigate } from 'react-router'
-// import logo from '../assets/logo.png'
 import logo from '../assets/letter_logo.png'
 import RootSideNav from './RootSideNav'
 import { AuthContext } from '../contexts/AuthContext'

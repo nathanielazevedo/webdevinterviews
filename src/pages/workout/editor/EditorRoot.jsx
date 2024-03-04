@@ -85,6 +85,7 @@ const EditorRoot = ({ isSolution }) => {
                         alignItems: 'center',
                         height: '5vh',
                         backgroundColor: 'black',
+                        margin: '1px',
                       }}
                     >
                       <Typography
