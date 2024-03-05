@@ -74,7 +74,7 @@ const Screen = ({ output, code, gameOver, currentScore, deckLength }) => {
               theme={{
                 ...amethyst,
                 colors: {
-                  surface1: 'black',
+                  surface1: '#121212',
                 },
                 font: { size: '20px', lineHeight: '30px' },
                 syntax: {

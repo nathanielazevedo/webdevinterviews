@@ -17,8 +17,7 @@ import TrueOrFalseMain from './pages/games/trueOrFalse/TrueOrFalseMain'
 import ShortsEditor from './pages/shortsEditor/ShortsEditor'
 import WillItThrowMain from './pages/games/willItThrow/WillItThrowMain'
 import NewMemberForm from './pages/NewMemberForm'
-import Ccc from './pages/games/ccc/Ccc'
-import CccList from './pages/games/ccc/CccList'
+import CccMain from './pages/games/ccc/CccList'
 
 const router = createBrowserRouter([
   {
@@ -123,15 +122,15 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <CccList />,
+                element: <CccMain />,
               },
+              // {
+              //   path: 'structured/:deckNumber',
+              //   element: <CccMain gameName={'ccc'} random={false} />,
+              // },
               {
-                path: ':id',
-                element: (
-                  <div className='fit-wrapper'>
-                    <Ccc />
-                  </div>
-                ),
+                path: 'random/:deckNumber',
+                element: <GameBase gameName={'ccc'} random={true} />,
               },
             ],
           },

@@ -35,7 +35,7 @@ const Workouts = () => {
 
     return (
       <div>
-        <Alert severity='info' className='workout-alert' icon={false}>
+        <Alert severity='info' variant='standard'>
           There is no value in these workouts being mobile friendly. Therefore,
           there is currenly no intention to do so.
         </Alert>
@@ -43,14 +43,14 @@ const Workouts = () => {
           {sortedWorkouts.map((workout) => {
             return workout.visible ? (
               <Card
-                elevation={0}
+                elevation={1}
                 key={workout.id}
                 className='item-container'
                 onClick={() => navigate(`/workouts/${workout.id}`)}
               >
                 <div>
                   <div className='item-text-wrapper'>
-                    <Typography>{workout.title}</Typography>
+                    <Typography fontWeight='bold'>{workout.title}</Typography>
                     <Rating rating={workout.difficulty} />
                   </div>
                   <Typography sx={{ color: 'grey.500' }} variant='subtitle2'>
@@ -70,7 +70,10 @@ const Workouts = () => {
                     })}
                   </div>
                 </div>
-                <ArrowForwardIosIcon sx={{ color: 'grey.400' }} />
+                <ArrowForwardIosIcon
+                  fontSize='small'
+                  sx={{ color: 'grey.400' }}
+                />
               </Card>
             ) : (
               <div className='hidden-item-wrapper' key={workout.id}>
@@ -78,7 +81,7 @@ const Workouts = () => {
                 <div className='item-container'>
                   <div>
                     <div className='item-text-wrapper'>
-                      <Typography>{workout.title}</Typography>
+                      <Typography fontWeight='bold'>{workout.title}</Typography>
                       <Rating rating={workout.difficulty} />
                     </div>
                     <Typography sx={{ color: 'grey.500' }} variant='subtitle2'>
@@ -98,7 +101,7 @@ const Workouts = () => {
                       })}
                     </div>
                   </div>
-                  <LockIcon sx={{ color: 'grey.400' }} />
+                  <LockIcon sx={{ color: 'grey.400' }} fontSize='small' />
                 </div>
               </div>
             )
@@ -113,8 +116,7 @@ const Workouts = () => {
       <div className='fit-wrapper'>
         <Header
           title='Workouts'
-          subtext='A programmer is an athlete of the mind. These workouts will train your abilities 
-          with React, JavaScript, HTML, CSS and DSA.'
+          subtext='A programmer is an athlete of the mind. These workouts will train your abilities with React, JavaScript, HTML, CSS and DSA.'
         />
         {renderBodyContent()}
       </div>

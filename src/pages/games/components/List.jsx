@@ -18,16 +18,18 @@ const List = ({ headerText, items, basePath }) => {
   if (isRandom) {
     return (
       <>
-        <Item
-          item={{
-            title: 'Random Questions',
-            public: displayName,
-            id: 'r',
-            description: 'From our question pool .',
-          }}
-          basePath={basePath}
-          className='no-line'
-        />
+        <div className='items-container'>
+          <Item
+            item={{
+              title: 'Random Questions',
+              public: displayName,
+              id: 'r',
+              description: 'From our question pool .',
+            }}
+            basePath={basePath}
+            className='no-line'
+          />
+        </div>
         <Divider sx={{ marginTop: '20px' }}>OR</Divider>
         <div
           style={{
@@ -37,15 +39,15 @@ const List = ({ headerText, items, basePath }) => {
             alignItems: 'flex-end',
           }}
         >
-          <Typography sx={{ color: 'grey.500' }}>
+          <Typography color={'text.secondary'}>
             Random questions deck by deck.
           </Typography>
-          <Typography variant='caption' sx={{ color: 'grey.500' }} noWrap>
-            {items.length} decks
+          <Typography variant='caption' color={'text.secondary'} noWrap>
+            {items.length} DECKS
           </Typography>
         </div>
 
-        <div style={{ margin: '20px 0' }}>
+        <div className='items-container'>
           {items.map((item, index) => {
             return <Item key={index} item={item} basePath={basePath} />
           })}
@@ -55,8 +57,8 @@ const List = ({ headerText, items, basePath }) => {
   } else {
     return (
       <>
-        <Typography sx={{ color: 'grey.500' }}>{headerText}</Typography>
-        <div style={{ margin: '20px 0' }}>
+        <Typography color={'text.secondary'}>{headerText}</Typography>
+        <div className='items-container'>
           {items.map((item, index) => {
             return <Item key={index} item={item} basePath={basePath} />
           })}

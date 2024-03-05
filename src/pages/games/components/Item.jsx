@@ -7,7 +7,7 @@ const Item = ({ item, basePath, className }) => {
   const navigate = useNavigate()
   return item.public ? (
     <Card
-      elevation={0}
+      elevation={1}
       className={`item-container ` + className}
       onClick={() => navigate(basePath + item.id)}
     >
@@ -15,32 +15,33 @@ const Item = ({ item, basePath, className }) => {
         <div
           style={{
             display: 'flex',
-            gap: '10px',
-            alignItems: 'center',
+            flexDirection: 'column',
+            // gap: '5px',
+            alignItems: 'flex-start',
           }}
         >
-          <Typography color='grey.400' textTransform={'uppercase'}>
-            {item.title}
+          <Typography>{item.title}</Typography>
+          <Typography color={'text.secondary'}>{item?.description}</Typography>
+          <Typography variant='caption' color={'text.secondary'}>
+            {item?.questions?.length && item?.questions?.length + ' Questions'}
           </Typography>
         </div>
-        <Typography color='grey.300' sx={{ fontSize: '14px' }}>
-          {item?.description}
-        </Typography>
-        <Typography variant='caption' color={'grey.500'}>
-          {item?.questions?.length && item?.questions?.length + ' Questions'}
-        </Typography>
       </div>
-      <ArrowForwardIosIcon fontSize='small' sx={{ color: 'grey.500' }} />
+      <ArrowForwardIosIcon fontSize='small' color={'text.icon'} />
     </Card>
   ) : (
     <div className='hidden-item-wrapper'>
       <div className='hidden-item-overlay'></div>
-      <div className='item-container'>
+      <Card
+        elevation={1}
+        className={`item-container ` + className}
+        onClick={() => navigate(basePath + item.id)}
+      >
         <div>
           <div
             style={{
               display: 'flex',
-              gap: '10px',
+              gap: '5px',
               alignItems: 'center',
             }}
           >
@@ -57,7 +58,7 @@ const Item = ({ item, basePath, className }) => {
             color: 'grey.400',
           }}
         />
-      </div>
+      </Card>
     </div>
   )
 }

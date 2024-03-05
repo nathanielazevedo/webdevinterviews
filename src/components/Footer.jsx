@@ -1,11 +1,11 @@
 import { Link, Paper, Typography } from '@mui/material'
 import { Link as routerLink } from 'react-router-dom'
-import TextLink from './TextLink'
 import AddToHomeScreenIcon from '@mui/icons-material/AddToHomeScreen'
 
 const Footer = ({ bannerOpen = false }) => {
   return (
-    <div
+    <Paper
+      elevation={2}
       className='footer-wrapper'
       style={{
         marginBottom: bannerOpen ? '120px' : 0,
@@ -45,7 +45,7 @@ const Footer = ({ bannerOpen = false }) => {
           Contact
         </Link>
       </div>
-    </div>
+    </Paper>
   )
 }
 

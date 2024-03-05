@@ -6,11 +6,11 @@ import {
   Button,
   Menu,
   MenuItem,
+  Typography,
 } from '@mui/material'
 import TextLink from '../components/TextLink'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useNavigate } from 'react-router'
-import logo from '../assets/letter_logo.png'
 import RootSideNav from './RootSideNav'
 import { AuthContext } from '../contexts/AuthContext'
 import { YouTube } from '@mui/icons-material'
@@ -29,20 +29,17 @@ const RootTopNav = () => {
   }
 
   return (
-    <AppBar elevation={0}>
+    <AppBar>
       <Toolbar>
         <div className='app-bar-section'>
-          <img
+          <Typography
             onClick={() => navigate('/')}
-            src={logo}
-            width={'70px'}
-            style={{
-              borderRadius: '10px',
-              cursor: 'pointer',
-            }}
-          />
-
-          {/* <TextLink to='/' text='WDI' end={false} /> */}
+            variant='h5'
+            fontWeight={'bold'}
+            letterSpacing={'4px'}
+          >
+            WDI
+          </Typography>
           <div className='app-bar-links'>
             <TextLink to='/workouts' text='Workouts' end={false} />
             <TextLink to='/games' text='Games' end={false} />

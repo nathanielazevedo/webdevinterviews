@@ -15,7 +15,7 @@ const GamesList = () => {
         <Alert severity='info'>
           Games are added, updated and audited daily!
         </Alert>
-        <div style={{ marginTop: '10px' }}>
+        <div className='items-container'>
           {games.map((game, index) => (
             <Item key={index} item={game} basePath={'/games/'} />
           ))}

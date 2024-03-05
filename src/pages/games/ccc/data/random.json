@@ -1,7 +1,7 @@
 [
   {
+    "id": "1",
     "title": "Deck 1",
-    "to": "1",
     "questions": [
       "1.1 ??? 2",
       "true ??? false",
@@ -9,7 +9,7 @@
       "'1' ??? 1",
       "'true' ??? true"
     ],
-    "allowNots": [false, false, false, false, false],
+    "allowNots": [false, false, false, false, true],
     "explanations": [
       "Basic math question to warm up.",
       "When comparing booleans, JavaScript turns both booleans to numbers. True coerced to a number is 1. False coerced to a number is 0. The comparison becomes 1 ??? 0. There are multiple correct answers including >, != and !==.",
@@ -20,8 +20,8 @@
     "public": true
   },
   {
+    "id": "2",
     "title": "Deck 2",
-    "to": "2",
     "questions": [
       "[] ??? {}",
       "1 ??? '1'",
@@ -29,6 +29,7 @@
       "1.0 ??? 1.00",
       "'a' ??? 0"
     ],
+    "allowNots": [false, false, true, false, true],
     "explanations": [
       "When comparing different types like an array and an object, the abstract relational comparison algorithm is applied. This converts the operands to primitives and then compares them. An empty array ([]) gets coerced to the empty string (''), while an empty object ({}) gets coerced to '[object Object]'. After coercion we are comparing these strings, '' ??? '[object Object]'. If all else is equal, the shorter string is considered less than the longer string. Therefore the answer is <.",
       "When comparing a number to a string, JavaScript attempts to turn strings to numbers. In this case, '1' gets converted to a number, and the comparison becomes 1 ??? 1. Therefore the answer is ==.",
@@ -39,8 +40,8 @@
     "public": true
   },
   {
+    "id": "3",
     "title": "Deck 3",
-    "to": "3",
     "questions": [
       "(100 / '10') ??? 10",
       "10 + '10' ??? 1010",
@@ -58,8 +59,8 @@
     "public": true
   },
   {
+    "id": "4",
     "title": "Deck 4",
-    "to": "4",
     "questions": [
       "typeof NaN ??? 'number'",
       "null ??? undefined",
@@ -77,8 +78,8 @@
     "public": true
   },
   {
+    "id": "5",
     "title": "Deck 5",
-    "to": "5",
     "questions": [
       "({}).toString() ??? '[object Object]'",
       "[].toString() ??? ''",
@@ -96,8 +97,8 @@
     "public": true
   },
   {
+    "id": "6",
     "title": "Deck 6",
-    "to": "6",
     "questions": [
       "{} + [] ??? 0",
       "Math.min() ??? Math.max()",
@@ -109,8 +110,8 @@
     "public": false
   },
   {
+    "id": "7",
     "title": "Deck 7",
-    "to": "7",
     "questions": [
       "'a' ??? 'b'",
       "2 + 2 + '2' ??? 42",
@@ -122,8 +123,8 @@
     "public": false
   },
   {
+    "id": "8",
     "title": "Deck 8",
-    "to": "8",
     "questions": [
       "+true ??? 1",
       "+[] ??? 0",
@@ -135,8 +136,8 @@
     "public": false
   },
   {
+    "id": "9",
     "title": "Deck 9",
-    "to": "9",
     "questions": [
       "typeof null ??? 'null'",
       "typeof null ??? 'undefined'",
@@ -148,8 +149,8 @@
     "public": false
   },
   {
+    "id": "10",
     "title": "Deck 10",
-    "to": "10",
     "questions": [
       "typeof Boolean() ??? 'boolean'",
       "Boolean(' ') ??? true",
@@ -161,8 +162,8 @@
     "public": false
   },
   {
+    "id": "11",
     "title": "Deck 11",
-    "to": "11",
     "questions": [
       "true ??? false + 1",
       "true ??? 1",
@@ -174,8 +175,8 @@
     "public": false
   },
   {
+    "id": "12",
     "title": "Deck 12",
-    "to": "12",
     "questions": [
       "null ??? undefined",
       "0 ??? undefined",
@@ -187,8 +188,8 @@
     "public": false
   },
   {
+    "id": "13",
     "title": "Deck 13",
-    "to": "13",
     "questions": [
       "undefined ??? 1",
       "null ??? 0",
@@ -200,8 +201,8 @@
     "public": false
   },
   {
+    "id": "14",
     "title": "Deck 14",
-    "to": "14",
     "questions": [
       "+[] ??? 0",
       "typeof function(){} ??? 'object'",
@@ -213,8 +214,8 @@
     "public": false
   },
   {
+    "id": "15",
     "title": "Deck 15",
-    "to": "15",
     "questions": [
       "+{} ??? 0",
       "typeof true ??? 'object'",
@@ -226,8 +227,8 @@
     "public": false
   },
   {
+    "id": "16",
     "title": "Deck 16",
-    "to": "16",
     "questions": [
       "12 % 2 ??? []",
       "[] - true ??? -1",
@@ -239,8 +240,8 @@
     "public": false
   },
   {
+    "id": "17",
     "title": "Deck 17",
-    "to": "17",
     "questions": [
       "Infinity ??? Infinity - 1",
       "-Infinity ??? Infinity * -1",
@@ -252,8 +253,8 @@
     "public": false
   },
   {
+    "id": "18",
     "title": "Deck 18",
-    "to": "18",
     "questions": [
       "'bab' ??? 'aba",
       "4.5 + 5.5 ??? 10",
@@ -265,8 +266,8 @@
     "public": false
   },
   {
+    "id": "19",
     "title": "Deck 19",
-    "to": "19",
     "questions": [
       "({}).toString() ??? '[object Object]'",
       "NaN ??? NaN",
@@ -278,8 +279,8 @@
     "public": false
   },
   {
+    "id": "20",
     "title": "Deck 20",
-    "to": "20",
     "questions": [
       "null ??? null",
       "undefined ??? 0",
@@ -291,8 +292,8 @@
     "public": false
   },
   {
+    "id": "21",
     "title": "Deck 21",
-    "to": "21",
     "questions": [
       "'nate' ??? 'cool'",
       "'a' ??? 'z'",
@@ -304,8 +305,8 @@
     "public": false
   },
   {
+    "id": "22",
     "title": "Deck 22",
-    "to": "22",
     "questions": [
       "3 ??? 2 + '1'",
       "45 ??? '4' + '5'",
@@ -317,8 +318,8 @@
     "public": false
   },
   {
+    "id": "23",
     "title": "Deck 23",
-    "to": "23",
     "questions": [
       "!([] ??? [])",
       "typeof [] !??? 'array'",
@@ -330,8 +331,8 @@
     "public": false
   },
   {
+    "id": "24",
     "title": "Deck 24",
-    "to": "24",
     "questions": [
       "Number(5) ??? 5",
       "typeof Number('Nate') ??? 'number'",
@@ -343,8 +344,8 @@
     "public": false
   },
   {
+    "id": "25",
     "title": "Deck 25",
-    "to": "25",
     "questions": [
       "parseInt([]) ??? 0",
       "Number([]) ??? 0",
@@ -356,8 +357,8 @@
     "public": false
   },
   {
+    "id": "26",
     "title": "Deck 26",
-    "to": "26",
     "questions": [
       "Number((() ??? {})) ??? 1",
       "(() => 1)() ??? 1",
@@ -369,8 +370,8 @@
     "public": false
   },
   {
+    "id": "27",
     "title": "Deck 27",
-    "to": "27",
     "questions": [
       "[] ??? ![]",
       "{} + [] ??? {}",
@@ -382,8 +383,8 @@
     "public": false
   },
   {
+    "id": "28",
     "title": "Deck 28",
-    "to": "28",
     "questions": [
       "Infinity ??? undefined",
       "Infinity ??? Infinity",
@@ -395,8 +396,8 @@
     "public": false
   },
   {
+    "id": "29",
     "title": "Deck 29",
-    "to": "29",
     "questions": [
       "'' || true",
       "null || true",
@@ -408,8 +409,8 @@
     "public": false
   },
   {
+    "id": "30",
     "title": "Deck 30",
-    "to": "30",
     "questions": [
       "false ?? true",
       "false || true",
@@ -421,8 +422,8 @@
     "public": false
   },
   {
+    "id": "31",
     "title": "Deck 31",
-    "to": "31",
     "questions": [
       "[] ? true : false",
       "({}) ? true : false",

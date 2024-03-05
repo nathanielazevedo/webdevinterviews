@@ -49,10 +49,8 @@ const Home = () => {
     <>
       <div className='fit-wrapper'>
         <div className='marketing-section'>
-          <Typography variant='h3' color={'grey.500'}>
-            WEB DEV INTERVIEWS
-          </Typography>
-          <Typography variant='h6' color={'grey.300'} textAlign={'left'}>
+          <Typography variant='h3'>WEB DEV INTERVIEWS</Typography>
+          <Typography variant='h6' color={'text.secondary'} textAlign={'left'}>
             Learning hinges on capturing your brain's interest. Through the use
             of games, dynamic workouts, and engaging contests, I strive to
             inspire continuous exploration and learning.
@@ -99,10 +97,8 @@ const Home = () => {
         </div>
         <Divider />
         <div className='marketing-section'>
-          <Typography variant='h3' color={'grey.500'}>
-            TRUE OR FALSE
-          </Typography>
-          <Typography variant='h6' color={'grey.300'}>
+          <Typography variant='h3'>TRUE OR FALSE</Typography>
+          <Typography variant='h6' color={'text.secondary'}>
             Exercise your understanding of JavaScript comparison operators, type
             coercion and so much more.
           </Typography>

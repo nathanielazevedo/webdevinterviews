@@ -20,7 +20,7 @@ const TrueOrFalseMain = () => {
 
         <Header
           title='True or False'
-          subtext="Welcome to True or False, the JavaScript game where you'll face a series of comparisons and decide if they're true or false. From simple math equations to curious facts, challenge your intuition and logic with each choice. Are you ready to play?"
+          subtext="The JavaScript game where you'll face a series of comparisons and decide if they're true or false. From simple math equations to curious facts, challenge your intuition and logic with each choice. Are you ready to play?"
         />
 
         {/* <Alert severity='info'>

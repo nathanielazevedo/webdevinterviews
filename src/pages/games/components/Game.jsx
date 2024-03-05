@@ -29,6 +29,8 @@ const Game = ({
   const currentScore = scores.reduce((cum, curr) => (curr ? cum + 1 : cum), 0)
   const currentQuestion = deck.questions[currentQuestionIndex]
   const currentDeckExplanation = deck.explanations[currentQuestionIndex]
+  const allowNots =
+    gameName != 'ccc' ? undefined : deck?.allowNots[currentQuestionIndex]
 
   const newGame = () => {
     setCurrentQuestionIndex(0)
@@ -82,6 +84,11 @@ const Game = ({
         if (input === 'yes') handleCorrectInput()
         else handleIncorrectInput()
       }
+    } else if (gameName == 'ccc') {
+      const questionWithInput = cleanedQuestion.replaceAll('???', input)
+      const result = eval(questionWithInput)
+      if (result) handleCorrectInput()
+      else handleIncorrectInput()
     }
 
     setTimeout(() => {
@@ -115,6 +122,7 @@ const Game = ({
             <GameButtons
               gameName={gameName}
               onSubmit={onSubmit}
+              allowNots={allowNots}
               disabled={output != null}
             />
           )}
