@@ -1,24 +1,21 @@
-import { useNavigate } from 'react-router'
 import useFetch from '../../hooks/useFetch'
-import { Typography, Alert, Card } from '@mui/material'
-
-import WorkoutsSkeleton from './WorkoutsSkeleton'
+import Alert from '@mui/material/Alert'
 import Header from '../../components/Header'
-import Rating from '../../components/Rating'
-import Footer from '../../components/Footer'
-
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
-import LockIcon from '@mui/icons-material/Lock'
+import Item from '../../components/Item'
 
 const Workouts = () => {
-  const navigate = useNavigate()
-
   const url = `/workouts`
   const { data: workouts, loading, error } = useFetch(url)
 
   const renderBodyContent = () => {
     if (loading) {
-      return <WorkoutsSkeleton />
+      return (
+        <div className='items-container'>
+          {[1, 2, 3, 4, 5].map((index) => (
+            <Item key={index} skeleton={true} />
+          ))}
+        </div>
+      )
     }
 
     if (error || !workouts) {
@@ -34,94 +31,26 @@ const Workouts = () => {
     )
 
     return (
-      <div>
-        <Alert severity='info' variant='standard'>
-          There is no value in these workouts being mobile friendly. Therefore,
-          there is currenly no intention to do so.
-        </Alert>
-        <div className='items-container'>
-          {sortedWorkouts.map((workout) => {
-            return workout.visible ? (
-              <Card
-                elevation={1}
-                key={workout.id}
-                className='item-container'
-                onClick={() => navigate(`/workouts/${workout.id}`)}
-              >
-                <div>
-                  <div className='item-text-wrapper'>
-                    <Typography fontWeight='bold'>{workout.title}</Typography>
-                    <Rating rating={workout.difficulty} />
-                  </div>
-                  <Typography sx={{ color: 'grey.500' }} variant='subtitle2'>
-                    {workout.description}
-                  </Typography>
-                  <div className='skills-wrapper'>
-                    {workout?.skills?.map((skill) => {
-                      return (
-                        <Typography
-                          key={skill}
-                          sx={{ color: 'grey.500' }}
-                          variant='subtitle2'
-                        >
-                          #{skill}
-                        </Typography>
-                      )
-                    })}
-                  </div>
-                </div>
-                <ArrowForwardIosIcon
-                  fontSize='small'
-                  sx={{ color: 'grey.400' }}
-                />
-              </Card>
-            ) : (
-              <div className='hidden-item-wrapper' key={workout.id}>
-                <div className='hidden-item-overlay'></div>
-                <div className='item-container'>
-                  <div>
-                    <div className='item-text-wrapper'>
-                      <Typography fontWeight='bold'>{workout.title}</Typography>
-                      <Rating rating={workout.difficulty} />
-                    </div>
-                    <Typography sx={{ color: 'grey.500' }} variant='subtitle2'>
-                      {workout.description}
-                    </Typography>
-                    <div className='skills-wrapper'>
-                      {workout?.skills?.map((skill) => {
-                        return (
-                          <Typography
-                            key={skill}
-                            sx={{ color: 'grey.500' }}
-                            variant='subtitle2'
-                          >
-                            #{skill}
-                          </Typography>
-                        )
-                      })}
-                    </div>
-                  </div>
-                  <LockIcon sx={{ color: 'grey.400' }} fontSize='small' />
-                </div>
-              </div>
-            )
-          })}
-        </div>
+      <div className='items-container'>
+        {sortedWorkouts.map((item) => (
+          <Item key={item.id} item={item} basePath={'/workouts/'} />
+        ))}
       </div>
     )
   }
 
   return (
-    <>
-      <div className='fit-wrapper'>
-        <Header
-          title='Workouts'
-          subtext='A programmer is an athlete of the mind. These workouts will train your abilities with React, JavaScript, HTML, CSS and DSA.'
-        />
-        {renderBodyContent()}
-      </div>
-      <Footer />
-    </>
+    <div className='fit-wrapper'>
+      <Header
+        title='Workouts'
+        subtext='A programmer is an athlete of the mind. These workouts will train your abilities with React, JavaScript, HTML, CSS and DSA.'
+      />
+      <Alert severity='info' className='workout-alert'>
+        There is no value in these workouts being mobile friendly. Therefore,
+        there is currenly no intention to do so.
+      </Alert>
+      {renderBodyContent()}
+    </div>
   )
 }
 

@@ -4,34 +4,19 @@ const Rating = ({ rating }) => {
   switch (rating) {
     case 'junior':
       return (
-        <Typography
-          variant='caption'
-          sx={{ color: 'var(--green)' }}
-          fontWeight='bolder'
-          noWrap
-        >
+        <Typography variant='subtitle2' color='success.light' noWrap>
           JUNIOR
         </Typography>
       )
     case 'mid-level':
       return (
-        <Typography
-          variant='caption'
-          sx={{ color: 'var(--orange)' }}
-          fontWeight='bolder'
-          noWrap
-        >
+        <Typography variant='subtitle2' color='warning.light' noWrap>
           MID-LEVEL
         </Typography>
       )
     case 'senior':
       return (
-        <Typography
-          variant='caption'
-          sx={{ color: 'var(--red)' }}
-          fontWeight='bolder'
-          noWrap
-        >
+        <Typography variant='subtitle2' color='error.light' noWrap>
           SENIOR
         </Typography>
       )

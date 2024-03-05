@@ -27,7 +27,7 @@ const Console = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          borderBottom: '0.5px solid var(--color-solid-resize-bar)',
+          borderBottom: '0.5px solid var(--divider)',
           height: '35px',
         }}
       >

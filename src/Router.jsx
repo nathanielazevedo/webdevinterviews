@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './root/Root'
-
+import Footer from './components/Footer.jsx'
 import Home from './pages/Home'
 import Error from './pages/misc/Error'
 import FourOFour from './pages/misc/FourOFour'
@@ -47,7 +47,12 @@ const router = createBrowserRouter([
       {
         path: 'workouts',
         errorElement: <Error />,
-        element: <Workouts />,
+        element: (
+          <>
+            <Workouts />
+            <Footer />
+          </>
+        ),
       },
       {
         path: 'workouts/:id',
@@ -81,14 +86,24 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <GamesList />,
+            element: (
+              <>
+                <GamesList />
+                <Footer />
+              </>
+            ),
           },
           {
             path: 'true-or-false',
             children: [
               {
                 index: true,
-                element: <TrueOrFalseMain />,
+                element: (
+                  <>
+                    <TrueOrFalseMain />
+                    <Footer />
+                  </>
+                ),
               },
               {
                 path: 'structured/:deckNumber',

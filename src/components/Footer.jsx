@@ -18,12 +18,12 @@ const Footer = ({ bannerOpen = false }) => {
           alignItems: 'center',
         }}
       >
-        <AddToHomeScreenIcon sx={{ fontSize: '45px', color: 'grey.400' }} />
+        <AddToHomeScreenIcon sx={{ fontSize: '45px', color: 'text.icon' }} />
         <div>
-          <Typography variant='caption' sx={{ color: 'grey.400' }}>
+          <Typography variant='caption' color='text.secondary'>
             Make this site feel native.
           </Typography>
-          <Typography sx={{ color: 'grey.400' }}>
+          <Typography color='text.secondary'>
             Add it to your homescreen.
           </Typography>
         </div>

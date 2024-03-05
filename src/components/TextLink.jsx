@@ -1,20 +1,22 @@
-import { Typography } from '@mui/material'
+import { Link } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
 const TextLink = ({ to, text, end = true, icon, target }) => (
-  <NavLink
+  <Link
+    component={NavLink}
+    underline='hover'
+    color={'text.secondary'}
     end={end}
     to={to}
     target={target ? target : ''}
+    sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}
     className={({ isActive }) =>
       `nav-link ${isActive ? 'active' : 'not-active'}`
     }
   >
-    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-      {icon && icon}
-      <Typography sx={{ fontSize: '16px' }}>{text}</Typography>
-    </div>
-  </NavLink>
+    {icon && icon}
+    {text}
+  </Link>
 )
 
 export default TextLink

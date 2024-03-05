@@ -3,36 +3,42 @@
     "id": "true-or-false",
     "title": "True or False",
     "public": true,
+    "visible": true,
     "description": "Improve your understanding of JavaScript types and comparisons."
   },
   {
     "id": "will-it-throw",
     "title": "Will It Throw?",
     "public": true,
+    "visible": true,
     "description": "Determine if the provided code will throw an error."
   },
   {
     "id": "ccc",
     "title": "Choose Correct Comparison Operator",
     "public": true,
+    "visible": true,
     "description": "You choose the correct comparison operator. > < == ==="
   },
   {
     "id": "ccc",
     "title": "Choose Correct Error Type",
     "public": false,
+    "visible": false,
     "description": "This code will throw an error, but what type or error?"
   },
   {
     "id": "",
     "title": "Does It Mutate",
     "public": false,
+    "visible": false,
     "description": "Does the code mutate or create a new array?"
   },
   {
     "id": "",
     "title": "Returns What?",
     "public": false,
+    "visible": false,
     "description": "Predict the returned value."
   }
 ]

@@ -1,6 +1,7 @@
-function getRandomQuestions(data) {
+function getRandomQuestions(data, ccc) {
   let selectedQuestions = []
   let selectedExplanations = []
+  let selectedAllowNots = []
 
   // Function to get a random question and its corresponding explanation from an array of questions and explanations
   function getRandomQuestionWithExplanation(questions, explanations) {
@@ -8,6 +9,18 @@ function getRandomQuestions(data) {
     const question = questions[randomIndex]
     const explanation = explanations[randomIndex]
     return { question, explanation }
+  }
+
+  function getRandomQuestionWithExplanationAndAllowNots(
+    questions,
+    explanations,
+    allowNots
+  ) {
+    const randomIndex = Math.floor(Math.random() * questions.length)
+    const question = questions[randomIndex]
+    const explanation = explanations[randomIndex]
+    const allowNot = allowNots[randomIndex]
+    return { question, explanation, allowNot }
   }
 
   // Loop to randomly select questions and explanations from each deck
@@ -22,12 +35,24 @@ function getRandomQuestions(data) {
       deck.explanations &&
       deck.explanations.length > 0
     ) {
-      const { question, explanation } = getRandomQuestionWithExplanation(
-        deck.questions,
-        deck.explanations
-      )
-      selectedQuestions.push(question)
-      selectedExplanations.push(explanation)
+      if (ccc) {
+        const { question, explanation, allowNot } =
+          getRandomQuestionWithExplanationAndAllowNots(
+            deck.questions,
+            deck.explanations,
+            deck.allowNots
+          )
+        selectedQuestions.push(question)
+        selectedExplanations.push(explanation)
+        selectedAllowNots.push(allowNot)
+      } else {
+        const { question, explanation } = getRandomQuestionWithExplanation(
+          deck.questions,
+          deck.explanations
+        )
+        selectedQuestions.push(question)
+        selectedExplanations.push(explanation)
+      }
     }
   }
 
@@ -35,6 +60,7 @@ function getRandomQuestions(data) {
     title: 'Random',
     questions: selectedQuestions,
     explanations: selectedExplanations,
+    allowNots: selectedAllowNots,
   }
 }
 

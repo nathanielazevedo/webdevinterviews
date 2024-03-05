@@ -23,9 +23,10 @@ const GameBase = ({ gameName, random }) => {
   const [key, setKey] = useState(deckNumber)
   const [deck, setDeck] = useState(
     deckNumber == 'r'
-      ? getRandomQuestions(decks)
+      ? getRandomQuestions(decks, gameName == 'ccc' ? true : false)
       : decks[Number(deckNumber) - 1]
   )
+  console.log(deck)
   const isLastDeck = deckNumber >= decks.length - 1
   const pastFreeDecks = Number(deckNumber) >= 5 && !displayName
 

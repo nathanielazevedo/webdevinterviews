@@ -24,7 +24,7 @@ const CustomTabs = ({ labels, listsInfo }) => {
   }
 
   return (
-    <Box>
+    <div>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange}>
           {labels.map((label, index) => (
@@ -41,7 +41,7 @@ const CustomTabs = ({ labels, listsInfo }) => {
           />
         </CustomTabPanel>
       ))}
-    </Box>
+    </div>
   )
 }
 

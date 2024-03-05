@@ -1,5 +1,5 @@
 import { Typography, Divider } from '@mui/material'
-import Item from './Item'
+import Item from '../../../components/Item'
 import { AuthContext } from '../../../contexts/AuthContext'
 import { useContext } from 'react'
 
@@ -9,9 +9,9 @@ const List = ({ headerText, items, basePath }) => {
 
   items.forEach((item, index) => {
     if (displayName) {
-      item.public = true
+      item.visible = true
     } else if (index <= 4) {
-      item.public = true
+      item.visible = true
     }
   })
 
@@ -22,7 +22,7 @@ const List = ({ headerText, items, basePath }) => {
           <Item
             item={{
               title: 'Random Questions',
-              public: displayName,
+              visible: displayName,
               id: 'r',
               description: 'From our question pool .',
             }}
