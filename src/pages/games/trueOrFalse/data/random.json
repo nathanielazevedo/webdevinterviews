@@ -462,7 +462,7 @@
         "explanation": "The typeof operator returns 'string' for string literals in JavaScript. Therefore, typeof 'aaa' == 'string' evaluates to true."
       },
       {
-        "question": "({}) == ({})",
+        "question": "({} == {})",
         "explanation": "Objects are compared by reference in JavaScript. {} and {} refer to different memory locations, so {} == {} evaluates to false."
       }
     ]

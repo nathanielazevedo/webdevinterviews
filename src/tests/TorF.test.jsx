@@ -25,7 +25,7 @@ describe('True Or False Component', () => {
 
     let gamesButton = screen.queryByText('Play True or False')
     fireEvent.click(gamesButton)
-    let gameButton = screen.queryByText('JavaScript is weird.')
+    let gameButton = screen.queryByText('JavaScript is weird')
     fireEvent.click(gameButton)
 
     let allDoneText = screen.queryByText('All done')
@@ -140,7 +140,7 @@ describe('True Or False Component', () => {
       let trueButton = screen.queryByText('True')
       fireEvent.click(trueButton)
       vi.runAllTimers()
-      let goBackButton = screen.queryByText('Go Back')
+      let goBackButton = screen.queryByText('Back')
       fireEvent.click(goBackButton)
     })
     let secondTrueButton = screen.queryByText('True')

@@ -1,7 +1,6 @@
 import { Box, ToggleButtonGroup, ToggleButton } from '@mui/material'
 
 const GameButtons = ({ onSubmit, disabled, gameName, allowNots }) => {
-  console.log(allowNots)
   let buttons
   if (gameName == 'true-or-false') {
     buttons = (

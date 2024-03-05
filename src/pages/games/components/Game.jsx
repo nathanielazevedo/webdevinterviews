@@ -27,10 +27,10 @@ const Game = ({
   const deckLength = deck.questions.length
   const gameOver = currentQuestionIndex >= deckLength
   const currentScore = scores.reduce((cum, curr) => (curr ? cum + 1 : cum), 0)
-  const currentQuestion = deck.questions[currentQuestionIndex].question
+  const currentQuestion = deck.questions[currentQuestionIndex]?.question
   const currentDeckExplanation =
-    deck.questions[currentQuestionIndex].explanation
-  const allowNots = gameName != 'ccc' ? undefined : currentQuestion.allowNots
+    deck.questions[currentQuestionIndex]?.explanation
+  const allowNots = gameName != 'ccc' ? undefined : currentQuestion?.allowNots
 
   const newGame = () => {
     setCurrentQuestionIndex(0)
@@ -72,8 +72,12 @@ const Game = ({
       .replaceAll('&nbsp;', '')
 
     if (gameName == 'true-or-false') {
-      if (input == eval(cleanedQuestion)) handleCorrectInput()
-      else handleIncorrectInput()
+      try {
+        if (input == eval(cleanedQuestion)) handleCorrectInput()
+        else handleIncorrectInput()
+      } catch (e) {
+        console.log('something went wrong')
+      }
     } else if (gameName == 'will-it-throw') {
       try {
         eval(cleanedQuestion)

@@ -2,11 +2,9 @@ const checkCodeDifferences = (serverFiles, localFiles) => {
   const serverKeys = Object.keys(serverFiles)
   const localKeys = Object.keys(localFiles)
   const diffKeys = []
-  console.log(serverFiles)
   serverKeys.forEach((key) => {
     if (serverFiles[key]?.code !== localFiles?.[key]?.code) {
       diffKeys.push(key)
-      console.log(1)
     }
   })
 
@@ -16,7 +14,6 @@ const checkCodeDifferences = (serverFiles, localFiles) => {
       localFiles[key]?.code !== '.emptyDir'
     ) {
       diffKeys.push(key)
-      console.log(2)
     }
   })
 
