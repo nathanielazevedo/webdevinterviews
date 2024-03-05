@@ -3,272 +3,392 @@
     "id": "1",
     "title": "Deck 1",
     "questions": [
-      "const arr = [1,2,3]; \narr[4];",
-      "const obj = {1: true}; \nobj[3];",
-      "let str = 'dog'; \nstr[4] = 'a';",
-      "let dog = 4; \ndog[5];",
-      "hello"
-    ],
-    "explanations": [
-      "This code initializes an array 'arr' with three elements. The statement 'arr[4];' tries to access the element at index 4, which is out of bounds because arrays in JavaScript are zero-indexed. This will result in 'undefined', but it won't throw an error.",
-      "Here, an object 'obj' is defined with a key '1' and value 'true'. 'obj[3];' attempts to access the value associated with key '3', which doesn't exist. This will also return 'undefined' without throwing an error.",
-      "A string 'str' is defined as 'dog'. The statement 'str[4] = 'a';' attempts to change the character at index 4 to 'a', but strings in JavaScript are immutable, so this line won't change the string. However, it won't throw an error.",
-      "A variable 'dog' is assigned the value '4'. The expression 'dog[5];' tries to access index 5 of the variable 'dog', but 'dog' is not an array, it's a number. Accessing an index of a number as if it were an array will throw an error: 'TypeError: Cannot read property '5' of undefined'.",
-      "This is not valid JavaScript syntax on its own. It's just the string 'hello'. It won't throw an error because it's not even an executable statement."
+      {
+        "question": "const arr = [1,2,3]; \narr[4];",
+        "explanation": "This code initializes an array 'arr' with three elements. The statement 'arr[4];' tries to access the element at index 4, which is out of bounds because arrays in JavaScript are zero-indexed. This will result in 'undefined', but it won't throw an error."
+      },
+      {
+        "question": "const obj = {1: true}; \nobj[3];",
+        "explanation": "Here, an object 'obj' is defined with a key '1' and value 'true'. 'obj[3];' attempts to access the value associated with key '3', which doesn't exist. This will also return 'undefined' without throwing an error."
+      },
+      {
+        "question": "let str = 'dog'; \nstr[4] = 'a';",
+        "explanation": "A string 'str' is defined as 'dog'. The statement 'str[4] = 'a';' attempts to change the character at index 4 to 'a', but strings in JavaScript are immutable, so this line won't change the string. However, it won't throw an error."
+      },
+      {
+        "question": "let dog = 4; \ndog[5];",
+        "explanation": "A variable 'dog' is assigned the value '4'. The expression 'dog[5];' tries to access index 5 of the variable 'dog', but 'dog' is not an array, it's a number. Accessing an index of a number as if it were an array will throw an error: 'TypeError: Cannot read property '5' of undefined'."
+      },
+      {
+        "question": "hello",
+        "explanation": "This is not valid JavaScript syntax on its own. It's just the string 'hello'. It won't throw an error because it's not even an executable statement."
+      }
     ]
   },
   {
     "id": "2",
     "title": "Deck 2",
     "questions": [
-      "let obj = {}; \nconsole.log(obj.prop);",
-      "let result = 10 / 0;",
-      "let func; \nfunc();",
-      "let arr = [1, 2, 3]; \nconsole.log(arr[10]);",
-      "let unusedVar;"
-    ],
-    "explanations": [
-      "In this line, an empty object 'obj' is created. Then, 'console.log(obj.prop);' attempts to access a property named 'prop' on the object 'obj'. Since 'prop' does not exist in the object, it will log 'undefined' to the console without throwing an error.",
-      "This line tries to perform division by zero, which is mathematically undefined and will result in a special value called 'Infinity' in JavaScript. However, dividing by zero doesn't throw an error in JavaScript.",
-      "This code declares a variable 'func' without assigning a value to it, so it's 'undefined'. Then, it tries to invoke 'func()' as a function. Invoking an undefined variable as a function will result in a TypeError: 'func is not a function'.",
-      "An array 'arr' is defined with three elements. Then, it tries to access the element at index 10, which is out of bounds since arrays are zero-indexed. This will result in 'undefined', but it won't throw an error.",
-      "This line declares a variable 'unusedVar' but doesn't initialize it with any value. Since it's declared but not used, it won't throw any errors."
+      {
+        "question": "let obj = {}; \nconsole.log(obj.prop);",
+        "explanation": "In this line, an empty object 'obj' is created. Then, 'console.log(obj.prop);' attempts to access a property named 'prop' on the object 'obj'. Since 'prop' does not exist in the object, it will log 'undefined' to the console without throwing an error."
+      },
+      {
+        "question": "let result = 10 / 0;",
+        "explanation": "This line tries to perform division by zero, which is mathematically undefined and will result in a special value called 'Infinity' in JavaScript. However, dividing by zero doesn't throw an error in JavaScript."
+      },
+      {
+        "question": "let func; \nfunc();",
+        "explanation": "This code declares a variable 'func' without assigning a value to it, so it's 'undefined'. Then, it tries to invoke 'func()' as a function. Invoking an undefined variable as a function will result in a TypeError: 'func is not a function'."
+      },
+      {
+        "question": "let arr = [1, 2, 3]; \nconsole.log(arr[10]);",
+        "explanation": "An array 'arr' is defined with three elements. Then, it tries to access the element at index 10, which is out of bounds since arrays are zero-indexed. This will result in 'undefined', but it won't throw an error."
+      },
+      {
+        "question": "let unusedVar;",
+        "explanation": "This line declares a variable 'unusedVar' but doesn't initialize it with any value. Since it's declared but not used, it won't throw any errors."
+      }
     ]
   },
   {
     "id": "3",
     "title": "Deck 3",
     "questions": [
-      "JSON.parse('hello world');",
-      "document.querySelector('.nonexistent-element').classList",
-      "parseInt('abc');",
-      "let map = new Map(); \nmap.get('dog');",
-      "let dog = 5; \ndog();"
-    ],
-    "explanations": [
-      "The line attempts to parse the string 'hello world' as JSON, but it's not valid JSON syntax. This will throw a SyntaxError: 'Unexpected token h in JSON at position 0'.",
-      "This line tries to query for an element with the class '.nonexistent-element' using document.querySelector(). If the element doesn't exist, it will return 'null'. Trying to access the 'classList' property of 'null' will throw a TypeError: 'Cannot read property 'classList' of null'.",
-      "The parseInt() function attempts to parse the string 'abc' into an integer. Since 'abc' is not a valid integer, parseInt() will return NaN (Not a Number).",
-      "A new Map object 'map' is created. Then, it tries to get the value associated with the key 'dog', but no such key exists in the map. This will return 'undefined'.",
-      "This line declares a variable 'dog' and assigns it the value '5'. Then, it tries to invoke 'dog' as a function. Since 'dog' is not a function, this will throw a TypeError: 'dog is not a function'."
+      {
+        "question": "JSON.parse('hello world');",
+        "explanation": "The line attempts to parse the string 'hello world' as JSON, but it's not valid JSON syntax. This will throw a SyntaxError: 'Unexpected token h in JSON at position 0'."
+      },
+      {
+        "question": "document.querySelector('.nonexistent-element').classList",
+        "explanation": "This line tries to query for an element with the class '.nonexistent-element' using document.querySelector(). If the element doesn't exist, it will return 'null'. Trying to access the 'classList' property of 'null' will throw a TypeError: 'Cannot read property 'classList' of null'."
+      },
+      {
+        "question": "parseInt('abc');",
+        "explanation": "The parseInt() function attempts to parse the string 'abc' into an integer. Since 'abc' is not a valid integer, parseInt() will return NaN (Not a Number)."
+      },
+      {
+        "question": "let map = new Map(); \nmap.get('dog');",
+        "explanation": "A new Map object 'map' is created. Then, it tries to get the value associated with the key 'dog', but no such key exists in the map. This will return 'undefined'."
+      },
+      {
+        "question": "let dog = 5; \ndog();",
+        "explanation": "This line declares a variable 'dog' and assigns it the value '5'. Then, it tries to invoke 'dog' as a function. Since 'dog' is not a function, this will throw a TypeError: 'dog is not a function'."
+      }
     ]
   },
   {
     "id": "4",
     "title": "Deck 4",
     "questions": [
-      "++3",
-      "3 ++ 4",
-      "'aa'.map(Number)",
-      "[].map(Number())",
-      "[].map(Number)"
-    ],
-    "explanations": [
-      "The prefix increment operator '++' attempts to increment the value of '3' by 1. However, '3' is a primitive value, not a variable, and cannot be modified. This will throw a SyntaxError: 'Invalid left-hand side expression in prefix operation'.",
-      "This expression attempts to use '++' as a postfix operator, which is not valid in JavaScript. This will result in a SyntaxError: 'Unexpected token ++'.",
-      "The string 'aa' does not have a 'map' method. This will throw a TypeError: 'aa.map is not a function'.",
-      "The expression `Number()` is a function call. However, `map()` expects a function as an argument, not a function call. This will throw a TypeError: 'Number is not a function'.",
-      "The expression `[].map(Number)` attempts to call the `map` method on an empty array `[]`, passing `Number` as a callback function. This will return an empty array because there are no elements to map over."
+      {
+        "question": "++3",
+        "explanation": "The prefix increment operator '++' attempts to increment the value of '3' by 1. However, '3' is a primitive value, not a variable, and cannot be modified. This will throw a SyntaxError: 'Invalid left-hand side expression in prefix operation'."
+      },
+      {
+        "question": "3 ++ 4",
+        "explanation": "This expression attempts to use '++' as a postfix operator, which is not valid in JavaScript. This will result in a SyntaxError: 'Unexpected token ++'."
+      },
+      {
+        "question": "'aa'.map(Number)",
+        "explanation": "The string 'aa' does not have a 'map' method. This will throw a TypeError: 'aa.map is not a function'."
+      },
+      {
+        "question": "[].map(Number())",
+        "explanation": "The expression `Number()` is a function call. However, `map()` expects a function as an argument, not a function call. This will throw a TypeError: 'Number is not a function'."
+      },
+      {
+        "question": "[].map(Number)",
+        "explanation": "The expression `[].map(Number)` attempts to call the `map` method on an empty array `[]`, passing `Number` as a callback function. This will return an empty array because there are no elements to map over."
+      }
     ]
   },
   {
     "id": "5",
     "title": "Deck 5",
     "questions": [
-      "[][2]",
-      "{}[4]",
-      "let num = 1; \nnum.toPrecision(500);",
-      "({}).toString()",
-      "[].map(Number)"
-    ],
-    "explanations": [
-      "This expression attempts to access the element at index 2 of an empty array. Since there is no element at index 2, it will return 'undefined'.",
-      "This expression attempts to access the property at key 4 of an empty object `{}`. Since there is no property with key 4, it will return 'undefined'.",
-      "The 'toPrecision()' method of numbers in JavaScript expects a value between 1 and 21 as an argument. Providing 500 as the argument exceeds this range and will throw a RangeError: 'toPrecision() argument must be between 1 and 21'.",
-      "The `toString()` method called on an empty object `{}` will return '[object Object]'.",
-      "The expression `[].map(Number)` attempts to call the `map` method on an empty array `[]`, passing `Number` as a callback function. This will return an empty array because there are no elements to map over."
+      {
+        "question": "[][2]",
+        "explanation": "This expression attempts to access the element at index 2 of an empty array. Since there is no element at index 2, it will return 'undefined'."
+      },
+      {
+        "question": "{}[4]",
+        "explanation": "This expression attempts to access the property at key 4 of an empty object `{}`. Since there is no property with key 4, it will return 'undefined'."
+      },
+      {
+        "question": "let num = 1; \nnum.toPrecision(500);",
+        "explanation": "The 'toPrecision()' method of numbers in JavaScript expects a value between 1 and 21 as an argument. Providing 500 as the argument exceeds this range and will throw a RangeError: 'toPrecision() argument must be between 1 and 21'."
+      },
+      {
+        "question": "({}).toString()",
+        "explanation": "The `toString()` method called on an empty object `{}` will return '[object Object]'."
+      },
+      {
+        "question": "[].map(Number)",
+        "explanation": "The expression `[].map(Number)` attempts to call the `map` method on an empty array `[]`, passing `Number` as a callback function. This will return an empty array because there are no elements to map over."
+      }
     ]
   },
   {
     "id": "6",
     "title": "Deck 6",
     "questions": [
-      "let x = 10; \nx.toUpperCase();",
-      "let arr = [1, 2, 3]; \narr.push(4, 5);",
-      "const obj = {}; \nobj.prop;",
-      "let num = 'Hello'; \nparseInt(num);",
-      "let arr = [1, 2, 3]; \narr['foo'];"
-    ],
-    "explanations": [
-      "This code tries to call the 'toUpperCase()' method on a number, which is not valid. It will result in a TypeError: 'x.toUpperCase is not a function'.",
-      "This code adds two elements, 4 and 5, to the end of the array 'arr' using the 'push()' method.",
-      "This code tries to access a property 'prop' of an empty object 'obj', but since 'prop' is not defined, it will return 'undefined'.",
-      "This code tries to parse the string 'Hello' into an integer using 'parseInt()', but since 'Hello' is not a valid number, it will return 'NaN' (Not a Number).",
-      "This code tries to access an element of the array 'arr' using a string key, which is not valid. It will return 'undefined'."
+      {
+        "question": "let x = 10; \nx.toUpperCase();",
+        "explanation": "This code tries to call the 'toUpperCase()' method on a number, which is not valid. It will result in a TypeError: 'x.toUpperCase is not a function'."
+      },
+      {
+        "question": "let arr = [1, 2, 3]; \narr.push(4, 5);",
+        "explanation": "This code adds two elements, 4 and 5, to the end of the array 'arr' using the 'push()' method."
+      },
+      {
+        "question": "const obj = {}; \nobj.prop;",
+        "explanation": "This code tries to access a property 'prop' of an empty object 'obj', but since 'prop' is not defined, it will return 'undefined'."
+      },
+      {
+        "question": "let num = 'Hello'; \nparseInt(num);",
+        "explanation": "This code tries to parse the string 'Hello' into an integer using 'parseInt()', but since 'Hello' is not a valid number, it will return 'NaN' (Not a Number)."
+      },
+      {
+        "question": "let arr = [1, 2, 3]; \narr['foo'];",
+        "explanation": "This code tries to access an element of the array 'arr' using a string key, which is not valid. It will return 'undefined'."
+      }
     ]
   },
   {
     "id": "7",
     "title": "Deck 7",
-    "questions": [
-      "let x = {}; \nx.y.z;",
-      "let arr = [1, 2, 3]; \narr.slice('a');",
-      "let obj = { name: 'John' }; \ndelete obj.age;",
-      "let str = '123'; \nstr.map(Number);",
-      "let arr = [1, 2, 3]; \narr.splice(0, 1, 'a', 'b');"
-    ],
-    "explanations": [
-      "This code tries to access the property 'z' of property 'y' of object 'x'. Since 'y' is not defined, it will throw a TypeError: 'Cannot read property 'z' of undefined'.",
-      "This code tries to slice the array 'arr' using the string 'a' as an argument, which is not valid. It will return an empty array.",
-      "This code tries to delete the property 'age' from the object 'obj'. Since 'age' is not a property of 'obj', it will not throw an error and will simply do nothing.",
-      "This code tries to map each character of the string 'str' to a number using the 'map' method, which is not applicable to strings. It will throw a TypeError: 'str.map is not a function'.",
-      "This code removes one element from index 0 of the array 'arr' and inserts the strings 'a' and 'b' in its place. It modifies the original array in place and returns an array containing the removed elements."
-    ],
     "language": "javascript",
-    "public": false
+    "public": false,
+    "questions": [
+      {
+        "question": "let x = {}; \nx.y.z;",
+        "explanation": "This code tries to access the property 'z' of property 'y' of object 'x'. Since 'y' is not defined, it will throw a TypeError: 'Cannot read property 'z' of undefined'."
+      },
+      {
+        "question": "let arr = [1, 2, 3]; \narr.slice('a');",
+        "explanation": "This code tries to slice the array 'arr' using the string 'a' as an argument, which is not valid. It will return an empty array."
+      },
+      {
+        "question": "let obj = { name: 'John' }; \ndelete obj.age;",
+        "explanation": "This code tries to delete the property 'age' from the object 'obj'. Since 'age' is not a property of 'obj', it will not throw an error and will simply do nothing."
+      },
+      {
+        "question": "let str = '123'; \nstr.map(Number);",
+        "explanation": "This code tries to map each character of the string 'str' to a number using the 'map' method, which is not applicable to strings. It will throw a TypeError: 'str.map is not a function'."
+      },
+      {
+        "question": "let arr = [1, 2, 3]; \narr.splice(0, 1, 'a', 'b');",
+        "explanation": "This code removes one element from index 0 of the array 'arr' and inserts the strings 'a' and 'b' in its place. It modifies the original array in place and returns an array containing the removed elements."
+      }
+    ]
   },
   {
     "id": "8",
     "title": "Deck 8",
     "questions": [
-      "let obj = {}; \nobj.prop.method();",
-      "let arr = [1, 2, 3]; \narr.find('a');",
-      "let person = { name: 'John' }; \nperson.age;",
-      "let str = 'hello'; \nstr.slice(1, 'a');",
-      "let num = '5'; \nNumber(num);"
-    ],
-    "explanations": [
-      "This code tries to call the method 'method()' on the property 'prop' of object 'obj'. Since 'method()' does not exist, it will throw a TypeError: 'Cannot read property 'method' of undefined'.",
-      "This code tries to find an element 'a' in the array 'arr' using the 'find()' method, but 'find()' expects a function as an argument. It will throw a TypeError.",
-      "This code tries to access the property 'age' from the object 'person'. Since 'age' is not a property of 'person', it will return 'undefined'.",
-      "This code tries to slice the string 'hello' using '1' as the starting index and 'a' as the ending index, which is not valid. It will throw a TypeError.",
-      "This code tries to convert the string '5' to a number using 'Number()', which will successfully convert it into the number 5."
+      {
+        "question": "let obj = {}; \nobj.prop.method();",
+        "explanation": "This code tries to call the method 'method()' on the property 'prop' of object 'obj'. Since 'method()' does not exist, it will throw a TypeError: 'Cannot read property 'method' of undefined'."
+      },
+      {
+        "question": "let arr = [1, 2, 3]; \narr.find('a');",
+        "explanation": "This code tries to find an element 'a' in the array 'arr' using the 'find()' method, but 'find()' expects a function as an argument. It will throw a TypeError."
+      },
+      {
+        "question": "let person = { name: 'John' }; \nperson.age;",
+        "explanation": "This code tries to access the property 'age' from the object 'person'. Since 'age' is not a property of 'person', it will return 'undefined'."
+      },
+      {
+        "question": "let str = 'hello'; \nstr.slice(1, 'a');",
+        "explanation": "This code tries to slice the string 'hello' using '1' as the starting index and 'a' as the ending index, which is not valid. It will throw a TypeError."
+      },
+      {
+        "question": "let num = '5'; \nNumber(num);",
+        "explanation": "This code tries to convert the string '5' to a number using 'Number()', which will successfully convert it into the number 5."
+      }
     ]
   },
   {
     "id": "9",
     "title": "Deck 9",
     "questions": [
-      "let obj = {}; \nobj.prop.method();",
-      "let arr = [1, 2, 3]; \narr.includes('a');",
-      "let str = 'hello'; \nstr.substring(5);",
-      "let num = '5'; \nparseInt(num, 10);",
-      "let func; \nfunc();"
-    ],
-    "explanations": [
-      "This code tries to call the method 'method()' on the property 'prop' of object 'obj'. Since 'prop' is not defined, it will throw a TypeError: 'Cannot read property 'method' of undefined'.",
-      "This code tries to check if the array 'arr' includes the element 'a'. Since 'a' is not in the array, it will return 'false'.",
-      "This code tries to get a substring of the string 'hello' starting from index 5, which is out of bounds. It will return an empty string.",
-      "This code tries to parse the string '5' into an integer using 'parseInt()', specifying base 10. It will successfully parse it into the integer 5.",
-      "This code tries to invoke an undefined function 'func'. It will throw a TypeError: 'func is not a function'."
+      {
+        "question": "let obj = {}; \nobj.prop.method();",
+        "explanation": "This code tries to call the method 'method()' on the property 'prop' of object 'obj'. Since 'prop' is not defined, it will throw a TypeError: 'Cannot read property 'method' of undefined'."
+      },
+      {
+        "question": "let arr = [1, 2, 3]; \narr.includes('a');",
+        "explanation": "This code tries to check if the array 'arr' includes the element 'a'. Since 'a' is not in the array, it will return 'false'."
+      },
+      {
+        "question": "let str = 'hello'; \nstr.substring(5);",
+        "explanation": "This code tries to get a substring of the string 'hello' starting from index 5, which is out of bounds. It will return an empty string."
+      },
+      {
+        "question": "let num = '5'; \nparseInt(num, 10);",
+        "explanation": "This code tries to parse the string '5' into an integer using 'parseInt()', specifying base 10. It will successfully parse it into the integer 5."
+      },
+      {
+        "question": "let func; \nfunc();",
+        "explanation": "This code tries to invoke an undefined function 'func'. It will throw a TypeError: 'func is not a function'."
+      }
     ]
   },
   {
     "id": "10",
     "title": "Deck 10",
     "questions": [
-      "let x = 5; \nlet { y } = x;",
-      "let obj = { nate: 'cool' }; \nfor(const p of obj) { \n console.log(p) \n} ",
-      "null.foo",
-      "const foo = undefined; \nfoo.substring(1);",
-      "const foo = 'bar'; \nObject.create(foo);"
-    ],
-    "explanations": [
-      "Attempting to destructure a non-object value (`x`). TypeError expected.",
-      "Trying to iterate over a non-iterable object (`obj`). TypeError expected.",
-      "Attempting to access a property (`foo`) of null. TypeError expected.",
-      "Calling `substring()` on undefined (`foo`). TypeError expected.",
-      "Attempting to create an object using `Object.create()` with a non-object argument (`foo`). TypeError expected."
+      {
+        "question": "let x = 5; \nlet { y } = x;",
+        "explanation": "Attempting to destructure a non-object value (`x`). TypeError expected."
+      },
+      {
+        "question": "let obj = { nate: 'cool' }; \nfor(const p of obj) { \n console.log(p) \n} ",
+        "explanation": "Trying to iterate over a non-iterable object (`obj`). TypeError expected."
+      },
+      {
+        "question": "null.foo",
+        "explanation": "Attempting to access a property (`foo`) of null. TypeError expected."
+      },
+      {
+        "question": "const foo = undefined; \nfoo.substring(1);",
+        "explanation": "Calling `substring()` on undefined (`foo`). TypeError expected."
+      },
+      {
+        "question": "const foo = 'bar'; \nObject.create(foo);",
+        "explanation": "Attempting to create an object using `Object.create()` with a non-object argument (`foo`). TypeError expected."
+      }
     ]
   },
   {
     "id": "11",
     "title": "Deck 11",
     "questions": [
-      "const x = document.getElementByID('foo');",
-      "const x = document.getElementById('foo');",
-      "const obj = {}; \nobj.map(Number);",
-      "const obj = {foo: () => {}; foo: 1}; \nobj.foo();",
-      "2 x 5"
-    ],
-    "explanations": [
-      "Incorrect method name. 'getElementByID' should be 'getElementById'.",
-      "Correct usage of 'getElementById' method to retrieve DOM elements.",
-      "Attempting to use the 'map' method on an empty object (`obj`). TypeError expected.",
-      "Syntax error in object definition. Object literals should have unique keys. Unexpected token `;`.",
-      "Syntax error. Expression '2 x 5' is not valid JavaScript syntax."
+      {
+        "question": "const x = document.getElementByID('foo');",
+        "explanation": "Incorrect method name. 'getElementByID' should be 'getElementById'."
+      },
+      {
+        "question": "const x = document.getElementById('foo');",
+        "explanation": "Correct usage of 'getElementById' method to retrieve DOM elements."
+      },
+      {
+        "question": "const obj = {}; \nobj.map(Number);",
+        "explanation": "Attempting to use the 'map' method on an empty object (`obj`). TypeError expected."
+      },
+      {
+        "question": "const obj = {foo: () => {}; foo: 1}; \nobj.foo();",
+        "explanation": "Syntax error in object definition. Object literals should have unique keys. Unexpected token `;`."
+      },
+      {
+        "question": "2 x 5",
+        "explanation": "Syntax error. Expression '2 x 5' is not valid JavaScript syntax."
+      }
     ]
   },
   {
     "id": "12",
     "title": "Deck 12",
     "questions": [
-      "const s = new Set(); \ns.add({})",
-      "new Array(-1)",
-      "const obj = {num: 1}; \nconsole.log(num);",
-      "const obj = {num: 1}; \nconsole.log(obj[num]);",
-      "const obj = {num: 1}; \nconsole.log(obj['num']);"
-    ],
-    "explanations": [
-      "Attempting to add an object to a Set. The Set will accept it, but it may not behave as expected due to object uniqueness in Set.",
-      "Trying to create an array with a negative length. RangeError expected.",
-      "Trying to access an undeclared variable (`num`). ReferenceError expected.",
-      "Trying to access a non-existent property using bracket notation. The result will be undefined.",
-      "Accessing a property (`num`) of the object (`obj`) using bracket notation. Expected output is the value associated with the key 'num' in the object."
+      {
+        "question": "const s = new Set(); \ns.add({})",
+        "explanation": "Attempting to add an object to a Set. The Set will accept it, but it may not behave as expected due to object uniqueness in Set."
+      },
+      {
+        "question": "new Array(-1)",
+        "explanation": "Trying to create an array with a negative length. RangeError expected."
+      },
+      {
+        "question": "const obj = {num: 1}; \nconsole.log(num);",
+        "explanation": "Trying to access an undeclared variable (`num`). ReferenceError expected."
+      },
+      {
+        "question": "const obj = {num: 1}; \nconsole.log(obj[num]);",
+        "explanation": "Trying to access a non-existent property using bracket notation. The result will be undefined."
+      },
+      {
+        "question": "const obj = {num: 1}; \nconsole.log(obj['num']);",
+        "explanation": "Accessing a property (`num`) of the object (`obj`) using bracket notation. Expected output is the value associated with the key 'num' in the object."
+      }
     ]
   },
   {
     "id": "13",
     "title": "Deck 13",
     "questions": [
-      "bar = true",
-      "const x = {}; \ndelete x;",
-      "function getUser(user){ \n return user && user.id ?? null \n};",
-      "const str = “This looks like a string”;",
-      "const colors = ['#000', #333', '#555'];"
-    ],
-    "explanations": [
-      "Assigning a value to a variable (`bar`) without declaring it. May result in a global variable or a ReferenceError in strict mode.",
-      "Trying to delete a variable (`x`) that was declared with `const`. This operation will throw a SyntaxError.",
-      "Using the nullish coalescing operator (`??`) without proper syntax. Unexpected token error expected.",
-      "Invalid quotes used in defining a string (`str`). This will result in a SyntaxError.",
-      "Invalid array syntax. Missing quotes around the second color (`#333`) in the `colors` array."
+      {
+        "question": "bar = true",
+        "explanation": "Assigning a value to a variable (`bar`) without declaring it. May result in a global variable or a ReferenceError in strict mode."
+      },
+      {
+        "question": "const x = {}; \ndelete x;",
+        "explanation": "Trying to delete a variable (`x`) that was declared with `const`. This operation will throw a SyntaxError."
+      },
+      {
+        "question": "function getUser(user){ \n return user && user.id ?? null \n};",
+        "explanation": "Using the nullish coalescing operator (`??`) without proper syntax. Unexpected token error expected."
+      },
+      {
+        "question": "const str = “This looks like a string”;",
+        "explanation": "Invalid quotes used in defining a string (`str`). This will result in a SyntaxError."
+      },
+      {
+        "question": "const colors = ['#000', #333', '#555'];",
+        "explanation": "Invalid array syntax. Missing quotes around the second color (`#333`) in the `colors` array."
+      }
     ]
   },
   {
     "id": "14",
     "title": "Deck 14",
     "questions": [
-      "(() => {})()",
-      "-1 ?? throw new Error()",
-      "const arr = []; \narr.5",
-      "if([] > {}){ \n throw new Error() \n}",
-      "let x; \nx == 1;"
-    ],
-    "explanations": [
-      "Immediately Invoked Function Expression (IIFE) with an empty arrow function. This code will execute without errors.",
-      "Using the nullish coalescing operator (`??`) incorrectly. A syntax error is expected. The `throw` statement cannot be used in this context.",
-      "Trying to access the 6th element (`arr.5`) of an array (`arr`) that doesn't have it. This will return `undefined` but will not throw an error.",
-      "Comparison between an empty array and an empty object. JavaScript doesn't define a comparison between arrays and objects, so this expression will not throw an error but will return `false`.",
-      "Variable `x` is declared but not initialized. Comparison (`==`) with a number (`1`) will return `false` but will not throw an error."
+      {
+        "question": "(() => {})()",
+        "explanation": "Immediately Invoked Function Expression (IIFE) with an empty arrow function. This code will execute without errors."
+      },
+      {
+        "question": "-1 ?? throw new Error()",
+        "explanation": "Using the nullish coalescing operator (`??`) incorrectly. A syntax error is expected. The `throw` statement cannot be used in this context."
+      },
+      {
+        "question": "const arr = []; \narr.5",
+        "explanation": "Trying to access the 6th element (`arr.5`) of an array (`arr`) that doesn't have it. This will return `undefined` but will not throw an error."
+      },
+      {
+        "question": "if([] > {}){ \n throw new Error() \n}",
+        "explanation": "Comparison between an empty array and an empty object. JavaScript doesn't define a comparison between arrays and objects, so this expression will not throw an error but will return `false`."
+      },
+      {
+        "question": "let x; \nx == 1;",
+        "explanation": "Variable `x` is declared but not initialized. Comparison (`==`) with a number (`1`) will return `false` but will not throw an error."
+      }
     ]
   },
   {
     "id": "15",
     "title": "Deck 15",
     "questions": [
-      "Number('dog')",
-      "Number('5).toString()",
-      "Number(typeof 'string')",
-      "'14'.toString()",
-      "let x ='string', x.map(Number)"
-    ],
-    "explanations": [
-      "Attempting to convert a non-numeric string ('dog') to a number using the Number constructor. This will result in NaN (Not-a-Number).",
-      "Invalid syntax. Missing closing single quote in the string ('5).toString()'). This will result in a SyntaxError.",
-      "Using the typeof operator to get the data type of a string ('string'), and then attempting to convert it to a number. This will result in NaN.",
-      "Converting the string '14' to a string (which it already is). This operation will not throw any errors and will return the same string ('14').",
-      "Trying to call the `map` method on a string (`x`) which is not an array. This will result in a TypeError."
+      {
+        "question": "Number('dog')",
+        "explanation": "Attempting to convert a non-numeric string ('dog') to a number using the Number constructor. This will result in NaN (Not-a-Number)."
+      },
+      {
+        "question": "Number('5).toString()",
+        "explanation": "Invalid syntax. Missing closing single quote in the string ('5).toString()'). This will result in a SyntaxError."
+      },
+      {
+        "question": "Number(typeof 'string')",
+        "explanation": "Using the typeof operator to get the data type of a string ('string'), and then attempting to convert it to a number. This will result in NaN."
+      },
+      {
+        "question": "'14'.toString()",
+        "explanation": "Converting the string '14' to a string (which it already is). This operation will not throw any errors and will return the same string ('14')."
+      },
+      {
+        "question": "let x ='string', x.map(Number)",
+        "explanation": "Trying to call the `map` method on a string (`x`) which is not an array. This will result in a TypeError."
+      }
     ]
   }
 ]
