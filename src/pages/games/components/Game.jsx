@@ -27,10 +27,10 @@ const Game = ({
   const deckLength = deck.questions.length
   const gameOver = currentQuestionIndex >= deckLength
   const currentScore = scores.reduce((cum, curr) => (curr ? cum + 1 : cum), 0)
-  const currentQuestion = deck.questions[currentQuestionIndex]
-  const currentDeckExplanation = deck.explanations[currentQuestionIndex]
-  const allowNots =
-    gameName != 'ccc' ? undefined : deck?.allowNots[currentQuestionIndex]
+  const currentQuestion = deck.questions[currentQuestionIndex].question
+  const currentDeckExplanation =
+    deck.questions[currentQuestionIndex].explanation
+  const allowNots = gameName != 'ccc' ? undefined : currentQuestion.allowNots
 
   const newGame = () => {
     setCurrentQuestionIndex(0)
