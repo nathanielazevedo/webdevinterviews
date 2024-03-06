@@ -29,7 +29,7 @@ const RootTopNav = () => {
   }
 
   return (
-    <AppBar>
+    <AppBar elevation={1}>
       <Toolbar>
         <div className='app-bar-section'>
           <Typography
@@ -37,6 +37,7 @@ const RootTopNav = () => {
             variant='h5'
             fontWeight={'bold'}
             letterSpacing={'4px'}
+            sx={{ cursor: 'pointer' }}
           >
             WDI
           </Typography>

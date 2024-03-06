@@ -165,7 +165,7 @@
     "public": false,
     "questions": [
       {
-        "question": "{} + [] ??? 0",
+        "question": "[] + {} ??? 0",
         "allowNots": false
       },
       {
@@ -173,7 +173,7 @@
         "allowNots": false
       },
       {
-        "question": "{} ??? []",
+        "question": "[] ??? {}",
         "allowNots": false
       },
       {
@@ -408,7 +408,7 @@
     "public": false,
     "questions": [
       {
-        "question": "+{} ??? 0",
+        "question": "0 ??? +{}",
         "allowNots": false
       },
       {
@@ -505,7 +505,7 @@
         "allowNots": false
       },
       {
-        "question": "{} ??? {}",
+        "question": "({} ??? {})",
         "allowNots": true
       }
     ]
@@ -609,7 +609,7 @@
         "allowNots": false
       },
       {
-        "question": "{} ??? {}",
+        "question": "({} ??? {})",
         "allowNots": false
       },
       {
@@ -736,7 +736,7 @@
         "allowNots": false
       },
       {
-        "question": "{} + [] ??? {}",
+        "question": "({} + [] ??? {})",
         "allowNots": false
       },
       {

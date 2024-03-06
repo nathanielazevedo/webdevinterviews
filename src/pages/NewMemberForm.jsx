@@ -2,8 +2,6 @@ import { useState, useContext } from 'react'
 import useApi from '../hooks/useApi'
 import {
   FormControl,
-  FormLabel,
-  InputLabel,
   TextField,
   Typography,
   Button,
@@ -13,11 +11,11 @@ import {
   CircularProgress,
 } from '@mui/material'
 import Footer from '../components/Footer'
-import displayNameImage from '../assets/display_name.png'
-import accessCode from '../assets/access_code.png'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 import Faq from '../components/Faq'
+import HomeHeader from './home/components/HomeHeader'
+import HomeButton from './home/components/HomeButton'
 
 const NewMemberForm = () => {
   const [display_name, setDisplayName] = useState('')
@@ -35,10 +33,6 @@ const NewMemberForm = () => {
       setError({ display_name: 'Required.' })
       return
     }
-    // if (!access_code) {
-    //   setError({ access_code: 'Required.' })
-    //   return
-    // }
     setLoading(true)
     try {
       const response = await postIt('/verify-member', {
@@ -57,36 +51,24 @@ const NewMemberForm = () => {
     <>
       <div className='fit-wrapper'>
         <div className='marketing-section'>
-          <Typography variant='h3' color='grey.500'>
-            BECOME A MEMBER
-          </Typography>
-          <Typography variant='h6' color='grey.300'>
-            Members of my YouTube channel get all access to workouts, True or
-            False, and Will It Throw games. It costs 99 cents a month. Your
-            support allows me to improve my content and continue to produce cool
-            stuff.
-          </Typography>
-          <Button
-            variant='outlined'
-            href='https://www.youtube.com/channel/UC-4Ij6StciJgYzbxLyxHMPw/join'
-            target='_blank'
-            size='large'
-            sx={{
-              fontSize: '20px',
-              fontWeight: 'bold',
-            }}
-            className='marketing-button'
-          >
-            Become a member
-          </Button>
+          <HomeHeader
+            title={'BECOME A MEMBER'}
+            subtext={
+              'Members of my YouTube channel get all access to workouts, True or False, and Will It Throw games. It costs 99 cents a month. Your support allows me to improve my content and continue to produce cool stuff.'
+            }
+          />
+          <HomeButton
+            text='Become a member'
+            to='https://www.youtube.com/channel/UC-4Ij6StciJgYzbxLyxHMPw/join'
+            outside={true}
+            oneLine={true}
+          />
         </div>
         <Divider />
         <div className='marketing-section'>
           <FormControl>
             <FormGroup sx={{ gap: '20px' }}>
-              <Typography variant='h3' color='grey.500'>
-                ALREADY A MEMBER?
-              </Typography>
+              <HomeHeader title={'ALREADY A MEMBER?'} />
               <TextField
                 label='YouTube Display Name'
                 variant='outlined'
@@ -102,22 +84,6 @@ const NewMemberForm = () => {
                   setDisplayName(evt.target.value)
                 }}
               />
-
-              {/* <TextField
-                label='Access Code'
-                variant='outlined'
-                value={access_code}
-                error={error?.access_code}
-                helperText={
-                  error?.access_code
-                    ? 'Required.'
-                    : 'Find this in the YouTube channel membership tab. Scroll to bottom. Read the first post. Scroll to the bottom of this page for help.'
-                }
-                onChange={(evt) => {
-                  setError(null)
-                  setAccessCode(evt.target.value)
-                }}
-              /> */}
               <Button
                 variant='outlined'
                 onClick={verifyName}

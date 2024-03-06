@@ -27,10 +27,11 @@ const Game = ({
   const deckLength = deck.questions.length
   const gameOver = currentQuestionIndex >= deckLength
   const currentScore = scores.reduce((cum, curr) => (curr ? cum + 1 : cum), 0)
-  const currentQuestion = deck.questions[currentQuestionIndex]?.question
-  const currentDeckExplanation =
-    deck.questions[currentQuestionIndex]?.explanation
-  const allowNots = gameName != 'ccc' ? undefined : currentQuestion?.allowNots
+  const currentQuestionInfo = deck.questions[currentQuestionIndex]
+  const currentQuestion = currentQuestionInfo?.question
+  const currentDeckExplanation = currentQuestionInfo?.explanation
+  const allowNots =
+    gameName != 'ccc' ? undefined : currentQuestionInfo?.allowNots
 
   const newGame = () => {
     setCurrentQuestionIndex(0)
@@ -90,9 +91,13 @@ const Game = ({
       }
     } else if (gameName == 'ccc') {
       const questionWithInput = cleanedQuestion.replaceAll('???', input)
-      const result = eval(questionWithInput)
-      if (result) handleCorrectInput()
-      else handleIncorrectInput()
+      try {
+        const result = eval(questionWithInput)
+        if (result) handleCorrectInput()
+        else handleIncorrectInput()
+      } catch (e) {
+        console.log(e)
+      }
     }
 
     setTimeout(() => {

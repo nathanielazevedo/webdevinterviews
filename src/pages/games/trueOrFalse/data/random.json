@@ -31,7 +31,7 @@
     "questions": [
       {
         "question": "[] > {}",
-        "explanation": "When comparing different types like an array and an object, the abstract relational comparison algorithm is applied. This converts the operands to primitives and then compares them. An empty array ([]) gets coerced to the empty string (''), while an empty object ({}) gets coerced to '[object Object]'. Comparing these strings, '' > '[object Object]', which evaluates to false. If all else is equal, the shorter string is considered less than the longer string."
+        "explanation": "When comparing different types like an array and an object, the abstract relational comparison algorithm is applied. This converts the operands to primitives and then compares them. An empty array gets coerced to an empty string, while an empty object gets coerced to '[object Object]'. After type coercion the comparison becomes '' > '[object Object]'. This expression evaluates to false."
       },
       {
         "question": "1 > '1'",
@@ -213,7 +213,7 @@
     "questions": [
       {
         "question": "typeof null == 'null'",
-        "explanation": "typeof null returns 'object' in JavaScript because null is considered an empty object reference."
+        "explanation": "typeof null returns 'object' in JavaScript because null is considered an empty object reference. This expression evaluates to false."
       },
       {
         "question": "typeof null == 'undefined'",
@@ -273,11 +273,11 @@
       },
       {
         "question": "0 == ''",
-        "explanation": "In JavaScript, 0 is loosely equal to an empty string (''). So, 0 == '' evaluates to true."
+        "explanation": "In JavaScript, 0 is loosely equal to an empty string (''). This is because Number('') == 0. After type coercion the expression becomes 0 == 0. This expression evaluates to true."
       },
       {
         "question": "Number('     ') == 0",
-        "explanation": "Number('     ') returns 0 after parsing because leading and trailing spaces are ignored. So, Number('     ') == 0 evaluates to true."
+        "explanation": "Number('     ') returns 0 after parsing because leading and trailing spaces are ignored and a empty string becomes 0 after coercion to a number. So, Number('     ') == 0 evaluates to true."
       },
       {
         "question": "'1' + 1 + 1 + 1 == 13",
@@ -307,7 +307,7 @@
       },
       {
         "question": "true && false",
-        "explanation": "The logical AND operator && returns true only if both operands are true. Since one of the operands, false, is false, the result is false."
+        "explanation": "The logical AND operator will return the first truthy value. Because true is truthy, false is returned and this expression evaluates to false."
       }
     ]
   },
@@ -399,7 +399,7 @@
       },
       {
         "question": "[] - true === -1",
-        "explanation": "An empty array [] is converted to 0 when used with the subtraction operator. true is converted to 1. So, [] - true === -1 evaluates to false."
+        "explanation": "When performing mathematical operations on booleans, booleans will be coerced to numbers. true coerced to a number is 1. An empty array as a number is 0. After type coercion this expression becomes 0 - 1 === -1. This expression evaluates to true."
       },
       {
         "question": "'1' - '1' === 0",
@@ -541,7 +541,7 @@
       },
       {
         "question": "3 == '2' + '1'",
-        "explanation": "3 == '2' + '1' evaluates to true because '2' + '1' results in the string '21', which is then converted to the number 21."
+        "explanation": "Here, JavaScript will concatenate the '2' and the '1' resulting in '21'. The expression then becomes 3 == '21'. This expression evaluates to false."
       }
     ]
   },
@@ -577,7 +577,7 @@
     "questions": [
       {
         "question": "!([] == [])",
-        "explanation": "!([] == []) evaluates to true because arrays in JavaScript are compared by reference, and these two arrays are stored in different memory locations."
+        "explanation": "!([] == []) evaluates to true because arrays in JavaScript are compared by reference, and these two arrays are stored in different memory locations. Using the logical not operator will turn the false into true. This expression evaluates to true."
       },
       {
         "question": "typeof [] !== 'array'",
@@ -697,7 +697,7 @@
       },
       {
         "question": "NaN !== NaN",
-        "explanation": "NaN !== NaN: This expression evaluates to true because NaN (Not a Number) is a special value in JavaScript, and according to the IEEE 754 standard, NaN is not equal to any other value, including itself. Hence, NaN !== NaN."
+        "explanation": "According to the IEEE 754 standard, NaN is not equal to any other value, including itself. This expression evaluates to true."
       }
     ]
   },
@@ -706,19 +706,24 @@
     "title": "Deck 28",
     "questions": [
       {
-        "question": "Infinity == undefined"
+        "question": "Infinity == undefined",
+        "explanation": "As number primitives, Infinity stays Infinity and undefined becomes NaN. NaN is equal to nothing including itself. This expression evaluates to false."
       },
       {
-        "question": "Infinity == Infinity"
+        "question": "Infinity == Infinity",
+        "explanation": "In JavaScript and mathmatics, Infinity is equal to Infinity."
       },
       {
-        "question": "0 / 0 == NaN"
+        "question": "0 / 0 == NaN",
+        "explanation": "0 / 0 does equate to NaN, but NaN is equal to nothing including itself. This expression evaluates to false."
       },
       {
-        "question": "NaN == NaN"
+        "question": "NaN == NaN",
+        "explanation": "NaN is equal to nothing including to itself. This expression evaluates to false."
       },
       {
-        "question": "Boolean('false')"
+        "question": "Boolean('false')",
+        "explanation": "Here, the argument is not the boolean false but instead it is the string 'false'. Running the Boolean function on a non empty string evaluates to true."
       }
     ]
   },
@@ -727,10 +732,12 @@
     "title": "Deck 29",
     "questions": [
       {
-        "question": "'' || true"
+        "question": "'' || true",
+        "explanation": "If the value of the expression on the left side of the logical operator evaluates to falsey, the value to the right will be returned. Because '' is falsey, this expression evaluates to true."
       },
       {
-        "question": "null || true"
+        "question": "null || true",
+        "explanation": "In JavaScript, the logical OR operator (||) doesn't necessarily return true or false based on the truthiness of the operands. Instead, it returns the first truthy value it encounters, or the last falsy value if none are found"
       },
       {
         "question": "undefined || true"
@@ -782,6 +789,36 @@
       },
       {
         "question": "' ' ? true : false"
+      }
+    ]
+  },
+  {
+    "id": "32",
+    "title": "Deck 32",
+    "questions": [
+      {
+        "question": "false || false || 8"
+      },
+      {
+        "question": "true || (true && false)"
+      },
+      {
+        "question": "true || (true || false)"
+      },
+      {
+        "question": "true && true && 8"
+      },
+      {
+        "question": "8 ?? 7 == 8"
+      }
+    ]
+  },
+  {
+    "id": "33",
+    "title": "Deck 33",
+    "questions": [
+      {
+        "question": "'' ?? false ?? 8"
       }
     ]
   }

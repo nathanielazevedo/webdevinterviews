@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './root/Root'
 import Footer from './components/Footer.jsx'
-import Home from './pages/Home'
+import Home from './pages/home/Home'
 import Error from './pages/misc/Error'
 import FourOFour from './pages/misc/FourOFour'
 import Contact from './pages/Contact'
@@ -139,10 +139,6 @@ const router = createBrowserRouter([
                 index: true,
                 element: <CccMain />,
               },
-              // {
-              //   path: 'structured/:deckNumber',
-              //   element: <CccMain gameName={'ccc'} random={false} />,
-              // },
               {
                 path: 'random/:deckNumber',
                 element: <GameBase gameName={'ccc'} random={true} />,

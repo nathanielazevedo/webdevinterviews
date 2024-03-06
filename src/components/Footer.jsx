@@ -5,10 +5,10 @@ import AddToHomeScreenIcon from '@mui/icons-material/AddToHomeScreen'
 const Footer = ({ bannerOpen = false }) => {
   return (
     <Paper
-      elevation={2}
+      elevation={1}
       className='footer-wrapper'
       style={{
-        marginBottom: bannerOpen ? '120px' : 0,
+        marginBottom: bannerOpen ? '80px' : 0,
       }}
     >
       <div

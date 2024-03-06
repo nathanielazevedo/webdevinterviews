@@ -42,25 +42,25 @@ const GameButtons = ({ onSubmit, disabled, gameName, allowNots }) => {
         disabled={disabled}
         size='small'
       >
-        <ToggleButton value={'>'} sx={{ padding: '8px 10px' }}>
+        <ToggleButton value={'>'} sx={{ padding: '8px 5px' }}>
           &nbsp; &gt; &nbsp;
         </ToggleButton>
-        <ToggleButton value={'<'} sx={{ padding: '8px 10px' }}>
+        <ToggleButton value={'<'} sx={{ padding: '8px 5px' }}>
           &nbsp; &lt; &nbsp;
         </ToggleButton>
-        <ToggleButton value={'=='} sx={{ padding: '8px 10px' }}>
+        <ToggleButton value={'=='} sx={{ padding: '8px 5px' }}>
           &nbsp; == &nbsp;
         </ToggleButton>
-        <ToggleButton value={'==='} sx={{ padding: '8px 10px' }}>
+        <ToggleButton value={'==='} sx={{ padding: '8px 5px' }}>
           &nbsp; === &nbsp;
         </ToggleButton>
         {allowNots && (
-          <ToggleButton value={'!='} sx={{ padding: '8px 10px' }}>
+          <ToggleButton value={'!='} sx={{ padding: '8px 5px' }}>
             &nbsp; != &nbsp;
           </ToggleButton>
         )}
         {allowNots && (
-          <ToggleButton value={'!=='} sx={{ padding: '8px 10px' }}>
+          <ToggleButton value={'!=='} sx={{ padding: '8px 5px' }}>
             &nbsp; !== &nbsp;
           </ToggleButton>
         )}
