@@ -1,3 +1,5 @@
+import * as React from 'react'
+import { createTheme } from '@mui/material/styles'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './root/Root'
 import Footer from './components/Footer.jsx'
@@ -18,6 +20,10 @@ import ShortsEditor from './pages/shortsEditor/ShortsEditor'
 import WillItThrowMain from './pages/games/willItThrow/WillItThrowMain'
 import NewMemberForm from './pages/NewMemberForm'
 import CccMain from './pages/games/ccc/CccList'
+
+import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider } from '@mui/material/styles'
+import { AuthProvider } from './contexts/AuthContext'
 
 const router = createBrowserRouter([
   {
@@ -156,6 +162,51 @@ const router = createBrowserRouter([
   },
 ])
 
-const Router = () => <RouterProvider router={router} />
+export const ColorModeContext = React.createContext({
+  toggleColorMode: () => {},
+})
+
+const getTheme = () => {
+  const theme = localStorage.getItem('theme')
+  if (theme) {
+    return theme
+  } else {
+    return 'dark'
+  }
+}
+
+const Router = () => {
+  const [mode, setMode] = React.useState(getTheme())
+  const colorMode = {
+    toggleColorMode: () => {
+      setMode((prevMode) => {
+        const newMode = prevMode === 'light' ? 'dark' : 'light'
+        localStorage.setItem('theme', newMode)
+        return newMode
+      })
+    },
+    mode,
+  }
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+        },
+      }),
+    [mode]
+  )
+  return (
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <AuthProvider>
+          <CssBaseline />
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
+  )
+}
 
 export default Router

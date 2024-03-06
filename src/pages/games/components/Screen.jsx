@@ -71,17 +71,18 @@ const Screen = ({ output, code, gameOver, currentScore, deckLength }) => {
         <Zoom in={true}>
           <div>
             <SandpackProvider
-              theme={{
-                ...amethyst,
-                colors: {
-                  surface1: '#121212',
-                },
-                font: { size: '20px', lineHeight: '30px' },
-                syntax: {
-                  tag: '#5833ff',
-                  static: '#6cbdf7',
-                },
-              }}
+              theme={'light'}
+              // theme={{
+              //   ...amethyst,
+              //   colors: {
+              //     surface1: '#121212',
+              //   },
+              //   font: { size: '20px', lineHeight: '30px' },
+              //   syntax: {
+              //     tag: '#5833ff',
+              //     static: '#6cbdf7',
+              //   },
+              // }}
               files={{ '/index.js': code }}
             >
               <SandpackCodeEditor

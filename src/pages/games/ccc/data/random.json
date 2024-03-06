@@ -489,7 +489,7 @@
     "public": false,
     "questions": [
       {
-        "question": "'bab' ??? 'aba",
+        "question": "'bab' ??? 'aba'",
         "allowNots": false
       },
       {
@@ -704,10 +704,6 @@
     "title": "Deck 26",
     "public": false,
     "questions": [
-      {
-        "question": "Number((() ??? {})) ??? 1",
-        "allowNots": false
-      },
       {
         "question": "(() => 1)() ??? 1",
         "allowNots": false

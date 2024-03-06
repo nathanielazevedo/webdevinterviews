@@ -14,7 +14,6 @@
 
 .main {
   min-height: calc(100vh - 64px);
-  margin-top: 64px;
   display: flex;
   flex-direction: column;
 }
@@ -30,18 +29,6 @@
 }
 
 /* Navigation */
-
-.app-bar-section {
-  display: flex;
-  align-items: center;
-  flex-grow: 1;
-  gap: 25px;
-}
-
-.app-bar-links {
-  display: flex;
-  gap: 25px;
-}
 
 .top-nav {
   height: 50px;
@@ -192,7 +179,6 @@
   }
 }
 
-/* The element to apply the animation to */
 .thing {
   width: 100px;
   height: 100px;
@@ -315,7 +301,7 @@
 
 @media screen and (max-width: 765px) {
   .main {
-    margin-top: 56px;
+    margin-top: 15px;
   }
 
   .fit-wrapper {

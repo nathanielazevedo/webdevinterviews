@@ -5,9 +5,9 @@ import AddToHomeScreenIcon from '@mui/icons-material/AddToHomeScreen'
 const Footer = ({ bannerOpen = false }) => {
   return (
     <Paper
-      elevation={1}
+      elevation={2}
       className='footer-wrapper'
-      style={{
+      sx={{
         marginBottom: bannerOpen ? '80px' : 0,
       }}
     >
@@ -20,9 +20,7 @@ const Footer = ({ bannerOpen = false }) => {
       >
         <AddToHomeScreenIcon sx={{ fontSize: '45px', color: 'text.icon' }} />
         <div>
-          <Typography variant='caption' color='text.secondary'>
-            Make this site feel native.
-          </Typography>
+          <Typography variant='caption'>Make this site feel native.</Typography>
           <Typography color='text.secondary'>
             Add it to your homescreen.
           </Typography>

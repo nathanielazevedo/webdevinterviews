@@ -60,7 +60,7 @@ const GameBase = ({ gameName, random }) => {
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: 'flex-start',
         }}
       >
         <TextLink

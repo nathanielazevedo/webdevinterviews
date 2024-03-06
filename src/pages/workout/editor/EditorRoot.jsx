@@ -15,12 +15,14 @@ import Browser from './browser/Root'
 import AutoSave from './components/AutoSave'
 import Prettier from './components/Prettier'
 import ChangedFiles from './components/ChangedFiles'
+import { ColorModeContext } from '../../../Router'
 
 const isDev = import.meta.env.DEV
 
 const EditorRoot = ({ isSolution }) => {
   const codemirrorInstance = useRef()
   const { workout, setFromLocal } = useContext(WorkoutContext)
+  const colorMode = useContext(ColorModeContext)
 
   const renderAutoSave = () => {
     if (isDev) {
@@ -53,7 +55,7 @@ const EditorRoot = ({ isSolution }) => {
           cmInstance={codemirrorInstance.current}
         />
       )}
-      <SandpackThemeProvider theme={'dark'}>
+      <SandpackThemeProvider theme={colorMode.mode}>
         <SandpackLayout>
           <div className='editor-layout'>
             <PanelGroup

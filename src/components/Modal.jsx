@@ -45,10 +45,10 @@ export default function CookiesBanner({ bannerOpen, setBannerOpen }) {
                   alignSelf: { xs: 'flex-start', sm: 'center' },
                 }}
               >
-                <Typography fontWeight='bold' sx={{ color: 'grey.500' }}>
+                <Typography fontWeight='bold'>
                   This site relies on its members.
                 </Typography>
-                <Typography variant='body2' sx={{ color: 'grey.300' }}>
+                <Typography variant='body2' color='text.secondary'>
                   They pay the server and coffee fees. 0.99&#162; / month
                 </Typography>
               </Box>

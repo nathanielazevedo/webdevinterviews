@@ -77,7 +77,7 @@ const Game = ({
         if (input == eval(cleanedQuestion)) handleCorrectInput()
         else handleIncorrectInput()
       } catch (e) {
-        console.log('something went wrong')
+        console.log(`Error, ${(deck.id, currentQuestion)}`)
       }
     } else if (gameName == 'will-it-throw') {
       try {
@@ -96,7 +96,7 @@ const Game = ({
         if (result) handleCorrectInput()
         else handleIncorrectInput()
       } catch (e) {
-        console.log(e)
+        console.log(`Error, ${(deck.id, currentQuestion)}`)
       }
     }
 

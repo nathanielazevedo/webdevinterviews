@@ -8,7 +8,7 @@ const Item = ({ item, basePath, skeleton = false }) => {
   const navigate = useNavigate()
   return (
     <Paper
-      elevation={item?.visible || skeleton ? 1 : 0.5}
+      elevation={2}
       className='item-container'
       onClick={item?.visible ? () => navigate(basePath + item.id) : null}
     >
