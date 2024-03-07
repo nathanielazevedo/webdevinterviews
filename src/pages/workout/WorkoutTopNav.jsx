@@ -18,7 +18,7 @@ const WorkoutTopNav = () => {
           gap: '20px',
         }}
       >
-        <Typography sx={{ color: 'grey.300' }}>{workout.title}</Typography>
+        <Typography>{workout.title}</Typography>
         <TemplateToSvg template={workout.sp_template} />
         <Rating rating={workout.difficulty} />
         <YouTube workout={workout} />

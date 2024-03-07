@@ -16,6 +16,7 @@ import ThemeSwitch from '../components/ThemeSwitch'
 import { useNavigate } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
+import { useLocation } from 'react-router-dom'
 const pages = [
   {
     title: 'Workouts',
@@ -33,6 +34,9 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null)
   const navigate = useNavigate()
   const { displayName, setDisplayName } = React.useContext(AuthContext)
+  const location = useLocation()
+
+  const noToggle = location.pathname.includes('/workouts/')
 
   if (!displayName) {
     if (pages[pages.length - 1].title !== 'Become a member') {
@@ -81,7 +85,14 @@ function ResponsiveAppBar() {
             WDI
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'flex', md: 'none' },
+              alignItems: 'center',
+              gap: '10px',
+            }}
+          >
             <IconButton
               size='large'
               aria-label='account of current user'
@@ -121,26 +132,26 @@ function ResponsiveAppBar() {
                 </MenuItem>
               ))}
             </Menu>
+            {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
+            <Typography
+              variant='h5'
+              noWrap
+              component='a'
+              onClick={() => navigate('/')}
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              WDI
+            </Typography>
           </Box>
-          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
-          <Typography
-            variant='h5'
-            noWrap
-            component='a'
-            onClick={() => navigate('/')}
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-              cursor: 'pointer',
-            }}
-          >
-            WDI
-          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -155,7 +166,7 @@ function ResponsiveAppBar() {
             ))}
           </Box>
 
-          <ThemeSwitch />
+          {!noToggle && <ThemeSwitch />}
           {displayName && (
             <Box sx={{ flexGrow: 0, display: 'flex' }}>
               <Tooltip title='Open settings'>

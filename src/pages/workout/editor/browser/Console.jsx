@@ -1,12 +1,14 @@
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import { Typography, Box, Tooltip, IconButton } from '@mui/material'
 import { Console as ConsoleFeed } from 'console-feed'
 import { useSandpack, useSandpackConsole } from '@codesandbox/sandpack-react'
 import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt'
+import { ColorModeContext } from '../../../../Router'
 
 const Console = () => {
   const { logs, reset } = useSandpackConsole({})
   const { listen } = useSandpack()
+  const colorMode = useContext(ColorModeContext)
 
   useEffect(() => {
     const stopListening = listen((msg) => {
@@ -20,7 +22,7 @@ const Console = () => {
   }, [listen])
 
   return (
-    <div style={{ height: '100%', backgroundColor: '#151515' }}>
+    <div style={{ height: '100%' }}>
       <Box
         sx={{
           padding: '0 10px',
@@ -39,19 +41,7 @@ const Console = () => {
         </IconButton>
       </Box>
       <Box sx={{ overflowY: 'scroll', height: '100%' }}>
-        <ConsoleFeed
-          logs={logs}
-          variant='dark'
-          styles={{
-            LOG_BACKGROUND: '#151515',
-            BASE_BACKGROUND_COLOR: '#151515',
-            LOG_AMOUNT_BACKGROUND: 'black',
-            // BASE_FONT_SIZE: '14px',
-            BASE_FONT_FAMILY: 'monospace',
-            // BASE_LINE_HEIGHT: '10px',
-            TREENODE_LINE_HEIGHT: '20px',
-          }}
-        />
+        <ConsoleFeed logs={logs} variant={colorMode.mode} />
       </Box>
     </div>
   )

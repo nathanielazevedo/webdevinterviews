@@ -19,7 +19,7 @@
 }
 
 .fit-wrapper {
-  padding: 30px 0 50px 0;
+  padding: 40px 0 50px 0;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -36,10 +36,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.menu-icon {
-  display: none !important;
 }
 
 .active {
@@ -101,35 +97,15 @@
 
 .ResizeHandleOuter {
   cursor: col-resize;
-  width: 5px;
+  width: 3px;
   position: relative;
-  --background-color: black;
-}
-
-.ResizeHandleOuter[data-resize-handle-active] {
-  --background-color: var(--lightBlue);
-}
-
-.ResizeHandleInner {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: var(--background-color);
-  transition: background-color 0.3s linear;
 }
 
 .HorizontalResizeHandleOuter {
   cursor: col-resize;
-  height: 5px;
+  height: 3px;
   min-height: 3px;
   position: relative;
-  --background-color: black;
-}
-
-.HorizontalResizeHandleOuter[data-resize-handle-active] {
-  --background-color: var(--lightBlue);
 }
 
 /* GAME */

@@ -70,9 +70,9 @@ const GameBase = ({ gameName, random }) => {
         />
         <IconButton onClick={setSoundPreference}>
           {playSound ? (
-            <MusicNoteIcon sx={{ color: 'grey.400' }} />
+            <MusicNoteIcon color='text.icon' />
           ) : (
-            <MusicOffIcon sx={{ color: 'grey.400' }} />
+            <MusicOffIcon color='text.icon' />
           )}
         </IconButton>
       </div>

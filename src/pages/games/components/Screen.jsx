@@ -4,13 +4,16 @@ import {
   SandpackCodeEditor,
   SandpackProvider,
 } from '@codesandbox/sandpack-react'
-import { amethyst } from '@codesandbox/sandpack-themes'
+import { amethyst, githubLight } from '@codesandbox/sandpack-themes'
 import CloseIcon from '@mui/icons-material/Close'
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined'
+import { ColorModeContext } from '../../../Router'
+import { useContext } from 'react'
 
 const Screen = ({ output, code, gameOver, currentScore, deckLength }) => {
   const perfectScore = currentScore == deckLength
-
+  const colorMode = useContext(ColorModeContext)
+  const theme = colorMode.mode == 'dark' ? amethyst : githubLight
   const getGameOverText = () => {
     const score = (currentScore / deckLength) * 100
     if (score > 80) {
@@ -33,10 +36,10 @@ const Screen = ({ output, code, gameOver, currentScore, deckLength }) => {
               alignItems: 'center',
             }}
           >
-            <Typography variant='subtitle1' sx={{ color: 'grey.300' }}>
+            <Typography variant='subtitle1' color='text.primary'>
               {getGameOverText()}
             </Typography>
-            <Typography sx={{ color: 'grey.300', fontSize: '45px' }}>
+            <Typography color={'text.secondary'} sx={{ fontSize: '45px' }}>
               {currentScore} / {deckLength}
             </Typography>
           </div>
@@ -71,18 +74,13 @@ const Screen = ({ output, code, gameOver, currentScore, deckLength }) => {
         <Zoom in={true}>
           <div>
             <SandpackProvider
-              theme={'light'}
-              // theme={{
-              //   ...amethyst,
-              //   colors: {
-              //     surface1: '#121212',
-              //   },
-              //   font: { size: '20px', lineHeight: '30px' },
-              //   syntax: {
-              //     tag: '#5833ff',
-              //     static: '#6cbdf7',
-              //   },
-              // }}
+              theme={{
+                ...theme,
+                colors: {
+                  surface1: colorMode.mode == 'dark' ? '#121212' : 'white',
+                },
+                font: { size: '20px', lineHeight: '30px' },
+              }}
               files={{ '/index.js': code }}
             >
               <SandpackCodeEditor

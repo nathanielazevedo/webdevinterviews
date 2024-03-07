@@ -15,21 +15,21 @@ const WorkoutSideNav = () => {
   const links = [
     {
       name: '',
-      icon: <CloseIcon sx={{ color: 'inherit' }} />,
+      icon: <CloseIcon />,
       path: `/workouts`,
       end: true,
       replace: true,
     },
     {
       name: 'EDITOR',
-      icon: <CodeIcon sx={{ color: 'inherit' }} />,
+      icon: <CodeIcon />,
       path: `/workouts/${workout.id}`,
       end: true,
       replace: true,
     },
     {
       name: 'SOLUTION',
-      icon: <VisibilityOutlinedIcon sx={{ color: 'inherit' }} />,
+      icon: <VisibilityOutlinedIcon />,
       path: `/workouts/${workout.id}/solution`,
       end: true,
       replace: true,
@@ -46,7 +46,6 @@ const WorkoutSideNav = () => {
           to={link.path}
           color={'text.secondary'}
           replace={link.replace}
-          className={({ isActive }) => (isActive ? 'active' : 'not-active')}
           underline='hover'
           style={{
             display: 'flex',

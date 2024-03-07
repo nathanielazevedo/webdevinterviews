@@ -15,7 +15,7 @@ const YouTube = ({ workout }) => (
         target='_blank'
         rel='noreferrer'
       >
-        <YouTubeIcon sx={{ color: 'darkred' }} fontSize='medium' />
+        <YouTubeIcon color='error' fontSize='medium' />
       </a>
     </IconButton>
   </Tooltip>

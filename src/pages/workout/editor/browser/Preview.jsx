@@ -23,7 +23,7 @@ const BasicTabs = () => {
 
   return (
     <Box sx={{ width: '100%', height: 'calc(100% - 40px)' }}>
-      <Box sx={{ backgroundColor: '#151515' }}>
+      <Box>
         <Tabs value={value} onChange={handleChange} sx={{ minHeight: '40px' }}>
           {['Details', 'Console', 'Tests', 'Example', 'Video'].map((label) => (
             <Tab
@@ -55,7 +55,6 @@ const BasicTabs = () => {
           >
             <SandpackThemeProvider theme={'dark'}>
               <SandpackPreview
-                showNavigator
                 style={{ height: '100%' }}
                 showOpenInCodeSandbox={false}
               />
@@ -70,7 +69,7 @@ const BasicTabs = () => {
           height='100%'
           src={workout.embed_link}
           title='YouTube video player'
-          frameborder='0'
+          frameBorder='0'
           allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
           allowfullscreen
         ></iframe>

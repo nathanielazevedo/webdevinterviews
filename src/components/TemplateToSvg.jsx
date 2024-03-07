@@ -6,7 +6,7 @@ const TemplateToSvg = ({ template }) => {
     switch (templateName) {
       case 'react':
         return react
-      case 'vanilla':
+      case 'static':
         return vanilla
       default:
         return null

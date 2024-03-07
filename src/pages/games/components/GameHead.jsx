@@ -10,7 +10,7 @@ const GameHead = ({ title, length, scores }) => {
         alignItems: 'center',
       }}
     >
-      <Typography sx={{ color: 'grey.400' }}>{title}</Typography>
+      <Typography color={'text.secondary'}>{title}</Typography>
       <ScoreCircles length={length} scores={scores} />
     </div>
   )
