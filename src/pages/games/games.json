@@ -1,0 +1,37 @@
+[
+  {
+    "id": "true-or-false",
+    "title": "True or False",
+    "public": true,
+    "visible": true,
+    "description": "Improve your understanding of JavaScript types and comparisons."
+  },
+  {
+    "id": "will-it-throw",
+    "title": "Will It Throw?",
+    "public": true,
+    "visible": true,
+    "description": "Determine if the provided code will throw an error."
+  },
+  {
+    "id": "ccc",
+    "title": "Choose Correct Comparison Operator",
+    "public": true,
+    "visible": true,
+    "description": "You choose the correct comparison operator. > < == ==="
+  },
+  {
+    "id": "mutate",
+    "title": "Does It Mutate",
+    "public": false,
+    "visible": false,
+    "description": "Does the array method mutate the original array?"
+  },
+  {
+    "id": "returns",
+    "title": "Returns What?",
+    "public": false,
+    "visible": false,
+    "description": "Predict the returned value."
+  }
+]

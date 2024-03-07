@@ -2,9 +2,9 @@ import './fireworks.css'
 
 const Fireworks = () => {
   return (
-    <div class='pyro'>
-      <div class='before'></div>
-      <div class='after'></div>
+    <div className='pyro'>
+      <div className='before'></div>
+      <div className='after'></div>
     </div>
   )
 }

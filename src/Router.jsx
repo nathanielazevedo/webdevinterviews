@@ -1,7 +1,8 @@
+import * as React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './root/Root'
-
-import Home from './pages/Home'
+import Footer from './components/Footer.jsx'
+import Home from './pages/home/Home'
 import Error from './pages/misc/Error'
 import FourOFour from './pages/misc/FourOFour'
 import Contact from './pages/Contact'
@@ -11,16 +12,19 @@ import Workout from './pages/workout/Workout'
 import EditorRoot from './pages/workout/editor/EditorRoot'
 
 import GamesList from './pages/games/GamesList'
-import TrueOrFalseList from './pages/games/trueOrFalse/TrueOrFalseList'
-import TrueOrFalse from './pages/games/trueOrFalse/TrueOrFalse'
+import GameBase from './pages/games/components/GameBase.jsx'
+
+import TrueOrFalseMain from './pages/games/trueOrFalse/TrueOrFalseMain'
 import ShortsEditor from './pages/shortsEditor/ShortsEditor'
-import WillItThrowList from './pages/games/willItThrow/WillItThrowList'
-import WillItThrow from './pages/games/willItThrow/Will_ItThrow'
-import Contests from './pages/contests/ContestsList'
+import WillItThrowMain from './pages/games/willItThrow/WillItThrowMain'
 import NewMemberForm from './pages/NewMemberForm'
-import Ccc from './pages/games/ccc/Ccc'
-import CccList from './pages/games/ccc/CccList'
+import CccMain from './pages/games/ccc/CccList'
+import MutateMain from './pages/games/mutate/MutateMain'
+import ReturnMain from './pages/games/returns/ReturnMain'
 import Runner from './pages/games/runner/Runner'
+
+import { AuthProvider } from './contexts/AuthContext'
+import { ThemeProvider } from './contexts/ThemeContext'
 
 const router = createBrowserRouter([
   {
@@ -50,7 +54,12 @@ const router = createBrowserRouter([
       {
         path: 'workouts',
         errorElement: <Error />,
-        element: <Workouts />,
+        element: (
+          <>
+            <Workouts />
+            <Footer />
+          </>
+        ),
       },
       {
         path: 'workouts/:id',
@@ -85,22 +94,32 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <GamesList />,
+            element: (
+              <>
+                <GamesList />
+                <Footer />
+              </>
+            ),
           },
           {
             path: 'true-or-false',
             children: [
               {
                 index: true,
-                element: <TrueOrFalseList />,
+                element: (
+                  <>
+                    <TrueOrFalseMain />
+                    <Footer />
+                  </>
+                ),
               },
               {
-                path: ':id',
-                element: (
-                  <div className='fit-wrapper'>
-                    <TrueOrFalse />
-                  </div>
-                ),
+                path: 'structured/:deckNumber',
+                element: <GameBase gameName={'true-or-false'} random={false} />,
+              },
+              {
+                path: 'random/:deckNumber',
+                element: <GameBase gameName={'true-or-false'} random={true} />,
               },
             ],
           },
@@ -109,15 +128,15 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <WillItThrowList />,
+                element: <WillItThrowMain />,
               },
               {
-                path: ':id',
-                element: (
-                  <div className='fit-wrapper'>
-                    <WillItThrow />
-                  </div>
-                ),
+                path: 'structured/:deckNumber',
+                element: <GameBase gameName={'will-it-throw'} random={false} />,
+              },
+              {
+                path: 'random/:deckNumber',
+                element: <GameBase gameName={'will-it-throw'} random={true} />,
               },
             ],
           },
@@ -126,15 +145,37 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <CccList />,
+                element: <CccMain />,
               },
               {
-                path: ':id',
-                element: (
-                  <div className='fit-wrapper'>
-                    <Ccc />
-                  </div>
-                ),
+                path: 'random/:deckNumber',
+                element: <GameBase gameName={'ccc'} random={true} />,
+              },
+            ],
+          },
+          {
+            path: 'mutate',
+            children: [
+              {
+                index: true,
+                element: <MutateMain />,
+              },
+              {
+                path: 'random/:deckNumber',
+                element: <GameBase gameName={'mutate'} random={true} />,
+              },
+            ],
+          },
+          {
+            path: 'returns',
+            children: [
+              {
+                index: true,
+                element: <ReturnMain />,
+              },
+              {
+                path: 'random/:deckNumber',
+                element: <GameBase gameName={'returns'} random={true} />,
               },
             ],
           },
@@ -166,6 +207,14 @@ const router = createBrowserRouter([
   },
 ])
 
-const Router = () => <RouterProvider router={router} />
+const Router = () => {
+  return (
+    <ThemeProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </ThemeProvider>
+  )
+}
 
 export default Router

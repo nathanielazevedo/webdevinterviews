@@ -6,7 +6,7 @@ const HelpPage = () => {
     <div className='fit-wrapper'>
       <Header
         title='Contact'
-        subtext='You can contact me in a few different ways.'
+        subtext='You can contact us by email or discord.'
       />
       <Typography sx={{ color: 'grey.500' }}>
         Email: webdevinterviews@gmail.com
@@ -16,11 +16,11 @@ const HelpPage = () => {
           Discord
         </Button>
       </a>
-      <a href='https://www.linkedin.com/in/nateazevedo/' target='_blank'>
+      {/* <a href='https://www.linkedin.com/in/nateazevedo/' target='_blank'>
         <Button fullWidth variant='outlined' color='primary'>
           LinkedIn
         </Button>
-      </a>
+      </a> */}
     </div>
   )
 }

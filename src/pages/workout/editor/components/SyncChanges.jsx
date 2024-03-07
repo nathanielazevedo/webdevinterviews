@@ -4,24 +4,20 @@ import { useContext, useState } from 'react'
 import CircularProgress from '@mui/material/CircularProgress'
 import { WorkoutContext } from '../../../../contexts/WorkoutContext'
 import { getChangedCode } from '../utils'
-import { useNavigate } from 'react-router'
 import useApi from '../../../../hooks/useApi'
 
 const SyncChanges = ({ changedFiles, isSolution }) => {
   const { putIt } = useApi()
-  const navigate = useNavigate()
   const { sandpack } = useSandpack()
   const [loading, setLoading] = useState(false)
-  const { workout, setData } = useContext(WorkoutContext)
+  const { workout } = useContext(WorkoutContext)
 
   const onSubmit = async () => {
     const { sharedFiles, otherFiles, packageJson } = getChangedCode(
       changedFiles,
       sandpack.files
     )
-    console.log(sharedFiles)
-    console.log(otherFiles)
-    console.log(packageJson)
+
     setLoading(true)
 
     try {

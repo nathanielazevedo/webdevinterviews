@@ -1,14 +1,14 @@
 import { Link, Paper, Typography } from '@mui/material'
 import { Link as routerLink } from 'react-router-dom'
-import TextLink from './TextLink'
 import AddToHomeScreenIcon from '@mui/icons-material/AddToHomeScreen'
 
 const Footer = ({ bannerOpen = false }) => {
   return (
-    <div
+    <Paper
+      elevation={2}
       className='footer-wrapper'
-      style={{
-        marginBottom: bannerOpen ? '120px' : 0,
+      sx={{
+        marginBottom: bannerOpen ? '80px' : 0,
       }}
     >
       <div
@@ -18,12 +18,10 @@ const Footer = ({ bannerOpen = false }) => {
           alignItems: 'center',
         }}
       >
-        <AddToHomeScreenIcon sx={{ fontSize: '45px', color: 'grey.400' }} />
+        <AddToHomeScreenIcon sx={{ fontSize: '45px', color: 'text.icon' }} />
         <div>
-          <Typography variant='caption' sx={{ color: 'grey.400' }}>
-            Make this site feel native.
-          </Typography>
-          <Typography sx={{ color: 'grey.400' }}>
+          <Typography variant='caption'>Make this site feel native.</Typography>
+          <Typography color='text.secondary'>
             Add it to your homescreen.
           </Typography>
         </div>
@@ -45,7 +43,7 @@ const Footer = ({ bannerOpen = false }) => {
           Contact
         </Link>
       </div>
-    </div>
+    </Paper>
   )
 }
 

@@ -1,12 +1,6 @@
 import * as React from 'react'
 import Stack from '@mui/material/Stack'
 import TrapFocus from '@mui/material/Unstable_TrapFocus'
-import CssBaseline from '@mui/material/CssBaseline'
-import AppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import Container from '@mui/material/Container'
-import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
 import Paper from '@mui/material/Paper'
 import Fade from '@mui/material/Fade'
 import Button from '@mui/material/Button'
@@ -51,10 +45,10 @@ export default function CookiesBanner({ bannerOpen, setBannerOpen }) {
                   alignSelf: { xs: 'flex-start', sm: 'center' },
                 }}
               >
-                <Typography fontWeight='bold' sx={{ color: 'grey.500' }}>
+                <Typography fontWeight='bold'>
                   This site relies on its members.
                 </Typography>
-                <Typography variant='body2' sx={{ color: 'grey.300' }}>
+                <Typography variant='body2' color='text.secondary'>
                   They pay the server and coffee fees. 0.99&#162; / month
                 </Typography>
               </Box>

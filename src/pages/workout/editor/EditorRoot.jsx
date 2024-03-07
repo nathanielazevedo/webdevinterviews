@@ -9,18 +9,20 @@ import {
   SandpackThemeProvider,
   SandpackProvider,
 } from '@codesandbox/sandpack-react'
-import { Box, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import ResizeHandle from '../../../components/ResizeHandle'
 import Browser from './browser/Root'
 import AutoSave from './components/AutoSave'
 import Prettier from './components/Prettier'
 import ChangedFiles from './components/ChangedFiles'
+import { ColorModeContext } from '../../../contexts/ThemeContext'
 
 const isDev = import.meta.env.DEV
 
 const EditorRoot = ({ isSolution }) => {
   const codemirrorInstance = useRef()
   const { workout, setFromLocal } = useContext(WorkoutContext)
+  const colorMode = useContext(ColorModeContext)
 
   const renderAutoSave = () => {
     if (isDev) {
@@ -53,7 +55,7 @@ const EditorRoot = ({ isSolution }) => {
           cmInstance={codemirrorInstance.current}
         />
       )}
-      <SandpackThemeProvider theme={'dark'}>
+      <SandpackThemeProvider theme={colorMode.mode}>
         <SandpackLayout>
           <div className='editor-layout'>
             <PanelGroup
@@ -85,6 +87,7 @@ const EditorRoot = ({ isSolution }) => {
                         alignItems: 'center',
                         height: '5vh',
                         backgroundColor: 'black',
+                        margin: '1px',
                       }}
                     >
                       <Typography

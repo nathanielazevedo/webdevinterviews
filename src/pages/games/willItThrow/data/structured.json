@@ -1,0 +1,96 @@
+[
+  {
+    "id": "1",
+    "title": "Syntax Error",
+    "description": "A look at different Syntax Errors.",
+    "questions": [
+      {
+        "question": "let str = 'This is a string with a syntax error;",
+        "explanation": "Syntax errors are very common but also very obvious. The string in this question is missing a closing quotation mark."
+      },
+      {
+        "question": "let num = 10; \nlet x = num.toFixed(2;",
+        "explanation": "The method .toFixed is missing a closing parentheses."
+      },
+      {
+        "question": "var array = [1, 2, 3, 4, 5;"
+      },
+      {
+        "question": "var obj = {\n name: 'John' \n age: 30, \n city: 'New York'\n};"
+      },
+      {
+        "question": "var new = 'newThing';"
+      },
+      {
+        "question": "if (x > 5 {}"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "title": "Reference Error",
+    "description": "A look at different ReferenceErrors.",
+    "questions": [
+      {
+        "question": "console.log(variable);",
+        "explanation": "Here, we are trying to reference a variable that has not been declared. Therefore, this code will throw a Reference Error."
+      },
+      {
+        "question": "var userName = 'John'; \nconsole.log(userNam); "
+      },
+      {
+        "question": "function outerFunction() {\n var innerVariable = 'Hello';\n}\nconsole.log(innerVariable); "
+      },
+      {
+        "question": "var obj = { name: 'John' }; \nconsole.log(obj.age);"
+      },
+      {
+        "question": "someFunction();"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "title": "Type Error",
+    "description": "A look at different TypeErrors.",
+    "questions": [
+      {
+        "question": "var obj = { \n name: 'John',\n greet: function() {\n  console.log('Hello, ' + this.name);\n }\n};\nvar greetFunction = obj.greet;\ngreetFunction();"
+      },
+      {
+        "question": "var num = 10; \nnum();"
+      },
+      {
+        "question": "var obj = null; \nconsole.log(obj.property);"
+      },
+      {
+        "question": "var arr = [1, 2, 3]; \narr.toUpperCase();"
+      },
+      {
+        "question": "var str = null; \nconsole.log(str[0]);"
+      },
+      {
+        "question": "var num = 10; \nconsole.log(num.map(Number));"
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "title": "Range Error",
+    "description": "A look at different RangeErrors.",
+    "questions": [
+      {
+        "question": "var arr = new Array(-1);"
+      },
+      {
+        "question": "Number.MAX_SAFE_INTEGER + 1;"
+      },
+      {
+        "question": "'abc'.repeat(Infinity);"
+      },
+      {
+        "question": "new Date(2022, 12, 32);"
+      }
+    ]
+  }
+]

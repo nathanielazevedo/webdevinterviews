@@ -5,12 +5,9 @@ import CodeIcon from '@mui/icons-material/Code'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import CloseIcon from '@mui/icons-material/Close'
 
-import { List } from '@mui/material'
+import { Link } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import ListItem from '@mui/material/ListItem'
 import Typography from '@mui/material/Typography'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemButton from '@mui/material/ListItemButton'
 
 const WorkoutSideNav = () => {
   const { workout } = useContext(WorkoutContext)
@@ -34,54 +31,34 @@ const WorkoutSideNav = () => {
       name: 'SOLUTION',
       icon: <VisibilityOutlinedIcon />,
       path: `/workouts/${workout.id}/solution`,
+      end: true,
       replace: true,
     },
   ]
 
   return (
-    <List className='side-nav-wrapper'>
+    <div className='side-nav-wrapper'>
       {links.map((link) => (
-        <NavLink
+        <Link
+          component={NavLink}
           key={link.path}
           end={link.end}
           to={link.path}
+          color={'text.secondary'}
           replace={link.replace}
-          className={({ isActive, isPending }) =>
-            isActive ? 'active' : 'not-active'
-          }
-          style={{ textDecoration: 'none' }}
+          underline='hover'
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
         >
-          <ListItem
-            key={link.name}
-            disablePadding
-            sx={{
-              display: 'flex',
-              maxWidth: '50px',
-              justifyContent: 'center',
-            }}
-          >
-            <ListItemButton
-              onClick={link.onClick}
-              sx={{
-                flexDirection: 'column',
-                justifyContent: 'center',
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: '0',
-                  maxWidth: '50px',
-                  color: 'inherit',
-                }}
-              >
-                {link.icon}
-              </ListItemIcon>
-              <Typography sx={{ fontSize: '8px' }}>{link.name}</Typography>
-            </ListItemButton>
-          </ListItem>
-        </NavLink>
+          {link.icon}
+          <Typography sx={{ fontSize: '8px' }}>{link.name}</Typography>
+        </Link>
       ))}
-    </List>
+    </div>
   )
 }
 

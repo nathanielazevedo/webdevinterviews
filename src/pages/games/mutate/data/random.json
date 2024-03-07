@@ -1,0 +1,199 @@
+[
+  {
+    "id": 1,
+    "title": "Deck 1",
+    "questions": [
+      {
+        "question": "const arr = [1, 2, 3]\narr.at()",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const arr = [1, 2, 3]\nconst arr2 = [4, 5, 6]\narr1.concat(arr2)",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const fruits = ['Banana', 'Orange', 'Apple', 'Mango'];\nfruits.copyWithin(2, 0);",
+        "explanation": "",
+        "answer": "yes"
+      },
+      {
+        "question": "const fruits = ['Banana', 'Orange', 'Apple', 'Mango'];\nconst f = fruits.entries();",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const ages = [32, 33, 16, 40];\n\nages.every(checkAge)\n\nfunction checkAge(age) {\n  return age > 18;\n}",
+        "explanation": "",
+        "answer": "no"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Deck 2",
+    "questions": [
+      {
+        "question": "const fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.fill(\"Kiwi\");",
+        "explanation": "",
+        "answer": "yes"
+      },
+      {
+        "question": "const ages = [3, 10, 18, 20];\nages.filter((age) => age > 18)",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const ages = [3, 10, 18, 20];\nages.find((age) => age > 18)",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const ages = [3, 10, 18, 20];\nages.findIndex((age) => age > 18)",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const ages = [3, 10, 18, 20];\nages.findLast((age) => age > 18)",
+        "explanation": "",
+        "answer": "no"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Deck 3",
+    "questions": [
+      {
+        "question": "const ages = [3, 10, 18, 20];\nages.findLastIndex((age) => age > 18)",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const myArr = [[1,2],[3,4],[5,6]];\nconst newArr = myArr.flat();",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const myArr = [1, 2, 3, 4, 5, 6];\nconst newArr = myArr.flatMap((x) => x * 2);",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const fruits = [\"apple\", \"orange\", \"cherry\"];\nfruits.forEach((each) => each + 's');",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.includes(\"Mango\");",
+        "explanation": "",
+        "answer": "no"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Deck 4",
+    "questions": [
+      {
+        "question": "const fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet index = fruits.indexOf(\"Apple\");",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet text = fruits.join();",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const fruits = [\"Apple\", \"Orange\", \"Apple\", \"Mango\"];\nlet index = fruits.lastIndexOf(\"Apple\");",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const numbers = [4, 9, 16, 25];\nconst newArr = numbers.map(Math.sqrt)",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.pop();",
+        "explanation": "",
+        "answer": "no"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Deck 5",
+    "questions": [
+      {
+        "question": "const fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.push(\"Kiwi\");",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const numbers = [175, 50, 25];\n\nnumbers.reduce(myFunc);\n\nfunction myFunc(total, num) {\n  return total - num;\n}",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const numbers = [175, 50, 25];\n\nnumbers.reduceRight(myFunc);\n\nfunction myFunc(total, num) {\n  return total - num;\n}",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.shift();",
+        "explanation": "",
+        "answer": "yes"
+      },
+      {
+        "question": "const fruits = [\"Banana\", \"Orange\", \"Lemon\", \"Apple\", \"Mango\"];\nconst citrus = fruits.slice(1, 3);",
+        "explanation": "",
+        "answer": "no"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Deck 6",
+    "questions": [
+      {
+        "question": "const ages = [3, 10, 18, 20];\n\nages.some(checkAdult);\nfunction checkAdult(age) {\n  return age > 18;\n}",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.sort();",
+        "explanation": "",
+        "answer": "yes"
+      },
+      {
+        "question": "const fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.splice(2, 0, \"Lemon\", \"Kiwi\");",
+        "explanation": "",
+        "answer": "yes"
+      },
+      {
+        "question": "const fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nlet text = fruits.toString();",
+        "explanation": "",
+        "answer": "no"
+      },
+      {
+        "question": "const fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nfruits.unshift(\"Lemon\",\"Pineapple\");",
+        "explanation": "",
+        "answer": "yes"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Deck 7",
+    "questions": [
+      {
+        "question": "const months = [\"Januar\", \"Februar\", \"Mar\", \"April\"];\nconst myMonths = months.with(2, \"March\");",
+        "explanation": "",
+        "answer": "no"
+      }
+    ]
+  }
+]

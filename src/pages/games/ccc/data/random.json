@@ -1,0 +1,860 @@
+[
+  {
+    "id": "1",
+    "title": "Deck 1",
+    "public": true,
+    "questions": [
+      {
+        "question": "1.1 ??? 2",
+        "explanation": "Basic math question to warm up.",
+        "allowNots": false
+      },
+      {
+        "question": "true ??? false",
+        "explanation": "When comparing booleans, JavaScript turns both booleans to numbers. True coerced to a number is 1. False coerced to a number is 0. The comparison becomes 1 ??? 0. There are multiple correct answers including >, != and !==.",
+        "allowNots": false
+      },
+      {
+        "question": "'dog' ??? 'cat'",
+        "explanation": "When comparing strings, JavaScript compares their Unicode values letter by letter. For the most part, letters later in the alphabet are considered greater than letters early in the alphabet. In this question 'd' is larger than 'c'. Possible answers are >, !==, and !=.",
+        "allowNots": false
+      },
+      {
+        "question": "'1' ??? 1",
+        "explanation": "When comparing strings to numbers, JavaScript attempts to turn strings to numbers. So JS converts the string '1' to the number 1. The comparison after coercion the is 1 ??? 1. It is important to keep in mind that === will compare value types. Therefore, the answer is ==.",
+        "allowNots": false
+      },
+      {
+        "question": "'true' ??? true",
+        "explanation": "The second true is converted to the number 1. JavaScript then tries to convert the string 'true' to a number, resulting in NaN. After coercion the comparison is NaN ??? 1. The answer is !== or !==",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "title": "Deck 2",
+    "public": true,
+    "questions": [
+      {
+        "question": "[] ??? {}",
+        "explanation": "When comparing different types like an array and an object, the abstract relational comparison algorithm is applied. This converts the operands to primitives and then compares them. An empty array ([]) gets coerced to the empty string (''), while an empty object ({}) gets coerced to '[object Object]'. After coercion we are comparing these strings, '' ??? '[object Object]'. If all else is equal, the shorter string is considered less than the longer string. Therefore the answer is <.",
+        "allowNots": false
+      },
+      {
+        "question": "1 ??? '1'",
+        "explanation": "When comparing a number to a string, JavaScript attempts to turn strings to numbers. In this case, '1' gets converted to a number, and the comparison becomes 1 ??? 1. Therefore the answer is ==.",
+        "allowNots": false
+      },
+      {
+        "question": "'true' ??? true",
+        "explanation": "JavaScript attempts to coerce the string 'true' to a number, resulting in NaN (not a number), while the boolean true gets converted to 1. After coercion the comparison is NaN ??? 1. Therefore, the answer is !==",
+        "allowNots": true
+      },
+      {
+        "question": "1.0 ??? 1.00",
+        "explanation": "When comparing numbers, the number of trailing zeros doesn't matter. Both 1.0 and 1.00 are the same numeric value. Therefore, the answer is ===..",
+        "allowNots": false
+      },
+      {
+        "question": "'a' ??? 0",
+        "explanation": "When comparing a string and a number, JavaScript attempts to turn strings to numbers. The string 'a' gets converted to NaN. After coercion the comparison is NaN ??? 0. Therefore, the answer is !==",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "title": "Deck 3",
+    "public": true,
+    "questions": [
+      {
+        "question": "(100 / '10') ??? 10",
+        "explanation": "When dividing a number by a string, JavaScript performs type coercion. The string '10' is converted to a number, resulting in 100 / 10 which is 10. The comparison becomes 10 ??? 10. Types were originally the same so the most proper answer is ===.",
+        "allowNots": false
+      },
+      {
+        "question": "10 + '10' ??? 1010",
+        "explanation": "When using the + operator with a number and a string, JavaScript performs string concatenation. In this case, '10' is concatenated to 10, resulting in '1010'. The comparison become '1010' ??? 1010. Answers can be == or !==.",
+        "allowNots": false
+      },
+      {
+        "question": "10 - '10' ??? 1010",
+        "explanation": "The subtraction operator (-) in JavaScript coerces the string '10' into a number, and the expression becomes 10 - 10, which equals 0. The comparison becomes 0 ??? 1010. Possible answers are !== or !=== or <.",
+        "allowNots": false
+      },
+      {
+        "question": "true + 10 ??? 11",
+        "explanation": "In JavaScript, when a boolean value (true) is used with the + operator, it's converted to a number (1). Thus, the expression becomes 1 + 10. The resulting comparison is 11 ??? 11. Possible answers are == and ===.",
+        "allowNots": false
+      },
+      {
+        "question": "0.1 + 0.2 ??? 0.3",
+        "explanation": "Floating-point arithmetic in JavaScript can sometimes lead to unexpected results due to how floating-point numbers are represented. In this case, 0.1 + 0.2 results in 0.30000000000000004, not 0.3. The comparison becomes 0.30000000000000004 ??? 0.3. Possible answers are >, != and !==.",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "title": "Deck 4",
+    "public": true,
+    "questions": [
+      {
+        "question": "typeof NaN ??? 'number'",
+        "explanation": "The typeof operator in JavaScript returns 'number' for NaN (Not a Number). Although NaN represents an invalid number, it is still considered a numeric data type. The comparison becomes 'number' ??? 'number'. Therefore, the answer is ===.",
+        "allowNots": false
+      },
+      {
+        "question": "null ??? undefined",
+        "explanation": "In JavaScript, null and undefined are loosely equal (==) but not strictly equal (===). So, null == undefined is true, but null === undefined is false. Therefore, the answer is ==.",
+        "allowNots": false
+      },
+      {
+        "question": "NaN ??? NaN",
+        "explanation": "In JavaScript, NaN (Not a Number) is considered to be unequal to every value, including itself. Therefore the possible answers are != and !==.",
+        "allowNots": false
+      },
+      {
+        "question": "Infinity ??? 1000",
+        "explanation": "In JavaScript, Infinity represents a value greater than any other number. Therefore, the answer is >.",
+        "allowNots": false
+      },
+      {
+        "question": "Boolean('false') ??? false",
+        "explanation": "The expression Boolean('false') evaluates to true because any non-empty string, including 'false', evaluates to true in a Boolean context. The comparison becomes true ??? false. Possible answers are >, != and !==.",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "title": "Deck 5",
+    "public": true,
+    "questions": [
+      {
+        "question": "({}).toString() ??? '[object Object]'",
+        "explanation": "In JavaScript, when an object is converted to a string, its default string representation is '[object Object]'. The comparision becomes, '[object Object]' ??? '[object Object]'. Therefore, the answer is ==.",
+        "allowNots": false
+      },
+      {
+        "question": "[].toString() ??? ''",
+        "explanation": "The `toString()` method of an empty array returns an empty string. The comparison becomes '' ??? ''. Therefore, the answer is ==.",
+        "allowNots": false
+      },
+      {
+        "question": "let dog = {}; let cat = dog; dog ??? cat",
+        "explanation": "In JavaScript, objects are reference types. When `cat` is assigned the value of `dog`, they refer to the same object. Therefore, the answer is ==.",
+        "allowNots": false
+      },
+      {
+        "question": "false + 10 ??? 9",
+        "explanation": "In JavaScript, `false` is coerced to the number 0 when used with the `+` operator. So, `false + 10` equals 10. The comparision becomes 10 ??? 10. The answer is ==.",
+        "allowNots": false
+      },
+      {
+        "question": "undefined ??? 0",
+        "explanation": "In JavaScript, when comparing `undefined` with a number, `undefined` is coerced to `NaN` (Not a Number). The comparison becomes NaN ??? 0. NaN is equivalent to no other values. Therefore, the answer is !=.",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "title": "Deck 6",
+    "public": false,
+    "questions": [
+      {
+        "question": "[] + {} ??? 0",
+        "allowNots": false
+      },
+      {
+        "question": "Math.min() ??? Math.max()",
+        "allowNots": false
+      },
+      {
+        "question": "[] ??? {}",
+        "allowNots": false
+      },
+      {
+        "question": "null ??? 0",
+        "allowNots": false
+      },
+      {
+        "question": "NaN ??? NaN",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "title": "Deck 7",
+    "public": false,
+    "questions": [
+      {
+        "question": "'a' ??? 'b'",
+        "allowNots": false
+      },
+      {
+        "question": "2 + 2 + '2' ??? 42",
+        "allowNots": false
+      },
+      {
+        "question": "'2' + 2 + 2 ??? 24",
+        "allowNots": false
+      },
+      {
+        "question": "2 ??? 'a'",
+        "allowNots": false
+      },
+      {
+        "question": "2 ??? '1'",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "8",
+    "title": "Deck 8",
+    "public": false,
+    "questions": [
+      {
+        "question": "+true ??? 1",
+        "allowNots": false
+      },
+      {
+        "question": "+[] ??? 0",
+        "allowNots": false
+      },
+      {
+        "question": "+'123' ??? 123",
+        "allowNots": false
+      },
+      {
+        "question": "+{} ??? 0",
+        "allowNots": false
+      },
+      {
+        "question": "+['1', '2'] ??? [1, 2]",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "9",
+    "title": "Deck 9",
+    "public": false,
+    "questions": [
+      {
+        "question": "typeof null ??? 'null'",
+        "allowNots": false
+      },
+      {
+        "question": "typeof null ??? 'undefined'",
+        "allowNots": false
+      },
+      {
+        "question": "typeof null ??? 'object'",
+        "allowNots": false
+      },
+      {
+        "question": "typeof undefined ??? 'undefined'",
+        "allowNots": false
+      },
+      {
+        "question": "typeof typeof 1 ??? 'string'",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "title": "Deck 10",
+    "public": false,
+    "questions": [
+      {
+        "question": "typeof Boolean() ??? 'boolean'",
+        "allowNots": false
+      },
+      {
+        "question": "Boolean(' ') ??? true",
+        "allowNots": false
+      },
+      {
+        "question": "Boolean(NaN.toString()) ??? true",
+        "allowNots": false
+      },
+      {
+        "question": "Boolean('undefined') ??? false",
+        "allowNots": false
+      },
+      {
+        "question": "Boolean([]) === 'a'",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "title": "Deck 11",
+    "public": false,
+    "questions": [
+      {
+        "question": "true ??? false + 1",
+        "allowNots": false
+      },
+      {
+        "question": "true ??? 1",
+        "allowNots": false
+      },
+      {
+        "question": "0 ??? ''",
+        "allowNots": false
+      },
+      {
+        "question": "Number('     ') ??? 0",
+        "allowNots": false
+      },
+      {
+        "question": "'1' + 1 + 1 + 1 ??? 13",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "12",
+    "title": "Deck 12",
+    "public": false,
+    "questions": [
+      {
+        "question": "null ??? undefined",
+        "allowNots": false
+      },
+      {
+        "question": "0 ??? undefined",
+        "allowNots": false
+      },
+      {
+        "question": "false ??? undefined",
+        "allowNots": false
+      },
+      {
+        "question": "!(3 ??? 5)",
+        "allowNots": false
+      },
+      {
+        "question": "true && false",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "13",
+    "title": "Deck 13",
+    "public": false,
+    "questions": [
+      {
+        "question": "undefined ??? 1",
+        "allowNots": false
+      },
+      {
+        "question": "null ??? 0",
+        "allowNots": false
+      },
+      {
+        "question": "false.toString() ??? 'false'",
+        "allowNots": false
+      },
+      {
+        "question": "!!(3 ??? 5)",
+        "allowNots": false
+      },
+      {
+        "question": "0 ? true : false",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "14",
+    "title": "Deck 14",
+    "public": false,
+    "questions": [
+      {
+        "question": "+[] ??? 0",
+        "allowNots": false
+      },
+      {
+        "question": "typeof function(){} ??? 'object'",
+        "allowNots": false
+      },
+      {
+        "question": "typeof [] ??? 'array'",
+        "allowNots": false
+      },
+      {
+        "question": "Array.isArray([])",
+        "allowNots": false
+      },
+      {
+        "question": "2 ??? +'1' + 1",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "15",
+    "title": "Deck 15",
+    "public": false,
+    "questions": [
+      {
+        "question": "0 ??? +{}",
+        "allowNots": false
+      },
+      {
+        "question": "typeof true ??? 'object'",
+        "allowNots": false
+      },
+      {
+        "question": "+[] + 1 ??? 1",
+        "allowNots": false
+      },
+      {
+        "question": "3 ??? 4 - true",
+        "allowNots": false
+      },
+      {
+        "question": "14 ??? true * 14",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "16",
+    "title": "Deck 16",
+    "public": false,
+    "questions": [
+      {
+        "question": "12 % 2 ??? []",
+        "allowNots": false
+      },
+      {
+        "question": "[] - true ??? -1",
+        "allowNots": false
+      },
+      {
+        "question": "'1' - '1' ??? 0",
+        "allowNots": false
+      },
+      {
+        "question": "Boolean('null') ??? false",
+        "allowNots": false
+      },
+      {
+        "question": "'you liked and subscribed'",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "17",
+    "title": "Deck 17",
+    "public": false,
+    "questions": [
+      {
+        "question": "Infinity ??? Infinity - 1",
+        "allowNots": false
+      },
+      {
+        "question": "-Infinity ??? Infinity * -1",
+        "allowNots": false
+      },
+      {
+        "question": "Infinity ??? Infinity + 1",
+        "allowNots": false
+      },
+      {
+        "question": "0 / 0 ??? Infinity",
+        "allowNots": false
+      },
+      {
+        "question": "12 / 0 ??? Infinity",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "18",
+    "title": "Deck 18",
+    "public": false,
+    "questions": [
+      {
+        "question": "'bab' ??? 'aba'",
+        "allowNots": false
+      },
+      {
+        "question": "4.5 + 5.5 ??? 10",
+        "allowNots": false
+      },
+      {
+        "question": "typeof new Date() ??? 'date'",
+        "allowNots": false
+      },
+      {
+        "question": "typeof 'aaa' ??? 'string'",
+        "allowNots": false
+      },
+      {
+        "question": "({} ??? {})",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "19",
+    "title": "Deck 19",
+    "public": false,
+    "questions": [
+      {
+        "question": "({}).toString() ??? '[object Object]'",
+        "allowNots": false
+      },
+      {
+        "question": "NaN ??? NaN",
+        "allowNots": false
+      },
+      {
+        "question": "4 / 2 * 2 ??? 1",
+        "allowNots": false
+      },
+      {
+        "question": "false + 1 ??? 2",
+        "allowNots": false
+      },
+      {
+        "question": "[].join() ??? []",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "20",
+    "title": "Deck 20",
+    "public": false,
+    "questions": [
+      {
+        "question": "null ??? null",
+        "allowNots": false
+      },
+      {
+        "question": "undefined ??? 0",
+        "allowNots": false
+      },
+      {
+        "question": "undefined ??? undefined",
+        "allowNots": false
+      },
+      {
+        "question": "false ??? ''",
+        "allowNots": false
+      },
+      {
+        "question": "'a' ??? true",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "21",
+    "title": "Deck 21",
+    "public": false,
+    "questions": [
+      {
+        "question": "'nate' ??? 'cool'",
+        "allowNots": false
+      },
+      {
+        "question": "'a' ??? 'z'",
+        "allowNots": false
+      },
+      {
+        "question": "Boolean()",
+        "allowNots": false
+      },
+      {
+        "question": "'1' ??? 2 - 1",
+        "allowNots": false
+      },
+      {
+        "question": "3 ??? '2' + '1'",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "22",
+    "title": "Deck 22",
+    "public": false,
+    "questions": [
+      {
+        "question": "3 ??? 2 + '1'",
+        "allowNots": false
+      },
+      {
+        "question": "45 ??? '4' + '5'",
+        "allowNots": false
+      },
+      {
+        "question": "[] ??? []",
+        "allowNots": false
+      },
+      {
+        "question": "({} ??? {})",
+        "allowNots": false
+      },
+      {
+        "question": "(5 ??? 5 || 3 ??? 5)",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "23",
+    "title": "Deck 23",
+    "public": false,
+    "questions": [
+      {
+        "question": "!([] ??? [])",
+        "allowNots": false
+      },
+      {
+        "question": "typeof [] !??? 'array'",
+        "allowNots": false
+      },
+      {
+        "question": "'2' ??? '1'",
+        "allowNots": false
+      },
+      {
+        "question": "2 < 'John'",
+        "allowNots": false
+      },
+      {
+        "question": "Number('3.14') ??? 3.14",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "24",
+    "title": "Deck 24",
+    "public": false,
+    "questions": [
+      {
+        "question": "Number(5) ??? 5",
+        "allowNots": false
+      },
+      {
+        "question": "typeof Number('Nate') ??? 'number'",
+        "allowNots": false
+      },
+      {
+        "question": "typeof NaN ??? 'number'",
+        "allowNots": false
+      },
+      {
+        "question": "Number([]) ??? 0",
+        "allowNots": false
+      },
+      {
+        "question": "Number([]) ??? NaN",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "25",
+    "title": "Deck 25",
+    "public": false,
+    "questions": [
+      {
+        "question": "parseInt([]) ??? 0",
+        "allowNots": false
+      },
+      {
+        "question": "Number([]) ??? 0",
+        "allowNots": false
+      },
+      {
+        "question": "+[] ??? 0",
+        "allowNots": false
+      },
+      {
+        "question": "Number.isInteger(5)",
+        "allowNots": false
+      },
+      {
+        "question": "typeof Math.random() ??? 'string'",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "26",
+    "title": "Deck 26",
+    "public": false,
+    "questions": [
+      {
+        "question": "(() => 1)() ??? 1",
+        "allowNots": false
+      },
+      {
+        "question": "Boolean(3 - 3 / 3)",
+        "allowNots": false
+      },
+      {
+        "question": "typeof Number() ??? 'number'",
+        "allowNots": false
+      },
+      {
+        "question": "typeof String(55) ??? '55'",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "27",
+    "title": "Deck 27",
+    "public": false,
+    "questions": [
+      {
+        "question": "[] ??? ![]",
+        "allowNots": false
+      },
+      {
+        "question": "({} + [] ??? {})",
+        "allowNots": false
+      },
+      {
+        "question": "NaN ??? NaN",
+        "allowNots": false
+      },
+      {
+        "question": "true + false ??? true",
+        "allowNots": false
+      },
+      {
+        "question": "NaN ??? NaN",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "28",
+    "title": "Deck 28",
+    "public": false,
+    "questions": [
+      {
+        "question": "Infinity ??? undefined",
+        "allowNots": false
+      },
+      {
+        "question": "Infinity ??? Infinity",
+        "allowNots": false
+      },
+      {
+        "question": "0 / 0 ??? NaN",
+        "allowNots": false
+      },
+      {
+        "question": "NaN ??? NaN",
+        "allowNots": false
+      },
+      {
+        "question": "Boolean('false')",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "29",
+    "title": "Deck 29",
+    "public": false,
+    "questions": [
+      {
+        "question": "'' || true",
+        "allowNots": false
+      },
+      {
+        "question": "null || true",
+        "allowNots": false
+      },
+      {
+        "question": "undefined || true",
+        "allowNots": false
+      },
+      {
+        "question": "'2' < '12'",
+        "allowNots": false
+      },
+      {
+        "question": "'2' > '12'",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "30",
+    "title": "Deck 30",
+    "public": false,
+    "questions": [
+      {
+        "question": "false ?? true",
+        "allowNots": false
+      },
+      {
+        "question": "false || true",
+        "allowNots": false
+      },
+      {
+        "question": "null || true",
+        "allowNots": false
+      },
+      {
+        "question": "null ?? true",
+        "allowNots": false
+      },
+      {
+        "question": "true ?? false",
+        "allowNots": true
+      }
+    ]
+  },
+  {
+    "id": "31",
+    "title": "Deck 31",
+    "public": false,
+    "questions": [
+      {
+        "question": "[] ? true : false",
+        "allowNots": false
+      },
+      {
+        "question": "({}) ? true : false",
+        "allowNots": false
+      },
+      {
+        "question": "({}).key ? true : false",
+        "allowNots": false
+      },
+      {
+        "question": "'' ? true : false",
+        "allowNots": false
+      },
+      {
+        "question": "' ' ? true : false",
+        "allowNots": true
+      }
+    ]
+  }
+]
