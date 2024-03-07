@@ -1,8 +1,8 @@
 {
   "short_name": "WDI",
   "name": "WEB DEV INTERVIEWS",
-  "background_color": "#1e1e1e",
-  "theme_color": "#1e1e1e",
+  "background_color": "#272727",
+  "theme_color": "#272727",
   "display": "standalone",
   "orientation": "any",
   "homepage_url": "https://webdevinterviews.com/games",

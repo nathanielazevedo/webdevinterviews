@@ -52,12 +52,11 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 export default function CustomizedSwitches() {
   const colorMode = React.useContext(ColorModeContext)
-  console.log(colorMode)
   return (
     <MaterialUISwitch
       sx={{ m: 1 }}
       onClick={colorMode.toggleColorMode}
-      defaultChecked={colorMode.mode == 'dark'}
+      checked={colorMode.mode == 'dark'}
     />
   )
 }

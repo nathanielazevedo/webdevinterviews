@@ -90,7 +90,7 @@ function ResponsiveAppBar() {
               flexGrow: 1,
               display: { xs: 'flex', md: 'none' },
               alignItems: 'center',
-              gap: '10px',
+              gap: '2px',
             }}
           >
             <IconButton
@@ -123,7 +123,7 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem
-                  key={page}
+                  key={page.title}
                   component={NavLink}
                   onClick={handleCloseNavMenu}
                   to={page.to}
@@ -155,7 +155,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.title}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
                 component={NavLink}
