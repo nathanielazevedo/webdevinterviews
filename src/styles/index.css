@@ -101,10 +101,6 @@
 
 /* GAME */
 
-.game-container {
-  margin-top: 10px;
-}
-
 .code-container {
   position: relative;
   min-height: 200px;
@@ -112,6 +108,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 20px;
 }
 
 .game-buttons {

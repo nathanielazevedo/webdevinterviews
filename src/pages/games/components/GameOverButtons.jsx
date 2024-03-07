@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material'
+import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 const GameOverButtons = ({
@@ -10,31 +10,40 @@ const GameOverButtons = ({
 }) => {
   const navigate = useNavigate()
   return (
-    <Box>
-      <ToggleButtonGroup value={''} exclusive size='small'>
-        <ToggleButton onClick={newGame} value={'play'}>
-          Play Again
+    <ToggleButtonGroup
+      value={''}
+      exclusive
+      size='small'
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'flex-end',
+        width: '100%',
+        flexGrow: 1,
+      }}
+    >
+      <ToggleButton onClick={newGame} value={'play'}>
+        Play Again
+      </ToggleButton>
+      {pastFreeDecks ? (
+        <ToggleButton
+          variant='outlined'
+          value={'become'}
+          onClick={() => navigate(`/new-member`)}
+        >
+          Become a Member
         </ToggleButton>
-        {pastFreeDecks ? (
-          <ToggleButton
-            variant='outlined'
-            value={'become'}
-            onClick={() => navigate(`/new-member`)}
-          >
-            Become a Member
-          </ToggleButton>
-        ) : (
-          <ToggleButton
-            variant='outlined'
-            value={'all'}
-            disabled={isLastDeck}
-            onClick={goNextDeck}
-          >
-            {isLastDeck ? 'All done' : 'Next Deck'}
-          </ToggleButton>
-        )}
-      </ToggleButtonGroup>
-    </Box>
+      ) : (
+        <ToggleButton
+          variant='outlined'
+          value={'all'}
+          disabled={isLastDeck}
+          onClick={goNextDeck}
+        >
+          {isLastDeck ? 'All done' : 'Next Deck'}
+        </ToggleButton>
+      )}
+    </ToggleButtonGroup>
   )
 }
 

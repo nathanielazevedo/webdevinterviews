@@ -1,16 +1,16 @@
-import Typography from '@mui/material/Typography'
 import ScoreCircles from './ScoreCircles'
 
-const GameHead = ({ title, length, scores }) => {
+const GameHead = ({ length, scores }) => {
   return (
     <div
       style={{
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         alignItems: 'center',
+        width: '100%',
+        paddingTop: '10px',
       }}
     >
-      <Typography color={'text.secondary'}>{title}</Typography>
       <ScoreCircles length={length} scores={scores} />
     </div>
   )

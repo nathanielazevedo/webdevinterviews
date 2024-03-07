@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 import { useLocation } from 'react-router-dom'
+import logo from '../assets/temp_logo.png'
 const pages = [
   {
     title: 'Workouts',
@@ -67,6 +68,7 @@ function ResponsiveAppBar() {
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+          <Avatar src={logo} sx={{ display: { xs: 'none', md: 'flex' } }} />
           <Typography
             variant='h6'
             noWrap
@@ -74,6 +76,7 @@ function ResponsiveAppBar() {
             onClick={() => navigate('/')}
             sx={{
               mr: 2,
+              ml: 1.5,
               display: { xs: 'none', md: 'flex' },
               fontWeight: 700,
               letterSpacing: '.3rem',
@@ -133,6 +136,10 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
             {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
+            {/* <Avatar
+            src={logo}
+            sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, ml: 1.5 }}
+          /> */}
             <Typography
               variant='h5'
               noWrap
@@ -152,6 +159,7 @@ function ResponsiveAppBar() {
               WDI
             </Typography>
           </Box>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button

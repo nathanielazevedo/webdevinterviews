@@ -15,7 +15,7 @@ import Browser from './browser/Root'
 import AutoSave from './components/AutoSave'
 import Prettier from './components/Prettier'
 import ChangedFiles from './components/ChangedFiles'
-import { ColorModeContext } from '../../../Router'
+import { ColorModeContext } from '../../../contexts/ThemeContext'
 
 const isDev = import.meta.env.DEV
 

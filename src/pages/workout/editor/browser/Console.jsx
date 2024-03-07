@@ -3,7 +3,7 @@ import { Typography, Box, Tooltip, IconButton } from '@mui/material'
 import { Console as ConsoleFeed } from 'console-feed'
 import { useSandpack, useSandpackConsole } from '@codesandbox/sandpack-react'
 import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt'
-import { ColorModeContext } from '../../../../Router'
+import { ColorModeContext } from '../../../../contexts/ThemeContext'
 
 const Console = () => {
   const { logs, reset } = useSandpackConsole({})

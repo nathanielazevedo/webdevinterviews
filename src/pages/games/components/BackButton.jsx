@@ -8,8 +8,9 @@ const BackButton = ({ disabled, goBack }) => {
       onClick={goBack}
       size='small'
       startIcon={<ArrowBackIos />}
+      sx={{ alignSelf: 'flex-start' }}
     >
-      Back
+      Previous
     </Button>
   )
 }

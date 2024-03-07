@@ -24,7 +24,7 @@ const List = ({ headerText, items, basePath }) => {
               title: 'Random Questions',
               visible: displayName,
               id: 'r',
-              description: 'From our question pool .',
+              description: 'From our question pool.',
             }}
             basePath={basePath}
             className='no-line'

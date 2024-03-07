@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { createTheme, responsiveFontSizes } from '@mui/material/styles'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './root/Root'
 import Footer from './components/Footer.jsx'
@@ -20,10 +19,11 @@ import ShortsEditor from './pages/shortsEditor/ShortsEditor'
 import WillItThrowMain from './pages/games/willItThrow/WillItThrowMain'
 import NewMemberForm from './pages/NewMemberForm'
 import CccMain from './pages/games/ccc/CccList'
+import MutateMain from './pages/games/mutate/MutateMain'
+import ReturnMain from './pages/games/returns/ReturnMain'
 
-import CssBaseline from '@mui/material/CssBaseline'
-import { ThemeProvider } from '@mui/material/styles'
 import { AuthProvider } from './contexts/AuthContext'
+import { ThemeProvider } from './contexts/ThemeContext'
 
 const router = createBrowserRouter([
   {
@@ -151,6 +151,32 @@ const router = createBrowserRouter([
               },
             ],
           },
+          {
+            path: 'mutate',
+            children: [
+              {
+                index: true,
+                element: <MutateMain />,
+              },
+              {
+                path: 'random/:deckNumber',
+                element: <GameBase gameName={'mutate'} random={true} />,
+              },
+            ],
+          },
+          {
+            path: 'returns',
+            children: [
+              {
+                index: true,
+                element: <ReturnMain />,
+              },
+              {
+                path: 'random/:deckNumber',
+                element: <GameBase gameName={'returns'} random={true} />,
+              },
+            ],
+          },
         ],
       },
       {
@@ -162,51 +188,13 @@ const router = createBrowserRouter([
   },
 ])
 
-export const ColorModeContext = React.createContext({
-  toggleColorMode: () => {},
-})
-
-const getTheme = () => {
-  const theme = localStorage.getItem('theme')
-  if (theme) {
-    return theme
-  } else {
-    return 'dark'
-  }
-}
-
 const Router = () => {
-  const [mode, setMode] = React.useState(getTheme())
-  const colorMode = {
-    toggleColorMode: () => {
-      setMode((prevMode) => {
-        const newMode = prevMode === 'light' ? 'dark' : 'light'
-        localStorage.setItem('theme', newMode)
-        return newMode
-      })
-    },
-    mode,
-  }
-
-  let theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode]
-  )
-  theme = responsiveFontSizes(theme)
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <CssBaseline />
-          <RouterProvider router={router} />
-        </AuthProvider>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+    <ThemeProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 

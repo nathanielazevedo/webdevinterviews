@@ -7,8 +7,9 @@ import {
 import { amethyst, githubLight } from '@codesandbox/sandpack-themes'
 import CloseIcon from '@mui/icons-material/Close'
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined'
-import { ColorModeContext } from '../../../Router'
+import { ColorModeContext } from '../../../contexts/ThemeContext'
 import { useContext } from 'react'
+// import PrintCode from './PrintCode'
 
 const Screen = ({ output, code, gameOver, currentScore, deckLength }) => {
   const perfectScore = currentScore == deckLength
@@ -83,6 +84,7 @@ const Screen = ({ output, code, gameOver, currentScore, deckLength }) => {
               }}
               files={{ '/index.js': code }}
             >
+              {/* <PrintCode /> */}
               <SandpackCodeEditor
                 readOnly
                 showReadOnly={false}

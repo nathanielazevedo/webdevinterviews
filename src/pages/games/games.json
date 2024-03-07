@@ -21,14 +21,14 @@
     "description": "You choose the correct comparison operator. > < == ==="
   },
   {
-    "id": "",
+    "id": "mutate",
     "title": "Does It Mutate",
     "public": false,
     "visible": false,
-    "description": "Does the code mutate or create a new array?"
+    "description": "Does the array method mutate the original array?"
   },
   {
-    "id": "",
+    "id": "returns",
     "title": "Returns What?",
     "public": false,
     "visible": false,

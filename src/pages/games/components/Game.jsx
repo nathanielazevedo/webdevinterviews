@@ -32,7 +32,8 @@ const Game = ({
   const currentDeckExplanation = currentQuestionInfo?.explanation
   const allowNots =
     gameName != 'ccc' ? undefined : currentQuestionInfo?.allowNots
-
+  const answer = currentQuestionInfo?.answer
+  const options = currentQuestionInfo?.options
   const newGame = () => {
     setCurrentQuestionIndex(0)
     setScores([])
@@ -98,6 +99,20 @@ const Game = ({
       } catch (e) {
         console.log(`Error, ${(deck.id, currentQuestion)}`)
       }
+    } else if (gameName == 'mutate') {
+      try {
+        if (answer == input) handleCorrectInput()
+        else handleIncorrectInput()
+      } catch (e) {
+        console.log(`Error, ${(deck.id, currentQuestion)}`)
+      }
+    } else if (gameName == 'returns') {
+      try {
+        if (answer == input) handleCorrectInput()
+        else handleIncorrectInput()
+      } catch (e) {
+        console.log(`Error, ${(deck.id, currentQuestion)}`)
+      }
     }
 
     setTimeout(() => {
@@ -112,8 +127,20 @@ const Game = ({
 
   return (
     <>
-      <div className='game-container'>
-        <GameHead scores={scores} title={deck.title} length={deckLength} />
+      <div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            justifyContent: 'space-between',
+          }}
+        >
+          <BackButton goBack={goBack} disabled={currentQuestionIndex == 0} />
+          <Typography color={'grey.600'}>{deck.title}</Typography>
+        </div>
+        {/* <Divider sx={{ padding: '5px 0 5px 0' }} /> */}
+        <GameHead scores={scores} length={deckLength} />
         <Screen
           output={output}
           gameOver={gameOver}
@@ -122,7 +149,6 @@ const Game = ({
           currentScore={currentScore}
         />
         <div className='game-buttons'>
-          <BackButton goBack={goBack} disabled={currentQuestionIndex == 0} />
           {gameOver ? (
             <GameOverButtons
               newGame={newGame}
@@ -135,6 +161,7 @@ const Game = ({
               gameName={gameName}
               onSubmit={onSubmit}
               allowNots={allowNots}
+              options={options}
               disabled={output != null}
             />
           )}

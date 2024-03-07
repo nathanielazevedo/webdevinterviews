@@ -140,7 +140,7 @@ describe('True Or False Component', () => {
       let trueButton = screen.queryByText('True')
       fireEvent.click(trueButton)
       vi.runAllTimers()
-      let goBackButton = screen.queryByText('Back')
+      let goBackButton = screen.queryByText('Previous')
       fireEvent.click(goBackButton)
     })
     let secondTrueButton = screen.queryByText('True')

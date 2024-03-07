@@ -35,11 +35,11 @@
       },
       {
         "question": "1 > '1'",
-        "explanation": "When comparing a number to a string, JavaScript attempts to turn strings to numbers. In this case, '1' gets converted to a number, and the comparison becomes 1 > 1, which is false."
+        "explanation": "When comparing a number to a string, JavaScript attempts to turn numbers to strings. In this case, 1 gets converted to a string, and the comparison becomes '1' > '1', which is false."
       },
       {
         "question": "'true' > true",
-        "explanation": "JavaScript attempts to coerce the string 'true' to a number, resulting in NaN (not a number), while the boolean true gets converted to 1. After coercion the comparison is NaN > 1, which is false."
+        "explanation": "When comparing anything to a boolean, JavaScript attempts to coerce the everything to number. The string 'true' as a number is NaN (not a number), while the boolean true gets converted to 1. After coercion the comparison is NaN > 1, which is false."
       },
       {
         "question": "1.0 > 1.00",
@@ -83,7 +83,7 @@
     "questions": [
       {
         "question": "typeof NaN === 'number'",
-        "explanation": "The typeof operator in JavaScript returns 'number' for NaN (Not a Number). Although NaN represents an invalid number, it is still considered a numeric data type."
+        "explanation": "The typeof operator in JavaScript returns 'number' for NaN (Not a Number). Although NaN represents an invalid number, it is still considered a numeric data type. This expression evaluates to true."
       },
       {
         "question": "null == undefined",
@@ -99,7 +99,7 @@
       },
       {
         "question": "Boolean('false') === false",
-        "explanation": "The expression Boolean('false') evaluates to true because any non-empty string, including 'false', evaluates to true in a Boolean context. However, when compared strictly, Boolean('false') === false evaluates to false because the string 'false' is coerced into true by the Boolean constructor, but false is false."
+        "explanation": "The expression Boolean('false') evaluates to true because any non-empty string, including 'false', evaluates to true in a Boolean context. After that the expression becomes true === false. This expression evaluates to false."
       }
     ]
   },
@@ -165,7 +165,7 @@
       },
       {
         "question": "2 + 2 + '2' == 42",
-        "explanation": "The expression is evaluated left-to-right. First, 2 + 2 results in 4. Then, 4 is concatenated with the string '2', resulting in '42'. Since '42' is not equal to 42, the expression evaluates to false."
+        "explanation": "The expression is evaluated left-to-right. First, 2 + 2 results in 4. Then, 4 is concatenated with the string '2', resulting in '42'. Since '42' is loosely equal to 42, this expression evaluates to true."
       },
       {
         "question": "'2' + 2 + 2 == 24",
@@ -203,7 +203,7 @@
       },
       {
         "question": "+['1', '2'] == [1, 2]",
-        "explanation": "The unary plus operator converts the array to a string, which results in '1,2'. Since '1,2' is not equal to [1, 2], +['1', '2'] == [1, 2] evaluates to false."
+        "explanation": "The unary plus operator converts the array to a number which results in NaN. NaN is equal to nothing, including itself. This expression evaluates to false."
       }
     ]
   },
@@ -217,7 +217,7 @@
       },
       {
         "question": "typeof null == 'undefined'",
-        "explanation": "typeof null does not return 'undefined'. Therefore, typeof null == 'undefined' evaluates to false."
+        "explanation": "typeof null returns 'object'. typeof null does not return 'undefined'. This expression evaluates to false."
       },
       {
         "question": "typeof null == 'object'",
@@ -243,11 +243,11 @@
       },
       {
         "question": "Boolean(' ') == true",
-        "explanation": "Boolean(' ') evaluates to true because any non-empty string is considered truthy in JavaScript."
+        "explanation": "Boolean(' ') evaluates to true because any non-empty string is considered truthy in JavaScript. In this question, a string with a space is considered true. This expression evaluates to true."
       },
       {
         "question": "Boolean(NaN.toString()) == true",
-        "explanation": "NaN.toString() returns the string 'NaN'. Since 'NaN' is a non-empty string, Boolean(NaN.toString()) evaluates to true."
+        "explanation": "NaN.toString() returns the string 'NaN'. Since 'NaN' is a non-empty string, Boolean(NaN.toString()) evaluates to true. This expression evaluates to true."
       },
       {
         "question": "Boolean('undefined') == false",
@@ -408,10 +408,6 @@
       {
         "question": "Boolean('null') === false",
         "explanation": "The string 'null' is not empty, so Boolean('null') returns true. Therefore, Boolean('null') === false evaluates to false."
-      },
-      {
-        "question": "'you liked and subscribed'",
-        "explanation": "This statement is incomplete and lacks a comparison, so it is not a valid JavaScript expression."
       }
     ]
   },
@@ -515,7 +511,7 @@
       },
       {
         "question": "'a' > true",
-        "explanation": "In JavaScript, when comparing different types, they are converted to numbers. 'a' is NaN when converted to a number, and true is converted to 1. Since NaN is not greater than 1, 'a' > true evaluates to false."
+        "explanation": "In JavaScript, when comparing anything to a boolean, everything will be converted to a number. 'a' is NaN when converted to a number, and true is converted to 1. Since NaN is not greater than 1, This expression evaluates to false."
       }
     ]
   },
@@ -537,7 +533,7 @@
       },
       {
         "question": "'1' == 2 - 1",
-        "explanation": "'1' == 2 - 1 evaluates to true because 2 - 1 equals 1, which is equal to the string '1'."
+        "explanation": "2 - 1 is 1. The expression becomes '1' == 1. This expression evaluates to true."
       },
       {
         "question": "3 == '2' + '1'",
@@ -663,7 +659,7 @@
       },
       {
         "question": "Boolean(3 - 3 / 3)",
-        "explanation": "Boolean(3 - 3 / 3) evaluates to false because the expression 3 - 3 / 3 results in 2, and Boolean(2) returns true."
+        "explanation": "The expression 3 - 3 / 3 results in 2, and Boolean(2) returns true. This expression evaluates to true."
       },
       {
         "question": "typeof Number() == 'number'",
@@ -733,7 +729,7 @@
     "questions": [
       {
         "question": "'' || true",
-        "explanation": "If the value of the expression on the left side of the logical operator evaluates to falsey, the value to the right will be returned. Because '' is falsey, this expression evaluates to true."
+        "explanation": "The logical or operator will return the first truthy value or else it will return false. Because true is the first truthy value this expression evaluates to true."
       },
       {
         "question": "null || true",
@@ -743,7 +739,8 @@
         "question": "undefined || true"
       },
       {
-        "question": "'2' < '12'"
+        "question": "'2' < '12'",
+        "explanation": "In the comparison '2' < '12', JavaScript compares the strings '2' and '12' character by character from left to right. The first characters '2' and '1' are compared. Since '2' comes after '1' in the Unicode table, '2' is greater than '1', and thus '2' is greater than '12'. This expression evaluates to false."
       },
       {
         "question": "'2' > '12'"
@@ -758,7 +755,8 @@
         "question": "false ?? true"
       },
       {
-        "question": "false || true"
+        "question": "false || true",
+        "explanation": "The logical or operator in js will return the first truthy value. This expression evaluates to true."
       },
       {
         "question": "null || true"
@@ -779,7 +777,8 @@
         "question": "[] ? true : false"
       },
       {
-        "question": "({}) ? true : false"
+        "question": "({} ? true : false)",
+        "explanation": "If the first value of a ternary operator is true, the following item will be returned otherwise the last item will be returned. Because Boolean({}) is true this expression evaluates to true."
       },
       {
         "question": "({}).key ? true : false"
@@ -818,7 +817,8 @@
     "title": "Deck 33",
     "questions": [
       {
-        "question": "'' ?? false ?? 8"
+        "question": "Boolean('' ?? 0 ?? 1)",
+        "explanation": "The nullish coalescing operator will return the first non null or undefined value it finds. Here, an empty string is not null or undefined, so the empty string is returned as the argument to the Boolean function. An empty string is falsey, so the Boolean function will return false. This expression evaluates to false."
       }
     ]
   }

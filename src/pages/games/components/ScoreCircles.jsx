@@ -9,13 +9,13 @@ const ScoreCircles = ({ length, scores }) => {
     } else if (score) {
       return (
         <Fade in={true} timeout={1500}>
-          <CheckOutlinedIcon color='success' />
+          <CheckOutlinedIcon color='success' fontSize='small' />
         </Fade>
       )
     } else {
       return (
         <Fade in={true} timeout={1500}>
-          <CloseIcon color='error' />
+          <CloseIcon color='error' fontSize='small' />
         </Fade>
       )
     }
