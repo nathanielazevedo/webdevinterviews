@@ -23,7 +23,7 @@ const BasicTabs = () => {
 
   return (
     <Box sx={{ width: '100%', height: 'calc(100% - 40px)' }}>
-      <Box>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} sx={{ minHeight: '40px' }}>
           {['Details', 'Console', 'Tests', 'Example', 'Video'].map((label) => (
             <Tab

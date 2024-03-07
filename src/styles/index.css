@@ -19,10 +19,10 @@
 }
 
 .fit-wrapper {
-  padding: 40px 0 50px 0;
+  padding: 50px 0 50px 0;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 30px;
   width: 765px;
   margin: 0 auto;
   flex-grow: 1;
@@ -32,7 +32,6 @@
 
 .top-nav {
   height: 50px;
-  padding: 0 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -50,14 +49,6 @@
   align-items: center;
   gap: 20px;
   margin-top: 15px;
-}
-
-.drawer-links-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 50px;
-  justify-content: space-between;
 }
 
 /* Editor */
@@ -209,7 +200,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 15px 0;
+  margin: 25px 0;
 }
 
 .header-container {
@@ -231,16 +222,22 @@
 
 .item-text-wrapper {
   display: flex;
-  gap: 15px;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.big-spacer {
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+  padding-top: 25px;
 }
 
 .marketing-section {
-  padding: 50px 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border-radius: 20px;
 }
 
 .marketing-button {
@@ -263,6 +260,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 30px;
+  margin-top: 70px;
 }
 
 .legal-wrapper {

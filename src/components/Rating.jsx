@@ -4,19 +4,19 @@ const Rating = ({ rating }) => {
   switch (rating) {
     case 'junior':
       return (
-        <Typography variant='subtitle2' color='success.light' noWrap>
+        <Typography variant='caption' color='success.light'>
           JUNIOR
         </Typography>
       )
     case 'mid-level':
       return (
-        <Typography variant='subtitle2' color='warning.light' noWrap>
+        <Typography variant='caption' color='warning.light'>
           MID-LEVEL
         </Typography>
       )
     case 'senior':
       return (
-        <Typography variant='subtitle2' color='error.light' noWrap>
+        <Typography variant='caption' color='error.light'>
           SENIOR
         </Typography>
       )

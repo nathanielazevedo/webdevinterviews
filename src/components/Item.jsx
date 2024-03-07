@@ -13,23 +13,23 @@ const Item = ({ item, basePath, skeleton = false }) => {
       onClick={item?.visible ? () => navigate(basePath + item.id) : null}
     >
       <div>
-        <div className='item-text-wrapper'>
-          {skeleton ? (
-            <Skeleton width='100px' />
-          ) : (
-            <>
-              <Typography variant='subtitle1'>{item.title}</Typography>
-              <Rating rating={item.difficulty} />
-            </>
-          )}
-        </div>
-        <Typography color='text.secondary' variant='subtitle2'>
+        <Rating rating={item?.difficulty} />
+        {skeleton ? (
+          <Skeleton width='100px' />
+        ) : (
+          <>
+            <Typography variant='subtitle1' sx={{ flexGrow: 1 }}>
+              {item.title}
+            </Typography>
+          </>
+        )}
+        <Typography color='text.secondary' variant='subtitle1'>
           {skeleton ? <Skeleton width='150px' /> : item.description}
         </Typography>
         <div className='skills-wrapper'>
           {item?.skills?.map((skill) => {
             return (
-              <Typography key={skill} color='text.secondary' variant='caption'>
+              <Typography key={skill} color='text.secondary'>
                 #{skill}
               </Typography>
             )

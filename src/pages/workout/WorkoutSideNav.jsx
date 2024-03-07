@@ -55,9 +55,7 @@ const WorkoutSideNav = () => {
           }}
         >
           {link.icon}
-          <Typography sx={{ fontSize: '8px', color: 'inherit' }}>
-            {link.name}
-          </Typography>
+          <Typography sx={{ fontSize: '8px' }}>{link.name}</Typography>
         </Link>
       ))}
     </div>

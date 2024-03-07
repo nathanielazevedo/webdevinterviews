@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { createTheme } from '@mui/material/styles'
+import { createTheme, responsiveFontSizes } from '@mui/material/styles'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './root/Root'
 import Footer from './components/Footer.jsx'
@@ -188,7 +188,7 @@ const Router = () => {
     mode,
   }
 
-  const theme = React.useMemo(
+  let theme = React.useMemo(
     () =>
       createTheme({
         palette: {
@@ -197,6 +197,7 @@ const Router = () => {
       }),
     [mode]
   )
+  theme = responsiveFontSizes(theme)
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>

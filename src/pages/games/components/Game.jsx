@@ -102,9 +102,12 @@ const Game = ({
 
     setTimeout(() => {
       setOutput(null)
-      setErrorType('')
       setCurrentQuestionIndex(currentQuestionIndex + 1)
     }, 500)
+
+    setTimeout(() => {
+      setErrorType('')
+    }, 4000)
   }
 
   return (
