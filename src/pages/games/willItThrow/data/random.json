@@ -197,7 +197,7 @@
       },
       {
         "question": "let person = { name: 'John' }; \nperson.age;",
-        "explanation": "This code tries to access the property 'age' from the object 'person'. Since 'age' is not a property of 'person', it will return 'undefined'."
+        "explanation": "This code tries to access the property 'age' from the object 'person'. Since 'age' is not a property of 'person', it will return 'undefined' but it will not throw an error."
       },
       {
         "question": "let str = 'hello'; \nstr.slice(1, 'a');",
@@ -241,7 +241,7 @@
     "questions": [
       {
         "question": "let x = 5; \nlet { y } = x;",
-        "explanation": "Attempting to destructure a non-object value (`x`). TypeError expected."
+        "explanation": "Attempting to destructure a non-object value (`x`) will not throw an error. Watch out for this one!"
       },
       {
         "question": "let obj = { nate: 'cool' }; \nfor(const p of obj) { \n console.log(p) \n} ",
@@ -267,11 +267,11 @@
     "questions": [
       {
         "question": "const x = document.getElementByID('foo');",
-        "explanation": "Incorrect method name. 'getElementByID' should be 'getElementById'."
+        "explanation": "Incorrect method name. 'getElementByID' should be 'getElementById' TypeError: document.getElementByID is not a function."
       },
       {
         "question": "const x = document.getElementById('foo');",
-        "explanation": "Correct usage of 'getElementById' method to retrieve DOM elements."
+        "explanation": "Correct usage of 'getElementById' method to retrieve DOM elements. No error will be thrown."
       },
       {
         "question": "const obj = {}; \nobj.map(Number);",
@@ -279,7 +279,7 @@
       },
       {
         "question": "const obj = {foo: () => {}; foo: 1}; \nobj.foo();",
-        "explanation": "Syntax error in object definition. Object literals should have unique keys. Unexpected token `;`."
+        "explanation": "Syntax error in object definition. A semi-colon is used where a comma should be used. Unexpected token `;`."
       },
       {
         "question": "2 x 5",
@@ -326,7 +326,7 @@
         "explanation": "Trying to delete a variable (`x`) that was declared with `const`. This operation will throw a SyntaxError."
       },
       {
-        "question": "function getUser(user){ \n return user && user.id ?? null \n};",
+        "question": "const user = {id: '1'}\nfunction getUser(user){ \n return user && user.id ?? null \n};",
         "explanation": "Using the nullish coalescing operator (`??`) without proper syntax. Unexpected token error expected."
       },
       {

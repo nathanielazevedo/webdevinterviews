@@ -86,10 +86,6 @@
         "explanation": "The typeof operator in JavaScript returns 'number' for NaN (Not a Number). Although NaN represents an invalid number, it is still considered a numeric data type. This expression evaluates to true."
       },
       {
-        "question": "null == undefined",
-        "explanation": "In JavaScript, null and undefined are loosely equal (==) but not strictly equal (===). So, null == undefined is true, but null === undefined is false."
-      },
-      {
         "question": "NaN === NaN",
         "explanation": "In JavaScript, NaN (Not a Number) is considered to be unequal to every value, including itself. So NaN === NaN evaluates to false."
       },
@@ -295,11 +291,11 @@
       },
       {
         "question": "0 == undefined",
-        "explanation": "0 is loosely equal to undefined. So, 0 == undefined evaluates to false."
+        "explanation": "JavaScript will coerce the undefined to a number. Number(undefined) is NaN. NaN is equal to nothing including itself. This expression evaluates to false."
       },
       {
         "question": "false == undefined",
-        "explanation": "Similarly, false is loosely equal to undefined. So, false == undefined evaluates to false."
+        "explanation": "When anything is compared to a boolean, JavaScript will coerce everything to a number. Number(false) is 0 and Number(undefined) is NaN. After coercion the expression becomes 0 == NaN. This expression evaluates to false."
       },
       {
         "question": "!(3 > 5)",
@@ -407,7 +403,7 @@
       },
       {
         "question": "Boolean('null') === false",
-        "explanation": "The string 'null' is not empty, so Boolean('null') returns true. Therefore, Boolean('null') === false evaluates to false."
+        "explanation": "A non empty string is considered truthy. Therefore, Boolean('null') returns true. The expression becomes true === false. This expression evaluates to false."
       }
     ]
   },
@@ -451,7 +447,7 @@
       },
       {
         "question": "typeof new Date() == 'date'",
-        "explanation": "The typeof operator returns 'object' for instances of Date in JavaScript. Therefore, typeof new Date() == 'date' evaluates to false."
+        "explanation": "The typeof operator returns 'object' for instances of Date in JavaScript. This expression evaluates to false."
       },
       {
         "question": "typeof 'aaa' == 'string'",
@@ -774,7 +770,8 @@
     "title": "Deck 31",
     "questions": [
       {
-        "question": "[] ? true : false"
+        "question": "[] ? true : false",
+        "explanation": "An empty array is considered a truthy value. Therefore true will be returned and this expression evaluates to true."
       },
       {
         "question": "({} ? true : false)",
