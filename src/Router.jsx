@@ -21,7 +21,7 @@ import NewMemberForm from './pages/NewMemberForm'
 import CccMain from './pages/games/ccc/CccList'
 import MutateMain from './pages/games/mutate/MutateMain'
 import ReturnMain from './pages/games/returns/ReturnMain'
-import Runner from './pages/games/runner/Runner'
+import Runner from './pages/games/runner/Swimmer2.jsx'
 
 import { AuthProvider } from './contexts/AuthContext'
 import { ThemeProvider } from './contexts/ThemeContext'
