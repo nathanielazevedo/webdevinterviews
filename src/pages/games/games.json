@@ -21,6 +21,13 @@
     "description": "You choose the correct comparison operator. > < == ==="
   },
   {
+    "id": "runner",
+    "title": "Swim",
+    "public": true,
+    "visible": true,
+    "description": "Does the array method mutate the original array?"
+  },
+  {
     "id": "mutate",
     "title": "Does It Mutate",
     "public": false,

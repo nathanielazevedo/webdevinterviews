@@ -1,17 +1,20 @@
 import background from './background.png'
 import fishImages from './Walk.png'
 import torpedoImage from './Torpedo.png'
+import death from './Death.png'
 import getQuestions from '../components/swimmerDecks'
 
-export function initializeGame(answer) {
+export function initializeGame() {
   const canvas = document.getElementById('gameCanvas')
   const questionSpot = document.getElementById('question')
+  document.getElementById('intro-screen').style.display = 'none'
   let currentQuestion = 0
   const ctx = canvas.getContext('2d')
   const questions = getQuestions().questions
   const canvasWidth = canvas.width
   const canvasHeight = canvas.height
   let backgroundX = 0
+  let score = 0
   const backgroundImage = new Image()
   backgroundImage.src = background
 
@@ -36,11 +39,14 @@ export function initializeGame(answer) {
   const fishImage = new Image()
   fishImage.src = fishImages
 
-  const moveSpeed = 3
+  const dyingFishImage = new Image()
+  dyingFishImage.src = death
+
+  const moveSpeed = 7
   const frameWidth = 47
   const fishFrames = 4
 
-  let fishPosition = { x: 100, y: 200 }
+  let fishPosition = { x: 50, y: 200 }
   let fishFrameIndex = 0
   let isGameOver = false
   let isMovingUp = false
@@ -75,7 +81,7 @@ export function initializeGame(answer) {
 
   function updateFishFrame() {
     count += 1
-    if (count > 10) {
+    if (count > 5) {
       count = 0
       fishFrameIndex = (fishFrameIndex + 1) % fishFrames
     }
@@ -104,7 +110,7 @@ export function initializeGame(answer) {
         y: torpedoY,
         width: 50,
         height: 20,
-        speed: 2, // Adjust speed as needed
+        speed: 5, // Adjust speed as needed
         status: true, // true means active, false means inactive
         pastFish: false,
       }
@@ -126,17 +132,19 @@ export function initializeGame(answer) {
         const evaluated = eval(questions[currentQuestion].question)
         if (fishPosition.y < torpedo.y) {
           if (evaluated) {
-            answer('correct')
+            // answer('correct')
+            score++
           } else {
             isGameOver = true
-            answer('incorrect')
+            // answer('incorrect')
           }
         } else {
           if (evaluated) {
             isGameOver = true
-            answer('incorrect')
+            // answer('incorrect')
           } else {
-            answer('correct')
+            // answer('correct')
+            score++
           }
         }
       }
@@ -200,6 +208,7 @@ export function initializeGame(answer) {
   function gameLoop() {
     if (isGameOver) {
       document.getElementById('startOverButton').style.display = 'block'
+      questionSpot.innerText = 'Your Score: ' + score
       return
     } else {
       document.getElementById('startOverButton').style.display = 'none'
@@ -263,7 +272,8 @@ export function initializeGame(answer) {
 
   document.getElementById('startOverButton').addEventListener('click', () => {
     isGameOver = false
-    fishPosition = { x: 100, y: 200 }
+    score = 0
+    fishPosition = { x: 50, y: 200 }
     torpedoes.length = 0
     gameLoop()
   })
