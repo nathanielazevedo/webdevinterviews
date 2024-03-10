@@ -1,6 +1,6 @@
 import background from './background.svg'
 import fishImages from './Walk.png'
-import torpedoImage from './Torpedo.png'
+import torpedoImage from './torpedo.png'
 import getQuestions from '../components/swimmerDecks'
 
 export function initializeGame() {
