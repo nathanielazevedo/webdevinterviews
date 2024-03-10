@@ -1,33 +1,51 @@
-import background from './background.png'
+import background from './background.svg'
 import fishImages from './Walk.png'
 import torpedoImage from './Torpedo.png'
-import death from './Death.png'
 import getQuestions from '../components/swimmerDecks'
 
 export function initializeGame() {
-  const canvas = document.getElementById('gameCanvas')
-  const questionSpot = document.getElementById('question')
   document.getElementById('intro-screen').style.display = 'none'
-  let currentQuestion = 0
+  const questionSpot = document.getElementById('question')
+  const gameOverButton = document.getElementById('startOverButton')
+  const canvas = document.getElementById('gameCanvas')
   const ctx = canvas.getContext('2d')
+
+  let currentQuestion = 0
   const questions = getQuestions().questions
-  const canvasWidth = canvas.width
-  const canvasHeight = canvas.height
-  let backgroundX = 0
   let score = 0
+
+  const aspectRatio = 16 / 9
+  const canvasWidth = Math.min(window.innerWidth, 800)
+  const canvasHeight = canvasWidth / aspectRatio
+  canvas.width = canvasWidth
+  canvas.height = canvasHeight
+  let backgroundX = 0
+
+  const moveSpeed = 4
+  const frameWidth = 47
+  const fishFrames = 4
+
+  let fishPosition = { x: 50, y: canvasHeight / 2 - 25 }
+  let fishFrameIndex = 0
+  let isGameOver = false
+  let isMovingUp = false
+  let count = 0
+  const torpedoes = []
+  const scrollSpeed = 1
+
   const backgroundImage = new Image()
   backgroundImage.src = background
+
+  const torpImage = new Image()
+  torpImage.src = torpedoImage
+
+  const fishImage = new Image()
+  fishImage.src = fishImages
 
   backgroundImage.onload = () => {
     gameLoop()
   }
 
-  const torpImage = new Image()
-  torpImage.src = torpedoImage
-
-  const torpedoes = []
-
-  const scrollSpeed = 1
   function updateBackgroundPosition() {
     backgroundX -= scrollSpeed
 
@@ -35,23 +53,6 @@ export function initializeGame() {
       backgroundX = 0
     }
   }
-
-  const fishImage = new Image()
-  fishImage.src = fishImages
-
-  const dyingFishImage = new Image()
-  dyingFishImage.src = death
-
-  const moveSpeed = 7
-  const frameWidth = 47
-  const fishFrames = 4
-
-  let fishPosition = { x: 50, y: 200 }
-  let fishFrameIndex = 0
-  let isGameOver = false
-  let isMovingUp = false
-  let isMovingDown = false
-  let count = 0
 
   function drawBackground() {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight)
@@ -92,7 +93,7 @@ export function initializeGame() {
   }
 
   function moveFishDown() {
-    fishPosition.y = Math.min(fishPosition.y + moveSpeed, canvasHeight - 50)
+    fishPosition.y = Math.min(fishPosition.y + 1, canvasHeight - 50)
   }
 
   function createTorpedo() {
@@ -100,18 +101,13 @@ export function initializeGame() {
       torpedoes.length === 0 ||
       !torpedoes.some((torpedo) => torpedo.status)
     ) {
-      // const middleY = canvasHeight / 2
-      const minDistance = 100 // Minimum distance from the edge
-      const maxDistance = canvasHeight - minDistance // Maximum distance from the edge
-      const torpedoY = Math.random() * (maxDistance - minDistance) + minDistance
-
       const torpedo = {
         x: canvasWidth,
-        y: torpedoY,
+        y: canvasHeight / 2 - 10,
         width: 50,
         height: 20,
-        speed: 5, // Adjust speed as needed
-        status: true, // true means active, false means inactive
+        speed: 2,
+        status: true,
         pastFish: false,
       }
       torpedoes.push(torpedo)
@@ -132,18 +128,14 @@ export function initializeGame() {
         const evaluated = eval(questions[currentQuestion].question)
         if (fishPosition.y < torpedo.y) {
           if (evaluated) {
-            // answer('correct')
             score++
           } else {
             isGameOver = true
-            // answer('incorrect')
           }
         } else {
           if (evaluated) {
             isGameOver = true
-            // answer('incorrect')
           } else {
-            // answer('correct')
             score++
           }
         }
@@ -154,19 +146,15 @@ export function initializeGame() {
   function drawTorpedoes() {
     torpedoes.forEach((torpedo) => {
       if (torpedo.status) {
-        // Save the current state of the canvas
         ctx.save()
 
-        // Translate the origin to the center of the torpedo
         ctx.translate(
           torpedo.x + torpedo.width / 2,
           torpedo.y + torpedo.height / 2
         )
 
-        // Rotate the canvas by 90 degrees (in radians)
         ctx.rotate(-Math.PI / 2)
 
-        // Draw the torpedo with the rotated context
         ctx.drawImage(
           torpImage,
           -torpedo.height / 2,
@@ -175,7 +163,6 @@ export function initializeGame() {
           torpedo.width
         )
 
-        // Restore the canvas state to prevent affecting other drawings
         ctx.restore()
       }
     })
@@ -207,11 +194,11 @@ export function initializeGame() {
 
   function gameLoop() {
     if (isGameOver) {
-      document.getElementById('startOverButton').style.display = 'block'
+      gameOverButton.style.display = 'block'
       questionSpot.innerText = 'Your Score: ' + score
       return
     } else {
-      document.getElementById('startOverButton').style.display = 'none'
+      gameOverButton.style.display = 'none'
     }
 
     updateBackgroundPosition()
@@ -223,7 +210,7 @@ export function initializeGame() {
 
     if (isMovingUp) {
       moveFishUp()
-    } else if (isMovingDown) {
+    } else {
       moveFishDown()
     }
 
@@ -236,32 +223,26 @@ export function initializeGame() {
   }
 
   // Define event handler functions
-  function handleMouseDown(event) {
-    handleInput(event.clientX, event.clientY)
+  function handleMouseDown() {
+    handleInput()
   }
 
   function handleMouseUp() {
     isMovingUp = false
-    isMovingDown = false
   }
 
   function handleTouchStart(event) {
     event.preventDefault()
-    handleInput(event.touches[0].clientX, event.touches[0].clientY)
+    handleInput()
   }
 
   function handleTouchEnd() {
     isMovingUp = false
-    isMovingDown = false
   }
 
   // Function to handle input (common for both mouse and touch events)
-  function handleInput(x, y) {
-    if (y < canvasHeight / 2) {
-      isMovingUp = true
-    } else {
-      isMovingDown = true
-    }
+  function handleInput() {
+    isMovingUp = true
   }
 
   canvas.addEventListener('mousedown', handleMouseDown)
@@ -273,7 +254,7 @@ export function initializeGame() {
   document.getElementById('startOverButton').addEventListener('click', () => {
     isGameOver = false
     score = 0
-    fishPosition = { x: 50, y: 200 }
+    fishPosition = { x: 50, y: canvasHeight / 2 }
     torpedoes.length = 0
     gameLoop()
   })

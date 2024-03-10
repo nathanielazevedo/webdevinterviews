@@ -1,19 +1,16 @@
-import React, { useEffect } from 'react'
+import * as React from 'react'
 import { initializeGame } from './gameLogic.js'
 import { Button, Typography } from '@mui/material'
 import background from './background.png'
+import './runner.css'
 
 function GameComponent() {
-  useEffect(() => {
-    // drawBg()
-  }, [])
-
   return (
     <div
       style={{
-        position: 'relative',
-        width: '500px',
+        width: '100vw',
         height: '300px',
+        position: 'relative',
       }}
     >
       <div
@@ -33,35 +30,47 @@ function GameComponent() {
         <Typography variant='h4' sx={{ color: 'black' }}>
           JavaSwim
         </Typography>
-        <Button variant='contained' onClick={() => initializeGame(() => {})}>
+        <Button
+          variant='contained'
+          onClick={() => {
+            console.log('play game')
+            initializeGame(() => {})
+          }}
+          style={{ zIndex: 1000 }}
+        >
           Play Game
         </Button>
       </div>
-      <canvas id='gameCanvas' width={500} height={300}></canvas>
-      <Button
-        id='startOverButton'
-        variant='contained'
+      <canvas id='gameCanvas'></canvas>
+      <div
         style={{
           position: 'absolute',
-          display: 'none',
-          top: '50%',
+          top: '35%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
+          zIndex: 2000,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '20px',
         }}
       >
-        New Game
-      </Button>
-      <Typography
-        id='question'
-        sx={{
-          position: 'absolute',
-          top: '20%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          fontWeight: 'bold',
-          color: 'black',
-        }}
-      ></Typography>
+        <Typography
+          id='question'
+          variant='h6'
+          sx={{ color: 'black', fontWeight: 'bold' }}
+        ></Typography>
+        <Button
+          id='startOverButton'
+          variant='contained'
+          style={{
+            display: 'none',
+          }}
+        >
+          New Game
+        </Button>
+      </div>
     </div>
   )
 }
