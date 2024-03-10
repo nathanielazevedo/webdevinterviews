@@ -86,7 +86,6 @@ const Game = ({
         if (input === 'no') handleCorrectInput()
         else handleIncorrectInput()
       } catch (e) {
-        console.log(e)
         setErrorType(e.toString())
         if (input === 'yes') handleCorrectInput()
         else handleIncorrectInput()
