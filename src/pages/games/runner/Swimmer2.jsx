@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import * as React from 'react'
 import { initializeGame } from './gameLogic.js'
 import { Button, Typography } from '@mui/material'
@@ -9,7 +10,7 @@ function GameComponent() {
     <div
       style={{
         width: '100vw',
-        height: '300px',
+        height: 'calc(100vw * 9 / 16)',
         position: 'relative',
       }}
     >
@@ -24,21 +25,34 @@ function GameComponent() {
           alignItems: 'center',
           backgroundImage: `url(${background})`,
           backgroundSize: '100% 100%',
-          gap: '25px',
+          gap: '15px',
         }}
       >
-        <Typography variant='h4' sx={{ color: 'black' }}>
-          JavaSwim
-        </Typography>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant='h4' sx={{ color: 'black', fontWeight: 'bold' }}>
+            JavaSwim
+          </Typography>
+          <Typography variant='subtitle1' sx={{ color: 'black' }}>
+            Swim over the shark if you think it's true, swim under if you think
+            it's false.
+          </Typography>
+        </div>
         <Button
           variant='contained'
           onClick={() => {
             console.log('play game')
             initializeGame(() => {})
           }}
-          style={{ zIndex: 1000 }}
+          style={{ zIndex: 1000, width: '100px' }}
         >
-          Play Game
+          Play
         </Button>
       </div>
       <canvas id='gameCanvas'></canvas>
@@ -54,6 +68,7 @@ function GameComponent() {
           justifyContent: 'center',
           alignItems: 'center',
           gap: '20px',
+          color: 'black',
         }}
       >
         <Typography
@@ -61,15 +76,28 @@ function GameComponent() {
           variant='h6'
           sx={{ color: 'black', fontWeight: 'bold' }}
         ></Typography>
-        <Button
-          id='startOverButton'
-          variant='contained'
-          style={{
-            display: 'none',
-          }}
-        >
-          New Game
-        </Button>
+      </div>
+      <div
+        id='startOverButton'
+        style={{
+          position: 'absolute',
+          top: '45%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 2000,
+          display: 'none',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '15px',
+          color: 'black',
+        }}
+      >
+        <Typography variant='h4' fontWeight={'bold'}>
+          Game Over
+        </Typography>
+        <Typography id='scoreSpot' variant='h5'></Typography>
+        <Button variant='contained'>Play Again</Button>
       </div>
     </div>
   )

@@ -25,7 +25,7 @@
     "title": "Swim",
     "public": true,
     "visible": true,
-    "description": "Does the array method mutate the original array?"
+    "description": "Truth or false but game mode. Go above the torpedo to answer true. Go below to answer false."
   },
   {
     "id": "mutate",

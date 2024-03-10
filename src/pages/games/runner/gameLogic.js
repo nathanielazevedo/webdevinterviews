@@ -1,11 +1,13 @@
 import background from './background.svg'
-import fishImages from './Walk.png'
-import torpedoImage from './torpedo.png'
+import fishImages from './turtleWalk.png'
+import torpedoImage from './Walk.png'
 import getQuestions from '../components/swimmerDecks'
+import attack from './Attack.png'
 
 export function initializeGame() {
   document.getElementById('intro-screen').style.display = 'none'
   const questionSpot = document.getElementById('question')
+  const scoreSpot = document.getElementById('scoreSpot')
   const gameOverButton = document.getElementById('startOverButton')
   const canvas = document.getElementById('gameCanvas')
   const ctx = canvas.getContext('2d')
@@ -21,8 +23,8 @@ export function initializeGame() {
   canvas.height = canvasHeight
   let backgroundX = 0
 
-  const moveSpeed = 4
-  const frameWidth = 47
+  const moveSpeed = 5
+  const frameWidth = 48
   const fishFrames = 4
 
   let fishPosition = { x: 50, y: canvasHeight / 2 - 25 }
@@ -31,7 +33,7 @@ export function initializeGame() {
   let isMovingUp = false
   let count = 0
   const torpedoes = []
-  const scrollSpeed = 1
+  let scrollSpeed = 1
 
   const backgroundImage = new Image()
   backgroundImage.src = background
@@ -41,6 +43,9 @@ export function initializeGame() {
 
   const fishImage = new Image()
   fishImage.src = fishImages
+
+  const attackImage = new Image()
+  attackImage.src = attack
 
   backgroundImage.onload = () => {
     gameLoop()
@@ -69,7 +74,7 @@ export function initializeGame() {
   function drawFish() {
     ctx.drawImage(
       fishImage,
-      fishFrameIndex * frameWidth,
+      isGameOver ? 1 * frameWidth : fishFrameIndex * frameWidth,
       0,
       frameWidth,
       frameWidth,
@@ -82,7 +87,7 @@ export function initializeGame() {
 
   function updateFishFrame() {
     count += 1
-    if (count > 5) {
+    if (count > 7) {
       count = 0
       fishFrameIndex = (fishFrameIndex + 1) % fishFrames
     }
@@ -123,7 +128,6 @@ export function initializeGame() {
         fishPosition.x + frameWidth > torpedo.x &&
         !torpedo.pastFish
       ) {
-        // Check if the fish is above or below the torpedo
         torpedo.pastFish = true
         const evaluated = eval(questions[currentQuestion].question)
         if (fishPosition.y < torpedo.y) {
@@ -153,14 +157,18 @@ export function initializeGame() {
           torpedo.y + torpedo.height / 2
         )
 
-        ctx.rotate(-Math.PI / 2)
+        ctx.scale(-1, 1)
 
         ctx.drawImage(
-          torpImage,
+          isGameOver ? attackImage : torpImage,
+          fishFrameIndex * frameWidth, // Adjust based on frame index
+          0,
+          frameWidth,
+          frameWidth,
           -torpedo.height / 2,
           -torpedo.width / 2,
-          torpedo.height,
-          torpedo.width
+          frameWidth,
+          frameWidth
         )
 
         ctx.restore()
@@ -179,26 +187,24 @@ export function initializeGame() {
     })
   }
 
-  function checkCollision() {
-    torpedoes.forEach((torpedo) => {
-      if (
-        fishPosition.x < torpedo.x + torpedo.width &&
-        fishPosition.x + frameWidth > torpedo.x &&
-        fishPosition.y < torpedo.y + torpedo.height &&
-        fishPosition.y + frameWidth > torpedo.y
-      ) {
-        isGameOver = true
-      }
-    })
-  }
-
   function gameLoop() {
     if (isGameOver) {
-      gameOverButton.style.display = 'block'
-      questionSpot.innerText = 'Your Score: ' + score
+      torpedoes[torpedoes.length - 1].y = fishPosition.y + 15
+      torpedoes[torpedoes.length - 1].x = fishPosition.x + 50
+      scrollSpeed = 0
+      updateBackgroundPosition()
+      drawBackground()
+      drawTorpedoes()
+      updateFishFrame()
+      drawFish()
+      requestAnimationFrame(gameLoop)
+      gameOverButton.style.display = 'flex'
+      scoreSpot.innerText = 'Your Score: ' + score
+      questionSpot.style.display = 'none'
       return
     } else {
       gameOverButton.style.display = 'none'
+      questionSpot.style.display = 'block'
     }
 
     updateBackgroundPosition()
@@ -217,14 +223,13 @@ export function initializeGame() {
     createTorpedo()
     moveTorpedoes()
     drawTorpedoes()
-    checkCollision()
 
-    requestAnimationFrame(gameLoop)
+    requestAnimationFrame(gameLoop) // Ensure requestAnimationFrame is called only once per frame
   }
 
-  // Define event handler functions
+  // Add event listeners
   function handleMouseDown() {
-    handleInput()
+    isMovingUp = true
   }
 
   function handleMouseUp() {
@@ -233,16 +238,11 @@ export function initializeGame() {
 
   function handleTouchStart(event) {
     event.preventDefault()
-    handleInput()
+    isMovingUp = true
   }
 
   function handleTouchEnd() {
     isMovingUp = false
-  }
-
-  // Function to handle input (common for both mouse and touch events)
-  function handleInput() {
-    isMovingUp = true
   }
 
   canvas.addEventListener('mousedown', handleMouseDown)
@@ -254,8 +254,8 @@ export function initializeGame() {
   document.getElementById('startOverButton').addEventListener('click', () => {
     isGameOver = false
     score = 0
+    scrollSpeed = 1
     fishPosition = { x: 50, y: canvasHeight / 2 }
     torpedoes.length = 0
-    gameLoop()
   })
 }
