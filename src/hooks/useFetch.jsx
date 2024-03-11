@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import useApi from './useApi'
 
 const useFetch = (url) => {

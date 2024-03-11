@@ -3,8 +3,9 @@ import fishImages from './turtleWalk.png'
 import torpedoImage from './Walk.png'
 import getQuestions from '../components/swimmerDecks'
 import attack from './Attack.png'
+import turtleHurt from './Hurt.png'
 
-export function initializeGame() {
+export function initializeGame(returnScore) {
   document.getElementById('intro-screen').style.display = 'none'
   const questionSpot = document.getElementById('question')
   const scoreSpot = document.getElementById('scoreSpot')
@@ -47,6 +48,9 @@ export function initializeGame() {
   const attackImage = new Image()
   attackImage.src = attack
 
+  const hurtImage = new Image()
+  hurtImage.src = turtleHurt
+
   backgroundImage.onload = () => {
     gameLoop()
   }
@@ -73,7 +77,7 @@ export function initializeGame() {
 
   function drawFish() {
     ctx.drawImage(
-      fishImage,
+      isGameOver ? hurtImage : fishImage,
       isGameOver ? 1 * frameWidth : fishFrameIndex * frameWidth,
       0,
       frameWidth,
@@ -135,10 +139,12 @@ export function initializeGame() {
             score++
           } else {
             isGameOver = true
+            returnScore(score)
           }
         } else {
           if (evaluated) {
             isGameOver = true
+            returnScore(score)
           } else {
             score++
           }
@@ -161,7 +167,7 @@ export function initializeGame() {
 
         ctx.drawImage(
           isGameOver ? attackImage : torpImage,
-          fishFrameIndex * frameWidth, // Adjust based on frame index
+          fishFrameIndex * frameWidth,
           0,
           frameWidth,
           frameWidth,
@@ -201,6 +207,7 @@ export function initializeGame() {
       gameOverButton.style.display = 'flex'
       scoreSpot.innerText = 'Your Score: ' + score
       questionSpot.style.display = 'none'
+
       return
     } else {
       gameOverButton.style.display = 'none'
@@ -224,7 +231,7 @@ export function initializeGame() {
     moveTorpedoes()
     drawTorpedoes()
 
-    requestAnimationFrame(gameLoop) // Ensure requestAnimationFrame is called only once per frame
+    requestAnimationFrame(gameLoop)
   }
 
   // Add event listeners
@@ -251,7 +258,7 @@ export function initializeGame() {
   canvas.addEventListener('mouseup', handleMouseUp)
   canvas.addEventListener('touchend', handleTouchEnd)
 
-  document.getElementById('startOverButton').addEventListener('click', () => {
+  document.getElementById('playAgain').addEventListener('click', () => {
     isGameOver = false
     score = 0
     scrollSpeed = 1
