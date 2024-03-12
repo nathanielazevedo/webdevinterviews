@@ -10,7 +10,6 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import background from './background.svg'
 import './runner.css'
 import useFetch from '../../../hooks/useFetch.jsx'
 import useApi from '../../../hooks/useApi.jsx'
@@ -78,7 +77,11 @@ const GameComponent = () => {
               return (
                 <TableRow
                   key={index}
-                  sx={{ fontSize: '10px !important', padding: 0, margin: 0 }}
+                  sx={{
+                    fontSize: '10px !important',
+                    padding: 0,
+                    margin: 0,
+                  }}
                 >
                   <TableCell
                     variant='caption'
@@ -124,8 +127,9 @@ const GameComponent = () => {
     <div
       style={{
         width: '100vw',
-        height: 'calc(100vw * 9 / 16)',
+        // height: 'calc(100vw * 9 / 16)',
         position: 'relative',
+        height: '300px',
       }}
     >
       <div
@@ -137,8 +141,9 @@ const GameComponent = () => {
           justifyContent: 'center',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundImage: `url(${background})`,
-          backgroundSize: '100% 100%',
+          backgroundColor: 'lightblue',
+          // backgroundImage: `url(${background})`,
+          // backgroundSize: '100% 100%',
           gap: '0px',
         }}
       >
@@ -198,7 +203,7 @@ const GameComponent = () => {
       <div
         style={{
           position: 'absolute',
-          top: '35%',
+          top: '25%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
           zIndex: 2000,
@@ -220,7 +225,7 @@ const GameComponent = () => {
         id='startOverButton'
         style={{
           position: 'absolute',
-          top: '45%',
+          top: '35%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
           zIndex: 2000,
@@ -278,9 +283,7 @@ const GameComponent = () => {
                   onChange={(evt) => handleInput(evt)}
                   value={name}
                 ></input>
-                <Typography sx={{ fontSize: '8px' }}>
-                  Max 4 characters
-                </Typography>
+                <Typography sx={{ fontSize: '8px' }}>Max characters</Typography>
               </div>
               <button onClick={submitHighScore}>Submit</button>
             </div>
