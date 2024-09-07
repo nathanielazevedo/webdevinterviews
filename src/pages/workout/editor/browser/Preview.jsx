@@ -50,7 +50,7 @@ const BasicTabs = () => {
       {value === 3 && (
         <div style={{ height: '100%' }}>
           <SandpackProvider
-            files={workout.solution}
+            files={{ ...workout.solution, ...workout.shared }}
             template={workout.sp_template}
           >
             <SandpackThemeProvider theme={'dark'}>
