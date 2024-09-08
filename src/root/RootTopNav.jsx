@@ -65,10 +65,10 @@ function ResponsiveAppBar() {
 
   return (
     <AppBar position='static'>
-      <Container maxWidth='xl'>
+      <Container maxWidth='100%'>
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <Avatar src={logo} sx={{ display: { xs: 'none', md: 'flex' } }} />
+          {/* <Avatar src={logo} sx={{ display: { xs: 'none', md: 'flex' } }} /> */}
           <Typography
             variant='h6'
             noWrap

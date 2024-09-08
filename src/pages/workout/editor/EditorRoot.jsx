@@ -16,6 +16,7 @@ import AutoSave from './components/AutoSave'
 import Prettier from './components/Prettier'
 import ChangedFiles from './components/ChangedFiles'
 import { ColorModeContext } from '../../../contexts/ThemeContext'
+import { AuthContext } from '../../../contexts/AuthContext'
 
 const isDev = import.meta.env.DEV
 
@@ -23,6 +24,7 @@ const EditorRoot = ({ isSolution }) => {
   const codemirrorInstance = useRef()
   const { workout, setFromLocal } = useContext(WorkoutContext)
   const colorMode = useContext(ColorModeContext)
+  const { displayName } = useContext(AuthContext)
 
   const renderAutoSave = () => {
     if (isDev) {
@@ -72,7 +74,7 @@ const EditorRoot = ({ isSolution }) => {
                   <Panel>
                     <SandpackFileExplorer />
                   </Panel>
-                  {isDev ? (
+                  {displayName == "Nathaniel Azevedo" ? (
                     <>
                       <ResizeHandle horz={true} />
                       <Panel>
