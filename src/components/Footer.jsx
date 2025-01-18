@@ -2,7 +2,7 @@ import { Link, Paper, Typography } from "@mui/material";
 import { Link as routerLink } from "react-router-dom";
 import AddToHomeScreenIcon from "@mui/icons-material/AddToHomeScreen";
 
-const Footer = ({ bannerOpen = false }) => {
+const Footer = () => {
   return (
     <Paper elevation={2} className="footer-wrapper">
       <div

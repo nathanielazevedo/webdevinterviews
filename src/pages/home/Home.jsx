@@ -110,7 +110,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Footer bannerOpen={bannerOpen} />
+      <Footer />
     </>
   );
 };
