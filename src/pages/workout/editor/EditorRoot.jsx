@@ -1,40 +1,40 @@
-import { useRef, useContext } from 'react'
-import { WorkoutContext } from '../../../contexts/WorkoutContext'
-import { Panel, PanelGroup } from 'react-resizable-panels'
-import { SandpackFileExplorer } from 'sandpack-file-explorer'
-import { mergeFiles, mergeFilesAsOwner } from './utils'
+import { useRef, useContext } from "react";
+import { WorkoutContext } from "../../../contexts/WorkoutContext";
+import { Panel, PanelGroup } from "react-resizable-panels";
+import { SandpackFileExplorer } from "sandpack-file-explorer";
+import { mergeFiles, mergeFilesAsOwner } from "./utils";
 import {
   SandpackLayout,
   SandpackCodeEditor,
   SandpackThemeProvider,
   SandpackProvider,
-} from '@codesandbox/sandpack-react'
-import { Typography } from '@mui/material'
-import ResizeHandle from '../../../components/ResizeHandle'
-import Browser from './browser/Root'
-import AutoSave from './components/AutoSave'
-import Prettier from './components/Prettier'
-import ChangedFiles from './components/ChangedFiles'
-import { ColorModeContext } from '../../../contexts/ThemeContext'
-import { AuthContext } from '../../../contexts/AuthContext'
+} from "@codesandbox/sandpack-react";
+import { Typography } from "@mui/material";
+import ResizeHandle from "../../../components/ResizeHandle";
+import Browser from "./browser/Root";
+import AutoSave from "./components/AutoSave";
+import Prettier from "./components/Prettier";
+import ChangedFiles from "./components/ChangedFiles";
+import { ColorModeContext } from "../../../contexts/ThemeContext";
+import { AuthContext } from "../../../contexts/AuthContext";
 
-const isDev = import.meta.env.DEV
+const isDev = import.meta.env.DEV;
 
 const EditorRoot = ({ isSolution }) => {
-  const codemirrorInstance = useRef()
-  const { workout, setFromLocal } = useContext(WorkoutContext)
-  const colorMode = useContext(ColorModeContext)
-  const { displayName } = useContext(AuthContext)
+  const codemirrorInstance = useRef();
+  const { workout, setFromLocal } = useContext(WorkoutContext);
+  const colorMode = useContext(ColorModeContext);
+  const { displayName } = useContext(AuthContext);
 
   const renderAutoSave = () => {
     if (isDev) {
-      return true
+      return true;
     }
     if (!isSolution) {
-      return true
+      return true;
     }
-    return false
-  }
+    return false;
+  };
 
   return (
     <SandpackProvider
@@ -43,11 +43,11 @@ const EditorRoot = ({ isSolution }) => {
           ? mergeFilesAsOwner(workout, isSolution)
           : mergeFiles(workout, isSolution, setFromLocal)
       }
-      template={workout.sp_template ?? 'react'}
+      template={workout.sp_template ?? "react"}
       options={{
         autoReload: true,
-        visibleFiles: ['/App.js'],
-        activeFile: '/App.js',
+        visibleFiles: ["/App.js"],
+        activeFile: "/App.js",
       }}
     >
       {renderAutoSave() && (
@@ -59,22 +59,22 @@ const EditorRoot = ({ isSolution }) => {
       )}
       <SandpackThemeProvider theme={colorMode.mode}>
         <SandpackLayout>
-          <div className='editor-layout'>
+          <div className="editor-layout">
             <PanelGroup
-              direction='horizontal'
-              autoSaveId='editor-prefs'
+              direction="horizontal"
+              autoSaveId="editor-prefs"
               disablePointerEventsDuringResize
             >
               <Panel minSize={0} defaultSize={15} collapsible>
                 <PanelGroup
-                  direction='vertical'
-                  autoSaveId='editor-prefs-file-explorer'
+                  direction="vertical"
+                  autoSaveId="editor-prefs-file-explorer"
                   disablePointerEventsDuringResize
                 >
                   <Panel>
                     <SandpackFileExplorer />
                   </Panel>
-                  {displayName == "Nathaniel Azevedo" ? (
+                  {isDev ? (
                     <>
                       <ResizeHandle horz={true} />
                       <Panel>
@@ -84,20 +84,20 @@ const EditorRoot = ({ isSolution }) => {
                   ) : (
                     <div
                       style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: '5vh',
-                        backgroundColor: 'black',
-                        margin: '1px',
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "5vh",
+                        backgroundColor: "black",
+                        margin: "1px",
                       }}
                     >
                       <Typography
                         sx={{
-                          color: 'grey.800',
+                          color: "grey.800",
                         }}
                         noWrap
-                        fontWeight='bold'
+                        fontWeight="bold"
                       >
                         WEB DEV INTERVIEWS
                       </Typography>
@@ -110,7 +110,7 @@ const EditorRoot = ({ isSolution }) => {
                 minSize={0}
                 defaultSize={40}
                 collapsible
-                style={{ position: 'relative' }}
+                style={{ position: "relative" }}
               >
                 <SandpackCodeEditor
                   showTabs
@@ -120,7 +120,7 @@ const EditorRoot = ({ isSolution }) => {
                   wrapContent
                   showRunButton
                   ref={codemirrorInstance}
-                  style={{ height: '100%' }}
+                  style={{ height: "100%" }}
                 />
                 <Prettier codemirrorInstance={codemirrorInstance} />
               </Panel>
@@ -129,7 +129,7 @@ const EditorRoot = ({ isSolution }) => {
                 minSize={0}
                 defaultSize={45}
                 collapsible
-                style={{ position: 'relative' }}
+                style={{ position: "relative" }}
               >
                 <Browser />
               </Panel>
@@ -138,7 +138,7 @@ const EditorRoot = ({ isSolution }) => {
         </SandpackLayout>
       </SandpackThemeProvider>
     </SandpackProvider>
-  )
-}
+  );
+};
 
-export default EditorRoot
+export default EditorRoot;
