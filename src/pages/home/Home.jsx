@@ -18,7 +18,7 @@ const Home = () => {
             <HomeHeader
               title={"WEB DEV INTERVIEWS"}
               subtext={
-                "Learning hinges on capturing your brains interest. Through the use of games, dynamic workouts, and engaging contests, I strive to inspire continuous exploration and learning."
+                "Learning hinges on capturing your brains interest. Through the use of games, dynamic workouts, and engaging contests, I strive to inspire continuous exploration and learning. This site is totally free! Enjoy."
               }
             />
             <div className="home-buttons">
@@ -80,7 +80,7 @@ const Home = () => {
             <HomeHeader
               title={"CHOOSE CORRECT COMPARISON OPERATOR"}
               subtext={
-                "JavaScript does not like to throw errors but it is very important to know when it will. This game will test your understanding of JavaScript error handling."
+                "Here, you'll receive to sides of a comparsion. You decide what operator should be in the middle."
               }
             />
             <HomeButton text="Play CCC" to="/games/ccc" oneLine={true} />

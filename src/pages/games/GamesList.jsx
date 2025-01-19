@@ -1,23 +1,22 @@
-import games from './games.json'
-import Alert from '@mui/material/Alert'
-import Header from '../../components/Header'
-import Item from '../../components/Item'
+import games from "./games.json";
+import Alert from "@mui/material/Alert";
+import Header from "../../components/Header";
+import Item from "../../components/Item";
 
 const GamesList = () => {
   return (
-    <div className='fit-wrapper'>
+    <div className="fit-wrapper">
       <Header
-        title='Games'
-        subtext='Improve your understanding of JavaScript with games.'
+        title="Games"
+        subtext="Improve your understanding of JavaScript with games."
       />
-      <Alert severity='info'>Games are added, updated and audited daily!</Alert>
-      <div className='items-container'>
+      <div className="items-container">
         {games.map((game, index) => (
-          <Item key={index} item={game} basePath={'/games/'} />
+          <Item key={index} item={game} basePath={"/games/"} />
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default GamesList
+export default GamesList;

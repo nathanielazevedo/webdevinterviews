@@ -69,8 +69,8 @@ function ResponsiveAppBar() {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="100%">
-        <Toolbar disableGutters>
+      <Container maxWidth="100%" sx={{ backgroundColor: "background.paper" }}>
+        <Toolbar disableGutters sx={{ backgroundColor: "background.paper" }}>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           {/* <Avatar src={logo} sx={{ display: { xs: 'none', md: 'flex' } }} /> */}
           <Typography
@@ -178,7 +178,7 @@ function ResponsiveAppBar() {
             ))}
           </Box>
 
-          {!noToggle && <ThemeSwitch />}
+          {/* {!noToggle && <ThemeSwitch />} */}
           {/* {displayName && (
             <Box sx={{ flexGrow: 0, display: "flex" }}>
               <Tooltip title="Open settings">

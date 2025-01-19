@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
   Divider,
-  Drawer,
   List,
   ListItem,
   ListItemText,
@@ -73,7 +72,7 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
                 sx={{
                   cursor: "pointer",
                   backgroundColor:
-                    currentQuestionIndex == index ? "grey.900" : "inherit",
+                    currentQuestionIndex == index ? "grey.900" : "",
                 }}
               >
                 <ListItemText primary={`Question ${index + 1}`} />
