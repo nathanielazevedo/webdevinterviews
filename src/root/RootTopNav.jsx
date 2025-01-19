@@ -27,6 +27,10 @@ const pages = [
     title: "Games",
     to: "/games",
   },
+  {
+    title: "Quizes",
+    to: "/quizes",
+  },
 ];
 const settings = ["Logout"];
 

@@ -1,34 +1,35 @@
-import * as React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Root from './root/Root'
-import Footer from './components/Footer.jsx'
-import Home from './pages/home/Home'
-import Error from './pages/misc/Error'
-import FourOFour from './pages/misc/FourOFour'
-import Contact from './pages/Contact'
+import * as React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root from "./root/Root";
+import Footer from "./components/Footer.jsx";
+import Home from "./pages/home/Home";
+import Error from "./pages/misc/Error";
+import FourOFour from "./pages/misc/FourOFour";
+import Contact from "./pages/Contact";
 
-import Workouts from './pages/workouts/Workouts'
-import Workout from './pages/workout/Workout'
-import EditorRoot from './pages/workout/editor/EditorRoot'
+import Workouts from "./pages/workouts/Workouts";
+import Workout from "./pages/workout/Workout";
+import EditorRoot from "./pages/workout/editor/EditorRoot";
 
-import GamesList from './pages/games/GamesList'
-import GameBase from './pages/games/components/GameBase.jsx'
+import GamesList from "./pages/games/GamesList";
+import GameBase from "./pages/games/components/GameBase.jsx";
 
-import TrueOrFalseMain from './pages/games/trueOrFalse/TrueOrFalseMain'
-import ShortsEditor from './pages/shortsEditor/ShortsEditor'
-import WillItThrowMain from './pages/games/willItThrow/WillItThrowMain'
-import NewMemberForm from './pages/NewMemberForm'
-import CccMain from './pages/games/ccc/CccList'
-import MutateMain from './pages/games/mutate/MutateMain'
-import ReturnMain from './pages/games/returns/ReturnMain'
-import Runner from './pages/games/runner/Swimmer2.jsx'
+import TrueOrFalseMain from "./pages/games/trueOrFalse/TrueOrFalseMain";
+import ShortsEditor from "./pages/shortsEditor/ShortsEditor";
+import WillItThrowMain from "./pages/games/willItThrow/WillItThrowMain";
+import NewMemberForm from "./pages/NewMemberForm";
+import CccMain from "./pages/games/ccc/CccList";
+import MutateMain from "./pages/games/mutate/MutateMain";
+import ReturnMain from "./pages/games/returns/ReturnMain";
+import Runner from "./pages/games/runner/Swimmer2.jsx";
+import Quiz from "./pages/courses/multipleChoice/QuizMain";
 
-import { AuthProvider } from './contexts/AuthContext'
-import { ThemeProvider } from './contexts/ThemeContext'
+import { AuthProvider } from "./contexts/AuthContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Root />,
     errorElement: <Error />,
     children: [
@@ -38,21 +39,21 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path: 'new-member',
+        path: "new-member",
         element: <NewMemberForm />,
       },
       {
-        path: 'shorts-editor',
+        path: "shorts-editor",
         errorElement: <Error />,
         element: <ShortsEditor />,
       },
       {
-        path: 'contact',
+        path: "contact",
         element: <Contact />,
         errorElement: <Error />,
       },
       {
-        path: 'workouts',
+        path: "workouts",
         errorElement: <Error />,
         element: (
           <>
@@ -62,7 +63,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'workouts/:id',
+        path: "workouts/:id",
         element: <Workout />,
         errorElement: <Error />,
         children: [
@@ -71,16 +72,16 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <EditorRoot key='challenge' isSolution={false} />,
+                element: <EditorRoot key="challenge" isSolution={false} />,
                 errorElement: <Error />,
               },
               {
-                path: 'solution',
-                element: <EditorRoot key='solution' isSolution={true} />,
+                path: "solution",
+                element: <EditorRoot key="solution" isSolution={true} />,
                 errorElement: <Error />,
               },
               {
-                path: '*',
+                path: "*",
                 element: <FourOFour />,
                 errorElement: <Error />,
               },
@@ -89,7 +90,16 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: 'games',
+        path: "quizes",
+        children: [
+          {
+            index: true,
+            element: <Quiz />,
+          },
+        ],
+      },
+      {
+        path: "games",
         errorElement: <Error />,
         children: [
           {
@@ -102,7 +112,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: 'true-or-false',
+            path: "true-or-false",
             children: [
               {
                 index: true,
@@ -114,82 +124,82 @@ const router = createBrowserRouter([
                 ),
               },
               {
-                path: 'structured/:deckNumber',
-                element: <GameBase gameName={'true-or-false'} random={false} />,
+                path: "structured/:deckNumber",
+                element: <GameBase gameName={"true-or-false"} random={false} />,
               },
               {
-                path: 'random/:deckNumber',
-                element: <GameBase gameName={'true-or-false'} random={true} />,
+                path: "random/:deckNumber",
+                element: <GameBase gameName={"true-or-false"} random={true} />,
               },
             ],
           },
           {
-            path: 'will-it-throw',
+            path: "will-it-throw",
             children: [
               {
                 index: true,
                 element: <WillItThrowMain />,
               },
               {
-                path: 'structured/:deckNumber',
-                element: <GameBase gameName={'will-it-throw'} random={false} />,
+                path: "structured/:deckNumber",
+                element: <GameBase gameName={"will-it-throw"} random={false} />,
               },
               {
-                path: 'random/:deckNumber',
-                element: <GameBase gameName={'will-it-throw'} random={true} />,
+                path: "random/:deckNumber",
+                element: <GameBase gameName={"will-it-throw"} random={true} />,
               },
             ],
           },
           {
-            path: 'ccc',
+            path: "ccc",
             children: [
               {
                 index: true,
                 element: <CccMain />,
               },
               {
-                path: 'random/:deckNumber',
-                element: <GameBase gameName={'ccc'} random={true} />,
+                path: "random/:deckNumber",
+                element: <GameBase gameName={"ccc"} random={true} />,
               },
             ],
           },
           {
-            path: 'mutate',
+            path: "mutate",
             children: [
               {
                 index: true,
                 element: <MutateMain />,
               },
               {
-                path: 'random/:deckNumber',
-                element: <GameBase gameName={'mutate'} random={true} />,
+                path: "random/:deckNumber",
+                element: <GameBase gameName={"mutate"} random={true} />,
               },
             ],
           },
           {
-            path: 'returns',
+            path: "returns",
             children: [
               {
                 index: true,
                 element: <ReturnMain />,
               },
               {
-                path: 'random/:deckNumber',
-                element: <GameBase gameName={'returns'} random={true} />,
+                path: "random/:deckNumber",
+                element: <GameBase gameName={"returns"} random={true} />,
               },
             ],
           },
           {
-            path: 'runner',
+            path: "runner",
             children: [
               {
                 index: true,
                 element: <Runner />,
               },
               {
-                path: ':id',
+                path: ":id",
                 element: (
-                  <div className='fit-wrapper'>
+                  <div className="fit-wrapper">
                     <Runner />
                   </div>
                 ),
@@ -199,13 +209,13 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: '*',
+        path: "*",
         element: <FourOFour />,
         errorElement: <Error />,
       },
     ],
   },
-])
+]);
 
 const Router = () => {
   return (
@@ -214,7 +224,7 @@ const Router = () => {
         <RouterProvider router={router} />
       </AuthProvider>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default Router
+export default Router;
