@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import TopNav from "./RootTopNav";
 import { Divider } from "@mui/material";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const Root = () => (
   <>
