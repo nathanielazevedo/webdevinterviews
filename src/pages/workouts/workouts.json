@@ -1,0 +1,1208 @@
+[
+  {
+    "description": "Improve the re-rendering of this component.",
+    "difficulty": "junior",
+    "embed_link": "https://www.youtube.com/embed/MabHyCR8mHY?si=-so-HjubLY1DLXnn",
+    "id": 15,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"@testing-library/react\": \"latest\",\n    \"@testing-library/jest-dom\": \"latest\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": true,
+    "shared": {
+        "/shared": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>Optimize React Re-renders</h1>\n  <h4>\n    Switching from light to dark mode is re-rendering the expensive component.\n  </h4>\n  <h4>\n    You can see this is happening by toggling the theme switch and seeing that\n    the component is calculating a new Fibbonaci number.\n  </h4>\n  <h4>\n    Our front-end really can't afford that. We need you to fix this application\n    so that clicking the theme switch does not rerender the expensive component.\n  </h4>\n  <h4>Good Luck!</h4>\n</div>\n"
+        },
+        "/shared/tests": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/tests/App.test.jsx": {
+            "code": "import React from \"react\";\nimport { render, fireEvent } from \"@testing-library/react\";\nimport \"@testing-library/jest-dom\";\nimport App from \"../App\";\n\ntest(\"renders App component\", () => {\n  render(<App />);\n});\n"
+        }
+    },
+    "skills": [
+        "react"
+    ],
+    "solution": {
+        "/App.js": {
+            "code": "import { ThemeProvider } from \"../ThemeContext.jsx\";\nimport NavBar from \"./components/NavBar\";\nimport Page from \"./components/Page.jsx\";\nimport Expensive from \"./components/Expensive.jsx\";\n\nfunction App() {\n  return (\n    <ThemeProvider>\n      <Page>\n        <NavBar />\n        <Expensive />\n      </Page>\n    </ThemeProvider>\n  );\n}\n\nexport default App;\n"
+        },
+        "/ThemeContext.jsx": {
+            "code": "import { createContext, useState } from \"react\";\n\nconst ThemeContext = createContext();\n\nconst ThemeProvider = ({ children }) => {\n  const [theme, setTheme] = useState(false);\n\n  return (\n    <ThemeContext.Provider value={{ theme, setTheme }}>\n      {children}\n    </ThemeContext.Provider>\n  );\n};\n\nexport { ThemeContext, ThemeProvider };\n"
+        },
+        "/ThemeToggle.css": {
+            "code": ".theme-toggle {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-right: 10px;\n}\n\n.switch {\n  position: relative;\n  display: inline-block;\n  width: 40px;\n  height: 20px;\n}\n\n.slider {\n  position: absolute;\n  cursor: pointer;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: #ccc;\n  transition: 0.4s;\n  border-radius: 20px; \n}\n\n.slider:before {\n  position: absolute;\n  content: '';\n  height: 16px; /* Reduced size */\n  width: 16px; /* Reduced size */\n  left: 2px; /* Adjusted position */\n  bottom: 2px; /* Adjusted position */\n  background-color: white;\n  transition: 0.4s;\n  border-radius: 50%;\n}\n\ninput:checked + .slider {\n  background-color: #2196f3;\n}\n\ninput:checked + .slider:before {\n  transform: translateX(20px); /* Adjusted translation */\n}\n\n.theme-label {\n  margin-left: 10px;\n  font-size: 14px; \n}\n"
+        },
+        "/components": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/components/Expensive.jsx": {
+            "code": "import React, { useState } from \"react\";\n\nconst ExpensiveComponent = () => {\n  const n = Math.floor(Math.random() * 35)\n  const calculateFibonacci = (n) => {\n    if (n <= 1) {\n      return n;\n    }\n    return calculateFibonacci(n - 1) + calculateFibonacci(n - 2);\n  };\n\n\n  const fibonacciResult = calculateFibonacci(n);\n\n\n  return (\n    <div className=\"expensive-component\">\n      <h2>Expensive Component</h2>\n      {fibonacciResult !== null && (\n        <p>\n          Fibonacci number for n=35 is: {fibonacciResult}. \n        </p>\n      )}\n    </div>\n  );\n};\n\nexport default ExpensiveComponent;\n"
+        },
+        "/components/NavBar.jsx": {
+            "code": "import ThemeToggle from \"./ThemeToggle.jsx\"\n\nconst NavBar = () => {\n\n  return (\n    <nav>\n      <ThemeToggle />\n    </nav>\n  );\n};\n\nexport default NavBar;"
+        },
+        "/components/Page.jsx": {
+            "code": "import { ThemeContext } from \"../ThemeContext\";\nimport { useContext } from \"react\";\n\nconst Page = ({ children }) => {\n  const { theme } = useContext(ThemeContext);\n  return <main className={theme ? \"dark\" : \"light\"}>{children}</main>;\n};\n\nexport default Page;\n"
+        },
+        "/components/ThemeToggle.css": {
+            "code": ".theme-toggle {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-right: 10px;\n}\n\n.switch {\n  position: relative;\n  display: inline-block;\n  width: 40px;\n  height: 20px;\n}\n\n.slider {\n  position: absolute;\n  cursor: pointer;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: #ccc;\n  transition: 0.4s;\n  border-radius: 20px; \n}\n\n.slider:before {\n  position: absolute;\n  content: '';\n  height: 16px; /* Reduced size */\n  width: 16px; /* Reduced size */\n  left: 2px; /* Adjusted position */\n  bottom: 2px; /* Adjusted position */\n  background-color: white;\n  transition: 0.4s;\n  border-radius: 50%;\n}\n\ninput:checked + .slider {\n  background-color: #2196f3;\n}\n\ninput:checked + .slider:before {\n  transform: translateX(20px); /* Adjusted translation */\n}\n\n.theme-label {\n  margin-left: 10px;\n  font-size: 14px; \n}"
+        },
+        "/components/ThemeToggle.jsx": {
+            "code": "import React, { useState, useEffect } from \"react\";\nimport \"./ThemeToggle.css\";\nimport { ThemeContext } from \"../ThemeContext\";\nimport { useContext } from \"react\";\n\nconst ThemeToggle = () => {\n  const { theme, setTheme } = useContext(ThemeContext);\n\n  const toggleTheme = () => {\n    setTheme((prevTheme) => !prevTheme);\n  };\n\n  return (\n    <div className=\"theme-toggle\">\n      <label className=\"switch\">\n        <input hidden type=\"checkbox\" onChange={toggleTheme} checked={theme} />\n        <span className=\"slider round\"></span>\n      </label>\n      <span className=\"theme-label\">\n        {theme ? \"Dark Mode\" : \"Light Mode\"}\n      </span>\n    </div>\n  );\n};\n\nexport default ThemeToggle;"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);\n"
+        },
+        "/public": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\n.flex {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\nnav {\n  width: 100%;\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  height: 40px;\n  padding: 0 20px;\n  border-bottom: grey 1px solid\n}\n\n.dark {\n  background-color: black;\n  color: white;\n}\n\n.light {\n  background-color: white;\n  color: black;\n}\n\nbutton {\n  padding: 5px 15px;\n  background-color: transparent;\n  border-radius: 5px;\n}\n\nbutton.dark {\n  border: solid white 0.5px;\n  color: white;\n}\n\nbutton.light {\n  border: solid black 0.5px;\n  color: black;\n}\n\nmain {\n  height: 100vh;\n}\n\n.expensive-component {\n  max-width: 400px;\n  margin: 100px auto;\n  padding: 20px;\n  border: 1px solid #ccc;\n  border-radius: 5px;\n  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\n  text-align: center;\n}"
+        }
+    },
+    "sp_template": "react",
+    "template": {
+        "/App.js": {
+            "code": "import { useState } from \"react\";\nimport { ThemeContext } from \"../ThemeContext.jsx\";\nimport NavBar from \"./components/NavBar\";\nimport Expensive from \"./components/Expensive\";\n\nfunction App() {\n  const [theme, setTheme] = useState(false);\n\n  return (\n    <ThemeContext.Provider value={{ theme, setTheme }}>\n      <main className={theme ? \"dark\" : \"light\"}>\n        <NavBar />\n        <div>\n          <Expensive />\n        </div>\n      </main>\n    </ThemeContext.Provider>\n  );\n}\n\nexport default App;\n"
+        },
+        "/ThemeContext.jsx": {
+            "code": "import { createContext, useState } from \"react\";\n\nconst ThemeContext = createContext();\n\nexport { ThemeContext };\n"
+        },
+        "/components": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/components/Expensive.jsx": {
+            "code": "import React, { useState } from \"react\";\n\nconst ExpensiveComponent = () => {\n  const n = Math.floor(Math.random() * 35);\n\n  const calculateFibonacci = (n) => {\n    if (n <= 1) {\n      return n;\n    }\n    return calculateFibonacci(n - 1) + calculateFibonacci(n - 2);\n  };\n\n  const fibonacciResult = calculateFibonacci(n);\n\n  return (\n    <div className=\"expensive-component\">\n      <h2>Expensive Component</h2>\n      {fibonacciResult !== null && (\n        <p>\n          Fibonacci number for n={n} is: {fibonacciResult}.\n        </p>\n      )}\n    </div>\n  );\n};\n\nexport default ExpensiveComponent;\n"
+        },
+        "/components/NavBar.jsx": {
+            "code": "import ThemeToggle from \"./ThemeToggle.jsx\"\n\nconst NavBar = () => {\n\n  return (\n    <nav>\n      <ThemeToggle />\n    </nav>\n  );\n};\n\nexport default NavBar;\n"
+        },
+        "/components/ThemeToggle.jsx": {
+            "code": "import React, { useState, useEffect } from \"react\";\nimport { ThemeContext } from \"../ThemeContext\";\nimport { useContext } from \"react\";\n\nconst ThemeToggle = () => {\n  const { theme, setTheme } = useContext(ThemeContext);\n\n  const toggleTheme = () => {\n    setTheme((prevTheme) => !prevTheme);\n  };\n\n  return (\n    <div className=\"theme-toggle\">\n      <label className=\"switch\">\n        <input type=\"checkbox\" onChange={toggleTheme} checked={theme} hidden/>\n        <span className=\"slider\"></span>\n      </label>\n      <span className=\"theme-label\">{theme ? \"Dark Mode\" : \"Light Mode\"}</span>\n    </div>\n  );\n};\n\nexport default ThemeToggle;\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nmain {\n  min-height: 100vh;\n  display: flex;\n  flex-direction: column\n}\n\nmain > :nth-child(2){\n  flex-grow: 1;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\nnav {\n  width: 100%;\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  height: 40px;\n  padding: 0 20px;\n  border-bottom: grey 1px solid\n}\n\n.dark {\n  background-color: black;\n  color: white;\n}\n\n.light {\n  background-color: white;\n  color: black;\n}\n\nbutton {\n  padding: 5px 15px;\n  background-color: transparent;\n  border-radius: 5px;\n}\n\nbutton.dark {\n  border: solid white 0.5px;\n  color: white;\n}\n\nbutton.light {\n  border: solid black 0.5px;\n  color: black;\n}\n\n.expensive-component {\n  max-width: 400px;\n  padding: 20px;\n  border: 1px solid #ccc;\n  border-radius: 5px;\n  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\n  text-align: center;\n}\n\n.theme-toggle {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-right: 10px;\n}\n\n.switch {\n  position: relative;\n  display: inline-block;\n  width: 40px;\n  height: 20px;\n}\n\n.slider {\n  position: absolute;\n  cursor: pointer;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: #ccc;\n  transition: 0.4s;\n  border-radius: 20px; \n}\n\n.slider:before {\n  position: absolute;\n  content: '';\n  height: 17px;\n  width: 16px; \n  left: 2px; \n  bottom: 2px;\n  background-color: white;\n  transition: 0.4s;\n  border-radius: 40%;\n}\n\ninput:checked + .slider {\n  background-color: #2196f3;\n}\n\ninput:checked + .slider:before {\n  transform: translateX(20px); \n}\n\n.theme-label {\n  margin-left: 10px;\n  font-size: 14px; \n}\n"
+        }
+    },
+    "title": "Optimize React Rerenders",
+    "youtube_link": "https://youtu.be/MabHyCR8mHY"
+},
+{
+    "description": "Can you fix the bug in the redux code?",
+    "difficulty": "junior",
+    "embed_link": "https://www.youtube.com/embed/0rZBkzOwVTQ?si=zsYq_9zqtrY6EAIS",
+    "id": 48,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\",\n    \"redux\": \"latest\",\n    \"react-redux\": \"latest\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": true,
+    "shared": {
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>Redux Bug Hunt</h1>\n  <h3>\n    This is a redux application for a simple todo list.\n  </h3>\n  <h3>\n    Users are currently able to create a task but when they try to delete a task it doesn't work.\n  </h3>\n  <h3>\n    Can you fix the bug?\n  </h3>\n</div>"
+        }
+    },
+    "skills": [
+        "redux"
+    ],
+    "solution": {
+        "/App.js": {
+            "code": "import React from 'react';\nimport TaskList from './TaskList';\nimport TaskForm from './TaskForm';\n\nfunction App() {\n  return (\n    <div>\n      <h1>Task Manager</h1>\n      <TaskForm />\n      <TaskList />\n    </div>\n  );\n}\n\nexport default App;\n\n"
+        },
+        "/TaskForm.jsx": {
+            "code": "import React, { useState } from 'react';\nimport { useDispatch } from 'react-redux';\nimport { addTask } from './actions';\n\nfunction TaskForm() {\n  const [task, setTask] = useState('');\n  const dispatch = useDispatch();\n\n  const handleAddTask = () => {\n    dispatch(addTask(task));\n    setTask('');\n  };\n\n  return (\n    <div>\n      <input\n        type=\"text\"\n        value={task}\n        onChange={(e) => setTask(e.target.value)}\n        placeholder=\"Enter task\"\n      />\n      <button onClick={handleAddTask}>Add Task</button>\n    </div>\n  );\n}\n\nexport default TaskForm;\n"
+        },
+        "/TaskList.jsx": {
+            "code": "import React from \"react\";\nimport { useSelector, useDispatch } from \"react-redux\";\nimport { removeTask } from \"./actions\";\n\nfunction TaskList() {\n  const tasks = useSelector((state) => state.tasks);\n  const dispatch = useDispatch();\n\n  const handleRemoveTask = (taskId) => {\n    dispatch(removeTask(taskId));\n  };\n\n  return (\n    <ul>\n      {tasks.map((task) => (\n        <li key={task.id}>\n          {task.text}\n          <button\n            data-testid={`delete-button-${task.id}`}\n            onClick={() => handleRemoveTask(task.id)}\n          >\n            Remove\n          </button>\n        </li>\n      ))}\n    </ul>\n  );\n}\n\nexport default TaskList;\n"
+        },
+        "/actions.js": {
+            "code": "export const addTask = (text) => ({\n  type: 'ADD_TASK',\n  payload: {\n    id: new Date().getTime(),\n    text,\n  },\n});\n\nexport const removeTask = (taskId) => ({\n  type: 'REMOVE_TASK',\n  payload: {\n    id: taskId,\n  },\n});\n"
+        },
+        "/index.js": {
+            "code": "import React from 'react';\nimport ReactDOM from 'react-dom';\nimport { createRoot } from 'react-dom/client';\nimport { Provider } from 'react-redux';\nimport { createStore } from 'redux';\nimport App from './App';\nimport taskReducer from './reducers';\n\nconst store = createStore(taskReducer);\n\nconst root = createRoot(document.getElementById('root'));\n\nroot.render(\n  <Provider store={store}>\n    <App />\n  </Provider>\n);\n\n"
+        },
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"@testing-library/jest-dom\": \"latest\",\n    \"@testing-library/react\": \"latest\",\n    \"@testing-library/user-event\": \"latest\",\n    \"jest-extended\": \"latest\",\n    \"react-markdown\": \"latest\",\n    \"react-redux\": \"latest\",\n    \"redux\": \"latest\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/reducers.js": {
+            "code": "const initialState = {\n  tasks: [],\n};\n\nconst taskReducer = (state = initialState, action) => {\n  switch (action.type) {\n    case \"ADD_TASK\":\n      return {\n        ...state,\n        tasks: [...state.tasks, action.payload],\n      };\n    case \"REMOVE_TASK\":\n      // Bug: Use action.payload.id not action.id\n        return {\n        ...state,\n          tasks: state.tasks.filter((task) => task.id !== action.payload.id),\n        };\n    default:\n      return state;\n  }\n};\n\nexport default taskReducer;\n"
+        },
+        "/styles.css": {
+            "code": ".flex{\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}"
+        }
+    },
+    "sp_template": "react",
+    "template": {
+        "/App.js": {
+            "code": "import React from 'react';\nimport TaskList from './TaskList';\nimport TaskForm from './TaskForm';\n\nfunction App() {\n  return (\n    <div>\n      <h1>Task Manager</h1>\n      <TaskForm />\n      <TaskList />\n    </div>\n  );\n}\n\nexport default App;\n"
+        },
+        "/TaskForm.js": {
+            "code": "import React, { useState } from 'react';\nimport { useDispatch } from 'react-redux';\nimport { addTask } from './actions';\n\nfunction TaskForm() {\n  const [task, setTask] = useState('');\n  const dispatch = useDispatch();\n\n  const handleAddTask = () => {\n    dispatch(addTask(task));\n    setTask('');\n  };\n\n  return (\n    <div>\n      <input\n        type=\"text\"\n        value={task}\n        onChange={(e) => setTask(e.target.value)}\n        placeholder=\"Enter task\"\n      />\n      <button onClick={handleAddTask}>Add Task</button>\n    </div>\n  );\n}\n\nexport default TaskForm;"
+        },
+        "/TaskList.js": {
+            "code": "import React from \"react\";\nimport { useSelector, useDispatch } from \"react-redux\";\nimport { removeTask } from \"./actions\";\n\nfunction TaskList() {\n  const tasks = useSelector((state) => state.tasks);\n  const dispatch = useDispatch();\n\n  const handleRemoveTask = (taskId) => {\n    dispatch(removeTask(taskId));\n  };\n\n  return (\n    <ul>\n      {tasks.map((task) => (\n        <li key={task.id}>\n          {task.text}\n          <button\n            data-testid={`delete-button-${task.id}`}\n            onClick={() => handleRemoveTask(task.id)}\n          >\n            Remove\n          </button>\n        </li>\n      ))}\n    </ul>\n  );\n}\n\nexport default TaskList;"
+        },
+        "/actions.js": {
+            "code": "export const addTask = (text) => ({\n  type: 'ADD_TASK',\n  payload: {\n    id: new Date().getTime(),\n    text,\n  },\n});\n\nexport const removeTask = (taskId) => ({\n  type: 'REMOVE_TASK',\n  payload: {\n    id: taskId,\n  },\n});"
+        },
+        "/index.js": {
+            "code": "import React from 'react';\nimport ReactDOM from 'react-dom';\nimport { createRoot } from 'react-dom/client';\nimport { Provider } from 'react-redux';\nimport { createStore } from 'redux';\nimport App from './App';\nimport taskReducer from './reducers';\n\nconst store = createStore(taskReducer);\n\nconst root = createRoot(document.getElementById('root'));\n\nroot.render(\n  <Provider store={store}>\n    <App />\n  </Provider>\n);"
+        },
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"@testing-library/jest-dom\": \"latest\",\n    \"@testing-library/react\": \"latest\",\n    \"@testing-library/user-event\": \"latest\",\n    \"jest-extended\": \"latest\",\n    \"react-markdown\": \"latest\",\n    \"react-redux\": \"latest\",\n    \"redux\": \"latest\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/reducers.js": {
+            "code": "const initialState = {\n  tasks: [],\n};\n\nconst taskReducer = (state = initialState, action) => {\n  switch (action.type) {\n    case \"ADD_TASK\":\n      return {\n        ...state,\n        tasks: [...state.tasks, action.payload],\n      };\n    case \"REMOVE_TASK\":\n        return {\n        ...state,\n          tasks: state.tasks.filter((task) => task.id !== action.id),\n        };\n    default:\n      return state;\n  }\n};\n\nexport default taskReducer;"
+        },
+        "/styles.css": {
+            "code": "* {\n  margin: 0;\n  padding: 0;\n}\n\n.flex {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}"
+        }
+    },
+    "title": "Redux Bug Hunt",
+    "youtube_link": "https://youtu.be/0rZBkzOwVTQ"
+},
+{
+    "description": "A little React-Router fun.",
+    "difficulty": "junior",
+    "embed_link": "https://www.youtube.com/embed/a-seOEpDJKM?si=Jy6YlYXO8-Xu-uUf",
+    "id": 46,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": true,
+    "shared": {
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>Outlet</h1>\n  <h3>If you use react, you probably use react-router.</h3>\n  <h3>A crucial skill to have is the ability to keep a base navigation frame and render different components within that frame.</h3>\n  <h3>That is the requirement for this workout.</h3>\n  <h3>Good luck!</h3>\n</div>"
+        }
+    },
+    "skills": [
+        "react",
+        "react-router"
+    ],
+    "solution": {
+        "/App.js": {
+            "code": "import { createBrowserRouter, RouterProvider } from \"react-router-dom\";\nimport Root from \"./Root\";\nimport About from \"./pages/About\";\nimport Info from \"./pages/Info\";\nimport Welcome from \"./pages/Welcome\";\n\nconst router = createBrowserRouter([\n  {\n    path: \"/\",\n    element: <Root />,\n    children: [\n      {\n        path: \"\",\n        element: <Welcome />,\n      },\n      {\n        path: \"about\",\n        element: <About />,\n      },\n      {\n        path: \"info\",\n        element: <Info />,\n      },\n    ],\n  },\n]);\n\nconst App = () => {\n  return <RouterProvider router={router} />;\n};\n\nexport default App;\n"
+        },
+        "/Root.js": {
+            "code": "import { Outlet } from \"react-router-dom\";\nimport TopNav from './TopNav'\n\nconst Root = () => {\n  return (\n    <div style={{ height: '100vh' }}>\n      <TopNav/>\n      <div className=\"flex\" style={{ height: \"calc(100vh - 50px)\" }}>\n        <Outlet />\n      </div>\n    </div>\n  );\n};\n\nexport default Root;\n"
+        },
+        "/TopNav.jsx": {
+            "code": "import { NavLink } from \"react-router-dom\";\n\nconst links = [\n  {\n    name: \"Logo\",\n    path: \"/\",\n  },\n  {\n    name: \"About\",\n    path: \"/about\",\n  },\n  {\n    name: \"Info\",\n    path: \"/info\",\n  },\n];\n\nconst TopNav = () => {\n  return (\n    <div className=\"top-nav\">\n      {links.map((link, index) => (\n        <NavLink\n          key={index}\n          to={link.path}\n          style={{flex: index == 0 ? 1 : 0, padding: '0 10px'}}\n          className={({ isActive, isPending }) =>\n            isActive ? \"link active\" : isPending ? \"link pending\" : \"link\"\n          }\n        >\n          {link.name}\n        </NavLink>\n      ))}\n    </div>\n  );\n};\n\nexport default TopNav;\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"react-router-dom\": \"latest\",\n    \"@testing-library/react\": \"latest\",\n    \"jest-extended\": \"latest\",\n    \"@testing-library/jest-dom\": \"latest\",\n    \"@testing-library/user-event\": \"latest\",\n    \"history\": \"latest\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        },
+        "/pages/About.jsx": {
+            "code": "const About = () => {\n  return (\n    <h3>ABOUT</h3>\n  )\n}\n\nexport default About"
+        },
+        "/pages/Info.jsx": {
+            "code": "const Info = () => {\n  return (\n    <h3>INFO</h3>\n  )\n}\n\nexport default Info"
+        },
+        "/pages/Welcome.jsx": {
+            "code": "const Welcome = () => {\n  return (\n    <h3>WELCOME</h3>\n  )\n}\n\nexport default Welcome"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": ".flex{\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n* {\n  padding: 0;\n  margin: 0\n}\n\n.top-nav {\n  height: 30px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  border-bottom: 1px solid black;\n  padding: 0 20px;\n}\n\n.link {\n  color: black;\n  font-size: 14px;\n  text-decoration: none\n}\n\n.active {\n  color: blue\n}\n\n.pending {\n  color: lightblue\n}"
+        },
+        "/tests/App.test.jsx": {
+            "code": "import React from \"react\";\nimport { render, fireEvent } from \"@testing-library/react\";\nimport \"@testing-library/jest-dom\";\nimport { createMemoryHistory } from \"history\";\nimport { createBrowserRouter, RouterProvider } from \"react-router-dom\";\nimport App from \"../App\";\n\ntest(\"renders App component\", () => {\n  render(<App />);\n});\n\ntest(\"navigates to Welcome page\", () => {\n  const { getByText } = render(<App />);\n\n  // Assuming there is a text unique to the Welcome page\n  const welcomeText = getByText(/WELCOME/i);\n  expect(welcomeText).toBeInTheDocument();\n});\n\ntest(\"navigates to About page\", () => {\n  const { getByText } = render(<App />);\n\n  // Assuming there is a text unique to the About page\n  fireEvent.click(getByText(/About/));\n  const aboutText = getByText(/ABOUT/)\n  expect(aboutText).toBeInTheDocument();\n});\n\ntest(\"navigates to About page\", () => {\n  const { getByText } = render(<App />);\n\n  // Assuming there is a text unique to the About page\n  fireEvent.click(getByText(/Info/));\n  const aboutText = getByText(/INFO/)\n  expect(aboutText).toBeInTheDocument();\n});\n"
+        }
+    },
+    "sp_template": "react",
+    "template": {
+        "/App.js": {
+            "code": "const App = () => {\n  return <h1 className=\"intro\">WEB DEV INTERVIEWS</h1>\n}\n\nexport default App\n"
+        },
+        "/Instructions.jsx": {
+            "code": "// Instructions.jsx\n\nimport React from 'react'\nimport {createRoot} from 'react-dom/client'\nimport Markdown from 'react-markdown'\n    \nconst markdown = `\n# Outlet \n### This challenge will exercise your abilities with react router dom. \nCreate a basic navigation system.\nThere should be 3 pages that can be navigated to. \n1. Create a top navbar containing 3 links.\n2. The first link routes to / and renders 'WELCOME'.\n3. The second link routes to /about and render \"ABOUT\" \n4. The third link routes to /info and renders \"INFO\"\n`\n  \nconst root = createRoot(document.getElementById(\"root\"))\nroot.render(<Markdown>{markdown}</Markdown>)"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\n\n.intro {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  font-family: Bai Jamjuree;\n  font-size: 35px;\n  height: 100vh;\n}\n"
+        },
+        "/tests/App.test.jsx": {
+            "code": "// App.test.jsx\n\nimport React from \"react\";\nimport { render, fireEvent } from \"@testing-library/react\";\nimport \"@testing-library/jest-dom\";\nimport { createMemoryHistory } from \"history\";\nimport { createBrowserRouter, RouterProvider } from \"react-router-dom\";\nimport App from \"../App\";\n\ntest(\"renders App component\", () => {\n  render(<App />);\n});\n\ntest(\"navigates to Welcome page\", () => {\n  const { getByText } = render(<App />);\n\n  // Assuming there is a text unique to the Welcome page\n  const welcomeText = getByText(/WELCOME/i);\n  expect(welcomeText).toBeInTheDocument();\n});\n\ntest(\"navigates to About page\", () => {\n  const { getByText } = render(<App />);\n\n  // Assuming there is a text unique to the About page\n  fireEvent.click(getByText(/About/));\n  const aboutText = getByText(/ABOUT/)\n  expect(aboutText).toBeInTheDocument();\n});\n\ntest(\"navigates to About page\", () => {\n  const { getByText } = render(<App />);\n\n  // Assuming there is a text unique to the About page\n  fireEvent.click(getByText(/Info/));\n  const aboutText = getByText(/INFO/)\n  expect(aboutText).toBeInTheDocument();\n});"
+        }
+    },
+    "title": "Outlet",
+    "youtube_link": "https://youtu.be/a-seOEpDJKM"
+},
+{
+    "description": "A classic question. Build out multiple tabs.",
+    "difficulty": "junior",
+    "embed_link": "https://www.youtube.com/embed/kjsPAe5boEU?si=UhEZ4LxFLtBYKyAY",
+    "id": 43,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": true,
+    "shared": {
+        "/shared": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>Tabs</h1>\n  <h3>Build out basic tabs.</h3>\n  <h3>This workout will exercise your abilites with react state.</h3>\n  <h3>Good luck!</h3>\n</div>\n"
+        }
+    },
+    "skills": [
+        "react",
+        "html",
+        "javascript",
+        "css"
+    ],
+    "solution": {
+        "/App.js": {
+            "code": "const tabs = ['TAB 1', 'TAB 2', 'TAB 3']\nconst panels = ['Panel 1', 'Panel 2', 'Panel 3']\nimport { useState } from 'react'\nimport Tab from './Tab'\nimport Panel from './Panel'\n\nexport default function App() {\n  const [currTab, setCurrTab] = useState(0)\n\n  const handleTabChange = (tab) => {\n    setCurrTab(tab)\n  }\n\n  return (\n    <div>\n      <div className='tabs-container'>\n        {tabs.map((tab, index) => {\n          return (\n            <Tab\n              key={index}\n              tab={tab}\n              onClick={() => handleTabChange(index)}\n              active={currTab === index}\n            />\n          )\n        })}\n      </div>\n      <div style={{ paddingTop: '15px' }}>\n        {panels.map((panel, index) => {\n          return <Panel key={index} tab={currTab} index={index} panel={panel} />\n        })}\n      </div>\n    </div>\n  )\n}\n"
+        },
+        "/Panel.js": {
+            "code": "/* eslint-disable react/prop-types */\n// Panel.js\n\nconst Panel = ({ panel, tab, index }) => {\n  return <div hidden={tab === index ? false : true}>{panel}</div>\n}\n\nexport default Panel\n"
+        },
+        "/Tab.js": {
+            "code": "/* eslint-disable react/prop-types */\n// Tab.js\n\nconst Tab = ({ tab, onClick, active }) => {\n  return (\n    <div\n      className='tab'\n      onClick={onClick}\n      style={{\n        borderBottom: active ? '2px solid blue' : '1px solid black',\n      }}\n    >\n      <b\n        style={{\n          color: active ? 'blue' : 'black',\n        }}\n      >\n        {tab}\n      </b>\n    </div>\n  )\n}\n\nexport default Tab\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": ".tabs-container {\n  display: flex;\n  gap: 10px;\n}\n\n.tab {\n  border-bottom: 1px solid black;\n  padding-bottom: 5px;\n  cursor: pointer;\n}\n"
+        }
+    },
+    "sp_template": "react",
+    "template": {
+        "/App.js": {
+            "code": "const tabs = ['TAB 1', 'TAB 2', 'TAB 3']\nconst panels = ['Panel 1', 'Panel 2', 'Panel 3']\n\nexport default function App() {\n  return <h1 className=\"intro\">WEB DEV INTERVIEWS</h1>\n}\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\n\n.intro {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  font-family: Bai Jamjuree;\n  font-size: 35px;\n  height: 100vh;\n}"
+        }
+    },
+    "title": "Tabs",
+    "youtube_link": "https://youtu.be/kjsPAe5boEU"
+},
+{
+    "description": "Fetch data and render the result.",
+    "difficulty": "junior",
+    "embed_link": "https://www.youtube.com/embed/1T0iMtIWmrw?si=MSI-nmVZH4DtqOXX",
+    "id": 42,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": false,
+    "shared": {
+        "/shared": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>Age Api</h1>\n  <h3>https://api.agify.io/?name=${text}</h3>\n  <h3>This api takes in a name and returns an age.</h3>\n  <h3>Your job is to build a form that takes a name \n  as an input and a submit button.</h3>\n  <h3>The name in the form should be sent in a request\n  to the provided endpoint.</h3>\n  <h3>You should then display the returned age to the user.</h3>\n  <h3>Good luck!</h3>\n</div>"
+        }
+    },
+    "skills": [
+        "react",
+        "javascript"
+    ],
+    "solution": {
+        "/App.js": {
+            "code": "import './styles.css'\nimport { useState } from 'react'\n\nconst App = () => {\n  const [text, setText] = useState('')\n  const [result, setResult] = useState(null)\n  const [previousSearches, setPreviousSearches] = useState({})\n\n  const handleSubmit = async () => {\n    try {\n      if (previousSearches.hasOwnProperty(text)) {\n        setResult(previousSearches[text])\n      } else {\n        const response = await fetch(`https://api.agify.io/?name=${text}`)\n        if (!response.ok) {\n          throw new Error(response.status)\n        }\n        const result = await response.json()\n        setResult(result.age)\n        setPreviousSearches({ ...previousSearches, [text]: result.age })\n      }\n    } catch (e) {\n      console.log(e)\n    } finally {\n      setText('')\n    }\n  }\n\n  return (\n    <div className='page flex'>\n      <div className='card flex'>\n        <div className='form flex'>\n          <input\n            value={text}\n            placeholder='Enter a Name'\n            onChange={(evt) => setText(evt.target.value)}\n          />\n          <button disabled={text === ''} onClick={handleSubmit}>\n            SUBMIT\n          </button>\n        </div>\n        <h1>{result ?? '-'}</h1>\n      </div>\n    </div>\n  )\n}\n\nexport default App\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  box-sizing: border-box;\n}\n\n.flex {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.page {\n  height: 100vh;\n}\n\n.card {\n  border-radius: 10px;\n  border: solid black 1px;\n  padding: 40px;\n  gap: 50px;\n}\n\n.form {\n  gap: 20px;\n  flex-direction: column;\n}\n\n.form > * {\n  padding: 15px;\n  width: 100%;\n}\n"
+        }
+    },
+    "sp_template": "react",
+    "template": {
+        "/App.js": {
+            "code": "export default function App() {\n  return <h1 className=\"intro\">WEB DEV INTERVIEWS</h1>;\n}\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\n\n.intro {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  font-family: Bai Jamjuree;\n  font-size: 35px;\n  height: 100vh;\n}"
+        }
+    },
+    "title": "Age API",
+    "youtube_link": "https://youtu.be/1T0iMtIWmrw"
+},
+{
+    "description": "Test your CSS by building a switch component.",
+    "difficulty": "junior",
+    "embed_link": "https://www.youtube.com/embed/NRFOgIOxRrg?si=NQqsWb7vrqIty1Ok",
+    "id": 45,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": true,
+    "shared": {
+        "/shared": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>Switch</h1>\n  <h3>Build a simple switch component.</h3>\n  <h3>For me, it wasn't so simple.</h3>\n  <h3>Good luck!</h3>\n</div>"
+        }
+    },
+    "skills": [
+        "react",
+        "css"
+    ],
+    "solution": {
+        "/App.js": {
+            "code": "import { useState } from 'react'\n\nexport default function App() {\n  const [switchStatus, setSwitchStatus] = useState(0)\n  console.log('hello world')\n  return (\n    <div className={`${switchStatus ? 'barOn' : 'barOff'} bar`}>\n      <div\n        className={`${switchStatus ? 'on' : 'off'} ball`}\n        onClick={() => setSwitchStatus(!switchStatus)}\n      ></div>\n    </div>\n  )\n}\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "body {\n  font-family: sans-serif;\n  -webkit-font-smoothing: auto;\n  -moz-font-smoothing: auto;\n  -moz-osx-font-smoothing: grayscale;\n  font-smoothing: auto;\n  text-rendering: optimizeLegibility;\n  font-smooth: always;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n}\n\nh1 {\n  font-size: 1.5rem;\n}\n\n.bar {\n  width: 100px;\n  height: 50px;\n\n  border-radius: 20px;\n  background-color: lightblue;\n  position: relative;\n}\n\n.ball {\n  width: 50px;\n  height: 50px;\n  border-radius: 50%;\n  background-color: blue;\n  position: absolute;\n}\n\n.on {\n  background-color: blue;\n  right: 0;\n}\n\n.off {\n  background-color: grey;\n}\n\n.barOn {\n  background-color: lightblue;\n}\n\n.barOff {\n  background-color: lightgrey;\n}\n"
+        }
+    },
+    "sp_template": "react",
+    "template": {
+        "/App.js": {
+            "code": "export default function App() {\n  return <h1 className=\"intro\">WEB DEV INTERVIEWS</h1>\n}\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\n\n.intro {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  font-family: Bai Jamjuree;\n  font-size: 35px;\n  height: 100vh;\n}"
+        }
+    },
+    "title": "Switch",
+    "youtube_link": "https://youtu.be/NRFOgIOxRrg"
+},
+{
+    "description": "Implement the most common sorting algorithms.",
+    "difficulty": "mid-level",
+    "embed_link": null,
+    "id": 10,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {},\n  \"main\": \"/index.html\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": true,
+    "shared": {
+        "/shared": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>Sorting Algorithm Challenge</h1>\n\n  <p>\n    Welcome to the Sorting Algorithm Challenge! Your job is to implement a\n    function for each sorting algorithm below. Clicking on the buttons above the\n    table on the main page should properly sort the items in the table by id.\n  </p>\n  <p>\n    Write the algorithm for each sorting method in the proper file in\n    /src/{name}.\n  </p>\n\n  <h2>Sorting Algorithms</h2>\n\n  <ul>\n    <li>Bubble Sort</li>\n    <li>Insertion Sort</li>\n    <li>Selection Sort</li>\n    <li>Merge Sort</li>\n    <li>QuickSort</li>\n    <li>Shell Sort</li>\n    <li>Heap Sort</li>\n  </ul>\n\n  <strong>Remember: Sort by id!</strong>\n  <h3>Good luck!</h3>\n</div>\n"
+        },
+        "/shared/tests": {
+            "code": ".emptyDir",
+            "hidden": true
+        }
+    },
+    "skills": [
+        "javascript",
+        "DSA"
+    ],
+    "solution": {
+        "/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Sorting Algorithms Interview</title>\n    <link rel=\"stylesheet\" href=\"styles.css\" />\n  </head>\n  <body>\n    <div>\n      <button onclick='sortData(\"reset\")' style=\"background-color: red\">reset</button>\n      <button onclick='sortData(\"bubble\")'>Bubble</button>\n      <button onclick='sortData(\"insertion\")'>Insertion</button>\n      <button onclick='sortData(\"selection\")'>Selection</button>\n      <button onclick='sortData(\"merge\")'>Merge</button>\n      <button onclick='sortData(\"quick\")'>Quick</button>\n      <button onclick='sortData(\"heap\")'>Heap</button>\n      <button onclick='sortData(\"shell\")'>Shell</button>\n      <h2>Products:</h2>\n      <table border=\"1\" id=\"productTable\">\n        <thead>\n          <tr>\n            <th>ID</th>\n            <th>Name</th>\n            <th>Price</th>\n            <th>Popularity</th>\n            <th>Rating</th>\n          </tr>\n        </thead>\n        <tbody></tbody>\n      </table>\n    </div>\n    <script src=\"/sortingAlgorithms/bubbleSort.js\"></script>\n    <script src=\"/sortingAlgorithms/insertionSort.js\"></script>\n    <script src=\"/sortingAlgorithms/selectionSort.js\"></script>\n    <script src=\"/sortingAlgorithms/mergeSort.js\"></script>\n    <script src=\"/sortingAlgorithms/quickSort.js\"></script>\n    <script src=\"/sortingAlgorithms/shellSort.js\"></script>\n    <script src=\"/sortingAlgorithms/heapSort.js\"></script>\n    <script src=\"index.js\"></script>\n  </body>\n</html>\n"
+        },
+        "/index.js": {
+            "code": "const products = [\n    { id: 3, name: 'Laptop', price: 1200, popularity: 10, rating: 4.5 },\n    { id: 1, name: 'Smartphone', price: 800, popularity: 8, rating: 4.2 },\n    { id: 2, name: 'Tablet', price: 500, popularity: 7, rating: 4.3 },\n    { id: 5, name: 'Dog', price: 100, popularity: 3, rating: 4.1 },\n    { id: 4, name: 'TV', price: 200, popularity: 4, rating: 4.4 },\n];\n\nfunction updateTable(sortedProducts) {\n  let tableBody = document\n    .getElementById(\"productTable\")\n    .getElementsByTagName(\"tbody\")[0];\n  tableBody.innerHTML = \"\";\n\n  sortedProducts.forEach((product) => {\n    let row = tableBody.insertRow();\n    for (let key in product) {\n      let cell = row.insertCell();\n      cell.appendChild(document.createTextNode(product[key]));\n    }\n  });\n}\n\nfunction sortData(algo) {\n  let sortedProducts;\n  switch (algo) {\n    case \"reset\":\n      sortedProducts = [...products];\n      break;\n    case \"bubble\":\n      sortedProducts = bubbleSort([...products]);\n      break;\n    case \"insertion\":\n      sortedProducts = insertionSort([...products]);\n      break;\n    case \"selection\":\n      sortedProducts = selectionSort([...products]);\n      break;\n    case \"merge\":\n      sortedProducts = mergeSort([...products]);\n      break;\n    case \"quick\":\n      sortedProducts = quickSort([...products]);\n      break;\n    case \"heap\":\n      sortedProducts = heapSort([...products]);\n      break;\n    case \"shell\":\n      sortedProducts = shellSort([...products]);\n      break;\n    default:\n      sortedProducts = bubbleSort([...products]);\n      break;\n  }\n\n  updateTable(sortedProducts);\n}\n\nupdateTable(products);\n"
+        },
+        "/sortingAlgorithms": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/sortingAlgorithms/bubbleSort.js": {
+            "code": "// O(n^2)\nfunction bubbleSort(arr) {\n  let n = arr.length;\n  for (let i = 0; i < n - 1; i++) {\n    for (let j = 0; j < n - i - 1; j++) {\n      if (arr[j].id > arr[j + 1].id) {\n        let temp = arr[j];\n        arr[j] = arr[j + 1];\n        arr[j + 1] = temp;\n      }\n    }\n  }\n  return arr;\n}\n"
+        },
+        "/sortingAlgorithms/heapSort.js": {
+            "code": "function heapSort(arr) {\n  const n = arr.length;\n\n  // Build a max heap\n  for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {\n    heapify(arr, n, i, \"id\");\n  }\n\n  // Extract elements from the heap one by one\n  for (let i = n - 1; i > 0; i--) {\n    // Swap the root (max element) with the last element\n    const temp = arr[0];\n    arr[0] = arr[i];\n    arr[i] = temp;\n\n    // Call heapify on the reduced heap\n    heapify(arr, i, 0);\n  }\n\n  return arr;\n}\n\n// Helper function to heapify a subtree rooted at index i\nfunction heapify(arr, n, i) {\n  let largest = i;\n  const left = 2 * i + 1;\n  const right = 2 * i + 2;\n\n  // Compare with left child\n  if (left < n && arr[left].id > arr[largest].id) {\n    largest = left;\n  }\n\n  // Compare with right child\n  if (right < n && arr[right].id > arr[largest].id) {\n    largest = right;\n  }\n\n  // If the largest is not the root, swap and recursively heapify the affected subtree\n  if (largest !== i) {\n    const temp = arr[i];\n    arr[i] = arr[largest];\n    arr[largest] = temp;\n\n    heapify(arr, n, largest);\n  }\n}\n"
+        },
+        "/sortingAlgorithms/insertionSort.js": {
+            "code": "function insertionSort(arr) {\n  let n = arr.length;\n\n  for (let i = 1; i < n; i++) {\n    let currentElement = arr[i];\n    let j = i - 1;\n\n    while (j >= 0 && arr[j].id > currentElement.id) {\n      arr[j + 1] = arr[j];\n      j--;\n    }\n\n    arr[j + 1] = currentElement;\n  }\n\n  return arr;\n}\n"
+        },
+        "/sortingAlgorithms/mergeSort.js": {
+            "code": "function mergeSort(arr) {\n  if (arr.length <= 1) {\n    return arr;\n  }\n\n  // Split the array into two halves\n  const middle = Math.floor(arr.length / 2);\n  const leftHalf = arr.slice(0, middle);\n  const rightHalf = arr.slice(middle);\n\n  // Recursively apply mergeSort to the two halves\n  const sortedLeft = mergeSort(leftHalf);\n  const sortedRight = mergeSort(rightHalf);\n\n  // Merge the sorted halves\n  return merge(sortedLeft, sortedRight);\n}\n\n// Helper function to merge two sorted arrays\nfunction merge(left, right) {\n  let result = [];\n  let leftIndex = 0;\n  let rightIndex = 0;\n\n  while (leftIndex < left.length && rightIndex < right.length) {\n    if (left[leftIndex].id < right[rightIndex].id) {\n      result.push(left[leftIndex]);\n      leftIndex++;\n    } else {\n      result.push(right[rightIndex]);\n      rightIndex++;\n    }\n  }\n\n  // Concatenate any remaining elements from both arrays\n  return result.concat(left.slice(leftIndex), right.slice(rightIndex));\n}\n"
+        },
+        "/sortingAlgorithms/quickSort.js": {
+            "code": "function quickSort(arr) {\n  if (arr.length <= 1) {\n    return arr;\n  }\n\n  const pivot = arr[0];\n  const left = [];\n  const right = [];\n\n  for (let i = 1; i < arr.length; i++) {\n    if (arr[i].id < pivot.id) {\n      left.push(arr[i]);\n    } else {\n      right.push(arr[i]);\n    }\n  }\n\n  return quickSort(left).concat(pivot, quickSort(right));\n}\n"
+        },
+        "/sortingAlgorithms/selectionSort.js": {
+            "code": "function selectionSort(arr) {\n  let n = arr.length;\n\n  for (let i = 0; i < n - 1; i++) {\n    let minIndex = i;\n\n    for (let j = i + 1; j < n; j++) {\n      if (arr[j].id < arr[minIndex].id) {\n        minIndex = j;\n      }\n    }\n\n    if (minIndex !== i) {\n      let temp = arr[i];\n      arr[i] = arr[minIndex];\n      arr[minIndex] = temp;\n    }\n  }\n\n  return arr;\n}\n"
+        },
+        "/sortingAlgorithms/shellSort.js": {
+            "code": "function shellSort(arr) {\n  const n = arr.length;\n\n  // Start with a large gap and reduce it\n  for (let gap = Math.floor(n / 2); gap > 0; gap = Math.floor(gap / 2)) {\n    // Perform a gapped insertion sort for this gap size\n    for (let i = gap; i < n; i++) {\n      const currentElement = arr[i];\n\n      // Shift the elements until the correct position is found\n      let j;\n      for (j = i; j >= gap && arr[j - gap].id > currentElement.id; j -= gap) {\n        arr[j] = arr[j - gap];\n      }\n\n      // Place the current element at its correct position\n      arr[j] = currentElement;\n    }\n  }\n\n  return arr;\n}\n"
+        },
+        "/styles.css": {
+            "code": "body {\n  font-family: \"Arial\", sans-serif;\n  margin: 20px;\n  text-align: center;\n}\n\nh1 {\n  color: #333;\n}\n\nh2 {\n  margin-top: 20px;\n  color: #555;\n}\n\nbutton {\n  padding: 10px;\n  margin: 5px;\n  background-color: #007bff;\n  color: #fff;\n  border: none;\n  border-radius: 5px;\n  cursor: pointer;\n}\n\ntable {\n  width: 80%;\n  margin: 20px auto;\n  border-collapse: collapse;\n}\n\nth,\ntd {\n  padding: 12px;\n  border: 1px solid #ddd;\n  text-align: left;\n}\n\nth {\n  background-color: #f2f2f2;\n}\n\ntr:nth-child(even) {\n  background-color: #f9f9f9;\n}\n"
+        }
+    },
+    "sp_template": "static",
+    "template": {
+        "/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Sorting Algorithms Interview</title>\n    <link rel=\"stylesheet\" href=\"styles.css\" />\n  </head>\n  <body>\n    <div>\n      <button onclick='sortData(\"reset\")' style=\"background-color: red\">reset</button>\n      <button onclick='sortData(\"bubble\")'>Bubble</button>\n      <button id=\"insertion\">Insertion</button>\n      <button id=\"selection\">Selection</button>\n      <button id=\"merge\">Merge</button>\n      <button id=\"quick\">Quick</button>\n      <button id=\"heap\">Heap</button>\n      <button id=\"shell\">Shell</button>\n      <h2>Products:</h2>\n      <table border=\"1\" id=\"productTable\">\n        <thead>\n          <tr>\n            <th>ID</th>\n            <th>Name</th>\n            <th>Price</th>\n            <th>Popularity</th>\n            <th>Rating</th>\n          </tr>\n        </thead>\n        <tbody></tbody>\n      </table>\n    </div>\n    <script src=\"/sortingAlgorithms/bubbleSort.js\"></script>\n    <script src=\"/sortingAlgorithms/insertionSort.js\"></script>\n    <script src=\"/sortingAlgorithms/selectionSort.js\"></script>\n    <script src=\"/sortingAlgorithms/mergeSort.js\"></script>\n    <script src=\"/sortingAlgorithms/quickSort.js\"></script>\n    <script src=\"/sortingAlgorithms/shellSort.js\"></script>\n    <script src=\"/sortingAlgorithms/heapSort.js\"></script>\n    <script src=\"index.js\"></script>\n  </body>\n</html>\n"
+        },
+        "/index.js": {
+            "code": "const products = [\n    { id: 3, name: 'Laptop', price: 1200, popularity: 10, rating: 4.5 },\n    { id: 1, name: 'Smartphone', price: 800, popularity: 8, rating: 4.2 },\n    { id: 2, name: 'Tablet', price: 500, popularity: 7, rating: 4.3 },\n    { id: 5, name: 'Dog', price: 100, popularity: 3, rating: 4.1 },\n    { id: 4, name: 'TV', price: 200, popularity: 4, rating: 4.4 },\n];\n\nfunction updateTable(sortedProducts) {\n  let tableBody = document\n    .getElementById(\"productTable\")\n    .getElementsByTagName(\"tbody\")[0];\n  tableBody.innerHTML = \"\";\n\n  sortedProducts.forEach((product) => {\n    let row = tableBody.insertRow();\n    for (let key in product) {\n      let cell = row.insertCell();\n      cell.appendChild(document.createTextNode(product[key]));\n    }\n  });\n}\n\nfunction sortData(algo) {\n  let sortedProducts;\n  switch (algo) {\n    case \"reset\":\n      sortedProducts = [...products];\n      break;\n    case \"bubble\":\n      sortedProducts = bubbleSort([...products]);\n      break;\n    case \"insertion\":\n      sortedProducts = insertionSort([...products]);\n      break;\n    case \"selection\":\n      sortedProducts = selectionSort([...products]);\n      break;\n    case \"merge\":\n      sortedProducts = mergeSort([...products]);\n      break;\n    case \"quick\":\n      sortedProducts = quickSort([...products]);\n      break;\n    case \"heap\":\n      sortedProducts = heapSort([...products]);\n      break;\n    case \"shell\":\n      sortedProducts = shellSort([...products]);\n      break;\n    default:\n      sortedProducts = bubbleSort([...products]);\n      break;\n  }\n\n  updateTable(sortedProducts);\n}\n\nupdateTable(products);\n"
+        },
+        "/sortingAlgorithms": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/sortingAlgorithms/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/sortingAlgorithms/bubbleSort.js": {
+            "code": "function bubbleSort(arr) {\n  return arr;\n}\n\n// [3, 4, 2, 5, 1]\n\n// 1 - 1\n// [3, 4, 2, 5, 1] <- before\n//  j j+1\n// [3, 4, 2, 5, 1] <- after\n\n// 1 - 2\n// [3, 4, 2, 5, 1] <- before\n//     j j+1\n// [3, 2, 4, 5, 1] <- after\n\n// 1 - 3\n// [3, 2, 4, 5, 1] <- before\n//        j j+1\n// [3, 2, 4, 5, 1] <- after\n\n// 1 - 4\n// [3, 2, 4, 5, 1] <- before\n//           j j+1\n// [3, 2, 4, 1, 5] <- after\n\n////////////////////////////////////////////////////////\n\n// 2 - 1\n// [3, 2, 4, 1, 5] <- before\n//  j j+1\n// [2, 3, 4, 1, 5] <- after\n\n// 2 - 2\n// [2, 3, 4, 1, 5] <- before\n//     j j+1\n// [2, 3, 4, 1, 5] <- after\n\n// 2 - 3\n// [2, 3, 4, 1, 5] <- before\n//        j j+1\n// [2, 3, 1, 4, 5] <- after\n"
+        },
+        "/sortingAlgorithms/heapSort.js": {
+            "code": "function heapSort (arr) {\n  return arr\n} "
+        },
+        "/sortingAlgorithms/insertionSort.js": {
+            "code": "function insertionSort(arr) {\n  return arr;\n}\n"
+        },
+        "/sortingAlgorithms/mergeSort.js": {
+            "code": "function mergeSort (arr) {\n  return arr\n} "
+        },
+        "/sortingAlgorithms/quickSort.js": {
+            "code": "function quickSort (arr) {\n  return arr\n} "
+        },
+        "/sortingAlgorithms/selectionSort.js": {
+            "code": "function selectionSort (arr) {\n  return arr\n} "
+        },
+        "/sortingAlgorithms/shellSort.js": {
+            "code": "function shellSort (arr) {\n  return arr\n} "
+        },
+        "/styles.css": {
+            "code": "body {\n  font-family: \"Arial\", sans-serif;\n  margin: 20px;\n  text-align: center;\n  font-size: 12px\n}\n\nh1 {\n  color: #333;\n}\n\nh2 {\n  margin-top: 10px;\n  color: #555;\n}\n\nbutton {\n  padding: 5px;\n  margin: 3px;\n  background-color: #007bff;\n  color: #fff;\n  border: none;\n  border-radius: 5px;\n  cursor: pointer;\n}\n\ntable {\n  width: 80%;\n  margin: 10px auto;\n  border-collapse: collapse;\n}\n\nth,\ntd {\n  padding: 12px;\n  border: 1px solid #ddd;\n  text-align: left;\n}\n\nth {\n  background-color: #f2f2f2;\n}\n\ntr:nth-child(even) {\n  background-color: #f9f9f9;\n}"
+        }
+    },
+    "title": "Sorting Algorithms",
+    "youtube_link": null
+},
+{
+    "description": "Build out a multi-step form.",
+    "difficulty": "mid-level",
+    "embed_link": "https://www.youtube.com/embed/oFS2ievr4AU?si=Y5Ak0TGQBdSCP9YL",
+    "id": 18,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"@testing-library/react\": \"latest\",\n    \"@testing-library/jest-dom\": \"latest\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": false,
+    "shared": {
+        "/shared": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>Multi-Step Form</h1>\n  <h3>\n    Build a three step form. Each form should have the appropriate buttons below it. (next, previous, submit).\n  </h3>\n  <h3>\n    The first form should have fields for First Name and Last Name.\n  </h3>\n  <h3>\n    The second form should have fields for City and Zip Code.\n  </h3>\n  <h3>\n    The third form should have fields for Favorite Food and Favorite dog.\n  </h3>\n  <h3>Pressing submit should console all inputed form values.</h3>\n  <h3>Good Luck!</h3>\n</div>"
+        },
+        "/shared/tests": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/tests/App.test.jsx": {
+            "code": "import React from \"react\";\nimport { render, fireEvent, screen } from \"@testing-library/react\";\nimport \"@testing-library/jest-dom\";\nimport App from \"../../App\";\n\ntest(\"renders multi-step form with step 1\", async () => {\n  const { getByText, getByLabelText } = render(<App />);\n\n  expect(getByText(\"Step 1\")).toBeInTheDocument();\n\n  // Check if Step1 fields are rendered\n  expect(getByLabelText(\"First Name:\")).toBeInTheDocument();\n  expect(getByLabelText(\"Last Name:\")).toBeInTheDocument();\n});\n\ntest(\"allows user to navigate between steps\", async () => {\n  render(<App />);\n\n  // Initial step\n  expect(screen.getByText(\"Step 1\")).toBeInTheDocument();\n\n  // Navigate to Step 2\n  fireEvent.click(screen.getByText(\"Next\"));\n  expect(screen.getByText(\"Step 2\")).toBeInTheDocument();\n\n  // Navigate to Step 3\n  fireEvent.click(screen.getByText(\"Next\"));\n  expect(screen.getByText(\"Step 3\")).toBeInTheDocument();\n\n  // Navigate back to Step 2\n  fireEvent.click(screen.getByText(\"Previous\"));\n  expect(screen.getByText(\"Step 2\")).toBeInTheDocument();\n});\n\ntest(\"allows inputting into form\", async () => {\n  render(<App />);\n\n  // Initial step\n  fireEvent.change(screen.getByLabelText(\"First Name:\"), {\n    target: { value: \"bob\" },\n  });\n  fireEvent.change(screen.getByLabelText(\"Last Name:\"), {\n    target: { value: \"billy\" },\n  });\n  expect(screen.getByDisplayValue(\"bob\")).toBeInTheDocument();\n  expect(screen.getByDisplayValue(\"billy\")).toBeInTheDocument();\n\n  // Navigate to Step 2\n  fireEvent.click(screen.getByText(\"Next\"));\n  fireEvent.change(screen.getByLabelText(\"Zip Code:\"), {\n    target: { value: \"21555\" },\n  });\n  fireEvent.change(screen.getByLabelText(\"City:\"), {\n    target: { value: \"San Diego\" },\n  });\n\n  expect(screen.getByDisplayValue(\"21555\")).toBeInTheDocument();\n  expect(screen.getByDisplayValue(\"San Diego\")).toBeInTheDocument();\n\n  // Navigate to Step 3\n  fireEvent.click(screen.getByText(\"Next\"));\n  fireEvent.change(screen.getByLabelText(\"Favorite Food:\"), {\n    target: { value: \"Pizza\" },\n  });\n  fireEvent.change(screen.getByLabelText(\"Favorite Dog:\"), {\n    target: { value: \"Schnauzer\" },\n  });\n  expect(screen.getByDisplayValue(\"Pizza\")).toBeInTheDocument();\n  expect(screen.getByDisplayValue(\"Schnauzer\")).toBeInTheDocument();\n\n  // Submit \n  fireEvent.click(screen.getByText(\"Submit\"));\n});\n"
+        }
+    },
+    "skills": [
+        "react",
+        "html",
+        "javascript"
+    ],
+    "solution": {
+        "/App.js": {
+            "code": "import MultiStepForm from \"./MultiStepForm\";\nimport { FormProvider } from \"./FormContext.jsx\";\n\nexport default function App() {\n  return (\n    <div className=\"page\">\n      <FormProvider>\n        <MultiStepForm />\n      </FormProvider>\n    </div>\n  );\n}\n"
+        },
+        "/FormContext.jsx": {
+            "code": "import React, { useState, useContext, createContext } from \"react\";\n\nconst FormContext = createContext();\n\nconst FormProvider = ({ children }) => {\n  const [currentStep, setCurrentStep] = useState(1);\n  const [formData, setFormData] = useState({\n    step1: {\n      firstName: \"\",\n      lastName: \"\",\n      email: \"\",\n    },\n    step2: {\n      address: \"\",\n      city: \"\",\n      zipCode: \"\",\n    },\n    step3: {\n      paymentMethod: \"\",\n      cardNumber: \"\",\n      expirationDate: \"\",\n    },\n  });\n\n  const handleInputChange = (step, fieldName, value) => {\n    setFormData((prevData) => ({\n      ...prevData,\n      [step]: {\n        ...prevData[step],\n        [fieldName]: value,\n      },\n    }));\n  };\n\n  const fields = [\n    [\n      {\n        label: \"First Name:\",\n        id: \"firstName\",\n        value: formData.step1.firstName || \"\",\n        onChange: (e) =>\n          handleInputChange(\"step1\", \"firstName\", e.target.value),\n      },\n      {\n        label: \"Last Name:\",\n        id: \"lastName\",\n        value: formData.step1.lastName || \"\",\n        onChange: (e) => handleInputChange(\"step1\", \"lastName\", e.target.value),\n      },\n    ],\n    [\n      {\n        label: \"City:\",\n        id: \"city\",\n        value: formData.step2.city || \"\",\n        onChange: (e) => handleInputChange(\"step2\", \"city\", e.target.value),\n      },\n      {\n        label: \"Zip Code:\",\n        id: \"zipCode\",\n        value: formData.step2.zipCode || \"\",\n        onChange: (e) => handleInputChange(\"step2\", \"zipCode\", e.target.value),\n      },\n    ],\n    [\n      {\n        label: \"Favorite Food:\",\n        id: \"favoriteFood\",\n        value: formData.step3.favoriteFood || \"\",\n        onChange: (e) =>\n          handleInputChange(\"step3\", \"favoriteFood\", e.target.value),\n      },\n      {\n        label: \"Favorite Dog:\",\n        id: \"favoriteDog\",\n        value: formData.step3.favoriteDog || \"\",\n        onChange: (e) =>\n          handleInputChange(\"step3\", \"favoriteDog\", e.target.value),\n      },\n    ],\n  ];\n\n  const handleSubmit = () => {\n    console.log(\"Form submitted:\", formData);\n  };\n\n  const contextValue = {\n    currentStep,\n    formData,\n    handleInputChange,\n    setCurrentStep,\n    handleSubmit,\n    fields,\n  };\n  return (\n    <FormContext.Provider value={contextValue}>{children}</FormContext.Provider>\n  );\n};\n\nexport { FormContext, FormProvider };\n"
+        },
+        "/MultiStepForm.jsx": {
+            "code": "import { FormContext } from \"./FormContext.jsx\";\nimport { useContext } from \"react\";\nimport Navigation from \"./components/Navigation\";\nimport Form from './components/Form'\n\nconst MultiStepForm = () => {\n  const { currentStep } = useContext(FormContext);\n  return (\n    <div className=\"form-container\">\n      <Form />\n      <Navigation />\n    </div>\n  );\n};\n\nexport default MultiStepForm;\n"
+        },
+        "/components": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/components/Form.jsx": {
+            "code": "import React, { useContext } from \"react\";\nimport { FormContext } from \"../FormContext\";\nimport TextField from \"../components/TextField.jsx\";\n\nconst Form = () => {\n  const { currentStep, fields } = useContext(FormContext);\n\n  return (\n    <form>\n      <fieldset style={{ padding: \"10px\" }}>\n        <legend>Step {currentStep}</legend>\n        {fields[currentStep - 1].map((field) => (\n          <TextField key={field.id} field={field} />\n        ))}\n      </fieldset>\n    </form>\n  );\n};\n\nexport default Form;\n"
+        },
+        "/components/Navigation.jsx": {
+            "code": "import { useContext } from \"react\";\nimport { FormContext } from \"../FormContext.jsx\";\n\nconst Navigation = () => {\n  const { currentStep, setCurrentStep, handleSubmit } = useContext(FormContext);\n  return (\n    <div className=\"nav-buttons\">\n      {currentStep > 1 && (\n        <button onClick={() => setCurrentStep((prevStep) => prevStep - 1)}>\n          Previous\n        </button>\n      )}\n      {currentStep < 3 && (\n        <button onClick={() => setCurrentStep((prevStep) => prevStep + 1)}>\n          Next\n        </button>\n      )}\n      {currentStep === 3 && <button onClick={handleSubmit}>Submit</button>}\n    </div>\n  );\n};\n\nexport default Navigation;\n"
+        },
+        "/components/TextField.jsx": {
+            "code": "const TextField = ({ field }) => {\n  return (\n    <div>\n      <label htmlFor={field.id}>\n        {field.label}\n      </label>\n      <input\n        type=\"text\"\n        id={field.id}\n        autoComplete=\"off\"\n        value={field.value || \"\"}\n        onChange={field.onChange}\n      />\n    </div>\n  );\n};\n\nexport default TextField;\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);\n"
+        },
+        "/public": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\n.page {\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.form-container {\n  width: 400px;\n  height: 400px;\n  display: flex;\n  justify-content: center;\n  flex-direction: column;\n  gap: 10px;\n}\n\nform,\nbutton,\ninput {\n  width: 100%;\n}\n\nform {\n  display: flex;\n  justify-content: center;\n  flex-direction: column;\n  gap: 10px;\n}\n\nbutton {\n  margin: 4px 0;\n}\n"
+        }
+    },
+    "sp_template": "react",
+    "template": {
+        "/App.js": {
+            "code": "const App = () => {\n  return <h1 className=\"intro\">WEB DEV INTERVIEWS</h1>;\n};\n\nexport default App;\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);\n"
+        },
+        "/public": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\n\n.intro {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  font-family: Bai Jamjuree;\n  font-size: 35px;\n  height: 100vh;\n}\n"
+        }
+    },
+    "title": "Multi-Step Form",
+    "youtube_link": "https://youtu.be/oFS2ievr4AU"
+},
+{
+    "description": "Like the transfer list, but only swap odd items.",
+    "difficulty": "mid-level",
+    "embed_link": "https://www.youtube.com/embed/TNoC0Ri52VU?si=VzmtdDEeTz-jJfhS",
+    "id": 44,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": false,
+    "shared": {
+        "/shared": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>Swap Odds</h1>\n  <h3>Build two lists with a button in-between them.</h3>\n  <h3>Upon clicking the button, the odds items from the left list should swap places with the odd items from the right list.</h3>\n  <h3>Good luck!</h3>\n</div>"
+        }
+    },
+    "skills": [
+        "react",
+        "html",
+        "javascript"
+    ],
+    "solution": {
+        "/App.js": {
+            "code": "import Cart from './Cart'\nimport { useState } from 'react'\nimport { cart1, cart2 } from './data.js'\n\nconst SwapOdds = () => {\n  const [cartA, setCartA] = useState(cart1)\n  const [cartB, setCartB] = useState(cart2)\n\n  const swapOdds = () => {\n    const newCartA = [...cartA]\n    const newCartB = [...cartB]\n    for (let i = 0; i < newCartA.length; i += 2) {\n      const temp = newCartA[i]\n      newCartA[i] = newCartB[i]\n      newCartB[i] = temp\n    }\n    setCartA(newCartA)\n    setCartB(newCartB)\n  }\n\n  return (\n    <div className='page flex'>\n      <div className='container flex'>\n        <Cart cartNumber={1} data={cartA} />\n        <button onClick={swapOdds} className='swap-button'>\n          Swap Odds\n        </button>\n        <Cart cartNumber={2} data={cartB} />\n      </div>\n    </div>\n  )\n}\n\nexport default SwapOdds\n"
+        },
+        "/Cart.js": {
+            "code": "/* eslint-disable react/prop-types */\nimport Item from './Item'\n\nconst Cart = ({ data, cartNumber }) => {\n  return (\n    <div className='cart'>\n      <h2 className='cart-title'>Cart {cartNumber}</h2>\n      <ul>\n        {data.map((item, index) => (\n          <Item key={index} item={item} index={index} />\n        ))}\n      </ul>\n    </div>\n  )\n}\n\nexport default Cart\n"
+        },
+        "/Item.js": {
+            "code": "/* eslint-disable react/prop-types */\nconst Item = ({ item, index }) => {\n  return (\n    <li className='item'>\n      <small className='item-number'>{index + 1}.</small>\n      {item.charAt(0).toUpperCase() + item.slice(1)}\n    </li>\n  )\n}\n\nexport default Item\n"
+        },
+        "/data.js": {
+            "code": "const cart1 = ['apples', 'bananas', 'grapes', 'oranges', 'pears', 'pineapple']\nconst cart2 = ['potatoes', 'beans', 'carrots', 'spinnach', 'kale', 'broccoli']\n\nexport { cart1, cart2 }\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  padding: 0;\n  margin: 0;\n}\n\n.flex {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.page {\n  height: 100vh;\n}\n\n.container {\n  gap: 20px;\n}\n\n.cart {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  align-items: flex-start;\n  border-radius: 10px;\n  padding: 30px 50px;\n  border: 1px solid black;\n}\n\n.cart-title {\n  border-bottom: 1px solid black;\n}\n\n.item {\n  list-style: none;\n  padding: 5px;\n}\n\n.item-number {\n  margin-right: 4px;\n}\n\n.swap-button {\n  padding: 10px;\n}\n"
+        }
+    },
+    "sp_template": "react",
+    "template": {
+        "/App.js": {
+            "code": "import { cart1, cart2 } from './data.js'\n\nconst App = () => {\n  return <div className='intro'>WEB DEV INTERVIEWS</div>\n}\n\nexport default App\n"
+        },
+        "/data.js": {
+            "code": "const cart1 = ['apples', 'bananas', 'grapes', 'oranges', 'pears', 'pineapple']\n\nconst cart2 = ['potatoes', 'beans', 'carrots', 'spinnach', 'kale', 'broccoli']\n\nexport { cart1, cart2 }\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\n\n.intro {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  font-family: Bai Jamjuree;\n  font-size: 35px;\n  height: 100vh;\n}\n"
+        }
+    },
+    "title": "Swap Odds",
+    "youtube_link": "https://youtu.be/TNoC0Ri52VU"
+},
+{
+    "description": "Build the classic tic-tac-toe game.",
+    "difficulty": "mid-level",
+    "embed_link": "https://www.youtube.com/embed/vweARwTPmg4?si=9QvuLYlhk3-KqkXq\"",
+    "id": 39,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": true,
+    "shared": {
+        "/shared": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>Tic-Tac-Toe</h1>\n  <h3>\n    I was given this question when I interviewed for a Mid/Senior role. Seems\n    easy right? I don't think so...\n  </h3>\n  <h3>Requirements</h3>\n  <ol>\n    <li>The board should be of variable but equal length and height (n).</li>\n    <li>\n      A win means n consecutive characters (horizontal, diagnol or vertical).\n    </li>\n    <li>\n      After a win, notify the player of the winner and provide the option to\n      play again.\n    </li>\n  </ol>\n</div>\n"
+        }
+    },
+    "skills": [
+        "react",
+        "html",
+        "javascript",
+        "css"
+    ],
+    "solution": {
+        "/App.js": {
+            "code": "/* eslint-disable no-unused-vars */\nimport { useState } from \"react\";\n\nconst generateBoard = (size) => {\n  const newBoard = [];\n  for (let i = 0; i < size; i++) {\n    newBoard.push([...Array(size)]);\n  }\n  return newBoard;\n};\n\nconst checkHorizotal = (board) => {\n  for (let row of board) {\n    const rowSet = new Set(row);\n    if (rowSet.size == 1 && !rowSet.has(undefined)) {\n      return true;\n    }\n  }\n};\n\nconst rowsToColums = (board) => {\n  const newBoard = [];\n  let column = 0;\n  while (column < board.length) {\n    const newRow = [];\n    for (let row = 0; row < board.length; row++) {\n      newRow.push(board[row][column]);\n    }\n    newBoard.push(newRow);\n    column++;\n  }\n  return newBoard;\n};\n\nconst diagnolToRow = (board) => {\n  const newBoard = [[], []];\n  let increment = 0;\n  let decrement = board.length - 1;\n  while (increment < board.length) {\n    newBoard[0].push(board[increment][increment]);\n    newBoard[1].push(board[increment][decrement]);\n    increment++;\n    decrement++;\n  }\n  return newBoard;\n};\n\nconst checkForWin = (board) => {\n  // horizontal\n  if (checkHorizotal(board)) {\n    return true;\n  }\n  // vertical\n  if (checkHorizotal(rowsToColums(board))) {\n    return true;\n  }\n  // diagnol\n  if (checkHorizotal(diagnolToRow(board))) {\n    return true;\n  }\n};\n\nfunction Tictactoe() {\n  const [board, setBoard] = useState(generateBoard(3));\n  const [currPlayer, setCurrPlayer] = useState(\"x\");\n\n  const handleClick = (row, col) => {\n    board[row][col] = currPlayer;\n    setBoard([...board]);\n    if (checkForWin(board)) {\n      console.log(currPlayer + \"wins\");\n      setBoard(generateBoard(3));\n      setCurrPlayer(\"x\");\n    } else {\n      setCurrPlayer(currPlayer == \"x\" ? \"y\" : \"x\");\n    }\n  };\n  return (\n    <div>\n      {board.map((row, r) => {\n        return (\n          <div\n            key={r}\n            style={{\n              display: \"flex\",\n            }}\n          >\n            {row.map((cell, c) => {\n              return (\n                <div\n                  key={c}\n                  onClick={() => handleClick(r, c)}\n                  style={{\n                    border: \"solid black 1px\",\n                    height: \"50px\",\n                    width: \"50px\",\n                    display: \"flex\",\n                    justifyContent: \"center\",\n                    alignItems: \"center\",\n                  }}\n                >\n                  {cell}\n                </div>\n              );\n            })}\n          </div>\n        );\n      })}\n    </div>\n  );\n}\n\nexport default Tictactoe;\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "body {\n  font-family: sans-serif;\n  -webkit-font-smoothing: auto;\n  -moz-font-smoothing: auto;\n  -moz-osx-font-smoothing: grayscale;\n  font-smoothing: auto;\n  text-rendering: optimizeLegibility;\n  font-smooth: always;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n}\n\nh1 {\n  font-size: 1.5rem;\n}"
+        }
+    },
+    "sp_template": "react",
+    "template": {
+        "/App.js": {
+            "code": "export default function App() {\n  return (\n    <h1 className=\"intro\" >\n      WEB DEV INTERVIEWS\n    </h1>\n  );\n}\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\n\n.intro {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  font-family: Bai Jamjuree;\n  font-size: 35px;\n  height: 100vh;\n}\n"
+        }
+    },
+    "title": "Tic Tac Toe",
+    "youtube_link": "https://youtu.be/vweARwTPmg4"
+},
+{
+    "description": "Transfer items from one list to the other.",
+    "difficulty": "mid-level",
+    "embed_link": "https://www.youtube.com/embed/w0Kvt65Z2Uk?si=NUq-RKHMrbLNhX8X",
+    "id": 41,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": false,
+    "shared": {
+        "/shared": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>Transfer List</h1>\n  <h3>Build two lists with two buttons in-between them.</h3>\n  <h3>One button shows a > and the other a <. </h3>\n  <h3>The first list should initially be populated with all the items from the provided data. Each item should be prefixed with a checkbox input.</h3>\n  <h3>Upon clicking the > button, all checked items from the left list are transfered to the right list.</h3>\n  <h3>Upon clicking the < button, all checked items from the right list are transfered to the left list.</h3>\n  <h3>Good luck!</h3>\n</div>"
+        }
+    },
+    "skills": [
+        "react",
+        "html",
+        "javascript",
+        "css"
+    ],
+    "solution": {
+        "/ActionButtons.js": {
+            "active": "true",
+            "code": "/* eslint-disable react/prop-types */\nconst ActionButtons = ({ moveRight, moveLeft }) => {\n  return (\n    <div className='buttons flex'>\n      <button onClick={moveRight}>&gt;</button>\n      <button onClick={moveLeft}>&lt;</button>\n    </div>\n  )\n}\n\nexport default ActionButtons\n",
+            "hidden": "false",
+            "readonly": "false"
+        },
+        "/App.js": {
+            "active": "true",
+            "code": "import './styles.css'\nimport List from './List'\nimport { items } from './data'\nimport { useState } from 'react'\nimport ActionButtons from './ActionButtons'\nimport { not, intersection } from './utils'\n\nconst App = () => {\n  const [leftItems, setLeftItems] = useState(items)\n  const [rightItems, setRightItems] = useState([])\n  const [checkedItems, setCheckedItems] = useState([])\n\n  const leftCheckedItems = intersection(checkedItems, leftItems)\n  const rightCheckedItems = intersection(checkedItems, rightItems)\n\n  const handleToggle = (item) => {\n    const currentIndex = checkedItems.indexOf(item)\n    const newChecked = [...checkedItems]\n\n    if (currentIndex === -1) {\n      newChecked.push(item)\n    } else {\n      newChecked.splice(currentIndex, 1)\n    }\n\n    setCheckedItems(newChecked)\n  }\n\n  const moveRight = () => {\n    setRightItems(rightItems.concat(leftCheckedItems))\n    setLeftItems(not(leftItems, leftCheckedItems))\n    setCheckedItems(not(checkedItems, leftCheckedItems))\n  }\n\n  const moveLeft = () => {\n    setLeftItems(leftItems.concat(rightCheckedItems))\n    setRightItems(not(rightItems, rightCheckedItems))\n    setCheckedItems(not(checkedItems, rightCheckedItems))\n  }\n\n  return (\n    <div className='App flex'>\n      <List items={leftItems} handleToggle={handleToggle} />\n      <ActionButtons moveRight={moveRight} moveLeft={moveLeft} />\n      <List items={rightItems} handleToggle={handleToggle} />\n    </div>\n  )\n}\n\nexport default App\n",
+            "hidden": "false",
+            "readonly": "false"
+        },
+        "/Item.js": {
+            "active": "true",
+            "code": "/* eslint-disable react/prop-types */\nconst Item = ({ item, handleToggle }) => {\n  return (\n    <label>\n      <input type='checkbox' onChange={handleToggle} />\n      {item}\n    </label>\n  )\n}\n\nexport default Item\n",
+            "hidden": "false",
+            "readonly": "false"
+        },
+        "/List.js": {
+            "active": "true",
+            "code": "/* eslint-disable react/prop-types */\nimport Item from './Item'\n\nconst List = ({ items, handleToggle }) => {\n  return (\n    <div className='list flex'>\n      {items.map((item) => (\n        <Item key={item} item={item} handleToggle={() => handleToggle(item)} />\n      ))}\n    </div>\n  )\n}\n\nexport default List\n",
+            "hidden": "false",
+            "readonly": "false"
+        },
+        "/data.js": {
+            "code": "export const items = [1, 2, 3, 4]\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "active": "true",
+            "code": ".flex {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.App {\n  height: 100vh;\n}\n\n.list {\n  border: solid black 1px;\n  width: 100px;\n  height: 150px;\n  flex-direction: column;\n  padding: 20px;\n  gap: 10px;\n  border-radius: 10px;\n}\n\n.buttons {\n  gap: 20px;\n  flex-direction: column;\n  padding: 20px;\n}\n\n.buttons > button {\n  padding: 5px;\n  font-size: 15px;\n  width: 50px;\n}\n",
+            "hidden": "false",
+            "readonly": "false"
+        },
+        "/utils.js": {
+            "code": "const intersection = (a, b) => {\n  return a.filter((value) => b.indexOf(value) !== -1)\n}\n\nconst not = (a, b) => {\n  return a.filter((value) => b.indexOf(value) === -1)\n}\n\nexport { not, intersection }\n"
+        }
+    },
+    "sp_template": "react",
+    "template": {
+        "/App.js": {
+            "code": "import data from './data'\n\nexport default function App() {\n  return <h1 className=\"intro\">WEB DEV INTERVIEWS</h1>;\n}\n"
+        },
+        "/data.js": {
+            "code": "export const items = [1, 2, 3, 4]"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\n\n.intro {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  font-family: Bai Jamjuree;\n  font-size: 35px;\n  height: 100vh;\n}\n"
+        }
+    },
+    "title": "Transfer List",
+    "youtube_link": "https://youtu.be/w0Kvt65Z2Uk"
+},
+{
+    "description": "Build a form.",
+    "difficulty": "mid-level",
+    "embed_link": null,
+    "id": 50,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": true,
+    "shared": {
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>Build a Form</h1>\n  <p>\n    Although it might seem simple, a form is a great way of understanding a\n    developers abilities.\n  </p>\n  <p>But don't forget about validation, error handling and more..</p>\n  <p>Good luck!</p>\n</div>\n"
+        },
+        "/shared/Welcome.jsx": {
+            "code": "const Welcome = ({ user }) => {\n  const imagePreview = URL.createObjectURL(user.profileImage);\n  return (\n    <div className=\"welcome-container\">\n      <div className=\"user-info\">\n        <img\n          src={imagePreview}\n          alt=\"Profile Preview\"\n          style={{ width: \"50px\", height: \"50px\", borderRadius: \"50%\" }}\n        />\n        {user.username}\n      </div>\n      <p>Congrats! You successfully signed up.</p>\n    </div>\n  );\n};\n\nexport default Welcome;\n"
+        },
+        "/shared/fetchOverride.js": {
+            "code": "const originalFetch = window.fetch;\n\nconst mockFetchRequest = (url, data) => {\n  return new Promise((resolve, reject) => {\n    setTimeout(() => {\n      let parsedData = {};\n\n      if (data instanceof FormData) {\n        for (let [key, value] of data.entries()) {\n          parsedData[key] = value;\n        }\n      } else {\n        parsedData = JSON.parse(data);\n      }\n\n      if (url !== \"/api/sign-up\") {\n        reject({\n          status: 404,\n          json: () =>\n            Promise.resolve({\n              error: \"Not found.\",\n              user: parsedData.username,\n            }),\n        });\n      } else if (parsedData.username && parsedData.password) {\n        resolve({\n          status: 200,\n          json: () =>\n            Promise.resolve({\n              message: \"Sign up successful.\",\n              user: {\n                username: parsedData.username,\n                profileImage: parsedData.profileImage,\n              },\n            }),\n        });\n      } else {\n        reject({\n          status: 400,\n          json: () =>\n            Promise.resolve({\n              error: \"Missing required fields.\",\n            }),\n        });\n      }\n    }, 1000);\n  });\n};\n\nwindow.fetch = (url, options) => {\n  if (url.includes(\"/api\")) {\n    return mockFetchRequest(url, options.body);\n  } else {\n    return originalFetch(url, options);\n  }\n};\n"
+        },
+        "/shared/isSignedIn.jsx": {
+            "code": ""
+        }
+    },
+    "skills": [
+        "react",
+        "javascript",
+        "error handling"
+    ],
+    "solution": {
+        "/App.js": {
+            "code": "import \"./shared/fetchOverride.js\"; // do not delete\n\nimport { useState } from \"react\";\nimport Form from \"./Form.js\";\nimport Welcome from \"./shared/Welcome\";\n\nexport default function App() {\n  const [user, setUser] = useState(null);\n  if (user) return <Welcome user={user} />;\n  return <Form setUser={setUser} />;\n}\n"
+        },
+        "/Form.js": {
+            "code": "import { useState, useRef } from \"react\";\n\nconst inputs = [\n  {\n    label: \"Username\",\n    name: \"username\",\n    type: \"text\",\n    placeholder: \"Enter your username\",\n  },\n  {\n    label: \"Password\",\n    name: \"password\",\n    type: \"password\",\n    placeholder: \"Enter a strong password\",\n  },\n  // {\n  //   label: \"Profile Image\",\n  //   name: \"profileImage\",\n  //   type: \"file\",\n  // },\n];\n\nconst defaultFormData = inputs.reduce((acc, input) => {\n  const name = input.name;\n  acc[name] = \"\";\n  return acc;\n}, {});\n\nconst Form = ({ setUser }) => {\n  const fileInput = useRef(null);\n  const [error, setError] = useState(\"\");\n  const [loading, setLoading] = useState(false);\n  const [imagePreview, setImagePreview] = useState(null);\n  const [formData, setFormData] = useState(defaultFormData);\n\n  const handleInputChange = (evt) => {\n    const { name, value, files, type } = evt.target;\n\n    if (type === \"file\") {\n      const file = files[0];\n      if (file) {\n        setFormData((prevState) => ({\n          ...prevState,\n          [name]: file,\n        }));\n        setImagePreview(URL.createObjectURL(file));\n      }\n    } else {\n      setFormData((prevState) => ({\n        ...prevState,\n        [name]: value,\n      }));\n    }\n  };\n\n  const handleSubmit = (evt) => {\n    evt.preventDefault();\n    setLoading(true);\n\n    const formDataToSend = new FormData();\n\n    for (const key in formData) {\n      formDataToSend.append(key, formData[key]);\n    }\n\n    fetch(\"/api/sign-up\", {\n      method: \"POST\",\n      body: formDataToSend,\n    })\n      .then(async (response) => {\n        const json = await response.json();\n        setUser(json.user);\n      })\n      .catch(async (error) => {\n        const json = await error.json();\n\n        setError(json.error);\n      })\n      .finally(() => {\n        setLoading(false);\n      });\n  };\n\n  const handleClickImage = () => {\n    fileInput.current.click();\n  };\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <div>\n        <p>Sign Up</p>\n        <i className=\"material-icons\">cloud</i>\n        <hr />\n      </div>\n      <div className=\"image-container\">\n        {imagePreview ? (\n          <>\n            <img\n              src={imagePreview}\n              alt=\"No image\"\n              style={{\n                width: \"100px\",\n                height: \"100px\",\n                borderRadius: \"50%\",\n                cursor: \"pointer\",\n                fontSize: \"10px\",\n                display: \"flex\",\n                justifyContent: \"center\",\n                alignItems: \"center\",\n                border: \"solid green 1px\",\n              }}\n            />\n          </>\n        ) : (\n          <>\n            <div>\n              <span className=\"material-symbols-outlined\">add_a_photo</span>{\" \"}\n              <div className=\"image-input\" onClick={handleClickImage}></div>\n              <input ref={fileInput} type=\"file\" style={{ display: \"none\" }} />\n            </div>\n          </>\n        )}\n      </div>\n      {inputs.map((input) => (\n        <div key={input.name} className=\"input-wrapper\">\n          <label htmlFor={input.label}>{input.label}:</label>\n          <input\n            id={input.label}\n            name={input.name}\n            type={input.type}\n            autoComplete=\"off\"\n            value={input.type === \"file\" ? undefined : formData[input.name]}\n            accept={input.type === \"file\" ? \"image/*\" : undefined}\n            onChange={handleInputChange}\n            placeholder={input.placeholder}\n          />\n        </div>\n      ))}\n\n      <input\n        type=\"submit\"\n        disabled={loading}\n        value={loading ? \"Loading...\" : \"Sign Up\"}\n      />\n      {error && (\n        <div className=\"error-alert\">\n          <p>Error: {error}</p>\n        </div>\n      )}\n    </form>\n  );\n};\n\nexport default Form;\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <link\n      rel=\"stylesheet\"\n      href=\"https://fonts.googleapis.com/icon?family=Material+Icons\"\n    />\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <link\n      rel=\"stylesheet\"\n      href=\"https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200\"\n    />\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>\n"
+        },
+        "/styles.css": {
+            "code": "body {\n  background-color: #FAFAFA;\n  font-family: Arial;\n}\n\nform {\n  padding: 30px;\n  padding-top: 20px;\n  display: flex;\n  flex-direction: column;\n  background-color: white;\n  border-radius: 10px;\n  width: 300px;\n  margin: auto;\n  margin-top: 50px;\n  box-shadow: 1px 1px 8px #888888;\n  display: flex;\n  flex-direction: column;\n}\n\nform > div > p {\n  line-height: 0px;\n  font-size: 25px;\n  font-weight: bold;\n}\n\nhr {\n  border-color: \n}\n\nlabel {\n  font-weight: bold;\n}\n\ninput {\n  padding: 12px;\n  border-radius: 5px;\n  border: 1px solid grey\n}\n\ninput[type=\"file\"]{\n  border: none;\n  padding: 0px;\n  border-radius: 5px\n}\n\ninput[type=\"submit\"] {\n  background-color: green;\n  color: white;\n  border-radius: 5px;\n  border: 0;\n  padding: 10px;\n  cursor: pointer;\n  font-weight: bold;\n  text-transform: uppercase;\n  font-size: 16px;\n  letter-spacing: 1px\n}\n\n.input-wrapper {\n  display: flex;\n  flex-direction: column;\n  gap: 8px\n}\n\n.error-alert {\n  border: solid red 1px;\n  padding: 0 10px 0 10px;\n  color: black;\n  background-color: rgba(255, 25, 25, 0.1);\n  border-radius: 5px;\n  font-size: 12px\n}\n\n.image-input {\n  width: 50px;\n  height: 50px;\n  border: solid black 1px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  text-align: center;\n  cursor: pointer\n}\n"
+        }
+    },
+    "sp_template": "react",
+    "template": {
+        "/App.js": {
+            "code": "import Form from \"./Form.jsx\";\nimport Welcome from \"./shared/Welcome\";\nimport { useState } from \"react\";\nimport \"./shared/fetchOverride.js\";\n\nexport default function App() {\n  const [user, setUser] = useState(null);\n  if (user) return <Welcome user={user} />;\n  return <Form setUser={setUser} />;\n}\n"
+        },
+        "/Form.jsx": {
+            "code": "const endpoint = \"/api/sign-up\";\n\nconst Form = ({ setUser }) => {\n  return <h1 className=\"intro\">WEB DEV INTERVIEWS</h1>;\n};\n\nexport default Form;\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\n\n.intro {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  font-family: Bai Jamjuree;\n  font-size: 35px;\n  height: 100vh;\n}"
+        }
+    },
+    "title": "Form",
+    "youtube_link": null
+},
+{
+    "description": "Good luck. This will take a while.",
+    "difficulty": "senior",
+    "embed_link": "https://www.youtube.com/embed/WX8Oplyd3Ag?si=gIvBTage9ZWcsk3I",
+    "id": 40,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\",\n    \"jest-extended\": \"^3.0.2\",\n    \"react-router-dom\": \"^6.16.0\"\n  },\n  \"main\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": true,
+    "shared": {
+        "/shared": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>\n    The Checked Tree\n  </h1>\n  <h3>\n    I was asked to build this component at a previous job.\n  </h4>\n  <h3>Words don't do this explanation justice. Check out the introduction of the video to get an idea of what needs to be built.</h3>\n</div>\n"
+        }
+    },
+    "skills": [
+        "react",
+        "html",
+        "javascript",
+        "css"
+    ],
+    "solution": {
+        "/App.js": {
+            "active": "true",
+            "code": "import './styles.css'\nimport data from './data'\nimport { useState } from 'react'\nimport { formatData } from './utils'\nimport CheckedTree from './CheckedTree'\n\nconst Main = () => {\n  const items = formatData(data)\n  const [formData, setFormData] = useState({ checkedTree: [] })\n\n  const handleSubmit = () => {\n    console.log(formData)\n  }\n\n  return (\n    <div className='container'>\n      <h1>Mock Form</h1>\n      <input placeholder='Mock Input' className='common' />\n      <input placeholder='Mock Input' className='common' />\n      <CheckedTree\n        data={items}\n        onChange={(checkedItems) => {\n          setFormData((prevFormData) => ({\n            ...prevFormData,\n            checkedTree: checkedItems,\n          }))\n        }}\n      />\n      <button onClick={handleSubmit} className='common'>\n        Submit\n      </button>\n    </div>\n  )\n}\n\nexport default Main\n",
+            "hidden": "false",
+            "readonly": "false"
+        },
+        "/CheckedTree.js": {
+            "active": "true",
+            "code": "/* eslint-disable react/prop-types */\nimport { useState } from 'react'\nimport { filterItems } from './utils'\n\nconst CheckboxTree = ({ data, onChange }) => {\n  const [searchQuery, setSearchQuery] = useState('')\n  const [checkedItems, setCheckedItems] = useState({})\n  const [expandedItems, setExpandedItems] = useState({})\n\n  const handleCheckboxChange = (itemId) => {\n    const updatedCheckedItems = { ...checkedItems }\n    updatedCheckedItems[itemId] = !updatedCheckedItems[itemId]\n\n    if (updatedCheckedItems[itemId]) {\n      // If checking a child, check all parents\n      checkParents(itemId, updatedCheckedItems)\n    } else {\n      // If unchecking a parent, uncheck all children\n      uncheckAllChildren(data, itemId, updatedCheckedItems)\n    }\n\n    // update parent onChange\n    const checkedIds = Object.keys(updatedCheckedItems).filter(\n      (id) => updatedCheckedItems[id]\n    )\n    onChange(checkedIds)\n    setCheckedItems(updatedCheckedItems)\n  }\n\n  const findParent = (nodes, itemId) => {\n    for (const node of nodes) {\n      if (node.children.length > 0) {\n        if (node.children.some((child) => child.id === itemId)) {\n          return node\n        } else {\n          const parent = findParent(node.children, itemId)\n          if (parent) {\n            return parent\n          }\n        }\n      }\n    }\n    return null\n  }\n\n  const checkParents = (id, updatedCheckedItems) => {\n    updatedCheckedItems[id] = true\n    const parent = findParent(data, id)\n    if (parent) {\n      checkParents(parent.id, updatedCheckedItems)\n    }\n  }\n\n  const uncheckAllChildren = (nodes, parentId, updatedCheckedItems) => {\n    for (const node of nodes) {\n      if (node.id === parentId) {\n        // Parent found, uncheck all its children\n        uncheckChildren(node, updatedCheckedItems)\n        return\n      }\n      if (node.children.length > 0) {\n        uncheckAllChildren(node.children, parentId, updatedCheckedItems)\n      }\n    }\n  }\n\n  const uncheckChildren = (node, updatedCheckedItems) => {\n    updatedCheckedItems[node.id] = false\n    for (const child of node.children) {\n      uncheckChildren(child, updatedCheckedItems)\n    }\n  }\n\n  const handleExpandToggle = (itemId) => {\n    setExpandedItems((prevState) => ({\n      ...prevState,\n      [itemId]: !prevState[itemId],\n    }))\n  }\n\n  const handleSearchChange = (event) => {\n    setSearchQuery(event.target.value)\n  }\n\n  // Filter items based on search query\n  const filteredData = filterItems(data, searchQuery)\n\n  const renderTree = (nodes) => {\n    return (\n      <ul style={{ listStyleType: 'none', paddingInlineStart: '20px' }}>\n        {nodes.map((node) => (\n          <li key={node.id}>\n            <div>\n              {node.children.length > 0 ? (\n                <span\n                  onClick={() => handleExpandToggle(node.id)}\n                  style={{ cursor: 'pointer', marginRight: '5px' }}\n                >\n                  {expandedItems[node.id] ? `v` : '>'}\n                </span>\n              ) : (\n                <span>&nbsp;&nbsp;&nbsp;</span>\n              )}\n              <label>\n                <input\n                  type='checkbox'\n                  checked={checkedItems[node.id] || false}\n                  onChange={() => handleCheckboxChange(node.id)}\n                />\n                {node.name}\n              </label>\n            </div>\n            {expandedItems[node.id] &&\n              node.children.length > 0 &&\n              renderTree(node.children)}\n          </li>\n        ))}\n      </ul>\n    )\n  }\n\n  return (\n    <div style={{ border: 'solid grey 1px', width: '100%' }}>\n      <input\n        placeholder='Search...'\n        value={searchQuery}\n        onChange={handleSearchChange}\n        style={{ width: '100%', padding: '10px' }}\n      />\n      <ul style={{ listStyleType: 'none', paddingInlineStart: '0px' }}>\n        {renderTree(filteredData)}\n      </ul>\n    </div>\n  )\n}\n\nexport default CheckboxTree\n",
+            "hidden": "false",
+            "readonly": "false"
+        },
+        "/data.js": {
+            "active": "true",
+            "code": "const response = [\n  { id: 4, parentId: 3, name: 'Days' },\n  { id: 1, parentId: null, name: 'Years' },\n  { id: 2, parentId: 1, name: 'Months' },\n  { id: 5, parentId: null, name: 'Stars' },\n  { id: 3, parentId: 2, name: 'Weeks' },\n  { id: 6, parentId: 5, name: 'Sun' },\n  { id: 7, parentId: 5, name: 'Proxima Centauri' },\n  { id: 8, parentId: null, name: 'Dogs' },\n]\n\nexport default response\n",
+            "hidden": "false",
+            "readonly": "false"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "active": "true",
+            "code": "* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n\n.container {\n  margin: 30px;\n  width: 500px;\n  color: black;\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n\n.common {\n  width: 100%;\n  padding: 10px;\n}\n",
+            "hidden": "false",
+            "readonly": "false"
+        },
+        "/utils.js": {
+            "active": "true",
+            "code": "const formatData = (data) => {\n  const map = {}\n  const result = []\n\n  // Create a map of items by their ID for quick access\n  data.forEach((item) => {\n    item.children = []\n    map[item.id] = item\n  })\n\n  // Iterate through the items to build the tree\n  data.forEach((item) => {\n    if (item.parentId !== null) {\n      // If the item has a parent, push it into its parent's \"children\" array\n      map[item.parentId].children.push(item)\n    } else {\n      // If the item has no parent, it's a top-level item, so add it to the result\n      result.push(item)\n    }\n  })\n  return result\n}\n\n// Recursive function to filter items based on search query, including children\nconst filterItems = (nodes, query) => {\n  return nodes.filter((node) => {\n    const isMatch = node.name.toLowerCase().includes(query.toLowerCase())\n    if (isMatch) {\n      return true\n    }\n    if (node.children.length > 0) {\n      return filterItems(node.children, query).length > 0\n    }\n    return false\n  })\n}\n\nexport { filterItems, formatData }\n",
+            "hidden": "false",
+            "readonly": "false"
+        }
+    },
+    "sp_template": "react",
+    "template": {
+        "/App.js": {
+            "active": "true",
+            "code": "import './styles.css'\nimport data from './data'\nimport { useState } from 'react'\n// import CheckedTree from './CheckedTree'\n\nconst Main = () => {\n  const [formData, setFormData] = useState({ checkedTree: [] })\n\n  const handleSubmit = () => {\n    console.log(formData)\n  }\n\n  return (\n    <div className='container'>\n      <h1>Mock Form</h1>\n      <input placeholder='Mock Input' className='common' />\n      <input placeholder='Mock Input' className='common' />\n      {/* <CheckedTree /> */}\n      <button onClick={handleSubmit} className='common'>\n        Submit\n      </button>\n    </div>\n  )\n}\n\nexport default Main\n",
+            "hidden": "false",
+            "readonly": "false"
+        },
+        "/data.js": {
+            "active": "true",
+            "code": "const response = [\n  { id: 4, parentId: 3, name: 'Days' },\n  { id: 1, parentId: null, name: 'Years' },\n  { id: 2, parentId: 1, name: 'Months' },\n  { id: 5, parentId: null, name: 'Stars' },\n  { id: 3, parentId: 2, name: 'Weeks' },\n  { id: 6, parentId: 5, name: 'Sun' },\n  { id: 7, parentId: 5, name: 'Proxima Centauri' },\n  { id: 8, parentId: null, name: 'Dogs' },\n]\n\nexport default response\n",
+            "hidden": "false",
+            "readonly": "false"
+        },
+        "/index.js": {
+            "active": "true",
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);",
+            "hidden": "false",
+            "readonly": "false"
+        },
+        "/public": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/index.html": {
+            "active": "true",
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>",
+            "hidden": "false",
+            "readonly": "false"
+        },
+        "/styles.css": {
+            "code": "* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n\n.container {\n  margin: 30px;\n  color: black;\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n\n.common {\n  width: 100%;\n  padding: 10px;\n}\n"
+        }
+    },
+    "title": "Checked Tree",
+    "youtube_link": "https://youtu.be/WX8Oplyd3Ag"
+},
+{
+    "description": "Fetch, render, sort, filter. This ones tough.",
+    "difficulty": "senior",
+    "embed_link": "https://www.youtube.com/embed/EgLIblcyLpM?si=YFwlTQc2lpATxzdH",
+    "id": 22,
+    "package": {
+        "/package.json": {
+            "code": "{\n  \"dependencies\": {\n    \"react\": \"^18.0.0\",\n    \"react-dom\": \"^18.0.0\",\n    \"react-scripts\": \"^5.0.0\"\n  },\n  \"main\": \"/index.js\",\n  \"entry\": \"/index.js\",\n  \"devDependencies\": {}\n}"
+        }
+    },
+    "public": true,
+    "shared": {
+        "/shared": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/Instructions.html": {
+            "code": "<div style=\"padding: 20px; height: 100vh\">\n  <h1>Build A Table</h1>\n  <h3>I built an enpoint - https://data.webdevinterviews.com/dogBreeds.json</h3>\n  <h3>This endpoint returns an array of data.</h3>\n  <h3>Fetch this data and render it into a table.</h3>\n  <h3>You then need to complete the following tasks:</h3>\n  <ol>\n    <li>Add a working search bar.</li>\n    <li>Add sorting for all columns.</li>\n    <li>Add filtering for all columns.</li>\n  </ol>\n  <h3>Good luck!</h3>\n</div>\n\n"
+        },
+        "/shared/tests": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/shared/tests/App.test.jsx": {
+            "code": "import React from \"react\";\nimport { render, fireEvent } from \"@testing-library/react\";\nimport \"@testing-library/jest-dom\";\nimport App from \"../App\";\n\ntest(\"renders App component\", () => {\n  render(<App />);\n});\n"
+        }
+    },
+    "skills": [
+        "react",
+        "html",
+        "javascript",
+        "css"
+    ],
+    "solution": {
+        "/App.js": {
+            "code": "import DogTable from \"./DogTable.jsx\";\n\nexport default function App() {\n  return <DogTable />;\n}\n"
+        },
+        "/CustomInput.jsx": {
+            "code": "const CustomInput = ({\n  filterOptions,\n  handleFilterChange,\n  label,\n  keyValue,\n  selectKey,\n}) => {\n\n  return (\n    <div>\n      <label htmlFor=\"avgHeight\">{label}</label>\n      <div className=\"select-input\">\n        <select\n          id={selectKey}\n          value={filterOptions[selectKey] ?? 'equalTo'}\n          onChange={(e) => handleFilterChange(selectKey, e.target.value)}\n        >\n          <option value=\"lessThan\">Less Than</option>\n          <option value=\"greaterThan\">Greater Than</option>\n          <option value=\"equalTo\">Equal To</option>\n        </select>\n        <input\n          type=\"number\"\n          id={keyValue}\n          min={0}\n          max={100}\n          value={filterOptions[keyValue]}\n          onChange={(e) => handleFilterChange(keyValue, e.target.value)}\n        />\n      </div>\n    </div>\n  );\n};\n\nexport default CustomInput;\n"
+        },
+        "/DogTable.jsx": {
+            "code": "import React, { useState, useEffect } from \"react\";\nimport FilterModal from \"./FilterModal\";\nimport TableHead from \"./table/TableHead\";\nimport Search from \"./table/Search\";\nimport Filter from \"./table/Filter\";\n\nconst endpointUrl = \"https://data.webdevinterviews.com/dogBreeds.json\";\n\nconst DogTable = () => {\n  const [breeds, setBreeds] = useState([]);\n  const [originalBreeds, setOriginalBreeds] = useState([]);\n  const [loading, setLoading] = useState(true);\n  const [filterModalIsOpen, setFilterModalIsOpen] = useState(false);\n\n  const [filterOptions, setFilterOptions] = useState({\n    avgWeight: \"\",\n    avgLifespan: \"\",\n    avgHeight: \"\",\n    isActive: \"\",\n    weightComparison: \"greaterThan\",\n    lifespanComparison: \"greaterThan\",\n    heightComparison: \"greaterThan\",\n  });\n\n  useEffect(() => {\n    setLoading(true);\n    fetch(endpointUrl)\n      .then(async (response) => {\n        const data = await response.json();\n        setBreeds(data);\n        setOriginalBreeds(data);\n        setLoading(false);\n      })\n      .catch((e) => {\n        console.log(e);\n        setLoading(false);\n      });\n  }, []);\n\n  const handleFilterButtonClick = () => {\n    setFilterModalIsOpen(true);\n  };\n\n  const handleFilterModalClose = () => {\n    setFilterModalIsOpen(false);\n  };\n\n  if (loading) {\n    return <div>Loading</div>;\n  }\n\n  return (\n    <>\n      <div className=\"table-actions\">\n        <Search dogBreeds={originalBreeds} setBreeds={setBreeds} />\n        <Filter handleFilterButtonClick={handleFilterButtonClick} />\n      </div>\n      <table>\n        <TableHead breeds={breeds} setBreeds={setBreeds} />\n        <tbody>\n          {breeds.map((breed) => (\n            <tr key={breed.id}>\n              <td>{breed.id}</td>\n              <td>{breed.name}</td>\n              <td>{breed.avgWeight} lbs.</td>\n              <td>{breed.avgLifespan} years</td>\n              <td>{breed.avgHeight} inches</td>\n              <td>{breed.isActive ? \"Yes\" : \"No\"}</td>\n            </tr>\n          ))}\n        </tbody>\n      </table>\n      {filterModalIsOpen && (\n        <FilterModal\n          dogBreeds={originalBreeds}\n          setBreeds={setBreeds}\n          setFilterOptions={setFilterOptions}\n          filterOptions={filterOptions}\n          handleFilterModalClose={handleFilterModalClose}\n        />\n      )}\n    </>\n  );\n};\n\nexport default DogTable;\n"
+        },
+        "/FilterModal.jsx": {
+            "code": "import { useState } from \"react\";\nimport CustomInput from \"./CustomInput\";\n\nconst FilterModal = ({\n  handleFilterModalClose,\n  dogBreeds,\n  setBreeds,\n  filterOptions,\n  setFilterOptions,\n}) => {\n  const handleApplyFilters = () => {\n    let filteredBreeds = dogBreeds;\n\n    if (filterOptions.avgWeight !== \"\") {\n      const weightComparison = filterOptions.weightComparison;\n\n      filteredBreeds = filteredBreeds.filter((breed) => {\n        const breedWeight = breed.avgWeight;\n        const filterWeight = parseFloat(filterOptions.avgWeight);\n\n        if (weightComparison === \"lessThan\") {\n          return breedWeight < filterWeight;\n        } else if (weightComparison === \"greaterThan\") {\n          return breedWeight > filterWeight;\n        } else {\n          return breedWeight === filterWeight;\n        }\n      });\n    }\n\n    if (filterOptions.avgLifespan !== \"\") {\n      const lifespanComparison = filterOptions.lifespanComparison;\n\n      filteredBreeds = filteredBreeds.filter((breed) => {\n        const breedLifespan = breed.avgLifespan;\n        const filterLifespan = parseFloat(filterOptions.avgLifespan);\n\n        if (lifespanComparison === \"lessThan\") {\n          return breedLifespan < filterLifespan;\n        } else if (lifespanComparison === \"greaterThan\") {\n          return breedLifespan > filterLifespan;\n        } else {\n          return breedLifespan === filterLifespan;\n        }\n      });\n    }\n\n    if (filterOptions.avgHeight !== \"\") {\n      const heightComparison = filterOptions.heightComparison;\n\n      filteredBreeds = filteredBreeds.filter((breed) => {\n        const breedHeight = breed.avgHeight;\n        const filterHeight = parseFloat(filterOptions.avgHeight);\n\n        if (heightComparison === \"lessThan\") {\n          return breedHeight < filterHeight;\n        } else if (heightComparison === \"greaterThan\") {\n          return breedHeight > filterHeight;\n        } else {\n          return breedHeight === filterHeight;\n        }\n      });\n    }\n\n    if (filterOptions.isActive !== \"\") {\n      const isActiveFilter = filterOptions.isActive === \"true\";\n      filteredBreeds = filteredBreeds.filter(\n        (breed) => breed.isActive === isActiveFilter\n      );\n    }\n\n    setBreeds(filteredBreeds);\n    handleFilterModalClose();\n  };\n\n  const handleFilterChange = (key, value) => {\n    setFilterOptions((prevOptions) => ({ ...prevOptions, [key]: value }));\n  };\n\n  const handleResetFilters = () => {\n    setFilterOptions({\n      avgWeight: \"\",\n      avgLifespan: \"\",\n      avgHeight: \"\",\n      isActive: \"\",\n      weightComparison: \"greaterThan\",\n      lifespanComparison: \"greaterThan\",\n      heightComparison: \"greaterThan\",\n    });\n  };\n\n  return (\n    <div className=\"modal-overlay\">\n      <div className=\"modal-content filter-modal\">\n        <div className=\"filter-title\">\n          <h2>Filter Options</h2>\n          <button onClick={handleFilterModalClose}>X</button>\n        </div>\n        <CustomInput\n          filterOptions={filterOptions}\n          handleFilterChange={handleFilterChange}\n          label=\"Average Weight\"\n          keyValue=\"avgWeight\"\n          selectKey=\"weightComparison\"\n        />\n        <CustomInput\n          filterOptions={filterOptions}\n          handleFilterChange={handleFilterChange}\n          label=\"Average Lifespan\"\n          keyValue=\"avgLifespan\"\n          selectKey=\"lifespanComparison\"\n        />\n        <CustomInput\n          filterOptions={filterOptions}\n          handleFilterChange={handleFilterChange}\n          label=\"Average Height\"\n          keyValue=\"avgHeight\"\n          selectKey=\"heightComparison\"\n        />\n        <div>\n          <label htmlFor=\"isActive\">Active Breed:</label>\n          <select\n            id=\"isActive\"\n            value={filterOptions.isActive}\n            onChange={(e) => handleFilterChange(\"isActive\", e.target.value)}\n          >\n            <option value=\"\">Any</option>\n            <option value=\"true\">Yes</option>\n            <option value=\"false\">No</option>\n          </select>\n        </div>\n        <div className=\"modal-footer\">\n          <button className=\"reset-button\" onClick={handleResetFilters}>\n            Reset Filters\n          </button>\n          <button onClick={handleApplyFilters}>Apply Filters</button>\n        </div>\n      </div>\n    </div>\n  );\n};\n\nexport default FilterModal;\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": ".table-actions {\n  width: 100%;\n  display: flex;\n  justify-content: space-between;\n}\n\nbutton {\n  padding: 10px 16px;\n  background: black;\n  color: white;\n  border: none;\n  border-radius: 4px;\n  cursor: pointer;\n  width: 100px;\n}\n\n/* Filter button hover effect */\nbutton:hover {\n  background: grey;\n}\n\ntable {\n  width: 100%;\n  border-collapse: collapse;\n  margin-top: 20px;\n  font-family: \"Arial\", sans-serif;\n}\n\nth,\ntd {\n  border: 1px solid #ddd;\n  padding: 12px;\n  text-align: left;\n}\n\nth {\n  background-color: black;\n  color: white;\n}\n\nth > div {\n  display: flex;\n  justify-content: space-between;\n  align-items: space-between;\n  width: 100%;\n}\n\ntr:nth-child(even) {\n  background-color: #f9f9f9;\n}\n\n.arrow {\n  cursor: pointer;\n  font-size: 12px;\n}\n\ninput[type=\"text\"] {\n  width: 200px;\n  padding: 8px;\n  margin-right: 10px;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n  box-sizing: border-box;\n  font-size: 14px;\n  flex: 1;\n}\n\n.modal-overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.5);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n\n.modal-content {\n  background: white;\n  padding: 20px;\n  border-radius: 8px;\n  max-width: 400px;\n  width: 100%;\n}\n\n.modal-content {\n  background: white;\n  padding: 20px;\n  border-radius: 8px;\n  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);\n  max-width: 400px;\n  width: 100%;\n  text-align: center;\n}\n\n.filter-title {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n\n.filter-title > button {\n  height: 50px;\n  width: 50px;\n}\n\n.modal-content div {\n  margin-bottom: 15px;\n}\n\n.modal-content label {\n  display: block;\n  margin-bottom: 5px;\n  text-align: start;\n}\n\n.modal-content input,\n.modal-content select {\n  width: 100%;\n  padding: 8px;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n  box-sizing: border-box;\n  font-size: 14px;\n}\n\n.modal-footer {\n  display: flex;\n  justify-content: space-between\n}\n\n.select-input {\n  display: flex;\n  gap: 10px\n}\n"
+        },
+        "/table": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/table/Filter.jsx": {
+            "code": "const Filter = ({ handleFilterButtonClick }) => {\n  return (\n    <button onClick={handleFilterButtonClick} className=\"filter-button\">\n      Filter\n    </button>\n  );\n};\n\nexport default Filter;\n"
+        },
+        "/table/Search.jsx": {
+            "code": "import { useState, useEffect } from \"react\";\n\nconst Search = ({ setBreeds, dogBreeds }) => {\n  const [searchQuery, setSearchQuery] = useState(\"\");\n  const [filteredBreeds, setFilteredBreeds] = useState([]);\n\n  const handleSearchChange = (event) => {\n    const query = event.target.value.toLowerCase();\n    setSearchQuery(query);\n    const filteredBreeds = dogBreeds.filter((breed) =>\n      breed.name.toLowerCase().includes(query)\n    );\n    setBreeds(filteredBreeds);\n  };\n\n  return (\n    <input\n      type=\"text\"\n      placeholder=\"Search by breed name\"\n      value={searchQuery}\n      onChange={handleSearchChange}\n    />\n  );\n};\n\nexport default Search;\n"
+        },
+        "/table/TableHead.jsx": {
+            "code": "import { useState } from \"react\";\n\nconst TableHead = ({ breeds, setBreeds }) => {\n  const [sortConfig, setSortConfig] = useState({ key: null, direction: \"asc\" });\n\n  const handleSortClick = (key) => {\n    const newSortConfig = { key, direction: \"asc\" };\n    if (sortConfig.key === key && sortConfig.direction === \"asc\") {\n      newSortConfig.direction = \"desc\";\n    }\n\n    setSortConfig(newSortConfig);\n\n    const sortedBreeds = [...breeds].sort((a, b) => {\n      const aValue = a[key];\n      const bValue = b[key];\n\n      if (newSortConfig.direction === \"asc\") {\n        return a[key] > b[key] ? 1 : -1;\n      } else {\n        return a[key] < b[key] ? 1 : -1;\n      }\n    });\n\n    setBreeds(sortedBreeds);\n  };\n\n  const getSortArrow = (key) => {\n    if (sortConfig.key === key) {\n      return sortConfig.direction === \"asc\" ? (\n        <span className=\"arrow\">↑</span>\n      ) : (\n        <span className=\"arrow\">↓</span>\n      );\n    }\n    return null;\n  };\n\n  const renderTableHeadCell = (label, key) => (\n    <th key={key} onClick={() => handleSortClick(key)}>\n      <div>\n        <span>{label}</span> {getSortArrow(key)}\n      </div>\n    </th>\n  );\n\n  return (\n    <thead>\n      <tr>\n        {renderTableHeadCell(\"ID\", \"id\")}\n        {renderTableHeadCell(\"Breed\", \"name\")}\n        {renderTableHeadCell(\"Avg. Weight\", \"avgWeight\")}\n        {renderTableHeadCell(\"Avg Lifespan\", \"avgLifespan\")}\n        {renderTableHeadCell(\"Avg Height\", \"avgHeight\")}\n        <th onClick={() => handleSortClick(\"isActive\")}>\n          <span>Active Breed</span> {getSortArrow(\"isActive\")}\n        </th>\n      </tr>\n    </thead>\n  );\n};\n\nexport default TableHead;\n"
+        }
+    },
+    "sp_template": "react",
+    "template": {
+        "/App.js": {
+            "code": "const endpointUrl = \"https://data.webdevinterviews.com/dogBreeds.json\";\n\nexport default function App() {\n  return <h1 className=\"intro\">WEB DEV INTERVIEWS</h1>;\n}\n"
+        },
+        "/index.js": {
+            "code": "import React, { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\nimport \"./styles.css\";\n\nimport App from \"./App\";\n\nconst root = createRoot(document.getElementById(\"root\"));\nroot.render(\n  <StrictMode>\n    <App />\n  </StrictMode>\n);"
+        },
+        "/public": {
+            "code": ".emptyDir",
+            "hidden": true
+        },
+        "/public/index.html": {
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n  </body>\n</html>"
+        },
+        "/styles.css": {
+            "code": "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\n\n.intro {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  font-family: Bai Jamjuree;\n  font-size: 35px;\n  height: 100vh;\n}\n\n\n"
+        }
+    },
+    "title": "Build a table with functionality.",
+    "youtube_link": "https://youtu.be/EgLIblcyLpM"
+}
+]
