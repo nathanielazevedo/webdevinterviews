@@ -1,0 +1,134 @@
+# Web Dev Interviews - Development Instructions
+
+## Project Overview
+This is a React-based educational platform for JavaScript developers to practice coding skills through interactive games, quizzes, and workouts. The app uses a dark theme with ChatGPT-inspired colors and focuses on clean, professional UI design.
+
+## Tech Stack
+- **Framework**: React 18 with Vite
+- **UI Library**: Material-UI (MUI) v5
+- **Styling**: MUI theme system with custom dark theme
+- **Routing**: React Router v6
+- **Package Manager**: npm
+
+## Design Philosophy
+- **Dark Theme Only**: Uses #1E1E1E background with #2D2D2D cards
+- **Primary Color**: #10A37F (ChatGPT green)
+- **Professional & Tight**: Clean, minimal design with proper spacing
+- **Interactive**: Hover effects, smooth transitions
+- **Mobile-Responsive**: Though some workouts are desktop-only
+
+## Style Preferences
+- **ChatGPT-Inspired Interface**: Clean, conversational, and professional
+- **Simple & Modern**: Avoid flashy animations or overly gamified elements
+- **Minimal Visual Noise**: Subtle borders, clean typography, generous whitespace
+- **Professional First**: Should feel like a development tool, not a game
+- **Consistent Spacing**: Use MUI's spacing system (multiples of 8px)
+- **Subtle Interactions**: Gentle hover effects, no dramatic animations
+- **Clean Typography**: Inter font family, proper hierarchy, readable sizes
+- **Muted Colors**: Stick to grays and the primary green, avoid bright colors
+- **Card-Based Layout**: Everything contained in clean, subtle cards
+- **No Clutter**: Avoid unnecessary icons, badges, or decorative elements
+
+### Visual Hierarchy
+- Use typography weight and size for emphasis, not colors
+- Maintain consistent card patterns across all pages
+- Keep UI elements aligned and properly spaced
+- Prefer subtle shadows over heavy borders
+- Use the primary green sparingly for important actions only
+
+## Key Components Structure
+
+### Games
+- Each game renders directly (no tab selection screens)
+- Games include: True/False, Will It Throw, CCC, Mutate, Returns
+- Use Game component wrapper with proper theming
+- Cards are clickable (no separate buttons)
+
+### Quizzes
+- Multiple choice quizzes with score tracking
+- No sidebar navigation - direct game experience
+- Clean preview screens before starting
+
+### Theme
+- Located in `/src/contexts/ThemeContext.jsx`
+- Always dark mode, no theme switching
+- Custom MUI component overrides for cards, buttons, chips
+- Responsive font sizes enabled
+
+## Development Guidelines
+
+### File Organization
+- Games: `/src/pages/games/[gameName]/`
+- Quizzes: `/src/pages/courses/multipleChoice/`
+- Components: `/src/components/`
+- Theme: `/src/contexts/`
+
+### UI Patterns
+- Use Container with maxWidth="lg" for consistent layouts
+- Grid spacing of 3 for cards
+- Card hover: translateY(-2px) with transition
+- Button styles: no text transform, medium font weight
+- Consistent padding: 2.5 for card content
+
+### Component Guidelines
+- Prefer functional components with hooks
+- Use Material-UI components over custom CSS
+- Implement proper hover states and transitions
+- Make cards clickable rather than having separate buttons
+- Keep layouts clean and minimal
+
+### Code Style
+- Use modern React patterns (hooks, functional components)
+- Consistent spacing and naming conventions
+- Prefer composition over large monolithic components
+- Use TypeScript for new quiz components
+
+### Package Management
+- Use `npm install --legacy-peer-deps` for dependency conflicts
+- Keep MUI at v5 (not v6) for stability
+- Regular React 18.x, avoid bleeding edge versions
+
+## Common Patterns
+
+### Game Page Structure
+```jsx
+// Clean, minimal layout - no flashy game elements
+<Container maxWidth="lg">
+  <BackButton />
+  <Typography variant="h3">Simple Title</Typography>
+  <Typography variant="h6" color="text.secondary">Clean subtitle</Typography>
+  <Game component />
+</Container>
+```
+
+### Card Component
+```jsx
+// Subtle, professional cards
+<Card component="a" href="/path" sx={{ 
+  transition: "all 0.2s ease",
+  "&:hover": { transform: "translateY(-2px)" }
+}}>
+  <CardContent sx={{ p: 2.5 }}>
+    <Box>Simple icon + Title</Box>
+    <Typography color="text.secondary">Description</Typography>
+    <Chip variant="outlined">Minimal tag</Chip>
+  </CardContent>
+</Card>
+```
+
+### Theme Usage
+- Always use theme colors: `primary.main`, `text.secondary`, etc.
+- Leverage MUI sx prop for styling
+- Use responsive breakpoints when needed
+
+## Deployment Notes
+- Vite build system
+- Static hosting ready
+- Environment variables for any external APIs
+- Optimized for performance with code splitting
+
+## Future Considerations
+- Maintain dark theme consistency
+- Keep professional, minimal aesthetic
+- Focus on user experience over flashy features
+- Ensure educational content remains the priority

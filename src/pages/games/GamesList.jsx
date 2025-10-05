@@ -1,21 +1,21 @@
 import games from "./games.json";
-import Alert from "@mui/material/Alert";
-import Header from "../../components/Header";
-import Item from "../../components/Item";
+import { Container, Grid, Box } from "@mui/material";
+import GameCard from "./components/GameCard";
 
 const GamesList = () => {
   return (
-    <div className="fit-wrapper">
-      <Header
-        title="Games"
-        subtext="Improve your understanding of JavaScript with games."
-      />
-      <div className="items-container">
-        {games.map((game, index) => (
-          <Item key={index} item={game} basePath={"/games/"} />
-        ))}
-      </div>
-    </div>
+    <Box sx={{ py: 4 }}>
+      <Container maxWidth="lg">
+        {/* Games Grid */}
+        <Grid container spacing={3}>
+          {games.map((game, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <GameCard game={game} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 

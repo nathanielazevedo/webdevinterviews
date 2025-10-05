@@ -1,43 +1,46 @@
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { Container, Box, Typography } from "@mui/material";
 
-import TextLink from '../../../components/TextLink'
-import Header from '../../../components/Header'
-import Tabs from '../components/Tabs'
+import TextLink from "../../../components/TextLink";
+import Footer from "../../../components/Footer";
+import Game from "../components/Game";
 
-import random from './data/random.json'
-import structured from './data/structured.json'
+import structured from "./data/structured.json";
+import random from "./data/random.json";
 
 const TrueOrFalseMain = () => {
-  return (
-    <div className='fit-wrapper'>
-      <TextLink
-        to='/games'
-        text='Back to games'
-        icon={<ArrowBackIosIcon fontSize='5px' />}
-      />
-      <Header
-        title='True or False'
-        subtext="The JavaScript game where you'll face a series of comparisons and decide if they're true or false. From simple math equations to curious facts, challenge your intuition and logic with each choice. Are you ready to play?"
-      />
-      <Tabs
-        labels={['Structured', 'Random']}
-        listsInfo={[
-          {
-            basePath: '/games/true-or-false/structured/',
-            headerText:
-              'This series of questions will slowly introduce you to the different JavaScript types and how they behave. Each series of questions builds upon the previous questions. This is a great place to start.',
-            items: structured,
-          },
-          {
-            basePath: '/games/true-or-false/random/',
-            headerText:
-              "You will receive random questions in no logical order. It's best to do this after completing the structured path.",
-            items: random,
-          },
-        ]}
-      />
-    </div>
-  )
-}
+  // Start with the first structured deck for better learning progression
+  const length = random.length;
+  const randomIndex = Math.floor(Math.random() * length);
+  const selectedDeck = random[randomIndex];
 
-export default TrueOrFalseMain
+  return (
+    <>
+      <Box sx={{ minHeight: "calc(100vh - 200px)" }}>
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+          <Box sx={{ mb: 4 }}>
+            <TextLink
+              to="/games"
+              text="Back to games"
+              icon={<ArrowBackIosIcon fontSize="small" />}
+            />
+          </Box>
+
+          <Game
+            deck={selectedDeck}
+            pastFreeDecks={false}
+            goNextDeck={() => {
+              // Reload with a new deck or cycle through structured decks
+              window.location.reload();
+            }}
+            isLastDeck={false}
+            gameName="true-or-false"
+            playSound={true}
+          />
+        </Container>
+      </Box>
+    </>
+  );
+};
+
+export default TrueOrFalseMain;

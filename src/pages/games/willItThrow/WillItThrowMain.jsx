@@ -1,48 +1,43 @@
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { Container, Box, Typography } from "@mui/material";
 
-import TextLink from '../../../components/TextLink'
-import Header from '../../../components/Header'
-import Footer from '../../../components/Footer'
-import Tabs from '../components/Tabs'
-
-import random from './data/random.json'
-import structured from './data/structured.json'
+import TextLink from "../../../components/TextLink";
+import Game from "../components/Game";
+import random from "./data/random.json";
 
 const Games = () => {
+  // Start with the first structured deck for better learning progression
+  const length = random.length;
+  const randomIndex = Math.floor(Math.random() * length);
+  const selectedDeck = random[randomIndex];
+
   return (
     <>
-      <div className='fit-wrapper'>
-        <TextLink
-          to='/games'
-          text='Back to games'
-          icon={<ArrowBackIosIcon fontSize='5px' />}
-        />
-        <Header
-          title='Will It Throw?'
-          subtext="Welcome to 'Will It Throw?' Can you predict if JavaScript code will throw an error? Test your skills by choosing 'Yes' or 'No' for each snippet. Explore JavaScript's nuances and error handling. Ready to play?"
-        />
+      <Box sx={{ minHeight: "calc(100vh - 200px)" }}>
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+          <Box sx={{ mb: 4 }}>
+            <TextLink
+              to="/games"
+              text="Back to games"
+              icon={<ArrowBackIosIcon fontSize="small" />}
+            />
+          </Box>
 
-        <Tabs
-          labels={['Structured', 'Random']}
-          listsInfo={[
-            {
-              basePath: '/games/will-it-throw/structured/',
-              headerText:
-                'This is the structured path. This series of questions will introduce you to the different JavaScript error types and when they might be thrown. This is a great place to start.',
-              items: structured,
-            },
-            {
-              basePath: '/games/will-it-throw/random/',
-              headerText:
-                'Receive random questions from our question pool in no logical order.',
-              items: random,
-            },
-          ]}
-        />
-      </div>
-      <Footer />
+          <Game
+            deck={selectedDeck}
+            pastFreeDecks={false}
+            goNextDeck={() => {
+              // Reload with a new deck or cycle through structured decks
+              window.location.reload();
+            }}
+            isLastDeck={false}
+            gameName="will-it-throw"
+            playSound={true}
+          />
+        </Container>
+      </Box>
     </>
-  )
-}
+  );
+};
 
-export default Games
+export default Games;

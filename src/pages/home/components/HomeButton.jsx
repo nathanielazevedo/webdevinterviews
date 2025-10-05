@@ -1,41 +1,41 @@
-import { Button } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const HomeButton = ({ text, to, outside, oneLine }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   if (outside) {
     return (
       <Button
-        variant='outlined'
+        variant="contained"
         href={to}
-        target='_blank'
-        size='large'
+        target="_blank"
+        size="large"
         fullWidth={!oneLine}
-        className={oneLine ? 'marketing-button' : ''}
+        className={oneLine ? "marketing-button" : ""}
         sx={{
-          fontSize: '20px',
-          fontWeight: 'bold',
+          fontSize: "20px",
+          fontWeight: "bold",
         }}
       >
         {text}
       </Button>
-    )
+    );
   }
   return (
     <Button
-      variant='outlined'
+      variant="contained"
       onClick={() => navigate(to)}
-      size='large'
+      size="large"
       fullWidth={!oneLine}
-      className={oneLine ? 'marketing-button' : ''}
+      className={oneLine ? "marketing-button" : ""}
       sx={{
-        fontSize: '20px',
-        fontWeight: 'bold',
+        fontSize: "20px",
+        fontWeight: "bold",
       }}
     >
       {text}
     </Button>
-  )
-}
+  );
+};
 
-export default HomeButton
+export default HomeButton;

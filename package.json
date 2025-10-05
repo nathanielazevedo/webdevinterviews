@@ -17,8 +17,8 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.12",
-    "@mui/icons-material": "^5.14.12",
-    "@mui/material": "^5.14.12",
+    "@mui/icons-material": "^5.16.7",
+    "@mui/material": "^5.16.7",
     "@vercel/analytics": "^1.5.0",
     "console-feed": "^3.5.0",
     "jwt-decode": "^4.0.0",
@@ -28,6 +28,7 @@
     "react-dom": "^18.2.0",
     "react-resizable-panels": "^0.0.55",
     "react-router-dom": "^6.16.0",
+    "react-syntax-highlighter": "^15.6.6",
     "sandpack-file-explorer": "^0.0.4"
   },
   "devDependencies": {

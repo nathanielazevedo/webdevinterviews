@@ -1,42 +1,35 @@
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { Container, Box, Typography } from "@mui/material";
 
-import TextLink from '../../../components/TextLink'
-import Header from '../../../components/Header'
-import Footer from '../../../components/Footer'
-import Tabs from '../components/Tabs'
+import TextLink from "../../../components/TextLink";
+import Footer from "../../../components/Footer";
+import Game from "../components/Game";
 
-import random from './data/random.json'
+import random from "./data/random.json";
 
 const Games = () => {
-  localStorage.setItem('gameTab', 0)
+  // Pick a random deck from the available decks
+  const randomDeck = random[Math.floor(Math.random() * random.length)];
+
   return (
     <>
-      <div className='fit-wrapper'>
-        <TextLink
-          to='/games'
-          text='Back to games'
-          icon={<ArrowBackIosIcon fontSize='5px' />}
-        />
-        <Header
-          title='Does it mutate?'
-          subtext="Do you know what array methods mutate the original array and which don't?"
-        />
-
-        <Tabs
-          labels={['Random']}
-          listsInfo={[
-            {
-              basePath: '/games/mutate/random/',
-              headerText:
-                'Receive random questions from our question pool in no logical order.',
-              items: random,
-            },
-          ]}
-        />
-      </div>
-      <Footer />
+      <Box sx={{ minHeight: "calc(100vh - 200px)" }}>
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+          <Game
+            deck={randomDeck}
+            pastFreeDecks={false}
+            goNextDeck={() => {
+              // Reload with a new random deck
+              window.location.reload();
+            }}
+            isLastDeck={false}
+            gameName="mutate"
+            playSound={true}
+          />
+        </Container>
+      </Box>
     </>
-  )
-}
+  );
+};
 
-export default Games
+export default Games;

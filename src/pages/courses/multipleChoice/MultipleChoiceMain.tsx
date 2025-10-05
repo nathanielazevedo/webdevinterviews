@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import {
   Box,
   Button,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
   Typography,
+  Card,
+  CardContent,
+  LinearProgress,
 } from "@mui/material";
 
 // Define types for the question and quiz data
@@ -28,83 +27,174 @@ interface Answer {
 const Quiz: React.FC<QuizProps> = ({ questions }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
+  const [showResults, setShowResults] = useState<boolean>(false);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   // Handle user's selection
   const handleOptionClick = (selectedOption: string): void => {
+    if (showFeedback) return; // Prevent multiple selections
+
+    setSelectedOption(selectedOption);
+    setShowFeedback(true);
+
     const isCorrect =
       selectedOption === questions[currentQuestionIndex].correctAnswer;
 
-    // Record the answer
-    setAnswers((prev) => [
-      ...prev,
-      { questionIndex: currentQuestionIndex, isCorrect },
-    ]);
+    if (isCorrect) {
+      // Record the correct answer
+      setAnswers((prev) => [
+        ...prev,
+        { questionIndex: currentQuestionIndex, isCorrect: true },
+      ]);
 
-    // Move to the next question if not the last one
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      // Move to next question after a delay
+      setTimeout(() => {
+        if (currentQuestionIndex < questions.length - 1) {
+          setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+          setSelectedOption(null);
+          setShowFeedback(false);
+        } else {
+          setShowResults(true);
+        }
+      }, 1500);
+    } else {
+      // Show incorrect feedback, then reset after delay
+      setTimeout(() => {
+        setSelectedOption(null);
+        setShowFeedback(false);
+      }, 1500);
     }
   };
 
-  return (
-    <Box
-      display="flex"
-      height="calc(100vh - 70px)"
-      sx={{ maxWidth: "100%", maxHeight: "calc(100vh - 80px)" }}
-    >
-      {/* Side Navigation */}
-      <Box sx={{ minWidth: "200px" }}>
-        <List>
-          {questions.map((q, index) => {
-            const answer = answers.find((a) => a.questionIndex === index);
-            const backgroundColor = answer
-              ? answer.isCorrect
-                ? "rgba(0, 255, 0, 0.2)"
-                : "rgba(255, 0, 0, 0.2)"
-              : "transparent";
+  const correctAnswers = answers.filter((a) => a.isCorrect).length;
+  const progress = (currentQuestionIndex / questions.length) * 100;
 
-            return (
-              <ListItem
-                key={index}
-                button
-                style={{ backgroundColor }}
-                onClick={() => setCurrentQuestionIndex(index)}
-                sx={{
-                  cursor: "pointer",
-                  backgroundColor:
-                    currentQuestionIndex == index ? "grey.900" : "",
-                }}
-              >
-                <ListItemText primary={`Question ${index + 1}`} />
-              </ListItem>
-            );
-          })}
-        </List>
+  if (showResults) {
+    return (
+      <Box sx={{ maxWidth: 600, mx: "auto", p: 3 }}>
+        <Card>
+          <CardContent sx={{ textAlign: "center", p: 4 }}>
+            <Typography variant="h4" gutterBottom>
+              Quiz Complete!
+            </Typography>
+            <Typography variant="h6" color="text.secondary" sx={{ mb: 3 }}>
+              You scored {correctAnswers} out of {questions.length}
+            </Typography>
+            <Typography variant="h3" color="primary.main" sx={{ mb: 2 }}>
+              {Math.round((correctAnswers / questions.length) * 100)}%
+            </Typography>
+            <Button
+              variant="contained"
+              onClick={() => window.location.reload()}
+              sx={{ mt: 2 }}
+            >
+              Try Again
+            </Button>
+          </CardContent>
+        </Card>
+      </Box>
+    );
+  }
+
+  return (
+    <Box sx={{ maxWidth: 600, mx: "auto", p: 3 }}>
+      {/* Progress Bar */}
+      <Box sx={{ mb: 4 }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+          <Typography variant="body2" color="text.secondary">
+            Question {currentQuestionIndex + 1} of {questions.length}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {Math.round(progress)}%
+          </Typography>
+        </Box>
+        <LinearProgress variant="determinate" value={progress} />
       </Box>
 
-      <Divider orientation="vertical" />
-      {/* Main Content */}
-      <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
-        <Box flexGrow={1} p={3}>
+      {/* Question Card */}
+      <Card sx={{ mb: 3 }}>
+        <CardContent sx={{ p: 4 }}>
           <Typography variant="h5" gutterBottom>
             {questions[currentQuestionIndex].question}
           </Typography>
+
           <Box
-            sx={{ display: "flex", flexDirection: "column", width: "500px" }}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+              mt: 3,
+            }}
           >
-            {questions[currentQuestionIndex].options.map((option, index) => (
-              <Button
-                key={index}
-                variant="contained"
-                onClick={() => handleOptionClick(option)}
-                style={{ margin: "10px 0" }}
-              >
-                {option}
-              </Button>
-            ))}
+            {questions[currentQuestionIndex].options.map((option, index) => {
+              let buttonColor = "outlined";
+              let buttonSx = {
+                p: 2,
+                textAlign: "left",
+                justifyContent: "flex-start",
+                "&:hover": showFeedback
+                  ? {}
+                  : {
+                      backgroundColor: "primary.main",
+                      color: "primary.contrastText",
+                    },
+              };
+
+              if (showFeedback) {
+                if (option === questions[currentQuestionIndex].correctAnswer) {
+                  buttonColor = "contained";
+                  buttonSx = {
+                    ...buttonSx,
+                    backgroundColor: "success.main",
+                    color: "success.contrastText",
+                    "&:hover": {
+                      backgroundColor: "success.main",
+                    },
+                  };
+                } else if (option === selectedOption) {
+                  buttonSx = {
+                    ...buttonSx,
+                    backgroundColor: "error.main",
+                    color: "error.contrastText",
+                    "&:hover": {
+                      backgroundColor: "error.main",
+                    },
+                  };
+                }
+              }
+
+              return (
+                <Button
+                  key={index}
+                  variant={buttonColor as any}
+                  onClick={() => handleOptionClick(option)}
+                  disabled={showFeedback}
+                  sx={buttonSx}
+                >
+                  {option}
+                </Button>
+              );
+            })}
           </Box>
-        </Box>
-      </Box>
+
+          {/* Feedback */}
+          {showFeedback && (
+            <Box sx={{ mt: 3, textAlign: "center" }}>
+              {selectedOption ===
+              questions[currentQuestionIndex].correctAnswer ? (
+                <Typography variant="h6" color="success.main">
+                  ✓ Correct! Moving to next question...
+                </Typography>
+              ) : (
+                <Typography variant="h6" color="error.main">
+                  ✗ Incorrect. Try again in a moment...
+                </Typography>
+              )}
+            </Box>
+          )}
+        </CardContent>
+      </Card>
     </Box>
   );
 };

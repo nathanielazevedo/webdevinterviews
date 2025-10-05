@@ -58,7 +58,6 @@ const router = createBrowserRouter([
         element: (
           <>
             <Workouts />
-            <Footer />
           </>
         ),
       },
@@ -107,7 +106,6 @@ const router = createBrowserRouter([
             element: (
               <>
                 <GamesList />
-                <Footer />
               </>
             ),
           },
@@ -119,7 +117,6 @@ const router = createBrowserRouter([
                 element: (
                   <>
                     <TrueOrFalseMain />
-                    <Footer />
                   </>
                 ),
               },

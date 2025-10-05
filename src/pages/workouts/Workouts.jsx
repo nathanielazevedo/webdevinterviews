@@ -1,37 +1,27 @@
-import Alert from "@mui/material/Alert";
-import Header from "../../components/Header";
-import Item from "../../components/Item";
+import { Alert, Container, Typography, Grid, Box } from "@mui/material";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import InfoIcon from "@mui/icons-material/Info";
+import WorkoutCard from "./components/WorkoutCard";
 import workouts from "./workouts.json";
 
 const Workouts = () => {
-  const url = `/workouts`;
-
-  const renderBodyContent = () => {
-    const sortedWorkouts = workouts.sort((a, b) =>
-      a.difficulty.localeCompare(b.difficulty)
-    );
-
-    return (
-      <div className="items-container">
-        {sortedWorkouts.map((item) => (
-          <Item key={item.id} item={item} basePath={"/workouts/"} />
-        ))}
-      </div>
-    );
-  };
+  const sortedWorkouts = workouts.sort((a, b) =>
+    a.difficulty.localeCompare(b.difficulty)
+  );
 
   return (
-    <div className="fit-wrapper">
-      <Header
-        title="Workouts"
-        subtext="A programmer is an athlete of the mind. These workouts will train your abilities with React, JavaScript, HTML, CSS and DSA."
-      />
-      <Alert severity="info" className="workout-alert">
-        There is no value in these workouts being mobile friendly. Therefore,
-        there is currenly no intention to do so.
-      </Alert>
-      {renderBodyContent()}
-    </div>
+    <Box sx={{ py: 4 }}>
+      <Container maxWidth="lg">
+        {/* Workouts Grid */}
+        <Grid container spacing={3}>
+          {sortedWorkouts.map((workout) => (
+            <Grid item xs={12} sm={6} md={4} key={workout.id}>
+              <WorkoutCard workout={workout} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 
