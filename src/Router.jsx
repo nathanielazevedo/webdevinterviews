@@ -27,6 +27,8 @@ import Quiz from "./pages/courses/multipleChoice/QuizMain";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
+import App from "./pages/portfolio/App.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,7 +37,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <App />,
         errorElement: <Error />,
       },
       {

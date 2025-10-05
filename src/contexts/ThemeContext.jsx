@@ -100,20 +100,38 @@ import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 
 const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
+  mode: "dark",
 });
 
 const ThemeProvider = ({ children }) => {
+  const [mode, setMode] = React.useState("dark");
+
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
-        // No-op since we're always using dark theme
+        setMode((prevMode) => {
+          const newMode = prevMode === "light" ? "dark" : "light";
+          localStorage.setItem("theme", newMode);
+          return newMode;
+        });
       },
-      mode: "dark",
+      mode,
     }),
-    []
+    [mode]
   );
 
-  let theme = React.useMemo(() => responsiveFontSizes(darkTheme), []);
+  // Load theme from localStorage on mount
+  React.useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme && (savedTheme === "light" || savedTheme === "dark")) {
+      setMode(savedTheme);
+    }
+  }, []);
+
+  let theme = React.useMemo(
+    () => responsiveFontSizes(mode === "dark" ? darkTheme : lightTheme),
+    [mode]
+  );
 
   return (
     <ColorModeContext.Provider value={colorMode}>
