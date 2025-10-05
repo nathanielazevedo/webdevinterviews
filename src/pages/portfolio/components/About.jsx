@@ -1,95 +1,135 @@
 import React from "react";
 import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
-import { styles } from "../styles";
+import {
+  Typography,
+  Card,
+  CardContent,
+  Box,
+  Grid,
+  useTheme,
+} from "@mui/material";
 import { services } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
 import { SectionWrapper } from "../hoc/index";
 
 const ServiceCard = ({ index, title, icon }) => {
+  const theme = useTheme();
+
   return (
-    <Tilt style={{ width: "100%", maxWidth: "250px" }}>
-      <motion.div
-        variants={fadeIn("right", "spring", 0.5 * index, 0.75)}
-        style={{
-          width: "100%",
-          border: "1px solid #333",
-          padding: "1px",
-          borderRadius: "20px",
-          boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-        }}
-      >
-        <div
-          options={{
-            max: 45,
-            scale: 1,
-            speed: 450,
-          }}
-          style={{
-            backgroundColor: "#2a2a2a",
-            borderRadius: "20px",
-            padding: "48px",
-            minHeight: "100px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-          }}
+    <Grid item xs={12} sm={6} md={4} lg={3}>
+      <Tilt style={{ width: "100%", height: "100%" }}>
+        <motion.div
+          variants={fadeIn("right", "spring", 0.5 * index, 0.75)}
+          style={{ width: "100%", height: "100%" }}
         >
-          <h3
-            style={{
-              color: "#f0f0f0",
-              fontSize: "20px",
-              fontWeight: "bold",
-              textAlign: "center",
+          <Card
+            sx={{
+              height: "100%",
+              minHeight: 100,
+              background: `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${theme.palette.action.hover} 100%)`,
+              border: `1px solid ${theme.palette.divider}`,
+              borderRadius: 3,
+              boxShadow: theme.shadows[4],
+              transition: "all 0.3s ease",
+              "&:hover": {
+                transform: "translateY(-4px)",
+                boxShadow: theme.shadows[8],
+                borderColor: theme.palette.primary.main,
+              },
             }}
           >
-            {title}
-          </h3>
-        </div>
-      </motion.div>
-    </Tilt>
+            <CardContent
+              sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                p: 4,
+              }}
+            >
+              <Typography
+                variant="h6"
+                component="h3"
+                sx={{
+                  fontWeight: "bold",
+                  color: theme.palette.text.primary,
+                  fontSize: { xs: "1.1rem", sm: "1.25rem" },
+                }}
+              >
+                {title}
+              </Typography>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </Tilt>
+    </Grid>
   );
 };
 
 const About = () => {
+  const theme = useTheme();
+
   return (
-    <>
+    <Box>
       <motion.div variants={textVariant()}>
-        <p style={{ ...styles.sectionSubText, color: "#888" }}>Introduction</p>
-        <p style={{ ...styles.sectionHeadText, color: "#f0f0f0" }}>Overview</p>
+        <Typography
+          variant="overline"
+          component="p"
+          sx={{
+            fontSize: { xs: "0.875rem", sm: "1rem" },
+            color: theme.palette.text.secondary,
+            textTransform: "uppercase",
+            letterSpacing: "0.1em",
+            fontWeight: 500,
+          }}
+        >
+          Introduction
+        </Typography>
+        <Typography
+          variant="h2"
+          component="h2"
+          sx={{
+            fontWeight: 900,
+            color: theme.palette.text.primary,
+            fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+            mt: 1,
+          }}
+        >
+          Overview
+        </Typography>
       </motion.div>
 
-      <motion.p
-        variants={fadeIn("", "", 0.1, 1)}
-        style={{
-          marginTop: "16px",
-          color: "#f0f0f0",
-          fontSize: "17px",
-          maxWidth: "768px",
-          lineHeight: "30px",
-        }}
-      >
-        I'm a software developer with experience using JavaScript, Python, HTML,
-        and CSS. I'm most competent using these frameworks — React, Vue, Django,
-        Flask. I'm a quick learner and collaborate closely with clients to
-        create efficient, scalable, and user-friendly solutions that solve
-        real-world problems. Let's work together to bring your ideas to life!
-      </motion.p>
+      <motion.div variants={fadeIn("", "", 0.1, 1)}>
+        <Typography
+          variant="body1"
+          sx={{
+            mt: 2,
+            color: theme.palette.text.primary,
+            fontSize: { xs: "1rem", sm: "1.1rem" },
+            maxWidth: "768px",
+            lineHeight: 1.8,
+          }}
+        >
+          I'm a software developer with experience using JavaScript, Python,
+          HTML, and CSS. I'm most competent using these frameworks — React, Vue,
+          Django, Flask. I'm a quick learner and collaborate closely with
+          clients to create efficient, scalable, and user-friendly solutions
+          that solve real-world problems. Let's work together to bring your
+          ideas to life!
+        </Typography>
+      </motion.div>
 
-      <div
-        style={{
-          marginTop: "80px",
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "40px",
-        }}
-      >
-        {services.map((service, index) => (
-          <ServiceCard key={service.title} index={index} {...service} />
-        ))}
-      </div>
-    </>
+      <Box sx={{ mt: 10 }}>
+        <Grid container spacing={4}>
+          {services.map((service, index) => (
+            <ServiceCard key={service.title} index={index} {...service} />
+          ))}
+        </Grid>
+      </Box>
+    </Box>
   );
 };
 

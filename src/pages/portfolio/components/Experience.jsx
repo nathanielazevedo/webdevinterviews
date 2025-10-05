@@ -4,108 +4,156 @@ import {
 } from "react-vertical-timeline-component";
 import { motion } from "framer-motion";
 import "react-vertical-timeline-component/style.min.css";
+import {
+  Typography,
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  Avatar,
+  useTheme,
+} from "@mui/material";
 
-import { styles } from "../styles";
 import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
 
-const ExperienceCard = ({ experience }) => (
-  <VerticalTimelineElement
-    contentArrowStyle={{ borderRight: "7px solid #dcdcdc" }}
-    date={experience.date}
-    iconStyle={{ background: experience.iconBg }}
-    icon={
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <img
-          src={experience.icon}
-          alt={experience.company_name}
-          style={{
-            width: "60%",
-            height: "60%",
-            objectFit: "contain",
-          }}
-        />
-      </div>
-    }
-    contentStyle={{
-      backgroundColor: "#2a2a2a",
-      color: "#f0f0f0",
-      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-      border: "1px solid #333",
-    }}
-    className="experience-timeline-element"
-  >
-    <div>
-      <h3
-        style={{
-          color: "#f0f0f0",
-          fontSize: "24px",
-          fontWeight: "bold",
-        }}
-      >
-        {experience.title}
-      </h3>
-      <p
-        style={{
-          color: "#888",
-          fontSize: "16px",
-          fontWeight: "600",
-          margin: 0,
-        }}
-      >
-        {experience.company_name}
-      </p>
-    </div>
-    <ul
-      style={{
-        marginTop: "20px",
-        listStyleType: "disc",
-        marginLeft: "20px",
-        display: "flex",
-        flexDirection: "column",
-        gap: "8px",
+const ExperienceCard = ({ experience }) => {
+  const theme = useTheme();
+
+  return (
+    <VerticalTimelineElement
+      contentArrowStyle={{
+        borderRight: `7px solid ${theme.palette.divider}`,
       }}
-    >
-      {experience.points.map((point, index) => (
-        <li
-          key={`experience-point-${index}`}
-          style={{
-            color: "#f0f0f0",
-            fontSize: "14px",
-            paddingLeft: "4px",
-            letterSpacing: "0.025em",
+      date={experience.date}
+      iconStyle={{
+        background: theme.palette.background.paper,
+        border: `3px solid ${theme.palette.primary.main}`,
+      }}
+      icon={
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
           }}
         >
-          {point}
-        </li>
-      ))}
-    </ul>
-  </VerticalTimelineElement>
-);
+          <Avatar
+            src={experience.icon}
+            alt={experience.company_name}
+            sx={{
+              width: "60%",
+              height: "60%",
+              objectFit: "contain",
+            }}
+          />
+        </Box>
+      }
+      contentStyle={{
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.primary,
+        boxShadow: theme.shadows[4],
+        border: `1px solid ${theme.palette.divider}`,
+        borderRadius: theme.shape.borderRadius,
+      }}
+      className="experience-timeline-element"
+    >
+      <Box>
+        <Typography
+          variant="h5"
+          component="h3"
+          sx={{
+            color: theme.palette.text.primary,
+            fontWeight: "bold",
+            mb: 1,
+          }}
+        >
+          {experience.title}
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          component="p"
+          sx={{
+            color: theme.palette.text.secondary,
+            fontWeight: 600,
+            mb: 2,
+          }}
+        >
+          {experience.company_name}
+        </Typography>
+      </Box>
+
+      <List
+        sx={{
+          mt: 2,
+          pl: 2,
+        }}
+      >
+        {experience.points.map((point, index) => (
+          <ListItem
+            key={`experience-point-${index}`}
+            sx={{
+              display: "list-item",
+              listStyleType: "disc",
+              py: 0.5,
+              px: 0,
+            }}
+          >
+            <ListItemText
+              primary={point}
+              primaryTypographyProps={{
+                color: theme.palette.text.primary,
+                fontSize: "0.875rem",
+                letterSpacing: "0.025em",
+                lineHeight: 1.5,
+              }}
+            />
+          </ListItem>
+        ))}
+      </List>
+    </VerticalTimelineElement>
+  );
+};
 
 const Experience = () => {
+  const theme = useTheme();
+
   return (
-    <>
+    <Box>
       <motion.div variants={textVariant()}>
-        <p style={{ ...styles.sectionSubText, color: "#888" }}>
+        <Typography
+          variant="overline"
+          component="p"
+          sx={{
+            fontSize: { xs: "0.875rem", sm: "1rem" },
+            color: theme.palette.text.secondary,
+            textTransform: "uppercase",
+            letterSpacing: "0.1em",
+            fontWeight: 500,
+          }}
+        >
           What I have done so far
-        </p>
-        <p style={{ ...styles.sectionHeadText, color: "#f0f0f0" }}>
+        </Typography>
+        <Typography
+          variant="h2"
+          component="h2"
+          sx={{
+            fontWeight: 900,
+            color: theme.palette.text.primary,
+            fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+            mt: 1,
+          }}
+        >
           Work Experience
-        </p>
+        </Typography>
       </motion.div>
-      <div
-        style={{
-          marginTop: "80px",
+
+      <Box
+        sx={{
+          mt: 10,
           display: "flex",
           flexDirection: "column",
         }}
@@ -115,8 +163,8 @@ const Experience = () => {
             <ExperienceCard key={index} experience={experience} />
           ))}
         </VerticalTimeline>
-      </div>
-    </>
+      </Box>
+    </Box>
   );
 };
 

@@ -1,4 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
+import { Box, useTheme } from "@mui/material";
 import {
   About,
   Contact,
@@ -11,33 +12,33 @@ import {
   StarsCanvas,
   ThemeToggle,
 } from "./components";
-import "./index.css";
+// import "./index.css";
 
 const Portfolio = () => {
+  const theme = useTheme();
+
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         position: "relative",
         zIndex: 0,
-        backgroundColor: "#1a1a1a",
-        color: "#f0f0f0",
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.primary,
         minHeight: "100vh",
+        px: { xs: 2, sm: 3, md: 4 },
       }}
     >
-      <div>
-        {/* <Navbar /> */}
-        <Hero />
-      </div>
+      <Hero />
       <About />
       <Experience />
       <Tech />
       <Works />
       <Feedbacks />
-      <div style={{ position: "relative", zIndex: 0 }}>
+      <Box sx={{ position: "relative", zIndex: 0 }}>
         <Contact />
         <StarsCanvas />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

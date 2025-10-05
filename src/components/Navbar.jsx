@@ -1,58 +1,122 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material";
 import ThemeToggle from "./ThemeToggle";
 
-const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
+const pages = [
+  {
+    title: "Workouts",
+    to: "/workouts",
+  },
+  {
+    title: "Games",
+    to: "/games",
+  },
+  {
+    title: "Quizes",
+    to: "/quizes",
+  },
+];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 100);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+const Navbar = () => {
+  const location = useLocation();
+
+  // Hide navbar on specific routes with numeric IDs (e.g., /workouts/123, /games/456)
+  const shouldHideNavbar = () => {
+    const pathSegments = location.pathname.split("/");
+    if (pathSegments.length >= 3) {
+      const lastSegment = pathSegments[pathSegments.length - 1];
+      // Check if the last segment is a number
+      return /^\d+$/.test(lastSegment);
+    }
+    return false;
+  };
+
+  // Don't render navbar if it should be hidden
+  if (shouldHideNavbar()) {
+    return null;
+  }
 
   return (
-    <nav
-      style={{
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        padding: "20px 40px",
-        position: "fixed",
-        top: 0,
-        zIndex: 1000,
-        backgroundColor: scrolled ? "#1a1a1a" : "transparent",
-        transition: "background-color 0.3s ease",
+    <AppBar
+      position="static"
+      elevation={2}
+      sx={{
+        backgroundColor: (theme) => theme.palette.background.paper,
+        borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
       }}
     >
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+      <Toolbar
+        sx={{
           maxWidth: "1280px",
+          width: "100%",
           margin: "0 auto",
+          px: { xs: 2, sm: 5 },
+          py: 2.5,
         }}
       >
-        <Link
-          to="/"
-          style={{
-            color: "#f0f0f0",
-            fontSize: "18px",
-            fontWeight: "bold",
-            textDecoration: "none",
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
           }}
-          onClick={() => window.scrollTo(0, 0)}
         >
-          Nate Azevedo
-        </Link>
+          <Typography
+            variant="h6"
+            component={Link}
+            to="/"
+            onClick={() => window.scrollTo(0, 0)}
+            sx={{
+              fontWeight: "bold",
+              textDecoration: "none",
+              color: "text.primary",
+              transition: "color 0.2s ease",
+              "&:hover": {
+                color: "primary.main",
+              },
+            }}
+          >
+            Nate Azevedo
+          </Typography>
 
-        <ThemeToggle />
-      </div>
-    </nav>
+          {/* Navigation Links */}
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              gap: 1,
+              alignItems: "center",
+            }}
+          >
+            {pages.map((page) => (
+              <Button
+                key={page.title}
+                component={Link}
+                to={page.to}
+                sx={{
+                  color: "text.primary",
+                  textTransform: "none",
+                  fontWeight: 500,
+                  px: 2,
+                  py: 1,
+                  borderRadius: 2,
+                  transition: "all 0.2s ease",
+                  "&:hover": {
+                    backgroundColor: "action.hover",
+                    color: "primary.main",
+                  },
+                }}
+              >
+                {page.title}
+              </Button>
+            ))}
+          </Box>
+
+          <ThemeToggle />
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 };
 

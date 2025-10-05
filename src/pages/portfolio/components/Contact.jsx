@@ -1,14 +1,32 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import { styles } from "../styles";
+import {
+  Typography,
+  Box,
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Alert,
+  Snackbar,
+  useTheme,
+} from "@mui/material";
+import { Send as SendIcon } from "@mui/icons-material";
 import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
 
 const Contact = () => {
+  const theme = useTheme();
   const formRef = useRef();
   const [loading, setLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -39,162 +57,269 @@ const Contact = () => {
       .then(
         () => {
           setLoading(false);
-          alert("Thank you. I will get back to you as soon as possible.");
+          setSnackbar({
+            open: true,
+            message: "Thank you! I will get back to you as soon as possible.",
+            severity: "success",
+          });
           setForm({ name: "", email: "", message: "" });
         },
         (error) => {
           setLoading(false);
           console.log(error);
-          alert("Something went wrong.");
+          setSnackbar({
+            open: true,
+            message: "Something went wrong. Please try again.",
+            severity: "error",
+          });
         }
       );
   };
 
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
+
   return (
-    <div
-      style={{
-        marginTop: "48px",
-        display: "flex",
-        flexDirection: "column-reverse",
-        gap: "40px",
-        overflow: "hidden",
-      }}
-    >
-      <motion.div
-        variants={slideIn("left", "tween", 0.2, 1)}
-        style={{
-          flex: "0.75",
-          backgroundColor: "#2a2a2a",
-          padding: "32px",
-          borderRadius: "16px",
-          border: "1px solid #333",
+    <>
+      <Box
+        sx={{
+          mt: 6,
+          display: "flex",
+          flexDirection: { xs: "column-reverse", lg: "row" },
+          gap: 5,
+          overflow: "hidden",
         }}
       >
-        <p style={{ ...styles.sectionSubText, color: "#888" }}>Get in touch</p>
-        <h3 style={{ ...styles.sectionHeadText, color: "#f0f0f0" }}>Contact</h3>
+        <Grid container spacing={4}>
+          <Grid item xs={12} lg={8}>
+            <motion.div variants={slideIn("left", "tween", 0.2, 1)}>
+              <Card
+                sx={{
+                  background: `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${theme.palette.action.hover} 100%)`,
+                  border: `1px solid ${theme.palette.divider}`,
+                  borderRadius: 2,
+                  boxShadow: theme.shadows[4],
+                }}
+              >
+                <CardContent sx={{ p: { xs: 3, sm: 4 } }}>
+                  <Typography
+                    variant="overline"
+                    component="p"
+                    sx={{
+                      fontSize: { xs: "0.875rem", sm: "1rem" },
+                      color: theme.palette.text.secondary,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.1em",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Get in touch
+                  </Typography>
+                  <Typography
+                    variant="h2"
+                    component="h3"
+                    sx={{
+                      fontWeight: 900,
+                      color: theme.palette.text.primary,
+                      fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+                      mt: 1,
+                      mb: 4,
+                    }}
+                  >
+                    Contact
+                  </Typography>
 
-        <form
-          ref={formRef}
-          onSubmit={handleSubmit}
-          style={{
-            marginTop: "48px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "32px",
-          }}
+                  <Box
+                    component="form"
+                    ref={formRef}
+                    onSubmit={handleSubmit}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 3,
+                    }}
+                  >
+                    <TextField
+                      fullWidth
+                      name="name"
+                      label="Your Name"
+                      placeholder="What's your name?"
+                      value={form.name}
+                      onChange={handleChange}
+                      required
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          backgroundColor: theme.palette.background.default,
+                          "& fieldset": {
+                            borderColor: theme.palette.divider,
+                          },
+                          "&:hover fieldset": {
+                            borderColor: theme.palette.primary.main,
+                          },
+                          "&.Mui-focused fieldset": {
+                            borderColor: theme.palette.primary.main,
+                          },
+                        },
+                        "& .MuiInputLabel-root": {
+                          color: theme.palette.text.secondary,
+                        },
+                        "& .MuiOutlinedInput-input": {
+                          color: theme.palette.text.primary,
+                        },
+                      }}
+                    />
+
+                    <TextField
+                      fullWidth
+                      name="email"
+                      type="email"
+                      label="Your Email"
+                      placeholder="What's your email?"
+                      value={form.email}
+                      onChange={handleChange}
+                      required
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          backgroundColor: theme.palette.background.default,
+                          "& fieldset": {
+                            borderColor: theme.palette.divider,
+                          },
+                          "&:hover fieldset": {
+                            borderColor: theme.palette.primary.main,
+                          },
+                          "&.Mui-focused fieldset": {
+                            borderColor: theme.palette.primary.main,
+                          },
+                        },
+                        "& .MuiInputLabel-root": {
+                          color: theme.palette.text.secondary,
+                        },
+                        "& .MuiOutlinedInput-input": {
+                          color: theme.palette.text.primary,
+                        },
+                      }}
+                    />
+
+                    <TextField
+                      fullWidth
+                      name="message"
+                      label="Your Message"
+                      placeholder="What do you want to say?"
+                      value={form.message}
+                      onChange={handleChange}
+                      required
+                      multiline
+                      rows={6}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          backgroundColor: theme.palette.background.default,
+                          "& fieldset": {
+                            borderColor: theme.palette.divider,
+                          },
+                          "&:hover fieldset": {
+                            borderColor: theme.palette.primary.main,
+                          },
+                          "&.Mui-focused fieldset": {
+                            borderColor: theme.palette.primary.main,
+                          },
+                        },
+                        "& .MuiInputLabel-root": {
+                          color: theme.palette.text.secondary,
+                        },
+                        "& .MuiOutlinedInput-input": {
+                          color: theme.palette.text.primary,
+                        },
+                      }}
+                    />
+
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      disabled={loading}
+                      startIcon={<SendIcon />}
+                      sx={{
+                        width: "fit-content",
+                        px: 4,
+                        py: 1.5,
+                        fontSize: "1rem",
+                        fontWeight: "bold",
+                        borderRadius: 2,
+                        backgroundColor: theme.palette.primary.main,
+                        color: theme.palette.primary.contrastText,
+                        "&:hover": {
+                          backgroundColor: theme.palette.primary.dark,
+                        },
+                        "&:disabled": {
+                          backgroundColor:
+                            theme.palette.action.disabledBackground,
+                          color: theme.palette.action.disabled,
+                        },
+                      }}
+                    >
+                      {loading ? "Sending..." : "Send Message"}
+                    </Button>
+                  </Box>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </Grid>
+
+          {/* Optional EarthCanvas section */}
+          <Grid item xs={12} lg={4}>
+            <motion.div variants={slideIn("right", "tween", 0.2, 1)}>
+              <Box
+                sx={{
+                  height: { xs: 300, lg: 400 },
+                  borderRadius: 2,
+                  overflow: "hidden",
+                  border: `1px solid ${theme.palette.divider}`,
+                }}
+              >
+                {/* <EarthCanvas /> */}
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      color: theme.palette.primary.contrastText,
+                      textAlign: "center",
+                    }}
+                  >
+                    3D Earth Canvas
+                    <br />
+                    (Optional)
+                  </Typography>
+                </Box>
+              </Box>
+            </motion.div>
+          </Grid>
+        </Grid>
+      </Box>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
         >
-          <label style={{ display: "flex", flexDirection: "column" }}>
-            <span
-              style={{
-                color: "#f0f0f0",
-                fontWeight: "500",
-                marginBottom: "16px",
-              }}
-            >
-              Your Name
-            </span>
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="What's your name?"
-              style={{
-                backgroundColor: "#1a1a1a",
-                padding: "16px 24px",
-                color: "#f0f0f0",
-                borderRadius: "8px",
-                border: "none",
-                outline: "none",
-                fontWeight: "500",
-                fontSize: "14px",
-              }}
-            />
-          </label>
-
-          <label style={{ display: "flex", flexDirection: "column" }}>
-            <span
-              style={{
-                color: "#f0f0f0",
-                fontWeight: "500",
-                marginBottom: "16px",
-              }}
-            >
-              Your Email
-            </span>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="What's your email?"
-              style={{
-                backgroundColor: "#1a1a1a",
-                padding: "16px 24px",
-                color: "#f0f0f0",
-                borderRadius: "8px",
-                border: "none",
-                outline: "none",
-                fontWeight: "500",
-                fontSize: "14px",
-              }}
-            />
-          </label>
-
-          <label style={{ display: "flex", flexDirection: "column" }}>
-            <span
-              style={{
-                color: "#f0f0f0",
-                fontWeight: "500",
-                marginBottom: "16px",
-              }}
-            >
-              Your Message
-            </span>
-            <textarea
-              rows="7"
-              name="message"
-              value={form.message}
-              onChange={handleChange}
-              placeholder="What do you want to say?"
-              style={{
-                backgroundColor: "#1a1a1a",
-                padding: "16px 24px",
-                color: "#f0f0f0",
-                borderRadius: "8px",
-                border: "none",
-                outline: "none",
-                fontWeight: "500",
-                fontSize: "14px",
-                resize: "vertical",
-              }}
-            />
-          </label>
-
-          <button
-            type="submit"
-            style={{
-              backgroundColor: "#1a1a1a",
-              padding: "12px 32px",
-              outline: "none",
-              width: "fit-content",
-              color: "#f0f0f0",
-              fontWeight: "bold",
-              borderRadius: "12px",
-              border: "1px solid #333",
-              cursor: "pointer",
-            }}
-          >
-            {loading ? "Sending..." : "Send"}
-          </button>
-        </form>
-      </motion.div>
-
-      {/* Optional EarthCanvas here */}
-      {/* <motion.div variants={slideIn("right", "tween", 0.2, 1)} style={{ flex: 1, height: '350px' }}>
-        <EarthCanvas />
-      </motion.div> */}
-    </div>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 

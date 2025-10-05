@@ -1,31 +1,31 @@
-import { useContext, useState } from 'react'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
-import Box from '@mui/material/Box'
+import { useContext, useState } from "react";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
 import {
   SandpackPreview,
   SandpackProvider,
   SandpackTests,
   SandpackThemeProvider,
   useSandpack,
-} from '@codesandbox/sandpack-react'
-import { WorkoutContext } from '../../../../contexts/WorkoutContext'
-import Console from './Console'
+} from "@codesandbox/sandpack-react";
+import { WorkoutContext } from "../../../../contexts/WorkoutContext";
+import Console from "./Console";
 
 const BasicTabs = () => {
-  const [value, setValue] = useState(0)
-  const { workout } = useContext(WorkoutContext)
-  const { sandpack } = useSandpack()
+  const [value, setValue] = useState(0);
+  const { workout } = useContext(WorkoutContext);
+  const { sandpack } = useSandpack();
 
   const handleChange = (event, newValue) => {
-    setValue(newValue)
-  }
+    setValue(newValue);
+  };
 
   return (
-    <Box sx={{ width: '100%', height: 'calc(100% - 40px)' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} sx={{ minHeight: '40px' }}>
-          {['Details', 'Console', 'Tests', 'Example', 'Video'].map((label) => (
+    <Box sx={{ width: "100%", height: "calc(100% - 40px)" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs value={value} onChange={handleChange} sx={{ minHeight: "40px" }}>
+          {["Details", "Console", "Tests", "Example", "Video"].map((label) => (
             <Tab
               key={label}
               label={label}
@@ -38,24 +38,24 @@ const BasicTabs = () => {
       {value === 0 && (
         <div
           dangerouslySetInnerHTML={{
-            __html: sandpack?.files['/shared/Instructions.html']?.code ?? '',
+            __html: sandpack?.files["/shared/Instructions.html"]?.code ?? "",
           }}
         />
       )}
 
       {value === 1 && <Console />}
 
-      {value === 2 && <SandpackTests style={{ height: '100%' }} />}
+      {value === 2 && <SandpackTests style={{ height: "100%" }} />}
 
       {value === 3 && (
-        <div style={{ height: '100%' }}>
+        <div style={{ height: "100%" }}>
           <SandpackProvider
             files={{ ...workout.solution, ...workout.shared }}
             template={workout.sp_template}
           >
-            <SandpackThemeProvider theme={'dark'}>
+            <SandpackThemeProvider theme={"dark"}>
               <SandpackPreview
-                style={{ height: '100%' }}
+                style={{ height: "100%" }}
                 showOpenInCodeSandbox={false}
               />
             </SandpackThemeProvider>
@@ -65,17 +65,17 @@ const BasicTabs = () => {
 
       {value === 4 && (
         <iframe
-          width='100%'
-          height='100%'
+          width="100%"
+          height="100%"
           src={workout.embed_link}
-          title='YouTube video player'
-          frameBorder='0'
-          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen
         ></iframe>
       )}
     </Box>
-  )
-}
+  );
+};
 
-export default BasicTabs
+export default BasicTabs;

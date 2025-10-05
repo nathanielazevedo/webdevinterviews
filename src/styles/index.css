@@ -77,8 +77,8 @@
 }
 
 .editor-container {
-  min-height: calc(100vh - 135px);
-  max-height: calc(100vh - 135px);
+  min-height: calc(100vh - 55px);
+  max-height: calc(100vh - 55px);
   flex-grow: 1;
   padding-right: 20px;
   padding-bottom: 10px;
