@@ -10,29 +10,72 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="apple-touch-startup-image" href="/ios/1024.png" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <meta property="og:title" content="Web Dev Interviews" />
-    <meta property="og:description" content="Become a better dev." />
-    <meta
-      property="og:image"
-      content="https://www.webdevinterviews.com/logo.png"
-    />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Interactive web development interview preparation platform with coding games, multiple choice quizzes, and comprehensive study materials for JavaScript, React, Node.js, and more." />
+    <meta name="keywords" content="web development, coding interviews, JavaScript, React, Node.js, programming, software engineer, frontend, backend, interview preparation" />
+    <meta name="author" content="Nate Azevedo" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Web Dev Interviews - Interactive Interview Preparation" />
+    <meta property="og:description" content="Master web development interviews with interactive coding games, quizzes, and comprehensive study materials. Practice JavaScript, React, algorithms, and more." />
+    <meta property="og:image" content="https://webdevinterviews.com/logo.png" />
+    <meta property="og:url" content="https://webdevinterviews.com" />
+    <meta property="og:site_name" content="Web Dev Interviews" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Web Dev Interviews - Interactive Interview Preparation" />
+    <meta name="twitter:description" content="Master web development interviews with interactive coding games, quizzes, and comprehensive study materials." />
+    <meta name="twitter:image" content="https://webdevinterviews.com/logo.png" />
+    <meta name="twitter:creator" content="@nateazevedo" />
+    
+    <!-- LinkedIn specific -->
+    <meta property="article:author" content="Nate Azevedo" />
+    <meta property="article:publisher" content="https://webdevinterviews.com" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Web Dev Interviews",
+      "url": "https://webdevinterviews.com",
+      "description": "Interactive web development interview preparation platform with coding games, multiple choice quizzes, and comprehensive study materials.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web Browser",
+      "author": {
+        "@type": "Person",
+        "name": "Nate Azevedo",
+        "url": "https://nateazevedo.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <!-- GitHub Pages SPA redirect handling - LinkedIn safe -->
     <script type="text/javascript">
-      ;(function (l) {
-        if (l.search[1] === '/') {
-          var decoded = l.search
-            .slice(1)
-            .split('&')
-            .map(function (s) {
-              return s.replace(/~and~/g, '&')
-            })
-            .join('?')
-          window.history.replaceState(
-            null,
-            null,
-            l.pathname.slice(0, -1) + decoded + l.hash
-          )
+      // Handle GitHub Pages SPA routing
+      (function(l) {
+        if (l.search && l.search[1] === '/') {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&');
+          }).join('?');
+          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
         }
-      })(window.location)
+      })(window.location);
     </script>
   </head>
   <body>
