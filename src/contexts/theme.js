@@ -29,6 +29,17 @@ export const lightTheme = createTheme({
     },
     divider: "rgba(0,0,0,0.08)",
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundImage: `radial-gradient(circle, rgba(16,163,127,0.15) 2px, transparent 2px)`,
+          backgroundSize: '50px 50px',
+          backgroundAttachment: 'fixed',
+        },
+      },
+    },
+  },
 });
 
 export const darkTheme = createTheme({
@@ -50,5 +61,16 @@ export const darkTheme = createTheme({
       secondary: "#B0B0B0",
     },
     divider: "rgba(255,255,255,0.12)",
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundImage: `radial-gradient(circle, rgba(16,163,127,0.12) 2px, transparent 2px)`,
+          backgroundSize: '50px 50px',
+          backgroundAttachment: 'fixed',
+        },
+      },
+    },
   },
 });

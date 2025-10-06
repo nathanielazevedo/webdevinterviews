@@ -44,6 +44,7 @@ const Navbar = () => {
       sx={{
         backgroundColor: (theme) => theme.palette.background.paper,
         borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+        zIndex: 9999999999,
       }}
     >
       <Toolbar
@@ -81,36 +82,61 @@ const Navbar = () => {
             Nate Azevedo
           </Typography>
 
-          {/* Navigation Links */}
+          {/* Study Material Section */}
           <Box
             sx={{
               display: { xs: "none", md: "flex" },
-              gap: 1,
+              gap: 3,
               alignItems: "center",
             }}
           >
-            {pages.map((page) => (
-              <Button
-                key={page.title}
-                component={Link}
-                to={page.to}
-                sx={{
-                  color: "text.primary",
-                  textTransform: "none",
-                  fontWeight: 500,
-                  px: 2,
-                  py: 1,
-                  borderRadius: 2,
-                  transition: "all 0.2s ease",
-                  "&:hover": {
-                    backgroundColor: "action.hover",
-                    color: "primary.main",
-                  },
-                }}
-              >
-                {page.title}
-              </Button>
-            ))}
+            {/* Handwritten-style text */}
+            <Typography
+              sx={{
+                fontFamily:
+                  '"Dancing Script", "Caveat", "Patrick Hand", cursive',
+                fontSize: "1rem",
+                color: "text.secondary",
+                fontWeight: 500,
+                userSelect: "none",
+                opacity: 0.8,
+                letterSpacing: "0.5px",
+              }}
+            >
+              my study material →
+            </Typography>
+
+            {/* Navigation Links */}
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                alignItems: "center",
+              }}
+            >
+              {pages.map((page) => (
+                <Button
+                  key={page.title}
+                  component={Link}
+                  to={page.to}
+                  sx={{
+                    color: "text.primary",
+                    textTransform: "none",
+                    fontWeight: 500,
+                    px: 2,
+                    py: 1,
+                    borderRadius: 2,
+                    transition: "all 0.2s ease",
+                    "&:hover": {
+                      backgroundColor: "action.hover",
+                      color: "primary.main",
+                    },
+                  }}
+                >
+                  {page.title}
+                </Button>
+              ))}
+            </Box>
           </Box>
 
           <ThemeToggle />

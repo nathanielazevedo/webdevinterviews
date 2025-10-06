@@ -21,7 +21,7 @@ const Portfolio = () => {
     <Box
       sx={{
         position: "relative",
-        zIndex: 0,
+        zIndex: 1,
         backgroundColor: theme.palette.background.default,
         color: theme.palette.text.primary,
         minHeight: "100vh",
@@ -34,9 +34,22 @@ const Portfolio = () => {
       <Tech />
       <Works />
       <Feedbacks />
-      <Box sx={{ position: "relative", zIndex: 0 }}>
-        <Contact />
+      <Box sx={{ position: "relative", zIndex: -1 }}>
         <StarsCanvas />
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1,
+            pointerEvents: "none",
+          }}
+        >
+          <Box sx={{ pointerEvents: "auto" }}>
+            <Contact />
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

@@ -202,18 +202,23 @@
 
 
 
-/* Ensure content background is transparent to respect Tailwind */
-.vertical-timeline-element-content {
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
-
-/* Default (light mode) */
+/* Timeline line styles for Material-UI themes */
 .vertical-timeline::before {
-  background-color: #1a1a1a !important; /* your "text" color in light mode */
+  background-color: #202123 !important; /* Light mode - dark gray line */
 }
 
-/* Dark mode override */
-html.dark .vertical-timeline::before {
-  background-color: #f3f3f3 !important; /* your "dark-white-100" color */
+/* Dark mode timeline line - using body class detection */
+body.dark-theme .vertical-timeline::before,
+.dark-theme .vertical-timeline::before {
+  background-color: #ECECEC !important; /* Dark mode - light gray line */
+}
+
+/* Timeline element date styles */
+.vertical-timeline-element-date {
+  color: #4D4D4D !important; /* Light mode date color */
+}
+
+body.dark-theme .vertical-timeline-element-date,
+.dark-theme .vertical-timeline-element-date {
+  color: #B0B0B0 !important; /* Dark mode date color */
 }

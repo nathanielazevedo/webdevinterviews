@@ -22,8 +22,8 @@ const SectionWrapper = (Component, idName) =>
         <span
           style={{
             display: "block",
-            paddingTop: "100px",
-            marginTop: "-100px",
+            // paddingTop: "100px",
+            // marginTop: "-100px",
           }}
           id={idName}
         >

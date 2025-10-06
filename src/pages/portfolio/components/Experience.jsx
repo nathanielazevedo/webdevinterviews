@@ -12,6 +12,7 @@ import {
   ListItemText,
   Avatar,
   useTheme,
+  GlobalStyles,
 } from "@mui/material";
 
 import { experiences } from "../constants";
@@ -121,8 +122,18 @@ const ExperienceCard = ({ experience }) => {
 const Experience = () => {
   const theme = useTheme();
 
+  const timelineStyles = {
+    ".vertical-timeline::before": {
+      backgroundColor: `${theme.palette.text.primary} !important`,
+    },
+    ".vertical-timeline-element-date": {
+      color: `${theme.palette.text.secondary} !important`,
+    },
+  };
+
   return (
     <Box>
+      <GlobalStyles styles={timelineStyles} />
       <motion.div variants={textVariant()}>
         <Typography
           variant="overline"

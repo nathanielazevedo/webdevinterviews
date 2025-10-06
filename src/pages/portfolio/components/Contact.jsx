@@ -89,6 +89,7 @@ const Contact = () => {
           flexDirection: { xs: "column-reverse", lg: "row" },
           gap: 5,
           overflow: "hidden",
+          pb: 5,
         }}
       >
         <Grid container spacing={4}>
@@ -262,44 +263,6 @@ const Contact = () => {
                   </Box>
                 </CardContent>
               </Card>
-            </motion.div>
-          </Grid>
-
-          {/* Optional EarthCanvas section */}
-          <Grid item xs={12} lg={4}>
-            <motion.div variants={slideIn("right", "tween", 0.2, 1)}>
-              <Box
-                sx={{
-                  height: { xs: 300, lg: 400 },
-                  borderRadius: 2,
-                  overflow: "hidden",
-                  border: `1px solid ${theme.palette.divider}`,
-                }}
-              >
-                {/* <EarthCanvas /> */}
-                <Box
-                  sx={{
-                    width: "100%",
-                    height: "100%",
-                    background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      color: theme.palette.primary.contrastText,
-                      textAlign: "center",
-                    }}
-                  >
-                    3D Earth Canvas
-                    <br />
-                    (Optional)
-                  </Typography>
-                </Box>
-              </Box>
             </motion.div>
           </Grid>
         </Grid>
