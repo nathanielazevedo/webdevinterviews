@@ -16,13 +16,23 @@ const pages = [
     title: "Quizes",
     to: "/quizes",
   },
+  {
+    title: "Battle",
+    to: "/battle",
+  },
 ];
 
 const Navbar = () => {
   const location = useLocation();
 
-  // Hide navbar on specific routes with numeric IDs (e.g., /workouts/123, /games/456)
+  // Hide navbar on specific routes with numeric IDs (e.g., /workouts/123, /games/456) and battle route
   const shouldHideNavbar = () => {
+    // Hide on battle route
+    if (location.pathname === "/battle") {
+      return true;
+    }
+
+    // Hide on routes with numeric IDs
     const pathSegments = location.pathname.split("/");
     if (pathSegments.length >= 3) {
       const lastSegment = pathSegments[pathSegments.length - 1];

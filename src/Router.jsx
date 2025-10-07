@@ -1,8 +1,5 @@
-import * as React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./root/Root";
-import Footer from "./components/Footer.jsx";
-import Home from "./pages/home/Home";
 import Error from "./pages/misc/Error";
 import FourOFour from "./pages/misc/FourOFour";
 import Contact from "./pages/Contact";
@@ -23,6 +20,7 @@ import MutateMain from "./pages/games/mutate/MutateMain";
 import ReturnMain from "./pages/games/returns/ReturnMain";
 import Runner from "./pages/games/runner/Swimmer2.jsx";
 import Quiz from "./pages/courses/multipleChoice/QuizMain";
+import BattleMain from "./pages/battle/BattleMain";
 
 import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -96,6 +94,15 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Quiz />,
+          },
+        ],
+      },
+      {
+        path: "battle",
+        children: [
+          {
+            index: true,
+            element: <BattleMain />,
           },
         ],
       },
