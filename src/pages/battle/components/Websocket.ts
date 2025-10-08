@@ -27,12 +27,47 @@ interface WebSocketMessage {
   userId?: string;
   isCompleted?: boolean;
   completedAt?: string | null;
+  status?: string;
+  isAdmin?: boolean;
+  battleId?: string;
+  startedAt?: string;
+  message?: string;
+  roomIds?: string[];
+  rooms?: Record<string, {
+    status: string;
+    canJoin: boolean;
+    connectedPlayers: number;
+    isActive?: boolean;
+    isWaiting?: boolean;
+    isCompleted?: boolean;
+    participantCount?: number;
+    startedAt?: string;
+  }>;
+  roomId?: string;
+  canJoin?: boolean;
+  connectedPlayers?: number;
+  change?: string;
+  results?: Array<{
+    userId: string;
+    testsPassed: number;
+    totalTests: number;
+    placement: number;
+  }>;
 }
 
 export function useWebSocket(url: string, roomId: string, userId: string) {
   const [isConnected, setIsConnected] = useState(false);
   const [playersList, setPlayersList] = useState<Player[]>([]);
   const [playerResults, setPlayerResults] = useState<PlayerResults>({});
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [battleStatus, setBattleStatus] = useState<'waiting' | 'active' | 'completed'>('waiting');
+  const [battleId, setBattleId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [watchedRooms, setWatchedRooms] = useState<Record<string, {
+    status: string;
+    canJoin: boolean;
+    connectedPlayers: number;
+  }>>({});
   const ws = useRef<WebSocket | null>(null);
 
   useEffect(() => {
@@ -61,6 +96,17 @@ export function useWebSocket(url: string, roomId: string, userId: string) {
 
       if (message.type === 'players-list') {
         setPlayersList(message.players || []);
+      } else if (message.type === 'battle-status') {
+        setIsAdmin(message.isAdmin || false);
+        setBattleStatus(message.status as 'waiting' | 'active' | 'completed');
+        setBattleId(message.battleId || null);
+      } else if (message.type === 'battle-started') {
+        setBattleStatus('active');
+        setBattleId(message.battleId || null);
+        setError(null);
+      } else if (message.type === 'battle-completed') {
+        setBattleStatus('completed');
+        // Results are available in message.results
       } else if (message.type === 'test-results-update') {
         // Handle individual player test result updates
         if (message.userId) {
@@ -74,6 +120,26 @@ export function useWebSocket(url: string, roomId: string, userId: string) {
             }
           }));
         }
+      } else if (message.type === 'room-statuses') {
+        // Handle initial room statuses when watching multiple rooms
+        setWatchedRooms(message.rooms || {});
+      } else if (message.type === 'room-status-update') {
+        // Handle real-time room status updates
+        if (message.roomId) {
+          setWatchedRooms(prev => ({
+            ...prev,
+            [message.roomId!]: {
+              status: message.status || 'unknown',
+              canJoin: message.canJoin || false,
+              connectedPlayers: message.connectedPlayers || 0,
+            }
+          }));
+        }
+      } else if (message.type === 'unwatched') {
+        // Clear watched rooms when unwatching
+        setWatchedRooms({});
+      } else if (message.type === 'error') {
+        setError(message.message || 'An error occurred');
       }
     };
 
@@ -118,12 +184,55 @@ export function useWebSocket(url: string, roomId: string, userId: string) {
     }
   };
 
+  const startBattle = () => {
+    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+      ws.current.send(JSON.stringify({
+        type: 'start-battle'
+      }));
+    }
+  };
+
+  const completeBattle = (completionTime?: number) => {
+    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+      ws.current.send(JSON.stringify({
+        type: 'complete-battle',
+        completionTime
+      }));
+    }
+  };
+
+  const watchRooms = (roomIds: string[]) => {
+    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+      ws.current.send(JSON.stringify({
+        type: 'watch-rooms',
+        roomIds
+      }));
+    }
+  };
+
+  const unwatchRooms = () => {
+    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+      ws.current.send(JSON.stringify({
+        type: 'unwatch-rooms'
+      }));
+    }
+  };
+
   return {
     isConnected,
     playersList,
     playerResults,
+    isAdmin,
+    battleStatus,
+    battleId,
+    error,
+    watchedRooms,
     sendTestResults,
     requestPlayersList,
-    sendPlayerResults
+    sendPlayerResults,
+    startBattle,
+    completeBattle,
+    watchRooms,
+    unwatchRooms
   };
 }

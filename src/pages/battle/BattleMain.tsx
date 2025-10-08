@@ -6,8 +6,10 @@ import {
   BattleResults,
   ResizableCodingPanels,
   MultiplayerLeaderboard,
+  AdminPanel,
 } from "./components";
 import { useWebSocket } from "./components/Websocket";
+import { getWebSocketUrl } from "../../config/api";
 
 interface Player {
   id: string;
@@ -56,11 +58,17 @@ const BattleMain: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
 
   // WebSocket integration for multiplayer functionality
-  const { playersList, playerResults, sendTestResults } = useWebSocket(
-    "wss://portfoliobackend-production-5f6f.up.railway.app",
-    battleId,
-    currentPlayerId
-  );
+  const {
+    playersList,
+    playerResults,
+    sendTestResults,
+    isAdmin,
+    battleStatus: serverBattleStatus,
+    battleId: serverBattleId,
+    error: serverError,
+    startBattle: startServerBattle,
+    completeBattle: completeServerBattle,
+  } = useWebSocket(getWebSocketUrl(), battleId, currentPlayerId);
 
   // Update players list from WebSocket
   useEffect(() => {
@@ -89,6 +97,21 @@ const BattleMain: React.FC = () => {
       setPlayers(updatedPlayers);
     }
   }, [playersList]);
+
+  // Sync server battle status with local state
+  useEffect(() => {
+    if (serverBattleStatus) {
+      setBattleState((prev) => ({
+        ...prev,
+        status:
+          serverBattleStatus === "waiting"
+            ? "waiting"
+            : serverBattleStatus === "active"
+            ? "active"
+            : "finished",
+      }));
+    }
+  }, [serverBattleStatus]);
 
   // Initialize current user as the first player
   useEffect(() => {
@@ -144,8 +167,16 @@ const BattleMain: React.FC = () => {
   }, [countdown]);
 
   const handleStartBattle = () => {
-    setBattleState((prev) => ({ ...prev, status: "countdown" }));
-    setCountdown(3);
+    if (isAdmin) {
+      // Admin starts battle via server
+      startServerBattle();
+      setBattleState((prev) => ({ ...prev, status: "countdown" }));
+      setCountdown(3);
+    } else {
+      // Regular user can only request battle start (fallback for testing)
+      setBattleState((prev) => ({ ...prev, status: "countdown" }));
+      setCountdown(3);
+    }
   };
 
   const handleResetBattle = () => {
@@ -238,12 +269,34 @@ const BattleMain: React.FC = () => {
     console.log("Test code button clicked");
   };
 
+  const handleCompleteBattle = () => {
+    if (isAdmin) {
+      // Admin completes battle via server
+      completeServerBattle();
+      setBattleState((prev) => ({ ...prev, status: "finished" }));
+    }
+  };
+
   return (
     <Container maxWidth="xl">
       <Box sx={{ py: 4 }}>
         {/* <BattleHeader /> */}
 
         {/* <BattleStatusPanel battleState={battleState} countdown={countdown} /> */}
+
+        {/* Admin Panel */}
+        <AdminPanel
+          isAdmin={isAdmin}
+          battleStatus={
+            serverBattleStatus === "completed"
+              ? "finished"
+              : serverBattleStatus || "waiting"
+          }
+          playerCount={players.length}
+          error={serverError}
+          onStartBattle={handleStartBattle}
+          onCompleteBattle={handleCompleteBattle}
+        />
 
         {/* Pre-battle and post-battle layout */}
         {(battleState.status === "waiting" ||
@@ -255,13 +308,15 @@ const BattleMain: React.FC = () => {
               battleStatus={battleState.status}
               playerResults={playerResults}
             />
-            <BattleControls
-              battleStatus={battleState.status}
-              onStartBattle={handleStartBattle}
-              onResetBattle={handleResetBattle}
-              onSubmitSolution={handleSubmitSolution}
-              onTestCode={handleTestCode}
-            />
+            {!isAdmin && (
+              <BattleControls
+                battleStatus={battleState.status}
+                onStartBattle={handleStartBattle}
+                onResetBattle={handleResetBattle}
+                onSubmitSolution={handleSubmitSolution}
+                onTestCode={handleTestCode}
+              />
+            )}
           </>
         )}
 
@@ -269,6 +324,22 @@ const BattleMain: React.FC = () => {
         {(battleState.status === "active" ||
           battleState.status === "finished") && (
           <>
+            {/* Admin panel also visible during active battle */}
+            {battleState.status === "active" && (
+              <AdminPanel
+                isAdmin={isAdmin}
+                battleStatus={
+                  serverBattleStatus === "completed"
+                    ? "finished"
+                    : serverBattleStatus || "waiting"
+                }
+                playerCount={players.length}
+                error={serverError}
+                onStartBattle={handleStartBattle}
+                onCompleteBattle={handleCompleteBattle}
+              />
+            )}
+
             <Grid container spacing={3} mb={4}>
               {/* Multiplayer leaderboard during battle */}
               <Grid item xs={12} md={12}>

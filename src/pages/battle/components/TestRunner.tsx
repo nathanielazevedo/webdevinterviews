@@ -32,6 +32,7 @@ import {
 } from "@mui/icons-material";
 import CodeRunner, { TEST_CASES } from "../utils/CodeRunner";
 import { useWebSocket } from "./Websocket";
+import { getWebSocketUrl } from "../../../config/api";
 
 interface TestRunnerProps {
   code: string;
@@ -77,7 +78,7 @@ const TestRunner: React.FC<TestRunnerProps> = ({
 
   // WebSocket integration for real-time battle communication
   const { isConnected, sendTestResults } = useWebSocket(
-    "wss://portfoliobackend-production-5f6f.up.railway.app", // WebSocket server URL
+    getWebSocketUrl(), // WebSocket server URL from config
     battleId || "", // roomId
     playerId || "" // userId
   );
