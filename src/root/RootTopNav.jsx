@@ -15,7 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import ThemeSwitch from "../components/ThemeSwitch";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 import { useLocation } from "react-router-dom";
 // import logo from '../assets/temp_logo.png'
 const pages = [
@@ -38,7 +38,8 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
-  const { displayName, setDisplayName } = React.useContext(AuthContext);
+  const { user, signOut } = useAuth();
+  const displayName = user?.email?.split("@")[0] || "Anonymous";
   const location = useLocation();
 
   const noToggle = location.pathname.includes("/workouts/");
@@ -206,8 +207,7 @@ function ResponsiveAppBar() {
                   <MenuItem
                     key={setting}
                     onClick={() => {
-                      setDisplayName("");
-                      localStorage.removeItem("access_token");
+                      signOut();
                       handleCloseUserMenu();
                     }}
                   >

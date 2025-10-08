@@ -1,36 +1,31 @@
 import React, { useState, useRef, useCallback } from "react";
-import { Box, Paper, Typography, Button, Alert, useTheme } from "@mui/material";
-import { PlayArrow, Send, BugReport } from "@mui/icons-material";
+import { Box, Paper, Typography, Button, useTheme } from "@mui/material";
+import { Send, BugReport } from "@mui/icons-material";
 import MonacoCodeEditor from "./MonacoCodeEditor";
+import TestRunner from "./TestRunner";
 
 interface ResizableCodingPanelsProps {
   problemTitle: string;
+  problemId: string;
   onSubmit: (code: string) => void;
-  onTest: (code: string) => void;
-}
-
-interface TestResult {
-  passed: boolean;
-  message: string;
-  testCases: {
-    input: string;
-    expected: string;
-    actual: string;
-    passed: boolean;
-  }[];
+  onTest: (results: any) => void;
+  battleId?: string;
+  playerId?: string;
 }
 
 const ResizableCodingPanels: React.FC<ResizableCodingPanelsProps> = ({
   problemTitle,
+  problemId,
   onSubmit,
   onTest,
+  battleId,
+  playerId,
 }) => {
   const theme = useTheme();
   const [code, setCode] = useState(`function twoSum(nums, target) {
     // Write your solution here
     
 }`);
-  const [testResult, setTestResult] = useState<TestResult | null>(null);
   const [leftWidth, setLeftWidth] = useState(40); // Percentage
   const [rightTopHeight, setRightTopHeight] = useState(60); // Percentage
 
@@ -64,35 +59,6 @@ Constraints:
 • -10⁹ ≤ target ≤ 10⁹
 • Only one valid answer exists.
   `;
-
-  const handleTestCode = () => {
-    const mockResult: TestResult = {
-      passed: Math.random() > 0.3,
-      message: Math.random() > 0.3 ? "All tests passed!" : "Some tests failed",
-      testCases: [
-        {
-          input: "nums = [2,7,11,15], target = 9",
-          expected: "[0,1]",
-          actual: "[0,1]",
-          passed: true,
-        },
-        {
-          input: "nums = [3,2,4], target = 6",
-          expected: "[1,2]",
-          actual: "[1,2]",
-          passed: true,
-        },
-        {
-          input: "nums = [3,3], target = 6",
-          expected: "[0,1]",
-          actual: "[0,1]",
-          passed: Math.random() > 0.2,
-        },
-      ],
-    };
-    setTestResult(mockResult);
-    onTest(code);
-  };
 
   const handleSubmitSolution = () => {
     onSubmit(code);
@@ -262,15 +228,6 @@ Constraints:
             </Typography>
             <Box display="flex" gap={1}>
               <Button
-                variant="outlined"
-                size="small"
-                startIcon={<PlayArrow />}
-                onClick={handleTestCode}
-                color="primary"
-              >
-                Run Tests
-              </Button>
-              <Button
                 variant="contained"
                 size="small"
                 startIcon={<Send />}
@@ -315,71 +272,16 @@ Constraints:
             display: "flex",
             flexDirection: "column",
             borderRadius: 0,
+            overflow: "hidden",
           }}
         >
-          <Box
-            sx={{
-              p: 2,
-              borderBottom: `1px solid ${theme.palette.divider}`,
-              backgroundColor: theme.palette.background.default,
-            }}
-          >
-            <Typography variant="h6" fontWeight="bold">
-              Test Results
-            </Typography>
-          </Box>
-
-          <Box sx={{ flex: 1, p: 2, overflow: "auto" }}>
-            {testResult ? (
-              <Box>
-                <Alert
-                  severity={testResult.passed ? "success" : "error"}
-                  sx={{ mb: 2 }}
-                >
-                  {testResult.message}
-                </Alert>
-
-                {testResult.testCases.map((testCase, index) => (
-                  <Paper key={index} variant="outlined" sx={{ p: 2, mb: 2 }}>
-                    <Box display="flex" alignItems="center" mb={1}>
-                      <Typography variant="subtitle2" fontWeight="bold">
-                        Test Case {index + 1}
-                      </Typography>
-                      <Box
-                        sx={{
-                          ml: "auto",
-                          px: 1,
-                          py: 0.5,
-                          borderRadius: 1,
-                          backgroundColor: testCase.passed
-                            ? theme.palette.success.main
-                            : theme.palette.error.main,
-                          color: "white",
-                          fontSize: "0.75rem",
-                        }}
-                      >
-                        {testCase.passed ? "PASSED" : "FAILED"}
-                      </Box>
-                    </Box>
-
-                    <Typography variant="body2" color="text.secondary" mb={0.5}>
-                      <strong>Input:</strong> {testCase.input}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" mb={0.5}>
-                      <strong>Expected:</strong> {testCase.expected}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      <strong>Actual:</strong> {testCase.actual}
-                    </Typography>
-                  </Paper>
-                ))}
-              </Box>
-            ) : (
-              <Typography color="text.secondary">
-                Run tests to see results here
-              </Typography>
-            )}
-          </Box>
+          <TestRunner
+            code={code}
+            problemId={problemId}
+            onTestComplete={onTest}
+            battleId={battleId}
+            playerId={playerId}
+          />
         </Paper>
       </Box>
     </Box>

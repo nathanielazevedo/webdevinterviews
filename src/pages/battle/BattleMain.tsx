@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Box, Grid, Container } from "@mui/material";
+import { useAuth } from "../../contexts/AuthContext.tsx";
 import {
   PlayerCard,
-  BattleStatusPanel,
   VSIndicator,
   BattleControls,
   BattleResults,
-  BattleHeader,
   ResizableCodingPanels,
 } from "./components";
 
@@ -29,6 +28,12 @@ interface BattleState {
 }
 
 const BattleMain: React.FC = () => {
+  const { user } = useAuth();
+
+  // Generate battle and player IDs for WebSocket connection
+  const [battleId] = useState(() => `battle_${Date.now()}`);
+  const [currentPlayerId] = useState(() => user?.id || "anonymous");
+
   const [battleState, setBattleState] = useState<BattleState>({
     status: "waiting",
     timeRemaining: 900, // 15 minutes
@@ -36,24 +41,29 @@ const BattleMain: React.FC = () => {
     currentProblem: "Two Sum",
   });
 
+  // Test progress state for both players
+  const [testProgress, setTestProgress] = useState<{
+    [playerId: string]: { passed: number; total: number };
+  }>({});
+
   const [players] = useState<Player[]>([
     {
-      id: "1",
-      name: "Alex Chen",
-      avatar: "/api/placeholder/40/40",
-      rating: 1850,
-      wins: 23,
-      losses: 7,
+      id: user?.id || "anonymous",
+      name: user?.email?.split("@")[0] || "Anonymous",
+      avatar: user?.user_metadata?.avatar_url || "/api/placeholder/40/40",
+      rating: 1500, // Default rating for new users
+      wins: 0,
+      losses: 0,
       status: "ready",
     },
     {
-      id: "2",
-      name: "Jordan Smith",
+      id: "opponent",
+      name: "Waiting for opponent...",
       avatar: "/api/placeholder/40/40",
-      rating: 1920,
-      wins: 31,
-      losses: 12,
-      status: "ready",
+      rating: 1500,
+      wins: 0,
+      losses: 0,
+      status: "disconnected",
     },
   ]);
 
@@ -116,9 +126,23 @@ const BattleMain: React.FC = () => {
     }));
   };
 
-  const handleTestCode = (code?: string) => {
-    // Implement code testing logic
-    console.log("Testing code:", code);
+  const handleTestResults = (results: { testCases: { passed: boolean }[] }) => {
+    // Update test progress for current player
+    if (results && results.testCases) {
+      const passed = results.testCases.filter((tc) => tc.passed).length;
+      const total = results.testCases.length;
+
+      setTestProgress((prev) => ({
+        ...prev,
+        [currentPlayerId]: { passed, total },
+      }));
+    }
+    console.log("Testing code results:", results);
+  };
+
+  const handleTestCode = () => {
+    // Implement code testing logic for BattleControls
+    console.log("Test code button clicked");
   };
 
   return (
@@ -134,10 +158,18 @@ const BattleMain: React.FC = () => {
           <>
             <Grid container spacing={3} mb={4}>
               <Grid item xs={12} md={6}>
-                <PlayerCard player={players[0]} position="left" />
+                <PlayerCard
+                  player={players[0]}
+                  position="left"
+                  testProgress={testProgress[players[0].id]}
+                />
               </Grid>
               <Grid item xs={12} md={6}>
-                <PlayerCard player={players[1]} position="right" />
+                <PlayerCard
+                  player={players[1]}
+                  position="right"
+                  testProgress={testProgress[players[1].id]}
+                />
               </Grid>
             </Grid>
             <VSIndicator />
@@ -160,10 +192,18 @@ const BattleMain: React.FC = () => {
               <Grid item xs={12} md={12}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
-                    <PlayerCard player={players[0]} position="left" />
+                    <PlayerCard
+                      player={players[0]}
+                      position="left"
+                      testProgress={testProgress[players[0].id]}
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <PlayerCard player={players[1]} position="right" />
+                    <PlayerCard
+                      player={players[1]}
+                      position="right"
+                      testProgress={testProgress[players[1].id]}
+                    />
                   </Grid>
                 </Grid>
               </Grid>
@@ -172,8 +212,11 @@ const BattleMain: React.FC = () => {
               <Grid item xs={12}>
                 <ResizableCodingPanels
                   problemTitle={battleState.currentProblem}
+                  problemId="twoSum"
                   onSubmit={handleSubmitSolution}
-                  onTest={handleTestCode}
+                  onTest={handleTestResults}
+                  battleId={battleId}
+                  playerId={currentPlayerId}
                 />
               </Grid>
             </Grid>

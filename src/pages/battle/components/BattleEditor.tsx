@@ -166,6 +166,7 @@ Output: [0,1]
                   backgroundColor:
                     theme.palette.mode === "dark" ? "#1e1e1e" : "#f8f9fa",
                 },
+                p: 0,
               }}
               placeholder="Write your solution here..."
             />

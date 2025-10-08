@@ -16,7 +16,7 @@ import AutoSave from "./components/AutoSave";
 import Prettier from "./components/Prettier";
 import ChangedFiles from "./components/ChangedFiles";
 import { ColorModeContext } from "../../../contexts/ThemeContext";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const isDev = import.meta.env.DEV;
 
@@ -24,7 +24,8 @@ const EditorRoot = ({ isSolution }) => {
   const codemirrorInstance = useRef();
   const { workout, setFromLocal } = useContext(WorkoutContext);
   const colorMode = useContext(ColorModeContext);
-  const { displayName } = useContext(AuthContext);
+  const { user } = useAuth();
+  const displayName = user?.email?.split("@")[0] || "Anonymous";
 
   const renderAutoSave = () => {
     if (isDev) {

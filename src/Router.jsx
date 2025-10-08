@@ -21,8 +21,10 @@ import ReturnMain from "./pages/games/returns/ReturnMain";
 import Runner from "./pages/games/runner/Swimmer2.jsx";
 import Quiz from "./pages/courses/multipleChoice/QuizMain";
 import BattleMain from "./pages/battle/BattleMain";
+import Auth from "./pages/auth/Auth";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider } from "./contexts/AuthContext.tsx";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
 import App from "./pages/portfolio/App.jsx";
@@ -98,11 +100,20 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: "auth",
+        element: <Auth />,
+        errorElement: <Error />,
+      },
+      {
         path: "battle",
         children: [
           {
             index: true,
-            element: <BattleMain />,
+            element: (
+              <ProtectedRoute>
+                <BattleMain />
+              </ProtectedRoute>
+            ),
           },
         ],
       },

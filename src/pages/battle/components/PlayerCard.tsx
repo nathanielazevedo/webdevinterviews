@@ -26,10 +26,17 @@ interface Player {
 interface PlayerCardProps {
   player: Player;
   position: "left" | "right";
-  codeProgress?: number;
+  testProgress?: {
+    passed: number;
+    total: number;
+  };
 }
 
-const PlayerCard: React.FC<PlayerCardProps> = ({ player, position }) => {
+const PlayerCard: React.FC<PlayerCardProps> = ({
+  player,
+  position,
+  testProgress,
+}) => {
   const theme = useTheme();
 
   return (
@@ -79,6 +86,53 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, position }) => {
               </Box>
             </Box>
           </Box>
+
+          {/* Test Progress Section */}
+          {testProgress && (
+            <Box sx={{ mt: 2 }}>
+              <Divider sx={{ mb: 1 }} />
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Typography variant="body2" color="text.secondary">
+                  Test Progress
+                </Typography>
+                <Chip
+                  label={`${testProgress.passed}/${testProgress.total} passed`}
+                  color={
+                    testProgress.passed === testProgress.total
+                      ? "success"
+                      : "warning"
+                  }
+                  size="small"
+                  variant="outlined"
+                />
+              </Box>
+              <LinearProgress
+                variant="determinate"
+                value={
+                  testProgress.total > 0
+                    ? (testProgress.passed / testProgress.total) * 100
+                    : 0
+                }
+                sx={{
+                  mt: 1,
+                  height: 6,
+                  borderRadius: 3,
+                  backgroundColor: theme.palette.grey[200],
+                  "& .MuiLinearProgress-bar": {
+                    borderRadius: 3,
+                    backgroundColor:
+                      testProgress.passed === testProgress.total
+                        ? theme.palette.success.main
+                        : theme.palette.warning.main,
+                  },
+                }}
+              />
+            </Box>
+          )}
         </CardContent>
       </Card>
     </motion.div>
