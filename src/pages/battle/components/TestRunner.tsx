@@ -76,7 +76,7 @@ const TestRunner: React.FC<TestRunnerProps> = ({
   const [showDetails, setShowDetails] = useState(false);
 
   // WebSocket integration for real-time battle communication
-  const { isConnected, opponentResults, sendTestResults } = useWebSocket(
+  const { isConnected, sendTestResults } = useWebSocket(
     "wss://portfoliobackend-production-5f6f.up.railway.app", // WebSocket server URL
     battleId || "", // roomId
     playerId || "" // userId
@@ -338,7 +338,7 @@ const TestRunner: React.FC<TestRunnerProps> = ({
         )}
 
         {/* Opponent Results Section */}
-        {battleId && opponentResults && (
+        {false && (
           <Box sx={{ mt: 3 }}>
             <Divider sx={{ mb: 2 }}>
               <Chip

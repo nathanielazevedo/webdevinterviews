@@ -4,14 +4,46 @@ import { EmojiEvents } from "@mui/icons-material";
 import { motion } from "framer-motion";
 
 interface BattleResultsProps {
-  winner?: string;
+  winners?: string[];
   isVisible: boolean;
 }
 
-const BattleResults: React.FC<BattleResultsProps> = ({ winner, isVisible }) => {
+const BattleResults: React.FC<BattleResultsProps> = ({
+  winners,
+  isVisible,
+}) => {
   const theme = useTheme();
 
   if (!isVisible) return null;
+
+  const renderWinners = () => {
+    if (!winners || winners.length === 0) {
+      return <Typography variant="h6">No winners</Typography>;
+    }
+
+    if (winners.length === 1) {
+      return (
+        <Typography variant="h6">
+          Winner: <strong>{winners[0]}</strong>
+        </Typography>
+      );
+    }
+
+    return (
+      <>
+        <Typography variant="h6" mb={1}>
+          Winners:
+        </Typography>
+        {winners.map((winner, index) => (
+          <Typography key={winner} variant="h6" component="div">
+            <strong>
+              #{index + 1} {winner}
+            </strong>
+          </Typography>
+        ))}
+      </>
+    );
+  };
 
   return (
     <motion.div
@@ -32,9 +64,7 @@ const BattleResults: React.FC<BattleResultsProps> = ({ winner, isVisible }) => {
         <Typography variant="h4" fontWeight="bold" mb={2}>
           🎉 Battle Complete! 🎉
         </Typography>
-        <Typography variant="h6">
-          Winner: <strong>{winner}</strong>
-        </Typography>
+        {renderWinners()}
       </Paper>
     </motion.div>
   );

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Box, Grid, Container } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext.tsx";
 import {
-  PlayerCard,
-  VSIndicator,
   BattleControls,
   BattleResults,
   ResizableCodingPanels,
+  MultiplayerLeaderboard,
 } from "./components";
+import { useWebSocket } from "./components/Websocket";
 
 interface Player {
   id: string;
@@ -17,6 +17,12 @@ interface Player {
   wins: number;
   losses: number;
   status: "ready" | "coding" | "submitted" | "disconnected";
+  joinedAt: number;
+  testProgress?: {
+    passed: number;
+    total: number;
+    completedAt?: number;
+  };
 }
 
 interface BattleState {
@@ -24,14 +30,16 @@ interface BattleState {
   timeRemaining: number;
   totalTime: number;
   currentProblem: string;
-  winner?: string;
+  winners: string[]; // Array of winners for multiplayer
+  totalPlayers: number;
+  completedPlayers: number;
 }
 
 const BattleMain: React.FC = () => {
   const { user } = useAuth();
 
   // Generate battle and player IDs for WebSocket connection
-  const [battleId] = useState(() => `battle_1`);
+  const [battleId] = useState(`battle_1`);
   const [currentPlayerId] = useState(() => user?.id || "anonymous");
 
   const [battleState, setBattleState] = useState<BattleState>({
@@ -39,33 +47,67 @@ const BattleMain: React.FC = () => {
     timeRemaining: 900, // 15 minutes
     totalTime: 900,
     currentProblem: "Two Sum",
+    winners: [],
+    totalPlayers: 0,
+    completedPlayers: 0,
   });
 
-  // Test progress state for both players
-  const [testProgress, setTestProgress] = useState<{
-    [playerId: string]: { passed: number; total: number };
-  }>({});
+  // Dynamic player list - updated via WebSocket
+  const [players, setPlayers] = useState<Player[]>([]);
 
-  const [players] = useState<Player[]>([
-    {
-      id: user?.id || "anonymous",
-      name: user?.email?.split("@")[0] || "Anonymous",
-      avatar: user?.user_metadata?.avatar_url || "/api/placeholder/40/40",
-      rating: 1500, // Default rating for new users
-      wins: 0,
-      losses: 0,
-      status: "ready",
-    },
-    {
-      id: "opponent",
-      name: "Waiting for opponent...",
-      avatar: "/api/placeholder/40/40",
-      rating: 1500,
-      wins: 0,
-      losses: 0,
-      status: "disconnected",
-    },
-  ]);
+  // WebSocket integration for multiplayer functionality
+  const { playersList, playerResults, sendTestResults } = useWebSocket(
+    "wss://portfoliobackend-production-5f6f.up.railway.app",
+    battleId,
+    currentPlayerId
+  );
+
+  // Update players list from WebSocket
+  useEffect(() => {
+    if (playersList.length > 0) {
+      const updatedPlayers = playersList.map((wsPlayer) => ({
+        id: wsPlayer.userId,
+        name: wsPlayer.userId.split("@")[0] || "Anonymous", // Extract name from userId
+        avatar: "/api/placeholder/40/40",
+        rating: 1500,
+        wins: 0,
+        losses: 0,
+        status: wsPlayer.isConnected
+          ? ("ready" as const)
+          : ("disconnected" as const),
+        joinedAt: new Date(wsPlayer.joinedAt).getTime(),
+        testProgress: {
+          passed: wsPlayer.testsPassed,
+          total: wsPlayer.totalTests,
+          completedAt:
+            wsPlayer.testsPassed === wsPlayer.totalTests &&
+            wsPlayer.totalTests > 0
+              ? Date.now()
+              : undefined,
+        },
+      }));
+      setPlayers(updatedPlayers);
+    }
+  }, [playersList]);
+
+  // Initialize current user as the first player
+  useEffect(() => {
+    if (user) {
+      const currentPlayer: Player = {
+        id: user.id,
+        name: user.email?.split("@")[0] || "Anonymous",
+        avatar: user.user_metadata?.avatar_url || "/api/placeholder/40/40",
+        rating: 1500,
+        wins: 0,
+        losses: 0,
+        status: "ready",
+        joinedAt: Date.now(),
+      };
+
+      setPlayers([currentPlayer]);
+      setBattleState((prev) => ({ ...prev, totalPlayers: 1 }));
+    }
+  }, [user]);
 
   const [countdown, setCountdown] = useState<number | null>(null);
 
@@ -112,8 +154,20 @@ const BattleMain: React.FC = () => {
       timeRemaining: 900,
       totalTime: 900,
       currentProblem: "Two Sum",
+      winners: [],
+      totalPlayers: players.length,
+      completedPlayers: 0,
     });
     setCountdown(null);
+
+    // Reset all players' test progress
+    setPlayers((prev) =>
+      prev.map((player) => ({
+        ...player,
+        testProgress: undefined,
+        status: "ready",
+      }))
+    );
   };
 
   const handleSubmitSolution = (code?: string) => {
@@ -131,11 +185,50 @@ const BattleMain: React.FC = () => {
     if (results && results.testCases) {
       const passed = results.testCases.filter((tc) => tc.passed).length;
       const total = results.testCases.length;
+      const isCompleted = passed === total;
 
-      setTestProgress((prev) => ({
-        ...prev,
-        [currentPlayerId]: { passed, total },
-      }));
+      // Send test results to WebSocket server for multiplayer sync
+      sendTestResults(passed, total);
+
+      // Update the player's test progress
+      setPlayers((prev) =>
+        prev.map((player) =>
+          player.id === currentPlayerId
+            ? {
+                ...player,
+                testProgress: {
+                  passed,
+                  total,
+                  completedAt: isCompleted ? Date.now() : undefined,
+                },
+                status: isCompleted ? "submitted" : "coding",
+              }
+            : player
+        )
+      );
+
+      // Update battle state if player completed all tests
+      if (isCompleted) {
+        setBattleState((prev) => {
+          const newCompletedPlayers = prev.completedPlayers + 1;
+          const newWinners = [...prev.winners];
+
+          // Add to winners list (first 3 get podium positions)
+          if (newWinners.length < 3) {
+            newWinners.push(user?.email?.split("@")[0] || "Anonymous");
+          }
+
+          return {
+            ...prev,
+            completedPlayers: newCompletedPlayers,
+            winners: newWinners,
+            status:
+              newCompletedPlayers === prev.totalPlayers
+                ? "finished"
+                : prev.status,
+          };
+        });
+      }
     }
     console.log("Testing code results:", results);
   };
@@ -156,23 +249,12 @@ const BattleMain: React.FC = () => {
         {(battleState.status === "waiting" ||
           battleState.status === "countdown") && (
           <>
-            <Grid container spacing={3} mb={4}>
-              <Grid item xs={12} md={6}>
-                <PlayerCard
-                  player={players[0]}
-                  position="left"
-                  testProgress={testProgress[players[0].id]}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <PlayerCard
-                  player={players[1]}
-                  position="right"
-                  testProgress={testProgress[players[1].id]}
-                />
-              </Grid>
-            </Grid>
-            <VSIndicator />
+            <MultiplayerLeaderboard
+              players={players}
+              currentUserId={currentPlayerId}
+              battleStatus={battleState.status}
+              playerResults={playerResults}
+            />
             <BattleControls
               battleStatus={battleState.status}
               onStartBattle={handleStartBattle}
@@ -188,24 +270,14 @@ const BattleMain: React.FC = () => {
           battleState.status === "finished") && (
           <>
             <Grid container spacing={3} mb={4}>
-              {/* Compact player cards during battle */}
+              {/* Multiplayer leaderboard during battle */}
               <Grid item xs={12} md={12}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <PlayerCard
-                      player={players[0]}
-                      position="left"
-                      testProgress={testProgress[players[0].id]}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <PlayerCard
-                      player={players[1]}
-                      position="right"
-                      testProgress={testProgress[players[1].id]}
-                    />
-                  </Grid>
-                </Grid>
+                <MultiplayerLeaderboard
+                  players={players}
+                  currentUserId={currentPlayerId}
+                  battleStatus={battleState.status}
+                  playerResults={playerResults}
+                />
               </Grid>
 
               {/* Resizable Coding Panels */}
@@ -232,7 +304,7 @@ const BattleMain: React.FC = () => {
         )}
 
         <BattleResults
-          winner={battleState.winner}
+          winners={battleState.winners}
           isVisible={battleState.status === "finished"}
         />
       </Box>

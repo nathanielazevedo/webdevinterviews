@@ -6,3 +6,4 @@ export { default as BattleResults } from './BattleResults';
 export { default as BattleHeader } from './BattleHeader';
 export { default as BattleEditor } from './BattleEditor';
 export { default as ResizableCodingPanels } from './ResizableCodingPanels';
+export { default as MultiplayerLeaderboard } from './MultiplayerLeaderboard';
