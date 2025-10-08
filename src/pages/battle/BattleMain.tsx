@@ -31,7 +31,7 @@ const BattleMain: React.FC = () => {
   const { user } = useAuth();
 
   // Generate battle and player IDs for WebSocket connection
-  const [battleId] = useState(() => `battle_${Date.now()}`);
+  const [battleId] = useState(() => `battle_1`);
   const [currentPlayerId] = useState(() => user?.id || "anonymous");
 
   const [battleState, setBattleState] = useState<BattleState>({
