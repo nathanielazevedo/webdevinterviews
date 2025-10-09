@@ -6,7 +6,7 @@ import {
   BattleResults,
   ResizableCodingPanels,
   MultiplayerLeaderboard,
-  AdminPanel,
+  BattleEntrySideNav,
 } from "./components";
 import { useWebSocket } from "./components/Websocket";
 import { getWebSocketUrl } from "../../config/api";
@@ -40,9 +40,57 @@ interface BattleState {
 const BattleMain: React.FC = () => {
   const { user } = useAuth();
 
+  // Helper function to get player ID from URL params or user
+  const getPlayerId = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const debugPlayerId = urlParams.get("playerId");
+    const debugPlayerName = urlParams.get("playerName");
+
+    // If debug parameters are provided, use them
+    if (debugPlayerId) {
+      return debugPlayerId;
+    }
+
+    // If debugPlayerName is provided, create a consistent ID from it
+    if (debugPlayerName) {
+      return `debug_${debugPlayerName.toLowerCase().replace(/\s+/g, "_")}`;
+    }
+
+    return user?.id || "anonymous";
+  };
+
+  const getPlayerName = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const debugPlayerName = urlParams.get("playerName");
+
+    if (debugPlayerName) {
+      return debugPlayerName;
+    }
+
+    return user?.email?.split("@")[0] || "Anonymous";
+  };
+
   // Generate battle and player IDs for WebSocket connection
   const [battleId] = useState(`battle_1`);
-  const [currentPlayerId] = useState(() => user?.id || "anonymous");
+  const [currentPlayerId] = useState(() => getPlayerId());
+  const [currentPlayerName] = useState(() => getPlayerName());
+
+  // Check if we're in debug mode
+  const isDebugMode = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.has("playerId") || urlParams.has("playerName");
+  };
+
+  // Generate test URLs for multiple players
+  const generateTestUrls = () => {
+    const baseUrl = window.location.origin + window.location.pathname;
+    return [
+      `${baseUrl}?playerName=Alice`,
+      `${baseUrl}?playerName=Bob`,
+      `${baseUrl}?playerName=Charlie`,
+      `${baseUrl}?playerName=David`,
+    ];
+  };
 
   const [battleState, setBattleState] = useState<BattleState>({
     status: "waiting",
@@ -64,39 +112,52 @@ const BattleMain: React.FC = () => {
     sendTestResults,
     isAdmin,
     battleStatus: serverBattleStatus,
-    battleId: serverBattleId,
-    error: serverError,
     startBattle: startServerBattle,
-    completeBattle: completeServerBattle,
   } = useWebSocket(getWebSocketUrl(), battleId, currentPlayerId);
 
-  // Update players list from WebSocket
+  // Update players list from WebSocket with live test results
   useEffect(() => {
     if (playersList.length > 0) {
-      const updatedPlayers = playersList.map((wsPlayer) => ({
-        id: wsPlayer.userId,
-        name: wsPlayer.userId.split("@")[0] || "Anonymous", // Extract name from userId
-        avatar: "/api/placeholder/40/40",
-        rating: 1500,
-        wins: 0,
-        losses: 0,
-        status: wsPlayer.isConnected
-          ? ("ready" as const)
-          : ("disconnected" as const),
-        joinedAt: new Date(wsPlayer.joinedAt).getTime(),
-        testProgress: {
-          passed: wsPlayer.testsPassed,
-          total: wsPlayer.totalTests,
-          completedAt:
-            wsPlayer.testsPassed === wsPlayer.totalTests &&
-            wsPlayer.totalTests > 0
-              ? Date.now()
-              : undefined,
-        },
-      }));
+      const updatedPlayers = playersList.map((wsPlayer) => {
+        // Check if we have live test results for this player
+        const liveResults = playerResults[wsPlayer.userId];
+
+        return {
+          id: wsPlayer.userId,
+          name:
+            wsPlayer.userId === currentPlayerId
+              ? currentPlayerName // Use debug name for current player
+              : wsPlayer.userId.split("@")[0] || "Anonymous", // Extract name from userId for others
+          avatar: "/api/placeholder/40/40",
+          rating: 1500,
+          wins: 0,
+          losses: 0,
+          status: wsPlayer.isConnected
+            ? ("ready" as const)
+            : ("disconnected" as const),
+          joinedAt: new Date(wsPlayer.joinedAt).getTime(),
+          testProgress: liveResults
+            ? {
+                // Use live results if available (more up-to-date)
+                passed: liveResults.passed,
+                total: liveResults.total,
+                completedAt: liveResults.isCompleted ? Date.now() : undefined,
+              }
+            : {
+                // Fall back to WebSocket player data
+                passed: wsPlayer.testsPassed,
+                total: wsPlayer.totalTests,
+                completedAt:
+                  wsPlayer.testsPassed === wsPlayer.totalTests &&
+                  wsPlayer.totalTests > 0
+                    ? Date.now()
+                    : undefined,
+              },
+        };
+      });
       setPlayers(updatedPlayers);
     }
-  }, [playersList]);
+  }, [playersList, playerResults, currentPlayerId, currentPlayerName]); // Include playerResults in dependencies
 
   // Sync server battle status with local state
   useEffect(() => {
@@ -113,13 +174,41 @@ const BattleMain: React.FC = () => {
     }
   }, [serverBattleStatus]);
 
-  // Initialize current user as the first player
+  // Update battle state based on player completion status
   useEffect(() => {
-    if (user) {
+    const completedPlayers = players.filter(
+      (player) =>
+        player.testProgress &&
+        player.testProgress.passed === player.testProgress.total &&
+        player.testProgress.total > 0
+    );
+
+    if (completedPlayers.length > 0) {
+      setBattleState((prev) => {
+        const newWinners = completedPlayers
+          .slice(0, 3) // Top 3 winners
+          .map((player) => player.name);
+
+        return {
+          ...prev,
+          completedPlayers: completedPlayers.length,
+          winners: newWinners,
+          status:
+            completedPlayers.length === players.length && players.length > 0
+              ? "finished"
+              : prev.status,
+        };
+      });
+    }
+  }, [players]);
+
+  // Initialize current user as the first player only if no WebSocket players
+  useEffect(() => {
+    if (playersList.length === 0) {
       const currentPlayer: Player = {
-        id: user.id,
-        name: user.email?.split("@")[0] || "Anonymous",
-        avatar: user.user_metadata?.avatar_url || "/api/placeholder/40/40",
+        id: currentPlayerId,
+        name: currentPlayerName,
+        avatar: user?.user_metadata?.avatar_url || "/api/placeholder/40/40",
         rating: 1500,
         wins: 0,
         losses: 0,
@@ -130,7 +219,12 @@ const BattleMain: React.FC = () => {
       setPlayers([currentPlayer]);
       setBattleState((prev) => ({ ...prev, totalPlayers: 1 }));
     }
-  }, [user]);
+  }, [
+    currentPlayerId,
+    currentPlayerName,
+    user?.user_metadata?.avatar_url,
+    playersList.length,
+  ]);
 
   const [countdown, setCountdown] = useState<number | null>(null);
 
@@ -212,54 +306,15 @@ const BattleMain: React.FC = () => {
   };
 
   const handleTestResults = (results: { testCases: { passed: boolean }[] }) => {
-    // Update test progress for current player
+    // Send test results to WebSocket server for multiplayer sync
     if (results && results.testCases) {
       const passed = results.testCases.filter((tc) => tc.passed).length;
       const total = results.testCases.length;
-      const isCompleted = passed === total;
 
-      // Send test results to WebSocket server for multiplayer sync
+      // Send to WebSocket - this will trigger updates for all players
       sendTestResults(passed, total);
 
-      // Update the player's test progress
-      setPlayers((prev) =>
-        prev.map((player) =>
-          player.id === currentPlayerId
-            ? {
-                ...player,
-                testProgress: {
-                  passed,
-                  total,
-                  completedAt: isCompleted ? Date.now() : undefined,
-                },
-                status: isCompleted ? "submitted" : "coding",
-              }
-            : player
-        )
-      );
-
-      // Update battle state if player completed all tests
-      if (isCompleted) {
-        setBattleState((prev) => {
-          const newCompletedPlayers = prev.completedPlayers + 1;
-          const newWinners = [...prev.winners];
-
-          // Add to winners list (first 3 get podium positions)
-          if (newWinners.length < 3) {
-            newWinners.push(user?.email?.split("@")[0] || "Anonymous");
-          }
-
-          return {
-            ...prev,
-            completedPlayers: newCompletedPlayers,
-            winners: newWinners,
-            status:
-              newCompletedPlayers === prev.totalPlayers
-                ? "finished"
-                : prev.status,
-          };
-        });
-      }
+      console.log("Sent test results to WebSocket:", { passed, total });
     }
     console.log("Testing code results:", results);
   };
@@ -269,90 +324,125 @@ const BattleMain: React.FC = () => {
     console.log("Test code button clicked");
   };
 
-  const handleCompleteBattle = () => {
-    if (isAdmin) {
-      // Admin completes battle via server
-      completeServerBattle();
-      setBattleState((prev) => ({ ...prev, status: "finished" }));
-    }
-  };
-
   return (
-    <Container maxWidth="xl">
-      <Box sx={{ py: 4 }}>
-        {/* <BattleHeader /> */}
+    <>
+      {/* Debug Mode Info Panel - Always visible in development */}
+      {/* <Box
+        sx={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 2000,
+          backgroundColor: "warning.light",
+          border: "1px solid",
+          borderColor: "warning.main",
+          p: 1,
+          fontSize: "0.8rem",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box>
+            <strong>
+              🧪{" "}
+              {isDebugMode() ? "Debug Mode Active" : "Local Testing Available"}
+            </strong>
+            {" | "}
+            Playing as: <strong>{currentPlayerName}</strong> (ID:{" "}
+            {currentPlayerId})
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              alignItems: "center",
+              fontSize: "0.75em",
+            }}
+          >
+            <span>Try: ?playerName=Alice</span>
+            <button
+              onClick={() => {
+                const urls = generateTestUrls();
+                console.log("🧪 Test URLs for multiple players:");
+                urls.forEach((url, i) =>
+                  console.log(`Player ${i + 1}: ${url}`)
+                );
+                alert(
+                  "Test URLs logged to console! Open Developer Tools to copy them."
+                );
+              }}
+              style={{ padding: "2px 6px", fontSize: "11px" }}
+            >
+              Log Test URLs
+            </button>
+          </Box>
+        </Box>
+      </Box> */}
 
-        {/* <BattleStatusPanel battleState={battleState} countdown={countdown} /> */}
+      <Container maxWidth="xl">
+        <Box sx={{ py: 4, mt: 6 }}>
+          {" "}
+          {/* Add top margin to account for fixed debug panel */}
+          {/* <BattleHeader /> */}
+          {/* <BattleStatusPanel battleState={battleState} countdown={countdown} /> */}
+          {/* Pre-battle and post-battle layout */}
+          {(battleState.status === "waiting" ||
+            battleState.status === "countdown") && (
+            <Grid container spacing={3}>
+              {/* Side Navigation */}
+              <Grid item xs={12} md={3}>
+                <BattleEntrySideNav
+                  players={players}
+                  currentUserId={currentPlayerId}
+                />
+              </Grid>
 
-        {/* Admin Panel */}
-        <AdminPanel
-          isAdmin={isAdmin}
-          battleStatus={
-            serverBattleStatus === "completed"
-              ? "finished"
-              : serverBattleStatus || "waiting"
-          }
-          playerCount={players.length}
-          error={serverError}
-          onStartBattle={handleStartBattle}
-          onCompleteBattle={handleCompleteBattle}
-        />
-
-        {/* Pre-battle and post-battle layout */}
-        {(battleState.status === "waiting" ||
-          battleState.status === "countdown") && (
-          <>
-            <MultiplayerLeaderboard
-              players={players}
-              currentUserId={currentPlayerId}
-              battleStatus={battleState.status}
-              playerResults={playerResults}
-            />
-            {!isAdmin && (
-              <BattleControls
-                battleStatus={battleState.status}
-                onStartBattle={handleStartBattle}
-                onResetBattle={handleResetBattle}
-                onSubmitSolution={handleSubmitSolution}
-                onTestCode={handleTestCode}
-              />
-            )}
-          </>
-        )}
-
-        {/* Active battle layout with editor */}
-        {(battleState.status === "active" ||
-          battleState.status === "finished") && (
-          <>
-            {/* Admin panel also visible during active battle */}
-            {battleState.status === "active" && (
-              <AdminPanel
-                isAdmin={isAdmin}
-                battleStatus={
-                  serverBattleStatus === "completed"
-                    ? "finished"
-                    : serverBattleStatus || "waiting"
-                }
-                playerCount={players.length}
-                error={serverError}
-                onStartBattle={handleStartBattle}
-                onCompleteBattle={handleCompleteBattle}
-              />
-            )}
-
-            <Grid container spacing={3} mb={4}>
-              {/* Multiplayer leaderboard during battle */}
-              <Grid item xs={12} md={12}>
+              {/* Main Content */}
+              <Grid item xs={12} md={9}>
                 <MultiplayerLeaderboard
                   players={players}
                   currentUserId={currentPlayerId}
                   battleStatus={battleState.status}
                   playerResults={playerResults}
+                  countdown={countdown}
                 />
+                {!isAdmin && (
+                  <BattleControls
+                    battleStatus={battleState.status}
+                    onStartBattle={handleStartBattle}
+                    onResetBattle={handleResetBattle}
+                    onSubmitSolution={handleSubmitSolution}
+                    onTestCode={handleTestCode}
+                  />
+                )}
               </Grid>
-
-              {/* Resizable Coding Panels */}
-              <Grid item xs={12}>
+            </Grid>
+          )}
+          {/* Active battle layout with editor */}
+          {(battleState.status === "active" ||
+            battleState.status === "finished") && (
+            <Box
+              sx={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: "flex",
+                flexDirection: "column",
+                backgroundColor: "background.default",
+                overflow: "hidden",
+                zIndex: 1000,
+              }}
+            >
+              {/* Fixed-height coding panels */}
+              <Box sx={{ flexGrow: 1, minHeight: 0 }}>
                 <ResizableCodingPanels
                   problemTitle={battleState.currentProblem}
                   problemId="twoSum"
@@ -360,26 +450,19 @@ const BattleMain: React.FC = () => {
                   onTest={handleTestResults}
                   battleId={battleId}
                   playerId={currentPlayerId}
+                  players={players}
+                  currentUserId={currentPlayerId}
                 />
-              </Grid>
-            </Grid>
-
-            {/* <BattleControls
-              battleStatus={battleState.status}
-              onStartBattle={handleStartBattle}
-              onResetBattle={handleResetBattle}
-              onSubmitSolution={handleSubmitSolution}
-              onTestCode={handleTestCode}
-            /> */}
-          </>
-        )}
-
-        <BattleResults
-          winners={battleState.winners}
-          isVisible={battleState.status === "finished"}
-        />
-      </Box>
-    </Container>
+              </Box>
+            </Box>
+          )}
+          <BattleResults
+            winners={battleState.winners}
+            isVisible={battleState.status === "finished"}
+          />
+        </Box>
+      </Container>
+    </>
   );
 };
 

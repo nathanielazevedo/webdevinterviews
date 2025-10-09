@@ -1,16 +1,46 @@
 import React, { useState, useRef, useCallback } from "react";
-import { Box, Paper, Typography, Button, useTheme } from "@mui/material";
-import { Send, BugReport } from "@mui/icons-material";
+import {
+  Box,
+  Paper,
+  Typography,
+  Button,
+  useTheme,
+  LinearProgress,
+  Avatar,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+} from "@mui/material";
+import { Send, BugReport, Person } from "@mui/icons-material";
 import MonacoCodeEditor from "./MonacoCodeEditor";
 import TestRunner from "./TestRunner";
+
+interface TestResults {
+  testCases: { passed: boolean }[];
+}
+
+interface Player {
+  id: string;
+  name: string;
+  avatar: string;
+  status: "ready" | "coding" | "submitted" | "disconnected";
+  testProgress?: {
+    passed: number;
+    total: number;
+    completedAt?: number;
+  };
+}
 
 interface ResizableCodingPanelsProps {
   problemTitle: string;
   problemId: string;
   onSubmit: (code: string) => void;
-  onTest: (results: any) => void;
+  onTest: (results: TestResults) => void;
   battleId?: string;
   playerId?: string;
+  players?: Player[];
+  currentUserId?: string;
 }
 
 const ResizableCodingPanels: React.FC<ResizableCodingPanelsProps> = ({
@@ -20,14 +50,17 @@ const ResizableCodingPanels: React.FC<ResizableCodingPanelsProps> = ({
   onTest,
   battleId,
   playerId,
+  players = [],
+  currentUserId,
 }) => {
   const theme = useTheme();
   const [code, setCode] = useState(`function twoSum(nums, target) {
     // Write your solution here
     
 }`);
-  const [leftWidth, setLeftWidth] = useState(40); // Percentage
-  const [rightTopHeight, setRightTopHeight] = useState(60); // Percentage
+  const [userListWidth, setUserListWidth] = useState(20); // Percentage for left user list panel
+  const [problemWidth, setProblemWidth] = useState(30); // Percentage for problem description panel
+  const [rightTopHeight, setRightTopHeight] = useState(60); // Percentage for right top panel (editor)
 
   const containerRef = useRef<HTMLDivElement>(null);
   const isDraggingVertical = useRef(false);
@@ -64,8 +97,8 @@ Constraints:
     onSubmit(code);
   };
 
-  // Handle vertical resizer (between left and right panels)
-  const handleVerticalMouseDown = useCallback((e: React.MouseEvent) => {
+  // Handle first vertical resizer (between user list and problem panels)
+  const handleFirstVerticalMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     isDraggingVertical.current = true;
 
@@ -73,12 +106,12 @@ Constraints:
       if (!isDraggingVertical.current || !containerRef.current) return;
 
       const containerRect = containerRef.current.getBoundingClientRect();
-      const newLeftWidth =
+      const newUserListWidth =
         ((e.clientX - containerRect.left) / containerRect.width) * 100;
 
-      // Constrain between 20% and 70%
-      const constrainedWidth = Math.min(Math.max(newLeftWidth, 20), 70);
-      setLeftWidth(constrainedWidth);
+      // Constrain between 15% and 40%
+      const constrainedWidth = Math.min(40, Math.max(15, newUserListWidth));
+      setUserListWidth(constrainedWidth);
     };
 
     const handleMouseUp = () => {
@@ -90,6 +123,41 @@ Constraints:
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
   }, []);
+
+  // Handle second vertical resizer (between problem and editor panels)
+  const handleSecondVerticalMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      isDraggingVertical.current = true;
+
+      const handleMouseMove = (e: MouseEvent) => {
+        if (!isDraggingVertical.current || !containerRef.current) return;
+
+        const containerRect = containerRef.current.getBoundingClientRect();
+        const newProblemWidth =
+          ((e.clientX -
+            containerRect.left -
+            (userListWidth * containerRect.width) / 100 -
+            4) /
+            containerRect.width) *
+          100;
+
+        // Constrain between 20% and 50%
+        const constrainedWidth = Math.min(50, Math.max(20, newProblemWidth));
+        setProblemWidth(constrainedWidth);
+      };
+
+      const handleMouseUp = () => {
+        isDraggingVertical.current = false;
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+      };
+
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    },
+    [userListWidth]
+  );
 
   // Handle horizontal resizer (between right top and bottom panels)
   const handleHorizontalMouseDown = useCallback((e: React.MouseEvent) => {
@@ -124,19 +192,132 @@ Constraints:
     <Box
       ref={containerRef}
       sx={{
-        height: "80vh",
+        height: "100vh",
         display: "flex",
-        border: `1px solid ${theme.palette.divider}`,
-        borderRadius: 1,
+        border: "none",
+        borderRadius: 0,
         overflow: "hidden",
         position: "relative",
       }}
     >
-      {/* Left Panel - Problem Description */}
+      {/* Left Panel - User List */}
       <Paper
         elevation={0}
         sx={{
-          width: `${leftWidth}%`,
+          width: `${userListWidth}%`,
+          display: "flex",
+          flexDirection: "column",
+          borderRadius: 0,
+          borderRight: `1px solid ${theme.palette.divider}`,
+        }}
+      >
+        <Box
+          sx={{
+            p: 2,
+            borderBottom: `1px solid ${theme.palette.divider}`,
+            backgroundColor: theme.palette.background.default,
+          }}
+        >
+          <Typography variant="h6" fontWeight="bold">
+            Players ({players.length})
+          </Typography>
+        </Box>
+
+        <Box
+          sx={{
+            flex: 1,
+            overflow: "auto",
+          }}
+        >
+          <List sx={{ py: 0 }}>
+            {players.map((player) => (
+              <ListItem
+                key={player.id}
+                sx={{
+                  px: 2,
+                  py: 1,
+                  borderBottom: `1px solid ${theme.palette.divider}20`,
+                  backgroundColor:
+                    player.id === currentUserId
+                      ? `${theme.palette.primary.main}10`
+                      : "transparent",
+                }}
+              >
+                <ListItemAvatar sx={{ minWidth: 40 }}>
+                  <Avatar src={player.avatar} sx={{ width: 32, height: 32 }}>
+                    <Person fontSize="small" />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <Typography variant="body2" fontWeight={500}>
+                      {player.name}
+                      {player.id === currentUserId && " (You)"}
+                    </Typography>
+                  }
+                  secondary={
+                    <Box sx={{ mt: 0.5, width: "100%" }}>
+                      <LinearProgress
+                        variant="determinate"
+                        value={
+                          player.testProgress && player.testProgress.total > 0
+                            ? (player.testProgress.passed /
+                                player.testProgress.total) *
+                              100
+                            : 0
+                        }
+                        sx={{
+                          height: 6,
+                          borderRadius: 3,
+                          backgroundColor: theme.palette.grey[200],
+                          "& .MuiLinearProgress-bar": {
+                            borderRadius: 3,
+                            backgroundColor:
+                              player.testProgress &&
+                              player.testProgress.passed ===
+                                player.testProgress.total &&
+                              player.testProgress.total > 0
+                                ? theme.palette.success.main
+                                : theme.palette.primary.main,
+                          },
+                        }}
+                      />
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        sx={{ mt: 0.5, display: "block" }}
+                      >
+                        {player.testProgress?.passed || 0}/
+                        {player.testProgress?.total || 0} tests
+                      </Typography>
+                    </Box>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Paper>
+
+      {/* First Vertical Resizer */}
+      <Box
+        onMouseDown={handleFirstVerticalMouseDown}
+        sx={{
+          width: "4px",
+          cursor: "col-resize",
+          backgroundColor: theme.palette.divider,
+          "&:hover": {
+            backgroundColor: theme.palette.primary.main,
+          },
+          transition: "background-color 0.2s",
+        }}
+      />
+
+      {/* Middle Panel - Problem Description */}
+      <Paper
+        elevation={0}
+        sx={{
+          width: `${problemWidth}%`,
           display: "flex",
           flexDirection: "column",
           borderRadius: 0,
@@ -181,9 +362,9 @@ Constraints:
         </Box>
       </Paper>
 
-      {/* Vertical Resizer */}
+      {/* Second Vertical Resizer */}
       <Box
-        onMouseDown={handleVerticalMouseDown}
+        onMouseDown={handleSecondVerticalMouseDown}
         sx={{
           width: "4px",
           cursor: "col-resize",
@@ -198,7 +379,7 @@ Constraints:
       {/* Right Panel Container */}
       <Box
         sx={{
-          width: `${100 - leftWidth}%`,
+          width: `${100 - userListWidth - problemWidth - 0.8}%`, // Subtract space for resizers
           display: "flex",
           flexDirection: "column",
         }}
@@ -241,7 +422,7 @@ Constraints:
 
           <Box sx={{ flex: 1, p: 2, position: "relative" }}>
             <MonacoCodeEditor
-              key={`editor-${leftWidth}-${rightTopHeight}`}
+              key={`editor-${userListWidth}-${problemWidth}-${rightTopHeight}`}
               value={code}
               onChange={setCode}
               language="javascript"

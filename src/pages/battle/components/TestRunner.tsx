@@ -2,13 +2,9 @@ import React, { useState, useCallback, useEffect } from "react";
 import {
   Box,
   Typography,
-  Card,
-  CardContent,
   LinearProgress,
-  Chip,
   Stack,
   Alert,
-  Collapse,
   IconButton,
   Table,
   TableBody,
@@ -18,17 +14,11 @@ import {
   TableRow,
   Paper,
   useTheme,
-  Divider,
 } from "@mui/material";
 import {
   PlayArrow,
   CheckCircle,
   Error as ErrorIcon,
-  ExpandMore,
-  ExpandLess,
-  Timer,
-  Person,
-  PersonOutline,
 } from "@mui/icons-material";
 import CodeRunner, { TEST_CASES } from "../utils/CodeRunner";
 import { useWebSocket } from "./Websocket";
@@ -59,11 +49,6 @@ interface TestResult {
   totalExecutionTime: number;
 }
 
-interface OpponentResults {
-  passed: number;
-  total: number;
-}
-
 const TestRunner: React.FC<TestRunnerProps> = ({
   code,
   problemId,
@@ -74,7 +59,6 @@ const TestRunner: React.FC<TestRunnerProps> = ({
   const theme = useTheme();
   const [isRunning, setIsRunning] = useState(false);
   const [results, setResults] = useState<TestResult | null>(null);
-  const [showDetails, setShowDetails] = useState(false);
 
   // WebSocket integration for real-time battle communication
   const { isConnected, sendTestResults } = useWebSocket(
@@ -149,10 +133,6 @@ const TestRunner: React.FC<TestRunnerProps> = ({
     }
   }, [code, problemId, onTestComplete, battleId, playerId, sendTestResults]);
 
-  const getStatusColor = (passed: boolean) => {
-    return passed ? theme.palette.success.main : theme.palette.error.main;
-  };
-
   const getStatusIcon = (passed: boolean) => {
     return passed ? (
       <CheckCircle color="success" />
@@ -206,127 +186,79 @@ const TestRunner: React.FC<TestRunnerProps> = ({
       <Box sx={{ flex: 1, overflow: "auto", p: 2 }}>
         {results && (
           <Stack spacing={2}>
-            {/* Summary Card */}
-            <Card
-              sx={{
-                border: `2px solid ${getStatusColor(results.passed)}`,
-                bgcolor: results.passed
-                  ? `${theme.palette.success.main}10`
-                  : `${theme.palette.error.main}10`,
-              }}
-            >
-              <CardContent>
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  {getStatusIcon(results.passed)}
-                  <Box sx={{ flex: 1 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                      {results.message}
-                    </Typography>
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      spacing={2}
-                      sx={{ mt: 1 }}
-                    >
-                      <Chip
-                        size="small"
-                        label={`${
-                          results.testCases.filter((tc) => tc.passed).length
-                        }/${results.testCases.length} passed`}
-                        color={results.passed ? "success" : "error"}
-                      />
-                      <Box
-                        sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
-                      >
-                        <Timer fontSize="small" />
-                        <Typography variant="body2">
-                          {results.totalExecutionTime.toFixed(2)}ms
-                        </Typography>
-                      </Box>
-                    </Stack>
-                  </Box>
-                  <IconButton onClick={() => setShowDetails(!showDetails)}>
-                    {showDetails ? <ExpandLess /> : <ExpandMore />}
-                  </IconButton>
-                </Stack>
-              </CardContent>
-            </Card>
-
             {/* Detailed Results */}
-            <Collapse in={showDetails}>
-              <TableContainer component={Paper}>
-                <Table size="small">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Status</TableCell>
-                      <TableCell>Test Case</TableCell>
-                      <TableCell>Input</TableCell>
-                      <TableCell>Expected</TableCell>
-                      <TableCell>Actual</TableCell>
-                      <TableCell>Time</TableCell>
+            <TableContainer component={Paper}>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Status</TableCell>
+                    <TableCell>Test Case</TableCell>
+                    <TableCell>Input</TableCell>
+                    <TableCell>Expected</TableCell>
+                    <TableCell>Actual</TableCell>
+                    <TableCell>Time</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {results.testCases.map((testCase, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{
+                        bgcolor: testCase.passed
+                          ? `${theme.palette.success.main}05`
+                          : `${theme.palette.error.main}05`,
+                      }}
+                    >
+                      <TableCell>{getStatusIcon(testCase.passed)}</TableCell>
+                      <TableCell>
+                        <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                          {testCase.description}
+                        </Typography>
+                        {testCase.error && (
+                          <Alert severity="error" sx={{ mt: 1 }}>
+                            {testCase.error}
+                          </Alert>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <Typography
+                          variant="body2"
+                          sx={{ fontFamily: "monospace" }}
+                        >
+                          {testCase.input}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography
+                          variant="body2"
+                          sx={{ fontFamily: "monospace" }}
+                        >
+                          {testCase.expected}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            fontFamily: "monospace",
+                            color: testCase.passed
+                              ? "inherit"
+                              : theme.palette.error.main,
+                          }}
+                        >
+                          {testCase.actual}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="body2">
+                          {testCase.executionTime?.toFixed(2)}ms
+                        </Typography>
+                      </TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {results.testCases.map((testCase, index) => (
-                      <TableRow
-                        key={index}
-                        sx={{
-                          bgcolor: testCase.passed
-                            ? `${theme.palette.success.main}05`
-                            : `${theme.palette.error.main}05`,
-                        }}
-                      >
-                        <TableCell>{getStatusIcon(testCase.passed)}</TableCell>
-                        <TableCell>
-                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                            {testCase.description}
-                          </Typography>
-                          {testCase.error && (
-                            <Alert severity="error" sx={{ mt: 1 }}>
-                              {testCase.error}
-                            </Alert>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          <Typography
-                            variant="body2"
-                            sx={{ fontFamily: "monospace" }}
-                          >
-                            {testCase.input}
-                          </Typography>
-                        </TableCell>
-                        <TableCell>
-                          <Typography
-                            variant="body2"
-                            sx={{ fontFamily: "monospace" }}
-                          >
-                            {testCase.expected}
-                          </Typography>
-                        </TableCell>
-                        <TableCell>
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              fontFamily: "monospace",
-                              color: testCase.passed
-                                ? "inherit"
-                                : theme.palette.error.main,
-                            }}
-                          >
-                            {testCase.actual}
-                          </Typography>
-                        </TableCell>
-                        <TableCell>
-                          <Typography variant="body2">
-                            {testCase.executionTime?.toFixed(2)}ms
-                          </Typography>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Collapse>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
 
             {/* No Results Message */}
             {results.testCases.length === 0 && (
@@ -336,82 +268,6 @@ const TestRunner: React.FC<TestRunnerProps> = ({
               </Alert>
             )}
           </Stack>
-        )}
-
-        {/* Opponent Results Section */}
-        {false && (
-          <Box sx={{ mt: 3 }}>
-            <Divider sx={{ mb: 2 }}>
-              <Chip
-                icon={<PersonOutline />}
-                label="Opponent Results"
-                variant="outlined"
-                size="small"
-              />
-            </Divider>
-
-            <Card
-              sx={{
-                border: `2px solid ${getStatusColor(
-                  (opponentResults as OpponentResults).passed ===
-                    (opponentResults as OpponentResults).total
-                )}`,
-                bgcolor:
-                  (opponentResults as OpponentResults).passed ===
-                  (opponentResults as OpponentResults).total
-                    ? `${theme.palette.success.main}08`
-                    : `${theme.palette.error.main}08`,
-                opacity: 0.8,
-              }}
-            >
-              <CardContent>
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  {getStatusIcon(
-                    (opponentResults as OpponentResults).passed ===
-                      (opponentResults as OpponentResults).total
-                  )}
-                  <Box sx={{ flex: 1 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                      Opponent Test Progress
-                    </Typography>
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      spacing={2}
-                      sx={{ mt: 1 }}
-                    >
-                      <Chip
-                        size="small"
-                        label={`${
-                          (opponentResults as OpponentResults).passed
-                        }/${(opponentResults as OpponentResults).total} passed`}
-                        color={
-                          (opponentResults as OpponentResults).passed ===
-                          (opponentResults as OpponentResults).total
-                            ? "success"
-                            : "error"
-                        }
-                        variant="outlined"
-                      />
-                    </Stack>
-                  </Box>
-                </Stack>
-              </CardContent>
-            </Card>
-          </Box>
-        )}
-
-        {/* WebSocket Connection Status */}
-        {battleId && (
-          <Box sx={{ mt: 2 }}>
-            <Chip
-              icon={<Person />}
-              label={isConnected ? "Connected to Battle" : "Connecting..."}
-              color={isConnected ? "success" : "warning"}
-              variant="outlined"
-              size="small"
-            />
-          </Box>
         )}
 
         {/* Initial State */}

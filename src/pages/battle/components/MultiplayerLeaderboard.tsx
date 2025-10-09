@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -11,6 +11,7 @@ import {
   Paper,
   useTheme,
   Badge,
+  CircularProgress,
 } from "@mui/material";
 import {
   Person,
@@ -19,6 +20,7 @@ import {
   Code,
   CheckCircle,
   Schedule,
+  PlayArrow,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 
@@ -52,6 +54,7 @@ interface MultiplayerLeaderboardProps {
   currentUserId: string;
   battleStatus: "waiting" | "countdown" | "active" | "finished";
   playerResults?: PlayerResults;
+  countdown?: number | null;
 }
 
 const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
@@ -59,8 +62,28 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
   currentUserId,
   battleStatus,
   playerResults = {},
+  countdown = null,
 }) => {
   const theme = useTheme();
+
+  // Countdown timer for next battle
+  const [nextBattleCountdown, setNextBattleCountdown] = useState(300); // 5 minutes default
+
+  useEffect(() => {
+    if (battleStatus === "waiting") {
+      const interval = setInterval(() => {
+        setNextBattleCountdown((prev) => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [battleStatus]);
+
+  const formatCountdown = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+  };
 
   // Sort players by completion status and time
   const sortedPlayers = [...players].sort((a, b) => {
@@ -123,6 +146,81 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
     if (index === 2) return <EmojiEvents sx={{ color: "#CD7F32" }} />; // Bronze
     return null;
   };
+
+  // Show countdown entry screen for waiting and countdown states
+  if (battleStatus === "waiting" || battleStatus === "countdown") {
+    return (
+      <Paper elevation={2} sx={{ p: 4, mb: 3, textAlign: "center" }}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          minHeight={300}
+        >
+          {battleStatus === "countdown" && countdown !== null ? (
+            // Battle starting countdown
+            <>
+              <Typography
+                variant="h3"
+                sx={{
+                  fontWeight: 700,
+                  mb: 2,
+                  color: theme.palette.primary.main,
+                }}
+              >
+                {countdown}
+              </Typography>
+              <Typography variant="h5" sx={{ fontWeight: 600, mb: 3 }}>
+                Battle Starting...
+              </Typography>
+              <CircularProgress size={60} thickness={4} />
+            </>
+          ) : (
+            // Waiting for next battle
+            <>
+              <PlayArrow
+                sx={{
+                  fontSize: 80,
+                  mb: 3,
+                  color: theme.palette.primary.main,
+                  opacity: 0.7,
+                }}
+              />
+              <Typography variant="h4" sx={{ fontWeight: 700, mb: 2 }}>
+                Next Battle Starts In
+              </Typography>
+              <Typography
+                variant="h2"
+                sx={{
+                  fontWeight: 800,
+                  mb: 3,
+                  color: theme.palette.primary.main,
+                  fontFamily: "monospace",
+                }}
+              >
+                {formatCountdown(nextBattleCountdown)}
+              </Typography>
+              <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
+                Get ready to code! The battle will begin automatically.
+              </Typography>
+              <Box display="flex" alignItems="center" gap={2}>
+                <Chip
+                  label={`${players.length} Player${
+                    players.length !== 1 ? "s" : ""
+                  } Ready`}
+                  color="success"
+                  variant="outlined"
+                  size="medium"
+                />
+                <Timer color="primary" />
+              </Box>
+            </>
+          )}
+        </Box>
+      </Paper>
+    );
+  }
 
   return (
     <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
