@@ -1,9 +1,5 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import {
-  apiClient,
-  wsClient,
-  WebSocketClient,
-} from "@webdevinterviews/shared";
+import { apiClient, wsClient, WebSocketClient } from "@webdevinterviews/shared";
 import type {
   BattleStatusResponse,
   PlayersResponse,
@@ -149,7 +145,7 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({
 
     try {
       const { data, error } = await httpClient.GET("/room/{roomId}/battle", {
-        params: { path: { roomId } }
+        params: { path: { roomId } },
       });
       if (error) throw new Error("API Error");
       setState((prev) => ({ ...prev, lastSync: new Date() }));
@@ -171,7 +167,7 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({
 
     try {
       const { data, error } = await httpClient.GET("/room/{roomId}/players", {
-        params: { path: { roomId } }
+        params: { path: { roomId } },
       });
       if (error) throw new Error("API Error");
       setState((prev) => ({ ...prev, lastSync: new Date() }));
@@ -193,7 +189,7 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({
 
     try {
       const { data, error } = await httpClient.GET("/user/{userId}/stats", {
-        params: { path: { userId } }
+        params: { path: { userId } },
       });
       if (error) throw new Error("API Error");
       setState((prev) => ({ ...prev, lastSync: new Date() }));
