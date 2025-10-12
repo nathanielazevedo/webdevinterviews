@@ -1,8 +1,8 @@
 [build]
-command = "cd packages/backend && npm install && npm run build"
+command = "npm install && npm run build:shared && npm run build:backend"
 
 [deploy]
-startCommand = "cd packages/backend && npm start"
+startCommand = "npm run start --workspace=@webdevinterviews/backend"
 
 [env]
 # Railway will automatically set PORT
