@@ -1,10 +1,10 @@
 # WEB DEV INTERVIEWS
 
-Welcome to Web Dev Interviews, a showcase of my React application designed for web development interviews.
+Welcome to Web Dev Interviews, a full-stack application designed for web development interviews and coding practice.
 
 ## Overview
 
-Web Dev Interviews is a React application built with modern web technologies. It's specifically crafted to demonstrate my skills and expertise in web development.
+Web Dev Interviews is a modern full-stack application built with cutting-edge web technologies. It features real-time interactions, user authentication, and a comprehensive database system to demonstrate advanced web development skills.
 
 ## System Design
 
@@ -12,38 +12,49 @@ For a detailed list of the system design, please check [System Design Documentat
 
 ## Technology Stack
 
-- **React and Vite:** Powering the frontend for a fast and responsive user experience.
-- **Authentication with Amazon Cognito:** Ensuring secure access and user management.
-- **AWS Services (S3, CloudFront):** Reliable and scalable infrastructure for hosting static assets.
-- **GitHub Actions for CI/CD:** Automated workflows for continuous integration and deployment.
-- **Jest and Testing Library:** Robust testing frameworks ensuring code quality.
-- **AWS CloudFormation:** Infrastructure as Code (IaC) for managing AWS resources.
-- **Sandpack and CodeMirror:** Enhancing the development experience with online code editing.
+### Frontend
+- **React with TypeScript:** Type-safe, component-based frontend architecture
+- **Vite:** Fast build tool and development server for optimal developer experience
+- **Vercel:** Modern deployment platform for seamless frontend hosting
+
+### Backend
+- **Node.js:** JavaScript runtime for server-side development
+- **WebSockets:** Real-time bidirectional communication for live features
+- **Express.js:** Web framework for API endpoints and server logic
+
+### Database & Authentication
+- **Supabase PostgreSQL:** Robust, scalable PostgreSQL database with real-time capabilities
+- **Supabase Auth:** Secure authentication and user management system
+
+### Development & Testing
+- **Jest and Testing Library:** Comprehensive testing frameworks ensuring code quality
+- **GitHub Actions for CI/CD:** Automated workflows for continuous integration and deployment
+- **TypeScript:** Static type checking across the entire application
 
 # Features
 
-Web Dev Interviews is packed with features to showcase modern web development practices:
+Web Dev Interviews showcases modern full-stack development practices:
 
-## Continuous Integration and Deployment
+## Real-time Communication
+- **WebSocket Integration:** Live updates and real-time interactions between users
+- **Event-driven Architecture:** Responsive user experience with instant feedback
 
-- **GitHub Actions:** Automated workflows ensure code quality and enable seamless deployment.
+## Authentication & Security
+- **Supabase Auth:** Secure user registration, login, and session management
+- **Protected Routes:** Role-based access control throughout the application
 
-## Testing
+## Database Management
+- **PostgreSQL with Supabase:** Robust relational database with real-time subscriptions
+- **Data Migrations:** Structured database schema evolution and version control
 
-- **Jest and Testing Library:** Comprehensive unit and integration testing for robust code.
+## Development Excellence
+- **TypeScript:** Full type safety across frontend and backend
+- **Monorepo Architecture:** Organized codebase with shared packages and utilities
+- **Comprehensive Testing:** Unit and integration tests ensuring code reliability
 
-## Infrastructure as Code (IaC)
-
-- **AWS CloudFormation:** Manage AWS resources efficiently with Infrastructure as Code.
-
-## Development Tools
-
-- **Online Code Editor - Sandpack:** Feature-rich code editor for quick prototyping and experimentation.
-- **CodeMirror Integration:** Enhance the code editing experience within the application.
-
-## Deployment
-
-- **Efficient Deployment:** Utilizes GitHub Actions workflows for continuous deployment.
+## Deployment & CI/CD
+- **Vercel Deployment:** Optimized frontend hosting with automatic deployments
+- **GitHub Actions:** Automated testing, building, and deployment workflows
 
 ---
 

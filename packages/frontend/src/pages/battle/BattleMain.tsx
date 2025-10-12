@@ -1,0 +1,690 @@
+import React, { useState, useEffect } from "react";
+import { Box, Grid, Container, Button, Typography } from "@mui/material";
+import { useAuth } from "../../contexts/AuthContext.tsx";
+import {
+  BattleControls,
+  BattleResults,
+  ResizableCodingPanels,
+  MultiplayerLeaderboard,
+  BattleEntrySideNav,
+} from "./components";
+import { useBattle } from "../../hooks/useBattle";
+
+interface Player {
+  id: string;
+  name: string;
+  avatar: string;
+  rating: number;
+  wins: number;
+  losses: number;
+  status: "ready" | "coding" | "submitted" | "disconnected";
+  joinedAt: number;
+  testProgress?: {
+    passed: number;
+    total: number;
+    completedAt?: number;
+  };
+}
+
+interface BattleState {
+  status: "waiting" | "countdown" | "active" | "finished";
+  timeRemaining: number;
+  totalTime: number;
+  currentProblem: string;
+  winners: string[]; // Array of winners for multiplayer
+  totalPlayers: number;
+  completedPlayers: number;
+}
+
+const BattleMain: React.FC = () => {
+  const { user } = useAuth();
+
+  // Helper function to get player ID from URL params or user
+  const getPlayerId = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const debugPlayerId = urlParams.get("playerId");
+    const debugPlayerName = urlParams.get("playerName");
+
+    // If debug parameters are provided, use them
+    if (debugPlayerId) {
+      return debugPlayerId;
+    }
+
+    // If debugPlayerName is provided, create a consistent ID from it
+    if (debugPlayerName) {
+      return `debug_${debugPlayerName.toLowerCase().replace(/\s+/g, "_")}`;
+    }
+
+    return user?.id || "anonymous";
+  };
+
+  const getPlayerName = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const debugPlayerName = urlParams.get("playerName");
+
+    if (debugPlayerName) {
+      return debugPlayerName;
+    }
+
+    return user?.email?.split("@")[0] || "Anonymous";
+  };
+
+  // Generate battle and player IDs for WebSocket connection
+  const [battleId] = useState(`battle_1`);
+  const [currentPlayerId] = useState(() => getPlayerId());
+  const [currentPlayerName] = useState(() => getPlayerName());
+
+  const [battleState, setBattleState] = useState<BattleState>({
+    status: "waiting",
+    timeRemaining: 900, // 15 minutes
+    totalTime: 900,
+    currentProblem: "Two Sum",
+    winners: [],
+    totalPlayers: 0,
+    completedPlayers: 0,
+  });
+
+  // Dynamic player list - updated via WebSocket
+  const [players, setPlayers] = useState<Player[]>([]);
+
+  // Battle API integration with WebSocket functionality
+  const {
+    playersList,
+    playerResults,
+    sendTestResults,
+    isAdmin,
+    battleStatus: serverBattleStatus,
+    battleStartTime,
+    timeUntilStart,
+    startBattle: startServerBattle,
+    // Question-related functionality
+    currentQuestion,
+    questionPool,
+    questionLoading,
+    getCurrentQuestion,
+    getQuestionPool,
+    // Battle timing functionality
+    createBattle,
+    getBattleInfo,
+  } = useBattle(battleId, currentPlayerId);
+
+  // Update players list from WebSocket with live test results
+  useEffect(() => {
+    if (playersList.length > 0) {
+      const updatedPlayers = playersList.map((wsPlayer) => {
+        // Check if we have live test results for this player
+        const liveResults = playerResults[wsPlayer.userId];
+
+        return {
+          id: wsPlayer.userId,
+          name:
+            wsPlayer.userId === currentPlayerId
+              ? currentPlayerName // Use debug name for current player
+              : wsPlayer.userId.split("@")[0] || "Anonymous", // Extract name from userId for others
+          avatar: "/api/placeholder/40/40",
+          rating: 1500,
+          wins: 0,
+          losses: 0,
+          status: wsPlayer.isConnected
+            ? ("ready" as const)
+            : ("disconnected" as const),
+          joinedAt: new Date(wsPlayer.joinedAt).getTime(),
+          testProgress: liveResults
+            ? {
+                // Use live results if available (more up-to-date)
+                passed: liveResults.passed,
+                total: liveResults.total,
+                completedAt: liveResults.isCompleted ? Date.now() : undefined,
+              }
+            : {
+                // Fall back to WebSocket player data
+                passed: wsPlayer.testsPassed,
+                total: wsPlayer.totalTests,
+                completedAt:
+                  wsPlayer.testsPassed === wsPlayer.totalTests &&
+                  wsPlayer.totalTests > 0
+                    ? Date.now()
+                    : undefined,
+              },
+        };
+      });
+      setPlayers(updatedPlayers);
+    }
+  }, [playersList, playerResults, currentPlayerId, currentPlayerName]); // Include playerResults in dependencies
+
+  // Sync server battle status with local state
+  useEffect(() => {
+    if (serverBattleStatus) {
+      setBattleState((prev) => ({
+        ...prev,
+        status:
+          serverBattleStatus === "waiting"
+            ? timeUntilStart !== null && timeUntilStart > 0
+              ? "countdown" // Show countdown if there's a scheduled start time
+              : "waiting"
+            : serverBattleStatus === "active"
+            ? "active"
+            : "finished",
+      }));
+    }
+  }, [serverBattleStatus, timeUntilStart]);
+
+  // Update battle state based on player completion status
+  useEffect(() => {
+    const completedPlayers = players.filter(
+      (player) =>
+        player.testProgress &&
+        player.testProgress.passed === player.testProgress.total &&
+        player.testProgress.total > 0
+    );
+
+    if (completedPlayers.length > 0) {
+      setBattleState((prev) => {
+        const newWinners = completedPlayers
+          .slice(0, 3) // Top 3 winners
+          .map((player) => player.name);
+
+        return {
+          ...prev,
+          completedPlayers: completedPlayers.length,
+          winners: newWinners,
+          status:
+            completedPlayers.length === players.length && players.length > 0
+              ? "finished"
+              : prev.status,
+        };
+      });
+    }
+  }, [players]);
+
+  // Initialize current user as the first player only if no WebSocket players
+  useEffect(() => {
+    if (playersList.length === 0) {
+      const currentPlayer: Player = {
+        id: currentPlayerId,
+        name: currentPlayerName,
+        avatar: user?.user_metadata?.avatar_url || "/api/placeholder/40/40",
+        rating: 1500,
+        wins: 0,
+        losses: 0,
+        status: "ready",
+        joinedAt: Date.now(),
+      };
+
+      setPlayers([currentPlayer]);
+      setBattleState((prev) => ({ ...prev, totalPlayers: 1 }));
+    }
+  }, [
+    currentPlayerId,
+    currentPlayerName,
+    user?.user_metadata?.avatar_url,
+    playersList.length,
+  ]);
+
+  // Log when we receive battle info and question pool
+  useEffect(() => {
+    if (questionPool.length > 0) {
+      console.log(
+        "📚 Question pool received:",
+        questionPool.length,
+        "questions"
+      );
+      console.log(
+        "🎯 Questions available:",
+        questionPool.map((q) => `${q.title} (${q.difficulty})`)
+      );
+    }
+  }, [questionPool]);
+
+  useEffect(() => {
+    if (battleStartTime) {
+      console.log(
+        "⏰ Battle scheduled for:",
+        new Date(battleStartTime).toLocaleString()
+      );
+    }
+  }, [battleStartTime]);
+
+  // Original broken useEffect - need to clean up
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log(
+        "📚 Battle page loaded - battle info should be fetched automatically via useBattle hook"
+      );
+      // Battle info and question pool will be fetched automatically when WebSocket connects
+
+      ws.onopen = () => {
+        console.log("� Test WebSocket connected for auto-battle creation");
+
+        // Join room first
+        ws.send(
+          JSON.stringify({
+            type: "join",
+            roomId: battleId,
+            userId: currentPlayerId,
+          })
+        );
+
+        setTimeout(() => {
+          console.log("📤 Auto-sending create-battle:", scheduledTime);
+          ws.send(
+            JSON.stringify({
+              type: "create-battle",
+              scheduledStartTime: scheduledTime,
+              durationMinutes: 15,
+            })
+          );
+        }, 500);
+
+        setTimeout(() => {
+          console.log("� Auto-sending get-battle-info");
+          ws.send(
+            JSON.stringify({
+              type: "get-battle-info",
+            })
+          );
+        }, 1000);
+
+        setTimeout(() => ws.close(), 2000);
+      };
+
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        console.log("📨 Auto-test response:", data);
+
+        if (data.type === "battle-created" && data.scheduledStartTime) {
+          console.log(
+            "✅ Battle created successfully! Scheduled for:",
+            data.scheduledStartTime
+          );
+          // TODO: Update the UI with the real scheduled time
+        }
+
+        if (data.type === "battle-info" && data.battle?.scheduledStartTime) {
+          console.log(
+            "✅ Battle info received! Scheduled for:",
+            data.battle.scheduledStartTime
+          );
+          // TODO: Update countdown to use real time
+        }
+      };
+
+      ws.onerror = (error) => {
+        console.error("❌ Auto-test WebSocket error:", error);
+      };
+    }, 3000); // Auto-create after 3 seconds
+
+    return () => clearTimeout(timer);
+  }, [battleId, currentPlayerId]); // Only run once when component mounts
+
+  // Use WebSocket countdown or fallback to manual countdown
+  const [countdown, setCountdown] = useState<number | null>(null);
+  const effectiveCountdown =
+    timeUntilStart !== null ? timeUntilStart : countdown;
+
+  // Timer logic for active battle
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (battleState.status === "active" && battleState.timeRemaining > 0) {
+      interval = setInterval(() => {
+        setBattleState((prev) => ({
+          ...prev,
+          timeRemaining: prev.timeRemaining - 1,
+        }));
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [battleState.status, battleState.timeRemaining]);
+
+  // Manual countdown logic (fallback for local testing)
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (countdown !== null && countdown > 0 && timeUntilStart === null) {
+      interval = setInterval(() => {
+        setCountdown((prev) => (prev ? prev - 1 : 0));
+      }, 1000);
+    } else if (countdown === 0 && timeUntilStart === null) {
+      setBattleState((prev) => ({ ...prev, status: "active" }));
+      setCountdown(null);
+    }
+
+    return () => clearInterval(interval);
+  }, [countdown, timeUntilStart]);
+
+  // Handle automatic battle start from WebSocket
+  useEffect(() => {
+    if (serverBattleStatus === "active" && battleState.status !== "active") {
+      console.log("🚀 Battle started automatically from server");
+      setBattleState((prev) => ({ ...prev, status: "active" }));
+      setCountdown(null);
+    }
+  }, [serverBattleStatus, battleState.status]);
+
+  // Fetch current question when component mounts or battle becomes active
+  useEffect(() => {
+    if (
+      battleState.status === "active" &&
+      !currentQuestion &&
+      !questionLoading
+    ) {
+      console.log("🔍 Fetching current question for active battle");
+      getCurrentQuestion();
+    }
+  }, [
+    battleState.status,
+    currentQuestion,
+    questionLoading,
+    getCurrentQuestion,
+  ]);
+
+  // Update battle state with question information
+  useEffect(() => {
+    if (currentQuestion) {
+      setBattleState((prev) => ({
+        ...prev,
+        currentProblem: currentQuestion.title,
+      }));
+      console.log("❓ Updated battle with question:", currentQuestion.title);
+    }
+  }, [currentQuestion]);
+
+  const handleStartBattle = () => {
+    if (isAdmin) {
+      // Admin starts battle via server - this may set a scheduled start time
+      startServerBattle();
+      console.log("🎮 Admin requested battle start");
+    } else {
+      // Regular user can only request battle start (fallback for testing)
+      setBattleState((prev) => ({ ...prev, status: "countdown" }));
+      setCountdown(3);
+      console.log("🎮 Local battle start (testing mode)");
+    }
+  };
+
+  const handleCreateScheduledBattle = () => {
+    // Create a battle scheduled to start in 30 seconds
+    const scheduledTime = new Date(Date.now() + 30 * 1000).toISOString();
+    const durationMinutes = 15; // 15 minute battle
+
+    console.log("⚔️ handleCreateScheduledBattle called");
+    console.log("⚔️ scheduledTime:", scheduledTime);
+    console.log("⚔️ createBattle function:", typeof createBattle);
+
+    if (createBattle) {
+      console.log("📤 Calling createBattle with:", {
+        scheduledTime,
+        durationMinutes,
+      });
+      createBattle(scheduledTime, durationMinutes);
+    } else {
+      console.error("❌ createBattle function not available");
+    }
+
+    setBattleState((prev) => ({ ...prev, status: "countdown" }));
+  };
+
+  const handleResetBattle = () => {
+    setBattleState({
+      status: "waiting",
+      timeRemaining: 900,
+      totalTime: 900,
+      currentProblem: "Two Sum",
+      winners: [],
+      totalPlayers: players.length,
+      completedPlayers: 0,
+    });
+    setCountdown(null);
+
+    // Reset all players' test progress
+    setPlayers((prev) =>
+      prev.map((player) => ({
+        ...player,
+        testProgress: undefined,
+        status: "ready",
+      }))
+    );
+  };
+
+  const handleSubmitSolution = (code?: string) => {
+    // Implement solution submission logic
+    console.log("Submitting solution:", code);
+    setBattleState((prev) => ({
+      ...prev,
+      status: "finished",
+      winner: players[Math.floor(Math.random() * 2)].name,
+    }));
+  };
+
+  const handleTestResults = (results: { testCases: { passed: boolean }[] }) => {
+    // Send test results to WebSocket server for multiplayer sync
+    if (results && results.testCases) {
+      const passed = results.testCases.filter((tc) => tc.passed).length;
+      const total = results.testCases.length;
+
+      // Send to WebSocket - this will trigger updates for all players
+      sendTestResults(passed, total);
+
+      console.log("Sent test results to WebSocket:", { passed, total });
+    }
+    console.log("Testing code results:", results);
+  };
+
+  const handleTestCode = () => {
+    // Implement code testing logic for BattleControls
+    console.log("Test code button clicked");
+  };
+
+  return (
+    <>
+      <Container maxWidth="xl">
+        <Box sx={{ py: 4 }}>
+          {/* <BattleHeader /> */}
+          {/* <BattleStatusPanel battleState={battleState} countdown={countdown} /> */}
+          {/* Pre-battle and post-battle layout */}
+          {(battleState.status === "waiting" ||
+            battleState.status === "countdown") && (
+            <Grid container spacing={3}>
+              {/* Side Navigation */}
+              <Grid item xs={12} md={3}>
+                <BattleEntrySideNav
+                  players={players}
+                  currentUserId={currentPlayerId}
+                />
+              </Grid>
+
+              {/* Main Content */}
+              <Grid item xs={12} md={9}>
+                <MultiplayerLeaderboard
+                  players={players}
+                  currentUserId={currentPlayerId}
+                  battleStatus={battleState.status}
+                  playerResults={playerResults}
+                  countdown={effectiveCountdown}
+                  battleStartTime={battleStartTime}
+                />
+
+                {/* Debug: Question fetching and battle timing buttons */}
+                <Box sx={{ mt: 2, display: "flex", gap: 2, flexWrap: "wrap" }}>
+                  <Button
+                    variant="outlined"
+                    onClick={getCurrentQuestion}
+                    disabled={questionLoading}
+                  >
+                    {questionLoading ? "Loading..." : "Get Current Question"}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={getQuestionPool}
+                    disabled={questionLoading}
+                  >
+                    {questionLoading ? "Loading..." : "Get Question Pool"}
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleCreateScheduledBattle}
+                    disabled={
+                      serverBattleStatus === "active" ||
+                      battleStartTime !== null
+                    }
+                  >
+                    Create Scheduled Battle (30s)
+                  </Button>
+                  <Button variant="outlined" onClick={getBattleInfo}>
+                    Get Battle Info
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => {
+                      console.log("🧪 Testing direct WebSocket call");
+                      // Direct WebSocket test - bypass the hook
+                      const ws = new WebSocket(`ws://localhost:3001`);
+                      ws.onopen = () => {
+                        console.log("🔌 Direct WS connected");
+                        // Join room first
+                        ws.send(
+                          JSON.stringify({
+                            type: "join",
+                            roomId: "battle_1",
+                            userId: currentPlayerId,
+                          })
+                        );
+
+                        setTimeout(() => {
+                          console.log(
+                            "📤 Sending get-battle-info via direct WS"
+                          );
+                          ws.send(
+                            JSON.stringify({
+                              type: "get-battle-info",
+                            })
+                          );
+                        }, 500);
+
+                        setTimeout(() => {
+                          const scheduledTime = new Date(
+                            Date.now() + 30 * 1000
+                          ).toISOString();
+                          console.log(
+                            "📤 Sending create-battle via direct WS",
+                            scheduledTime
+                          );
+                          ws.send(
+                            JSON.stringify({
+                              type: "create-battle",
+                              scheduledStartTime: scheduledTime,
+                              durationMinutes: 15,
+                            })
+                          );
+                        }, 1000);
+
+                        setTimeout(() => ws.close(), 3000);
+                      };
+
+                      ws.onmessage = (event) => {
+                        console.log(
+                          "📨 Direct WS response:",
+                          JSON.parse(event.data)
+                        );
+                      };
+                    }}
+                  >
+                    Direct WS Test
+                  </Button>
+                  {currentQuestion && (
+                    <Typography variant="body2" sx={{ alignSelf: "center" }}>
+                      Current: <strong>{currentQuestion.title}</strong> (
+                      {currentQuestion.difficulty})
+                    </Typography>
+                  )}
+                  {questionPool.length > 0 && (
+                    <Typography variant="body2" sx={{ alignSelf: "center" }}>
+                      Pool: {questionPool.length} questions
+                    </Typography>
+                  )}
+                  {battleStartTime && (
+                    <Typography
+                      variant="body2"
+                      sx={{ alignSelf: "center", color: "primary.main" }}
+                    >
+                      Battle starts:{" "}
+                      <strong>
+                        {new Date(battleStartTime).toLocaleTimeString()}
+                      </strong>
+                    </Typography>
+                  )}
+                  {timeUntilStart !== null && timeUntilStart > 0 && (
+                    <Typography
+                      variant="body2"
+                      sx={{ alignSelf: "center", color: "secondary.main" }}
+                    >
+                      Countdown:{" "}
+                      <strong>
+                        {Math.floor(timeUntilStart / 60)}:
+                        {(timeUntilStart % 60).toString().padStart(2, "0")}
+                      </strong>
+                    </Typography>
+                  )}
+                </Box>
+
+                {!isAdmin && (
+                  <BattleControls
+                    battleStatus={battleState.status}
+                    onStartBattle={handleStartBattle}
+                    onResetBattle={handleResetBattle}
+                    onSubmitSolution={handleSubmitSolution}
+                    onTestCode={handleTestCode}
+                  />
+                )}
+              </Grid>
+            </Grid>
+          )}
+          {/* Active battle layout with editor */}
+          {(battleState.status === "active" ||
+            battleState.status === "finished") && (
+            <Box
+              sx={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: "flex",
+                flexDirection: "column",
+                backgroundColor: "background.default",
+                overflow: "hidden",
+                zIndex: 1000,
+              }}
+            >
+              {/* Fixed-height coding panels */}
+              <Box sx={{ flexGrow: 1, minHeight: 0 }}>
+                <ResizableCodingPanels
+                  problemTitle={
+                    currentQuestion?.title || battleState.currentProblem
+                  }
+                  problemId={currentQuestion?.slug || "twoSum"}
+                  onSubmit={handleSubmitSolution}
+                  onTest={handleTestResults}
+                  battleId={battleId}
+                  playerId={currentPlayerId}
+                  players={players}
+                  currentUserId={currentPlayerId}
+                />
+              </Box>
+            </Box>
+          )}
+          <BattleResults
+            winners={battleState.winners}
+            isVisible={battleState.status === "finished"}
+          />
+        </Box>
+      </Container>
+    </>
+  );
+};
+
+export default BattleMain;

@@ -1,0 +1,33 @@
+{
+  "name": "@webdevinterviews/backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "migrate": "node-pg-migrate",
+    "migrate:create": "node-pg-migrate create",
+    "migrate:up": "node-pg-migrate up",
+    "migrate:down": "node-pg-migrate down",
+    "schema:generate": "node scripts/generate-schema.js",
+    "schema:watch": "node --watch scripts/generate-schema.js",
+    "types:generate": "npm run schema:generate && npx openapi-typescript generated/api-schema.json -o generated/types.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.74.0",
+    "@webdevinterviews/shared": "*",
+    "cors": "^2.8.5",
+    "destroy": "^1.2.0",
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "node-pg-migrate": "^8.0.3",
+    "pg": "^8.16.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "ws": "^8.16.0"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.9.1"
+  }
+}
