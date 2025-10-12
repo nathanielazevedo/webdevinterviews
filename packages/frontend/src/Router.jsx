@@ -19,7 +19,7 @@ import MutateMain from "./pages/games/mutate/MutateMain";
 import ReturnMain from "./pages/games/returns/ReturnMain";
 import Runner from "./pages/games/runner/Swimmer2.jsx";
 import Quiz from "./pages/courses/multipleChoice/QuizMain";
-import BattleTest from "./pages/battle/BattleTest";
+import BattleMain from "./pages/battle/BattleMain.tsx";
 import Auth from "./pages/auth/Auth";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -107,7 +107,7 @@ const router = createBrowserRouter([
             index: true,
             element: (
               <ProtectedRoute>
-                <BattleTest />
+                <BattleMain />
               </ProtectedRoute>
             ),
           },

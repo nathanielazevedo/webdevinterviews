@@ -179,17 +179,28 @@ export const useBattle = (playerId: string) => {
     fetchNextBattle();
   }, [api.config.baseUrl]);
 
-  // Connect and setup message listeners
+  // Connect WebSocket only once and set up message handlers
   useEffect(() => {
-    connectWs();
+    let isSubscribed = true;
+    
+    // Set up message handlers
     wsClient.on('message', handleMessage);
-    wsClient.on('error', () => setError('WebSocket connection error'));
+    wsClient.on('error', () => {
+      if (isSubscribed) setError('WebSocket connection error');
+    });
+    
+    // Connect only if not already connected
+    if (!api.state.wsConnected) {
+      console.log('🔌 Initiating WebSocket connection...');
+      connectWs();
+    }
     
     return () => {
-      wsClient.off('message', handleMessage);
+      isSubscribed = false;
+      wsClient.off('message', handleMessage as (data: unknown) => void);
       wsClient.off('error');
     };
-  }, [connectWs, wsClient, handleMessage]);
+  }, []); // Run only once on mount
 
   // Join room when connected and we have battle info
   useEffect(() => {
@@ -267,8 +278,8 @@ export const useBattle = (playerId: string) => {
   }, [sendMessage]);
 
   const startBattle = useCallback(() => {
-    wsClient.send({ type: 'start-battle' });
-  }, [wsClient]);
+    sendMessage({ type: 'start-battle' });
+  }, [sendMessage]);
 
   return {
     // API context

@@ -11,9 +11,10 @@ export class WebSocketClient {
   private ws: WebSocket | null = null;
   private url: string;
   private listeners = new Map<string, Set<(data: unknown) => void>>();
-  private reconnectAttempts = 0;
-  private maxReconnectAttempts = 5;
-  private reconnectDelay = 1000;
+  // Temporarily disabled reconnection variables
+  // private reconnectAttempts = 0;
+  // private maxReconnectAttempts = 5;
+  // private reconnectDelay = 1000;
 
   constructor(url: string = "ws://localhost:3001") {
     this.url = url;
@@ -21,13 +22,19 @@ export class WebSocketClient {
 
   connect(url?: string): void {
     if (url) this.url = url;
+    
+    // Prevent duplicate connections
+    if (this.ws && (this.ws.readyState === WebSocket.CONNECTING || this.ws.readyState === WebSocket.OPEN)) {
+      console.log("WebSocket already connected or connecting");
+      return;
+    }
 
     try {
       this.ws = new WebSocket(this.url);
 
       this.ws.onopen = () => {
         console.log("WebSocket connected");
-        this.reconnectAttempts = 0;
+        // this.reconnectAttempts = 0;
         this.emit("connected", null);
       };
 
@@ -96,6 +103,12 @@ export class WebSocketClient {
   }
 
   private attemptReconnect(): void {
+    // Temporarily disable auto-reconnection to prevent infinite loops
+    // TODO: Implement smarter reconnection logic
+    console.log("WebSocket disconnected. Auto-reconnection disabled.");
+    
+    // Uncomment below to re-enable reconnection
+    /*
     if (this.reconnectAttempts < this.maxReconnectAttempts) {
       this.reconnectAttempts++;
       setTimeout(() => {
@@ -105,6 +118,7 @@ export class WebSocketClient {
         this.connect();
       }, this.reconnectDelay * this.reconnectAttempts);
     }
+    */
   }
 }
 
