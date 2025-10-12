@@ -1,5 +1,5 @@
 function getRandomQuestions(data) {
-  let selectedQuestions = []
+  const selectedQuestions = []
 
   // Function to get a random question and its corresponding explanation from an array of questions and explanations
   function getRandomQuestionWithExplanation(questions) {

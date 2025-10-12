@@ -72,7 +72,7 @@ export class BattleService {
         room_id: roomId,
         status: 'waiting' as const,
         admin_user_id: adminUserId,
-        participants: participants,
+        participants,
         duration_minutes: durationMinutes
       };
 
@@ -194,7 +194,7 @@ export class BattleService {
         .update({
           status: 'completed',
           completed_at: new Date().toISOString(),
-          results: results,
+          results,
           ended_by: endedBy
         })
         .eq('room_id', roomId)

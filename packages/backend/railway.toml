@@ -1,0 +1,12 @@
+[build]
+command = "cd packages/backend && npm install && npm run build"
+
+[deploy]
+startCommand = "cd packages/backend && npm start"
+
+[env]
+# Railway will automatically set PORT
+# Add your other environment variables in the dashboard:
+# SUPABASE_URL
+# SUPABASE_SERVICE_ROLE_KEY
+# ADMIN_USER_ID (optional)

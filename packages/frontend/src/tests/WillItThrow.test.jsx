@@ -23,16 +23,16 @@ describe('Will It Throw Component', () => {
       </AuthProvider>
     )
 
-    let gamesButton = screen.queryByText('Play Will It Throw')
+    const gamesButton = screen.queryByText('Play Will It Throw')
     fireEvent.click(gamesButton)
-    let gameButton = screen.queryByText('Syntax Error')
+    const gameButton = screen.queryByText('Syntax Error')
     fireEvent.click(gameButton)
 
     let allDoneText = screen.queryByText('All done')
     while (!allDoneText) {
       await act(async () => {
-        let trueButton = screen.queryByText('Yes')
-        let nextGameButton = screen.queryByText('Next Deck')
+        const trueButton = screen.queryByText('Yes')
+        const nextGameButton = screen.queryByText('Next Deck')
         if (!(trueButton || nextGameButton)) {
           screen.debug()
         }
@@ -59,18 +59,18 @@ describe('Will It Throw Component', () => {
       </AuthProvider>
     )
 
-    let gamesButton = screen.queryByText('Back to decks')
+    const gamesButton = screen.queryByText('Back to decks')
     fireEvent.click(gamesButton)
-    let randomTab = screen.queryByText('Random')
+    const randomTab = screen.queryByText('Random')
     fireEvent.click(randomTab)
-    let firstGame = screen.queryByText('Deck 1')
+    const firstGame = screen.queryByText('Deck 1')
     fireEvent.click(firstGame)
 
     let allDoneText = screen.queryByText('All done')
     while (!allDoneText) {
       await act(async () => {
-        let trueButton = screen.queryByText('Yes')
-        let nextGameButton = screen.queryByText('Next Deck')
+        const trueButton = screen.queryByText('Yes')
+        const nextGameButton = screen.queryByText('Next Deck')
         if (!(trueButton || nextGameButton)) {
           screen.debug()
         }
@@ -97,17 +97,17 @@ describe('Will It Throw Component', () => {
       </AuthProvider>
     )
 
-    let gamesButton = screen.queryByText('Back to decks')
+    const gamesButton = screen.queryByText('Back to decks')
     fireEvent.click(gamesButton)
-    let randomTab = screen.queryByText('Random')
+    const randomTab = screen.queryByText('Random')
     fireEvent.click(randomTab)
-    let firstGame = screen.queryByText('Deck 1')
+    const firstGame = screen.queryByText('Deck 1')
     fireEvent.click(firstGame)
 
     let playAgainButton = screen.queryByText('Play Again')
     while (!playAgainButton) {
       await act(async () => {
-        let trueButton = screen.queryByText('Yes')
+        const trueButton = screen.queryByText('Yes')
         expect(trueButton).toBeTruthy('Yes button not found')
 
         fireEvent.click(trueButton)
@@ -119,7 +119,7 @@ describe('Will It Throw Component', () => {
       fireEvent.click(playAgainButton)
       vi.runAllTimers()
     })
-    let trueButton = screen.queryByText('Yes')
+    const trueButton = screen.queryByText('Yes')
     expect(trueButton).toBeInTheDocument()
   }, 10000)
 })

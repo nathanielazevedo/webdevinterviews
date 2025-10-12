@@ -51,7 +51,7 @@ const Game = ({
 
   const handleCorrectInput = () => {
     if (playSound) {
-      var audio = new Audio(correctSound);
+      const audio = new Audio(correctSound);
       audio.play();
     }
     setOutput(true);
@@ -60,7 +60,7 @@ const Game = ({
 
   const handleIncorrectInput = () => {
     if (playSound) {
-      var audio = new Audio(incorrectSound);
+      const audio = new Audio(incorrectSound);
       audio.play();
     }
     setOutput(false);

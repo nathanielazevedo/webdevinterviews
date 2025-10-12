@@ -337,12 +337,12 @@ app.get('/battle/next', async (req: Request, res: Response) => {
       durationMinutes: battle.duration_minutes,
       adminUserId: battle.admin_user_id,
       participantCount: battle.participants?.length || 0,
-      connectedPlayers: connectedPlayers,
+      connectedPlayers,
       canJoin: battle.status === 'waiting' || battle.status === 'active',
       isActive: battle.status === 'active',
       isWaiting: battle.status === 'waiting',
       isCompleted: battle.status === 'completed',
-      questionPool: questionPool
+      questionPool
     };
     
     log.info(`Next battle info retrieved`, { battleInfo: { ...battleInfo, questionPool: `${questionPool.length} questions` } });
@@ -382,7 +382,7 @@ app.get('/room/:roomId/battle', async (req: Request, res: Response) => {
       createdAt: battle.created_at,
       adminUserId: battle.admin_user_id,
       participantCount: battle.participants?.length || 0,
-      connectedPlayers: connectedPlayers,
+      connectedPlayers,
       canJoin: battle.status === 'waiting' || battle.status === 'active',
       isActive: battle.status === 'active',
       isWaiting: battle.status === 'waiting',
@@ -422,7 +422,7 @@ app.get('/rooms/status', async (req: Request, res: Response) => {
           roomStatuses[roomId] = {
             status: 'no-battle',
             canJoin: true,
-            connectedPlayers: connectedPlayers
+            connectedPlayers
           };
         } else {
           roomStatuses[roomId] = {
@@ -431,7 +431,7 @@ app.get('/rooms/status', async (req: Request, res: Response) => {
             isActive: battle.status === 'active',
             isWaiting: battle.status === 'waiting',
             isCompleted: battle.status === 'completed',
-            connectedPlayers: connectedPlayers,
+            connectedPlayers,
             participantCount: battle.participants?.length || 0,
             startedAt: battle.started_at
           };
@@ -730,7 +730,7 @@ async function broadcastRoomStatus(roomId: string, statusChange: string | null =
       roomStatus = {
         status: 'no-battle',
         canJoin: true,
-        connectedPlayers: connectedPlayers
+        connectedPlayers
       };
     } else {
       roomStatus = {
@@ -739,7 +739,7 @@ async function broadcastRoomStatus(roomId: string, statusChange: string | null =
         isActive: battle.status === 'active',
         isWaiting: battle.status === 'waiting',
         isCompleted: battle.status === 'completed',
-        connectedPlayers: connectedPlayers,
+        connectedPlayers,
         participantCount: battle.participants?.length || 0,
         startedAt: battle.started_at
       };
@@ -752,7 +752,7 @@ async function broadcastRoomStatus(roomId: string, statusChange: string | null =
     
     const message = JSON.stringify({
       type: 'room-status-update',
-      roomId: roomId,
+      roomId,
       ...roomStatus
     });
     

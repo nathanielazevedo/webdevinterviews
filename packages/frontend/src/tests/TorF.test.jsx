@@ -23,16 +23,16 @@ describe('True Or False Component', () => {
       </AuthProvider>
     )
 
-    let gamesButton = screen.queryByText('Play True or False')
+    const gamesButton = screen.queryByText('Play True or False')
     fireEvent.click(gamesButton)
-    let gameButton = screen.queryByText('JavaScript is weird')
+    const gameButton = screen.queryByText('JavaScript is weird')
     fireEvent.click(gameButton)
 
     let allDoneText = screen.queryByText('All done')
     while (!allDoneText) {
       await act(async () => {
-        let trueButton = screen.queryByText('True')
-        let nextGameButton = screen.queryByText('Next Deck')
+        const trueButton = screen.queryByText('True')
+        const nextGameButton = screen.queryByText('Next Deck')
         if (!(trueButton || nextGameButton)) {
           screen.debug()
         }
@@ -59,18 +59,18 @@ describe('True Or False Component', () => {
       </AuthProvider>
     )
 
-    let gamesButton = screen.queryByText('Back to decks')
+    const gamesButton = screen.queryByText('Back to decks')
     fireEvent.click(gamesButton)
-    let randomTab = screen.queryByText('Random')
+    const randomTab = screen.queryByText('Random')
     fireEvent.click(randomTab)
-    let firstGame = screen.queryByText('Deck 1')
+    const firstGame = screen.queryByText('Deck 1')
     fireEvent.click(firstGame)
 
     let allDoneText = screen.queryByText('All done')
     while (!allDoneText) {
       await act(async () => {
-        let trueButton = screen.queryByText('True')
-        let nextGameButton = screen.queryByText('Next Deck')
+        const trueButton = screen.queryByText('True')
+        const nextGameButton = screen.queryByText('Next Deck')
         if (!(trueButton || nextGameButton)) {
           screen.debug()
         }
@@ -97,17 +97,17 @@ describe('True Or False Component', () => {
       </AuthProvider>
     )
 
-    let gamesButton = screen.queryByText('Back to decks')
+    const gamesButton = screen.queryByText('Back to decks')
     fireEvent.click(gamesButton)
-    let randomTab = screen.queryByText('Random')
+    const randomTab = screen.queryByText('Random')
     fireEvent.click(randomTab)
-    let firstGame = screen.queryByText('Deck 1')
+    const firstGame = screen.queryByText('Deck 1')
     fireEvent.click(firstGame)
 
     let playAgainButton = screen.queryByText('Play Again')
     while (!playAgainButton) {
       await act(async () => {
-        let trueButton = screen.queryByText('True')
+        const trueButton = screen.queryByText('True')
         expect(trueButton).toBeTruthy('True button not found')
 
         fireEvent.click(trueButton)
@@ -119,7 +119,7 @@ describe('True Or False Component', () => {
       fireEvent.click(playAgainButton)
       vi.runAllTimers()
     })
-    let trueButton = screen.queryByText('True')
+    const trueButton = screen.queryByText('True')
     expect(trueButton).toBeInTheDocument()
   }, 10000)
 
@@ -130,20 +130,20 @@ describe('True Or False Component', () => {
       </AuthProvider>
     )
 
-    let gamesButton = screen.queryByText('Back to decks')
+    const gamesButton = screen.queryByText('Back to decks')
     fireEvent.click(gamesButton)
-    let randomTab = screen.queryByText('Random')
+    const randomTab = screen.queryByText('Random')
     fireEvent.click(randomTab)
-    let firstGame = screen.queryByText('Deck 1')
+    const firstGame = screen.queryByText('Deck 1')
     fireEvent.click(firstGame)
     await act(async () => {
-      let trueButton = screen.queryByText('True')
+      const trueButton = screen.queryByText('True')
       fireEvent.click(trueButton)
       vi.runAllTimers()
-      let goBackButton = screen.queryByText('Previous')
+      const goBackButton = screen.queryByText('Previous')
       fireEvent.click(goBackButton)
     })
-    let secondTrueButton = screen.queryByText('True')
+    const secondTrueButton = screen.queryByText('True')
     expect(secondTrueButton).toBeTruthy('True button not found')
   }, 10000)
 })

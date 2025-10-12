@@ -23,16 +23,16 @@ describe('CCC Component', () => {
       </AuthProvider>
     )
 
-    let gamesButton = screen.queryByText('Play CCC')
+    const gamesButton = screen.queryByText('Play CCC')
     fireEvent.click(gamesButton)
-    let gameButton = screen.queryByText('Deck 1')
+    const gameButton = screen.queryByText('Deck 1')
     fireEvent.click(gameButton)
 
     let allDoneText = screen.queryByText('All done')
     while (!allDoneText) {
       await act(async () => {
-        let trueButton = screen.queryByText('==')
-        let nextGameButton = screen.queryByText('Next Deck')
+        const trueButton = screen.queryByText('==')
+        const nextGameButton = screen.queryByText('Next Deck')
         if (!(trueButton || nextGameButton)) {
           screen.debug()
         }
@@ -59,15 +59,15 @@ describe('CCC Component', () => {
       </AuthProvider>
     )
 
-    let gamesButton = screen.queryByText('Back to decks')
+    const gamesButton = screen.queryByText('Back to decks')
     fireEvent.click(gamesButton)
-    let firstGame = screen.queryByText('Deck 1')
+    const firstGame = screen.queryByText('Deck 1')
     fireEvent.click(firstGame)
 
     let playAgainButton = screen.queryByText('Play Again')
     while (!playAgainButton) {
       await act(async () => {
-        let trueButton = screen.queryByText('==')
+        const trueButton = screen.queryByText('==')
         expect(trueButton).toBeTruthy('Yes button not found')
 
         fireEvent.click(trueButton)
@@ -79,7 +79,7 @@ describe('CCC Component', () => {
       fireEvent.click(playAgainButton)
       vi.runAllTimers()
     })
-    let trueButton = screen.queryByText('==')
+    const trueButton = screen.queryByText('==')
     expect(trueButton).toBeInTheDocument()
   }, 10000)
 })

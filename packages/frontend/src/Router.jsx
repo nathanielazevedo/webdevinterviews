@@ -14,7 +14,6 @@ import GameBase from "./pages/games/components/GameBase.jsx";
 import TrueOrFalseMain from "./pages/games/trueOrFalse/TrueOrFalseMain";
 import ShortsEditor from "./pages/shortsEditor/ShortsEditor";
 import WillItThrowMain from "./pages/games/willItThrow/WillItThrowMain";
-import NewMemberForm from "./pages/NewMemberForm";
 import CccMain from "./pages/games/ccc/CccList";
 import MutateMain from "./pages/games/mutate/MutateMain";
 import ReturnMain from "./pages/games/returns/ReturnMain";
@@ -40,10 +39,6 @@ const router = createBrowserRouter([
         index: true,
         element: <App />,
         errorElement: <Error />,
-      },
-      {
-        path: "new-member",
-        element: <NewMemberForm />,
       },
       {
         path: "shorts-editor",

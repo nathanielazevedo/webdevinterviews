@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+ 
 const fs = require('fs')
 const path = require('path')
 const cccData = require('/Users/nateazevedo/Desktop/wdi/webdevinterviews/src/pages/games/willItThrow/data/random.json')

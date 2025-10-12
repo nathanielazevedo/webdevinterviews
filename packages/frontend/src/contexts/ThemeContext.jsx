@@ -1,5 +1,9 @@
 // theme.ts
-import { createTheme } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes, ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
+
+// ThemeContext.jsx
+import * as React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const common = {
   typography: {
@@ -92,12 +96,6 @@ export const darkTheme = createTheme({
   },
 });
 
-// ThemeContext.jsx
-import * as React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import { responsiveFontSizes } from "@mui/material/styles";
-import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-
 const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
   mode: "dark",
@@ -128,7 +126,7 @@ const ThemeProvider = ({ children }) => {
     }
   }, []);
 
-  let theme = React.useMemo(
+  const theme = React.useMemo(
     () => responsiveFontSizes(mode === "dark" ? darkTheme : lightTheme),
     [mode]
   );

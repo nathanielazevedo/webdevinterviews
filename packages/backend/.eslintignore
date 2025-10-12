@@ -1,0 +1,7 @@
+dist/
+node_modules/
+generated/
+migrations/
+scripts/
+*.js
+*.d.ts
