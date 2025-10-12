@@ -1,19 +1,25 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 // Database logging function
-export const dbLog = {
-  info: (message, data = null) => {
+interface DbLogger {
+  info: (message: string, data?: any) => void;
+  error: (message: string, error?: any) => void;
+  debug: (message: string, data?: any) => void;
+}
+
+export const dbLog: DbLogger = {
+  info: (message: string, data: any = null) => {
     const timestamp = new Date().toISOString();
     console.log(`[${timestamp}] DB-INFO: ${message}`, data ? JSON.stringify(data, null, 2) : '');
   },
-  error: (message, error = null) => {
+  error: (message: string, error: any = null) => {
     const timestamp = new Date().toISOString();
     console.error(`[${timestamp}] DB-ERROR: ${message}`, error || '');
   },
-  debug: (message, data = null) => {
+  debug: (message: string, data: any = null) => {
     const timestamp = new Date().toISOString();
     console.log(`[${timestamp}] DB-DEBUG: ${message}`, data ? JSON.stringify(data, null, 2) : '');
   }
@@ -33,5 +39,5 @@ if (!supabaseUrl || !supabaseServiceRoleKey) {
 }
 
 // Using service role key for server-side operations
-export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
+export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseServiceRoleKey);
 dbLog.info('Supabase client initialized successfully');
