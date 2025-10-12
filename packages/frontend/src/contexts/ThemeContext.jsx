@@ -1,5 +1,9 @@
 // theme.ts
-import { createTheme, responsiveFontSizes, ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
+import {
+  createTheme,
+  responsiveFontSizes,
+  ThemeProvider as MuiThemeProvider,
+} from "@mui/material/styles";
 
 // ThemeContext.jsx
 import * as React from "react";
