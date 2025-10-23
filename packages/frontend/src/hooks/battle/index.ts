@@ -1,12 +1,6 @@
-// Individual battle hooks
-export { useBattleState } from './useBattleState';
-export { useBattlePlayers } from './useBattlePlayers';
-export { useBattleQuestions } from './useBattleQuestions';
-export { useBattleTimer } from './useBattleTimer';
-
-// Enhanced unified hook
+// Export the main enhanced battle hook
 export { useBattleEnhanced } from './useBattleEnhanced';
 
-// Re-export types
-export type { BattleStatus, BattleState, BattleInfo } from './useBattleState';
-export type { Player, WSPlayer, PlayerResults } from './useBattlePlayers';
+// Note: The individual hooks (useBattleState, useBattlePlayers, etc.) have been removed
+// in favor of the simplified useBattleEnhanced hook which uses the main useBattle hook
+// that integrates with the new simplified backend architecture.

@@ -31,81 +31,85 @@ export interface QuestionSummary {
   tags?: string[] | null;
 }
 
-// Battle timing types  
-export interface BattleDetails {
+// Simplified battle types for new backend
+export interface Battle {
   id: string;
+  room_id?: string; // Legacy field for database compatibility
   status: 'waiting' | 'active' | 'completed';
-  scheduledStartTime?: string | null;
-  startedAt?: string | null;
-  autoEndTime?: string | null;
-  durationMinutes?: number | null;
-  endedBy?: string | null;
-  isAdmin: boolean;
-  participantCount: number;
+  started_at?: string | null;
+  completed_at?: string | null;
+  duration_minutes?: number | null;
+  admin_user_id?: string;
+  scheduled_start_time?: string | null;
+  auto_end_time?: string | null;
+  created_at?: string;
+  updated_at?: string;
+  ended_by?: string | null;
+  participants?: BattleParticipant[];
 }
 
-// Additional WebSocket message types for questions and timing
-export interface GetCurrentQuestionMessage {
-  type: 'get-current-question';
+export interface BattleParticipant {
+  userId: string;
+  joinedAt: string;
+  testsPassed?: number;
+  totalTests?: number;
 }
 
-export interface GetQuestionPoolMessage {
-  type: 'get-question-pool';
+export interface Player {
+  userId: string;
+  testsPassed: number;
+  totalTests: number;
+  joinedAt: string;
+  isConnected: boolean;
 }
 
-export interface CreateBattleMessage {
-  type: 'create-battle';
-  scheduledStartTime?: string;
-  durationMinutes?: number;
+// API Response types matching the new backend
+export interface BattleCurrentResponse {
+  battle?: Battle;
+  questions?: QuestionSummary[];
 }
 
-export interface UpdateBattleTimingMessage {
-  type: 'update-battle-timing';
-  scheduledStartTime?: string;
-  durationMinutes?: number;
+export interface BattlePlayersResponse {
+  players: Player[];
 }
 
-export interface GetBattleInfoMessage {
-  type: 'get-battle-info';
+export interface BattleStatusResponse {
+  battle?: Battle | null;
+  canJoin: boolean;
+  message?: string;
+}
+
+// WebSocket message types for simplified backend
+export interface JoinMessage {
+  type: 'join';
+  userId: string;
+}
+
+export interface StartBattleMessage {
+  type: 'start-battle';
+}
+
+export interface TestResultsMessage {
+  type: 'test-results';
+  passed: number;
+  total: number;
 }
 
 // WebSocket response types
-export interface CurrentQuestionResponse {
-  type: 'current-question';
-  question: Question | null;
-}
-
-export interface QuestionPoolResponse {
-  type: 'question-pool';
-  questions: QuestionSummary[];
-}
-
-export interface BattleCreatedResponse {
-  type: 'battle-created';
-  battleId: string;
-  scheduledStartTime?: string | null;
-  durationMinutes?: number | null;
+export interface BattleStatusWsResponse {
+  type: 'battle-status';
   status: string;
-}
-
-export interface BattleTimingUpdatedResponse {
-  type: 'battle-timing-updated';
+  isAdmin: boolean;
   battleId: string;
-  scheduledStartTime?: string | null;
-  durationMinutes?: number | null;
 }
 
-export interface BattleInfoResponse {
-  type: 'battle-info';
-  battle: BattleDetails | null;
-}
-
-// Enhanced battle started response with timing
 export interface BattleStartedResponse {
   type: 'battle-started';
   battleId: string;
   startedAt: string;
-  autoEndTime?: string | null;
-  durationMinutes?: number | null;
-  startedBy?: string;
+}
+
+export interface PlayersListResponse {
+  type: 'players-list';
+  players: Player[];
 }

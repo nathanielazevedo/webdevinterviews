@@ -28,13 +28,11 @@ export const useApiLoading = (key: string) => {
 };
 
 export const useWebSocket = () => {
-  const { wsClient, connectWs, disconnectWs, joinRoom, sendTestResults, state } = useApi();
+  const { wsClient, connectWs, disconnectWs, state } = useApi();
   return { 
     wsClient, 
     connectWs, 
     disconnectWs, 
-    joinRoom, 
-    sendTestResults, 
     connected: state.wsConnected 
   };
 };

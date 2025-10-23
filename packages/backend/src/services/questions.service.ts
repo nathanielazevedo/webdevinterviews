@@ -1,23 +1,7 @@
 import { supabase } from '../config/database.js';
+import type { Question, QuestionSummary } from '@webdevinterviews/shared';
 
-// Type definitions
-interface Question {
-  id?: string;
-  title: string;
-  slug: string;
-  difficulty: 'Easy' | 'Medium' | 'Hard';
-  leetcode_number?: number;
-  problem_statement: string;
-  function_signature: string;
-  test_cases: TestCase[];
-  examples: Example[];
-  constraints: string;
-  tags: string[];
-  hints: string[];
-  created_at?: string;
-  updated_at?: string;
-}
-
+// Backend-specific question types
 interface TestCase {
   input: Record<string, any>;
   expected: any;

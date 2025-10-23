@@ -9,3 +9,4 @@ export { default as ResizableCodingPanels } from './ResizableCodingPanels';
 export { default as MultiplayerLeaderboard } from './MultiplayerLeaderboard';
 export { default as AdminPanel } from './AdminPanel';
 export { default as BattleEntrySideNav } from './BattleEntrySideNav';
+export { AdminControls } from './AdminControls';

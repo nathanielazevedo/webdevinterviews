@@ -30,7 +30,10 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["HealthResponse"];
+                        "application/json": {
+                            /** @example ok */
+                            status?: string;
+                        };
                     };
                 };
             };
@@ -51,30 +54,56 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get all players in a room
-         * @description Retrieves all players currently in the specified room
+         * Get players in a room
+         * @description Returns all players currently in the specified room
          */
         get: {
             parameters: {
                 query?: never;
                 header?: never;
                 path: {
-                    /** @description Unique room identifier */
-                    roomId: components["parameters"]["RoomId"];
+                    /** @description The room identifier */
+                    roomId: string;
                 };
                 cookie?: never;
             };
             requestBody?: never;
             responses: {
-                /** @description List of players in the room */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["PlayersResponse"];
-                    };
+                200: components["responses"]["PlayersResponse"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/room/{roomId}/battle": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get battle status for a room
+         * @description Returns the current battle information for the specified room
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description The room identifier */
+                    roomId: string;
                 };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                200: components["responses"]["BattleStatusResponse"];
             };
         };
         put?: never;
@@ -94,7 +123,7 @@ export interface paths {
         };
         /**
          * Get user battle history
-         * @description Retrieves battle history for a specific user
+         * @description Returns the battle history for a specific user
          */
         get: {
             parameters: {
@@ -104,8 +133,8 @@ export interface paths {
                 };
                 header?: never;
                 path: {
-                    /** @description Unique user identifier */
-                    userId: components["parameters"]["UserId"];
+                    /** @description The user identifier */
+                    userId: string;
                 };
                 cookie?: never;
             };
@@ -117,10 +146,12 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["BattleHistoryResponse"];
+                        "application/json": {
+                            battles?: components["schemas"]["Battle"][];
+                        };
                     };
                 };
-                500: components["responses"]["InternalServerError"];
+                500: components["responses"]["ErrorResponse"];
             };
         };
         put?: never;
@@ -139,74 +170,23 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get user statistics
-         * @description Retrieves battle statistics for a specific user
+         * Get user battle statistics
+         * @description Returns comprehensive battle statistics for a user
          */
         get: {
             parameters: {
                 query?: never;
                 header?: never;
                 path: {
-                    /** @description Unique user identifier */
-                    userId: components["parameters"]["UserId"];
+                    /** @description The user identifier */
+                    userId: string;
                 };
                 cookie?: never;
             };
             requestBody?: never;
             responses: {
-                /** @description User battle statistics */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["UserStatsResponse"];
-                    };
-                };
-                500: components["responses"]["InternalServerError"];
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/room/{roomId}/battle": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get battle status for room
-         * @description Retrieves current battle status and information for a specific room
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description Unique room identifier */
-                    roomId: components["parameters"]["RoomId"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Battle status information */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["BattleStatusResponse"];
-                    };
-                };
-                500: components["responses"]["InternalServerError"];
+                200: components["responses"]["UserStatsResponse"];
+                500: components["responses"]["ErrorResponse"];
             };
         };
         put?: never;
@@ -226,7 +206,7 @@ export interface paths {
         };
         /**
          * Get status of multiple rooms
-         * @description Retrieves status information for multiple rooms at once
+         * @description Returns status information for multiple rooms at once
          */
         get: {
             parameters: {
@@ -240,17 +220,20 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description Status information for requested rooms */
+                /** @description Room statuses */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["MultiRoomStatusResponse"];
+                        "application/json": {
+                            rooms?: {
+                                [key: string]: components["schemas"]["RoomStatus"];
+                            };
+                        };
                     };
                 };
-                400: components["responses"]["BadRequest"];
-                500: components["responses"]["InternalServerError"];
+                400: components["responses"]["ErrorResponse"];
             };
         };
         put?: never;
@@ -265,495 +248,116 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        HealthResponse: {
-            /** @example ok */
-            status: string;
-        };
-        PlayersResponse: {
-            players: components["schemas"]["Player"][];
-        };
-        BattleHistoryResponse: {
-            battles: components["schemas"]["Battle"][];
-        };
-        UserStatsResponse: {
-            stats: components["schemas"]["UserStats"];
-        };
-        BattleStatusResponse: {
-            battle: components["schemas"]["BattleInfo"] | null;
-            /** @example No battle found for this room */
-            message?: string;
-            canJoin: boolean;
-            /** @enum {string} */
-            status: "no-battle" | "waiting" | "active" | "completed";
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "BattleStatusResponse";
-        };
-        /** @example {
-         *       "battle_1": {
-         *         "status": "active",
-         *         "canJoin": true,
-         *         "isActive": true,
-         *         "connectedPlayers": 3,
-         *         "participantCount": 3
-         *       },
-         *       "battle_2": {
-         *         "status": "no-battle",
-         *         "canJoin": true,
-         *         "connectedPlayers": 0
-         *       }
-         *     } */
-        MultiRoomStatusResponse: {
-            [key: string]: components["schemas"]["RoomStatus"];
-        };
-        Player: {
-            /**
-             * Format: uuid
-             * @example c9c22420-5e80-490f-8abf-3396c5949adf
-             */
-            userId: string;
-            /** @example 3 */
-            testsPassed: number;
-            /** @example 5 */
-            totalTests: number;
-            /**
-             * Format: date-time
-             * @example 2025-10-08T23:40:13.838Z
-             */
-            joinedAt: string;
-            /** @example true */
-            isConnected: boolean;
-        };
         Battle: {
-            /** Format: uuid */
-            id: string;
-            /** @example battle_1 */
-            room_id: string;
+            id?: string;
+            room_id?: string;
             /** @enum {string} */
-            status: "waiting" | "active" | "completed";
-            /** Format: uuid */
-            admin_user_id: string;
-            /** Format: date-time */
-            created_at: string;
+            status?: "waiting" | "active" | "completed";
+            admin_user_id?: string;
+            participants?: components["schemas"]["BattleParticipant"][];
+            duration_minutes?: number;
             /** Format: date-time */
             started_at?: string | null;
             /** Format: date-time */
             completed_at?: string | null;
-            /**
-             * Format: date-time
-             * @description When the battle is scheduled to start automatically
-             */
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
             scheduled_start_time?: string | null;
-            /**
-             * @description Battle duration in minutes
-             * @default 60
-             */
-            duration_minutes: number;
-            /**
-             * Format: date-time
-             * @description Calculated time when battle should automatically end
-             */
+            /** Format: date-time */
             auto_end_time?: string | null;
-            /**
-             * @description How the battle ended
-             * @enum {string|null}
-             */
-            ended_by?: "admin" | "timeout" | "manual" | null;
-            participants?: components["schemas"]["BattleParticipant"][];
         };
         BattleParticipant: {
-            /** Format: uuid */
-            user_id: string;
-            tests_passed: number;
-            total_tests: number;
+            userId?: string;
             /** Format: date-time */
-            joined_at: string;
-            final_placement?: number | null;
+            joinedAt?: string;
+            /** @default 0 */
+            testsPassed: number;
+            /** @default 0 */
+            totalTests: number;
         };
-        BattleInfo: {
-            /** Format: uuid */
-            id: string;
-            /** @enum {string} */
-            status: "waiting" | "active" | "completed";
+        Player: {
+            userId?: string;
+            testsPassed?: number;
+            totalTests?: number;
             /** Format: date-time */
-            startedAt?: string | null;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: uuid */
-            adminUserId: string;
-            participantCount: number;
-            connectedPlayers: number;
-            canJoin: boolean;
-            isActive: boolean;
-            isWaiting: boolean;
-            isCompleted: boolean;
+            joinedAt?: string;
+            isConnected?: boolean;
         };
         RoomStatus: {
-            /** @enum {string} */
-            status: "no-battle" | "waiting" | "active" | "completed" | "error";
-            canJoin: boolean;
+            status?: string;
+            canJoin?: boolean;
             isActive?: boolean;
             isWaiting?: boolean;
             isCompleted?: boolean;
-            connectedPlayers: number;
+            connectedPlayers?: number;
             participantCount?: number;
             /** Format: date-time */
             startedAt?: string | null;
         };
         UserStats: {
-            totalBattles: number;
-            battlesWon: number;
-            battlesCompleted: number;
-            averageTestsPassed: number;
-            winRate: number;
+            total_battles?: number;
+            wins?: number;
+            /** Format: float */
+            win_rate?: number;
+            /** Format: float */
+            avg_tests_passed?: number;
+            total_tests_passed?: number;
+            best_placement?: number | null;
+            recent_battles?: number;
         };
-        Question: {
-            /** @example 1 */
-            id: number;
-            /** @example Two Sum */
-            title: string;
-            /** @example two-sum */
-            slug: string;
-            /**
-             * @example Easy
-             * @enum {string}
-             */
-            difficulty: "Easy" | "Medium" | "Hard";
-            /** @description The full problem description */
-            problem_statement: string;
-            /** @description The initial function signature for the problem */
-            function_signature: string;
-            /** @description Test cases for the problem */
-            test_cases: {
-                input?: Record<string, never>;
-                expected?: unknown;
-            }[];
-            /** @description Example input/output pairs with explanations */
-            examples?: {
-                input?: string;
-                output?: string;
-                explanation?: string;
-            }[] | null;
-            /** @description Problem constraints */
-            constraints?: string | null;
-            /** @description Hints for solving the problem */
-            hints?: string[] | null;
-            /** @description Topic tags for the problem */
-            tags?: string[] | null;
-            /**
-             * @description Original LeetCode problem number
-             * @example 1
-             */
-            leetcode_number?: number | null;
-            /** Format: date-time */
-            created_at?: string;
-            /** Format: date-time */
-            updated_at?: string;
-        };
-        QuestionSummary: {
-            /** @example 1 */
-            id: number;
-            /** @example Two Sum */
-            title: string;
-            /**
-             * @example Easy
-             * @enum {string}
-             */
-            difficulty: "Easy" | "Medium" | "Hard";
-            /** @example 1 */
-            leetcode_number?: number | null;
-            /** @example [
-             *       "Array",
-             *       "Hash Table"
-             *     ] */
-            tags?: string[] | null;
-        };
-        WebSocketMessage: components["schemas"]["JoinRoomMessage"] | components["schemas"]["StartBattleMessage"] | components["schemas"]["TestResultsMessage"] | components["schemas"]["GetPlayersMessage"] | components["schemas"]["WatchRoomsMessage"] | components["schemas"]["UnwatchRoomsMessage"] | components["schemas"]["CompleteBattleMessage"] | components["schemas"]["CreateBattleMessage"] | components["schemas"]["UpdateBattleTimingMessage"] | components["schemas"]["GetBattleInfoMessage"] | components["schemas"]["GetCurrentQuestionMessage"] | components["schemas"]["GetQuestionPoolMessage"];
-        JoinRoomMessage: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "JoinRoomMessage";
-            /** @example battle_1 */
-            roomId: string;
-            /** Format: uuid */
-            userId: string;
-        };
-        StartBattleMessage: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "StartBattleMessage";
-        };
-        TestResultsMessage: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "TestResultsMessage";
-            passed: number;
-            total: number;
-        };
-        GetPlayersMessage: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "GetPlayersMessage";
-        };
-        WatchRoomsMessage: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "WatchRoomsMessage";
-            /** @example [
-             *       "battle_1",
-             *       "battle_2"
-             *     ] */
-            roomIds?: string[];
-        };
-        UnwatchRoomsMessage: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "UnwatchRoomsMessage";
-        };
-        CompleteBattleMessage: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "CompleteBattleMessage";
-            /** @description Completion time in milliseconds */
-            completionTime?: number | null;
-        };
-        CreateBattleMessage: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "CreateBattleMessage";
-            /** @description Room ID for the battle */
-            roomId: string;
-            options?: {
-                /**
-                 * Format: date-time
-                 * @description ISO timestamp for scheduled battle start
-                 */
-                scheduled_start_time?: string;
-                /** @description Battle duration in minutes */
-                duration_minutes?: number;
-            };
-        };
-        UpdateBattleTimingMessage: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "UpdateBattleTimingMessage";
-            /**
-             * Format: uuid
-             * @description ID of the battle to update
-             */
-            battleId: string;
-            options: {
-                /**
-                 * Format: date-time
-                 * @description New scheduled start time
-                 */
-                scheduled_start_time?: string;
-                /** @description New duration in minutes */
-                duration_minutes?: number;
-            };
-        };
-        GetBattleInfoMessage: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "GetBattleInfoMessage";
-            /**
-             * Format: uuid
-             * @description ID of the battle to get info for
-             */
-            battleId: string;
-        };
-        GetCurrentQuestionMessage: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "GetCurrentQuestionMessage";
-        };
-        GetQuestionPoolMessage: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "GetQuestionPoolMessage";
-        };
-        WebSocketResponse: components["schemas"]["BattleStatusResponse"] | components["schemas"]["BattleStartedResponse"] | components["schemas"]["TestResultsUpdateResponse"] | components["schemas"]["PlayersListResponse"] | components["schemas"]["RoomStatusesResponse"] | components["schemas"]["BattleCompletedResponse"] | components["schemas"]["BattleCreatedResponse"] | components["schemas"]["BattleTimingUpdatedResponse"] | components["schemas"]["BattleInfoResponse"] | components["schemas"]["CurrentQuestionResponse"] | components["schemas"]["QuestionPoolResponse"] | components["schemas"]["ErrorResponse"];
-        BattleStatusWsResponse: {
-            /** @enum {string} */
-            type: "battle-status";
-            /** @enum {string} */
-            status: "waiting" | "active" | "completed";
-            isAdmin: boolean;
-            /** Format: uuid */
-            battleId: string;
-        };
-        BattleStartedResponse: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "BattleStartedResponse";
-            /** Format: uuid */
-            battleId: string;
-            /** Format: date-time */
-            startedAt: string;
-        };
-        TestResultsUpdateResponse: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "TestResultsUpdateResponse";
-            /** Format: uuid */
-            userId: string;
-            passed: number;
-            total: number;
-        };
-        PlayersListResponse: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "PlayersListResponse";
-            players: components["schemas"]["Player"][];
-        };
-        RoomStatusesResponse: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "RoomStatusesResponse";
-            rooms: {
-                [key: string]: components["schemas"]["RoomStatus"];
-            };
-        };
-        BattleCompletedResponse: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "BattleCompletedResponse";
-            /** Format: uuid */
-            battleId: string;
-            results: {
-                /** Format: uuid */
-                userId: string;
-                testsPassed: number;
-                totalTests: number;
-                completionTime?: number | null;
-                placement: number;
-            }[];
-        };
-        BattleCreatedResponse: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "BattleCreatedResponse";
-            battle: components["schemas"]["Battle"];
-        };
-        BattleTimingUpdatedResponse: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "BattleTimingUpdatedResponse";
-            /** Format: uuid */
-            battleId: string;
-            timing: {
-                /** Format: date-time */
-                scheduled_start_time?: string | null;
-                duration_minutes?: number | null;
-                /** Format: date-time */
-                auto_end_time?: string | null;
-            };
-        };
-        BattleInfoResponse: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "BattleInfoResponse";
-            battle: components["schemas"]["Battle"];
-        };
-        CurrentQuestionResponse: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "CurrentQuestionResponse";
-            question: components["schemas"]["Question"] & unknown;
-        };
-        QuestionPoolResponse: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "QuestionPoolResponse";
-            questions: components["schemas"]["QuestionSummary"][];
-        };
-        ErrorResponse: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "ErrorResponse";
-            message: string;
+        Error: {
+            error?: string;
         };
     };
     responses: {
-        /** @description Bad request - invalid parameters */
-        BadRequest: {
+        /** @description List of players in the room */
+        PlayersResponse: {
             headers: {
                 [name: string]: unknown;
             };
             content: {
                 "application/json": {
-                    /** @example roomIds query parameter is required */
-                    error: string;
+                    players?: components["schemas"]["Player"][];
                 };
             };
         };
-        /** @description Internal server error */
-        InternalServerError: {
+        /** @description Battle status information */
+        BattleStatusResponse: {
             headers: {
                 [name: string]: unknown;
             };
             content: {
                 "application/json": {
-                    /** @example Failed to fetch data */
-                    error: string;
+                    battle?: components["schemas"]["Battle"];
+                    message?: string;
+                    canJoin?: boolean;
+                    status?: string;
                 };
             };
         };
+        /** @description User battle statistics */
+        UserStatsResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    stats?: components["schemas"]["UserStats"];
+                };
+            };
+        };
+        /** @description Error response */
+        ErrorResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["Error"];
+            };
+        };
     };
-    parameters: {
-        /** @description Unique room identifier */
-        RoomId: string;
-        /** @description Unique user identifier */
-        UserId: string;
-    };
+    parameters: never;
     requestBodies: never;
     headers: never;
     pathItems: never;

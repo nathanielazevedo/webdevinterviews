@@ -4,7 +4,6 @@ import { useContext, useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { WorkoutContext } from "../../../../contexts/WorkoutContext";
 import { getChangedCode } from "../utils";
-import useApi from "../../../../hooks/useApi.jsx";
 
 const SyncChanges = ({ changedFiles, isSolution }) => {
   const { putIt } = useApi();

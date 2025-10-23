@@ -1,10 +1,77 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { apiClient, wsClient, WebSocketClient } from "@webdevinterviews/shared";
-import type {
-  BattleStatusResponse,
-  PlayersResponse,
-  UserStatsResponse,
-} from "@webdevinterviews/shared";
+
+// Simple WebSocket client for our battle system
+class SimpleWebSocketClient {
+  private ws: WebSocket | null = null;
+  private url: string = "";
+  private listeners: Map<string, Set<Function>> = new Map();
+
+  connect(url: string) {
+    this.url = url;
+    this.ws = new WebSocket(url);
+
+    this.ws.onopen = () => {
+      this.emit("connected");
+    };
+
+    this.ws.onclose = () => {
+      this.emit("disconnected");
+    };
+
+    this.ws.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        this.emit("message", data);
+      } catch (error) {
+        console.error("Failed to parse WebSocket message:", error);
+      }
+    };
+
+    this.ws.onerror = (error) => {
+      this.emit("error", error);
+    };
+  }
+
+  disconnect() {
+    if (this.ws) {
+      this.ws.close();
+      this.ws = null;
+    }
+  }
+
+  send(data: Record<string, unknown>) {
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(JSON.stringify(data));
+    }
+  }
+
+  on(event: string, callback: Function) {
+    if (!this.listeners.has(event)) {
+      this.listeners.set(event, new Set());
+    }
+    this.listeners.get(event)!.add(callback);
+  }
+
+  off(event: string, callback?: Function) {
+    if (!callback) {
+      this.listeners.delete(event);
+    } else if (this.listeners.has(event)) {
+      this.listeners.get(event)!.delete(callback);
+    }
+  }
+
+  private emit(event: string, data?: any) {
+    if (this.listeners.has(event)) {
+      this.listeners.get(event)!.forEach((callback) => {
+        try {
+          callback(data);
+        } catch (error) {
+          console.error(`Error in WebSocket ${event} listener:`, error);
+        }
+      });
+    }
+  }
+}
 
 // API Configuration Interface
 interface ApiConfig {
@@ -33,20 +100,12 @@ interface ApiContextType {
   // State
   state: ApiState;
 
-  // API Clients
-  httpClient: typeof apiClient;
-  wsClient: WebSocketClient;
-
-  // Common API Operations
-  getRoomBattle: (roomId: string) => Promise<BattleStatusResponse>;
-  getRoomPlayers: (roomId: string) => Promise<PlayersResponse>;
-  getUserStats: (userId: string) => Promise<UserStatsResponse>;
+  // WebSocket client
+  wsClient: SimpleWebSocketClient;
 
   // WebSocket Operations
   connectWs: () => void;
   disconnectWs: () => void;
-  joinRoom: (roomId: string, userId: string) => void;
-  sendTestResults: (passed: number, total: number) => void;
 
   // Utility Functions
   setLoading: (key: string, loading: boolean) => void;
@@ -104,9 +163,8 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({
 
   const [state, setState] = useState<ApiState>(defaultState);
 
-  // Initialize API clients with current config
-  const [httpClient] = useState(() => apiClient);
-  const [wsClientInstance] = useState(() => wsClient);
+  // Initialize WebSocket client
+  const [wsClientInstance] = useState(() => new SimpleWebSocketClient());
 
   // Update configuration
   const updateConfig = (newConfig: Partial<ApiConfig>) => {
@@ -136,75 +194,6 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({
     return state.loading[key] || false;
   };
 
-  // Common API Operations with error handling and loading states
-  const getRoomBattle = async (
-    roomId: string
-  ): Promise<BattleStatusResponse> => {
-    const loadingKey = `room-battle-${roomId}`;
-    setLoading(loadingKey, true);
-
-    try {
-      const { data, error } = await httpClient.GET("/room/{roomId}/battle", {
-        params: { path: { roomId } },
-      });
-      if (error) throw new Error("API Error");
-      setState((prev) => ({ ...prev, lastSync: new Date() }));
-      return data;
-    } catch (error) {
-      const errorMsg = `Failed to fetch battle for room ${roomId}: ${
-        error instanceof Error ? error.message : "Unknown error"
-      }`;
-      addError(errorMsg);
-      throw error;
-    } finally {
-      setLoading(loadingKey, false);
-    }
-  };
-
-  const getRoomPlayers = async (roomId: string): Promise<PlayersResponse> => {
-    const loadingKey = `room-players-${roomId}`;
-    setLoading(loadingKey, true);
-
-    try {
-      const { data, error } = await httpClient.GET("/room/{roomId}/players", {
-        params: { path: { roomId } },
-      });
-      if (error) throw new Error("API Error");
-      setState((prev) => ({ ...prev, lastSync: new Date() }));
-      return data;
-    } catch (error) {
-      const errorMsg = `Failed to fetch players for room ${roomId}: ${
-        error instanceof Error ? error.message : "Unknown error"
-      }`;
-      addError(errorMsg);
-      throw error;
-    } finally {
-      setLoading(loadingKey, false);
-    }
-  };
-
-  const getUserStats = async (userId: string): Promise<UserStatsResponse> => {
-    const loadingKey = `user-stats-${userId}`;
-    setLoading(loadingKey, true);
-
-    try {
-      const { data, error } = await httpClient.GET("/user/{userId}/stats", {
-        params: { path: { userId } },
-      });
-      if (error) throw new Error("API Error");
-      setState((prev) => ({ ...prev, lastSync: new Date() }));
-      return data;
-    } catch (error) {
-      const errorMsg = `Failed to fetch stats for user ${userId}: ${
-        error instanceof Error ? error.message : "Unknown error"
-      }`;
-      addError(errorMsg);
-      throw error;
-    } finally {
-      setLoading(loadingKey, false);
-    }
-  };
-
   // WebSocket Operations
   const connectWs = () => {
     wsClientInstance.connect(config.wsUrl);
@@ -212,20 +201,6 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({
 
   const disconnectWs = () => {
     wsClientInstance.disconnect();
-  };
-
-  const joinRoom = (roomId: string, userId: string) => {
-    wsClientInstance.send("join-room", {
-      roomId,
-      userId,
-    });
-  };
-
-  const sendTestResults = (passed: number, total: number) => {
-    wsClientInstance.send("test-results", {
-      passed,
-      total,
-    });
   };
 
   // Monitor online status
@@ -277,15 +252,9 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({
     config,
     updateConfig,
     state,
-    httpClient,
     wsClient: wsClientInstance,
-    getRoomBattle,
-    getRoomPlayers,
-    getUserStats,
     connectWs,
     disconnectWs,
-    joinRoom,
-    sendTestResults,
     setLoading,
     addError,
     clearErrors,

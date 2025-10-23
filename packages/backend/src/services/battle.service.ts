@@ -1,14 +1,8 @@
 import { supabase, dbLog } from '../config/database.js';
 import { QuestionsService } from './questions.service.js';
+import type { Battle, BattleParticipant } from '@webdevinterviews/shared';
 
-// Type definitions
-interface BattleParticipant {
-  userId: string;
-  joinedAt: string;
-  testsPassed?: number;
-  totalTests?: number;
-}
-
+// Additional backend-specific types
 interface BattleCreateOptions {
   scheduledStartTime?: string;
   durationMinutes?: number;
@@ -20,22 +14,6 @@ interface BattleResult {
   totalTests: number;
   completionTime?: number | null;
   placement?: number;
-}
-
-interface Battle {
-  id: string;
-  room_id: string;
-  status: 'waiting' | 'active' | 'completed';
-  admin_user_id: string;
-  participants: BattleParticipant[];
-  duration_minutes: number;
-  started_at?: string;
-  completed_at?: string;
-  created_at: string;
-  scheduled_start_time?: string;
-  auto_end_time?: string;
-  ended_by?: string;
-  results?: BattleResult[];
 }
 
 interface UserStats {
@@ -364,7 +342,50 @@ export class BattleService {
         throw error;
       }
 
-      return data as Battle || null;
+      if (!data) {
+        return null;
+      }
+
+      const battle = data as Battle;
+
+      // Auto-fix: If battle is in waiting status but has no scheduled start time, add one
+      // (Only for waiting battles, not completed ones)
+      if (battle.status === 'waiting' && !battle.scheduled_start_time) {
+        dbLog.info('Found waiting battle without scheduled start time, fixing...', { 
+          battleId: battle.id,
+          currentStatus: battle.status 
+        });
+
+        const scheduledStartTime = new Date(Date.now() + 30 * 1000).toISOString(); // 30 seconds from now
+        
+        try {
+          const { data: updatedData, error: updateError } = await supabase
+            .from('battles')
+            .update({ scheduled_start_time: scheduledStartTime })
+            .eq('id', battle.id)
+            .select()
+            .single();
+
+          if (updateError) {
+            dbLog.error('Failed to update battle with scheduled start time:', updateError);
+            // Return original battle even if update fails
+            return battle;
+          }
+
+          dbLog.info('Successfully added scheduled start time to battle', {
+            battleId: battle.id,
+            scheduledStartTime
+          });
+
+          return updatedData as Battle;
+        } catch (updateError) {
+          dbLog.error('Error updating battle with scheduled start time:', updateError);
+          // Return original battle even if update fails
+          return battle;
+        }
+      }
+
+      return battle;
     } catch (error) {
       dbLog.error('Error fetching battle:', error);
       throw error;  

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Box,
   Typography,
@@ -62,32 +62,66 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
   players,
   currentUserId,
   battleStatus,
-  playerResults = {},
+  playerResults: _playerResults = {},
   countdown = null,
   battleStartTime = null,
 }) => {
   const theme = useTheme();
 
-  // Countdown timer for next battle
-  const [nextBattleCountdown, setNextBattleCountdown] = useState(300); // 5 minutes default
-
-  useEffect(() => {
-    if (battleStatus === "waiting") {
-      const interval = setInterval(() => {
-        setNextBattleCountdown((prev) => (prev > 0 ? prev - 1 : 0));
-      }, 1000);
-
-      return () => clearInterval(interval);
-    }
-  }, [battleStatus]);
-
   const formatCountdown = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+
+    if (days > 0) {
+      return `${days}d ${hours}h ${minutes}m ${remainingSeconds}s`;
+    } else if (hours > 0) {
+      return `${hours}h ${minutes}m ${remainingSeconds}s`;
+    } else {
+      return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+    }
   };
 
-  // Sort players by completion status and time
+  // Format the battle start time properly
+  const formatBattleStartTime = (startTime: string | null) => {
+    if (!startTime) return "Not scheduled";
+
+    try {
+      const date = new Date(startTime);
+      // Check if date is valid
+      if (isNaN(date.getTime())) return "Invalid time";
+
+      // Check if it's a Saturday 5pm battle (weekly scheduled battle)
+      const dayOfWeek = date.getDay();
+      const hour = date.getHours();
+
+      if (dayOfWeek === 6 && hour === 17) {
+        // Saturday at 5pm
+        return (
+          date.toLocaleDateString([], {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          }) + " (Weekly Battle)"
+        );
+      }
+
+      return date.toLocaleString([], {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      });
+    } catch {
+      return "Invalid time";
+    }
+  }; // Sort players by completion status and time
   const sortedPlayers = [...players].sort((a, b) => {
     // Completed players first
     if (a.testProgress?.completedAt && !b.testProgress?.completedAt) return -1;
@@ -192,7 +226,7 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
               <Typography variant="h4" sx={{ fontWeight: 700, mb: 2 }}>
                 {countdown !== null && countdown > 0
                   ? "Battle Starts In"
-                  : "Next Battle Starts In"}
+                  : "Waiting for Players"}
               </Typography>
               <Typography
                 variant="h2"
@@ -205,7 +239,7 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
               >
                 {countdown !== null && countdown > 0
                   ? formatCountdown(countdown)
-                  : formatCountdown(nextBattleCountdown)}
+                  : "--:--"}
               </Typography>
               {battleStartTime && (
                 <Typography
@@ -213,8 +247,16 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
                   color="text.secondary"
                   sx={{ mb: 2 }}
                 >
-                  Scheduled for:{" "}
-                  {new Date(battleStartTime).toLocaleTimeString()}
+                  Scheduled for: {formatBattleStartTime(battleStartTime)}
+                </Typography>
+              )}
+              {(!battleStartTime || (countdown !== null && countdown <= 0)) && (
+                <Typography
+                  variant="body1"
+                  color="text.secondary"
+                  sx={{ mb: 2 }}
+                >
+                  Battle will start when ready
                 </Typography>
               )}
               <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>

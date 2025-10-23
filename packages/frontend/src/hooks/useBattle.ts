@@ -1,14 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useApi, useWebSocket } from './useApi';
-import { Question, QuestionSummary } from '@webdevinterviews/shared';
-
-interface Player {
-  userId: string;
-  testsPassed: number;
-  totalTests: number;
-  joinedAt: string;
-  isConnected: boolean;
-}
+import { getBattleCurrent } from '../api/generated/requests/services.gen';
+import type { Player, Question, QuestionSummary } from '@webdevinterviews/shared';
 
 interface PlayerResults {
   [playerId: string]: {
@@ -39,7 +32,7 @@ export const useBattle = (playerId: string) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   
-  // Question state
+  // Question state - using shared types
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [questionPool, setQuestionPool] = useState<QuestionSummary[]>([]);
   const [questionLoading, setQuestionLoading] = useState(false);
@@ -111,7 +104,7 @@ export const useBattle = (playerId: string) => {
           }
           // Handle question pool from battle info
           if (Array.isArray(battle.questionPool)) {
-            setQuestionPool(battle.questionPool as QuestionSummary[]);
+            setQuestionPool(battle.questionPool);
             console.log('📚 Received question pool with battle info:', battle.questionPool.length, 'questions');
           }
         }
@@ -133,39 +126,40 @@ export const useBattle = (playerId: string) => {
     (wsClient as unknown as { send: (data: Record<string, unknown>) => void }).send(data);
   }, [wsClient]);
 
-  // Fetch next battle info on component mount
+  // Fetch next battle info on component mount using generated API
   useEffect(() => {
     const fetchNextBattle = async () => {
       try {
         setLoading(true);
         console.log('🔍 Fetching next battle info...');
         
-        const response = await fetch(`${api.config.baseUrl}/battle/next`, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch battle info: ${response.status}`);
-        }
-        
-        const data = await response.json();
+        const data = await getBattleCurrent();
         const { battle } = data;
         
         if (battle) {
-          console.log('✅ Next battle info received:', battle);
-          setBattleId(battle.roomId);
+          console.log('✅ Current battle info received:', battle);
+          console.log('🕐 Battle timing details:', {
+            scheduledStartTime: battle.scheduledStartTime,
+            startedAt: battle.startedAt,
+            status: battle.status
+          });
+          
+          setBattleId(String(battle.id) || null); 
           setBattleInfo(battle);
-          setBattleStatus(battle.status);
-          setBattleStartTime(battle.scheduledStartTime);
+          setBattleStatus((battle.status as 'waiting' | 'active' | 'completed') || 'waiting');
+          
+          // Use scheduledStartTime for waiting battles, startedAt for active battles
+          const startTime = battle.scheduledStartTime || battle.startedAt;
+          console.log('🎯 Setting battle start time:', startTime);
+          setBattleStartTime(startTime ? String(startTime) : null);
           
           // Set question pool if available
-          if (battle.questionPool && Array.isArray(battle.questionPool)) {
-            setQuestionPool(battle.questionPool);
-            console.log('📚 Question pool loaded:', battle.questionPool.length, 'questions');
+          if (Array.isArray(data.questions)) {
+            setQuestionPool(data.questions as QuestionSummary[]);
+            console.log('📚 Question pool loaded:', data.questions.length, 'questions');
           }
         } else {
+          console.log('❌ No battle data received');
           setError('No battle available');
         }
       } catch (error) {
@@ -177,7 +171,7 @@ export const useBattle = (playerId: string) => {
     };
 
     fetchNextBattle();
-  }, [api.config.baseUrl]);
+  }, []);
 
   // Connect WebSocket only once and set up message handlers
   useEffect(() => {
@@ -202,38 +196,52 @@ export const useBattle = (playerId: string) => {
     };
   }, []); // Run only once on mount
 
-  // Join room when connected and we have battle info
+  // Join battle when connected (no more rooms)
   useEffect(() => {
     if (api.state.wsConnected && battleId) {
-      console.log('🔌 WebSocket connected, joining battle room:', battleId);
+      console.log('🔌 WebSocket connected, joining battle:', battleId);
       
       sendMessage({
         type: 'join',
-        roomId: battleId,
         userId: playerId
       });
       
-      // Request initial data - this will include question pool and battle timing
+      // Request initial data
       setTimeout(() => {
         console.log('📋 Fetching initial battle data...');
         sendMessage({ type: 'get-players' });
-        sendMessage({ type: 'get-battle-info' }); // This now includes question pool
       }, 100);
     }
   }, [api.state.wsConnected, battleId, playerId, sendMessage]);
 
   // Countdown timer for scheduled battles
   useEffect(() => {
-    if (!battleStartTime || battleStatus !== 'waiting') return;
+    if (!battleStartTime || battleStatus !== 'waiting') {
+      console.log('🔄 Countdown not running:', { battleStartTime, battleStatus });
+      return;
+    }
 
     const updateCountdown = () => {
-      const now = new Date().getTime();
-      const startTime = new Date(battleStartTime).getTime();
-      const timeLeft = Math.max(0, Math.floor((startTime - now) / 1000));
+      const now = new Date();
+      const nowUTC = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
+      const startTime = new Date(battleStartTime);
+      const timeLeft = Math.max(0, Math.floor((startTime.getTime() - now.getTime()) / 1000));
+      
+      console.log('⏰ Countdown update:', {
+        nowLocal: now.toISOString(),
+        nowUTC: nowUTC.toISOString(),
+        battleStartTime,
+        startTimeUTC: startTime.toISOString(),
+        timeDiffMs: startTime.getTime() - now.getTime(),
+        timeLeft,
+        timeLeftMinutes: Math.floor(timeLeft / 60),
+        timeLeftHours: Math.floor(timeLeft / 3600)
+      });
       
       setTimeUntilStart(timeLeft);
       
       if (timeLeft === 0) {
+        console.log('🚀 Battle starting! Time reached zero');
         setBattleStatus('active');
         setBattleStartTime(null);
         setTimeUntilStart(null);
@@ -245,36 +253,13 @@ export const useBattle = (playerId: string) => {
     return () => clearInterval(interval);
   }, [battleStartTime, battleStatus]);
 
-  // Battle actions
+  // Simplified battle actions for the new backend
   const sendTestResults = useCallback((passed: number, total: number) => {
     sendMessage({
       type: 'test-results',
       passed,
-      total,
-      userId: playerId
+      total
     });
-  }, [sendMessage, playerId]);
-
-  const getCurrentQuestion = useCallback(() => {
-    setQuestionLoading(true);
-    sendMessage({ type: 'get-current-question' });
-  }, [sendMessage]);
-
-  const getQuestionPool = useCallback(() => {
-    setQuestionLoading(true);
-    sendMessage({ type: 'get-question-pool' });
-  }, [sendMessage]);
-
-  const createBattle = useCallback((scheduledStartTime?: string, durationMinutes?: number) => {
-    sendMessage({
-      type: 'create-battle',
-      scheduledStartTime,
-      durationMinutes
-    });
-  }, [sendMessage]);
-
-  const getBattleInfo = useCallback(() => {
-    sendMessage({ type: 'get-battle-info' });
   }, [sendMessage]);
 
   const startBattle = useCallback(() => {
@@ -282,11 +267,6 @@ export const useBattle = (playerId: string) => {
   }, [sendMessage]);
 
   return {
-    // API context
-    httpClient: api.httpClient,
-    config: api.config,
-    state: api.state,
-    
     // Battle state
     playersList,
     playerResults,
@@ -306,10 +286,6 @@ export const useBattle = (playerId: string) => {
     
     // Actions
     sendTestResults,
-    getCurrentQuestion,
-    getQuestionPool,
-    createBattle,
-    getBattleInfo,
     startBattle,
     
     // Connection state

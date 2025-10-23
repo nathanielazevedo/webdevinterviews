@@ -6,18 +6,19 @@ import {
   ResizableCodingPanels,
   MultiplayerLeaderboard,
   BattleEntrySideNav,
+  AdminControls,
 } from "./components";
 import { useBattleEnhanced } from "../../hooks/battle";
 
 const BattleMain: React.FC = () => {
-  // Use the new enhanced battle hook - all logic is now contained here
+  // Use the enhanced battle hook
   const {
     // IDs
     battleId,
     currentPlayerId,
 
-    // Battle State
-    battleState,
+    // Battle State - use actual properties from useBattle
+    battleStatus,
     isAdmin,
 
     // Players
@@ -29,18 +30,40 @@ const BattleMain: React.FC = () => {
 
     // Timer
     battleStartTime,
-    effectiveCountdown,
+    timeUntilStart,
 
     // Actions
     handleStartBattle,
-    handleResetBattle,
-    handleSubmitSolution,
     handleTestResults,
+    handleEndBattle,
   } = useBattleEnhanced();
+
+  // Calculate derived values that were in the old battleState
+
+  // Calculate winners from player results
+  const winners = Object.entries(playerResults)
+    .filter(([, result]) => result.isCompleted)
+    .sort((a, b) => {
+      // Sort by completion time, then by score
+      const aTime = new Date(a[1].completedAt || "").getTime();
+      const bTime = new Date(b[1].completedAt || "").getTime();
+      if (aTime !== bTime) return aTime - bTime;
+      return b[1].passed - a[1].passed;
+    })
+    .slice(0, 3) // Top 3
+    .map(([playerId]) => playerId);
 
   // Simple test code handler for BattleControls
   const handleTestCode = () => {
     // Implementation for test code functionality
+  };
+
+  const handleResetBattle = () => {
+    // Reset functionality would go here
+  };
+
+  const handleSubmitSolution = () => {
+    // Submit solution functionality would go here
   };
 
   return (
@@ -48,8 +71,7 @@ const BattleMain: React.FC = () => {
       <Container maxWidth="xl">
         <Box sx={{ py: 4 }}>
           {/* Pre-battle and post-battle layout */}
-          {(battleState.status === "waiting" ||
-            battleState.status === "countdown") && (
+          {battleStatus === "waiting" && (
             <Grid container spacing={3}>
               {/* Side Navigation */}
               <Grid item xs={12} md={3}>
@@ -64,15 +86,15 @@ const BattleMain: React.FC = () => {
                 <MultiplayerLeaderboard
                   players={players}
                   currentUserId={currentPlayerId}
-                  battleStatus={battleState.status}
+                  battleStatus={battleStatus}
                   playerResults={playerResults}
-                  countdown={effectiveCountdown}
+                  countdown={timeUntilStart || 0}
                   battleStartTime={battleStartTime}
                 />
 
                 {!isAdmin && (
                   <BattleControls
-                    battleStatus={battleState.status}
+                    battleStatus={battleStatus}
                     onStartBattle={handleStartBattle}
                     onResetBattle={handleResetBattle}
                     onSubmitSolution={handleSubmitSolution}
@@ -84,8 +106,7 @@ const BattleMain: React.FC = () => {
           )}
 
           {/* Active battle layout with editor */}
-          {(battleState.status === "active" ||
-            battleState.status === "finished") && (
+          {(battleStatus === "active" || battleStatus === "completed") && (
             <Box
               sx={{
                 position: "fixed",
@@ -103,13 +124,11 @@ const BattleMain: React.FC = () => {
               {/* Fixed-height coding panels */}
               <Box sx={{ flexGrow: 1, minHeight: 0 }}>
                 <ResizableCodingPanels
-                  problemTitle={
-                    currentQuestion?.title || battleState.currentProblem
-                  }
+                  problemTitle={currentQuestion?.title || "Loading..."}
                   problemId={currentQuestion?.slug || "twoSum"}
                   onSubmit={handleSubmitSolution}
                   onTest={handleTestResults}
-                  battleId={battleId}
+                  battleId={battleId || undefined}
                   playerId={currentPlayerId}
                   players={players}
                   currentUserId={currentPlayerId}
@@ -119,11 +138,21 @@ const BattleMain: React.FC = () => {
           )}
 
           <BattleResults
-            winners={battleState.winners}
-            isVisible={battleState.status === "finished"}
+            winners={winners}
+            isVisible={battleStatus === "completed"}
           />
         </Box>
       </Container>
+
+      {/* Admin Controls - Always visible to admins */}
+      <AdminControls
+        isAdmin={true}
+        battleStatus={battleStatus}
+        battleId={battleId}
+        onEndBattle={handleEndBattle}
+        onStartBattle={handleStartBattle}
+        onResetBattle={handleResetBattle}
+      />
     </>
   );
 };
