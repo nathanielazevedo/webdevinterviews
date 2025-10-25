@@ -105,8 +105,8 @@ export class TypedWebSocketClient {
     this.send(message);
   }
 
-  sendTestResults(passed: number, total: number): void {
-    const message: TestResultsMessage = { type: 'test-results', passed, total };
+  sendTestResults(testsPassed: number): void {
+    const message: TestResultsMessage = { type: 'test-results', testsPassed };
     this.send(message);
   }
 

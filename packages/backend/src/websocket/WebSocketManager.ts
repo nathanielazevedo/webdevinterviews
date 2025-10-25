@@ -148,7 +148,6 @@ export class WebSocketManager {
       if (!this.playerData.has(userId)) {
         this.playerData.set(userId, {
           testsPassed: 0,
-          totalTests: 0,
           joinedAt: new Date().toISOString()
         });
       } else {
@@ -272,7 +271,6 @@ export class WebSocketManager {
       const currentResults: BattleResult[] = Array.from(this.playerData.entries()).map(([playerId, data]) => ({
         userId: playerId,
         testsPassed: data.testsPassed || 0,
-        totalTests: data.totalTests || 0,
         completedAt: new Date().toISOString()  // Set completion time to now
       }));
 

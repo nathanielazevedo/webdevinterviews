@@ -86,7 +86,6 @@ export class BattleTimingManager {
         results.push({
           userId,
           testsPassed: data.testsPassed,
-          totalTests: data.totalTests,
           completionTime: null // No completion time for auto-ended battles
         });
       }

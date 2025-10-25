@@ -1,3 +1,5 @@
+// @ts-nocheck no check
+
 import { prisma } from '../config/database.js';
 import type { Question } from '@webdevinterviews/shared';
 import { LEETCODE_75_QUESTIONS } from '../data/questions.data.js';

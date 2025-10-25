@@ -62,7 +62,7 @@ export interface Player {
   username: string;
   avatar?: string;
   testsPassed: number;
-  totalTests: number;
+  totalTests?: number;
   joinedAt: string;
   isConnected: boolean;
 }

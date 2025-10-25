@@ -121,6 +121,7 @@ export type WebSocketMessage = ClientMessage | ServerMessage;
 export interface Player {
   userId: string;
   username?: string;
+  avatar?: string;
   testsPassed: number;
   joinedAt: string;
   isConnected: boolean;

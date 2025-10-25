@@ -25,7 +25,6 @@ export interface StatusWatcher {
 export interface BattleResult {
   userId: string;
   testsPassed: number;
-  totalTests: number;
   completionTime?: number | null;
 }
 
