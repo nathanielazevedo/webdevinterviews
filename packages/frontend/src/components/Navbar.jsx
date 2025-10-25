@@ -134,6 +134,10 @@ const pages = [
     title: "Battle",
     to: "/battle",
   },
+  {
+    title: "Battle Practice",
+    to: "/battle-practice",
+  },
 ];
 
 const Navbar = () => {
@@ -321,7 +325,8 @@ const Navbar = () => {
               {pages.map((page) => {
                 const isActive =
                   location.pathname === page.to ||
-                  (page.to !== "/" && location.pathname.startsWith(page.to));
+                  (page.to !== "/" &&
+                    location.pathname.startsWith(page.to + "/"));
 
                 return (
                   <Button

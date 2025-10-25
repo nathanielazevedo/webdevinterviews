@@ -7,17 +7,14 @@ import type {
 export interface WebSocketMessage {
   type: string;
   userId?: string;
-  passed?: number;
-  total?: number;
+  testsPassed?: number;
   scheduledStartTime?: string;
   durationMinutes?: number;
   completionTime?: number;
 }
 
 export interface PlayerData {
-  ws: WebSocket;
   testsPassed: number;
-  totalTests: number;
   joinedAt: string;
 }
 

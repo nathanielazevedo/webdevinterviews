@@ -52,11 +52,62 @@ Web Dev Interviews showcases modern full-stack development practices:
 - **Monorepo Architecture:** Organized codebase with shared packages and utilities
 - **Comprehensive Testing:** Unit and integration tests ensuring code reliability
 
-## Deployment & CI/CD
-- **Vercel Deployment:** Optimized frontend hosting with automatic deployments
-- **GitHub Actions:** Automated testing, building, and deployment workflows
+## WebSocket Client Generation
 
----
+**Yes!** You can generate TypeScript WebSocket clients from your AsyncAPI specification. Here's what I implemented:
+
+### ✅ Generated WebSocket Client
+
+1. **AsyncAPI Specification** (`packages/backend/asyncapi.yaml`)
+   - Complete WebSocket API spec with all message types
+   - Request/response schemas with proper validation
+
+2. **Shared WebSocket Client** (`packages/shared/src/websocket/client.ts`)
+   - TypeScript WebSocket client with convenience methods
+   - Type-safe message handling and reconnection logic
+
+### 🚀 Usage Example
+
+```typescript
+import { createWebSocketClient } from '@webdevinterviews/shared';
+
+// Create and connect
+const client = createWebSocketClient({ url: 'ws://localhost:3001' });
+
+client.on('message', (message) => {
+  switch (message.type) {
+    case 'battle-status':
+      console.log('Battle status:', message.status);
+      break;
+    case 'players-list':
+      console.log('Players:', message.players.length);
+      break;
+  }
+});
+
+await client.connect();
+
+// Use convenience methods
+client.join('user123');
+client.sendTestResults(8, 10);
+```
+
+### 📋 Available Commands
+
+```bash
+# Serve WebSocket documentation
+cd packages/backend
+npm run docs:websocket:serve
+```
+
+### 🎯 Benefits
+
+- **Type Safety**: Full TypeScript support for all WebSocket messages
+- **Convenience Methods**: Pre-built methods for each operation
+- **Reconnection**: Built-in reconnection and error handling
+- **Documentation**: Complete AsyncAPI specification
+
+The WebSocket client provides a robust, type-safe interface for real-time battle functionality!
 
 Thank you for checking out my code.
 

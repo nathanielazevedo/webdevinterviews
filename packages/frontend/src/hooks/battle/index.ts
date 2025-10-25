@@ -1,6 +1,9 @@
-// Export the main enhanced battle hook
-export { useBattleEnhanced } from './useBattleEnhanced';
-
-// Note: The individual hooks (useBattleState, useBattlePlayers, etc.) have been removed
-// in favor of the simplified useBattleEnhanced hook which uses the main useBattle hook
-// that integrates with the new simplified backend architecture.
+export { useBattle } from './useBattle';
+export { useBattlePractice } from './useBattlePractice';
+export type {
+  WebSocketMessage,
+  BattleStatus,
+  BattleResult,
+  TestResult
+} from './useBattle';
+export type { UseBattlePracticeReturn } from './useBattlePractice';

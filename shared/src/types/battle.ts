@@ -5,7 +5,7 @@ export interface Question {
   slug: string;
   difficulty: 'Easy' | 'Medium' | 'Hard';
   problem_statement: string;
-  function_signature: string;
+  function_signature?: string;
   test_cases: Array<{
     input?: Record<string, any>;
     expected?: any;
@@ -19,6 +19,8 @@ export interface Question {
   hints?: string[] | null;
   tags?: string[] | null;
   leetcode_number?: number | null;
+  starter_code?: string;
+  solution?: string;
   created_at?: string;
   updated_at?: string;
 }
@@ -57,6 +59,8 @@ export interface BattleParticipant {
 
 export interface Player {
   userId: string;
+  username: string;
+  avatar?: string;
   testsPassed: number;
   totalTests: number;
   joinedAt: string;
@@ -67,6 +71,24 @@ export interface Player {
 export interface BattleCurrentResponse {
   battle?: Battle;
   questions?: QuestionSummary[];
+}
+
+export interface BattleInfo {
+  id: string;
+  status: 'waiting' | 'active' | 'completed';
+  startedAt?: string | null;
+  createdAt?: string;
+  scheduledStartTime?: string | null;
+  durationMinutes?: number | null;
+  adminUserId?: string;
+  participantCount?: number;
+  connectedPlayers?: number;
+  canJoin?: boolean;
+  isActive?: boolean;
+  isWaiting?: boolean;
+  isCompleted?: boolean;
+  questionPool?: QuestionSummary[];
+  selectedQuestion?: Question | null;
 }
 
 export interface BattlePlayersResponse {

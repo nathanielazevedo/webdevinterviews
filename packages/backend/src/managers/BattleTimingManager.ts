@@ -29,29 +29,21 @@ export class BattleTimingManager {
       await this.checkExpiredBattles();
     }, 30000);
     
-    log.info('Battle timing manager started');
   }
 
   stop(): void {
     if (this.checkInterval) {
       clearInterval(this.checkInterval);
       this.checkInterval = null;
-      log.info('Battle timing manager stopped');
     }
   }
 
   private async checkScheduledBattles(): Promise<void> {
     try {
-      const battlesToStart = await BattleService.getBattlesToAutoStart();
+      const battleToStart = await BattleService.getBattleToAutoStart();
       
-      for (const battle of battlesToStart) {
-        log.info(`Auto-starting scheduled battle`, { 
-          battleId: battle.id, 
-          roomId: battle.room_id,
-          scheduledTime: battle.scheduled_start_time
-        });
-
-        const startedBattle = await BattleService.autoStartBattle(battle.id);
+      if (battleToStart) {
+        const startedBattle = await BattleService.autoStartBattle(battleToStart.id);
         
         if (startedBattle) {
           // Broadcast battle started to all users
@@ -67,18 +59,12 @@ export class BattleTimingManager {
 
   private async checkExpiredBattles(): Promise<void> {
     try {
-      const battlesToEnd = await BattleService.getBattlesToAutoEnd();
+      const battleToEnd = await BattleService.getBattleToAutoEnd();
       
-      for (const battle of battlesToEnd) {
-        log.info(`Auto-ending expired battle`, { 
-          battleId: battle.id, 
-          roomId: battle.room_id,
-          autoEndTime: battle.auto_end_time
-        });
-
+      if (battleToEnd) {
         // Collect final results from active players
         const finalResults = this.collectFinalResults();
-        const endedBattle = await BattleService.autoEndBattle(battle.id, finalResults);
+        const endedBattle = await BattleService.autoEndBattle(battleToEnd.id, finalResults);
         
         if (endedBattle) {
           // Broadcast battle ended to all users

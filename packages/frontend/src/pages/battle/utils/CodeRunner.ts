@@ -8,6 +8,7 @@ interface TestCase {
 
 interface TestResult {
   passed: boolean;
+  testsPassed: number;
   message: string;
   testCases: {
     input: string;
@@ -71,6 +72,7 @@ class CodeRunner {
 
     return {
       passed: totalPassed === testCases.length,
+      testsPassed: totalPassed,
       message: `${totalPassed}/${testCases.length} tests passed`,
       testCases: results,
       totalExecutionTime,

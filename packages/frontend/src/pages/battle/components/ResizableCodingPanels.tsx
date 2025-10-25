@@ -3,7 +3,6 @@ import {
   Box,
   Paper,
   Typography,
-  Button,
   useTheme,
   LinearProgress,
   Avatar,
@@ -12,31 +11,56 @@ import {
   ListItemAvatar,
   ListItemText,
 } from "@mui/material";
-import { Send, BugReport, Person } from "@mui/icons-material";
+import { BugReport } from "@mui/icons-material";
+import type { Question, Player } from "@webdevinterviews/shared";
 import MonacoCodeEditor from "./MonacoCodeEditor";
 import TestRunner from "./TestRunner";
 
-interface TestResults {
-  testCases: { passed: boolean }[];
-}
+// Predefined avatar options (same as in BattleEntrySideNav)
+const AVATAR_OPTIONS = [
+  { id: "default", type: "initial", label: "Default (Initials)" },
+  { id: "dev1", type: "emoji", emoji: "👨‍💻", label: "Developer" },
+  { id: "dev2", type: "emoji", emoji: "👩‍💻", label: "Developer" },
+  { id: "ninja", type: "emoji", emoji: "🥷", label: "Ninja" },
+  { id: "robot", type: "emoji", emoji: "🤖", label: "Robot" },
+  { id: "alien", type: "emoji", emoji: "👽", label: "Alien" },
+  { id: "wizard", type: "emoji", emoji: "🧙‍♂️", label: "Wizard" },
+  { id: "cat", type: "emoji", emoji: "🐱", label: "Cat" },
+  { id: "dog", type: "emoji", emoji: "🐶", label: "Dog" },
+  { id: "panda", type: "emoji", emoji: "🐼", label: "Panda" },
+  { id: "lion", type: "emoji", emoji: "🦁", label: "Lion" },
+  { id: "tiger", type: "emoji", emoji: "🐯", label: "Tiger" },
+  { id: "fire", type: "emoji", emoji: "🔥", label: "Fire" },
+  { id: "lightning", type: "emoji", emoji: "⚡", label: "Lightning" },
+  { id: "star", type: "emoji", emoji: "⭐", label: "Star" },
+  { id: "rocket", type: "emoji", emoji: "🚀", label: "Rocket" },
+];
 
-interface Player {
-  id: string;
-  name: string;
-  avatar: string;
-  status: "ready" | "coding" | "submitted" | "disconnected";
-  testProgress?: {
-    passed: number;
-    total: number;
-    completedAt?: number;
-  };
+// Helper function to render avatar content
+const renderAvatarContent = (player: Player) => {
+  if (!player.username) return "?";
+
+  const initials = player.username
+    .split(" ")
+    .map((name: string) => name.charAt(0).toUpperCase())
+    .slice(0, 2)
+    .join("");
+
+  return initials || player.username.charAt(0).toUpperCase();
+};
+
+interface TestResult {
+  passed: boolean;
+  message: string;
+  testCases: unknown[];
+  totalExecutionTime: number;
 }
 
 interface ResizableCodingPanelsProps {
   problemTitle: string;
   problemId: string;
-  onSubmit: (code: string) => void;
-  onTest: (results: TestResults) => void;
+  question?: Question;
+  onTest: (results: TestResult) => void;
   battleId?: string;
   playerId?: string;
   players?: Player[];
@@ -46,7 +70,7 @@ interface ResizableCodingPanelsProps {
 const ResizableCodingPanels: React.FC<ResizableCodingPanelsProps> = ({
   problemTitle,
   problemId,
-  onSubmit,
+  question,
   onTest,
   battleId,
   playerId,
@@ -54,10 +78,14 @@ const ResizableCodingPanels: React.FC<ResizableCodingPanelsProps> = ({
   currentUserId,
 }) => {
   const theme = useTheme();
-  const [code, setCode] = useState(`function twoSum(nums, target) {
+  const [code, setCode] = useState(
+    question?.starter_code ||
+      `function solution() {
     // Write your solution here
     
-}`);
+}`
+  );
+
   const [userListWidth, setUserListWidth] = useState(20); // Percentage for left user list panel
   const [problemWidth, setProblemWidth] = useState(30); // Percentage for problem description panel
   const [rightTopHeight, setRightTopHeight] = useState(60); // Percentage for right top panel (editor)
@@ -66,36 +94,33 @@ const ResizableCodingPanels: React.FC<ResizableCodingPanelsProps> = ({
   const isDraggingVertical = useRef(false);
   const isDraggingHorizontal = useRef(false);
 
-  const problemDescription = `
-Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+  // Generate problem description from question data
+  const problemDescription = question
+    ? `
+${question.problem_statement || "No problem statement available."}
 
-You may assume that each input would have exactly one solution, and you may not use the same element twice.
+${
+  question.examples && question.examples.length > 0
+    ? question.examples
+        .map(
+          (example, index) =>
+            `Example ${index + 1}:
+${example.input ? `Input: ${example.input}` : ""}
+${example.output ? `Output: ${example.output}` : ""}
+${example.explanation ? `Explanation: ${example.explanation}` : ""}`
+        )
+        .join("\n\n")
+    : ""
+}
 
-You can return the answer in any order.
-
-Example 1:
-Input: nums = [2,7,11,15], target = 9
-Output: [0,1]
-Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
-
-Example 2:
-Input: nums = [3,2,4], target = 6
-Output: [1,2]
-
-Example 3:
-Input: nums = [3,3], target = 6
-Output: [0,1]
-
-Constraints:
-• 2 ≤ nums.length ≤ 10⁴
-• -10⁹ ≤ nums[i] ≤ 10⁹
-• -10⁹ ≤ target ≤ 10⁹
-• Only one valid answer exists.
-  `;
-
-  const handleSubmitSolution = () => {
-    onSubmit(code);
-  };
+${
+  question.constraints
+    ? `Constraints:
+${question.constraints}`
+    : ""
+}
+  `.trim()
+    : "Loading problem description...";
 
   // Handle first vertical resizer (between user list and problem panels)
   const handleFirstVerticalMouseDown = useCallback((e: React.MouseEvent) => {
@@ -230,29 +255,57 @@ Constraints:
           }}
         >
           <List sx={{ py: 0 }}>
-            {players.map((player) => (
+            {players.map((player: Player) => (
               <ListItem
-                key={player.id}
+                key={player.userId}
                 sx={{
                   px: 2,
                   py: 1,
                   borderBottom: `1px solid ${theme.palette.divider}20`,
                   backgroundColor:
-                    player.id === currentUserId
+                    player.userId === currentUserId
                       ? `${theme.palette.primary.main}10`
                       : "transparent",
                 }}
               >
                 <ListItemAvatar sx={{ minWidth: 40 }}>
-                  <Avatar src={player.avatar} sx={{ width: 32, height: 32 }}>
-                    <Person fontSize="small" />
-                  </Avatar>
+                  {(() => {
+                    const avatarId = player.avatar || "default";
+                    const avatar = AVATAR_OPTIONS.find(
+                      (a) => a.id === avatarId
+                    );
+
+                    if (avatar && avatar.type === "emoji") {
+                      return (
+                        <Box
+                          sx={{
+                            width: 32,
+                            height: 32,
+                            borderRadius: "50%",
+                            bgcolor: "grey.100",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "1.2rem",
+                          }}
+                        >
+                          {avatar.emoji}
+                        </Box>
+                      );
+                    }
+
+                    return (
+                      <Avatar sx={{ width: 32, height: 32 }}>
+                        {renderAvatarContent(player)}
+                      </Avatar>
+                    );
+                  })()}
                 </ListItemAvatar>
                 <ListItemText
                   primary={
                     <Typography variant="body2" fontWeight={500}>
-                      {player.name}
-                      {player.id === currentUserId && " (You)"}
+                      {player.username}
+                      {player.userId === currentUserId && " (You)"}
                     </Typography>
                   }
                   secondary={
@@ -260,9 +313,9 @@ Constraints:
                       <LinearProgress
                         variant="determinate"
                         value={
-                          player.testProgress && player.testProgress.total > 0
-                            ? (player.testProgress.passed /
-                                player.testProgress.total) *
+                          question?.test_cases?.length > 0
+                            ? (player.testsPassed /
+                                question?.test_cases?.length) *
                               100
                             : 0
                         }
@@ -273,10 +326,8 @@ Constraints:
                           "& .MuiLinearProgress-bar": {
                             borderRadius: 3,
                             backgroundColor:
-                              player.testProgress &&
-                              player.testProgress.passed ===
-                                player.testProgress.total &&
-                              player.testProgress.total > 0
+                              player.testsPassed === player.totalTests &&
+                              player.totalTests > 0
                                 ? theme.palette.success.main
                                 : theme.palette.primary.main,
                           },
@@ -287,8 +338,8 @@ Constraints:
                         color="text.secondary"
                         sx={{ mt: 0.5, display: "block" }}
                       >
-                        {player.testProgress?.passed || 0}/
-                        {player.testProgress?.total || 0} tests
+                        {player.testsPassed}/{question?.test_cases.length} tests
+                        passed
                       </Typography>
                     </Box>
                   }
@@ -421,17 +472,7 @@ Constraints:
             <Typography variant="h6" fontWeight="bold">
               JavaScript Solution
             </Typography>
-            <Box display="flex" gap={1}>
-              <Button
-                variant="contained"
-                size="small"
-                startIcon={<Send />}
-                onClick={handleSubmitSolution}
-                color="success"
-              >
-                Submit
-              </Button>
-            </Box>
+            <Box display="flex" gap={1}></Box>
           </Box>
 
           <Box sx={{ flex: 1, p: 2, position: "relative" }}>
@@ -476,6 +517,7 @@ Constraints:
             onTestComplete={onTest}
             battleId={battleId}
             playerId={playerId}
+            testCases={question?.test_cases}
           />
         </Paper>
       </Box>

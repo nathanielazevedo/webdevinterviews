@@ -21,7 +21,7 @@ import {
   Error as ErrorIcon,
 } from "@mui/icons-material";
 import CodeRunner, { TEST_CASES } from "../utils/CodeRunner";
-import { useBattle } from "../../../hooks/useBattle";
+import { useBattleContext } from "../../../contexts/BattleContext";
 
 interface TestRunnerProps {
   code: string;
@@ -29,6 +29,10 @@ interface TestRunnerProps {
   onTestComplete?: (results: TestResult) => void;
   battleId?: string;
   playerId?: string;
+  testCases?: Array<{
+    input?: { [key: string]: unknown };
+    expected?: unknown;
+  }>;
 }
 
 interface TestCase {
@@ -54,25 +58,20 @@ const TestRunner: React.FC<TestRunnerProps> = ({
   onTestComplete,
   battleId,
   playerId,
+  testCases,
 }) => {
   const theme = useTheme();
   const [isRunning, setIsRunning] = useState(false);
   const [results, setResults] = useState<TestResult | null>(null);
 
-  // Battle hook for real-time battle communication
-  const { isConnected, sendTestResults } = useBattle(
-    battleId || "", // battleId
-    playerId || "" // playerId
-  );
+  // Battle context for real-time battle communication
+  const { isConnected, handleTestResults: sendTestResults } =
+    useBattleContext();
 
   // Connect to WebSocket when component mounts with battleId
   useEffect(() => {
     if (battleId && playerId) {
-      console.log("TestRunner: Connecting to battle", {
-        battleId,
-        playerId,
-        isConnected,
-      });
+      // TestRunner connected to battle
     }
   }, [battleId, playerId, isConnected]);
 
@@ -93,9 +92,33 @@ const TestRunner: React.FC<TestRunnerProps> = ({
 
     try {
       const codeRunner = new CodeRunner(5000); // 5 second timeout
-      const testCases = TEST_CASES[problemId as keyof typeof TEST_CASES] || [];
 
-      if (testCases.length === 0) {
+      // Use provided test cases or fall back to hardcoded ones
+      let testCasesToRun: Array<{
+        input: any[];
+        expected: any;
+        description: string;
+      }> = [];
+
+      if (testCases && testCases.length > 0) {
+        // Transform question test cases to CodeRunner format
+        testCasesToRun = testCases
+          .filter((tc) => tc.input && tc.expected !== undefined)
+          .map((tc, index) => ({
+            input: Object.values(tc.input!) as any[],
+            expected: tc.expected as any,
+            description: `Test Case ${index + 1}: ${Object.keys(tc.input!).join(
+              ", "
+            )} = ${Object.values(tc.input!)
+              .map((v) => JSON.stringify(v))
+              .join(", ")}`,
+          }));
+      } else {
+        // Fall back to hardcoded test cases
+        testCasesToRun = TEST_CASES[problemId as keyof typeof TEST_CASES] || [];
+      }
+
+      if (testCasesToRun.length === 0) {
         const noTestsResult = {
           passed: false,
           message: "No test cases found for this problem",
@@ -106,16 +129,19 @@ const TestRunner: React.FC<TestRunnerProps> = ({
         return;
       }
 
-      const testResults = await codeRunner.runTests(code, testCases);
+      const testResults = await codeRunner.runTests(code, testCasesToRun);
       setResults(testResults);
       onTestComplete?.(testResults);
 
       // Send test results to opponent via WebSocket
       if (battleId && playerId && sendTestResults) {
-        const passedTests = testResults.testCases.filter(
-          (tc) => tc.passed
-        ).length;
-        sendTestResults(passedTests, testResults.testCases.length);
+        sendTestResults({
+          passed: testResults.passed,
+          message: testResults.message,
+          testCases: testResults.testCases,
+          testsPassed: testResults.testsPassed,
+          totalExecutionTime: testResults.totalExecutionTime,
+        });
       }
     } catch (error) {
       const errorResult = {

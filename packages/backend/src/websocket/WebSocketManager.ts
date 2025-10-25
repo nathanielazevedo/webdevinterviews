@@ -1,12 +1,40 @@
 import { WebSocket, WebSocketServer } from 'ws';
+import { IncomingMessage } from 'http';
+import { URL } from 'url';
+import { createClient } from '@supabase/supabase-js';
 import { BattleService } from '../services/battle.service.js';
 import { logger } from '../utils/logger.js';
 import { WebSocketMessage, PlayerData, StatusWatcher, BattleResult } from '../types/websocket.js';
-import type { Player } from '@webdevinterviews/shared';
+import type { Player } from '@webdevinterviews/shared/src/types/battle';
 
 const log = logger;
 
-const BATTLE_ROOM_ID = 'battle_main'; // Single battle room constant
+// Supabase JWT verification setup
+const supabaseUrl = process.env.SUPABASE_URL!;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY!;
+
+// Create Supabase client for token verification
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+async function verifyWebSocketToken(token: string): Promise<{ sub: string; email?: string; [key: string]: unknown } | null> {
+  try {
+    // Use Supabase client to verify the JWT token
+    const { data: { user }, error } = await supabase.auth.getUser(token);
+
+    if (error || !user) {
+      log.warn('WebSocket token verification failed', error);
+      return null;
+    }
+    return {
+      sub: user.id,
+      email: user.email,
+      ...user.user_metadata
+    };
+  } catch (error) {
+    log.error('Error verifying WebSocket token:', error);
+    return null;
+  }
+}
 
 export class WebSocketManager {
   private connectedPlayers: Map<string, WebSocket>;
@@ -25,145 +53,175 @@ export class WebSocketManager {
   get statusWatchersMap() { return this.statusWatchers; }
 
   setupWebSocketServer(wss: WebSocketServer): void {
-    wss.on('connection', (ws: WebSocket) => {
-      let userId: string | null = null;
-      const connectionId = Math.random().toString(36).substring(7);
-      
-      log.info(`New WebSocket connection established`, { connectionId });
+    log.info('Setting up WebSocket server');
+    wss.on('connection', async (ws: WebSocket, request: IncomingMessage) => {
+      log.info('New WebSocket connection attempt from:', request.socket.remoteAddress);
+      try {
+        const url = new URL(request.url || '', 'http://localhost');
+        const token = url.searchParams.get('token');
 
-      ws.on('message', async (data: Buffer) => {
-        try {
-          const message: WebSocketMessage = JSON.parse(data.toString());
-          log.debug(`Received message from ${userId || connectionId}`, {
-            type: message.type,
-            userId: message.userId || userId,
-            messageData: message
-          });
-
-          if (message.type === 'join') {
-            await this.handleJoinMessage(message, ws, connectionId, (user) => {
-              userId = user;
-            });
-          } else if (message.type === 'end-battle') {
-            await this.handleEndBattleMessage(message, ws, userId);
-          } else if (message.type === 'start-battle') {
-            await this.handleStartBattleMessage(message, ws, userId);
-          }
-          // Add more message handlers here as needed
-
-        } catch (error) {
-          log.error(`Error processing WebSocket message from ${userId || connectionId}:`, error);
-          if (ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify({
-              type: 'error',
-              message: 'Invalid message format or processing error'
-            }));
-          }
+        if (!token) {
+          log.warn('WebSocket connection rejected: no token provided');
+          ws.close(1008, 'Authentication required');
+          return;
         }
-      });
 
-      ws.on('close', () => {
-        this.handleDisconnection(userId, connectionId);
-      });
+        // Verify the JWT token
+        const user = await verifyWebSocketToken(token);
+        if (!user) {
+          log.warn('WebSocket connection rejected: invalid token');
+          ws.close(1008, 'Invalid authentication token');
+          return;
+        }
 
-      ws.on('error', (error: Error) => {
-        log.error(`WebSocket error for connection ${connectionId}:`, error);
-      });
+        const userId = user.sub;
+        const connectionId = Math.random().toString(36).substring(7);
+        
+        log.info(`WebSocket connection established for user: ${userId}, connectionId: ${connectionId}`);
+
+
+        // Set up message handling with authenticated user
+        ws.on('message', async (data: Buffer) => {
+          log.info(`Raw message received from ${userId}, length: ${data.length}`);
+          
+          // Handle the message in a separate async function to catch all errors
+          (async () => {
+            try {
+              const message: WebSocketMessage = JSON.parse(data.toString());
+              log.info(`Parsed WebSocket message from ${userId}:`, { type: message.type, hasUserId: !!message.userId });
+
+              if (message.type === 'join') {
+                log.info(`User ${userId} sent join message`);
+                await this.handleJoinMessage(ws, userId);
+                log.info(`Join message handling completed for user: ${userId}`);
+              } else if (message.type === 'end-battle') {
+                await this.handleEndBattleMessage(message, ws, userId);
+              } else if (message.type === 'start-battle') {
+                await this.handleStartBattleMessage(message, ws, userId);
+              } else if (message.type === 'test-results') {
+                await this.handleTestResultsMessage(message, ws, userId);
+              } else {
+                log.warn(`Unknown message type from ${userId}: ${message.type}`);
+              }
+
+            } catch (error) {
+              log.error(`Error processing WebSocket message from ${userId}:`, error);
+              log.error(`Raw message data:`, data.toString());
+              if (ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({
+                  type: 'error',
+                  message: 'Internal server error processing message'
+                }));
+              }
+            }
+          })().catch((unhandledError) => {
+            log.error(`Unhandled error in message handler for ${userId}:`, unhandledError);
+            // Don't close the connection for unhandled errors
+          });
+        });
+
+        ws.on('close', () => {
+          log.info(`WebSocket connection closed for user: ${userId}, connectionId: ${connectionId}`);
+          this.handleDisconnection(userId, connectionId);
+        });
+
+        ws.on('error', (error: Error) => {
+          log.error(`WebSocket error for user ${userId}:`, error);
+        });
+
+      } catch (error) {
+        log.error('Error establishing WebSocket connection:', error);
+        ws.close(1011, 'Internal server error');
+      }
     });
   }
 
   private async handleJoinMessage(
-    message: WebSocketMessage, 
     ws: WebSocket, 
-    connectionId: string,
-    updateConnectionInfo: (userId: string) => void
+    authenticatedUserId: string
   ): Promise<void> {
-    const userId = message.userId!;
-
-    log.info(`User attempting to join battle`, {
-      userId,
-      connectionId
-    });
-
-    // Add player to connected players
-    this.connectedPlayers.set(userId, ws);
+    const userId = authenticatedUserId;
     
-    // Initialize or update player data
-    if (!this.playerData.has(userId)) {
-      this.playerData.set(userId, {
-        ws,
-        testsPassed: 0,
-        totalTests: 0,
-        joinedAt: new Date().toISOString()
-      });
-      log.info(`New player data created for user: ${userId}`);
-    } else {
-      // Update WebSocket connection for existing player
-      const existing = this.playerData.get(userId)!;
-      existing.ws = ws;
-      log.info(`Updated WebSocket connection for existing user: ${userId}`);
-    }
-    
-    log.info(`User ${userId} successfully joined battle`);
-    
-    // Create or get battle for the main room
     try {
-      log.info(`Managing battle for main room`);
-      let battle = await BattleService.getBattle(BATTLE_ROOM_ID);
+      this.connectedPlayers.set(userId, ws);
       
-      if (!battle) {
-        // Create new battle in waiting state when first user joins
-        // Admin is the first user to join or specified admin
-        const adminUserId = process.env.ADMIN_USER_ID || userId;
-        log.info(`Creating new battle for main room`, {
-          adminUserId,
-          isDefaultAdmin: !process.env.ADMIN_USER_ID
-        });
-        
-        battle = await BattleService.createBattle(BATTLE_ROOM_ID, adminUserId, [{ userId, joinedAt: new Date().toISOString() }]);
-        log.info(`Battle created successfully`, {
-          battleId: battle.id,
-          status: battle.status,
-          adminUserId: battle.admin_user_id
+      if (!this.playerData.has(userId)) {
+        this.playerData.set(userId, {
+          testsPassed: 0,
+          totalTests: 0,
+          joinedAt: new Date().toISOString()
         });
       } else {
-        // Add participant to existing battle
-        log.info(`Adding participant to existing battle`, {
-          battleId: battle.id,
-          userId,
-          currentStatus: battle.status
-        });
-        await BattleService.addParticipantToBattle(BATTLE_ROOM_ID, userId);
+        // Player data already exists, just log
+        log.info(`Updated WebSocket connection for existing user: ${userId}`);
       }
       
-      // Send battle status to the joining user
-      const battleStatus = {
-        type: 'battle-status',
-        status: battle.status,
-        isAdmin: battle.admin_user_id == userId,
-        battleId: battle.id
-      };
+      log.info(`User ${userId} successfully joined battle`);
       
-      log.info(`Sending battle status to user ${userId}`, { battleStatus });
-      ws.send(JSON.stringify(battleStatus));
+      // Log with display name
+      this.getDisplayName(userId).then(displayName => {
+        log.info(`${displayName} joined the battle`);
+      }).catch(err => {
+        log.error('Error getting display name for join log:', err);
+      });
+      
+      // Create or get battle for the main room
+      try {
+        log.info(`Managing battle for main room`);
+        const battle = await BattleService.getBattle('');
+        
+        if (!battle) {
+          log.info(`No current battle found, creating new battle for user ${userId}`);
+          // Still broadcast player list even if no battle exists
+        } else {
+          log.info(`Found existing battle: ${battle.id}`);
+          await BattleService.addParticipantToBattle(userId);
+          
+          // Send battle status to the joining user
+          const battleStatus = {
+            type: 'battle-status',
+            status: battle.status,
+            isAdmin: battle.admin_user_id == userId,
+            battleId: battle.id
+          };
+          
+          log.info(`Sending battle status to user ${userId}`, { battleStatus });
+          ws.send(JSON.stringify(battleStatus));
+        }
+      } catch (battleError) {
+        log.error('Error managing battle:', battleError);
+        ws.send(JSON.stringify({
+          type: 'error',
+          message: 'Failed to manage battle'
+        }));
+      }
+      
+      // Broadcast updated player list to all users (moved outside battle check)
+      try {
+        await this.broadcastPlayerList();
+        log.info(`Player list broadcast completed for user ${userId}`);
+      } catch (broadcastError) {
+        log.error('Error broadcasting player list on join:', broadcastError);
+      }
+      
+      // Broadcast battle status change to watchers (new player joined)
+      try {
+        await this.broadcastBattleStatus('player-joined');
+        log.info(`Battle status broadcast completed for user ${userId}`);
+      } catch (statusError) {
+        log.error('Error broadcasting battle status on player join:', statusError);
+      }
+      
     } catch (error) {
-      log.error('Error managing battle:', error);
-      ws.send(JSON.stringify({
-        type: 'error',
-        message: 'Failed to manage battle'
-      }));
+      log.error(`Critical error in handleJoinMessage for user ${userId}:`, error);
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+          type: 'error',
+          message: 'Failed to join battle'
+        }));
+      }
+      // Don't rethrow - we want to log the error but not crash the connection
     }
-    
-    // Update connection info for the parent scope
-    updateConnectionInfo(userId);
-    
-    // Broadcast updated player list to all users
-    this.broadcastPlayerList();
-    
-    // Broadcast battle status change to watchers (new player joined)
-    this.broadcastBattleStatus('player-joined').catch((err: Error) => 
-      log.error('Error broadcasting battle status on player join:', err)
-    );
   }
 
   private async handleEndBattleMessage(
@@ -181,7 +239,7 @@ export class WebSocketManager {
 
     try {
       // Check if user is admin for this battle
-      const isAdmin = await BattleService.isAdminForBattle(BATTLE_ROOM_ID, userId);
+      const isAdmin = await BattleService.isAdminForBattle(userId);
       if (!isAdmin) {
         ws.send(JSON.stringify({
           type: 'error',
@@ -193,7 +251,7 @@ export class WebSocketManager {
       log.info(`Admin ${userId} requesting to end battle`);
 
       // Get current battle
-      const battle = await BattleService.getBattle(BATTLE_ROOM_ID);
+      const battle = await BattleService.getCurrentBattle();
       if (!battle) {
         ws.send(JSON.stringify({
           type: 'error',
@@ -218,7 +276,7 @@ export class WebSocketManager {
         completedAt: new Date().toISOString()  // Set completion time to now
       }));
 
-      const completedBattle = await BattleService.completeBattle(BATTLE_ROOM_ID, currentResults, userId);
+      const completedBattle = await BattleService.completeBattle(currentResults, userId);
 
       log.info(`Battle ended by admin`, {
         battleId: completedBattle.id,
@@ -267,7 +325,7 @@ export class WebSocketManager {
 
     try {
       // Check if user is admin for this battle
-      const isAdmin = await BattleService.isAdminForBattle(BATTLE_ROOM_ID, userId);
+      const isAdmin = await BattleService.isAdminForBattle(userId);
       if (!isAdmin) {
         ws.send(JSON.stringify({
           type: 'error',
@@ -279,7 +337,7 @@ export class WebSocketManager {
       log.info(`Admin ${userId} requesting to start battle`);
 
       // Get current battle
-      const battle = await BattleService.getBattle(BATTLE_ROOM_ID);
+      const battle = await BattleService.getCurrentBattle();
       if (!battle) {
         ws.send(JSON.stringify({
           type: 'error',
@@ -297,7 +355,7 @@ export class WebSocketManager {
       }
 
       // Start the battle
-      const startedBattle = await BattleService.startBattle(BATTLE_ROOM_ID, userId);
+      const startedBattle = await BattleService.startBattle(userId);
 
       log.info(`Battle started by admin`, {
         battleId: startedBattle.id,
@@ -331,6 +389,55 @@ export class WebSocketManager {
     }
   }
 
+  private async handleTestResultsMessage(
+    message: WebSocketMessage,
+    ws: WebSocket,
+    userId: string | null
+  ): Promise<void> {
+    if (!userId) {
+      ws.send(JSON.stringify({
+        type: 'error',
+        message: 'User not authenticated'
+      }));
+      return;
+    }
+
+    try {
+      const { testsPassed } = message;
+      
+      if (typeof testsPassed !== 'number') {
+        ws.send(JSON.stringify({
+          type: 'error',
+          message: 'Invalid test results format'
+        }));
+        return;
+      }
+
+      // Update player data
+      const existingData = this.playerData.get(userId) || {
+        testsPassed: 0,
+        joinedAt: new Date().toISOString()
+      };
+
+      this.playerData.set(userId, {
+        ...existingData,
+        testsPassed
+      });
+
+      log.info(`Updated test results for user ${userId}: ${testsPassed} tests passed`);
+
+      // Broadcast updated player list
+      await this.broadcastPlayerList();
+
+    } catch (error) {
+      log.error(`Error handling test results for user ${userId}:`, error);
+      ws.send(JSON.stringify({
+        type: 'error',
+        message: 'Failed to update test results'
+      }));
+    }
+  }
+
   private handleDisconnection(userId: string | null, connectionId: string): void {
     log.info(`WebSocket connection closed`, {
       userId: userId || 'unknown',
@@ -341,10 +448,19 @@ export class WebSocketManager {
       this.connectedPlayers.delete(userId);
       log.info(`User ${userId} removed from battle`);
       
+      // Log with display name
+      this.getDisplayName(userId).then(displayName => {
+        log.info(`${displayName} left the battle`);
+      }).catch(err => {
+        log.error('Error getting display name for leave log:', err);
+      });
+      
       if (this.connectedPlayers.size > 0) {
         log.info(`Battle still has ${this.connectedPlayers.size} users remaining`);
         // Broadcast updated player list when someone leaves
-        this.broadcastPlayerList();
+        this.broadcastPlayerList().catch((err: Error) => 
+          log.error('Error broadcasting player list on disconnect:', err)
+        );
         // Broadcast battle status change to watchers (player left)
         this.broadcastBattleStatus('player-left').catch((err: Error) => 
           log.error('Error broadcasting battle status on player leave:', err)
@@ -358,59 +474,170 @@ export class WebSocketManager {
     this.statusWatchers.delete(connectionId);
   }
 
-  // Helper function to get all connected players
-  getAllPlayers(): Player[] {
-    log.debug(`Getting all connected players`);
-    
-    const players: Player[] = [];
-    this.connectedPlayers.forEach((ws, userId) => {
-      const data = this.playerData.get(userId);
-      const player: Player = {
-        userId,
-        testsPassed: data?.testsPassed || 0,
-        totalTests: data?.totalTests || 0,
-        joinedAt: data?.joinedAt || new Date().toISOString(),
-        isConnected: ws.readyState === WebSocket.OPEN
-      };
-      players.push(player);
-      log.debug(`Player data for ${userId}`, { player });
-    });
-    
-    log.debug(`Found ${players.length} connected players`);
-    return players;
+  // Helper function to get display name for a user
+  private async getDisplayName(userId: string): Promise<string> {
+    try {
+      const supabase = createClient(
+        process.env.SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+      );
+
+      const { data, error } = await supabase.auth.admin.getUserById(userId);
+      
+      if (error || !data?.user) {
+        log.debug(`Could not fetch user data for ${userId}, using ID as fallback`);
+        return userId;
+      }
+
+      const user = data.user;
+      return user.user_metadata?.display_name || 
+             user.user_metadata?.username || 
+             user.user_metadata?.name || 
+             user.email?.split('@')[0] || 
+             userId;
+    } catch (error) {
+      log.error(`Error fetching display name for user ${userId}:`, error);
+      return userId;
+    }
   }
 
-  // Helper function to broadcast player list to all users
-  broadcastPlayerList(): void {
+  // Helper function to get all connected players
+  async getAllPlayers(): Promise<Player[]> {
+    log.debug(`Getting all connected players`);
+
+    const players: Player[] = [];
+    const userIds = Array.from(this.connectedPlayers.keys());
+
+    try {
+      // Fetch user profiles from Supabase auth
+      const supabase = createClient(
+        process.env.SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+      );
+
+      log.debug(`Fetching user data for ${userIds.length} users from Supabase auth`);
+
+      // Get user metadata from auth.users
+      const { data: users, error } = await supabase.auth.admin.listUsers();
+      console.log('All users dog', users.users);
+      if (error) {
+        log.error('Error fetching users from auth:', error);
+        // Fall back to user IDs without usernames
+        this.connectedPlayers.forEach((ws, userId) => {
+          if (!userId) {
+            log.error('Found connected player with undefined userId, skipping');
+            return;
+          }
+          
+          const data = this.playerData.get(userId);
+          const player: Player = {
+            userId,
+            username: userId, // Use userId as fallback
+            testsPassed: data?.testsPassed || 0,
+            joinedAt: data?.joinedAt || new Date().toISOString(),
+            isConnected: ws.readyState === WebSocket.OPEN
+          };
+          players.push(player);
+        });
+      } else {
+        log.debug(`Fetched ${users.users.length} users from Supabase auth`);
+        
+        // Create a map of userId to user metadata for quick lookup
+        const userMap = new Map<string, { displayName: string; avatar?: string; email?: string }>();
+        users.users.forEach(user => {
+          if (userIds.includes(user.id)) {
+            const displayName = user.user_metadata?.display_name || 
+                               user.user_metadata?.username || 
+                               user.user_metadata?.name || 
+                               user.email?.split('@')[0] || 
+                               user.id;
+            userMap.set(user.id, {
+              displayName,
+              avatar: user.user_metadata?.avatar,
+              email: user.email
+            });
+            log.debug(`User ${user.id} -> displayName: ${displayName}, avatar: ${user.user_metadata?.avatar}`);
+          }
+        });
+
+        this.connectedPlayers.forEach((ws, userId) => {
+          if (!userId) {
+            log.error('Found connected player with undefined userId, skipping');
+            return;
+          }
+          
+          const data = this.playerData.get(userId);
+          const userInfo = userMap.get(userId);
+          const player: Player = {
+            userId,
+            username: userInfo?.displayName || userId,
+            avatar: userInfo?.avatar,
+            testsPassed: data?.testsPassed || 0,
+            joinedAt: data?.joinedAt || new Date().toISOString(),
+            isConnected: ws.readyState === WebSocket.OPEN
+          };
+          players.push(player);
+          log.debug(`Player data for ${userId}`, { player });
+        });
+      }
+    } catch (error) {
+      log.error('Error fetching player data:', error);
+      // Fall back to basic player data without usernames
+      this.connectedPlayers.forEach((ws, userId) => {
+        if (!userId) {
+          log.error('Found connected player with undefined userId in fallback, skipping');
+          return;
+        }
+        
+        const data = this.playerData.get(userId);
+        const player: Player = {
+          userId,
+          username: userId, // Use userId as fallback
+          testsPassed: data?.testsPassed || 0,
+          joinedAt: data?.joinedAt || new Date().toISOString(),
+          isConnected: ws.readyState === WebSocket.OPEN
+        };
+        players.push(player);
+      });
+    }
+
+    log.debug(`Found ${players.length} connected players`);
+    return players;
+  }  // Helper function to broadcast player list to all users
+  async broadcastPlayerList(): Promise<void> {
     log.debug(`Broadcasting player list to all users`);
-    
+
     if (this.connectedPlayers.size === 0) {
       log.debug(`No connected players to broadcast to`);
       return;
     }
-    
-    const players = this.getAllPlayers();
-    const message = JSON.stringify({
-      type: 'players-list',
-      players
-    });
-    
-    let sentCount = 0;
-    this.connectedPlayers.forEach((ws, userId) => {
-      if (ws.readyState === WebSocket.OPEN) {
-        ws.send(message);
-        sentCount++;
-        log.debug(`Player list sent to user: ${userId}`);
-      } else {
-        log.debug(`Skipped sending to user ${userId} - connection not ready (state: ${ws.readyState})`);
-      }
-    });
-    
-    log.info(`Player list broadcast completed`, {
-      totalUsers: this.connectedPlayers.size,
-      sentTo: sentCount,
-      playerCount: players.length
-    });
+
+    try {
+      const players = await this.getAllPlayers();
+      const message = JSON.stringify({
+        type: 'players-list',
+        players
+      });
+
+      let sentCount = 0;
+      this.connectedPlayers.forEach((ws, userId) => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(message);
+          sentCount++;
+          log.debug(`Player list sent to user: ${userId}`);
+        } else {
+          log.debug(`Skipped sending to user ${userId} - connection not ready (state: ${ws.readyState})`);
+        }
+      });
+
+      log.info(`Player list broadcast completed`, {
+        totalUsers: this.connectedPlayers.size,
+        sentTo: sentCount,
+        playerCount: players.length
+      });
+    } catch (error) {
+      log.error('Error broadcasting player list:', error);
+    }
   }
 
   // Helper function to broadcast battle status changes to watchers
@@ -419,7 +646,7 @@ export class WebSocketManager {
     
     try {
       // Get current battle status
-      const battle = await BattleService.getBattle(BATTLE_ROOM_ID);
+      const battle = await BattleService.getCurrentBattle();
       const connectedPlayers = this.connectedPlayers.size;
       
       let battleStatus: Record<string, unknown>;

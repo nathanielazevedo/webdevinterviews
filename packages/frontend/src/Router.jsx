@@ -18,14 +18,15 @@ import CccMain from "./pages/games/ccc/CccList";
 import MutateMain from "./pages/games/mutate/MutateMain";
 import ReturnMain from "./pages/games/returns/ReturnMain";
 import Runner from "./pages/games/runner/Swimmer2.jsx";
-import Quiz from "./pages/courses/multipleChoice/QuizMain";
-import BattleMain from "./pages/battle/BattleMain.tsx";
+import BattlePage from "./pages/battle/BattlePage";
+import BattlePracticeList from "./pages/battle-practice/BattlePracticeList";
+import BattlePracticeMode from "./pages/battle-practice/BattlePracticeMode";
 import Auth from "./pages/auth/Auth";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Quiz from "./pages/courses/multipleChoice/QuizMain.tsx";
 
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { ApiProvider } from "./contexts/ApiContext.tsx";
 
 import App from "./pages/portfolio/App.jsx";
 
@@ -107,9 +108,22 @@ const router = createBrowserRouter([
             index: true,
             element: (
               <ProtectedRoute>
-                <BattleMain />
+                <BattlePage />
               </ProtectedRoute>
             ),
+          },
+        ],
+      },
+      {
+        path: "battle-practice",
+        children: [
+          {
+            index: true,
+            element: <BattlePracticeList />,
+          },
+          {
+            path: ":questionId",
+            element: <BattlePracticeMode />,
           },
         ],
       },
@@ -234,9 +248,7 @@ const Router = () => {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <ApiProvider>
-          <RouterProvider router={router} />
-        </ApiProvider>
+        <RouterProvider router={router} />
       </AuthProvider>
     </ThemeProvider>
   );

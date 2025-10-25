@@ -17,28 +17,11 @@ import {
   Person,
   EmojiEvents,
   Timer,
-  Code,
   CheckCircle,
-  Schedule,
   PlayArrow,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
-
-interface Player {
-  id: string;
-  name: string;
-  avatar: string;
-  rating: number;
-  wins: number;
-  losses: number;
-  status: "ready" | "coding" | "submitted" | "disconnected";
-  joinedAt: number;
-  testProgress?: {
-    passed: number;
-    total: number;
-    completedAt?: number;
-  };
-}
+import type { QuestionSummary, Player } from "@webdevinterviews/shared";
 
 interface PlayerResults {
   [playerId: string]: {
@@ -52,10 +35,11 @@ interface PlayerResults {
 interface MultiplayerLeaderboardProps {
   players: Player[];
   currentUserId: string;
-  battleStatus: "waiting" | "countdown" | "active" | "finished";
+  battleStatus: "waiting" | "active" | "completed" | "no-battle";
   playerResults?: PlayerResults;
   countdown?: number | null;
   battleStartTime?: string | null;
+  questionPool?: QuestionSummary[];
 }
 
 const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
@@ -65,6 +49,7 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
   playerResults: _playerResults = {},
   countdown = null,
   battleStartTime = null,
+  questionPool = [],
 }) => {
   const theme = useTheme();
 
@@ -123,57 +108,49 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
     }
   }; // Sort players by completion status and time
   const sortedPlayers = [...players].sort((a, b) => {
+    // Get completion status from playerResults
+    const aResult = _playerResults?.[a.userId];
+    const bResult = _playerResults?.[b.userId];
+
     // Completed players first
-    if (a.testProgress?.completedAt && !b.testProgress?.completedAt) return -1;
-    if (!a.testProgress?.completedAt && b.testProgress?.completedAt) return 1;
+    if (aResult?.isCompleted && !bResult?.isCompleted) return -1;
+    if (!aResult?.isCompleted && bResult?.isCompleted) return 1;
 
     // Among completed players, sort by completion time
-    if (a.testProgress?.completedAt && b.testProgress?.completedAt) {
-      return a.testProgress.completedAt - b.testProgress.completedAt;
+    if (
+      aResult?.isCompleted &&
+      bResult?.isCompleted &&
+      aResult.completedAt &&
+      bResult.completedAt
+    ) {
+      return (
+        new Date(aResult.completedAt).getTime() -
+        new Date(bResult.completedAt).getTime()
+      );
     }
 
     // Among non-completed players, sort by progress
-    const aProgress = a.testProgress
-      ? a.testProgress.passed / a.testProgress.total
-      : 0;
-    const bProgress = b.testProgress
-      ? b.testProgress.passed / b.testProgress.total
-      : 0;
+    const aProgress = a.totalTests > 0 ? a.testsPassed / a.totalTests : 0;
+    const bProgress = b.totalTests > 0 ? b.testsPassed / b.totalTests : 0;
 
     if (aProgress !== bProgress) return bProgress - aProgress;
 
     // Finally sort by join time
-    return a.joinedAt - b.joinedAt;
+    return new Date(a.joinedAt).getTime() - new Date(b.joinedAt).getTime();
   });
 
   const getStatusColor = (player: Player) => {
-    switch (player.status) {
-      case "submitted":
-        return theme.palette.success.main;
-      case "coding":
-        return theme.palette.warning.main;
-      case "ready":
-        return theme.palette.info.main;
-      case "disconnected":
-        return theme.palette.error.main;
-      default:
-        return theme.palette.grey[500];
-    }
+    return player.isConnected
+      ? theme.palette.success.main
+      : theme.palette.error.main;
   };
 
   const getStatusIcon = (player: Player) => {
-    switch (player.status) {
-      case "submitted":
-        return <CheckCircle color="success" />;
-      case "coding":
-        return <Code color="warning" />;
-      case "ready":
-        return <Schedule color="info" />;
-      case "disconnected":
-        return <Person color="disabled" />;
-      default:
-        return <Person />;
-    }
+    return player.isConnected ? (
+      <CheckCircle color="success" />
+    ) : (
+      <Person color="disabled" />
+    );
   };
 
   const getRankIcon = (index: number) => {
@@ -184,7 +161,7 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
   };
 
   // Show countdown entry screen for waiting and countdown states
-  if (battleStatus === "waiting" || battleStatus === "countdown") {
+  if (battleStatus === "waiting") {
     return (
       <Paper elevation={2} sx={{ p: 4, mb: 3, textAlign: "center" }}>
         <Box
@@ -194,87 +171,105 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
           justifyContent="center"
           minHeight={300}
         >
-          {battleStatus === "countdown" && countdown !== null ? (
-            // Battle starting countdown
-            <>
-              <Typography
-                variant="h3"
-                sx={{
-                  fontWeight: 700,
-                  mb: 2,
-                  color: theme.palette.primary.main,
-                }}
-              >
-                {countdown}
+          <>
+            <PlayArrow
+              sx={{
+                fontSize: 80,
+                mb: 3,
+                color: theme.palette.primary.main,
+                opacity: 0.7,
+              }}
+            />
+            <Typography variant="h4" sx={{ fontWeight: 700, mb: 2 }}>
+              {countdown !== null && countdown > 0
+                ? "Battle Starts In"
+                : "Waiting for Players"}
+            </Typography>
+            <Typography
+              variant="h2"
+              sx={{
+                fontWeight: 800,
+                mb: 3,
+                color: theme.palette.primary.main,
+                fontFamily: "monospace",
+              }}
+            >
+              {countdown !== null && countdown > 0
+                ? formatCountdown(countdown)
+                : "--:--"}
+            </Typography>
+            {battleStartTime && (
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+                Scheduled for: {formatBattleStartTime(battleStartTime)}
               </Typography>
-              <Typography variant="h5" sx={{ fontWeight: 600, mb: 3 }}>
-                Battle Starting...
+            )}
+            {(!battleStartTime || (countdown !== null && countdown <= 0)) && (
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+                Battle will start when ready
               </Typography>
-              <CircularProgress size={60} thickness={4} />
-            </>
-          ) : (
-            // Waiting for next battle
-            <>
-              <PlayArrow
-                sx={{
-                  fontSize: 80,
-                  mb: 3,
-                  color: theme.palette.primary.main,
-                  opacity: 0.7,
-                }}
-              />
-              <Typography variant="h4" sx={{ fontWeight: 700, mb: 2 }}>
-                {countdown !== null && countdown > 0
-                  ? "Battle Starts In"
-                  : "Waiting for Players"}
-              </Typography>
-              <Typography
-                variant="h2"
-                sx={{
-                  fontWeight: 800,
-                  mb: 3,
-                  color: theme.palette.primary.main,
-                  fontFamily: "monospace",
-                }}
-              >
-                {countdown !== null && countdown > 0
-                  ? formatCountdown(countdown)
-                  : "--:--"}
-              </Typography>
-              {battleStartTime && (
-                <Typography
-                  variant="body1"
-                  color="text.secondary"
-                  sx={{ mb: 2 }}
-                >
-                  Scheduled for: {formatBattleStartTime(battleStartTime)}
+            )}
+            <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
+              Get ready to code! The battle will begin automatically.
+            </Typography>
+
+            {/* Question Pool Display */}
+            {questionPool.length > 0 && (
+              <Box sx={{ mt: 4, mb: 3 }}>
+                <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+                  Battle Questions ({questionPool.length})
                 </Typography>
-              )}
-              {(!battleStartTime || (countdown !== null && countdown <= 0)) && (
-                <Typography
-                  variant="body1"
-                  color="text.secondary"
-                  sx={{ mb: 2 }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 1,
+                    justifyContent: "center",
+                  }}
                 >
-                  Battle will start when ready
-                </Typography>
-              )}
-              <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
-                Get ready to code! The battle will begin automatically.
-              </Typography>
-              <Box display="flex" alignItems="center" gap={2}>
-                <Chip
-                  label={`${players.length} Player${
-                    players.length !== 1 ? "s" : ""
-                  } Ready`}
-                  color="success"
-                  variant="outlined"
-                  size="medium"
-                />
-                <Timer color="primary" />
+                  {questionPool.map((question, index) => (
+                    <Chip
+                      key={question.id}
+                      label={`${index + 1}. ${question.title}`}
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        backgroundColor:
+                          question.difficulty === "Easy"
+                            ? "#e8f5e8"
+                            : question.difficulty === "Medium"
+                            ? "#fff3e0"
+                            : "#ffebee",
+                        borderColor:
+                          question.difficulty === "Easy"
+                            ? "#4caf50"
+                            : question.difficulty === "Medium"
+                            ? "#ff9800"
+                            : "#f44336",
+                        color:
+                          question.difficulty === "Easy"
+                            ? "#2e7d32"
+                            : question.difficulty === "Medium"
+                            ? "#e65100"
+                            : "#c62828",
+                      }}
+                    />
+                  ))}
+                </Box>
               </Box>
-            </>
-          )}
+            )}
+
+            <Box display="flex" alignItems="center" gap={2}>
+              <Chip
+                label={`${players.length} Player${
+                  players.length !== 1 ? "s" : ""
+                } Ready`}
+                color="success"
+                variant="outlined"
+                size="medium"
+              />
+              <Timer color="primary" />
+            </Box>
+          </>
         </Box>
       </Paper>
     );
@@ -300,18 +295,18 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
 
       <Grid container spacing={2}>
         {sortedPlayers.map((player, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={player.id}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={player.userId}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
               <Card
-                elevation={player.id === currentUserId ? 4 : 1}
+                elevation={player.userId === currentUserId ? 4 : 1}
                 sx={{
                   height: "100%",
                   border:
-                    player.id === currentUserId
+                    player.userId === currentUserId
                       ? `2px solid ${theme.palette.primary.main}`
                       : `1px solid ${theme.palette.divider}`,
                   position: "relative",
@@ -319,7 +314,7 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
                 }}
               >
                 {/* Rank Badge */}
-                {battleStatus === "finished" && index < 3 && (
+                {battleStatus === "completed" && index < 3 && (
                   <Box
                     sx={{
                       position: "absolute",
@@ -365,78 +360,68 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
                           whiteSpace: "nowrap",
                         }}
                       >
-                        {player.name}
-                        {player.id === currentUserId && " (You)"}
+                        {player.username}
+                        {player.userId === currentUserId && " (You)"}
                       </Typography>
                       <Box display="flex" alignItems="center" gap={0.5}>
                         {getStatusIcon(player)}
                         <Typography variant="caption" color="text.secondary">
-                          {player.status}
+                          {player.isConnected ? "Connected" : "Disconnected"}
                         </Typography>
                       </Box>
                     </Box>
                   </Box>
 
                   {/* Test Progress */}
-                  {player.testProgress && (
-                    <Box mb={2}>
-                      <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                        mb={1}
-                      >
-                        <Typography variant="body2" color="text.secondary">
-                          Tests Passed
-                        </Typography>
-                        <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                          {player.testProgress.passed}/
-                          {player.testProgress.total}
-                        </Typography>
-                      </Box>
-                      <LinearProgress
-                        variant="determinate"
-                        value={
-                          player.testProgress.total > 0
-                            ? (player.testProgress.passed /
-                                player.testProgress.total) *
-                              100
-                            : 0
-                        }
-                        sx={{
-                          height: 6,
-                          borderRadius: 3,
-                          backgroundColor: theme.palette.grey[200],
-                          "& .MuiLinearProgress-bar": {
-                            borderRadius: 3,
-                            backgroundColor:
-                              player.testProgress.passed ===
-                              player.testProgress.total
-                                ? theme.palette.success.main
-                                : theme.palette.primary.main,
-                          },
-                        }}
-                      />
+                  <Box mb={2}>
+                    <Box
+                      display="flex"
+                      justifyContent="space-between"
+                      alignItems="center"
+                      mb={1}
+                    >
+                      <Typography variant="body2" color="text.secondary">
+                        Tests Passed
+                      </Typography>
+                      <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                        {player.testsPassed}/{player.totalTests}
+                      </Typography>
                     </Box>
-                  )}
+                    <LinearProgress
+                      variant="determinate"
+                      value={
+                        player.totalTests > 0
+                          ? (player.testsPassed / player.totalTests) * 100
+                          : 0
+                      }
+                      sx={{
+                        height: 6,
+                        borderRadius: 3,
+                        backgroundColor: theme.palette.grey[200],
+                        "& .MuiLinearProgress-bar": {
+                          borderRadius: 3,
+                          backgroundColor:
+                            player.testsPassed === player.totalTests &&
+                            player.totalTests > 0
+                              ? theme.palette.success.main
+                              : theme.palette.primary.main,
+                        },
+                      }}
+                    />
+                  </Box>
 
-                  {/* Player Stats */}
-                  <Box display="flex" justifyContent="space-between" gap={1}>
+                  {/* Player Stats - Placeholder for now */}
+                  <Box display="flex" justifyContent="center" gap={1}>
                     <Chip
-                      label={`${player.rating} ELO`}
+                      label="Rating: TBD"
                       color="primary"
                       size="small"
                       variant="outlined"
                     />
-                    <Chip
-                      label={`${player.wins}W/${player.losses}L`}
-                      variant="outlined"
-                      size="small"
-                    />
                   </Box>
 
                   {/* Completion Time */}
-                  {player.testProgress?.completedAt && (
+                  {_playerResults?.[player.userId]?.isCompleted && (
                     <Box mt={2} display="flex" alignItems="center" gap={0.5}>
                       <Timer fontSize="small" color="success" />
                       <Typography variant="caption" color="success.main">

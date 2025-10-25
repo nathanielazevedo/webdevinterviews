@@ -14,22 +14,40 @@ import {
 } from "@mui/material";
 import { Person, FiberManualRecord } from "@mui/icons-material";
 import { motion } from "framer-motion";
+import { Player } from "@webdevinterviews/shared";
 
-interface Player {
-  id: string;
-  name: string;
-  avatar: string;
-  rating: number;
-  wins: number;
-  losses: number;
-  status: "ready" | "coding" | "submitted" | "disconnected";
-  joinedAt: number;
-  testProgress?: {
-    passed: number;
-    total: number;
-    completedAt?: number;
-  };
-}
+// Predefined avatar options (same as in Navbar)
+const AVATAR_OPTIONS = [
+  { id: "default", type: "initial", label: "Default (Initials)" },
+  { id: "dev1", type: "emoji", emoji: "👨‍💻", label: "Developer" },
+  { id: "dev2", type: "emoji", emoji: "👩‍💻", label: "Developer" },
+  { id: "ninja", type: "emoji", emoji: "🥷", label: "Ninja" },
+  { id: "robot", type: "emoji", emoji: "🤖", label: "Robot" },
+  { id: "alien", type: "emoji", emoji: "👽", label: "Alien" },
+  { id: "wizard", type: "emoji", emoji: "🧙‍♂️", label: "Wizard" },
+  { id: "cat", type: "emoji", emoji: "🐱", label: "Cat" },
+  { id: "dog", type: "emoji", emoji: "🐶", label: "Dog" },
+  { id: "panda", type: "emoji", emoji: "🐼", label: "Panda" },
+  { id: "lion", type: "emoji", emoji: "🦁", label: "Lion" },
+  { id: "tiger", type: "emoji", emoji: "🐯", label: "Tiger" },
+  { id: "fire", type: "emoji", emoji: "🔥", label: "Fire" },
+  { id: "lightning", type: "emoji", emoji: "⚡", label: "Lightning" },
+  { id: "star", type: "emoji", emoji: "⭐", label: "Star" },
+  { id: "rocket", type: "emoji", emoji: "🚀", label: "Rocket" },
+];
+
+// Helper function to render avatar content (same as in Navbar)
+const renderAvatarContent = (player: Player) => {
+  if (!player.username) return "?";
+
+  const initials = player.username
+    .split(" ")
+    .map((name) => name.charAt(0).toUpperCase())
+    .slice(0, 2)
+    .join("");
+
+  return initials || player.username.charAt(0).toUpperCase();
+};
 
 interface BattleEntrySideNavProps {
   players: Player[];
@@ -44,23 +62,8 @@ const BattleEntrySideNav: React.FC<BattleEntrySideNavProps> = ({
 }) => {
   const theme = useTheme();
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "ready":
-        return theme.palette.success.main;
-      case "coding":
-        return theme.palette.warning.main;
-      case "submitted":
-        return theme.palette.info.main;
-      case "disconnected":
-        return theme.palette.error.main;
-      default:
-        return theme.palette.grey[500];
-    }
-  };
-
-  const getTotalBattles = (wins: number, losses: number) => {
-    return wins + losses;
+  const getStatusColor = (isConnected: boolean) => {
+    return isConnected ? theme.palette.success.main : theme.palette.error.main;
   };
 
   return (
@@ -135,7 +138,7 @@ const BattleEntrySideNav: React.FC<BattleEntrySideNavProps> = ({
           >
             {players.map((player, index) => (
               <motion.div
-                key={player.id}
+                key={player.userId}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -147,11 +150,11 @@ const BattleEntrySideNav: React.FC<BattleEntrySideNavProps> = ({
                     borderRadius: 2,
                     mb: 1,
                     background:
-                      player.id === currentUserId
+                      player.userId === currentUserId
                         ? `${theme.palette.primary.main}15`
                         : "transparent",
                     border:
-                      player.id === currentUserId
+                      player.userId === currentUserId
                         ? `2px solid ${theme.palette.primary.main}40`
                         : "2px solid transparent",
                     transition: "all 0.2s ease-in-out",
@@ -170,24 +173,56 @@ const BattleEntrySideNav: React.FC<BattleEntrySideNavProps> = ({
                       badgeContent={
                         <FiberManualRecord
                           sx={{
-                            color: getStatusColor(player.status),
+                            color: getStatusColor(player.isConnected),
                             fontSize: 12,
                           }}
                         />
                       }
                     >
-                      <Avatar
-                        src={player.avatar}
-                        sx={{
-                          width: isCollapsed ? 32 : 40,
-                          height: isCollapsed ? 32 : 40,
-                          border: `2px solid ${getStatusColor(
-                            player.status
-                          )}20`,
-                        }}
-                      >
-                        <Person fontSize="small" />
-                      </Avatar>
+                      {(() => {
+                        const avatarId = player.avatar || "default";
+                        const avatar = AVATAR_OPTIONS.find(
+                          (a) => a.id === avatarId
+                        );
+
+                        if (avatar && avatar.type === "emoji") {
+                          return (
+                            <Box
+                              sx={{
+                                width: isCollapsed ? 32 : 40,
+                                height: isCollapsed ? 32 : 40,
+                                borderRadius: "50%",
+                                bgcolor: "grey.100",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: isCollapsed ? "1.2rem" : "1.4rem",
+                                border: `2px solid ${getStatusColor(
+                                  player.isConnected
+                                )}20`,
+                              }}
+                            >
+                              {avatar.emoji}
+                            </Box>
+                          );
+                        }
+
+                        return (
+                          <Avatar
+                            sx={{
+                              width: isCollapsed ? 32 : 40,
+                              height: isCollapsed ? 32 : 40,
+                              bgcolor: "primary.main",
+                              fontSize: isCollapsed ? "0.9rem" : "1.1rem",
+                              border: `2px solid ${getStatusColor(
+                                player.isConnected
+                              )}20`,
+                            }}
+                          >
+                            {renderAvatarContent(player)}
+                          </Avatar>
+                        );
+                      })()}
                     </Badge>
                   </ListItemAvatar>
 
@@ -204,8 +239,8 @@ const BattleEntrySideNav: React.FC<BattleEntrySideNavProps> = ({
                             whiteSpace: "nowrap",
                           }}
                         >
-                          {player.name}
-                          {player.id === currentUserId && " (You)"}
+                          {player.username}
+                          {player.userId === currentUserId && " (You)"}
                         </Typography>
                       }
                       secondary={
@@ -217,8 +252,7 @@ const BattleEntrySideNav: React.FC<BattleEntrySideNavProps> = ({
                             mt: 0.5,
                           }}
                         >
-                          {player.wins}W /{" "}
-                          {getTotalBattles(player.wins, player.losses)} Battles
+                          {player.testsPassed}/{player.totalTests} Tests
                         </Typography>
                       }
                     />
