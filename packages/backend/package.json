@@ -2,7 +2,7 @@
   "name": "@webdevinterviews/backend",
   "version": "1.0.0",
   "type": "module",
-  "main": "dist/backend/src/index.js",
+  "main": "dist/index.js", 
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
