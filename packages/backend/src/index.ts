@@ -13,25 +13,6 @@ import { authenticateToken, optionalAuth } from './middleware/auth.js';
 
 dotenv.config();
 
-// Swagger configuration
-const swaggerOptions = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Portfolio Battle API',
-      version: '1.0.0',
-      description: 'Real-time coding battle API'
-    },
-    servers: [
-      {
-        url: 'http://localhost:3001',
-        description: 'Development server'
-      }
-    ]
-  },
-  apis: ['./src/routes/*.ts'] // Path to the API routes
-};
-
 
 // Use shared logger
 const log = logger;

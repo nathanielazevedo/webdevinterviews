@@ -1,5 +1,5 @@
 [build]
-command = "npm install && npm run build:shared && npm run build:backend"
+command = "./build.sh"
 
 [deploy]
 startCommand = "cd packages/backend && npm start"
