@@ -15,7 +15,13 @@ cd ..
 echo "Building backend package..."
 cd packages/backend
 npm install
+
+echo "Generating Prisma client..."
+npx prisma generate
+
+echo "Building TypeScript..."
 npm run build
+
 cd ../..
 
 echo "Build completed successfully!"
