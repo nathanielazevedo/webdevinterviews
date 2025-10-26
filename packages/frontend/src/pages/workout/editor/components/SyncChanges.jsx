@@ -6,7 +6,6 @@ import { WorkoutContext } from "../../../../contexts/WorkoutContext";
 import { getChangedCode } from "../utils";
 
 const SyncChanges = ({ changedFiles, isSolution }) => {
-  const { putIt } = useApi();
   const { sandpack } = useSandpack();
   const [loading, setLoading] = useState(false);
   const { workout } = useContext(WorkoutContext);
