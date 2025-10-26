@@ -8,7 +8,7 @@ async function resetAndSeedQuestions() {
   try {
     log.info('Starting database reset and question seeding...');
 
-    // Step 1: Clear all existing questions
+    // Step 1: Clear all existing questionss
     log.info('Clearing existing questions from database...');
     const deleteResult = await prisma.question.deleteMany();
     log.info(`Deleted ${deleteResult.count} existing questions`);
