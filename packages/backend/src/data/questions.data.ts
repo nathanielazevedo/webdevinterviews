@@ -434,7 +434,7 @@ Return the maximum number of operations you can perform on the array.`,
       }
     ],
     constraints: "1 <= nums.length <= 10^5\n1 <= nums[i] <= 10^9\n1 <= k <= 10^9",
-    tags: ["Array", "Hash Table", "Two Pointers", "Sorting"],
+    tags: ["Array", "Hash Table", "Two Pointers", "Sorting", "Greedy"],
     hints: ["Sort the array and use two pointers", "Use a hash map to count frequencies", "For each number, look for k - num in the remaining elements"]
   }
 ];
