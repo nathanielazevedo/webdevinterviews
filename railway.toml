@@ -2,7 +2,7 @@
 command = "./build.sh"
 
 [deploy]
-startCommand = "cd packages/backend && npm start"
+startCommand = "node packages/backend/dist/index.js"
 
 [env]
 # Railway will automatically set PORT
