@@ -11,9 +11,10 @@
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "resolveJsonModule": true,
     "types": ["node"],
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
       "@/*": ["./src/*"],
       "@webdevinterviews/shared": ["../shared/src/index.ts"]

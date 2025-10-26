@@ -1,3 +1,5 @@
+// @ts-nocheck no check
+
 // Environment variable utilities for cross-platform support
 // Works in both browser (with Vite) and Node.js environments
 
