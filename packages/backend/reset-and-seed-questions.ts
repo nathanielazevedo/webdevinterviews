@@ -19,7 +19,7 @@ async function resetAndSeedQuestions() {
     log.info(`Deleted ${deletePoolsResult.count} battle question pools`);
 
     // Step 3: Seed new questions
-    log.info('Seeding new questions...');
+    log.info('Seeding new questionss...');
     const questions = await QuestionsService.seedQuestions();
     log.info(`Successfully seeded ${questions.length} questions`);
 
