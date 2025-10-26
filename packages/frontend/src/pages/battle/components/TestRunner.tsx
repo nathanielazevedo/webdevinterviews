@@ -64,9 +64,12 @@ const TestRunner: React.FC<TestRunnerProps> = ({
   const [isRunning, setIsRunning] = useState(false);
   const [results, setResults] = useState<TestResult | null>(null);
 
-  // Battle context for real-time battle communication
-  const { isConnected, handleTestResults: sendTestResults } =
-    useBattleContext();
+  // Battle context for real-time battle communication (only when in battle mode)
+  const battleContext = battleId ? useBattleContext() : null;
+  const { isConnected, handleTestResults: sendTestResults } = battleContext || {
+    isConnected: false,
+    handleTestResults: undefined,
+  };
 
   // Connect to WebSocket when component mounts with battleId
   useEffect(() => {
@@ -139,7 +142,6 @@ const TestRunner: React.FC<TestRunnerProps> = ({
           passed: testResults.passed,
           message: testResults.message,
           testCases: testResults.testCases,
-          testsPassed: testResults.testsPassed,
           totalExecutionTime: testResults.totalExecutionTime,
         });
       }

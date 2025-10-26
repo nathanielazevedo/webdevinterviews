@@ -25,6 +25,7 @@ const ProjectCard = ({
   image,
   source_code_link,
   live_link,
+  hidden = false,
 }) => {
   const theme = useTheme();
 
@@ -42,19 +43,22 @@ const ProjectCard = ({
           style={{ height: "100%" }}
         >
           <Card
-            onClick={() => window.open(live_link, "_blank")}
+            onClick={() => !hidden && window.open(live_link, "_blank")}
             sx={{
               height: "100%",
-              cursor: "pointer",
+              cursor: hidden ? "default" : "pointer",
               background: `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${theme.palette.action.hover} 100%)`,
               border: `1px solid ${theme.palette.divider}`,
               borderRadius: 2,
               boxShadow: theme.shadows[4],
               transition: "all 0.3s ease",
+              opacity: hidden ? 0.6 : 1,
               "&:hover": {
-                transform: "translateY(-4px)",
-                boxShadow: theme.shadows[8],
-                borderColor: theme.palette.primary.main,
+                transform: hidden ? "none" : "translateY(-4px)",
+                boxShadow: hidden ? theme.shadows[4] : theme.shadows[8],
+                borderColor: hidden
+                  ? theme.palette.divider
+                  : theme.palette.primary.main,
               },
             }}
           >
@@ -78,15 +82,22 @@ const ProjectCard = ({
                 <IconButton
                   onClick={(e) => {
                     e.stopPropagation();
-                    window.open(source_code_link, "_blank");
+                    if (!hidden) {
+                      window.open(source_code_link, "_blank");
+                    }
                   }}
                   sx={{
                     backgroundColor: theme.palette.background.paper,
                     border: `1px solid ${theme.palette.divider}`,
                     boxShadow: theme.shadows[2],
+                    opacity: hidden ? 0.5 : 1,
                     "&:hover": {
-                      backgroundColor: theme.palette.action.hover,
-                      borderColor: theme.palette.primary.main,
+                      backgroundColor: hidden
+                        ? theme.palette.background.paper
+                        : theme.palette.action.hover,
+                      borderColor: hidden
+                        ? theme.palette.divider
+                        : theme.palette.primary.main,
                     },
                   }}
                 >
@@ -101,17 +112,32 @@ const ProjectCard = ({
             </Box>
 
             <CardContent sx={{ flexGrow: 1, p: 3 }}>
-              <Typography
-                variant="h6"
-                component="h3"
-                sx={{
-                  color: theme.palette.text.primary,
-                  fontWeight: "bold",
-                  mb: 1,
-                }}
+              <Box
+                sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}
               >
-                {name}
-              </Typography>
+                <Typography
+                  variant="h6"
+                  component="h3"
+                  sx={{
+                    color: theme.palette.text.primary,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {name}
+                </Typography>
+                {hidden && (
+                  <Chip
+                    label="Hidden"
+                    size="small"
+                    sx={{
+                      backgroundColor: theme.palette.grey[500],
+                      color: theme.palette.common.white,
+                      fontSize: "0.7rem",
+                      height: "20px",
+                    }}
+                  />
+                )}
+              </Box>
               <Typography
                 variant="body2"
                 sx={{

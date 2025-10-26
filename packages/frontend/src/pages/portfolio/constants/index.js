@@ -128,10 +128,23 @@ const technologies = [
 const experiences = [
   {
     title: 'Software Engineer',
+    company_name: 'Boehringer Ingelheim',
+    icon: br,
+    iconBg: 'black',
+    date: 'April 2025 - Current',
+    points: [
+      'Continue to design and implement frontend architecture, including user interface components and interactions, resulting in a user-friendly and responsive application that met business requirements.',
+      'Collaborate with cross-functional teams to gather requirements, design solutions, and integrate APIs to streamline data retrieval processes, enhancing data accuracy and reducing processing time.',
+      'Conduct code reviews and implement best practices to ensure scalable and maintainable codebase, resulting in improved code quality and reduced technical debt.',
+      'Provide technical support and training to end-users on using internal tools effectively, resulting in an increase in user adoption and satisfaction.',
+    ],
+  },
+  {
+    title: 'Software Engineer',
     company_name: 'Boehringer Ingleheim (W2 Contract)',
     icon: br,
     iconBg: 'black',
-    date: 'April 2024 - Current',
+    date: 'April 2024 - March 2025',
     points: [
       'Designed and implemented frontend architecture, including user interface components and interactions, resulting in a user-friendly and responsive application that met business requirements.',
       'Collaborated with cross-functional teams to gather requirements, design solutions, and integrate APIs to streamline data retrieval processes, enhancing data accuracy and reducing processing time.',
@@ -199,35 +212,32 @@ const testimonials = [
 
 const projects = [
   {
-    name: 'Web Dev Interviews',
+    name: 'Scientific Research Labs',
     description:
-      'Online code editor for practicing web development interview questions.',
+      'An attempt to organize the webspace of scientific research labs. This is an application to Y Combinator and currently hidden.',
     tags: [
       {
         name: 'react',
         color: 'blue-text-gradient',
       },
       {
-        name: 'Python',
-        color: 'pink-text-gradient',
-      },
-      {
-        name: 'Postgresql',
+        name: 'express',
         color: 'green-text-gradient',
       },
       {
-        name: 'AWS',
-        color: 'blue-text-gradient',
+        name: 'GPT-API',
+        color: 'pink-text-gradient',
       },
     ],
-    image: code,
-    source_code_link: 'https://github.com/nathanielazevedo/webdevinterviews',
-    live_link: 'https://www.webdevinterviews.com/',
+    image: srl,
+    source_code_link: 'https://github.com/nathanielazevedo/labs',
+    live_link: 'https://labs-pi-eight.vercel.app/',
+    hidden: true,
   },
   {
     name: 'Chicken Tinder',
     description:
-      'Chicken Tinder helps your party decide where to eat and when.',
+      'Chicken Tinder helps your party decide where to eat and when. Used by hundreds of users all over the world.',
     tags: [
       {
         name: 'react',
@@ -295,21 +305,17 @@ const projects = [
     live_link: 'https://pulse-ecru-two.vercel.app/',
   },
   {
-    name: 'Geo',
+    name: 'React Globe Frequency',
     description:
-      'Click the button and watch your location light up on Earth.',
+      'A React component library for displaying user location on an interactive 3D globe. Published on NPM.',
     tags: [
       {
         name: 'react',
         color: 'blue-text-gradient',
       },
       {
-        name: 'express',
+        name: 'npm-package',
         color: 'green-text-gradient',
-      },
-      {
-        name: 'postgesql',
-        color: 'pink-text-gradient',
       },
       {
         name: 'three.js',
@@ -318,7 +324,7 @@ const projects = [
     ],
     image: earth,
     source_code_link: 'https://github.com/nathanielazevedo/geo_front',
-    live_link: 'https://geo-front-hazel.vercel.app/',
+    live_link: 'https://www.npmjs.com/package/react-globe-frequency',
   },
   {
     name: 'JS OS',
@@ -341,28 +347,6 @@ const projects = [
     image: os,
     source_code_link: 'https://github.com/nathanielazevedo/os-portfolio',
     live_link: 'https://os-portfolio-two.vercel.app/',
-  },
-  {
-    name: 'Scientific Research Labs',
-    description:
-      'An attempt to organize the webspace of scientific research labs.',
-    tags: [
-      {
-        name: 'react',
-        color: 'blue-text-gradient',
-      },
-      {
-        name: 'express',
-        color: 'green-text-gradient',
-      },
-      {
-        name: 'GPT-API',
-        color: 'pink-text-gradient',
-      },
-    ],
-    image: srl,
-    source_code_link: 'https://github.com/nathanielazevedo/labs',
-    live_link: 'https://labs-pi-eight.vercel.app/',
   },
 ]
 

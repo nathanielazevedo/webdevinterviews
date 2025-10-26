@@ -89,6 +89,19 @@ model BattleQuestionPool {
   @@map("battle_question_pools")
 }
 
+model LocationPoint {
+  id        Int      @id @default(autoincrement())
+  latitude  Float
+  longitude Float
+  country   String?
+  region    String?
+  locality  String?
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  @@unique([latitude, longitude])
+  @@map("location_points")
+}
+
 // Views (if you want to include them)
 // view BattleStats {
 //   battle_id     String @db.Uuid

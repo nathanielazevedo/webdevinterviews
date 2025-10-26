@@ -9,6 +9,7 @@ import { BattleTimingManager } from './managers/BattleTimingManager.js';
 import { WebSocketManager } from './websocket/WebSocketManager.js';
 import { createBattleRoutes } from './routes/battle.js';
 import { createQuestionsRoutes } from './routes/questions.js';
+import { createLocationRoutes } from './routes/location.js';
 import { authenticateToken, optionalAuth } from './middleware/auth.js';
 
 dotenv.config();
@@ -49,6 +50,7 @@ const battleTimingManager = new BattleTimingManager(
 
 // Setup middleware
 app.use(cors());
+app.use(express.json());
 
 // Health check endpoint
 app.get('/', (req: Request, res: Response) => {
@@ -60,6 +62,7 @@ app.get('/', (req: Request, res: Response) => {
 // Setup route modules
 app.use('/battle', authenticateToken, createBattleRoutes(wsManager.connectedPlayersMap));
 app.use('/questions', optionalAuth, createQuestionsRoutes());
+app.use('/location', createLocationRoutes());
 
 
 const PORT = process.env.PORT || 3001;

@@ -5,13 +5,13 @@ import {
   Contact,
   Experience,
   Feedbacks,
+  GlobeComponent,
   Hero,
   Navbar,
   Tech,
   Works,
   StarsCanvas,
 } from "./components";
-// import "./index.css";
 
 const Portfolio = () => {
   const theme = useTheme();
@@ -28,6 +28,7 @@ const Portfolio = () => {
       }}
     >
       <Hero />
+      <GlobeComponent />
       <About />
       <Experience />
       <Tech />

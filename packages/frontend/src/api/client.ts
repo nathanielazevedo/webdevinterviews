@@ -119,6 +119,10 @@ export const api = {
   // Questions endpoints
   getAllQuestions: () => apiClient.get('/questions'),
 
+  // Location endpoints
+  getLocationPoints: () => apiClient.get('/location/points'),
+  geocodeLocation: (ip: string) => apiClient.post('/location/geocode', { location: ip }),
+
   // Health check
   healthCheck: () => apiClient.get('/'),
 };

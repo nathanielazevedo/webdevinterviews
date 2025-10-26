@@ -43,10 +43,7 @@ const BattlePracticeMode: React.FC = () => {
   // Set initial code based on question
   useEffect(() => {
     if (currentQuestion?.function_signature) {
-      setCode(`${currentQuestion.function_signature} {
-    // Write your solution here
-
-}`);
+      setCode(`${currentQuestion.function_signature}`);
     }
   }, [currentQuestion]);
 
@@ -172,54 +169,67 @@ const BattlePracticeMode: React.FC = () => {
       <Paper
         elevation={2}
         sx={{
-          p: 2,
+          p: 1.5,
           borderRadius: 0,
           borderBottom: `1px solid ${theme.palette.divider}`,
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
-          <IconButton component={Link} to="/battle-practice" sx={{ mr: 1 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
+          <IconButton component={Link} to="/battle-practice" size="small">
             <ArrowBack />
           </IconButton>
 
-          <Breadcrumbs aria-label="breadcrumb">
+          <Breadcrumbs aria-label="breadcrumb" sx={{ fontSize: "0.875rem" }}>
             <MuiLink
               component={Link}
               to="/"
-              sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.5,
+                fontSize: "inherit",
+              }}
             >
               <Home fontSize="small" />
               Home
             </MuiLink>
-            <MuiLink component={Link} to="/battle-practice">
-              Battle Practice
+            <MuiLink
+              component={Link}
+              to="/battle-practice"
+              sx={{ fontSize: "inherit" }}
+            >
+              Practice
             </MuiLink>
-            <Typography color="text.primary">
+            <Typography color="text.primary" sx={{ fontSize: "inherit" }}>
               {currentQuestion.title}
             </Typography>
           </Breadcrumbs>
         </Box>
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <Typography variant="h5" fontWeight="bold">
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+          <Typography variant="h6" fontWeight="bold">
             {currentQuestion.title}
           </Typography>
           <Box
             sx={{
-              px: 2,
-              py: 0.5,
+              px: 1.5,
+              py: 0.25,
               borderRadius: 1,
               backgroundColor: getDifficultyColor(currentQuestion.difficulty),
               color: "white",
-              fontSize: "0.875rem",
+              fontSize: "0.75rem",
               fontWeight: 500,
             }}
           >
             {currentQuestion.difficulty}
           </Box>
           {currentQuestion.leetcode_number && (
-            <Typography variant="body2" color="text.secondary">
-              LeetCode #{currentQuestion.leetcode_number}
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ fontSize: "0.875rem" }}
+            >
+              #{currentQuestion.leetcode_number}
             </Typography>
           )}
         </Box>
@@ -258,76 +268,62 @@ const BattlePracticeMode: React.FC = () => {
               flex: 1,
               p: 3,
               overflow: "auto",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              MozUserSelect: "none",
+              msUserSelect: "none",
             }}
+            onContextMenu={(e: React.MouseEvent) => e.preventDefault()}
+            onCopy={(e: React.ClipboardEvent) => e.preventDefault()}
+            onCut={(e: React.ClipboardEvent) => e.preventDefault()}
           >
             <Typography
               variant="body1"
-              component="div"
+              component="pre"
               sx={{
-                fontFamily: "inherit",
-                fontSize: "1rem",
+                fontFamily: "monospace",
+                fontSize: "0.875rem",
                 lineHeight: 1.6,
                 whiteSpace: "pre-wrap",
                 color: theme.palette.text.primary,
-                "& pre": {
-                  backgroundColor: theme.palette.grey[100],
-                  p: 2,
-                  borderRadius: 1,
-                  fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
-                  fontSize: "0.875rem",
-                  overflow: "auto",
-                },
+                userSelect: "none",
+                WebkitUserSelect: "none",
+                MozUserSelect: "none",
+                msUserSelect: "none",
+                WebkitTouchCallout: "none",
+                WebkitTapHighlightColor: "transparent",
+                pointerEvents: "none",
               }}
-              dangerouslySetInnerHTML={{
-                __html: currentQuestion.problem_statement
-                  .replace(/\n/g, "<br/>")
-                  .replace(/```(\w+)?\n?([\s\S]*?)```/g, "<pre>$2</pre>"),
-              }}
-            />
-
-            {currentQuestion.examples && (
-              <Box sx={{ mt: 3 }}>
-                <Typography variant="h6" sx={{ mb: 2 }}>
-                  Examples
-                </Typography>
-                <Typography
-                  variant="body2"
-                  component="div"
-                  sx={{
-                    fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
-                    backgroundColor: theme.palette.grey[100],
-                    p: 2,
-                    borderRadius: 1,
-                    whiteSpace: "pre-wrap",
-                  }}
-                >
+            >
+              {currentQuestion.problem_statement}
+              {currentQuestion.examples && (
+                <>
+                  {"\n\n"}
+                  Examples:
+                  {"\n"}
                   {Array.isArray(currentQuestion.examples)
-                    ? currentQuestion.examples.join("\n\n")
+                    ? currentQuestion.examples
+                        .map(
+                          (example, index) =>
+                            `Example ${index + 1}:\nInput: ${
+                              example.input
+                            }\nOutput: ${example.output}\nExplanation: ${
+                              example.explanation
+                            }`
+                        )
+                        .join("\n\n")
                     : currentQuestion.examples}
-                </Typography>
-              </Box>
-            )}
-
-            {currentQuestion.constraints && (
-              <Box sx={{ mt: 3 }}>
-                <Typography variant="h6" sx={{ mb: 2 }}>
-                  Constraints
-                </Typography>
-                <Typography
-                  variant="body2"
-                  component="div"
-                  sx={{
-                    fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
-                    backgroundColor: theme.palette.grey[100],
-                    p: 2,
-                    borderRadius: 1,
-                    whiteSpace: "pre-wrap",
-                  }}
-                >
+                </>
+              )}
+              {currentQuestion.constraints && (
+                <>
+                  {"\n\n"}
+                  Constraints:
+                  {"\n"}
                   {currentQuestion.constraints}
-                </Typography>
-              </Box>
-            )}
+                </>
+              )}
+            </Typography>
           </Box>
         </Paper>
 
@@ -380,10 +376,11 @@ const BattlePracticeMode: React.FC = () => {
 
             <Box sx={{ flex: 1, position: "relative" }}>
               <MonacoCodeEditor
+                key={`editor-${problemWidth}-${editorHeight}`}
                 value={code}
                 onChange={setCode}
                 language="javascript"
-                placeholder="Write your solution here..."
+                placeholder=""
               />
             </Box>
           </Paper>
@@ -417,6 +414,7 @@ const BattlePracticeMode: React.FC = () => {
               code={code}
               problemId={questionId || "0"}
               onTestComplete={handleTest}
+              testCases={currentQuestion?.test_cases}
             />
           </Paper>
         </Box>
