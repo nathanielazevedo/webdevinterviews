@@ -1,22 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import { initializeGame } from "./gameLogic.js";
 import { useState } from "react";
-import {
-  Button,
-  CircularProgress,
-  Table,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Button, CircularProgress, Typography, useTheme } from "@mui/material";
 import "./runner.css";
 
 const GameComponent = () => {
-  const { data: scores, loading, setData } = useFetch("/scores");
-  const [newHighScore, setNewHighScore] = useState(null);
-  const [name, setName] = useState("");
-  const { postIt } = useApi();
+  const theme = useTheme();
+  const [loading] = useState(false);
 
   if (loading) {
     return (
@@ -36,98 +26,13 @@ const GameComponent = () => {
     );
   }
 
-  const returnScore = (newScore) => {
-    scores.forEach((score) => {
-      if (newScore > score.score) {
-        setNewHighScore(newScore);
-        return;
-      }
-    });
-  };
-
-  const handleInput = (evt) => {
-    const val = evt.target.value;
-    if (val.length > 4) return;
-    setName(evt.target.value);
-  };
-
-  const CustomTable = () => {
-    return (
-      <>
-        <Typography variant="subtitle1" sx={{ fontSize: "10px !important" }}>
-          Top 5 Scores:
-        </Typography>
-        <Table size="small" sx={{ fontSize: "10px !important" }}>
-          <TableHead sx={{ padding: 0, margin: 0 }}>
-            <TableCell sx={{ fontSize: "10px !important", padding: "0 5px" }}>
-              Rank
-            </TableCell>
-            <TableCell sx={{ fontSize: "10px !important", padding: 0 }}>
-              Score
-            </TableCell>
-            <TableCell sx={{ fontSize: "10px !important", padding: 0 }}>
-              Name
-            </TableCell>
-          </TableHead>
-          {scores
-            .sort((a, b) => b.score - a.score)
-            .map((score, index) => {
-              return (
-                <TableRow
-                  key={index}
-                  sx={{
-                    fontSize: "10px !important",
-                    padding: 0,
-                    margin: 0,
-                  }}
-                >
-                  <TableCell
-                    variant="caption"
-                    sx={{
-                      fontSize: "10px !important",
-                      padding: "0 5px",
-                      margin: 0,
-                    }}
-                  >
-                    {index}
-                  </TableCell>
-                  <TableCell
-                    variant="caption"
-                    sx={{ fontSize: "10px !important", padding: 0, margin: 0 }}
-                  >
-                    {score.score}
-                  </TableCell>
-                  <TableCell
-                    variant="caption"
-                    sx={{ fontSize: "10px !important", padding: 0, margin: 0 }}
-                  >
-                    {score.display_name}{" "}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-        </Table>
-      </>
-    );
-  };
-
-  const submitHighScore = async () => {
-    const response = await postIt("/scores", {
-      display_name: name,
-      score: newHighScore,
-    });
-    setNewHighScore(null);
-    setData(response.data);
-    setName("");
-  };
-
   return (
     <div
       style={{
         width: "100vw",
-        // height: 'calc(100vw * 9 / 16)',
         position: "relative",
-        height: "300px",
+        height: "calc(100vh - 200px)",
+        minHeight: "400px",
       }}
     >
       <div
@@ -139,60 +44,140 @@ const GameComponent = () => {
           justifyContent: "center",
           flexDirection: "column",
           alignItems: "center",
-          backgroundColor: "lightblue",
-          // backgroundImage: `url(${background})`,
-          // backgroundSize: '100% 100%',
-          gap: "0px",
+          background:
+            theme.palette.mode === "dark"
+              ? `linear-gradient(135deg, ${theme.palette.background.default} 0%, ${theme.palette.background.paper} 100%)`
+              : `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.secondary.light} 100%)`,
+          position: "relative",
+          overflow: "hidden",
         }}
       >
+        {/* Background decoration */}
+        <div
+          style={{
+            position: "absolute",
+            top: "-50%",
+            left: "-50%",
+            width: "200%",
+            height: "200%",
+            background: `radial-gradient(circle, ${
+              theme.palette.mode === "dark"
+                ? "rgba(255,255,255,0.05)"
+                : "rgba(0,0,0,0.05)"
+            } 0%, transparent 70%)`,
+            animation: "float 6s ease-in-out infinite",
+          }}
+        />
+
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
             alignItems: "center",
-            width: "350px",
+            width: "400px",
+            maxWidth: "90vw",
             textAlign: "center",
+            zIndex: 1,
+            padding: "2rem",
+            background:
+              theme.palette.mode === "dark"
+                ? "rgba(255, 255, 255, 0.05)"
+                : "rgba(255, 255, 255, 0.8)",
+            borderRadius: "20px",
+            backdropFilter: "blur(10px)",
+            border: `1px solid ${
+              theme.palette.mode === "dark"
+                ? "rgba(255, 255, 255, 0.1)"
+                : "rgba(0, 0, 0, 0.1)"
+            }`,
+            boxShadow: theme.shadows[8],
           }}
         >
           <Typography
-            variant="subtitle1"
-            sx={{ color: "black", fontWeight: "bold" }}
+            variant="h3"
+            sx={{
+              color: theme.palette.text.primary,
+              fontWeight: "bold",
+              mb: 1,
+              textShadow:
+                theme.palette.mode === "dark"
+                  ? "none"
+                  : "2px 2px 4px rgba(0,0,0,0.1)",
+              fontSize: { xs: "2rem", sm: "2.5rem" },
+            }}
           >
             JavaSwim
           </Typography>
-          <Typography variant="caption" sx={{ color: "black", lineHeight: 1 }}>
-            Swim over the shark if you think it's true, swim under if you think
-            it's false.
+          <Typography
+            variant="h6"
+            sx={{
+              color: theme.palette.text.secondary,
+              mb: 3,
+              lineHeight: 1.4,
+              fontWeight: 400,
+              textShadow:
+                theme.palette.mode === "dark"
+                  ? "none"
+                  : "1px 1px 2px rgba(0,0,0,0.1)",
+            }}
+          >
+            Test your JavaScript knowledge
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              color: theme.palette.text.secondary,
+              mb: 4,
+              lineHeight: 1.6,
+              textShadow:
+                theme.palette.mode === "dark"
+                  ? "none"
+                  : "1px 1px 2px rgba(0,0,0,0.1)",
+              fontSize: "1.1rem",
+            }}
+          >
+            Swim{" "}
+            <strong style={{ color: theme.palette.success.main }}>over</strong>{" "}
+            the shark if the statement is{" "}
+            <strong style={{ color: theme.palette.success.main }}>true</strong>,
+            <br />
+            Swim{" "}
+            <strong style={{ color: theme.palette.error.main }}>
+              under
+            </strong>{" "}
+            if it's{" "}
+            <strong style={{ color: theme.palette.error.main }}>false</strong>.
           </Typography>
           <Button
             variant="contained"
-            size="small"
+            size="large"
             onClick={() => {
-              console.log("play game");
-              initializeGame(returnScore);
+              initializeGame();
             }}
-            style={{ zIndex: 1000, width: "100px" }}
+            sx={{
+              zIndex: 1000,
+              minWidth: "140px",
+              py: 1.5,
+              px: 4,
+              fontSize: "1.1rem",
+              fontWeight: "bold",
+              background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.primary.dark} 90%)`,
+              border: 0,
+              borderRadius: "25px",
+              boxShadow: `0 3px 5px 2px ${theme.palette.primary.main}30`,
+              color: theme.palette.primary.contrastText,
+              textTransform: "none",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                background: `linear-gradient(45deg, ${theme.palette.primary.dark} 30%, ${theme.palette.primary.main} 90%)`,
+                transform: "translateY(-2px)",
+                boxShadow: `0 6px 10px 2px ${theme.palette.primary.main}40`,
+              },
+            }}
           >
-            Play
+            Start Game
           </Button>
-          <div
-            className="high-scores"
-            style={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              alignItems: "center",
-              backgroundColor: "rgba(0,0,0,100)",
-              borderRadius: "10px",
-              padding: "0px 0",
-              marginTop: "3px",
-            }}
-          >
-            <CustomTable />
-          </div>
         </div>
       </div>
 
@@ -239,55 +224,9 @@ const GameComponent = () => {
           Game Over
         </Typography>
         <Typography id="scoreSpot" variant="subtitle1"></Typography>
-        <Button
-          variant="contained"
-          size="small"
-          id="playAgain"
-          onClick={() => setNewHighScore(null)}
-        >
+        <Button variant="contained" size="small" id="playAgain">
           Play Again
         </Button>
-        <div
-          className="high-scores"
-          style={{
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-            backgroundColor: "rgba(0,0,0,100)",
-            borderRadius: "10px",
-            padding: "5px 5px",
-            marginTop: "5px",
-            color: "white",
-            width: "350px",
-          }}
-        >
-          {newHighScore && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "column",
-                alignItems: "center",
-                marginTop: "3px",
-                width: "350px",
-              }}
-            >
-              <Typography variant="caption">New High Score.</Typography>
-              <div>
-                <input
-                  placeholder="Display Name"
-                  onChange={(evt) => handleInput(evt)}
-                  value={name}
-                ></input>
-                <Typography sx={{ fontSize: "8px" }}>Max characters</Typography>
-              </div>
-              <button onClick={submitHighScore}>Submit</button>
-            </div>
-          )}
-          <CustomTable />
-        </div>
       </div>
     </div>
   );

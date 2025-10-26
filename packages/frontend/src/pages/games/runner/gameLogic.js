@@ -5,7 +5,7 @@ import getQuestions from '../components/swimmerDecks'
 import attack from './Attack.png'
 import turtleHurt from './Hurt.png'
 
-export function initializeGame(returnScore) {
+export function initializeGame(returnScore = () => {}) {
   document.getElementById('intro-screen').style.display = 'none'
   const questionSpot = document.getElementById('question')
   const scoreSpot = document.getElementById('scoreSpot')
