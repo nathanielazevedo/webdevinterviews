@@ -9,29 +9,23 @@ import { programmingParadigmsQuiz } from "./programminParadigms";
 import { timeComplexityQuiz } from "./timeComplexity";
 import { dsaPatternsQuiz } from "./dsaPatterns";
 import { djangoQuiz } from "./django";
+import { regexQuiz } from "./regex";
 import { restApiQuiz } from "./rest";
 import { useState } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  Chip,
-  Container,
-  LinearProgress,
-  IconButton,
-  Paper,
-} from "@mui/material";
+import { Box, Typography, Grid, Container, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import QuizIcon from "@mui/icons-material/Quiz";
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import QuizCard from "./components/QuizCard";
 
 // Quiz options with descriptions
 const quizOptions = [
+  {
+    name: "Regex Basics",
+    quiz: regexQuiz,
+    description: "Fundamentals of regular expressions",
+    questions: regexQuiz.length,
+    difficulty: "Beginner",
+    category: "Programming",
+  },
   {
     name: "Hardware Basics",
     quiz: hardwareQuiz,

@@ -9,13 +9,40 @@ import {
   CircularProgress,
   Alert,
   Button,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useBattlePractice } from "../../hooks/battle";
+import { api } from "../../api/client";
+import type { Question } from "@webdevinterviews/shared";
 
 const BattlePracticeList = () => {
   const { questions, loading, error, refetch } = useBattlePractice();
   const navigate = useNavigate();
+  const [currentBattlePool, setCurrentBattlePool] = useState<Question[]>([]);
+  const [showOnlyPool, setShowOnlyPool] = useState(false);
+  const [poolLoading, setPoolLoading] = useState(false);
+
+  const fetchCurrentBattlePool = async () => {
+    try {
+      setPoolLoading(true);
+      const response = (await api.getCurrentBattle()) as {
+        battle: { questionPool: Question[] };
+      };
+      const questionPool = response.battle?.questionPool || [];
+      setCurrentBattlePool(questionPool);
+    } catch (err) {
+      // Error handled silently - filter will just be disabled
+    } finally {
+      setPoolLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCurrentBattlePool();
+  }, []);
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty.toLowerCase()) {
@@ -29,6 +56,14 @@ const BattlePracticeList = () => {
         return "default";
     }
   };
+
+  const displayedQuestions = showOnlyPool
+    ? questions.filter((question) =>
+        currentBattlePool.some(
+          (poolQuestion) => poolQuestion.id === question.id
+        )
+      )
+    : questions;
 
   if (loading) {
     return (
@@ -68,8 +103,24 @@ const BattlePracticeList = () => {
         question to start practicing.
       </Typography>
 
+      <Box sx={{ mb: 3, display: "flex", alignItems: "center", gap: 2 }}>
+        <Button
+          variant={showOnlyPool ? "contained" : "outlined"}
+          onClick={() => setShowOnlyPool(!showOnlyPool)}
+          disabled={poolLoading || currentBattlePool.length === 0}
+          startIcon={poolLoading ? <CircularProgress size={16} /> : null}
+        >
+          {showOnlyPool ? "Show All Questions" : "Show Battle Pool Only"}
+        </Button>
+        {currentBattlePool.length > 0 && (
+          <Typography variant="body2" color="text.secondary">
+            {currentBattlePool.length} questions in current battle
+          </Typography>
+        )}
+      </Box>
+
       <Grid container spacing={3}>
-        {questions.map((question) => (
+        {displayedQuestions.map((question) => (
           <Grid item xs={12} sm={6} md={4} key={question.id}>
             <Card
               sx={{
@@ -150,10 +201,12 @@ const BattlePracticeList = () => {
         ))}
       </Grid>
 
-      {questions.length === 0 && !loading && (
+      {displayedQuestions.length === 0 && !loading && (
         <Box sx={{ textAlign: "center", py: 8 }}>
           <Typography variant="h6" color="text.secondary">
-            No questions available
+            {showOnlyPool
+              ? "No questions in current battle pool"
+              : "No questions available"}
           </Typography>
           <Button variant="outlined" onClick={refetch} sx={{ mt: 2 }}>
             Refresh
