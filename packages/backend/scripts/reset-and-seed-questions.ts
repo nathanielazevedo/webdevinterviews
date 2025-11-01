@@ -1,6 +1,6 @@
-import { prisma } from './src/config/database.js';
-import { QuestionsService } from './src/services/questions.service.js';
-import { logger } from './src/utils/logger.js';
+import { prisma } from '../src/config/database.js';
+import { QuestionsService } from '../src/services/questions.service.js';
+import { logger } from '../src/utils/logger.js';
 
 const log = logger;
 
