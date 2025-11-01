@@ -4,8 +4,12 @@ import { URL } from 'url';
 import { createClient } from '@supabase/supabase-js';
 import { BattleService } from '../services/battle.service.js';
 import { logger } from '../utils/logger.js';
-import { WebSocketMessage, PlayerData, StatusWatcher, BattleResult } from '../types/websocket.js';
-import type { Player } from '@webdevinterviews/shared/src/types/battle';
+import type { Player, WebSocketMessage, PlayerData, BattleResult } from '@webdevinterviews/shared';
+
+// Backend-specific types
+interface StatusWatcher {
+  ws: WebSocket;
+}
 import { QuestionsService } from '../services/questions.service.js';
 import { BattleParticipationService } from '../services/battle-participation.service.js';
 

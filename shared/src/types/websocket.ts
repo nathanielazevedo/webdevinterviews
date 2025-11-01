@@ -5,8 +5,7 @@
 export interface WebSocketMessage {
   type: string;
   userId?: string;
-  passed?: number;
-  total?: number;
+  testsPassed?: number;
   scheduledStartTime?: string;
   durationMinutes?: number;
   completionTime?: number;
@@ -14,13 +13,14 @@ export interface WebSocketMessage {
 
 export interface PlayerData {
   testsPassed: number;
-  totalTests: number;
   joinedAt: string;
 }
 
 export interface BattleResult {
   userId: string;
   testsPassed: number;
-  totalTests: number;
+  totalTests?: number;
   completionTime?: number | null;
+  completedAt?: string;
+  placement?: number;
 }

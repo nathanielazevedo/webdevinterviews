@@ -1,7 +1,7 @@
 import { WebSocket } from 'ws';
 import { BattleService } from '../services/battle.service.js';
 import { logger } from '../utils/logger.js';
-import { BattleResult, PlayerData } from '../types/websocket.js';
+import type { BattleResult, PlayerData } from '@webdevinterviews/shared';
 import type { Battle } from '@webdevinterviews/shared';
 
 const log = logger;

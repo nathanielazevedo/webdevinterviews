@@ -2,30 +2,8 @@
 
 import { prisma, dbLog } from '../config/database.js';
 import { QuestionsService } from './questions.service.js';
-import type { Battle, BattleParticipant } from '@webdevinterviews/shared';
-
-// Additional backend-specific types
-interface BattleCreateOptions {
-  scheduledStartTime?: string;
-  durationMinutes?: number;
-}
-
-interface BattleResult {
-  userId: string;
-  testsPassed: number;
-  completionTime?: number | null;
-  placement?: number;
-}
-
-interface UserStats {
-  total_battles: number;
-  wins: number;
-  win_rate: number;
-  avg_tests_passed: number;
-  total_tests_passed: number;
-  best_placement: number;
-  recent_battles: number;
-}
+import type { Battle, BattleParticipant, BattleResult } from '@webdevinterviews/shared';
+import type { BattleCreateOptions, UserStats } from '../types/battle.service.types.js';
 
 export class BattleService {
   

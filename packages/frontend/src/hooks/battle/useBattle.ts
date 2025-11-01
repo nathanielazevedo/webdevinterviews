@@ -20,12 +20,7 @@ export interface BattleStatus {
   change?: string;
 }
 
-export interface BattleResult {
-  userId: string;
-  testsPassed: number;
-  totalTests: number;
-  completedAt: string;
-}
+
 
 export interface TestResult {
   userId: string;
