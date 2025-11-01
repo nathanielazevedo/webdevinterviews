@@ -104,18 +104,31 @@ const TestRunner: React.FC<TestRunnerProps> = ({
       }> = [];
 
       if (testCases && testCases.length > 0) {
-        // Transform question test cases to CodeRunner format
         testCasesToRun = testCases
           .filter((tc) => tc.input && tc.expected !== undefined)
-          .map((tc, index) => ({
-            input: Object.values(tc.input!) as any[],
-            expected: tc.expected as any,
-            description: `Test Case ${index + 1}: ${Object.keys(tc.input!).join(
-              ", "
-            )} = ${Object.values(tc.input!)
-              .map((v) => JSON.stringify(v))
-              .join(", ")}`,
-          }));
+          .map((tc, index) => {
+            // ✅ Extract input in the correct order based on function signature
+            const inputObj = tc.input as Record<string, any>;
+            const orderedInput = [];
+
+            // Match the order from function signature
+            if ("flowerbed" in inputObj) orderedInput.push(inputObj.flowerbed);
+            if ("n" in inputObj) orderedInput.push(inputObj.n);
+
+            // Fallback to Object.values if no specific params
+            const finalInput =
+              orderedInput.length > 0 ? orderedInput : Object.values(inputObj);
+
+            return {
+              input: finalInput,
+              expected: tc.expected as any,
+              description: `Test Case ${index + 1}: ${Object.keys(
+                inputObj
+              ).join(", ")} = ${Object.values(inputObj)
+                .map((v) => JSON.stringify(v))
+                .join(", ")}`,
+            };
+          });
       } else {
         // Fall back to hardcoded test cases
         testCasesToRun = TEST_CASES[problemId as keyof typeof TEST_CASES] || [];
@@ -132,7 +145,18 @@ const TestRunner: React.FC<TestRunnerProps> = ({
         return;
       }
 
-      const testResults = await codeRunner.runTests(code, testCasesToRun);
+      // ✅ Clone test cases to prevent mutation across tests
+      const clonedTestCases = testCasesToRun.map((tc) => ({
+        ...tc,
+        input: tc.input.map((arg) =>
+          Array.isArray(arg) ? JSON.parse(JSON.stringify(arg)) : arg
+        ),
+        expected: Array.isArray(tc.expected)
+          ? JSON.parse(JSON.stringify(tc.expected))
+          : tc.expected,
+      }));
+
+      const testResults = await codeRunner.runTests(code, clonedTestCases);
       setResults(testResults);
       onTestComplete?.(testResults);
 
@@ -157,7 +181,15 @@ const TestRunner: React.FC<TestRunnerProps> = ({
     } finally {
       setIsRunning(false);
     }
-  }, [code, problemId, onTestComplete, battleId, playerId, sendTestResults]);
+  }, [
+    code,
+    problemId,
+    testCases,
+    onTestComplete,
+    battleId,
+    playerId,
+    sendTestResults,
+  ]);
 
   const getStatusIcon = (passed: boolean) => {
     return passed ? (

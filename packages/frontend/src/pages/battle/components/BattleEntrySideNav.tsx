@@ -243,18 +243,6 @@ const BattleEntrySideNav: React.FC<BattleEntrySideNavProps> = ({
                           {player.userId === currentUserId && " (You)"}
                         </Typography>
                       }
-                      secondary={
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          sx={{
-                            fontSize: "0.8rem",
-                            mt: 0.5,
-                          }}
-                        >
-                          {player.testsPassed}/{player.totalTests} Tests
-                        </Typography>
-                      }
                     />
                   )}
                 </ListItem>

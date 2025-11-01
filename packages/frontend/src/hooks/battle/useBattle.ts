@@ -62,6 +62,26 @@ interface BattleInfo {
   selectedQuestion?: Question | null;
 }
 
+export interface BattleHistoryItem {
+  id: string;
+  status: 'waiting' | 'active' | 'completed';
+  startedAt?: string;
+  completedAt?: string;
+  createdAt?: string;
+  durationMinutes?: number;
+  adminUserId?: string;
+  endedBy?: string;
+  participants: Array<{
+    userId: string;
+    testsPassed: number;
+    totalTests: number;
+    completionTime?: number | null;
+    placement?: number | null;
+    joinedAt: string;
+    isConnected: boolean;
+  }>;
+}
+
 /**
  * Enhanced battle hook with full functionality from useBattleOld
  * Includes WebSocket authentication, battle state management, and API integration
@@ -96,6 +116,10 @@ export const useBattle = () => {
     questionPool: [],
     questionLoading: false,
   });
+
+  const [battleHistory, setBattleHistory] = useState<BattleHistoryItem[]>([]);
+  const [battleHistoryLoading, setBattleHistoryLoading] = useState(false);
+  const [battleHistoryError, setBattleHistoryError] = useState<string | null>(null);
 
   // WebSocket refs
   const wsRef = useRef<WebSocket | null>(null);
@@ -142,10 +166,11 @@ export const useBattle = () => {
         break;
 
       case 'battle-started':
-        setBattle(prev => ({ ...prev, status: 'active', startTime: null }));
+        setBattle(prev => ({ ...prev, status: 'active', startTime: null, currentQuestion: message.selectedQuestion as Question || null, questionLoading: false }));
         break;
 
       case 'battle-completed':
+        console.log('Battle completed message received');
         setBattle(prev => ({ ...prev, status: 'completed' }));
         break;
 
@@ -378,7 +403,6 @@ export const useBattle = () => {
 
   const handleTestResults = useCallback((results: { passed: boolean; message: string; testCases: unknown[]; totalExecutionTime: number, testsPassed: number }) => {
     // Send test results to backend via WebSocket
-    console.log(results)
     sendMessage({
       type: 'test-results',
       passed: results.passed ? 1 : 0,
@@ -468,6 +492,22 @@ export const useBattle = () => {
     battle.questionLoading,
   ]);
 
+  const fetchBattleHistory = useCallback(async (limit?: number) => {
+    try {
+      setBattleHistoryLoading(true);
+      setBattleHistoryError(null);
+      
+      const data = await api.getBattleHistory(limit) as { battles: BattleHistoryItem[]; total: number };
+      setBattleHistory(data.battles);
+      
+      setBattleHistoryLoading(false);
+    } catch (error) {
+      console.error('Error fetching battle history:', error);
+      setBattleHistoryError('Failed to fetch battle history');
+      setBattleHistoryLoading(false);
+    }
+  }, []);
+
   return useMemo(() => ({
     battle: memoizedBattle,
     players,
@@ -481,6 +521,10 @@ export const useBattle = () => {
     sendMessage,
     connect,
     disconnect,
+    fetchBattleHistory,
+    battleHistory,
+    battleHistoryLoading,
+    battleHistoryError,
   }), [
     memoizedBattle,
     players,
@@ -494,5 +538,9 @@ export const useBattle = () => {
     sendMessage,
     connect,
     disconnect,
+    fetchBattleHistory,
+    battleHistory,
+    battleHistoryLoading,
+    battleHistoryError,
   ]);
 };

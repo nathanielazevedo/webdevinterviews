@@ -115,6 +115,10 @@ export { ApiClient };
 export const api = {
   // Battle endpoints
   getCurrentBattle: () => apiClient.get('/battle/current'),
+  getBattleHistory: (limit?: number) => {
+    const params = limit ? `?limit=${limit}` : '';
+    return apiClient.get(`/battle/history${params}`);
+  },
 
   // Questions endpoints
   getAllQuestions: () => apiClient.get('/questions'),

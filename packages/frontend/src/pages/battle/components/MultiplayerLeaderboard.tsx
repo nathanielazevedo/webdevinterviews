@@ -1,17 +1,16 @@
 import React from "react";
 import {
   Box,
-  Typography,
-  Avatar,
-  Chip,
   Card,
   CardContent,
-  LinearProgress,
+  Chip,
   Grid,
+  LinearProgress,
   Paper,
-  useTheme,
+  Typography,
+  Avatar,
   Badge,
-  CircularProgress,
+  useTheme,
 } from "@mui/material";
 import {
   Person,
@@ -106,17 +105,21 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
     } catch {
       return "Invalid time";
     }
-  }; // Sort players by completion status and time
+  }; // Sort players by tests passed (descending), then by completion status and time
   const sortedPlayers = [...players].sort((a, b) => {
-    // Get completion status from playerResults
+    // First sort by tests passed (descending)
+    if (a.testsPassed !== b.testsPassed) {
+      return b.testsPassed - a.testsPassed;
+    }
+
+    // If tests passed are equal, completed players first
     const aResult = _playerResults?.[a.userId];
     const bResult = _playerResults?.[b.userId];
 
-    // Completed players first
     if (aResult?.isCompleted && !bResult?.isCompleted) return -1;
     if (!aResult?.isCompleted && bResult?.isCompleted) return 1;
 
-    // Among completed players, sort by completion time
+    // Among completed players with same tests passed, sort by completion time
     if (
       aResult?.isCompleted &&
       bResult?.isCompleted &&
@@ -129,15 +132,34 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
       );
     }
 
-    // Among non-completed players, sort by progress
-    const aProgress = a.totalTests > 0 ? a.testsPassed / a.totalTests : 0;
-    const bProgress = b.totalTests > 0 ? b.testsPassed / b.totalTests : 0;
-
-    if (aProgress !== bProgress) return bProgress - aProgress;
-
     // Finally sort by join time
     return new Date(a.joinedAt).getTime() - new Date(b.joinedAt).getTime();
   });
+
+  // Calculate place numbers with ties
+  const getPlaceNumber = (index: number): string => {
+    if (index === 0) return "1st";
+    if (index === 1) return "2nd";
+    if (index === 2) return "3rd";
+
+    // Check for ties
+    const currentPlayer = sortedPlayers[index];
+    const previousPlayer = sortedPlayers[index - 1];
+
+    if (currentPlayer.testsPassed === previousPlayer.testsPassed) {
+      // Find the start of this tie group
+      let tieStart = index - 1;
+      while (
+        tieStart > 0 &&
+        sortedPlayers[tieStart - 1].testsPassed === currentPlayer.testsPassed
+      ) {
+        tieStart--;
+      }
+      return `${tieStart + 1}th (tie)`;
+    }
+
+    return `${index + 1}th`;
+  };
 
   const getStatusColor = (player: Player) => {
     return player.isConnected
@@ -390,8 +412,10 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
                     <LinearProgress
                       variant="determinate"
                       value={
-                        player.totalTests > 0
-                          ? (player.testsPassed / player.totalTests) * 100
+                        (player.totalTests ?? 0) > 0
+                          ? ((player.testsPassed ?? 0) /
+                              (player.totalTests ?? 1)) *
+                            100
                           : 0
                       }
                       sx={{
@@ -420,12 +444,19 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
                     />
                   </Box>
 
+                  {/* Place Number */}
+                  <Box mt={1} display="flex" alignItems="center" gap={0.5}>
+                    <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                      Place: {getPlaceNumber(index)}
+                    </Typography>
+                  </Box>
+
                   {/* Completion Time */}
                   {_playerResults?.[player.userId]?.isCompleted && (
-                    <Box mt={2} display="flex" alignItems="center" gap={0.5}>
+                    <Box mt={1} display="flex" alignItems="center" gap={0.5}>
                       <Timer fontSize="small" color="success" />
                       <Typography variant="caption" color="success.main">
-                        Completed #{index + 1}
+                        Completed
                       </Typography>
                     </Box>
                   )}

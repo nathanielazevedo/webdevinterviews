@@ -79,7 +79,7 @@ const ResizableCodingPanels: React.FC<ResizableCodingPanelsProps> = ({
 }) => {
   const theme = useTheme();
   const [code, setCode] = useState(
-    question?.starter_code ||
+    question?.function_signature ||
       `function solution() {
     // Write your solution here
     
@@ -255,97 +255,148 @@ ${question.constraints}`
           }}
         >
           <List sx={{ py: 0 }}>
-            {players.map((player: Player) => (
-              <ListItem
-                key={player.userId}
-                sx={{
-                  px: 2,
-                  py: 1,
-                  borderBottom: `1px solid ${theme.palette.divider}20`,
-                  backgroundColor:
-                    player.userId === currentUserId
-                      ? `${theme.palette.primary.main}10`
-                      : "transparent",
-                }}
-              >
-                <ListItemAvatar sx={{ minWidth: 40 }}>
-                  {(() => {
-                    const avatarId = player.avatar || "default";
-                    const avatar = AVATAR_OPTIONS.find(
-                      (a) => a.id === avatarId
-                    );
+            {(() => {
+              // Sort players by tests passed (descending)
+              const sortedPlayers = [...players].sort((a, b) => {
+                // First sort by tests passed (descending)
+                if (a.testsPassed !== b.testsPassed) {
+                  return b.testsPassed - a.testsPassed;
+                }
+                // Finally sort by join time
+                return (
+                  new Date(a.joinedAt).getTime() -
+                  new Date(b.joinedAt).getTime()
+                );
+              });
 
-                    if (avatar && avatar.type === "emoji") {
-                      return (
-                        <Box
-                          sx={{
-                            width: 32,
-                            height: 32,
-                            borderRadius: "50%",
-                            bgcolor: "grey.100",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: "1.2rem",
-                          }}
-                        >
-                          {avatar.emoji}
-                        </Box>
+              // Calculate place numbers with ties
+              const getPlaceNumber = (index: number): string => {
+                if (index === 0) return "1st";
+                if (index === 1) return "2nd";
+                if (index === 2) return "3rd";
+
+                // Check for ties
+                const currentPlayer = sortedPlayers[index];
+                const previousPlayer = sortedPlayers[index - 1];
+
+                if (currentPlayer.testsPassed === previousPlayer.testsPassed) {
+                  // Find the start of this tie group
+                  let tieStart = index - 1;
+                  while (
+                    tieStart > 0 &&
+                    sortedPlayers[tieStart - 1].testsPassed ===
+                      currentPlayer.testsPassed
+                  ) {
+                    tieStart--;
+                  }
+                  return `${tieStart + 1}th (tie)`;
+                }
+
+                return `${index + 1}th`;
+              };
+
+              return sortedPlayers.map((player: Player, index: number) => (
+                <ListItem
+                  key={player.userId}
+                  sx={{
+                    px: 2,
+                    py: 1,
+                    borderBottom: `1px solid ${theme.palette.divider}20`,
+                    backgroundColor:
+                      player.userId === currentUserId
+                        ? `${theme.palette.primary.main}10`
+                        : "transparent",
+                  }}
+                >
+                  <ListItemAvatar sx={{ minWidth: 40 }}>
+                    {(() => {
+                      const avatarId = player.avatar || "default";
+                      const avatar = AVATAR_OPTIONS.find(
+                        (a) => a.id === avatarId
                       );
-                    }
 
-                    return (
-                      <Avatar sx={{ width: 32, height: 32 }}>
-                        {renderAvatarContent(player)}
-                      </Avatar>
-                    );
-                  })()}
-                </ListItemAvatar>
-                <ListItemText
-                  primary={
-                    <Typography variant="body2" fontWeight={500}>
-                      {player.username}
-                      {player.userId === currentUserId && " (You)"}
-                    </Typography>
-                  }
-                  secondary={
-                    <Box sx={{ mt: 0.5, width: "100%" }}>
-                      <LinearProgress
-                        variant="determinate"
-                        value={
-                          question?.test_cases?.length > 0
-                            ? (player.testsPassed /
-                                question?.test_cases?.length) *
-                              100
-                            : 0
-                        }
-                        sx={{
-                          height: 6,
-                          borderRadius: 3,
-                          backgroundColor: theme.palette.grey[200],
-                          "& .MuiLinearProgress-bar": {
-                            borderRadius: 3,
-                            backgroundColor:
-                              player.testsPassed === player.totalTests &&
-                              player.totalTests > 0
-                                ? theme.palette.success.main
-                                : theme.palette.primary.main,
-                          },
-                        }}
-                      />
-                      <Typography
-                        variant="caption"
-                        color="text.secondary"
-                        sx={{ mt: 0.5, display: "block" }}
+                      if (avatar && avatar.type === "emoji") {
+                        return (
+                          <Box
+                            sx={{
+                              width: 32,
+                              height: 32,
+                              borderRadius: "50%",
+                              bgcolor: "grey.100",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: "1.2rem",
+                            }}
+                          >
+                            {avatar.emoji}
+                          </Box>
+                        );
+                      }
+
+                      return (
+                        <Avatar sx={{ width: 32, height: 32 }}>
+                          {renderAvatarContent(player)}
+                        </Avatar>
+                      );
+                    })()}
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={
+                      <Box
+                        sx={{ display: "flex", alignItems: "center", gap: 1 }}
                       >
-                        {player.testsPassed}/{question?.test_cases.length} tests
-                        passed
-                      </Typography>
-                    </Box>
-                  }
-                />
-              </ListItem>
-            ))}
+                        <Typography
+                          variant="caption"
+                          sx={{ fontWeight: 600, color: "primary.main" }}
+                        >
+                          {getPlaceNumber(index)}
+                        </Typography>
+                        <Typography variant="body2" fontWeight={500}>
+                          {player.username}
+                          {player.userId === currentUserId && " (You)"}
+                        </Typography>
+                      </Box>
+                    }
+                    secondary={
+                      <Box sx={{ mt: 0.5, width: "100%" }}>
+                        <LinearProgress
+                          variant="determinate"
+                          value={
+                            (question?.test_cases?.length ?? 0) > 0
+                              ? (player.testsPassed /
+                                  (question?.test_cases?.length ?? 1)) *
+                                100
+                              : 0
+                          }
+                          sx={{
+                            height: 6,
+                            borderRadius: 3,
+                            backgroundColor: theme.palette.grey[200],
+                            "& .MuiLinearProgress-bar": {
+                              borderRadius: 3,
+                              backgroundColor:
+                                player.testsPassed === player.totalTests &&
+                                player.totalTests > 0
+                                  ? theme.palette.success.main
+                                  : theme.palette.primary.main,
+                            },
+                          }}
+                        />
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          sx={{ mt: 0.5, display: "block" }}
+                        >
+                          {player.testsPassed}/
+                          {question?.test_cases?.length ?? 0} tests passed
+                        </Typography>
+                      </Box>
+                    }
+                  />
+                </ListItem>
+              ));
+            })()}
           </List>
         </Box>
       </Paper>

@@ -6,6 +6,8 @@ import { BattleService } from '../services/battle.service.js';
 import { logger } from '../utils/logger.js';
 import { WebSocketMessage, PlayerData, StatusWatcher, BattleResult } from '../types/websocket.js';
 import type { Player } from '@webdevinterviews/shared/src/types/battle';
+import { QuestionsService } from '../services/questions.service.js';
+import { BattleParticipationService } from '../services/battle-participation.service.js';
 
 const log = logger;
 
@@ -174,7 +176,7 @@ export class WebSocketManager {
           // Still broadcast player list even if no battle exists
         } else {
           log.info(`Found existing battle: ${battle.id}`);
-          await BattleService.addParticipantToBattle(userId);
+          await BattleParticipationService.addParticipant(userId);
           
           // Send battle status to the joining user
           const battleStatus = {
@@ -354,7 +356,19 @@ export class WebSocketManager {
 
       // Start the battle
       const startedBattle = await BattleService.startBattle(userId);
+      // Get selected question if it exists
 
+      const newBattle = await BattleService.getCurrentBattle();
+      let selectedQuestion = null;
+      // @ts-ignore - selected_question_id exists in database but not in generated types yet
+      if (newBattle.selected_question_id) {
+        try {
+          // @ts-ignore - selected_question_id exists in database but not in generated types yet
+          selectedQuestion = await QuestionsService.getQuestionById(newBattle.selected_question_id.toString());
+        } catch (error) {
+          log.warn('Could not fetch selected question for battle', error);
+        }
+      }
       log.info(`Battle started by admin`, {
         battleId: startedBattle.id,
         startedBy: userId,
@@ -366,7 +380,8 @@ export class WebSocketManager {
         type: 'battle-started',
         battleId: startedBattle.id,
         startedBy: userId,
-        startedAt: startedBattle.started_at
+        startedAt: startedBattle.started_at,
+        selectedQuestion
       };
 
       for (const playerWs of this.connectedPlayers.values()) {
@@ -411,7 +426,7 @@ export class WebSocketManager {
         return;
       }
 
-      // Update player data
+      // Update player data in memory
       const existingData = this.playerData.get(userId) || {
         testsPassed: 0,
         joinedAt: new Date().toISOString()
@@ -421,6 +436,14 @@ export class WebSocketManager {
         ...existingData,
         testsPassed
       });
+
+      // Update battle participation record in database
+      try {
+        await BattleParticipationService.updateParticipation(userId, testsPassed);
+      } catch (dbError) {
+        log.error(`Error updating battle participation for user ${userId}:`, dbError);
+        // Continue with broadcasting even if DB update fails
+      }
 
       log.info(`Updated test results for user ${userId}: ${testsPassed} tests passed`);
 
@@ -662,8 +685,8 @@ export class WebSocketManager {
           isWaiting: battle.status === 'waiting',
           isCompleted: battle.status === 'completed',
           connectedPlayers,
-          participantCount: battle.participants?.length || 0,
-          startedAt: battle.started_at
+          startedAt: battle.started_at,
+          
         };
       }
       

@@ -68,7 +68,7 @@ export const AdminControls: React.FC<AdminControlsProps> = ({
           top: 16,
           right: 16,
           zIndex: 2000,
-          width: expanded ? 320 : 60,
+          width: expanded ? 320 : 80,
           transition: "width 0.3s ease",
         }}
       >

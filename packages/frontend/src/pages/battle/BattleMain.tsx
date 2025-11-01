@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Box, Grid, Container } from "@mui/material";
+import { Box, Grid, Container, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import {
   BattleResults,
   ResizableCodingPanels,
@@ -10,6 +11,7 @@ import {
 import { useBattleContext } from "../../contexts/BattleContext";
 
 const BattleMain: React.FC = () => {
+  const navigate = useNavigate();
   const {
     battle,
     players,
@@ -55,7 +57,16 @@ const BattleMain: React.FC = () => {
   return (
     <>
       <Container maxWidth="xl">
-        <Box sx={{ py: 4 }}>
+        <Box sx={{ py: 4, pt: 1 }}>
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => navigate("/")}
+            sx={{ mb: 2 }}
+          >
+            ← Back to Home
+          </Button>
+
           {/* Pre-battle and post-battle layout */}
           {battle.status === "waiting" && (
             <Grid container spacing={3}>
@@ -83,7 +94,7 @@ const BattleMain: React.FC = () => {
           )}
 
           {/* Active battle layout with editor */}
-          {(battle.status === "active" || battle.status === "completed") && (
+          {(battle.status === "active") && (
             <Box
               sx={{
                 position: "fixed",

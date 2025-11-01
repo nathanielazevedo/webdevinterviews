@@ -79,5 +79,43 @@ export function createBattleRoutes(
     }
   });
 
+  router.get('/history', async (req: Request, res: Response) => {
+    try {
+      log.info(`Fetching battle history`);
+      
+      const limit = parseInt(req.query.limit as string) || 50;
+      const battles = await BattleService.getCompletedBattles(limit);
+      
+      // Format the response with battle participants
+      const battleHistory = battles.map((battle: any) => ({
+        id: battle.id,
+        status: battle.status,
+        startedAt: battle.started_at,
+        completedAt: battle.completed_at,
+        createdAt: battle.created_at,
+        durationMinutes: battle.duration_minutes,
+        adminUserId: battle.admin_user_id,
+        endedBy: battle.ended_by,
+        participants: battle.participations?.map((participation: any) => ({
+          userId: participation.user_id,
+          testsPassed: participation.tests_passed,
+          totalTests: participation.total_tests,
+          completionTime: participation.completion_time,
+          placement: participation.placement,
+          joinedAt: participation.joined_at,
+          isConnected: participation.is_connected
+        })) || []
+      }));
+      
+      res.json({ 
+        battles: battleHistory,
+        total: battleHistory.length
+      });
+    } catch (error) {
+      log.error('Error fetching battle history:', error);
+      res.status(500).json({ error: 'Failed to fetch battle history' });
+    }
+  });
+
   return router;
 }

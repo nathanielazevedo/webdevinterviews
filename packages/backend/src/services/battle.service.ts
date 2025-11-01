@@ -851,4 +851,34 @@ export class BattleService {
       throw error;
     }
   }
+
+  // Get all completed battles with their participants
+  static async getCompletedBattles(limit: number = 50): Promise<unknown[]> {
+    dbLog.debug('Fetching completed battles', { limit });
+
+    try {
+      const battles = await prisma.battle.findMany({
+        where: {
+          status: 'completed'
+        },
+        include: {
+          participations: {
+            orderBy: [
+              { placement: 'asc' },
+              { completion_time: 'asc' },
+              { tests_passed: 'desc' }
+            ]
+          }
+        },
+        orderBy: { completed_at: 'desc' },
+        take: limit
+      });
+
+      dbLog.debug(`Found ${battles.length} completed battles`);
+      return battles;
+    } catch (error) {
+      dbLog.error('Error fetching completed battles:', error);
+      throw error;
+    }
+  }
 }

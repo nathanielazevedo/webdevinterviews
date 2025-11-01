@@ -29,113 +29,98 @@ class CodeRunner {
     this.timeout = timeout;
   }
 
-  async runTests(code: string, testCases: TestCase[]): Promise<TestResult> {
-    const startTime = performance.now();
-    const results: TestResult['testCases'] = [];
-    let totalPassed = 0;
+async runTests(code: string, testCases: TestCase[]): Promise<TestResult> {
+  const startTime = performance.now();
+  const results: TestResult['testCases'] = [];
+  let totalPassed = 0;
 
-    for (const testCase of testCases) {
-      const testStartTime = performance.now();
-      try {
-        const result = await this.executeCode(code, testCase.input);
-        const testEndTime = performance.now();
-        const executionTime = testEndTime - testStartTime;
+  for (const testCase of testCases) {
+    const testStartTime = performance.now();
+    try {
+      // ✅ Clone the input AGAIN here, because testCase.input is being reused
+      const clonedInput = JSON.parse(JSON.stringify(testCase.input));
+      
+      const result = await this.executeCode(code, clonedInput);
+      const testEndTime = performance.now();
+      const executionTime = testEndTime - testStartTime;
 
-        const passed = this.deepEqual(result, testCase.expected);
-        if (passed) totalPassed++;
+      const passed = this.deepEqual(result, testCase.expected);
+      if (passed) totalPassed++;
 
-        results.push({
-          input: this.formatInput(testCase.input),
-          expected: this.formatValue(testCase.expected),
-          actual: this.formatValue(result),
-          passed,
-          description: testCase.description,
-          executionTime,
-        });
-      } catch (error) {
-        const testEndTime = performance.now();
-        const executionTime = testEndTime - testStartTime;
+      results.push({
+        input: this.formatInput(testCase.input), // Use original for display
+        expected: this.formatValue(testCase.expected),
+        actual: this.formatValue(result),
+        passed,
+        description: testCase.description,
+        executionTime,
+      });
+    } catch (error) {
+      const testEndTime = performance.now();
+      const executionTime = testEndTime - testStartTime;
 
-        results.push({
-          input: this.formatInput(testCase.input),
-          expected: this.formatValue(testCase.expected),
-          actual: 'Error',
-          passed: false,
-          description: testCase.description,
-          executionTime,
-          error: error instanceof Error ? error.message : String(error),
-        });
-      }
+      results.push({
+        input: this.formatInput(testCase.input),
+        expected: this.formatValue(testCase.expected),
+        actual: 'Error',
+        passed: false,
+        description: testCase.description,
+        executionTime,
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
-
-    const totalExecutionTime = performance.now() - startTime;
-
-    return {
-      passed: totalPassed === testCases.length,
-      testsPassed: totalPassed,
-      message: `${totalPassed}/${testCases.length} tests passed`,
-      testCases: results,
-      totalExecutionTime,
-    };
   }
 
-  private async executeCode(code: string, inputs: TestInput[]): Promise<TestInput> {
-    return new Promise((resolve, reject) => {
-      const timer = setTimeout(() => {
-        reject(new Error(`Execution timeout (${this.timeout}ms)`));
-      }, this.timeout);
+  const totalExecutionTime = performance.now() - startTime;
 
-      try {
-        // Create a safe execution context
-        const wrappedCode = `
-          (function() {
-            ${code}
-            
-            // Get the function name from the code
-            const functionNames = [];
-            const funcRegex = /function\\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g;
-            let match;
-            const codeStr = ${JSON.stringify(code)};
-            while ((match = funcRegex.exec(codeStr)) !== null) {
-              functionNames.push(match[1]);
-            }
-            
-            // Also check for arrow functions and const declarations
-            const arrowRegex = /(?:const|let|var)\\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*=/g;
-            while ((match = arrowRegex.exec(codeStr)) !== null) {
-              try {
-                if (typeof eval(match[1]) === 'function') {
-                  functionNames.push(match[1]);
-                }
-              } catch (e) {
-                // Variable might not be accessible yet, skip
-              }
-            }
-            
-            if (functionNames.length === 0) {
-              throw new Error('No function found in code');
-            }
-            
-            const functionName = functionNames[0];
-            const func = eval(functionName);
-            
-            if (typeof func !== 'function') {
-              throw new Error('Main function not found or not a function');
-            }
-            
-            return func(...${JSON.stringify(inputs)});
-          })()
-        `;
+  return {
+    passed: totalPassed === testCases.length,
+    testsPassed: totalPassed,
+    message: `${totalPassed}/${testCases.length} tests passed`,
+    testCases: results,
+    totalExecutionTime,
+  };
+}
 
-        const result = eval(wrappedCode);
-        clearTimeout(timer);
-        resolve(result);
-      } catch (error) {
-        clearTimeout(timer);
-        reject(error);
+private async executeCode(code: string, inputs: TestInput[]): Promise<TestInput> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error(`Execution timeout (${this.timeout}ms)`));
+    }, this.timeout);
+
+    try {
+      const clonedInputs = JSON.parse(JSON.stringify(inputs));
+      
+      // ✅ Extract function name first
+      const funcNameMatch = code.match(/function\s+([a-zA-Z_$][0-9a-zA-Z_$]*)/);
+      if (!funcNameMatch) {
+        throw new Error('No function declaration found');
       }
-    });
-  }
+      
+      const funcName = funcNameMatch[1];
+      
+      // ✅ Wrap code to return the function
+      const wrappedCode = `
+        ${code}
+        return ${funcName};
+      `;
+      
+      const func = new Function(wrappedCode)();
+      
+      if (typeof func !== 'function') {
+        throw new Error(`${funcName} is not a function`);
+      }
+
+      const result = func(...clonedInputs);
+      
+      clearTimeout(timer);
+      resolve(result);
+    } catch (error) {
+      clearTimeout(timer);
+      reject(error);
+    }
+  });
+}
 
   private deepEqual(a: TestInput, b: TestInput): boolean {
     if (a === b) return true;

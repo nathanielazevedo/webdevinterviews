@@ -44,7 +44,6 @@ export const BattleProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const battleData = useBattle();
-  console.log("context render");
   // Memoize the context value - just pass through battle and players
   const contextValue = useMemo(
     () => ({
