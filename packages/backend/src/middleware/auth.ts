@@ -6,7 +6,15 @@ const log = logger;
 
 // Initialize Supabase client for auth verification
 const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhsa2FocnR6YWlyYXBjc210cnF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk4ODI3ODQsImV4cCI6MjA3NTQ1ODc4NH0.XcgLBEm1mF9USWSG2JddkySAjVPRxMnwoOUT38Su6sM';
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY!;
+
+// Validate required environment variables
+if (!supabaseUrl) {
+  throw new Error('SUPABASE_URL environment variable is required');
+}
+if (!supabaseAnonKey) {
+  throw new Error('SUPABASE_ANON_KEY environment variable is required');
+}
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -28,7 +36,8 @@ export async function authenticateToken(req: Request, res: Response, next: NextF
   try {
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
-    console.log('Authenticating token:', token?.substring(0, 20) + '...');
+    
+    log.debug('Authenticating request', { hasToken: !!token });
 
     if (!token) {
       log.warn('No token provided in request');

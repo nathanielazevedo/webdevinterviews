@@ -354,7 +354,7 @@ export class WebSocketManager {
           // @ts-ignore - selected_question_id exists in database but not in generated types yet
           selectedQuestion = await QuestionsService.getQuestionById(newBattle.selected_question_id.toString());
         } catch (error) {
-          log.warn('Could not fetch selected question for battle', error);
+          log.warn('Could not fetch selected question for battle', { error: String(error) });
         }
       }
       log.info(`Battle started by admin`, {

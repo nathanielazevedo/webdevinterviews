@@ -1,5 +1,3 @@
-// @ts-nocheck no check
-
 import { prisma } from '../config/database.js';
 import type { Question } from '@webdevinterviews/shared';
 import { LEETCODE_75_QUESTIONS } from '../data/questions.data.js';
@@ -22,9 +20,14 @@ export class QuestionsService {
         return existingQuestions as unknown as Question[];
       }
 
-      // Insert all questions
+      // Insert all questions with proper JSON field handling
       await prisma.question.createMany({
-        data: LEETCODE_75_QUESTIONS
+        data: LEETCODE_75_QUESTIONS.map(question => ({
+          ...question,
+          examples: question.examples || undefined,
+          hints: question.hints || undefined,
+          tags: question.tags || undefined
+        }))
       });
 
       // Get the inserted questions
@@ -244,7 +247,12 @@ export class QuestionsService {
     
     try {
       const question = await prisma.question.create({
-        data: questionData
+        data: {
+          ...questionData,
+          examples: questionData.examples || undefined,
+          hints: questionData.hints || undefined,
+          tags: questionData.tags || undefined
+        }
       });
 
       log.info('Question created successfully', { 
@@ -269,7 +277,12 @@ export class QuestionsService {
     try {
       const question = await prisma.question.update({
         where: { id: parseInt(questionId) },
-        data: updates
+        data: {
+          ...updates,
+          examples: updates.examples === null ? undefined : updates.examples,
+          hints: updates.hints === null ? undefined : updates.hints,
+          tags: updates.tags === null ? undefined : updates.tags
+        }
       });
 
       log.info('Question updated successfully', { 

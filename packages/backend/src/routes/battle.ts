@@ -1,6 +1,12 @@
 import { Router } from 'express';
 import { WebSocket } from 'ws';
+import type { Battle, BattleParticipation } from '@prisma/client';
 import { BattleService } from '../services/battle.service.js';
+
+// Type for battle with participations
+type BattleWithParticipations = Battle & {
+  participations?: BattleParticipation[];
+};
 import { QuestionsService } from '../services/questions.service.js';
 import { logger } from '../utils/logger.js';
 import { sendSuccessResponse, asyncHandler } from '../utils/response.js';
@@ -40,7 +46,7 @@ export function createBattleRoutes(
       try {
         questionPool = await QuestionsService.getBattleQuestionPool(battle.id);
       } catch (error) {
-        log.warn('Could not fetch question pool for battle', error);
+        log.warn('Could not fetch question pool for battle', { error: String(error) });
       }
       
       // Get selected question if it exists
@@ -51,7 +57,7 @@ export function createBattleRoutes(
           // @ts-ignore - selected_question_id exists in database but not in generated types yet
           selectedQuestion = await QuestionsService.getQuestionById(battle.selected_question_id.toString());
         } catch (error) {
-          log.warn('Could not fetch selected question for battle', error);
+          log.warn('Could not fetch selected question for battle', { error: String(error) });
         }
       }
       
@@ -85,7 +91,7 @@ export function createBattleRoutes(
       const battles = await BattleService.getCompletedBattles(limit);
       
       // Format the response with battle participants  
-      const battleHistory = battles.map((battle: any) => ({
+      const battleHistory = (battles as BattleWithParticipations[]).map((battle) => ({
         id: battle.id,
         status: battle.status,
         startedAt: battle.started_at,
@@ -94,7 +100,7 @@ export function createBattleRoutes(
         durationMinutes: battle.duration_minutes,
         adminUserId: battle.admin_user_id,
         endedBy: battle.ended_by,
-        participants: battle.participations?.map((participation: any) => ({
+        participants: battle.participations?.map((participation: BattleParticipation) => ({
           userId: participation.user_id,
           testsPassed: participation.tests_passed,
           totalTests: participation.total_tests,
