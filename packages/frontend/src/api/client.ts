@@ -142,7 +142,7 @@ export const api = {
 
   // Location endpoints
   getLocationPoints: () => apiClient.get<LocationPoint[]>('/location/points'),
-  geocodeLocation: (ip: string) => apiClient.post<LocationPoint>('/location/geocode', { location: ip }),
+  geocodeLocation: () => apiClient.post<LocationPoint>('/location/geocode', {}),
 
   // Health check
   healthCheck: () => apiClient.get<HealthCheckResponse>('/'),

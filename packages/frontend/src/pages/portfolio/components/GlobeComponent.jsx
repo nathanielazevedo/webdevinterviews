@@ -14,21 +14,18 @@ const GlobeComponent = () => {
   useEffect(() => {
     const initializeGlobe = async () => {
       try {
-        // Get user's IP address
-        const ipResponse = await fetch("https://api.ipify.org?format=json");
-        const ipData = await ipResponse.json();
-        const userIP = ipData.ip;
-
-        // Send location to backend for geocoding and storage
+        // Send current client location to backend for geocoding and storage
+        // Backend automatically detects client IP from request headers
         try {
-          await api.geocodeLocation(userIP);
+          await api.geocodeLocation();
         } catch {
           // Silently handle geocoding errors
         }
 
         // Fetch all stored location points
         const pointsResponse = await api.getLocationPoints();
-        setPoints(pointsResponse.points || []);
+        console.log(pointsResponse);
+        setPoints(pointsResponse.data.points || []);
       } catch {
         // Fallback to empty points array
         setPoints([]);

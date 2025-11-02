@@ -58,41 +58,7 @@ This application showcases modern full-stack development practices and technical
 - **Modern Build System:** Vite for frontend, TypeScript compilation for backend
 - **Deployment Ready:** Railway and Vercel deployment configurations
 
-## WebSocket Client Generation
-
-**Yes!** You can generate TypeScript WebSocket clients from your AsyncAPI specification. Here's what I implemented:
-
-### ✅ Generated WebSocket Client
-
-1. **AsyncAPI Specification** (`packages/backend/asyncapi.yaml`)
-   - Complete WebSocket API spec with all message types
-   - Request/response schemas with proper validation
-
-2. **Shared WebSocket Client** (`packages/shared/src/websocket/client.ts`)
-   - TypeScript WebSocket client with convenience methods
-   - Type-safe message handling and reconnection logic
-
-### 🚀 Usage Example
-
-```typescript
-import { useBattleContext } from './contexts/BattleContext';
-import { api } from './api/client';
-
-// Real-time battle participation
-const { battle, participants, isAdmin } = useBattleContext();
-
-// Type-safe API calls with standardized responses
-const questions = await api.getAllQuestions();
-const battleHistory = await api.getBattleHistory();
-
-// WebSocket integration for live updates
-client.on('battle:update', (battleState) => {
-  // Real-time battle state synchronization
-  updateBattleUI(battleState);
-});
-```
-
-### 📋 Development Commands
+## Development Commands
 
 ```bash
 # Root level - build entire project

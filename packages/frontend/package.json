@@ -10,8 +10,7 @@
     "lint:fix": "eslint . --fix",
     "lint:check": "eslint . --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest",
-    "generate-api": "npx @hey-api/openapi-ts -i http://localhost:3001/api-docs.json -o src/api/generated"
+    "test": "vitest"
   },
   "dependencies": {
     "@codemirror/lang-python": "^6.1.6",
@@ -21,7 +20,6 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.12",
-    "@hey-api/openapi-ts": "^0.85.1",
     "@monaco-editor/react": "^4.7.0",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
@@ -35,7 +33,6 @@
     "framer-motion": "^10.6.0",
     "jwt-decode": "^4.0.0",
     "maath": "^0.5.3",
-    "meshline": "^3.3.1",
     "react": "^18.2.0",
     "react-diff-viewer": "^3.1.1",
     "react-dom": "^18.2.0",
@@ -49,7 +46,6 @@
     "three": "^0.150.1"
   },
   "devDependencies": {
-    "@tanstack/react-query": "^5.90.2",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@types/react": "^18.3.12",
@@ -57,8 +53,6 @@
     "@typescript-eslint/eslint-plugin": "^8.46.0",
     "@typescript-eslint/parser": "^8.46.0",
     "@vitejs/plugin-react": "^4.0.3",
-    "autoprefixer": "^10.4.14",
-    "browserslist": "^4.26.3",
     "eslint": "^9.37.0",
     "eslint-import-resolver-node": "^0.3.9",
     "eslint-import-resolver-typescript": "^4.4.4",
@@ -69,7 +63,6 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "globals": "^16.4.0",
     "jsdom": "^23.0.1",
-    "jsesc": "^3.0.2",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.7",
     "typescript-eslint": "^8.46.0",
