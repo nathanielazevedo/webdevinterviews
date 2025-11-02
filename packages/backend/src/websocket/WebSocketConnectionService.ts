@@ -1,13 +1,10 @@
 import { WebSocket } from 'ws';
-import { logger } from '../utils/logger.js';
 import type { PlayerData } from '@webdevinterviews/shared';
 
 // Backend-specific types
 interface StatusWatcher {
   ws: WebSocket;
 }
-
-const log = logger;
 
 export class WebSocketConnectionService {
   private connectedPlayers: Map<string, WebSocket>;
@@ -28,7 +25,6 @@ export class WebSocketConnectionService {
    * Add a player connection
    */
   addPlayerConnection(userId: string, ws: WebSocket): void {
-    log.info(`Adding player connection for user: ${userId}`);
     this.connectedPlayers.set(userId, ws);
     
     if (!this.playerData.has(userId)) {
@@ -50,7 +46,6 @@ export class WebSocketConnectionService {
    * Add a status watcher connection
    */
   addStatusWatcher(connectionId: string, ws: WebSocket): void {
-    log.info(`Adding status watcher: ${connectionId}`);
     this.statusWatchers.set(connectionId, { ws });
   }
 
@@ -58,27 +53,11 @@ export class WebSocketConnectionService {
    * Handle player disconnection cleanup
    */
   handleDisconnection(userId: string, connectionId: string): void {
-    log.info(`WebSocket connection closed`, {
-      userId,
-      connectionId,
-      connectedPlayersCount: this.connectedPlayers.size,
-      statusWatchersCount: this.statusWatchers.size
-    });
-
     // Remove from connected players
-    const wasConnected = this.connectedPlayers.has(userId);
-    if (wasConnected) {
-      this.connectedPlayers.delete(userId);
-      log.info(`Removed player ${userId} from connected players`);
-    }
+    this.connectedPlayers.delete(userId);
 
     // Remove from status watchers if exists
-    if (this.statusWatchers.has(connectionId)) {
-      this.statusWatchers.delete(connectionId);
-      log.info(`Removed status watcher ${connectionId}`);
-    }
-
-    log.info(`After cleanup - Connected players: ${this.connectedPlayers.size}, Status watchers: ${this.statusWatchers.size}`);
+    this.statusWatchers.delete(connectionId);
   }
 
   /**
@@ -119,9 +98,6 @@ export class WebSocketConnectionService {
         ...existingData,
         testsPassed
       });
-      log.info(`Updated test results for ${userId}: ${testsPassed} tests passed`);
-    } else {
-      log.warn(`Cannot update test results for ${userId}: player data not found`);
     }
   }
 
@@ -149,12 +125,7 @@ export class WebSocketConnectionService {
     }
 
     for (const userId of staleConnections) {
-      log.info(`Cleaning up stale connection for user: ${userId}`);
       this.connectedPlayers.delete(userId);
-    }
-
-    if (staleConnections.length > 0) {
-      log.info(`Cleaned up ${staleConnections.length} stale connections`);
     }
   }
 }

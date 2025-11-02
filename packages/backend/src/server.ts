@@ -2,10 +2,7 @@ import { createServer, Server } from 'http';
 import { WebSocketServer } from 'ws';
 import { WebSocketManager } from './websocket/WebSocketManager.js';
 import { BattleTimingManager } from './managers/BattleTimingManager.js';
-import { logger } from './utils/logger.js';
 import type { Application } from 'express';
-
-const log = logger;
 
 export interface ServerComponents {
   server: Server;
@@ -38,7 +35,6 @@ export function createServerWithWebSocket(app: Application): ServerComponents {
     wsManager.broadcastBattleStatus.bind(wsManager)
   );
 
-  log.info('Server and WebSocket components initialized');
 
   return {
     server,

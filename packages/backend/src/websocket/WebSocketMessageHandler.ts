@@ -1,7 +1,6 @@
 import { WebSocket } from 'ws';
 import { BattleService } from '../services/battle.service.js';
 import { BattleParticipationService } from '../services/battle-participation.service.js';
-import { WebSocketAuthService } from './WebSocketAuthService.js';
 import { logger } from '../utils/logger.js';
 import type { WebSocketMessage, PlayerData, BattleResult } from '@webdevinterviews/shared';
 
@@ -25,30 +24,26 @@ export class WebSocketMessageHandler {
     _message: WebSocketMessage
   ): Promise<void> {
     try {
-      log.info(`User ${userId} joining battle`);
 
       // Initialize player data if not exists
       if (!this.playerData.has(userId)) {
-        const displayName = await WebSocketAuthService.getDisplayName(userId);
         this.playerData.set(userId, {
           testsPassed: 0,
           joinedAt: new Date().toISOString()
         });
-        log.debug(`Initialized player data for ${userId}`, { displayName });
       }
 
       // Add participant to current battle
       try {
         await BattleParticipationService.addParticipant(userId);
-      } catch (error) {
-        log.warn(`Failed to add participant to battle: ${error}`);
+      } catch {
+        // Participant might already exist, continue
       }
 
       // Get current battle info
       try {
         const battle = await BattleService.getCurrentBattle();
         if (!battle) {
-          log.warn('No current battle found when user tried to join');
           return;
         }
 
@@ -59,7 +54,6 @@ export class WebSocketMessageHandler {
           type: 'battle-status'
         } as WebSocketMessage);
 
-        log.info(`User ${userId} successfully joined battle ${battle.id}`);
       } catch (error) {
         log.error(`Error getting battle info for user ${userId}:`, error);
       }
@@ -93,16 +87,13 @@ export class WebSocketMessageHandler {
   ): Promise<void> {
     try {
       if (!userId) {
-        log.warn('Start battle attempted without user ID');
         return;
       }
 
-      log.info(`User ${userId} attempting to start battle`);
 
       // Check if user is admin for current battle
       const isAdmin = await BattleService.isAdminForBattle(userId);
       if (!isAdmin) {
-        log.warn(`User ${userId} tried to start battle but is not admin`);
         if (ws.readyState === WebSocket.OPEN) {
           ws.send(JSON.stringify({
             type: 'start-battle-response',
@@ -114,14 +105,13 @@ export class WebSocketMessageHandler {
       }
 
       // Start the battle
-      const battle = await BattleService.startBattle(userId);
+      await BattleService.startBattle(userId);
       
       // Broadcast battle start to all participants
       this.sendToBattleParticipants({
         type: 'battle-started'
       } as WebSocketMessage);
 
-      log.info(`Battle ${battle.id} started by user ${userId}`);
 
     } catch (error) {
       log.error(`Error starting battle for user ${userId}:`, error);
@@ -145,28 +135,23 @@ export class WebSocketMessageHandler {
   ): Promise<void> {
     try {
       if (!userId) {
-        log.warn('End battle attempted without user ID');
         return;
       }
 
-      log.info(`User ${userId} attempting to end battle`);
 
       // Check if user is admin for current battle
       const isAdmin = await BattleService.isAdminForBattle(userId);
       if (!isAdmin) {
-        log.warn(`User ${userId} tried to end battle but is not admin`);
         return;
       }
 
       // Get current battle
       const battle = await BattleService.getCurrentBattle();
       if (!battle) {
-        log.warn('No current battle found when trying to end');
         return;
       }
 
       if (battle.status !== 'active') {
-        log.warn(`Cannot end battle ${battle.id} - not in active state (current: ${battle.status})`);
         return;
       }
 
@@ -200,7 +185,6 @@ export class WebSocketMessageHandler {
         }
       }
 
-      log.info(`Battle ${battle.id} ended by user ${userId}`);
 
     } catch (error) {
       log.error(`Error ending battle for user ${userId}:`, error);

@@ -30,10 +30,7 @@ export class WebSocketBroadcastService {
    * Broadcast player list to all connected users
    */
   async broadcastPlayerList(): Promise<void> {
-    log.debug(`Broadcasting player list to all users`);
-
     if (this.connectedPlayers.size === 0) {
-      log.debug(`No connected players to broadcast to`);
       return;
     }
 
@@ -44,21 +41,10 @@ export class WebSocketBroadcastService {
         players
       });
 
-      let sentCount = 0;
-      this.connectedPlayers.forEach((ws, userId) => {
+      this.connectedPlayers.forEach((ws) => {
         if (ws.readyState === WebSocket.OPEN) {
           ws.send(message);
-          sentCount++;
-          log.debug(`Player list sent to user: ${userId}`);
-        } else {
-          log.debug(`Skipped sending to user ${userId} - connection not ready (state: ${ws.readyState})`);
         }
-      });
-
-      log.info(`Player list broadcast completed`, {
-        totalUsers: this.connectedPlayers.size,
-        sentTo: sentCount,
-        playerCount: players.length
       });
     } catch (error) {
       log.error('Error broadcasting player list:', error);
@@ -69,8 +55,6 @@ export class WebSocketBroadcastService {
    * Broadcast battle status changes to watchers
    */
   async broadcastBattleStatus(statusChange?: string): Promise<void> {
-    log.debug(`Broadcasting battle status`, { statusChange });
-    
     try {
       // Get current battle status
       const battle = await BattleService.getCurrentBattle();
@@ -105,30 +89,17 @@ export class WebSocketBroadcastService {
       });
 
       // Send to all status watchers
-      let watchersSentCount = 0;
-      this.statusWatchers.forEach((watcher, connectionId) => {
+      this.statusWatchers.forEach((watcher) => {
         if (watcher.ws.readyState === WebSocket.OPEN) {
           watcher.ws.send(message);
-          watchersSentCount++;
-          log.debug(`Battle status sent to watcher: ${connectionId}`);
         }
       });
 
       // Also send to all connected players
-      let playersSentCount = 0;
-      this.connectedPlayers.forEach((ws, userId) => {
+      this.connectedPlayers.forEach((ws) => {
         if (ws.readyState === WebSocket.OPEN) {
           ws.send(message);
-          playersSentCount++;
-          log.debug(`Battle status sent to player: ${userId}`);
         }
-      });
-
-      log.info(`Battle status broadcast completed`, {
-        statusWatchers: watchersSentCount,
-        players: playersSentCount,
-        statusChange,
-        battleStatus: battle?.status || 'no-battle'
       });
 
     } catch (error) {
@@ -142,13 +113,11 @@ export class WebSocketBroadcastService {
   sendToPlayer(userId: string, message: object): boolean {
     const ws = this.connectedPlayers.get(userId);
     if (!ws || ws.readyState !== WebSocket.OPEN) {
-      log.warn(`Cannot send message to ${userId}: connection not available`);
       return false;
     }
 
     try {
       ws.send(JSON.stringify(message));
-      log.debug(`Message sent to player ${userId}`, { type: (message as Record<string, unknown>).type });
       return true;
     } catch (error) {
       log.error(`Error sending message to player ${userId}:`, error);
@@ -168,17 +137,10 @@ export class WebSocketBroadcastService {
         try {
           ws.send(messageStr);
           sentCount++;
-          log.debug(`Broadcast message sent to player: ${userId}`);
         } catch (error) {
           log.error(`Error broadcasting to player ${userId}:`, error);
         }
       }
-    });
-
-    log.info(`Broadcast completed`, {
-      totalPlayers: this.connectedPlayers.size,
-      sentTo: sentCount,
-      messageType: (message as Record<string, unknown>).type
     });
 
     return sentCount;
@@ -188,16 +150,13 @@ export class WebSocketBroadcastService {
    * Get all players with their display names from Supabase
    */
   private async getAllPlayers(): Promise<Player[]> {
-    log.debug(`Getting all players`);
     const players: Player[] = [];
 
     if (this.connectedPlayers.size === 0) {
-      log.debug(`No connected players`);
       return players;
     }
 
     const userIds = Array.from(this.connectedPlayers.keys());
-    log.debug(`Connected user IDs:`, userIds);
 
     try {
       // Create Supabase client
@@ -206,23 +165,26 @@ export class WebSocketBroadcastService {
         process.env.SUPABASE_SERVICE_ROLE_KEY!
       );
 
-      // Fetch user profiles from Supabase
-      const { data: users, error } = await supabase
-        .from('profiles')
-        .select('id, display_name, full_name, email')
-        .in('id', userIds);
-
+      // Fetch user profiles from Supabase Auth
+      const { data: authUsers, error } = await supabase.auth.admin.listUsers();
+      
+      let users: Array<{ id: string; email?: string; user_metadata?: Record<string, unknown> }> = [];
       if (error) {
         log.error('Error fetching user profiles:', error);
         // Fall back to using user IDs as display names
+      } else {
+        // Filter to only the users we need
+        users = authUsers.users.filter(user => userIds.includes(user.id));
       }
 
       // Create user lookup map
-      const userLookup = new Map();
+      const userLookup = new Map<string, { displayName: string; email?: string }>();
       if (users) {
-        users.forEach((user: Record<string, unknown>) => {
+        users.forEach(user => {
+          const metadata = user.user_metadata || {};
+          const displayName = metadata.display_name || metadata.full_name || user.email || user.id;
           userLookup.set(user.id, {
-            displayName: user.display_name || user.full_name || user.email || user.id,
+            displayName: String(displayName),
             email: user.email
           });
         });
@@ -260,7 +222,6 @@ export class WebSocketBroadcastService {
       });
     }
 
-    log.debug(`Found ${players.length} connected players`);
     return players;
   }
 }

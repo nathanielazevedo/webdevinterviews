@@ -27,7 +27,6 @@ const main = async () => {
     // Start the server
     const port = process.env.PORT || 3001;
     server.listen(port, () => {
-      log.info(`Server running on port ${port}`);
     });
     
     // Start battle timing manager

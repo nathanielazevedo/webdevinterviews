@@ -52,9 +52,8 @@ export class WebSocketManager {
   };
 
   setupWebSocketServer(wss: WebSocketServer): void {
-    log.info('Setting up WebSocket server');
+    log.info('WebSocket server initialized');
     wss.on('connection', async (ws: WebSocket, request: IncomingMessage) => {
-      log.info('New WebSocket connection attempt from:', request.socket.remoteAddress);
       try {
         const url = new URL(request.url || '', 'http://localhost');
         const token = url.searchParams.get('token');

@@ -113,7 +113,6 @@ export class BattleTimingManager {
       }
     });
     
-    log.info(`Auto-start notification sent to ${this.connectedPlayers.size} connected users`);
   }
 
   private async broadcastBattleEnded(battle: Battle, results: BattleResult[]): Promise<void> {
@@ -134,6 +133,5 @@ export class BattleTimingManager {
       }
     });
     
-    log.info(`Auto-end notification sent to ${this.connectedPlayers.size} connected users`);
   }
 }

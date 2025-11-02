@@ -37,10 +37,8 @@ export async function authenticateToken(req: Request, res: Response, next: NextF
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
     
-    log.debug('Authenticating request', { hasToken: !!token });
 
     if (!token) {
-      log.warn('No token provided in request');
       return res.status(401).json({ error: 'Access token required' });
     }
 
@@ -48,7 +46,6 @@ export async function authenticateToken(req: Request, res: Response, next: NextF
     const { data: { user }, error } = await supabase.auth.getUser(token);
 
     if (error || !user) {
-      log.warn('Token verification failed', error);
       return res.status(403).json({ error: 'Invalid or expired token' });
     }
 
@@ -58,7 +55,6 @@ export async function authenticateToken(req: Request, res: Response, next: NextF
       email: user.email,
       ...user.user_metadata
     };
-    log.info('Token verified successfully', { userId: req.user.sub });
     next();
 
   } catch (error) {
@@ -75,7 +71,6 @@ export async function optionalAuth(req: Request, res: Response, next: NextFuncti
 
     if (!token) {
       // No token provided, continue without user
-      log.debug('No token provided, continuing without authentication');
       return next();
     }
 
@@ -83,7 +78,6 @@ export async function optionalAuth(req: Request, res: Response, next: NextFuncti
     const { data: { user }, error } = await supabase.auth.getUser(token);
 
     if (error || !user) {
-      log.warn('Optional token verification failed, continuing without auth', error);
       return next();
     }
 
@@ -92,7 +86,6 @@ export async function optionalAuth(req: Request, res: Response, next: NextFuncti
       email: user.email,
       ...user.user_metadata
     };
-    log.info('Optional token verified successfully', { userId: req.user.sub });
     next();
 
   } catch (error) {

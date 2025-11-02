@@ -28,7 +28,6 @@ export class WebSocketAuthService {
       const { data: { user }, error } = await supabaseClient.auth.getUser(token);
 
       if (error || !user) {
-        log.warn('WebSocket token verification failed', error);
         return null;
       }
       
@@ -51,7 +50,6 @@ export class WebSocketAuthService {
       const { data, error } = await supabaseAdmin.auth.admin.getUserById(userId);
       
       if (error || !data?.user) {
-        log.debug(`Could not fetch user data for ${userId}, using ID as fallback`);
         return userId;
       }
 
@@ -79,7 +77,6 @@ export class WebSocketAuthService {
         return null;
       }
 
-      log.debug('Retrieved users from Supabase auth', { userCount: users?.users?.length });
       return users;
     } catch (error) {
       log.error('Error in getAllUsers:', error);

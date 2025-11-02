@@ -1,17 +1,13 @@
 import { Router } from 'express';
 import { LocationService } from '../services/location.service.js';
-import { logger } from '../utils/logger.js';
 import { sendSuccessResponse, sendErrorResponse, asyncHandler } from '../utils/response.js';
 import { validateRequiredFields } from '../utils/validation.js';
 import { ENV, HTTP_STATUS } from '../utils/constants.js';
-
-const log = logger;
 
 export function createLocationRoutes() {
   const router = Router();
 
   router.get('/points', asyncHandler(async (req, res) => {
-    log.info('Fetching all location points');
 
     const points = await LocationService.getAllLocationPoints();
 

@@ -33,7 +33,6 @@ export class LocationService {
    */
   static async getAllLocationPoints(): Promise<LocationPoint[]> {
     try {
-      log.info('Fetching all location points');
 
       const points = await prisma.locationPoint.findMany({
         orderBy: {
@@ -41,7 +40,6 @@ export class LocationService {
         }
       });
 
-      log.info('Location points retrieved successfully', { count: points.length });
       return points;
     } catch (error) {
       log.error('Error fetching location points:', error);
@@ -57,7 +55,6 @@ export class LocationService {
       throw new Error('Geocoding service not configured - missing API key');
     }
 
-    log.info('Geocoding location', { location });
 
     const url = `https://api.ipgeolocation.io/v2/ipgeo?apiKey=${apiKey}&ip=${location}`;
     
@@ -71,7 +68,6 @@ export class LocationService {
       const data = await response.json();
 
       // Log the full response for debugging
-      log.info('Geocoding API response', { data });
 
       // Check if the API returned an error
       if (data.message || data.error) {
@@ -102,12 +98,10 @@ export class LocationService {
         ip: data.ip
       };
 
-      log.info('Location geocoded successfully', result);
 
       // Store in database (don't fail the request if this fails)
       try {
         await this.storeLocationPoint(result);
-        log.info('Location point stored/updated in database');
       } catch (dbError) {
         log.error('Failed to store location point in database:', dbError);
         // Continue without failing the request
