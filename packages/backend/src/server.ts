@@ -31,7 +31,6 @@ export function createServerWithWebSocket(app: Application): ServerComponents {
   // Initialize battle timing manager
   const battleTimingManager = new BattleTimingManager(
     wsManager.connectedPlayersMap,
-    wsManager.playerDataMap,
     wsManager.broadcastBattleStatus.bind(wsManager)
   );
 

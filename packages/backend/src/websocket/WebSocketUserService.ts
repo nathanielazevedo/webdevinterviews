@@ -1,13 +1,12 @@
 import { WebSocket } from 'ws';
 import { SupabaseClientService } from '../services/supabase-client.service.js';
 import { logger } from '../utils/logger.js';
-import type { Player, PlayerData } from '@webdevinterviews/shared';
+import type { Player } from '@webdevinterviews/shared';
 
 export class WebSocketUserService {
   
   constructor(
-    private connectedPlayers: Map<string, WebSocket>,
-    private playerData: Map<string, PlayerData>
+    private connectedPlayers: Map<string, WebSocket>
   ) {}
 
   /**

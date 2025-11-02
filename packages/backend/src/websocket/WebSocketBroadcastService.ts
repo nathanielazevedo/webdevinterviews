@@ -2,28 +2,18 @@ import { WebSocket } from 'ws';
 import { SupabaseClientService } from '../services/supabase-client.service.js';
 import { BattleService } from '../services/battle.service.js';
 import { logger } from '../utils/logger.js';
-import type { Player, PlayerData } from '@webdevinterviews/shared';
-
-// Backend-specific types
-interface StatusWatcher {
-  ws: WebSocket;
-}
+import type { Player } from '@webdevinterviews/shared';
+import { BattleParticipationService } from '../services/battle-participation.service.js';
 
 const log = logger;
 
 export class WebSocketBroadcastService {
   private connectedPlayers: Map<string, WebSocket>;
-  private playerData: Map<string, PlayerData>;
-  private statusWatchers: Map<string, StatusWatcher>;
 
   constructor(
-    connectedPlayers: Map<string, WebSocket>,
-    playerData: Map<string, PlayerData>,
-    statusWatchers: Map<string, StatusWatcher>
+    connectedPlayers: Map<string, WebSocket>
   ) {
     this.connectedPlayers = connectedPlayers;
-    this.playerData = playerData;
-    this.statusWatchers = statusWatchers;
   }
 
   /**
@@ -88,14 +78,7 @@ export class WebSocketBroadcastService {
         timestamp: new Date().toISOString()
       });
 
-      // Send to all status watchers
-      this.statusWatchers.forEach((watcher) => {
-        if (watcher.ws.readyState === WebSocket.OPEN) {
-          watcher.ws.send(message);
-        }
-      });
-
-      // Also send to all connected players
+      // Send to all connected players
       this.connectedPlayers.forEach((ws) => {
         if (ws.readyState === WebSocket.OPEN) {
           ws.send(message);
@@ -187,16 +170,25 @@ export class WebSocketBroadcastService {
         });
       }
 
+      // Get current battle and participation data for connected users
+      const currentBattle = await BattleService.getCurrentBattle();
+      let participationMap = new Map();
+      
+      if (currentBattle) {
+        const participationData = await BattleParticipationService.getBattleParticipants(currentBattle.id) as Array<{ user_id: string; tests_passed: number; joined_at: string }>;
+        participationMap = new Map(participationData.map(p => [p.user_id, p]));
+      }
+
       // Build players array
       this.connectedPlayers.forEach((ws, userId) => {
-        const data = this.playerData.get(userId);
         const userInfo = userLookup.get(userId);
+        const participation = participationMap.get(userId);
         
         const player: Player = {
           userId,
           username: userInfo?.displayName || userId, // Use display name or fallback to userId
-          testsPassed: data?.testsPassed || 0,
-          joinedAt: data?.joinedAt || new Date().toISOString(),
+          testsPassed: participation?.tests_passed || 0,
+          joinedAt: participation?.joined_at || new Date().toISOString(),
           isConnected: ws.readyState === WebSocket.OPEN
         };
         players.push(player);
@@ -207,12 +199,11 @@ export class WebSocketBroadcastService {
       
       // Fallback: create players with basic info
       this.connectedPlayers.forEach((ws, userId) => {
-        const data = this.playerData.get(userId);
         const player: Player = {
           userId,
           username: userId, // Use userId as fallback
-          testsPassed: data?.testsPassed || 0,
-          joinedAt: data?.joinedAt || new Date().toISOString(),
+          testsPassed: 0, // Default when no participation data available
+          joinedAt: new Date().toISOString(), // Default to now
           isConnected: ws.readyState === WebSocket.OPEN
         };
         players.push(player);

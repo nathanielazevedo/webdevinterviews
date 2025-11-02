@@ -2,7 +2,7 @@ import { prisma, dbLog } from '../config/database.js';
 import { QuestionsService } from './questions.service.js';
 import { BattleQueryService } from './battle-query.service.js';
 import { BattleParticipationService } from './battle-participation.service.js';
-import type { Battle, BattleParticipant, BattleResult } from '@webdevinterviews/shared';
+import type { Battle, BattleResult } from '@webdevinterviews/shared';
 import type { BattleCreateOptions } from '../types/battle.service.types.js';
 import { 
   BATTLE_CONFIG, 
@@ -47,7 +47,6 @@ export class BattleCoreService {
   static async createBattle(
     roomId: string, 
     adminUserId: string, 
-    participants: BattleParticipant[] = [], 
     options: BattleCreateOptions = {}
   ): Promise<Battle> {
     const { scheduledStartTime, durationMinutes = BATTLE_CONFIG.DEFAULT_DURATION_MINUTES } = options;
@@ -56,7 +55,6 @@ export class BattleCoreService {
       const battleData = {
         status: 'waiting' as const,
         admin_user_id: adminUserId,
-        participants: JSON.stringify(participants),
         duration_minutes: durationMinutes,
         ...(scheduledStartTime && { scheduled_start_time: new Date(scheduledStartTime) })
       };
@@ -227,7 +225,6 @@ export class BattleCoreService {
         data: {
           status: 'completed',
           completed_at: new Date(),
-          results: JSON.stringify(results),
           ended_by: endedBy
         },
         include: {

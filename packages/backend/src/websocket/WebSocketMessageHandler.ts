@@ -2,15 +2,14 @@ import { WebSocket } from 'ws';
 import { BattleService } from '../services/battle.service.js';
 import { BattleParticipationService } from '../services/battle-participation.service.js';
 import { logger } from '../utils/logger.js';
-import type { WebSocketMessage, PlayerData, BattleResult } from '@webdevinterviews/shared';
+import type { WebSocketMessage, BattleResult } from '@webdevinterviews/shared';
 
 const log = logger;
 
 export class WebSocketMessageHandler {
   
   constructor(
-    private connectedPlayers: Map<string, WebSocket>,
-    private playerData: Map<string, PlayerData>
+    private connectedPlayers: Map<string, WebSocket>
   ) {}
 
   /**
@@ -24,14 +23,6 @@ export class WebSocketMessageHandler {
     _message: WebSocketMessage
   ): Promise<void> {
     try {
-
-      // Initialize player data if not exists
-      if (!this.playerData.has(userId)) {
-        this.playerData.set(userId, {
-          testsPassed: 0,
-          joinedAt: new Date().toISOString()
-        });
-      }
 
       // Add participant to current battle
       try {
@@ -156,14 +147,27 @@ export class WebSocketMessageHandler {
       }
 
       // Collect results from connected players
+      // Get current battle and participants from database
+      const currentBattle = await BattleService.getCurrentBattle();
+      if (!currentBattle) {
+        ws.send(JSON.stringify({
+          type: 'error',
+          message: 'No current battle found'
+        }));
+        return;
+      }
+
+      const participationData = await BattleParticipationService.getBattleParticipants(currentBattle.id) as Array<{ user_id: string; tests_passed: number }>;
+      
       const results: BattleResult[] = [];
       let placement = 1;
       
-      for (const [playerId, playerData] of this.playerData.entries()) {
-        if (this.connectedPlayers.has(playerId)) {
+      // Build results from connected participants
+      for (const participant of participationData) {
+        if (this.connectedPlayers.has(participant.user_id)) {
           results.push({
-            userId: playerId,
-            testsPassed: playerData.testsPassed || 0,
+            userId: participant.user_id,
+            testsPassed: participant.tests_passed || 0,
             completionTime: 0, // Will be calculated elsewhere
             placement
           });
@@ -248,17 +252,6 @@ export class WebSocketMessageHandler {
           message: 'Invalid test results format'
         }));
         return;
-      }
-
-      // Update player data directly in this service
-      const playerData = this.playerData.get(userId);
-      if (playerData) {
-        playerData.testsPassed = testsPassed;
-      } else {
-        this.playerData.set(userId, { 
-          testsPassed,
-          joinedAt: new Date().toISOString()
-        });
       }
 
       // Update battle participation record in database

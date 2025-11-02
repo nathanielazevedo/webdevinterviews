@@ -12,7 +12,7 @@ import { authenticateToken, optionalAuth } from './middleware/auth.js';
 /**
  * Create and configure the Express application
  */
-export function createApp(connectedPlayersMap: Map<string, WebSocket>): express.Application {
+export function createApp(_connectedPlayersMap: Map<string, WebSocket>): express.Application {
   const app = express();
 
   // Setup middleware
@@ -26,7 +26,7 @@ export function createApp(connectedPlayersMap: Map<string, WebSocket>): express.
   });
 
   // Setup route modules
-  app.use('/battle', authenticateToken, createBattleRoutes(connectedPlayersMap));
+  app.use('/battle', authenticateToken, createBattleRoutes());
   app.use('/questions', optionalAuth, createQuestionsRoutes());
   app.use('/location', createLocationRoutes());
 

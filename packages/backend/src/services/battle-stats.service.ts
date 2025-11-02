@@ -1,5 +1,5 @@
 import { prisma, dbLog } from '../config/database.js';
-import type { Battle, BattleParticipant } from '@webdevinterviews/shared';
+import type { Battle } from '@webdevinterviews/shared';
 import type { UserStats } from '../types/battle.service.types.js';
 import { TIME_CONSTANTS } from '../utils/constants.js';
 
@@ -12,19 +12,17 @@ export class BattleStatsService {
     dbLog.info('Fetching user battle history', { userId, limit });
     
     try {
-      const battles = await prisma.battle.findMany({
+      // Get battles where user participated using the BattleParticipation table
+      const userBattles = await prisma.battle.findMany({
         where: {
-          // Note: This assumes participants is stored as JSON and contains userId
-          // In a real implementation, you might want to normalize this relationship
+          participations: {
+            some: {
+              user_id: userId
+            }
+          }
         },
         orderBy: { created_at: 'desc' },
         take: limit
-      });
-
-      // Filter battles where user is a participant (since JSON filtering is complex)
-      const userBattles = battles.filter(battle => {
-        const participants = (battle.participants as unknown as BattleParticipant[]) || [];
-        return participants.some(p => p.userId === userId);
       });
 
       dbLog.info('User battle history fetched successfully', { 

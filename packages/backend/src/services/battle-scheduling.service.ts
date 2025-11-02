@@ -141,7 +141,6 @@ export class BattleSchedulingService {
         data: {
           status: 'completed',
           completed_at: new Date(),
-          results: JSON.stringify(finalResults),
           ended_by: 'timeout'
         }
       });

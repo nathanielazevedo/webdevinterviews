@@ -1,7 +1,7 @@
 import { WebSocket } from 'ws';
 import { BattleService } from '../services/battle.service.js';
 import { logger } from '../utils/logger.js';
-import type { BattleResult, PlayerData } from '@webdevinterviews/shared';
+import type { BattleResult } from '@webdevinterviews/shared';
 import type { Battle } from '@webdevinterviews/shared';
 
 const log = logger;
@@ -9,16 +9,13 @@ const log = logger;
 export class BattleTimingManager {
   private checkInterval: NodeJS.Timeout | null = null;
   private connectedPlayers: Map<string, WebSocket>;
-  private playerData: Map<string, PlayerData>;
   private broadcastBattleStatus: (event?: string) => Promise<void>;
 
   constructor(
     connectedPlayers: Map<string, WebSocket>,
-    playerData: Map<string, PlayerData>,
     broadcastBattleStatus: (event?: string) => Promise<void>
   ) {
     this.connectedPlayers = connectedPlayers;
-    this.playerData = playerData;
     this.broadcastBattleStatus = broadcastBattleStatus;
   }
 
@@ -63,7 +60,7 @@ export class BattleTimingManager {
       
       if (battleToEnd) {
         // Collect final results from active players
-        const finalResults = this.collectFinalResults();
+        const finalResults = await this.collectFinalResults();
         const endedBattle = await BattleService.autoEndBattle(battleToEnd.id, finalResults);
         
         if (endedBattle) {
@@ -78,18 +75,33 @@ export class BattleTimingManager {
     }
   }
 
-  private collectFinalResults(): BattleResult[] {
+  private async collectFinalResults(): Promise<BattleResult[]> {
     const results: BattleResult[] = [];
-    this.connectedPlayers.forEach((ws, userId) => {
-      const data = this.playerData.get(userId);
-      if (data) {
-        results.push({
-          userId,
-          testsPassed: data.testsPassed,
-          completionTime: null // No completion time for auto-ended battles
-        });
+    
+    try {
+      // Get current battle and participants from database
+      const currentBattle = await BattleService.getCurrentBattle();
+      if (!currentBattle) {
+        return results;
       }
-    });
+
+      // Import BattleParticipationService
+      const { BattleParticipationService } = await import('../services/battle-participation.service.js');
+      const participationData = await BattleParticipationService.getBattleParticipants(currentBattle.id) as Array<{ user_id: string; tests_passed: number }>;
+      
+      // Build results from connected participants
+      for (const participant of participationData) {
+        if (this.connectedPlayers.has(participant.user_id)) {
+          results.push({
+            userId: participant.user_id,
+            testsPassed: participant.tests_passed,
+            completionTime: null // No completion time for auto-ended battles
+          });
+        }
+      }
+    } catch (error) {
+      log.error('Error collecting final results:', error);
+    }
 
     // Sort by tests passed (descending) for placement
     results.sort((a, b) => b.testsPassed - a.testsPassed);
