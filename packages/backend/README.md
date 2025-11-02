@@ -1,6 +1,6 @@
 # WebDev Interviews Backend
 
-Real-time coding battle WebSocket and REST API server.
+Real-time coding battle WebSocket and REST API server. 
 
 ## Structure
 
