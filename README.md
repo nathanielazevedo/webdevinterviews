@@ -1,10 +1,10 @@
-# WEB DEV INTERVIEWS
+# Nathaniel Azevedo - Portfolio Website
 
-Welcome to Web Dev Interviews, a full-stack application designed for web development interviews and coding practice.
+Welcome to my portfolio website! This is a modern full-stack application showcasing my software engineering skills through a real-time coding battle platform.
 
 ## Overview
 
-Web Dev Interviews is a modern full-stack application built with cutting-edge web technologies. It features real-time interactions, user authentication, and a comprehensive database system to demonstrate advanced web development skills.
+This portfolio demonstrates advanced web development capabilities through an interactive coding platform. It features real-time multiplayer battles, user authentication, geolocation services, and comprehensive database management - all built with modern technologies and best practices.
 
 ## System Design
 
@@ -31,26 +31,32 @@ For a detailed list of the system design, please check [System Design Documentat
 - **GitHub Actions for CI/CD:** Automated workflows for continuous integration and deployment
 - **TypeScript:** Static type checking across the entire application
 
-# Features
+# Portfolio Features
 
-Web Dev Interviews showcases modern full-stack development practices:
+This application showcases modern full-stack development practices and technical skills:
 
-## Real-time Communication
-- **WebSocket Integration:** Live updates and real-time interactions between users
+## Real-time Multiplayer Platform
+- **WebSocket Integration:** Live coding battles with real-time participant updates
+- **Battle Management:** Complete battle lifecycle from scheduling to completion
+- **Geolocation Services:** IP-based location matching for battle participants
 - **Event-driven Architecture:** Responsive user experience with instant feedback
 
 ## Authentication & Security
-- **Supabase Auth:** Secure user registration, login, and session management
+- **Supabase Auth:** JWT-based authentication with secure session management
 - **Protected Routes:** Role-based access control throughout the application
+- **Middleware Integration:** Custom authentication middleware for API endpoints
 
-## Database Management
-- **PostgreSQL with Supabase:** Robust relational database with real-time subscriptions
-- **Data Migrations:** Structured database schema evolution and version control
+## Database Architecture
+- **PostgreSQL with Prisma:** Type-safe database operations with comprehensive schema
+- **Real-time Subscriptions:** Live data updates via Supabase real-time features
+- **Migration System:** Structured database evolution with Prisma migrations
+- **Data Seeding:** Automated database setup with coding questions and sample data
 
-## Development Excellence
-- **TypeScript:** Full type safety across frontend and backend
-- **Monorepo Architecture:** Organized codebase with shared packages and utilities
-- **Comprehensive Testing:** Unit and integration tests ensuring code reliability
+## Full-Stack Development Excellence
+- **TypeScript:** End-to-end type safety across frontend, backend, and shared packages
+- **Monorepo Architecture:** Organized codebase with shared types and utilities
+- **Modern Build System:** Vite for frontend, TypeScript compilation for backend
+- **Deployment Ready:** Railway and Vercel deployment configurations
 
 ## WebSocket Client Generation
 
@@ -69,46 +75,64 @@ Web Dev Interviews showcases modern full-stack development practices:
 ### 🚀 Usage Example
 
 ```typescript
-import { createWebSocketClient } from '@webdevinterviews/shared';
+import { useBattleContext } from './contexts/BattleContext';
+import { api } from './api/client';
 
-// Create and connect
-const client = createWebSocketClient({ url: 'ws://localhost:3001' });
+// Real-time battle participation
+const { battle, participants, isAdmin } = useBattleContext();
 
-client.on('message', (message) => {
-  switch (message.type) {
-    case 'battle-status':
-      console.log('Battle status:', message.status);
-      break;
-    case 'players-list':
-      console.log('Players:', message.players.length);
-      break;
-  }
+// Type-safe API calls with standardized responses
+const questions = await api.getAllQuestions();
+const battleHistory = await api.getBattleHistory();
+
+// WebSocket integration for live updates
+client.on('battle:update', (battleState) => {
+  // Real-time battle state synchronization
+  updateBattleUI(battleState);
 });
-
-await client.connect();
-
-// Use convenience methods
-client.join('user123');
-client.sendTestResults(8, 10);
 ```
 
-### 📋 Available Commands
+### 📋 Development Commands
 
 ```bash
-# Serve WebSocket documentation
+# Root level - build entire project
+./build.sh
+
+# Frontend development
+cd packages/frontend
+npm run dev
+
+# Backend development  
 cd packages/backend
-npm run docs:websocket:serve
+npm run dev
+npm run db:migrate    # Run database migrations
+npm run db:studio     # Open Prisma Studio
+
+# Shared package
+cd shared
+npm run build         # Compile TypeScript types
 ```
 
-### 🎯 Benefits
+### 🎯 Technical Highlights
 
-- **Type Safety**: Full TypeScript support for all WebSocket messages
-- **Convenience Methods**: Pre-built methods for each operation
-- **Reconnection**: Built-in reconnection and error handling
-- **Documentation**: Complete AsyncAPI specification
+- **Type Safety**: Comprehensive TypeScript implementation with shared types
+- **Real-time Features**: WebSocket-powered live battles and updates  
+- **Modern Architecture**: Monorepo structure with clean separation of concerns
+- **Database Design**: Normalized PostgreSQL schema with Prisma ORM
+- **Authentication**: Secure JWT-based auth with Supabase integration
+- **Deployment**: Production-ready with Railway (backend) and Vercel (frontend)
 
-The WebSocket client provides a robust, type-safe interface for real-time battle functionality!
+## About This Portfolio
 
-Thank you for checking out my code.
+This project demonstrates my ability to build complex, real-time applications using modern web technologies. It showcases skills in:
 
-**Happy Coding!**
+- **Full-Stack Development**: Complete application from database to UI
+- **Real-time Systems**: WebSocket integration and event-driven architecture  
+- **Database Design**: Normalized schemas and efficient querying
+- **Authentication**: Secure user management and session handling
+- **DevOps**: Automated builds, deployments, and CI/CD workflows
+- **Code Quality**: TypeScript, ESLint, and architectural best practices
+
+Thank you for exploring my work!
+
+**— Nathaniel Azevedo**

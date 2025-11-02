@@ -6,10 +6,9 @@ set -e
 echo "Installing root dependencies..."
 npm install
 
-echo "Building shared package..."
+echo "Installing shared package dependencies..."
 cd shared
 npm install
-npm run build
 cd ..
 
 echo "Building backend package..."
