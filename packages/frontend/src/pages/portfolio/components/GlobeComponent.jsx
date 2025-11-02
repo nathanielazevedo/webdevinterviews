@@ -24,7 +24,6 @@ const GlobeComponent = () => {
 
         // Fetch all stored location points
         const pointsResponse = await api.getLocationPoints();
-        console.log(pointsResponse);
         setPoints(pointsResponse.data.points || []);
       } catch {
         // Fallback to empty points array

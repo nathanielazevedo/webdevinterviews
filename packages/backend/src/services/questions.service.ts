@@ -1,9 +1,22 @@
 import { prisma } from '../config/database.js';
 import type { Question } from '@webdevinterviews/shared';
-import { LEETCODE_75_QUESTIONS } from '../data/questions.data.js';
+import { ARRAYS_STRINGS_QUESTIONS } from '../data/arrays_strings.js';
+import { TWO_POINTERS_QUESTIONS } from '../data/two_pointers.js';
+import { SLIDING_WINDOW_QUESTIONS } from '../data/sliding_window.js';
+import { PREFIX_SUM_QUESTIONS } from '../data/prefix_sum.js';
+import { HASHMAP_SET_QUESTIONS } from '../data/hashmap_set.js';
 import { logger } from '../utils/logger.js';
 
 const log = logger;
+
+// Combine all question categories into one array
+const ALL_QUESTIONS = [
+  ...ARRAYS_STRINGS_QUESTIONS,
+  ...TWO_POINTERS_QUESTIONS,
+  ...SLIDING_WINDOW_QUESTIONS,
+  ...PREFIX_SUM_QUESTIONS,
+  ...HASHMAP_SET_QUESTIONS
+];
 
 export class QuestionsService {
   
@@ -22,7 +35,7 @@ export class QuestionsService {
 
       // Insert all questions with proper JSON field handling
       await prisma.question.createMany({
-        data: LEETCODE_75_QUESTIONS.map(question => ({
+        data: ALL_QUESTIONS.map(question => ({
           ...question,
           examples: question.examples || undefined,
           hints: question.hints || undefined,
@@ -33,7 +46,7 @@ export class QuestionsService {
       // Get the inserted questions
       const questions = await prisma.question.findMany({
         orderBy: { created_at: 'desc' },
-        take: LEETCODE_75_QUESTIONS.length
+        take: ALL_QUESTIONS.length
       });
 
       log.info('Successfully seeded questions', { count: questions.length });
