@@ -201,4 +201,84 @@ export class WebSocketMessageHandler {
       }
     }
   }
+
+  /**
+   * Central message router - delegates to specific handlers based on message type
+   */
+  async handleMessage(message: WebSocketMessage, ws: WebSocket, userId: string): Promise<void> {
+    try {
+      if (message.type === 'join') {
+        log.info(`User ${userId} sent join message`);
+        // Note: handleJoinMessage has different signature, may need to adapt
+        await this.handleJoinMessage(ws, '', userId, '', message);
+        log.info(`Join message handling completed for user: ${userId}`);
+      } else if (message.type === 'end-battle') {
+        await this.handleEndBattleMessage(ws, userId, message);
+      } else if (message.type === 'start-battle') {
+        await this.handleStartBattleMessage(ws, userId, message);
+      } else if (message.type === 'test-results') {
+        await this.handleTestResultsMessage(message, ws, userId);
+      } else {
+        log.warn(`Unknown message type from ${userId}: ${message.type}`);
+      }
+    } catch (error) {
+      log.error(`Error handling ${message.type} message from ${userId}:`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Handle test results submission from client
+   */
+  async handleTestResultsMessage(message: WebSocketMessage, ws: WebSocket, userId: string): Promise<void> {
+    if (!userId) {
+      ws.send(JSON.stringify({
+        type: 'error',
+        message: 'User not authenticated'
+      }));
+      return;
+    }
+
+    try {
+      const { testsPassed } = message;
+      
+      if (typeof testsPassed !== 'number') {
+        ws.send(JSON.stringify({
+          type: 'error',
+          message: 'Invalid test results format'
+        }));
+        return;
+      }
+
+      // Update player data directly in this service
+      const playerData = this.playerData.get(userId);
+      if (playerData) {
+        playerData.testsPassed = testsPassed;
+      } else {
+        this.playerData.set(userId, { 
+          testsPassed,
+          joinedAt: new Date().toISOString()
+        });
+      }
+
+      // Update battle participation record in database
+      try {
+        await BattleParticipationService.updateParticipation(userId, testsPassed);
+      } catch (dbError) {
+        log.error(`Error updating battle participation for user ${userId}:`, dbError);
+        // Continue with broadcasting even if DB update fails
+      }
+
+      log.info(`Updated test results for user ${userId}: ${testsPassed} tests passed`);
+
+      // TODO: Need to implement broadcasting player list - requires broadcast service injection
+
+    } catch (error) {
+      log.error(`Error handling test results for user ${userId}:`, error);
+      ws.send(JSON.stringify({
+        type: 'error',
+        message: 'Failed to update test results'
+      }));
+    }
+  }
 }

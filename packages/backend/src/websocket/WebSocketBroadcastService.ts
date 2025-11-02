@@ -1,5 +1,5 @@
 import { WebSocket } from 'ws';
-import { createClient } from '@supabase/supabase-js';
+import { SupabaseClientService } from '../services/supabase-client.service.js';
 import { BattleService } from '../services/battle.service.js';
 import { logger } from '../utils/logger.js';
 import type { Player, PlayerData } from '@webdevinterviews/shared';
@@ -159,11 +159,8 @@ export class WebSocketBroadcastService {
     const userIds = Array.from(this.connectedPlayers.keys());
 
     try {
-      // Create Supabase client
-      const supabase = createClient(
-        process.env.SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!
-      );
+      // Get Supabase client
+      const supabase = SupabaseClientService.getAdminClient();
 
       // Fetch user profiles from Supabase Auth
       const { data: authUsers, error } = await supabase.auth.admin.listUsers();

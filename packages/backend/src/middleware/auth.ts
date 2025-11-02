@@ -1,22 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import { createClient } from '@supabase/supabase-js';
+import { SupabaseClientService } from '../services/supabase-client.service.js';
 import { logger } from '../utils/logger.js';
 
 const log = logger;
 
-// Initialize Supabase client for auth verification
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY!;
-
-// Validate required environment variables
-if (!supabaseUrl) {
-  throw new Error('SUPABASE_URL environment variable is required');
-}
-if (!supabaseAnonKey) {
-  throw new Error('SUPABASE_ANON_KEY environment variable is required');
-}
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Get Supabase client for auth verification
+const supabase = SupabaseClientService.getAnonClient();
 
 // Extend Request interface to include user
 declare global {

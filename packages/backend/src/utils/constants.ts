@@ -43,5 +43,8 @@ export const ENV = {
   PORT: process.env.PORT || '3001',
   FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:5173',
   GEO_KEY: process.env.GEO_KEY,
-  NODE_ENV: process.env.NODE_ENV || 'development'
+  NODE_ENV: process.env.NODE_ENV || 'development',
+  SUPABASE_URL: process.env.SUPABASE_URL,
+  SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
+  SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY
 } as const;

@@ -1,16 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
+import { SupabaseClientService } from '../services/supabase-client.service.js';
 import { logger } from '../utils/logger.js';
 
 const log = logger;
 
-// Supabase JWT verification setup
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
-// Create singleton Supabase clients
-const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+// Get singleton Supabase clients
+const supabaseClient = SupabaseClientService.getAnonClient();
+const supabaseAdmin = SupabaseClientService.getAdminClient();
 
 export interface AuthenticatedUser {
   sub: string;
