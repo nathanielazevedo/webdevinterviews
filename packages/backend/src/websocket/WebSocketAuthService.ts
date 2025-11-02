@@ -1,0 +1,89 @@
+import { createClient } from '@supabase/supabase-js';
+import { logger } from '../utils/logger.js';
+
+const log = logger;
+
+// Supabase JWT verification setup
+const supabaseUrl = process.env.SUPABASE_URL!;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+// Create singleton Supabase clients
+const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+
+export interface AuthenticatedUser {
+  sub: string;
+  email?: string;
+  [key: string]: unknown;
+}
+
+export class WebSocketAuthService {
+  
+  /**
+   * Verify WebSocket JWT token
+   */
+  static async verifyToken(token: string): Promise<AuthenticatedUser | null> {
+    try {
+      const { data: { user }, error } = await supabaseClient.auth.getUser(token);
+
+      if (error || !user) {
+        log.warn('WebSocket token verification failed', error);
+        return null;
+      }
+      
+      return {
+        sub: user.id,
+        email: user.email,
+        ...user.user_metadata
+      };
+    } catch (error) {
+      log.error('Error verifying WebSocket token:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Get display name for a user
+   */
+  static async getDisplayName(userId: string): Promise<string> {
+    try {
+      const { data, error } = await supabaseAdmin.auth.admin.getUserById(userId);
+      
+      if (error || !data?.user) {
+        log.debug(`Could not fetch user data for ${userId}, using ID as fallback`);
+        return userId;
+      }
+
+      const user = data.user;
+      return user.user_metadata?.display_name || 
+             user.user_metadata?.username || 
+             user.user_metadata?.name || 
+             user.email?.split('@')[0] || 
+             userId;
+    } catch (error) {
+      log.error(`Error fetching display name for user ${userId}:`, error);
+      return userId;
+    }
+  }
+
+  /**
+   * Get all users from Supabase (for player list)
+   */
+  static async getAllUsers(): Promise<{ users: unknown[] } | null> {
+    try {
+      const { data: users, error } = await supabaseAdmin.auth.admin.listUsers();
+      
+      if (error) {
+        log.error('Error fetching users from auth:', error);
+        return null;
+      }
+
+      log.debug('Retrieved users from Supabase auth', { userCount: users?.users?.length });
+      return users;
+    } catch (error) {
+      log.error('Error in getAllUsers:', error);
+      return null;
+    }
+  }
+}

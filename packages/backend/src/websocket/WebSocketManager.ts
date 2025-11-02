@@ -3,6 +3,13 @@ import { IncomingMessage } from 'http';
 import { URL } from 'url';
 import { createClient } from '@supabase/supabase-js';
 import { BattleService } from '../services/battle.service.js';
+import { QuestionsService } from '../services/questions.service.js';
+import { BattleParticipationService } from '../services/battle-participation.service.js';
+import { WebSocketAuthService } from './WebSocketAuthService.js';
+import { WebSocketMessageHandler } from './WebSocketMessageHandler.js';
+import { WebSocketConnectionService } from './WebSocketConnectionService.js';
+import { WebSocketBroadcastService } from './WebSocketBroadcastService.js';
+import { WebSocketStatusService } from './WebSocketStatusService.js';
 import { logger } from '../utils/logger.js';
 import type { Player, WebSocketMessage, PlayerData, BattleResult } from '@webdevinterviews/shared';
 
@@ -10,53 +17,39 @@ import type { Player, WebSocketMessage, PlayerData, BattleResult } from '@webdev
 interface StatusWatcher {
   ws: WebSocket;
 }
-import { QuestionsService } from '../services/questions.service.js';
-import { BattleParticipationService } from '../services/battle-participation.service.js';
 
 const log = logger;
 
-// Supabase JWT verification setup
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY!;
 
-// Create Supabase client for token verification
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-async function verifyWebSocketToken(token: string): Promise<{ sub: string; email?: string; [key: string]: unknown } | null> {
-  try {
-    // Use Supabase client to verify the JWT token
-    const { data: { user }, error } = await supabase.auth.getUser(token);
-
-    if (error || !user) {
-      log.warn('WebSocket token verification failed', error);
-      return null;
-    }
-    return {
-      sub: user.id,
-      email: user.email,
-      ...user.user_metadata
-    };
-  } catch (error) {
-    log.error('Error verifying WebSocket token:', error);
-    return null;
-  }
-}
 
 export class WebSocketManager {
   private connectedPlayers: Map<string, WebSocket>;
   private playerData: Map<string, PlayerData>;
   private statusWatchers: Map<string, StatusWatcher>;
+  private connectionService: WebSocketConnectionService;
+  private broadcastService: WebSocketBroadcastService;
+  private statusService: WebSocketStatusService;
+  private messageHandler: WebSocketMessageHandler;
 
   constructor() {
     this.connectedPlayers = new Map();
     this.playerData = new Map();
     this.statusWatchers = new Map();
+    this.connectionService = new WebSocketConnectionService(this.connectedPlayers, this.playerData, this.statusWatchers);
+    this.broadcastService = new WebSocketBroadcastService(this.connectedPlayers, this.playerData, this.statusWatchers);
+    this.statusService = new WebSocketStatusService(this.statusWatchers);
+    this.messageHandler = new WebSocketMessageHandler(this.connectedPlayers, this.playerData);
   }
 
   // Public getters for external access
   get connectedPlayersMap() { return this.connectedPlayers; }
   get playerDataMap() { return this.playerData; }
   get statusWatchersMap() { return this.statusWatchers; }
+
+  // Public method for external battle status broadcasting
+  broadcastBattleStatus = (statusChange?: string) => {
+    return this.broadcastService.broadcastBattleStatus(statusChange);
+  };
 
   setupWebSocketServer(wss: WebSocketServer): void {
     log.info('Setting up WebSocket server');
@@ -73,7 +66,7 @@ export class WebSocketManager {
         }
 
         // Verify the JWT token
-        const user = await verifyWebSocketToken(token);
+        const user = await WebSocketAuthService.verifyToken(token);
         if (!user) {
           log.warn('WebSocket connection rejected: invalid token');
           ws.close(1008, 'Invalid authentication token');
@@ -149,17 +142,8 @@ export class WebSocketManager {
     const userId = authenticatedUserId;
     
     try {
-      this.connectedPlayers.set(userId, ws);
-      
-      if (!this.playerData.has(userId)) {
-        this.playerData.set(userId, {
-          testsPassed: 0,
-          joinedAt: new Date().toISOString()
-        });
-      } else {
-        // Player data already exists, just log
-        log.info(`Updated WebSocket connection for existing user: ${userId}`);
-      }
+      // Use connection service to handle player connection
+      this.connectionService.addPlayerConnection(userId, ws);
       
       log.info(`User ${userId} successfully joined battle`);
       
@@ -203,7 +187,7 @@ export class WebSocketManager {
       
       // Broadcast updated player list to all users (moved outside battle check)
       try {
-        await this.broadcastPlayerList();
+        await this.broadcastService.broadcastPlayerList();
         log.info(`Player list broadcast completed for user ${userId}`);
       } catch (broadcastError) {
         log.error('Error broadcasting player list on join:', broadcastError);
@@ -211,7 +195,7 @@ export class WebSocketManager {
       
       // Broadcast battle status change to watchers (new player joined)
       try {
-        await this.broadcastBattleStatus('player-joined');
+        await this.broadcastService.broadcastBattleStatus('player-joined');
         log.info(`Battle status broadcast completed for user ${userId}`);
       } catch (statusError) {
         log.error('Error broadcasting battle status on player join:', statusError);
@@ -303,7 +287,7 @@ export class WebSocketManager {
       }
 
       // Broadcast updated battle status
-      this.broadcastBattleStatus('battle-ended');
+      this.broadcastService.broadcastBattleStatus('battle-ended');
 
     } catch (error) {
       log.error(`Error ending battle by admin ${userId}:`, error);
@@ -395,7 +379,7 @@ export class WebSocketManager {
       }
 
       // Broadcast updated battle status
-      this.broadcastBattleStatus('battle-started');
+      this.broadcastService.broadcastBattleStatus('battle-started');
 
     } catch (error) {
       log.error(`Error starting battle by admin ${userId}:`, error);
@@ -430,16 +414,8 @@ export class WebSocketManager {
         return;
       }
 
-      // Update player data in memory
-      const existingData = this.playerData.get(userId) || {
-        testsPassed: 0,
-        joinedAt: new Date().toISOString()
-      };
-
-      this.playerData.set(userId, {
-        ...existingData,
-        testsPassed
-      });
+      // Update player data using connection service
+      this.connectionService.updatePlayerTestResults(userId, testsPassed);
 
       // Update battle participation record in database
       try {
@@ -452,7 +428,7 @@ export class WebSocketManager {
       log.info(`Updated test results for user ${userId}: ${testsPassed} tests passed`);
 
       // Broadcast updated player list
-      await this.broadcastPlayerList();
+      await this.broadcastService.broadcastPlayerList();
 
     } catch (error) {
       log.error(`Error handling test results for user ${userId}:`, error);
@@ -464,14 +440,9 @@ export class WebSocketManager {
   }
 
   private handleDisconnection(userId: string | null, connectionId: string): void {
-    log.info(`WebSocket connection closed`, {
-      userId: userId || 'unknown',
-      connectionId
-    });
-    
     if (userId) {
-      this.connectedPlayers.delete(userId);
-      log.info(`User ${userId} removed from battle`);
+      // Use connection service to handle disconnection
+      this.connectionService.handleDisconnection(userId, connectionId);
       
       // Log with display name
       this.getDisplayName(userId).then(displayName => {
@@ -483,20 +454,20 @@ export class WebSocketManager {
       if (this.connectedPlayers.size > 0) {
         log.info(`Battle still has ${this.connectedPlayers.size} users remaining`);
         // Broadcast updated player list when someone leaves
-        this.broadcastPlayerList().catch((err: Error) => 
+        this.broadcastService.broadcastPlayerList().catch((err: Error) => 
           log.error('Error broadcasting player list on disconnect:', err)
         );
         // Broadcast battle status change to watchers (player left)
-        this.broadcastBattleStatus('player-left').catch((err: Error) => 
+        this.broadcastService.broadcastBattleStatus('player-left').catch((err: Error) => 
           log.error('Error broadcasting battle status on player leave:', err)
         );
       } else {
         log.info(`Battle is now empty - no remaining users`);
       }
+    } else {
+      // Just handle status watcher disconnection
+      this.statusService.removeStatusWatcher(connectionId);
     }
-    
-    // Clean up status watchers
-    this.statusWatchers.delete(connectionId);
   }
 
   // Helper function to get display name for a user
@@ -544,7 +515,7 @@ export class WebSocketManager {
 
       // Get user metadata from auth.users
       const { data: users, error } = await supabase.auth.admin.listUsers();
-      console.log('All users dog', users.users);
+      log.debug('Retrieved users from Supabase auth', { userCount: users?.users?.length });
       if (error) {
         log.error('Error fetching users from auth:', error);
         // Fall back to user IDs without usernames
@@ -628,101 +599,9 @@ export class WebSocketManager {
 
     log.debug(`Found ${players.length} connected players`);
     return players;
-  }  // Helper function to broadcast player list to all users
-  async broadcastPlayerList(): Promise<void> {
-    log.debug(`Broadcasting player list to all users`);
-
-    if (this.connectedPlayers.size === 0) {
-      log.debug(`No connected players to broadcast to`);
-      return;
-    }
-
-    try {
-      const players = await this.getAllPlayers();
-      const message = JSON.stringify({
-        type: 'players-list',
-        players
-      });
-
-      let sentCount = 0;
-      this.connectedPlayers.forEach((ws, userId) => {
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(message);
-          sentCount++;
-          log.debug(`Player list sent to user: ${userId}`);
-        } else {
-          log.debug(`Skipped sending to user ${userId} - connection not ready (state: ${ws.readyState})`);
-        }
-      });
-
-      log.info(`Player list broadcast completed`, {
-        totalUsers: this.connectedPlayers.size,
-        sentTo: sentCount,
-        playerCount: players.length
-      });
-    } catch (error) {
-      log.error('Error broadcasting player list:', error);
-    }
   }
 
-  // Helper function to broadcast battle status changes to watchers
-  async broadcastBattleStatus(statusChange?: string): Promise<void> {
-    log.debug(`Broadcasting battle status`, { statusChange });
-    
-    try {
-      // Get current battle status
-      const battle = await BattleService.getCurrentBattle();
-      const connectedPlayers = this.connectedPlayers.size;
-      
-      let battleStatus: Record<string, unknown>;
-      if (!battle) {
-        battleStatus = {
-          status: 'no-battle',
-          canJoin: true,
-          connectedPlayers
-        };
-      } else {
-        battleStatus = {
-          status: battle.status,
-          canJoin: battle.status === 'waiting' || battle.status === 'active',
-          isActive: battle.status === 'active',
-          isWaiting: battle.status === 'waiting',
-          isCompleted: battle.status === 'completed',
-          connectedPlayers,
-          startedAt: battle.started_at,
-          
-        };
-      }
-      
-      // Add change information if provided
-      if (statusChange) {
-        battleStatus.change = statusChange;
-      }
-      
-      const message = JSON.stringify({
-        type: 'battle-status-update',
-        ...battleStatus
-      });
-      
-      // Send to all status watchers
-      let sentCount = 0;
-      this.statusWatchers.forEach((watcher, connectionId) => {
-        if (watcher.ws.readyState === WebSocket.OPEN) {
-          watcher.ws.send(message);
-          sentCount++;
-          log.debug(`Battle status sent to watcher: ${connectionId}`);
-        }
-      });
-      
-      log.info(`Battle status broadcast completed`, {
-        sentToWatchers: sentCount,
-        battleStatus
-      });
-      
-    } catch (error) {
-      log.error(`Error broadcasting battle status:`, error);
-    }
-  }
+
 
   // Get connected player count
   getConnectedPlayerCount(): number {
