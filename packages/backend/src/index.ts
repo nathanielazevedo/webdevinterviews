@@ -1,94 +1,46 @@
-import express, { Request, Response } from 'express';
-import { createServer } from 'http';
-import { WebSocketServer } from 'ws';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import { QuestionsService } from './services/questions.service.js';
+import { WebSocket } from 'ws';
+import { createApp } from './app.js';
+import { createServerWithWebSocket } from './server.js';
+import { initializeDatabase } from './startup.js';
+import { setupGracefulShutdown } from './shutdown.js';
 import { logger } from './utils/logger.js';
-import { BattleTimingManager } from './managers/BattleTimingManager.js';
-import { WebSocketManager } from './websocket/WebSocketManager.js';
-import { createBattleRoutes } from './routes/battle.js';
-import { createQuestionsRoutes } from './routes/questions.js';
-import { createLocationRoutes } from './routes/location.js';
-import { authenticateToken, optionalAuth } from './middleware/auth.js';
 
-dotenv.config();
-
-
-// Use shared logger
 const log = logger;
 
-
-// Initialize questions database on startup
-(async () => {
+const main = async () => {
   try {
-    await QuestionsService.seedQuestions();
+    // Initialize database
+    await initializeDatabase();
+    
+    // Create connected players map
+    const connectedPlayersMap = new Map<string, WebSocket>();
+    
+    // Create app with connected players
+    const app = createApp(connectedPlayersMap);
+    
+    // Create server components
+    const { server, battleTimingManager } = createServerWithWebSocket(app);
+    
+    // Setup graceful shutdown
+    setupGracefulShutdown(server, battleTimingManager);
+    
+    // Start the server
+    const port = process.env.PORT || 3001;
+    server.listen(port, () => {
+      log.info(`Server running on port ${port}`);
+    });
+    
+    // Start battle timing manager
+    battleTimingManager.start();
+    
   } catch (error) {
-    log.error('Failed to initialize questions database', error);
+    log.error('Failed to start server:', error);
+    process.exit(1);
   }
-})();
+};
 
-// Create Express app and HTTP server
-const app = express();
-const server = createServer(app);
-const wss = new WebSocketServer({ 
-  server,
-  perMessageDeflate: false, // Disable compression for compatibility
-  maxPayload: 1024 * 1024 // 1MB max payload
-});
-
-// Initialize WebSocket manager
-const wsManager = new WebSocketManager();
-wsManager.setupWebSocketServer(wss);
-
-// Initialize battle timing manager
-const battleTimingManager = new BattleTimingManager(
-  wsManager.connectedPlayersMap,
-  wsManager.playerDataMap,
-  wsManager.broadcastBattleStatus.bind(wsManager)
-);
-
-// Setup middleware
-app.use(cors());
-app.use(express.json());
-
-// Health check endpoint
-app.get('/', (req: Request, res: Response) => {
-  log.info('Health check endpoint accessed');
-  res.json({ status: 'ok' });
-});
-
-
-// Setup route modules
-app.use('/battle', authenticateToken, createBattleRoutes(wsManager.connectedPlayersMap));
-app.use('/questions', optionalAuth, createQuestionsRoutes());
-app.use('/location', createLocationRoutes());
-
-
-const PORT = process.env.PORT || 3001;
-
-server.listen(PORT, () => {
-  log.info(`WebSocket server started successfully on port ${PORT}`);
-  
-  // Start the battle timing manager
-  battleTimingManager.start();
-});
-
-// Graceful shutdown
-process.on('SIGINT', () => {
-  log.info('Received SIGINT, shutting down gracefully...');
-  battleTimingManager.stop();
-  server.close(() => {
-    log.info('Server closed');
-    process.exit(0);
-  });
-});
-
-process.on('SIGTERM', () => {
-  log.info('Received SIGTERM, shutting down gracefully...');
-  battleTimingManager.stop();
-  server.close(() => {
-    log.info('Server closed');
-    process.exit(0);
-  });
+// Start the application
+main().catch(error => {
+  log.error('Startup failed:', error);
+  process.exit(1);
 });

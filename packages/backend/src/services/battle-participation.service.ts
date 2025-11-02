@@ -1,9 +1,39 @@
-// @ts-nocheck ignore file
-
 import { prisma, dbLog } from '../config/database.js';
-import { BattleService } from './battle.service.js';
+import { BattleQueryService } from './battle-query.service.js';
+import { QuestionsService } from './questions.service.js';
+import type { BattleResult } from '@webdevinterviews/shared';
 
 export class BattleParticipationService {
+
+  /**
+   * Create battle participation records for analytics when battle completes
+   */
+  static async createBattleParticipations(battleId: string, results: BattleResult[]): Promise<void> {
+    dbLog.info('Creating battle participation records', { battleId, resultsCount: results.length });
+    
+    try {
+      const participations = results.map(result => ({
+        battle_id: battleId,
+        user_id: result.userId,
+        tests_passed: result.testsPassed,
+        completion_time: result.completionTime,
+        placement: result.placement || null,
+        total_tests: 0, // This gets updated elsewhere
+        joined_at: new Date(),
+        is_connected: false
+      }));
+
+      await prisma.battleParticipation.createMany({
+        data: participations,
+        skipDuplicates: true // In case records already exist
+      });
+
+      dbLog.info('Battle participation records created successfully');
+    } catch (error) {
+      dbLog.error('Error creating battle participation records:', error);
+      throw error;
+    }
+  }
 
   // Update or create battle participation record
   static async updateParticipation(
@@ -14,7 +44,7 @@ export class BattleParticipationService {
 
     try {
       // Get current battle
-      const battle = await BattleService.getCurrentBattle();
+      const battle = await BattleQueryService.getCurrentBattle();
       if (!battle || battle.status !== 'active') {
         dbLog.debug('No active battle found, skipping participation update');
         return;
@@ -23,12 +53,12 @@ export class BattleParticipationService {
       // Get the current question to determine total tests
       let totalTests = 0;
       try {
-        const currentQuestion = await BattleService.getCurrentBattleQuestion(battle.id);
+        const currentQuestion = await QuestionsService.getCurrentBattleQuestion(battle.id);
         if (currentQuestion && (currentQuestion as { test_cases?: unknown[] }).test_cases) {
           totalTests = (currentQuestion as { test_cases: unknown[] }).test_cases.length;
         }
       } catch (error) {
-        dbLog.warn('Could not fetch current question test count:', error);
+        dbLog.error('Could not fetch current question test count:', error);
       }
 
       const now = new Date();
@@ -183,7 +213,7 @@ export class BattleParticipationService {
 
     try {
       // Get current battle first
-      const battle = await BattleService.getCurrentBattle();
+      const battle = await BattleQueryService.getCurrentBattle();
       if (!battle) {
         return null;
       }
@@ -210,7 +240,7 @@ export class BattleParticipationService {
 
     try {
       // Get current battle
-      const battle = await BattleService.getCurrentBattle();
+      const battle = await BattleQueryService.getCurrentBattle();
       if (!battle) {
         dbLog.debug('No current battle found, cannot add participant');
         return;

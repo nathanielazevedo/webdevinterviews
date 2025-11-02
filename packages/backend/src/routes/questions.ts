@@ -1,26 +1,22 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 import { QuestionsService } from '../services/questions.service.js';
 import { logger } from '../utils/logger.js';
+import { sendSuccessResponse, asyncHandler } from '../utils/response.js';
 
 const log = logger;
 
 export function createQuestionsRoutes() {
   const router = Router();
 
-  router.get('/', async (req: Request, res: Response) => {
-    try {
-      log.info('Fetching all questions');
+  router.get('/', asyncHandler(async (req, res) => {
+    log.info('Fetching all questions');
 
-      const questions = await QuestionsService.getAllQuestions();
+    const questions = await QuestionsService.getAllQuestions();
 
-      log.info('All questions retrieved successfully', { count: questions.length });
+    log.info('All questions retrieved successfully', { count: questions.length });
 
-      res.json({ questions });
-    } catch (error) {
-      log.error('Error fetching all questions:', error);
-      res.status(500).json({ error: 'Failed to fetch questions' });
-    }
-  });
+    sendSuccessResponse(res, { questions }, 'Questions fetched successfully');
+  }));
 
   return router;
 }

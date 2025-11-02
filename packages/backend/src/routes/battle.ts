@@ -1,8 +1,10 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 import { WebSocket } from 'ws';
 import { BattleService } from '../services/battle.service.js';
 import { QuestionsService } from '../services/questions.service.js';
 import { logger } from '../utils/logger.js';
+import { sendSuccessResponse, asyncHandler } from '../utils/response.js';
+import { validateQueryParams } from '../utils/validation.js';
 
 const log = logger;
 
@@ -11,9 +13,8 @@ export function createBattleRoutes(
 ) {
   const router = Router();
 
-  router.get('/current', async (req: Request, res: Response) => {
-    try {
-      log.info(`Fetching current battle info`);
+  router.get('/current', asyncHandler(async (req, res) => {
+    log.info(`Fetching current battle info`);
       
       let battle = await BattleService.getCurrentBattle();
 
@@ -72,21 +73,18 @@ export function createBattleRoutes(
         selectedQuestion
       };
       
-      res.json({ battle: battleInfo });
-    } catch (error) {
-      log.error('Error fetching current battle:', error);
-      res.status(500).json({ error: 'Failed to fetch current battle info' });
-    }
-  });
+    sendSuccessResponse(res, { battle: battleInfo }, 'Current battle fetched successfully');
+  }));
 
-  router.get('/history', async (req: Request, res: Response) => {
-    try {
+  router.get('/history', 
+    validateQueryParams({ limit: 'number' }),
+    asyncHandler(async (req, res) => {
       log.info(`Fetching battle history`);
       
       const limit = parseInt(req.query.limit as string) || 50;
       const battles = await BattleService.getCompletedBattles(limit);
       
-      // Format the response with battle participants
+      // Format the response with battle participants  
       const battleHistory = battles.map((battle: any) => ({
         id: battle.id,
         status: battle.status,
@@ -107,15 +105,8 @@ export function createBattleRoutes(
         })) || []
       }));
       
-      res.json({ 
-        battles: battleHistory,
-        total: battleHistory.length
-      });
-    } catch (error) {
-      log.error('Error fetching battle history:', error);
-      res.status(500).json({ error: 'Failed to fetch battle history' });
-    }
-  });
+      sendSuccessResponse(res, { battles: battleHistory, total: battleHistory.length }, 'Battle history fetched successfully');
+    }));
 
   return router;
 }
