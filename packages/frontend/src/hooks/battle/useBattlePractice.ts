@@ -21,8 +21,8 @@ export const useBattlePractice = (): UseBattlePracticeReturn => {
     try {
       setLoading(true);
       setError(null);
-      const data = await api.getAllQuestions() as Question[];
-      setQuestions(data.questions || []);
+      const response = await api.getAllQuestions();
+      setQuestions(response.data?.questions || []);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch questions');
     } finally {

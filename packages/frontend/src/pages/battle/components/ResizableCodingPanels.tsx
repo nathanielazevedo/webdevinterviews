@@ -54,6 +54,7 @@ interface TestResult {
   message: string;
   testCases: unknown[];
   totalExecutionTime: number;
+  testsPassed: number;
 }
 
 interface ResizableCodingPanelsProps {

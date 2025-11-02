@@ -19,7 +19,7 @@ export class BattleQueryService {
         orderBy: { created_at: 'desc' },
         include: {
           participations: true,
-          questionPools: {
+          questionPool: {
             include: { question: true }
           }
         }
@@ -45,7 +45,7 @@ export class BattleQueryService {
         },
         include: {
           participations: true,
-          questionPools: { include: { question: true } }
+          questionPool: { include: { question: true } }
         }
       });
 
@@ -67,7 +67,7 @@ export class BattleQueryService {
         orderBy: { created_at: 'desc' },
         include: {
           participations: true,
-          questionPools: { include: { question: true } },
+          questionPool: { include: { question: true } },
           selectedQuestion: true
         }
       });
@@ -93,7 +93,7 @@ export class BattleQueryService {
             data: { scheduled_start_time: scheduledStartTime },
             include: {
               participations: true,
-              questionPools: { include: { question: true } },
+              questionPool: { include: { question: true } },
               selectedQuestion: true
             }
           });

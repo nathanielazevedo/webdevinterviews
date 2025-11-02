@@ -24,7 +24,7 @@ export class WebSocketManager {
     this.connectedPlayers = new Map();
     this.broadcastService = new WebSocketBroadcastService(this.connectedPlayers);
     this.userService = new WebSocketUserService(this.connectedPlayers);
-    this.messageHandler = new WebSocketMessageHandler(this.connectedPlayers);
+    this.messageHandler = new WebSocketMessageHandler(this.connectedPlayers, this.broadcastService);
   }
 
   // Public getters for external access
@@ -37,31 +37,40 @@ export class WebSocketManager {
 
   setupWebSocketServer(wss: WebSocketServer): void {
     wss.on('connection', async (ws: WebSocket, request: IncomingMessage) => {
+      log.info('New WebSocket connection attempt received');
       try {
         const url = new URL(request.url || '', 'http://localhost');
         const token = url.searchParams.get('token');
 
         if (!token) {
+          log.warn('WebSocket connection rejected - no token provided');
           ws.close(1008, 'Authentication required');
           return;
         }
 
         // Verify the JWT token
+        log.info('Verifying WebSocket authentication token...');
         const user = await WebSocketAuthService.verifyToken(token);
         if (!user) {
+          log.warn('WebSocket connection rejected - invalid token');
           ws.close(1008, 'Invalid authentication token');
           return;
         }
+        log.info(`WebSocket authentication successful for user: ${user.sub}`);
 
         const userId = user.sub;
         const connectionId = Math.random().toString(36).substring(7);
 
+        log.info(`WebSocket connection established for user: ${userId} (connectionId: ${connectionId})`);
+
         // Add player connection
         this.connectedPlayers.set(userId, ws);
+        log.info(`Added user ${userId} to connected players map. Total connections: ${this.connectedPlayers.size}`);
         
         // Add player to current battle participation if they're not already in it
         try {
           await BattleParticipationService.addParticipant(userId);
+          log.info(`Successfully added participant ${userId} to battle via WebSocket connection`);
         } catch {
           // Participant may already exist, which is fine
           log.info(`Player ${userId} may already be in battle participation`);
@@ -73,7 +82,9 @@ export class WebSocketManager {
           // Handle the message in a separate async function to catch all errors
           (async () => {
             try {
+              log.info(`WebSocketManager: Raw message received from ${userId}:`, data.toString());
               const message: WebSocketMessage = JSON.parse(data.toString());
+              log.info(`WebSocketManager: Parsed message for ${userId}:`, JSON.stringify(message));
 
               // Delegate all message handling to the message handler service
               await this.messageHandler.handleMessage(message, ws, userId);

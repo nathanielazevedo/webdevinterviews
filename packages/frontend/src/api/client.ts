@@ -1,8 +1,23 @@
 import { createClient } from '@supabase/supabase-js';
+import { ApiError } from '@webdevinterviews/shared';
+import type { 
+  Question,
+  BattleHistoryResponse,
+  LocationPoint,
+  HealthCheckResponse,
+  ApiResponse
+} from '@webdevinterviews/shared';
 
-// Initialize Supabase client (same as in AuthContext)
-const supabaseUrl = "https://hlkahrtzairapcsmtrqw.supabase.co";
-const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhsa2FocnR6YWlyYXBjc210cnF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk4ODI3ODQsImV4cCI6MjA3NTQ1ODc4NH0.XcgLBEm1mF9USWSG2JddkySAjVPRxMnwoOUT38Su6sM";
+// Re-export ApiError for convenience
+export { ApiError };
+
+// Initialize Supabase client using environment variables
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing required Supabase environment variables');
+}
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -42,66 +57,69 @@ class ApiClient {
     };
   }
 
-  async get(endpoint: string): Promise<unknown> {
+  private async request<T>(
+    endpoint: string, 
+    options: RequestInit = {}
+  ): Promise<T> {
     const headers = await this.getAuthHeaders();
+    
+    try {
+      const response = await fetch(`${this.baseURL}${endpoint}`, {
+        ...options,
+        headers: { ...headers, ...options.headers },
+      });
 
-    const response = await fetch(`${this.baseURL}${endpoint}`, {
-      method: 'GET',
-      headers,
-    });
+      if (!response.ok) {
+        let errorMessage = `${response.status} ${response.statusText}`;
+        
+        // Try to get more detailed error message from response body
+        try {
+          const errorData = await response.json();
+          if (errorData?.message) {
+            errorMessage = errorData.message;
+          } else if (errorData?.error) {
+            errorMessage = errorData.error;
+          }
+        } catch {
+          // If response body isn't JSON, use the status text
+        }
+        
+        throw new ApiError(response.status, response.statusText, endpoint, errorMessage);
+      }
 
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
+      return response.json() as Promise<T>;
+    } catch (error) {
+      if (error instanceof ApiError) {
+        throw error;
+      }
+      
+      // Handle network errors or other fetch failures
+      throw new ApiError(0, 'Network Error', endpoint, 
+        `Failed to connect to ${this.baseURL}${endpoint}: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
-
-    return response.json();
   }
 
-  async post(endpoint: string, data?: unknown): Promise<unknown> {
-    const headers = await this.getAuthHeaders();
+  async get<T>(endpoint: string): Promise<T> {
+    return this.request<T>(endpoint, { method: 'GET' });
+  }
 
-    const response = await fetch(`${this.baseURL}${endpoint}`, {
+  async post<T>(endpoint: string, data?: unknown): Promise<T> {
+    return this.request<T>(endpoint, {
       method: 'POST',
-      headers,
       body: data ? JSON.stringify(data) : undefined,
     });
-
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
-    }
-
-    return response.json();
   }
 
-  async put(endpoint: string, data?: unknown): Promise<unknown> {
-    const headers = await this.getAuthHeaders();
-
-    const response = await fetch(`${this.baseURL}${endpoint}`, {
+  async put<T>(endpoint: string, data?: unknown): Promise<T> {
+    return this.request<T>(endpoint, {
       method: 'PUT',
-      headers,
       body: data ? JSON.stringify(data) : undefined,
     });
-
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
-    }
-
-    return response.json();
   }
 
-  async delete(endpoint: string): Promise<unknown> {
-    const headers = await this.getAuthHeaders();
-
-    const response = await fetch(`${this.baseURL}${endpoint}`, {
-      method: 'DELETE',
-      headers,
-    });
-
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
-    }
-
-    return response.json();
+  async delete<T>(endpoint: string): Promise<T> {
+    return this.request<T>(endpoint, { method: 'DELETE' });
   }
 }
 
@@ -114,19 +132,18 @@ export { ApiClient };
 // Convenience functions for common endpoints
 export const api = {
   // Battle endpoints
-  getCurrentBattle: () => apiClient.get('/battle/current'),
   getBattleHistory: (limit?: number) => {
     const params = limit ? `?limit=${limit}` : '';
-    return apiClient.get(`/battle/history${params}`);
+    return apiClient.get<BattleHistoryResponse>(`/battle/history${params}`);
   },
 
   // Questions endpoints
-  getAllQuestions: () => apiClient.get('/questions'),
+  getAllQuestions: () => apiClient.get<ApiResponse<{ questions: Question[] }>>('/questions'),
 
   // Location endpoints
-  getLocationPoints: () => apiClient.get('/location/points'),
-  geocodeLocation: (ip: string) => apiClient.post('/location/geocode', { location: ip }),
+  getLocationPoints: () => apiClient.get<LocationPoint[]>('/location/points'),
+  geocodeLocation: (ip: string) => apiClient.post<LocationPoint>('/location/geocode', { location: ip }),
 
   // Health check
-  healthCheck: () => apiClient.get('/'),
+  healthCheck: () => apiClient.get<HealthCheckResponse>('/'),
 };

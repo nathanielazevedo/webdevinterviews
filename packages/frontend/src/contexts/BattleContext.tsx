@@ -1,30 +1,12 @@
 import React, { createContext, useContext, useMemo } from "react";
-import { Player, Question, QuestionSummary } from "@webdevinterviews/shared";
+import { Player, Battle } from "@webdevinterviews/shared";
 import { useBattle } from "../hooks/battle/index";
 
-interface PlayerResults {
-  [playerId: string]: {
-    passed: number;
-    total: number;
-    completedAt: string | null;
-    isCompleted: boolean;
-  };
-}
-
 interface BattleContextType {
-  battle: {
-    id: string | null;
-    status: "waiting" | "active" | "completed" | "no-battle";
-    info: any;
-    playerResults: any;
-    isAdmin: boolean;
-    startTime: string | null;
-    error: string | null;
-    loading: boolean;
-    currentQuestion: any;
-    questionPool: any[];
-    questionLoading: boolean;
-  };
+  battle: Battle | null;
+  isAdmin: boolean;
+  error: string | null;
+  loading: boolean;
   players: Player[];
   currentPlayerId?: string;
   isConnected: boolean;
@@ -34,6 +16,7 @@ interface BattleContextType {
     message: string;
     testCases: unknown[];
     totalExecutionTime: number;
+    testsPassed: number;
   }) => void;
   handleEndBattle: () => void;
 }
@@ -44,10 +27,13 @@ export const BattleProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const battleData = useBattle();
-  // Memoize the context value - just pass through battle and players
+  // Memoize the context value - pass through all battle data
   const contextValue = useMemo(
     () => ({
       battle: battleData.battle,
+      isAdmin: battleData.isAdmin,
+      error: battleData.error,
+      loading: battleData.loading,
       players: battleData.players,
       currentPlayerId: battleData.currentPlayerId,
       isConnected: battleData.isConnected,
@@ -57,6 +43,9 @@ export const BattleProvider: React.FC<{ children: React.ReactNode }> = ({
     }),
     [
       battleData.battle,
+      battleData.isAdmin,
+      battleData.error,
+      battleData.loading,
       battleData.players,
       battleData.currentPlayerId,
       battleData.isConnected,

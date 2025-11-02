@@ -7,3 +7,6 @@ export * from "./types/battle";
 
 // Export websocket types
 export * from "./types/websocket";
+
+// Export API types
+export * from "./types/api";

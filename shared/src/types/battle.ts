@@ -33,10 +33,10 @@ export interface QuestionSummary {
   tags?: string[] | null;
 }
 
-// Simplified battle types for new backend
+// Clean battle type - just the essential data
 export interface Battle {
+  // Database fields (snake_case to match DB)
   id: string;
-  room_id?: string; // Legacy field for database compatibility
   status: 'waiting' | 'active' | 'completed';
   started_at?: string | null;
   completed_at?: string | null;
@@ -47,7 +47,14 @@ export interface Battle {
   created_at?: string;
   updated_at?: string;
   ended_by?: string | null;
+  
+  // Related data
   participants?: BattleParticipant[];
+  questionPool?: Array<{
+    question: Question | QuestionSummary;
+  }>;
+  selectedQuestion?: Question | null;
+  selected_question_id?: number | null;
 }
 
 export interface BattleParticipant {
@@ -71,24 +78,6 @@ export interface Player {
 export interface BattleCurrentResponse {
   battle?: Battle;
   questions?: QuestionSummary[];
-}
-
-export interface BattleInfo {
-  id: string;
-  status: 'waiting' | 'active' | 'completed';
-  startedAt?: string | null;
-  createdAt?: string;
-  scheduledStartTime?: string | null;
-  durationMinutes?: number | null;
-  adminUserId?: string;
-  participantCount?: number;
-  connectedPlayers?: number;
-  canJoin?: boolean;
-  isActive?: boolean;
-  isWaiting?: boolean;
-  isCompleted?: boolean;
-  questionPool?: QuestionSummary[];
-  selectedQuestion?: Question | null;
 }
 
 export interface BattlePlayersResponse {

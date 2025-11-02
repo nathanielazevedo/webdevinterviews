@@ -5,6 +5,32 @@ import { logger } from '../utils/logger.js';
 import type { Player } from '@webdevinterviews/shared';
 import { BattleParticipationService } from '../services/battle-participation.service.js';
 
+// Battle with Prisma includes - use any for flexibility with database types
+interface BattleWithIncludes {
+  id: string;
+  status: string;
+  admin_user_id?: string | null;
+  started_at?: Date | null;
+  completed_at?: Date | null;
+  created_at?: Date;
+  updated_at?: Date;
+  scheduled_start_time?: Date | null;
+  duration_minutes?: number | null;
+  auto_end_time?: Date | null;
+  ended_by?: string | null;
+  selected_question_id?: number | null;
+  selectedQuestion?: unknown;
+  questionPool?: Array<{
+    question: {
+      id: number;
+      title: string;
+      difficulty: string;
+      leetcode_number?: number | null;
+      tags?: string[] | null;
+    };
+  }>;
+}
+
 const log = logger;
 
 export class WebSocketBroadcastService {
@@ -47,33 +73,79 @@ export class WebSocketBroadcastService {
   async broadcastBattleStatus(statusChange?: string): Promise<void> {
     try {
       // Get current battle status
-      const battle = await BattleService.getCurrentBattle();
+      const battleData = await BattleService.getCurrentBattle();
       const connectedPlayers = this.connectedPlayers.size;
       
       let battleStatus: Record<string, unknown>;
-      if (!battle) {
+      if (!battleData) {
         battleStatus = {
           status: 'no-battle',
           canJoin: true,
-          connectedPlayers
+          connectedPlayers,
+          battle: null,
+          currentQuestion: null,
+          questionPool: []
         };
       } else {
+        // Type assertion for battle with includes
+        const battle = battleData as BattleWithIncludes;
+
+        // Get current question if battle has one
+        let currentQuestion = null;
+        if (battle.selected_question_id) {
+          try {
+            currentQuestion = await BattleService.getCurrentBattleQuestion(battle.id);
+          } catch (questionError) {
+            log.error(`Error getting current question for battle ${battle.id}:`, questionError);
+          }
+        }
+
+        // Get question pool summary
+        const questionPool = battle.questionPool?.map(qp => ({
+          id: qp.question.id,
+          title: qp.question.title,
+          difficulty: qp.question.difficulty,
+          leetcode_number: qp.question.leetcode_number,
+          tags: qp.question.tags
+        })) || [];
+
         battleStatus = {
           status: battle.status,
           canJoin: battle.status === 'waiting' || battle.status === 'active',
           isActive: battle.status === 'active',
           isWaiting: battle.status === 'waiting',
+          isCompleted: battle.status === 'completed',
           battleId: battle.id,
           connectedPlayers,
           scheduledStart: battle.scheduled_start_time,
           actualStart: battle.started_at,
-          completedAt: battle.completed_at
+          completedAt: battle.completed_at,
+          durationMinutes: battle.duration_minutes,
+          adminUserId: battle.admin_user_id,
+          battle: {
+            id: battle.id,
+            status: battle.status,
+            startedAt: battle.started_at,
+            completedAt: battle.completed_at,
+            durationMinutes: battle.duration_minutes,
+            adminUserId: battle.admin_user_id,
+            scheduledStartTime: battle.scheduled_start_time,
+            autoEndTime: battle.auto_end_time,
+            createdAt: battle.created_at,
+            canJoin: battle.status === 'waiting' || battle.status === 'active',
+            isActive: battle.status === 'active',
+            isWaiting: battle.status === 'waiting',
+            isCompleted: battle.status === 'completed'
+          },
+          currentQuestion,
+          questionPool
         };
       }
 
+      // Send raw battle data - question info is already included in battle
       const message = JSON.stringify({
         type: 'battle-status',
-        ...battleStatus,
+        battle: battleStatus.battle,
         statusChange,
         timestamp: new Date().toISOString()
       });

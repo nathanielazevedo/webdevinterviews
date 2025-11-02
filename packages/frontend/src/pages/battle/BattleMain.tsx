@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Box, Grid, Container, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
@@ -14,6 +14,7 @@ const BattleMain: React.FC = () => {
   const navigate = useNavigate();
   const {
     battle,
+    isAdmin,
     players,
     currentPlayerId,
     handleStartBattle,
@@ -21,38 +22,8 @@ const BattleMain: React.FC = () => {
     handleEndBattle,
   } = useBattleContext();
 
-  // Local countdown timer state
-  const [timeUntilStart, setTimeUntilStart] = useState<number | null>(null);
-
   // Calculate winners from player results
   const winners: string[] = [];
-
-  // Local countdown timer for scheduled battles
-  useEffect(() => {
-    if (!battle.startTime || battle.status !== "waiting") {
-      setTimeUntilStart(null);
-      return;
-    }
-
-    const updateCountdown = () => {
-      const now = new Date();
-      const startTime = new Date(battle.startTime!);
-      const timeLeft = Math.max(
-        0,
-        Math.floor((startTime.getTime() - now.getTime()) / 1000)
-      );
-
-      setTimeUntilStart(timeLeft);
-
-      if (timeLeft === 0) {
-        setTimeUntilStart(null);
-      }
-    };
-
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-    return () => clearInterval(interval);
-  }, [battle.startTime, battle.status]);
 
   return (
     <>
@@ -68,7 +39,7 @@ const BattleMain: React.FC = () => {
           </Button>
 
           {/* Pre-battle and post-battle layout */}
-          {battle.status === "waiting" && (
+          {battle?.status === "waiting" && (
             <Grid container spacing={3}>
               {/* Side Navigation */}
               <Grid item xs={12} md={3}>
@@ -80,21 +51,13 @@ const BattleMain: React.FC = () => {
 
               {/* Main Content */}
               <Grid item xs={12} md={9}>
-                <MultiplayerLeaderboard
-                  players={players}
-                  currentUserId={currentPlayerId || ""}
-                  battleStatus={battle.status}
-                  playerResults={battle.playerResults}
-                  countdown={timeUntilStart || 0}
-                  battleStartTime={battle.startTime}
-                  questionPool={battle.questionPool}
-                />
+                <MultiplayerLeaderboard />
               </Grid>
             </Grid>
           )}
 
           {/* Active battle layout with editor */}
-          {(battle.status === "active") && (
+          {battle?.status === "active" && (
             <Box
               sx={{
                 position: "fixed",
@@ -112,14 +75,13 @@ const BattleMain: React.FC = () => {
               {/* Fixed-height coding panels */}
               <Box sx={{ flexGrow: 1, minHeight: 0 }}>
                 <ResizableCodingPanels
-                  problemTitle={battle.currentQuestion?.title || "Loading..."}
-                  problemId={battle.currentQuestion?.slug || "twoSum"}
-                  question={battle.currentQuestion || undefined}
-                  onTest={handleTestResults}
-                  battleId={battle.id || undefined}
-                  playerId={currentPlayerId}
                   players={players}
                   currentUserId={currentPlayerId || ""}
+                  problemTitle={battle?.selectedQuestion?.title || "Loading..."}
+                  problemId={battle?.selectedQuestion?.slug || "twoSum"}
+                  question={battle?.selectedQuestion || undefined}
+                  onTestResults={handleTestResults}
+                  battleId={battle?.id || undefined}
                 />
               </Box>
             </Box>
@@ -127,16 +89,16 @@ const BattleMain: React.FC = () => {
 
           <BattleResults
             winners={winners}
-            isVisible={battle.status === "completed"}
+            isVisible={battle?.status === "completed"}
           />
         </Box>
       </Container>
 
       {/* Admin Controls - Only show for admins when there's an active battle */}
-      {battle.isAdmin && battle.status !== "no-battle" && (
+      {isAdmin && battle && (
         <AdminControls
-          isAdmin={battle.isAdmin}
-          battleStatus={battle.status as "waiting" | "active" | "completed"}
+          isAdmin={isAdmin}
+          battleStatus={battle.status}
           battleId={battle.id}
           onEndBattle={handleEndBattle}
           onStartBattle={handleStartBattle}

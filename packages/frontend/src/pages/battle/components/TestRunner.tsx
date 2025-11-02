@@ -47,6 +47,7 @@ interface TestCase {
 
 interface TestResult {
   passed: boolean;
+  testsPassed: number;
   message: string;
   testCases: TestCase[];
   totalExecutionTime: number;
@@ -82,6 +83,7 @@ const TestRunner: React.FC<TestRunnerProps> = ({
     if (!code.trim()) {
       const errorResult = {
         passed: false,
+        testsPassed: 0,
         message: "No code provided",
         testCases: [],
         totalExecutionTime: 0,
@@ -137,6 +139,7 @@ const TestRunner: React.FC<TestRunnerProps> = ({
       if (testCasesToRun.length === 0) {
         const noTestsResult = {
           passed: false,
+          testsPassed: 0,
           message: "No test cases found for this problem",
           testCases: [],
           totalExecutionTime: 0,
@@ -167,11 +170,13 @@ const TestRunner: React.FC<TestRunnerProps> = ({
           message: testResults.message,
           testCases: testResults.testCases,
           totalExecutionTime: testResults.totalExecutionTime,
+          testsPassed: testResults.testsPassed,
         });
       }
     } catch (error) {
       const errorResult = {
         passed: false,
+        testsPassed: 0,
         message:
           error instanceof Error ? error.message : "Unknown error occurred",
         testCases: [],

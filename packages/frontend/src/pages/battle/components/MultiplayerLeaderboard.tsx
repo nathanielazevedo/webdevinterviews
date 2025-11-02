@@ -20,37 +20,50 @@ import {
   PlayArrow,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
-import type { QuestionSummary, Player } from "@webdevinterviews/shared";
+import type { Player } from "@webdevinterviews/shared";
+import { useBattleContext } from "../../../contexts/BattleContext";
 
-interface PlayerResults {
-  [playerId: string]: {
-    passed: number;
-    total: number;
-    completedAt: string | null;
-    isCompleted: boolean;
-  };
-}
 
-interface MultiplayerLeaderboardProps {
-  players: Player[];
-  currentUserId: string;
-  battleStatus: "waiting" | "active" | "completed" | "no-battle";
-  playerResults?: PlayerResults;
-  countdown?: number | null;
-  battleStartTime?: string | null;
-  questionPool?: QuestionSummary[];
-}
+const MultiplayerLeaderboard: React.FC = () => {
+  const { battle, players, currentPlayerId } = useBattleContext();
 
-const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
-  players,
-  currentUserId,
-  battleStatus,
-  playerResults: _playerResults = {},
-  countdown = null,
-  battleStartTime = null,
-  questionPool = [],
-}) => {
+  // Extract data from context
+  const battleStatus = battle?.status || "no-battle";
+  const battleStartTime = battle?.scheduled_start_time || null;
+  const questionPool = battle?.questionPool?.map((qp) => qp.question) || [];
+  const currentUserId = currentPlayerId || "";
+
+  // Calculate countdown from scheduled start time
+  const [countdown, setCountdown] = React.useState<number | null>(null);
   const theme = useTheme();
+
+  // Update countdown every second
+  React.useEffect(() => {
+    if (!battleStartTime) {
+      setCountdown(null);
+      return;
+    }
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const startTime = new Date(battleStartTime).getTime();
+      const timeDiff = Math.floor((startTime - now) / 1000);
+
+      if (timeDiff <= 0) {
+        setCountdown(0);
+      } else {
+        setCountdown(timeDiff);
+      }
+    };
+
+    // Update immediately
+    updateCountdown();
+
+    // Update every second
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, [battleStartTime]);
 
   const formatCountdown = (seconds: number) => {
     const days = Math.floor(seconds / 86400);
@@ -112,24 +125,9 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
       return b.testsPassed - a.testsPassed;
     }
 
-    // If tests passed are equal, completed players first
-    const aResult = _playerResults?.[a.userId];
-    const bResult = _playerResults?.[b.userId];
-
-    if (aResult?.isCompleted && !bResult?.isCompleted) return -1;
-    if (!aResult?.isCompleted && bResult?.isCompleted) return 1;
-
-    // Among completed players with same tests passed, sort by completion time
-    if (
-      aResult?.isCompleted &&
-      bResult?.isCompleted &&
-      aResult.completedAt &&
-      bResult.completedAt
-    ) {
-      return (
-        new Date(aResult.completedAt).getTime() -
-        new Date(bResult.completedAt).getTime()
-      );
+    // If tests passed are equal, use total tests as tiebreaker
+    if (a.totalTests !== b.totalTests) {
+      return (b.totalTests || 0) - (a.totalTests || 0);
     }
 
     // Finally sort by join time
@@ -451,12 +449,12 @@ const MultiplayerLeaderboard: React.FC<MultiplayerLeaderboardProps> = ({
                     </Typography>
                   </Box>
 
-                  {/* Completion Time */}
-                  {_playerResults?.[player.userId]?.isCompleted && (
+                  {/* Completion Status - show if player has passed any tests */}
+                  {player.testsPassed > 0 && battleStatus === "completed" && (
                     <Box mt={1} display="flex" alignItems="center" gap={0.5}>
-                      <Timer fontSize="small" color="success" />
+                      <CheckCircle fontSize="small" color="success" />
                       <Typography variant="caption" color="success.main">
-                        Completed
+                        {player.testsPassed} tests passed
                       </Typography>
                     </Box>
                   )}

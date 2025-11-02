@@ -63,7 +63,7 @@ export class BattleCoreService {
         data: battleData,
         include: {
           participations: true,
-          questionPools: { include: { question: true } }
+          questionPool: { include: { question: true } }
         }
       });
       
@@ -111,7 +111,7 @@ export class BattleCoreService {
         data: battleData,
         include: {
           participations: true,
-          questionPools: { include: { question: true } }
+          questionPool: { include: { question: true } }
         }
       });
 
@@ -170,7 +170,7 @@ export class BattleCoreService {
         },
         include: {
           participations: true,
-          questionPools: { include: { question: true } }
+          questionPool: { include: { question: true } }
         }
       });
 
@@ -229,7 +229,7 @@ export class BattleCoreService {
         },
         include: {
           participations: true,
-          questionPools: { include: { question: true } }
+          questionPool: { include: { question: true } }
         }
       });
 

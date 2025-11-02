@@ -24,7 +24,7 @@ model Battle {
 
   // Relations
   participations   BattleParticipation[]
-  questionPools    BattleQuestionPool[]
+  questionPool     BattleQuestionPool[]
   selectedQuestion Question?             @relation("SelectedQuestion", fields: [selected_question_id], references: [id])
 
   @@map("battles")
