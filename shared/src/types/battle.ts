@@ -43,6 +43,7 @@ export interface Battle {
   duration_minutes?: number | null;
   admin_user_id?: string;
   scheduled_start_time?: string | null;
+  auto_start_time?: string | null; // New: Battle auto-starts at this time (1 min after first join)
   auto_end_time?: string | null;
   created_at?: string;
   updated_at?: string;
@@ -72,6 +73,7 @@ export interface Player {
   totalTests?: number;
   joinedAt: string;
   isConnected: boolean;
+  isBot?: boolean; // Optional flag to indicate if player is a bot
 }
 
 // API Response types matching the new backend

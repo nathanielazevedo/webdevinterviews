@@ -14,6 +14,7 @@ export class BattleCoreService {
   
   /**
    * Helper function to get next Saturday at 5pm EST
+   * @deprecated No longer used for on-demand battles, but kept for special scheduled events
    */
   static getNextSaturday5pmEST(): string {
     const now = new Date();
@@ -91,20 +92,20 @@ export class BattleCoreService {
 
   /**
    * Create the current battle (no room ID needed since there's only one)
+   * For on-demand battles: auto_start_time is set when first player joins
    */
   static async createCurrentBattle(
     options: BattleCreateOptions = {}
   ): Promise<Battle> {
     const finalAdminUserId = DEFAULT_ADMIN_USER_ID;
-    const { scheduledStartTime, durationMinutes = BATTLE_CONFIG.DEFAULT_DURATION_MINUTES } = options;
-    const finalScheduledStartTime = scheduledStartTime || BattleCoreService.getNextSaturday5pmEST();
+    const { durationMinutes = BATTLE_CONFIG.DEFAULT_DURATION_MINUTES } = options;
     
     try {
       const battleData = {
         status: 'waiting' as const,
         admin_user_id: finalAdminUserId,
-        duration_minutes: durationMinutes,
-        scheduled_start_time: new Date(finalScheduledStartTime)
+        duration_minutes: durationMinutes
+        // No scheduled_start_time or auto_start_time yet - set when first player joins
       };
 
       const battle = await prisma.battle.create({
@@ -119,20 +120,75 @@ export class BattleCoreService {
       try {
         await QuestionsService.createBattleQuestionPool(battle.id);
         dbLog.info('Question pool created for current battle', { battleId: battle.id });
+        
+        // Select question immediately for on-demand battles (so players can see it during countdown)
+        const selectedQuestion = await QuestionsService.selectBattleQuestion(battle.id);
+        dbLog.info('Question selected for waiting battle', { 
+          battleId: battle.id, 
+          questionTitle: selectedQuestion.title,
+          questionId: selectedQuestion.id
+        });
       } catch (questionError) {
-        dbLog.error('Failed to create question pool, but current battle was created', questionError);
+        dbLog.error('Failed to create question pool or select question, but current battle was created', questionError);
       }
 
-      dbLog.info('Current battle created successfully', { 
+      // Fetch the updated battle with the selected question
+      const battleWithQuestion = await prisma.battle.findUnique({
+        where: { id: battle.id },
+        include: {
+          participations: true,
+          questionPool: { include: { question: true } },
+          selectedQuestion: true
+        }
+      });
+
+      dbLog.info('Current battle created successfully (on-demand mode)', { 
         battleId: battle.id, 
         status: battle.status,
-        scheduledStartTime: battle.scheduled_start_time,
-        durationMinutes: battle.duration_minutes
+        durationMinutes: battle.duration_minutes,
+        selectedQuestionId: battleWithQuestion?.selected_question_id
       });
       
-      return battle as unknown as Battle;
+      return (battleWithQuestion || battle) as unknown as Battle;
     } catch (error) {
       dbLog.error('Error creating current battle:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Set auto-start time for a battle (called when first player joins)
+   * Battle will auto-start 1 minute after this is set
+   */
+  static async setAutoStartTime(battleId: string, delayMinutes: number = 1): Promise<Battle> {
+    dbLog.info('Setting auto-start time for battle', { battleId, delayMinutes });
+    
+    try {
+      const autoStartTime = new Date(Date.now() + delayMinutes * 60 * 1000);
+      
+      const updatedBattle = await prisma.battle.update({
+        where: { 
+          id: battleId,
+          status: 'waiting',
+          auto_start_time: null // Only set if not already set
+        },
+        data: {
+          auto_start_time: autoStartTime
+        },
+        include: {
+          participations: true,
+          questionPool: { include: { question: true } }
+        }
+      });
+
+      dbLog.info('Auto-start time set successfully', { 
+        battleId: updatedBattle.id,
+        autoStartTime: updatedBattle.auto_start_time
+      });
+
+      return updatedBattle as unknown as Battle;
+    } catch (error) {
+      dbLog.error('Error setting auto-start time:', error);
       throw error;
     }
   }
@@ -175,16 +231,23 @@ export class BattleCoreService {
       });
 
       if (updatedBattle) {
-        // Select a random question from the battle's question pool
-        try {
-          const selectedQuestion = await QuestionsService.selectBattleQuestion(updatedBattle.id);
-          dbLog.info('Question selected for battle', { 
-            battleId: updatedBattle.id, 
-            questionTitle: selectedQuestion.title,
-            questionId: selectedQuestion.id
+        // Select a random question from the battle's question pool (only if not already selected)
+        if (!battle.selected_question_id) {
+          try {
+            const selectedQuestion = await QuestionsService.selectBattleQuestion(updatedBattle.id);
+            dbLog.info('Question selected for battle', { 
+              battleId: updatedBattle.id, 
+              questionTitle: selectedQuestion.title,
+              questionId: selectedQuestion.id
+            });
+          } catch (questionError) {
+            dbLog.error('Failed to select battle question', questionError);
+          }
+        } else {
+          dbLog.info('Question already selected for battle, skipping selection', { 
+            battleId: updatedBattle.id,
+            selectedQuestionId: battle.selected_question_id
           });
-        } catch (questionError) {
-          dbLog.error('Failed to select battle question', questionError);
         }
 
         dbLog.info('Battle started successfully', { 

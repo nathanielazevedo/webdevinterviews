@@ -8,30 +8,52 @@ const log = logger;
 
 export class BattleTimingManager {
   private checkInterval: NodeJS.Timeout | null = null;
+  private countdownInterval: NodeJS.Timeout | null = null;
+  private playerUpdateInterval: NodeJS.Timeout | null = null;
   private connectedPlayers: Map<string, WebSocket>;
   private broadcastBattleStatus: (event?: string) => Promise<void>;
+  private broadcastPlayerList: () => Promise<void>;
 
   constructor(
     connectedPlayers: Map<string, WebSocket>,
-    broadcastBattleStatus: (event?: string) => Promise<void>
+    broadcastBattleStatus: (event?: string) => Promise<void>,
+    broadcastPlayerList: () => Promise<void>
   ) {
     this.connectedPlayers = connectedPlayers;
     this.broadcastBattleStatus = broadcastBattleStatus;
+    this.broadcastPlayerList = broadcastPlayerList;
   }
 
   start(): void {
-    // Check every 30 seconds for battles to auto-start/end
+    // Check every 5 seconds for battles to auto-start/end (more frequent for on-demand battles)
     this.checkInterval = setInterval(async () => {
       await this.checkScheduledBattles();
       await this.checkExpiredBattles();
-    }, 30000);
+    }, 5000);
     
+    // Broadcast countdown every 10 seconds for waiting battles
+    this.countdownInterval = setInterval(async () => {
+      await this.broadcastWaitingBattleCountdown();
+    }, 10000);
+    
+    // Broadcast player updates every 3 seconds during active battles (for bot progress)
+    this.playerUpdateInterval = setInterval(async () => {
+      await this.broadcastActiveBattlePlayerUpdates();
+    }, 3000);
   }
 
   stop(): void {
     if (this.checkInterval) {
       clearInterval(this.checkInterval);
       this.checkInterval = null;
+    }
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+      this.countdownInterval = null;
+    }
+    if (this.playerUpdateInterval) {
+      clearInterval(this.playerUpdateInterval);
+      this.playerUpdateInterval = null;
     }
   }
 
@@ -145,5 +167,60 @@ export class BattleTimingManager {
       }
     });
     
+  }
+
+  private async broadcastWaitingBattleCountdown(): Promise<void> {
+    try {
+      const currentBattle = await BattleService.getCurrentBattle();
+      
+      if (!currentBattle || currentBattle.status !== 'waiting' || !currentBattle.auto_start_time) {
+        return; // No waiting battle with countdown
+      }
+
+      const timeUntilStart = new Date(currentBattle.auto_start_time).getTime() - Date.now();
+      
+      // Stop broadcasting if time is up (will be handled by auto-start)
+      if (timeUntilStart <= 0) {
+        return;
+      }
+
+      const message = {
+        type: 'battle-countdown',
+        battleId: currentBattle.id,
+        autoStartTime: currentBattle.auto_start_time,
+        secondsUntilStart: Math.ceil(timeUntilStart / 1000),
+        status: currentBattle.status
+      };
+
+      this.connectedPlayers.forEach((ws, _userId) => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify(message));
+        }
+      });
+
+      log.info(`Broadcast countdown: ${Math.ceil(timeUntilStart / 1000)}s until battle starts`);
+    } catch (error) {
+      log.error('Error broadcasting waiting battle countdown:', error);
+    }
+  }
+
+  /**
+   * Broadcast player list updates during active battles (for bot progress and real player updates)
+   */
+  private async broadcastActiveBattlePlayerUpdates(): Promise<void> {
+    try {
+      const currentBattle = await BattleService.getCurrentBattle();
+      
+      // Only broadcast during active battles
+      if (!currentBattle || currentBattle.status !== 'active') {
+        return;
+      }
+
+      // Broadcast player list with updated test progress
+      await this.broadcastPlayerList();
+      
+    } catch (error) {
+      log.error('Error broadcasting active battle player updates:', error);
+    }
   }
 }

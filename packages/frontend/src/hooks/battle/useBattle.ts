@@ -16,6 +16,13 @@ export interface BattleStatus {
   change?: string;
 }
 
+export interface BattleCountdown {
+  battleId: string;
+  autoStartTime: string;
+  secondsUntilStart: number;
+  status: 'waiting';
+}
+
 export interface TestResult {
   userId: string;
   problemId: string;
@@ -46,6 +53,9 @@ export const useBattle = () => {
     error: null,
     loading: true,
   });
+
+  // On-demand battle countdown state
+  const [countdown, setCountdown] = useState<BattleCountdown | null>(null);
 
   const [battleHistory, setBattleHistory] = useState<Battle[]>([]);
   const [battleHistoryLoading, setBattleHistoryLoading] = useState(false);
@@ -90,6 +100,8 @@ export const useBattle = () => {
           ...prev, 
           battle: prev.battle ? { ...prev.battle, status: 'active' } : null
         }));
+        // Clear countdown when battle starts
+        setCountdown(null);
         break;
 
       case 'battle-ended':
@@ -99,7 +111,21 @@ export const useBattle = () => {
           battle: prev.battle ? { ...prev.battle, status: 'completed' } : null
           // Could store results in battle state if needed
         }));
+        // Clear countdown when battle ends
+        setCountdown(null);
         break;
+
+      case 'battle-countdown': {
+        // New: Handle countdown messages for on-demand battles
+        const countdownData = message as any;
+        setCountdown({
+          battleId: countdownData.battleId,
+          autoStartTime: countdownData.autoStartTime,
+          secondsUntilStart: countdownData.secondsUntilStart,
+          status: 'waiting'
+        });
+        break;
+      }
 
       case 'join-response':
         // Handle join response from backend with raw battle data
@@ -281,6 +307,8 @@ export const useBattle = () => {
     isAdmin: memoizedBattle.isAdmin,
     error: memoizedBattle.error,
     loading: memoizedBattle.loading,
+    // On-demand battle countdown
+    countdown,
     // WebSocket data
     players,
     currentPlayerId: playerId,
@@ -310,6 +338,7 @@ export const useBattle = () => {
     refreshAttackData,
   }), [
     memoizedBattle,
+    countdown,
     players,
     playerId,
     isConnected,

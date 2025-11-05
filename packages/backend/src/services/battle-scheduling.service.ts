@@ -1,11 +1,13 @@
 import { prisma, dbLog } from '../config/database.js';
 import { QuestionsService } from './questions.service.js';
+import { BotPlayerService } from './bot-player.service.js';
 import type { Battle, BattleResult } from '@webdevinterviews/shared';
 
 export class BattleSchedulingService {
   
   /**
-   * Get battle scheduled to auto-start (returns single battle or null since only one battle at a time)
+   * Get battle scheduled to auto-start
+   * Now checks auto_start_time (on-demand battles) instead of scheduled_start_time
    */
   static async getBattleToAutoStart(): Promise<Battle | null> {
     dbLog.debug('Fetching battle to auto-start');
@@ -14,12 +16,12 @@ export class BattleSchedulingService {
       const battle = await prisma.battle.findFirst({
         where: {
           status: 'waiting',
-          scheduled_start_time: { 
+          auto_start_time: { 
             not: null,
             lte: new Date()
           }
         },
-        orderBy: { scheduled_start_time: 'asc' }
+        orderBy: { auto_start_time: 'asc' }
       });
 
       if (!battle) {
@@ -99,16 +101,36 @@ export class BattleSchedulingService {
       });
 
       if (updatedBattle) {
-        // Select a random question from the battle's question pool
-        try {
-          const selectedQuestion = await QuestionsService.selectBattleQuestion(updatedBattle.id);
-          dbLog.info('Question selected for auto-started battle', { 
-            battleId: updatedBattle.id, 
-            questionTitle: selectedQuestion.title,
-            questionId: selectedQuestion.id
+        // Select a random question from the battle's question pool (only if not already selected)
+        if (!battle.selected_question_id) {
+          try {
+            const selectedQuestion = await QuestionsService.selectBattleQuestion(updatedBattle.id);
+            dbLog.info('Question selected for auto-started battle', { 
+              battleId: updatedBattle.id, 
+              questionTitle: selectedQuestion.title,
+              questionId: selectedQuestion.id
+            });
+          } catch (questionError) {
+            dbLog.error('Failed to select battle question for auto-start', questionError);
+          }
+        } else {
+          dbLog.info('Question already selected for battle, skipping selection', { 
+            battleId: updatedBattle.id,
+            selectedQuestionId: battle.selected_question_id
           });
-        } catch (questionError) {
-          dbLog.error('Failed to select battle question for auto-start', questionError);
+        }
+
+        // Start bot performance simulation
+        try {
+          const question = await QuestionsService.getCurrentBattleQuestion(updatedBattle.id);
+          const totalTests = question?.test_cases?.length || 10;
+          BotPlayerService.startBotSimulation(updatedBattle.id, totalTests);
+          dbLog.info('Started bot simulation for battle', { 
+            battleId: updatedBattle.id,
+            totalTests 
+          });
+        } catch (botError) {
+          dbLog.error('Failed to start bot simulation', botError);
         }
 
         dbLog.info('Battle auto-started successfully', { 
@@ -133,6 +155,14 @@ export class BattleSchedulingService {
     dbLog.info('Auto-ending expired battle', { battleId, resultsCount: finalResults.length });
     
     try {
+      // Clean up bots before ending battle
+      try {
+        await BotPlayerService.cleanupBattle(battleId);
+        dbLog.info('Cleaned up bots for battle', { battleId });
+      } catch (botError) {
+        dbLog.error('Failed to cleanup bots', botError);
+      }
+
       const updatedBattle = await prisma.battle.update({
         where: { 
           id: battleId,

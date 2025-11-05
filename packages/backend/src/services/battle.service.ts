@@ -16,6 +16,7 @@ export class BattleService {
   static getNextSaturday5pmEST = BattleCoreService.getNextSaturday5pmEST;
   static createBattle = BattleCoreService.createBattle;
   static createCurrentBattle = BattleCoreService.createCurrentBattle;
+  static setAutoStartTime = BattleCoreService.setAutoStartTime;
   static startBattle = BattleCoreService.startBattle;
   static completeBattle = BattleCoreService.completeBattle;
 

@@ -4,6 +4,7 @@ import { BattleService } from '../services/battle.service.js';
 import { logger } from '../utils/logger.js';
 import type { Player } from '@webdevinterviews/shared';
 import { BattleParticipationService } from '../services/battle-participation.service.js';
+import { BotPlayerService } from '../services/bot-player.service.js';
 
 // Battle with Prisma includes - use any for flexibility with database types
 interface BattleWithIncludes {
@@ -42,16 +43,20 @@ export class WebSocketBroadcastService {
     this.connectedPlayers = connectedPlayers;
   }
 
-  /**
-   * Broadcast player list to all connected users
+    /**
+   * Broadcast current player list to all connected players
    */
   async broadcastPlayerList(): Promise<void> {
     if (this.connectedPlayers.size === 0) {
       return;
     }
 
+    log.info(`Broadcasting player list to ${this.connectedPlayers.size} connected players`);
+
     try {
       const players = await this.getAllPlayers();
+      log.info(`Player list contains ${players.length} total players (real + bots)`);
+      
       const message = JSON.stringify({
         type: 'players-list',
         players
@@ -142,10 +147,15 @@ export class WebSocketBroadcastService {
         };
       }
 
-      // Send raw battle data - question info is already included in battle
+      // Send raw battle data with question info
       const message = JSON.stringify({
         type: 'battle-status',
-        battle: battleStatus.battle,
+        battle: {
+          ...(battleStatus.battle || {}),
+          selectedQuestion: battleStatus.currentQuestion // Include the full selected question
+        },
+        currentQuestion: battleStatus.currentQuestion, // Also include at top level for backwards compatibility
+        questionPool: battleStatus.questionPool,
         statusChange,
         timestamp: new Date().toISOString()
       });
@@ -259,12 +269,37 @@ export class WebSocketBroadcastService {
         const player: Player = {
           userId,
           username: userInfo?.displayName || userId, // Use display name or fallback to userId
+          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${userId}`, // Generate avatar from userId
           testsPassed: participation?.tests_passed || 0,
           joinedAt: participation?.joined_at || new Date().toISOString(),
           isConnected: ws.readyState === WebSocket.OPEN
         };
         players.push(player);
       });
+
+      // Add bot players if there's a current battle
+      if (currentBattle) {
+        const botsInBattle = BotPlayerService.getBotsInBattle(currentBattle.id);
+        log.info(`Found ${botsInBattle.length} bots for battle ${currentBattle.id}`);
+        
+        botsInBattle.forEach(bot => {
+          const botInfo = BotPlayerService.getBotInfo(bot.id);
+          const participation = participationMap.get(bot.id);
+          
+          log.info(`Adding bot to player list: ${bot.username} (${bot.id})`);
+          
+          const botPlayer: Player = {
+            userId: bot.id,
+            username: bot.username,
+            avatar: bot.avatar, // Include bot avatar
+            testsPassed: participation?.tests_passed || botInfo?.currentTestsPassed || 0,
+            joinedAt: participation?.joined_at || new Date().toISOString(),
+            isConnected: true, // Bots are always "connected"
+            isBot: true // Mark as bot for frontend (optional display)
+          };
+          players.push(botPlayer);
+        });
+      }
 
     } catch (error) {
       log.error('Error in getAllPlayers:', error);
@@ -274,6 +309,7 @@ export class WebSocketBroadcastService {
         const player: Player = {
           userId,
           username: userId, // Use userId as fallback
+          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${userId}`, // Generate avatar from userId
           testsPassed: 0, // Default when no participation data available
           joinedAt: new Date().toISOString(), // Default to now
           isConnected: ws.readyState === WebSocket.OPEN

@@ -6,13 +6,14 @@ import {
   UserWallet,
   UserAttack,
 } from "@webdevinterviews/shared";
-import { useBattle } from "../hooks/battle/index";
+import { useBattle, type BattleCountdown } from "../hooks/battle/index";
 
 interface BattleContextType {
   battle: Battle | null;
   isAdmin: boolean;
   error: string | null;
   loading: boolean;
+  countdown: BattleCountdown | null;
   players: Player[];
   currentPlayerId?: string;
   isConnected: boolean;
@@ -50,6 +51,7 @@ export const BattleProvider: React.FC<{ children: React.ReactNode }> = ({
       isAdmin: battleData.isAdmin,
       error: battleData.error,
       loading: battleData.loading,
+      countdown: battleData.countdown,
       players: battleData.players,
       currentPlayerId: battleData.currentPlayerId,
       isConnected: battleData.isConnected,
@@ -72,6 +74,7 @@ export const BattleProvider: React.FC<{ children: React.ReactNode }> = ({
       battleData.isAdmin,
       battleData.error,
       battleData.loading,
+      battleData.countdown,
       battleData.players,
       battleData.currentPlayerId,
       battleData.isConnected,

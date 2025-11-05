@@ -4,6 +4,7 @@ export { useWebSocket } from './useWebSocket';
 export { useCountdownTimer } from './useCountdownTimer';
 export type {
   BattleStatus,
+  BattleCountdown,
   TestResult
 } from './useBattle';
 export type { WebSocketMessage } from './useWebSocket';

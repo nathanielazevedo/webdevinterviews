@@ -11,6 +11,7 @@ import {
 } from "./components";
 import { useBattleContext } from "../../contexts/BattleContext";
 import { AttackMarket } from "../../components/AttackMarket";
+import { BattleCountdown } from "../../components/BattleCountdown";
 
 const BattleMain: React.FC = () => {
   const navigate = useNavigate();
@@ -56,20 +57,25 @@ const BattleMain: React.FC = () => {
 
           {/* Pre-battle and post-battle layout */}
           {battle?.status === "waiting" && (
-            <Grid container spacing={3}>
-              {/* Side Navigation */}
-              <Grid item xs={12} md={3}>
-                <BattleEntrySideNav
-                  players={players}
-                  currentUserId={currentPlayerId || ""}
-                />
-              </Grid>
+            <>
+              {/* Countdown Timer */}
+              <BattleCountdown />
 
-              {/* Main Content */}
-              <Grid item xs={12} md={9}>
-                <MultiplayerLeaderboard />
+              <Grid container spacing={3}>
+                {/* Side Navigation */}
+                <Grid item xs={12} md={3}>
+                  <BattleEntrySideNav
+                    players={players}
+                    currentUserId={currentPlayerId || ""}
+                  />
+                </Grid>
+
+                {/* Main Content */}
+                <Grid item xs={12} md={9}>
+                  <MultiplayerLeaderboard />
+                </Grid>
               </Grid>
-            </Grid>
+            </>
           )}
 
           {/* Active battle layout with editor */}
