@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Grid, Container, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { ShoppingCart } from "@mui/icons-material";
 import {
   BattleResults,
   ResizableCodingPanels,
@@ -9,9 +10,11 @@ import {
   AdminControls,
 } from "./components";
 import { useBattleContext } from "../../contexts/BattleContext";
+import { AttackMarket } from "../../components/AttackMarket";
 
 const BattleMain: React.FC = () => {
   const navigate = useNavigate();
+  const [marketOpen, setMarketOpen] = useState(false);
   const {
     battle,
     isAdmin,
@@ -20,6 +23,7 @@ const BattleMain: React.FC = () => {
     handleStartBattle,
     handleTestResults,
     handleEndBattle,
+    userWallet,
   } = useBattleContext();
 
   // Calculate winners from player results
@@ -27,16 +31,28 @@ const BattleMain: React.FC = () => {
 
   return (
     <>
+      <AttackMarket open={marketOpen} onClose={() => setMarketOpen(false)} />
+
       <Container maxWidth="xl">
         <Box sx={{ py: 4, pt: 1 }}>
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={() => navigate("/")}
-            sx={{ mb: 2 }}
-          >
-            ← Back to Home
-          </Button>
+          <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => navigate("/")}
+            >
+              ← Back to Home
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              color="primary"
+              startIcon={<ShoppingCart />}
+              onClick={() => setMarketOpen(true)}
+            >
+              Market ({userWallet?.coins || 0} coins)
+            </Button>
+          </Box>
 
           {/* Pre-battle and post-battle layout */}
           {battle?.status === "waiting" && (

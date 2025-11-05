@@ -5,6 +5,8 @@ import { WebSocket } from 'ws';
 import { createBattleRoutes } from './routes/battle.js';
 import { createQuestionsRoutes } from './routes/questions.js';
 import { createLocationRoutes } from './routes/location.js';
+import userPerformanceRoutes from './routes/user-performance.js';
+import attackRoutes from './routes/attack.js';
 import { authenticateToken, optionalAuth } from './middleware/auth.js';
 
 
@@ -29,6 +31,8 @@ export function createApp(_connectedPlayersMap: Map<string, WebSocket>): express
   app.use('/battle', authenticateToken, createBattleRoutes());
   app.use('/questions', optionalAuth, createQuestionsRoutes());
   app.use('/location', createLocationRoutes());
+  app.use('/user-performance', optionalAuth, userPerformanceRoutes);
+  app.use('/attacks', optionalAuth, attackRoutes);
 
   return app;
 }

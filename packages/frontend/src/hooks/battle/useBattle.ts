@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { api } from '../../api/client';
 import { useWebSocket, type WebSocketMessage } from './useWebSocket';
-import type { Player, Battle } from '@webdevinterviews/shared';
+import type { Player, Battle, AttackType, UserWallet, UserAttack } from '@webdevinterviews/shared';
 
 export interface BattleStatus {
   status: 'waiting' | 'active' | 'completed' | 'no-battle';
@@ -50,6 +50,13 @@ export const useBattle = () => {
   const [battleHistory, setBattleHistory] = useState<Battle[]>([]);
   const [battleHistoryLoading, setBattleHistoryLoading] = useState(false);
   const [battleHistoryError, setBattleHistoryError] = useState<string | null>(null);
+
+  // Attack system state
+  const [availableAttacks, setAvailableAttacks] = useState<AttackType[]>([]);
+  const [userWallet, setUserWallet] = useState<UserWallet | null>(null);
+  const [userInventory, setUserInventory] = useState<UserAttack[]>([]);
+  const [attacksLoading, setAttacksLoading] = useState(false);
+  const [attacksError, setAttacksError] = useState<string | null>(null);
 
   // WebSocket message handler - synchronized with backend WebSocketMessageHandler
   const handleWebSocketMessage = useCallback((message: WebSocketMessage) => {
@@ -194,6 +201,65 @@ export const useBattle = () => {
     }
   }, []);
 
+  // Attack system management
+  const fetchAvailableAttacks = useCallback(async () => {
+    try {
+      setAttacksLoading(true);
+      setAttacksError(null);
+      
+      const response = await api.getAvailableAttacks();
+      if (response.success && response.data) {
+        setAvailableAttacks(response.data.attacks);
+      }
+    } catch (error) {
+      console.error('Error fetching available attacks:', error);
+      setAttacksError('Failed to fetch available attacks');
+    } finally {
+      setAttacksLoading(false);
+    }
+  }, []);
+
+  const fetchUserWallet = useCallback(async () => {
+    if (!session?.user?.id) return;
+    
+    try {
+      const response = await api.getUserWallet();
+      if (response.success && response.data) {
+        setUserWallet(response.data.wallet);
+      }
+    } catch (error) {
+      console.error('Error fetching user wallet:', error);
+    }
+  }, [session?.user?.id]);
+
+  const fetchUserInventory = useCallback(async () => {
+    if (!session?.user?.id) return;
+    
+    try {
+      const response = await api.getUserInventory();
+      if (response.success && response.data) {
+        setUserInventory(response.data.attacks);
+      }
+    } catch (error) {
+      console.error('Error fetching user inventory:', error);
+    }
+  }, [session?.user?.id]);
+
+  const refreshAttackData = useCallback(async () => {
+    await Promise.all([
+      fetchAvailableAttacks(),
+      fetchUserWallet(),
+      fetchUserInventory(),
+    ]);
+  }, [fetchAvailableAttacks, fetchUserWallet, fetchUserInventory]);
+
+  // Fetch attack data on mount if user is authenticated
+  useEffect(() => {
+    if (session?.user?.id) {
+      refreshAttackData();
+    }
+  }, [session?.user?.id, refreshAttackData]);
+
   // Load initial battle info on mount - simplified without getCurrentBattle for now
   useEffect(() => {
     setBattleState(prev => ({ ...prev, loading: false }));
@@ -232,6 +298,16 @@ export const useBattle = () => {
     battleHistory,
     battleHistoryLoading,
     battleHistoryError,
+    // Attack system
+    availableAttacks,
+    userWallet,
+    userInventory,
+    attacksLoading,
+    attacksError,
+    fetchAvailableAttacks,
+    fetchUserWallet,
+    fetchUserInventory,
+    refreshAttackData,
   }), [
     memoizedBattle,
     players,
@@ -247,5 +323,14 @@ export const useBattle = () => {
     battleHistory,
     battleHistoryLoading,
     battleHistoryError,
+    availableAttacks,
+    userWallet,
+    userInventory,
+    attacksLoading,
+    attacksError,
+    fetchAvailableAttacks,
+    fetchUserWallet,
+    fetchUserInventory,
+    refreshAttackData,
   ]);
 };

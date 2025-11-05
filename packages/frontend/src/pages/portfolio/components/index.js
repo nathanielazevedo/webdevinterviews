@@ -8,6 +8,7 @@ import Works from './Works';
 import Feedbacks from './Feedbacks';
 import Contact from './Contact';
 import GlobeComponent from './GlobeComponent';
+import BattleAd from './BattleAd';
 export {
   Hero,
   Navbar,
@@ -20,5 +21,6 @@ export {
   EarthCanvas, 
   BallCanvas, 
   StarsCanvas,
-  GlobeComponent
+  GlobeComponent,
+  BattleAd
 }

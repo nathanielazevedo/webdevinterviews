@@ -10,3 +10,6 @@ export * from "./types/websocket";
 
 // Export API types
 export * from "./types/api";
+
+// Export attack types
+export * from "./types/attack";

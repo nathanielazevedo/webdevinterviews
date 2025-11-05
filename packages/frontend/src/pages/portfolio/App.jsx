@@ -1,4 +1,3 @@
-import { BrowserRouter } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 import {
   About,
@@ -7,10 +6,10 @@ import {
   Feedbacks,
   GlobeComponent,
   Hero,
-  Navbar,
   Tech,
   Works,
   StarsCanvas,
+  BattleAd,
 } from "./components";
 
 const Portfolio = () => {
@@ -28,6 +27,7 @@ const Portfolio = () => {
       }}
     >
       <Hero />
+      <BattleAd />
       <GlobeComponent />
       <About />
       <Experience />

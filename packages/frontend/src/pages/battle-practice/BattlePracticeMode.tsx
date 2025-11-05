@@ -6,14 +6,21 @@ import {
   Button,
   useTheme,
   IconButton,
-  Breadcrumbs,
-  Link as MuiLink,
 } from "@mui/material";
-import { ArrowBack, BugReport, Home } from "@mui/icons-material";
-import { Link, useParams } from "react-router-dom";
+import { ArrowBack, BugReport, Timer, EmojiEvents } from "@mui/icons-material";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import MonacoCodeEditor from "../../pages/battle/components/MonacoCodeEditor";
 import TestRunner from "../../pages/battle/components/TestRunner";
 import { useBattlePractice } from "../../hooks/battle";
+import { DrillProgressBar } from "../../components/DrillProgressBar";
+import { api, type UserPerformanceData } from "../../api/client";
+import { createClient } from "@supabase/supabase-js";
+
+// Initialize Supabase client
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
 
 interface TestResults {
   testCases: { passed: boolean }[];
@@ -22,7 +29,150 @@ interface TestResults {
 const BattlePracticeMode: React.FC = () => {
   const theme = useTheme();
   const { questionId } = useParams<{ questionId: string }>();
-  const { questions, loading } = useBattlePractice();
+  const [searchParams] = useSearchParams();
+  const { questions, nextBattleQuestions, loading } = useBattlePractice();
+
+  // Check if we're in drill mode
+  const isDrillMode = searchParams.get("mode") === "drill";
+
+  // User authentication state
+  const [userId, setUserId] = useState<string | null>(null);
+
+  // Get drill progress from localStorage
+  const [drillProgress, setDrillProgress] = useState<
+    Record<string, "completed" | "failed" | "pending">
+  >({});
+
+  // Timer state
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [elapsedTime, setElapsedTime] = useState<number>(0);
+  const [isTimerActive, setIsTimerActive] = useState<boolean>(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // User performance state
+  const [userPerformance, setUserPerformance] =
+    useState<UserPerformanceData | null>(null);
+  const [isLoadingPerformance, setIsLoadingPerformance] =
+    useState<boolean>(false);
+
+  // Find the current question
+  const currentQuestion = questions.find(
+    (q) => q.id === parseInt(questionId || "0")
+  );
+
+  // Get drill progress from localStorage
+  useEffect(() => {
+    const savedProgress = localStorage.getItem("battleDrillProgress");
+    if (savedProgress) {
+      setDrillProgress(JSON.parse(savedProgress));
+    }
+  }, []);
+
+  // Get user authentication state
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session?.user?.id) {
+        setUserId(session.user.id);
+      }
+    };
+    getUser();
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUserId(session?.user?.id || null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Load user performance data when user and question are available
+  useEffect(() => {
+    const loadPerformanceData = async () => {
+      if (!userId || !currentQuestion) return;
+
+      setIsLoadingPerformance(true);
+      try {
+        const response = await api.getUserQuestionPerformance(
+          userId,
+          currentQuestion.id
+        );
+        if (response.success && response.data) {
+          setUserPerformance(response.data);
+        } else {
+          setUserPerformance(null);
+        }
+      } catch (error) {
+        // Silently handle error
+        setUserPerformance(null);
+      } finally {
+        setIsLoadingPerformance(false);
+      }
+    };
+
+    loadPerformanceData();
+  }, [userId, currentQuestion?.id]);
+
+  // Load drill progress from localStorage
+  useEffect(() => {
+    const savedProgress = localStorage.getItem("battleDrillProgress");
+    if (savedProgress) {
+      setDrillProgress(JSON.parse(savedProgress));
+    }
+  }, []);
+
+  // Get user authentication state
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session?.user?.id) {
+        setUserId(session.user.id);
+      }
+    };
+    getUser();
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUserId(session?.user?.id || null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Load user performance data when user and question are available
+  useEffect(() => {
+    const loadPerformanceData = async () => {
+      if (!userId || !currentQuestion) return;
+
+      setIsLoadingPerformance(true);
+      try {
+        const response = await api.getUserQuestionPerformance(
+          userId,
+          currentQuestion.id
+        );
+        if (response.success && response.data) {
+          setUserPerformance(response.data);
+        } else {
+          setUserPerformance(null);
+        }
+      } catch (error) {
+        // Silently handle error
+        setUserPerformance(null);
+      } finally {
+        setIsLoadingPerformance(false);
+      }
+    };
+
+    loadPerformanceData();
+  }, [userId, currentQuestion?.id]);
 
   const [code, setCode] = useState(`function solution() {
     // Write your solution here
@@ -35,17 +185,118 @@ const BattlePracticeMode: React.FC = () => {
   const isDraggingVertical = useRef(false);
   const isDraggingHorizontal = useRef(false);
 
-  // Find the current question
-  const currentQuestion = questions.find(
-    (q) => q.id === parseInt(questionId || "0")
-  );
-
-  // Set initial code based on question
+  // Load saved code from localStorage or set initial code based on question
   useEffect(() => {
-    if (currentQuestion?.function_signature) {
-      setCode(`${currentQuestion.function_signature}`);
+    if (currentQuestion) {
+      const savedCodeKey = `battlePractice_code_${currentQuestion.id}`;
+      const savedCode = localStorage.getItem(savedCodeKey);
+
+      if (savedCode) {
+        // Load previously saved code
+        setCode(savedCode);
+      } else if (currentQuestion.function_signature) {
+        // Use function signature as default
+        setCode(`${currentQuestion.function_signature}`);
+      }
     }
   }, [currentQuestion]);
+
+  // Timer logic
+  useEffect(() => {
+    if (isTimerActive && startTime) {
+      timerRef.current = setInterval(() => {
+        setElapsedTime(Date.now() - startTime);
+      }, 100); // Update every 100ms for smooth display
+
+      return () => {
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+        }
+      };
+    } else if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+  }, [isTimerActive, startTime]);
+
+  // Start timer when user first interacts with code
+  const handleCodeChange = useCallback(
+    (newCode: string) => {
+      setCode(newCode);
+
+      if (currentQuestion) {
+        const savedCodeKey = `battlePractice_code_${currentQuestion.id}`;
+        localStorage.setItem(savedCodeKey, newCode);
+
+        // Start timer on first code change if not already started
+        if (!isTimerActive && !startTime) {
+          const now = Date.now();
+          setStartTime(now);
+          setIsTimerActive(true);
+          setElapsedTime(0);
+        }
+      }
+    },
+    [currentQuestion, isTimerActive, startTime]
+  );
+
+  // Reset timer when switching questions
+  useEffect(() => {
+    setStartTime(null);
+    setElapsedTime(0);
+    setIsTimerActive(false);
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+  }, [questionId]);
+
+  // Format time display
+  const formatTime = useCallback((timeMs: number) => {
+    const totalSeconds = Math.floor(timeMs / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    const milliseconds = Math.floor((timeMs % 1000) / 10);
+
+    if (minutes > 0) {
+      return `${minutes}:${seconds.toString().padStart(2, "0")}.${milliseconds
+        .toString()
+        .padStart(2, "0")}`;
+    }
+    return `${seconds}.${milliseconds.toString().padStart(2, "0")}s`;
+  }, []);
+
+  // Handle test completion
+  const handleTestComplete = useCallback(
+    async (results: TestResults) => {
+      if (!userId || !currentQuestion) return;
+
+      const allTestsPassed = results.testCases.every((test) => test.passed);
+      const completionTime =
+        isTimerActive && startTime ? Date.now() - startTime : undefined;
+
+      try {
+        // Record the attempt in the database
+        const response = await api.recordQuestionAttempt({
+          questionId: currentQuestion.id,
+          userId,
+          completionTimeMs: allTestsPassed ? completionTime : undefined,
+          isSuccessful: allTestsPassed,
+        });
+
+        if (response.success && response.data) {
+          setUserPerformance(response.data);
+
+          // Stop timer if all tests passed
+          if (allTestsPassed && isTimerActive) {
+            setIsTimerActive(false);
+          }
+        }
+      } catch (error) {
+        // Silently handle error - don't interrupt user experience
+        // Error logging would go here in production
+      }
+    },
+    [userId, currentQuestion, isTimerActive, startTime]
+  );
 
   // Handle vertical resizer (between problem and editor panels)
   const handleVerticalMouseDown = useCallback((e: React.MouseEvent) => {
@@ -103,9 +354,13 @@ const BattlePracticeMode: React.FC = () => {
     document.addEventListener("mouseup", handleMouseUp);
   }, []);
 
-  const handleTest = useCallback((_results: TestResults) => {
-    // Handle test results - could add analytics or progress tracking here
-  }, []);
+  const handleTest = useCallback(
+    (results: TestResults) => {
+      // Handle test results - could add analytics or progress tracking here
+      handleTestComplete(results);
+    },
+    [handleTestComplete]
+  );
 
   if (loading) {
     return (
@@ -169,69 +424,137 @@ const BattlePracticeMode: React.FC = () => {
       <Paper
         elevation={2}
         sx={{
-          p: 1.5,
           borderRadius: 0,
           borderBottom: `1px solid ${theme.palette.divider}`,
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
-          <IconButton component={Link} to="/battle-practice" size="small">
-            <ArrowBack />
-          </IconButton>
-
-          <Breadcrumbs aria-label="breadcrumb" sx={{ fontSize: "0.875rem" }}>
-            <MuiLink
-              component={Link}
-              to="/"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 0.5,
-                fontSize: "inherit",
-              }}
-            >
-              <Home fontSize="small" />
-              Home
-            </MuiLink>
-            <MuiLink
-              component={Link}
-              to="/battle-practice"
-              sx={{ fontSize: "inherit" }}
-            >
-              Practice
-            </MuiLink>
-            <Typography color="text.primary" sx={{ fontSize: "inherit" }}>
-              {currentQuestion.title}
-            </Typography>
-          </Breadcrumbs>
-        </Box>
-
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-          <Typography variant="h6" fontWeight="bold">
-            {currentQuestion.title}
-          </Typography>
+        <Box sx={{ p: 1.5 }}>
+          {/* Top row with leave button and drill progress */}
           <Box
             sx={{
-              px: 1.5,
-              py: 0.25,
-              borderRadius: 1,
-              backgroundColor: getDifficultyColor(currentQuestion.difficulty),
-              color: "white",
-              fontSize: "0.75rem",
-              fontWeight: 500,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              mb: 1,
             }}
           >
-            {currentQuestion.difficulty}
-          </Box>
-          {currentQuestion.leetcode_number && (
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ fontSize: "0.875rem" }}
+            <IconButton
+              component={Link}
+              to="/battle-practice"
+              size="small"
+              sx={{
+                bgcolor: "action.hover",
+                "&:hover": { bgcolor: "action.selected" },
+              }}
             >
-              #{currentQuestion.leetcode_number}
-            </Typography>
-          )}
+              <ArrowBack />
+            </IconButton>
+
+            {/* Drill Progress Bar (when in drill mode) */}
+            {isDrillMode &&
+              nextBattleQuestions &&
+              nextBattleQuestions.length > 0 && (
+                <DrillProgressBar
+                  nextBattleQuestions={nextBattleQuestions}
+                  drillProgress={drillProgress}
+                  currentQuestionId={questionId}
+                  dotsOnly={true}
+                />
+              )}
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+              <Typography variant="h6" fontWeight="bold">
+                {currentQuestion.title}
+              </Typography>
+              <Box
+                sx={{
+                  px: 1.5,
+                  py: 0.25,
+                  borderRadius: 1,
+                  backgroundColor: getDifficultyColor(
+                    currentQuestion.difficulty
+                  ),
+                  color: "white",
+                  fontSize: "0.75rem",
+                  fontWeight: 500,
+                }}
+              >
+                {currentQuestion.difficulty}
+              </Box>
+              {currentQuestion.leetcode_number && (
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ fontSize: "0.875rem" }}
+                >
+                  #{currentQuestion.leetcode_number}
+                </Typography>
+              )}
+            </Box>
+
+            {/* Timer Display */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              {isTimerActive && (
+                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                  <Timer sx={{ fontSize: "1rem", color: "primary.main" }} />
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontFamily: "monospace",
+                      fontWeight: "bold",
+                      color: "primary.main",
+                    }}
+                  >
+                    {formatTime(elapsedTime)}
+                  </Typography>
+                </Box>
+              )}
+
+              {userPerformance && (
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  {userPerformance.fastestCompletionMs && (
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+                    >
+                      <EmojiEvents sx={{ fontSize: "1rem", color: "gold" }} />
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontFamily: "monospace",
+                          fontSize: "0.8rem",
+                          color: "text.secondary",
+                        }}
+                      >
+                        Best: {formatTime(userPerformance.fastestCompletionMs)}
+                      </Typography>
+                    </Box>
+                  )}
+
+                  {userPerformance.totalAttempts > 0 && (
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontSize: "0.75rem",
+                        color: "text.secondary",
+                      }}
+                    >
+                      ({userPerformance.successfulAttempts}/
+                      {userPerformance.totalAttempts} solved)
+                    </Typography>
+                  )}
+                </Box>
+              )}
+            </Box>
+          </Box>
         </Box>
       </Paper>
 
@@ -378,7 +701,7 @@ const BattlePracticeMode: React.FC = () => {
               <MonacoCodeEditor
                 key={`editor-${problemWidth}-${editorHeight}`}
                 value={code}
-                onChange={setCode}
+                onChange={handleCodeChange}
                 language="javascript"
                 placeholder=""
               />

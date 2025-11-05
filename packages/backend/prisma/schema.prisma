@@ -68,7 +68,8 @@ model Question {
 
   // Relations
   battlePools        BattleQuestionPool[]
-  selectedForBattles Battle[]             @relation("SelectedQuestion")
+  selectedForBattles Battle[]                  @relation("SelectedQuestion")
+  userPerformances   UserQuestionPerformance[]
 
   @@map("questions")
 }
@@ -98,6 +99,107 @@ model LocationPoint {
 
   @@unique([latitude, longitude])
   @@map("location_points")
+}
+
+model UserQuestionPerformance {
+  id                    Int      @id @default(autoincrement())
+  user_id               String   @db.Uuid
+  question_id           Int
+  fastest_completion_ms Int? // Fastest completion time in milliseconds
+  total_attempts        Int      @default(0)
+  successful_attempts   Int      @default(0)
+  last_attempted_at     DateTime @default(now()) @db.Timestamptz(6)
+  created_at            DateTime @default(now()) @db.Timestamptz(6)
+  updated_at            DateTime @updatedAt @db.Timestamptz(6)
+
+  // Relations
+  question Question @relation(fields: [question_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, question_id])
+  @@map("user_question_performance")
+}
+
+// Battle Attacks/Power-ups System
+model UserWallet {
+  id         Int      @id @default(autoincrement())
+  user_id    String   @unique @db.Uuid
+  coins      Int      @default(100) // Starting coins
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @updatedAt @db.Timestamptz(6)
+
+  // Relations
+  userAttacks UserAttack[]
+  attackUsage AttackUsage[]
+
+  @@map("user_wallets")
+}
+
+model AttackType {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique // e.g., "Code Eraser", "Freeze Ray", "Time Bomb"
+  description String   @db.Text
+  cost        Int // Cost in coins
+  duration_ms Int? // Duration of effect in milliseconds (null for instant)
+  cooldown_ms Int? // Cooldown before same attack can be used again
+  target_type String // "all" | "individual" | "self"
+  effect_type String // "erase_code" | "freeze_input" | "slow_typing" | "extra_time" | "hints"
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime @updatedAt @db.Timestamptz(6)
+
+  // Relations
+  userAttacks      UserAttack[]
+  attackUsage      AttackUsage[]
+  battleAttackLogs BattleAttackLog[]
+
+  @@map("attack_types")
+}
+
+model UserAttack {
+  id             Int      @id @default(autoincrement())
+  user_id        String   @db.Uuid
+  attack_type_id Int
+  quantity       Int      @default(1) // How many of this attack the user owns
+  purchased_at   DateTime @default(now()) @db.Timestamptz(6)
+
+  // Relations
+  userWallet UserWallet @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  attackType AttackType @relation(fields: [attack_type_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, attack_type_id])
+  @@map("user_attacks")
+}
+
+model AttackUsage {
+  id             Int       @id @default(autoincrement())
+  user_id        String    @db.Uuid // User who used the attack
+  battle_id      String    @db.Uuid
+  attack_type_id Int
+  target_user_id String?   @db.Uuid // Null if targeting all or self
+  used_at        DateTime  @default(now()) @db.Timestamptz(6)
+  effect_ends_at DateTime? // When the effect expires (for timed effects)
+
+  // Relations
+  userWallet UserWallet @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  attackType AttackType @relation(fields: [attack_type_id], references: [id], onDelete: Cascade)
+
+  @@map("attack_usage")
+}
+
+model BattleAttackLog {
+  id             Int       @id @default(autoincrement())
+  battle_id      String    @db.Uuid
+  attacker_id    String    @db.Uuid
+  attack_type_id Int
+  target_user_id String?   @db.Uuid // Null if targeting all
+  effect_data    Json? // Store any additional effect parameters
+  created_at     DateTime  @default(now()) @db.Timestamptz(6)
+  expires_at     DateTime? // When this effect expires
+
+  // Relations
+  attackType AttackType @relation(fields: [attack_type_id], references: [id], onDelete: Cascade)
+
+  @@map("battle_attack_logs")
 }
 
 // Views (if you want to include them)

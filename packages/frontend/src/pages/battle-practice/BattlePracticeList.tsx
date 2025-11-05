@@ -2,35 +2,56 @@ import {
   Container,
   Typography,
   Box,
-  Card,
-  CardContent,
-  Chip,
-  Grid,
   CircularProgress,
   Alert,
   Button,
 } from "@mui/material";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useBattlePractice } from "../../hooks/battle";
+import { QuestionTabs, DrillProgressSection, QuestionGrid } from "./components";
+import { useUserPerformance } from "./hooks/useUserPerformance";
+import { useDrillProgress } from "./hooks/useDrillProgress";
 
 const BattlePracticeList = () => {
-  const { questions, loading, error, refetch } = useBattlePractice();
+  const { questions, nextBattleQuestions, loading, error, refetch } =
+    useBattlePractice();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState(0);
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty.toLowerCase()) {
-      case "easy":
-        return "success";
-      case "medium":
-        return "warning";
-      case "hard":
-        return "error";
-      default:
-        return "default";
-    }
+  // Custom hooks for drill progress and user performance
+  const { drillProgress, setDrillProgress } = useDrillProgress();
+
+  // Memoize displayedQuestions to prevent useEffect dependency issues
+  const displayedQuestions = useMemo(() => {
+    return activeTab === 0 ? questions : nextBattleQuestions || [];
+  }, [activeTab, questions, nextBattleQuestions]);
+
+  // Get user performance data for displayed questions
+  const { userId, userPerformances } = useUserPerformance(displayedQuestions);
+
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
+    setActiveTab(newValue);
   };
 
-  const displayedQuestions = questions;
+  const startBattleDrill = () => {
+    if (nextBattleQuestions && nextBattleQuestions.length > 0) {
+      // Reset progress for this drill session
+      const resetProgress: Record<string, "completed" | "failed" | "pending"> =
+        {};
+      nextBattleQuestions.forEach((q) => {
+        resetProgress[q.id.toString()] = "pending";
+      });
+      setDrillProgress(resetProgress);
+
+      // Navigate to first question in drill mode
+      navigate(
+        `/battle-practice/${
+          nextBattleQuestions[0].id
+        }?mode=drill&pool=${nextBattleQuestions.map((q) => q.id).join(",")}`
+      );
+    }
+  };
 
   if (loading) {
     return (
@@ -70,87 +91,28 @@ const BattlePracticeList = () => {
         question to start practicing.
       </Typography>
 
-      <Grid container spacing={3}>
-        {displayedQuestions.map((question) => (
-          <Grid item xs={12} sm={6} md={4} key={question.id}>
-            <Card
-              sx={{
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                cursor: "pointer",
-                transition: "all 0.2s ease-in-out",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                  boxShadow: (theme) => theme.shadows[8],
-                },
-              }}
-              onClick={() => {
-                navigate(`/battle-practice/${question.id}`);
-              }}
-            >
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Box sx={{ mb: 2 }}>
-                  <Chip
-                    label={question.difficulty}
-                    color={getDifficultyColor(question.difficulty)}
-                    size="small"
-                    sx={{ mb: 1 }}
-                  />
-                  {question.leetcode_number && (
-                    <Chip
-                      label={`#${question.leetcode_number}`}
-                      variant="outlined"
-                      size="small"
-                      sx={{ ml: 1 }}
-                    />
-                  )}
-                </Box>
+      {/* Tabs for All Questions vs Battle Pool */}
+      <QuestionTabs
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+        nextBattleQuestionsCount={nextBattleQuestions?.length || 0}
+      />
 
-                <Typography variant="h6" component="h2" gutterBottom>
-                  {question.title}
-                </Typography>
+      {/* Battle Drill Progress and Mode */}
+      {activeTab === 1 && (
+        <DrillProgressSection
+          nextBattleQuestions={nextBattleQuestions || []}
+          drillProgress={drillProgress}
+          onStartDrill={startBattleDrill}
+        />
+      )}
 
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{
-                    mb: 2,
-                    display: "-webkit-box",
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
-                  }}
-                >
-                  {question.problem_statement.substring(0, 150)}...
-                </Typography>
-
-                {question.tags && Array.isArray(question.tags) && (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {question.tags.slice(0, 3).map((tag, index) => (
-                      <Chip
-                        key={index}
-                        label={tag}
-                        size="small"
-                        variant="outlined"
-                        sx={{ fontSize: "0.7rem" }}
-                      />
-                    ))}
-                    {question.tags.length > 3 && (
-                      <Chip
-                        label={`+${question.tags.length - 3} more`}
-                        size="small"
-                        variant="outlined"
-                        sx={{ fontSize: "0.7rem" }}
-                      />
-                    )}
-                  </Box>
-                )}
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      {/* Questions Grid */}
+      <QuestionGrid
+        questions={displayedQuestions}
+        userPerformances={userPerformances}
+        userId={userId}
+      />
 
       {displayedQuestions.length === 0 && !loading && (
         <Box sx={{ textAlign: "center", py: 8 }}>

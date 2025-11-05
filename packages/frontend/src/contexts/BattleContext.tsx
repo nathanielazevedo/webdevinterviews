@@ -1,5 +1,11 @@
 import React, { createContext, useContext, useMemo } from "react";
-import { Player, Battle } from "@webdevinterviews/shared";
+import {
+  Player,
+  Battle,
+  AttackType,
+  UserWallet,
+  UserAttack,
+} from "@webdevinterviews/shared";
 import { useBattle } from "../hooks/battle/index";
 
 interface BattleContextType {
@@ -19,6 +25,16 @@ interface BattleContextType {
     testsPassed: number;
   }) => void;
   handleEndBattle: () => void;
+  // Attack system
+  availableAttacks: AttackType[];
+  userWallet: UserWallet | null;
+  userInventory: UserAttack[];
+  attacksLoading: boolean;
+  attacksError: string | null;
+  fetchAvailableAttacks: () => Promise<void>;
+  fetchUserWallet: () => Promise<void>;
+  fetchUserInventory: () => Promise<void>;
+  refreshAttackData: () => Promise<void>;
 }
 
 const BattleContext = createContext<BattleContextType | undefined>(undefined);
@@ -40,6 +56,16 @@ export const BattleProvider: React.FC<{ children: React.ReactNode }> = ({
       handleStartBattle: battleData.handleStartBattle,
       handleTestResults: battleData.handleTestResults,
       handleEndBattle: battleData.handleEndBattle,
+      // Attack system
+      availableAttacks: battleData.availableAttacks,
+      userWallet: battleData.userWallet,
+      userInventory: battleData.userInventory,
+      attacksLoading: battleData.attacksLoading,
+      attacksError: battleData.attacksError,
+      fetchAvailableAttacks: battleData.fetchAvailableAttacks,
+      fetchUserWallet: battleData.fetchUserWallet,
+      fetchUserInventory: battleData.fetchUserInventory,
+      refreshAttackData: battleData.refreshAttackData,
     }),
     [
       battleData.battle,
@@ -52,6 +78,15 @@ export const BattleProvider: React.FC<{ children: React.ReactNode }> = ({
       battleData.handleStartBattle,
       battleData.handleTestResults,
       battleData.handleEndBattle,
+      battleData.availableAttacks,
+      battleData.userWallet,
+      battleData.userInventory,
+      battleData.attacksLoading,
+      battleData.attacksError,
+      battleData.fetchAvailableAttacks,
+      battleData.fetchUserWallet,
+      battleData.fetchUserInventory,
+      battleData.refreshAttackData,
     ]
   );
 

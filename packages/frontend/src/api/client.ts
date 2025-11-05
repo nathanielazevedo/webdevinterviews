@@ -5,7 +5,15 @@ import type {
   BattleHistoryResponse,
   LocationPoint,
   HealthCheckResponse,
-  ApiResponse
+  ApiResponse,
+  AttackType,
+  UserWallet,
+  UserAttack,
+  BattleAttackLog,
+  PurchaseAttackRequest,
+  UseAttackRequest,
+  PurchaseAttackResponse,
+  UseAttackResponse,
 } from '@webdevinterviews/shared';
 
 // Re-export ApiError for convenience
@@ -129,6 +137,30 @@ export const apiClient = new ApiClient();
 // Export the class for custom instances
 export { ApiClient };
 
+// Define types for user performance
+export interface UserPerformanceData {
+  questionId: number;
+  fastestCompletionMs: number | null;
+  totalAttempts: number;
+  successfulAttempts: number;
+  lastAttemptedAt: string;
+}
+
+export interface QuestionAttempt {
+  questionId: number;
+  userId: string;
+  completionTimeMs?: number;
+  isSuccessful: boolean;
+}
+
+export interface LeaderboardEntry {
+  rank: number;
+  userId: string;
+  completionTimeMs: number;
+  totalAttempts: number;
+  successfulAttempts: number;
+}
+
 // Convenience functions for common endpoints
 export const api = {
   // Battle endpoints
@@ -138,11 +170,51 @@ export const api = {
   },
 
   // Questions endpoints
-  getAllQuestions: () => apiClient.get<ApiResponse<{ questions: Question[] }>>('/questions'),
+  getAllQuestions: () => apiClient.get<ApiResponse<{ questions: Question[]; nextBattleQuestions: Question[] | null }>>('/questions'),
 
   // Location endpoints
   getLocationPoints: () => apiClient.get<LocationPoint[]>('/location/points'),
   geocodeLocation: () => apiClient.post<LocationPoint>('/location/geocode', {}),
+
+  // User Performance endpoints
+  recordQuestionAttempt: (attempt: QuestionAttempt) => 
+    apiClient.post<ApiResponse<UserPerformanceData>>('/user-performance/record-attempt', attempt),
+  
+  getUserQuestionPerformance: (userId: string, questionId: number) => 
+    apiClient.get<ApiResponse<UserPerformanceData | null>>(`/user-performance/${userId}/question/${questionId}`),
+  
+  getUserOverallPerformance: (userId: string) => 
+    apiClient.get<ApiResponse<UserPerformanceData[]>>(`/user-performance/${userId}/overall`),
+  
+  getQuestionLeaderboard: (questionId: number, limit?: number) => {
+    const params = limit ? `?limit=${limit}` : '';
+    return apiClient.get<ApiResponse<LeaderboardEntry[]>>(`/user-performance/leaderboard/question/${questionId}${params}`);
+  },
+  
+  getUserBestTimes: (userId: string, questionIds: number[]) => 
+    apiClient.post<ApiResponse<Record<number, number | null>>>(`/user-performance/${userId}/best-times`, { questionIds }),
+
+  // Attack system endpoints
+  getAvailableAttacks: () => 
+    apiClient.get<ApiResponse<{ attacks: AttackType[] }>>('/attacks'),
+  
+  getAttackById: (attackId: number) => 
+    apiClient.get<ApiResponse<{ attack: AttackType }>>(`/attacks/${attackId}`),
+  
+  getUserWallet: () => 
+    apiClient.get<ApiResponse<{ wallet: UserWallet }>>('/attacks/user/wallet'),
+  
+  getUserInventory: () => 
+    apiClient.get<ApiResponse<{ attacks: UserAttack[] }>>('/attacks/user/inventory'),
+  
+  purchaseAttack: (request: PurchaseAttackRequest) => 
+    apiClient.post<ApiResponse<PurchaseAttackResponse>>('/attacks/purchase', request),
+  
+  useAttack: (request: UseAttackRequest) => 
+    apiClient.post<ApiResponse<UseAttackResponse>>('/attacks/use', request),
+  
+  getBattleEffects: (battleId: string) => 
+    apiClient.get<ApiResponse<{ effects: BattleAttackLog[] }>>(`/attacks/battle/${battleId}/effects`),
 
   // Health check
   healthCheck: () => apiClient.get<HealthCheckResponse>('/'),
