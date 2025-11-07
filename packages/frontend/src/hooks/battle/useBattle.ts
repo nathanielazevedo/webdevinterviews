@@ -95,10 +95,18 @@ export const useBattle = () => {
         break;
 
       case 'battle-started':
-        // Backend sends simple battle-started message
+        // Backend sends battle-started message with battle data
+        const startedBattleData = (message as any).battle;
         setBattleState(prev => ({ 
           ...prev, 
-          battle: prev.battle ? { ...prev.battle, status: 'active' } : null
+          battle: prev.battle ? { 
+            ...prev.battle, 
+            status: 'active',
+            started_at: startedBattleData?.started_at || prev.battle.started_at,
+            duration_minutes: startedBattleData?.duration_minutes || prev.battle.duration_minutes,
+            auto_end_time: startedBattleData?.auto_end_time || prev.battle.auto_end_time,
+            selectedQuestion: startedBattleData?.selectedQuestion || prev.battle.selectedQuestion
+          } : null
         }));
         // Clear countdown when battle starts
         setCountdown(null);

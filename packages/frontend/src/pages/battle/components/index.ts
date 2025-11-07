@@ -10,3 +10,6 @@ export { default as MultiplayerLeaderboard } from './MultiplayerLeaderboard';
 export { default as AdminPanel } from './AdminPanel';
 export { default as BattleEntrySideNav } from './BattleEntrySideNav';
 export { AdminControls } from './AdminControls';
+export { PreBattleScreen } from './PreBattleScreen';
+export { BattleLobby } from './BattleLobby';
+export { BattleTimer } from './BattleTimer';

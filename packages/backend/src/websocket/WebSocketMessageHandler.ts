@@ -137,12 +137,25 @@ export class WebSocketMessageHandler {
       }
 
       // Start the battle
-      await BattleService.startBattle(userId);
+      const startedBattle = await BattleService.startBattle(userId);
       
-      // Broadcast battle start to all participants
+      // Broadcast battle start to all participants with full battle data
       this.sendToBattleParticipants({
-        type: 'battle-started'
+        type: 'battle-started',
+        battle: {
+          id: startedBattle.id,
+          status: startedBattle.status,
+          started_at: startedBattle.started_at,
+          duration_minutes: startedBattle.duration_minutes,
+          auto_end_time: startedBattle.auto_end_time,
+          selectedQuestion: startedBattle.selectedQuestion
+        }
       } as WebSocketMessage);
+
+      // Also broadcast the full battle status to ensure everyone has the complete data
+      if (this.broadcastService) {
+        await this.broadcastService.broadcastBattleStatus('battle-started');
+      }
 
 
     } catch (error) {
