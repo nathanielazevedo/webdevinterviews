@@ -46,13 +46,7 @@ const DrillCard = ({ drill }) => {
           >
             {drill.icon}
           </Box>
-          <Typography
-            variant="h5"
-            fontWeight="700"
-            sx={{
-              color: drill.color || "text.primary",
-            }}
-          >
+          <Typography variant="h5" fontWeight="700">
             {drill.title}
           </Typography>
         </Box>

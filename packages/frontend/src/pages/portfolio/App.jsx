@@ -9,7 +9,6 @@ import {
   Tech,
   Works,
   StarsCanvas,
-  BattleAd,
 } from "./components";
 
 const Portfolio = () => {
@@ -27,7 +26,7 @@ const Portfolio = () => {
       }}
     >
       <Hero />
-      <BattleAd />
+      {/* <BattleAd /> */}
       <GlobeComponent />
       <About />
       <Experience />
