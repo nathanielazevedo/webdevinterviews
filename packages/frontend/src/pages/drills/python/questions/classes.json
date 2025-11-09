@@ -1,0 +1,436 @@
+[
+  {
+    "id": "py-class-basic-1",
+    "title": "Create a Simple Class",
+    "difficulty": "easy",
+    "description": "Create a class named Person.",
+    "setupCode": "",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "<class 'type'>",
+    "testCode": "{user_code}\nprint(type(Person))",
+    "hints": [
+      "Use the class keyword",
+      "Syntax: class ClassName:"
+    ]
+  },
+  {
+    "id": "py-class-init-1",
+    "title": "Add Constructor",
+    "difficulty": "easy",
+    "description": "Create a Person class with __init__ that takes name and age.",
+    "setupCode": "",
+    "starterCode": "# Write your code here\nclass Person:\n    ",
+    "expectedOutput": "Alice 30",
+    "testCode": "{user_code}\np = Person('Alice', 30)\nprint(p.name, p.age)",
+    "hints": [
+      "Use def __init__(self, name, age):",
+      "Store as self.name and self.age"
+    ]
+  },
+  {
+    "id": "py-class-method-1",
+    "title": "Add Instance Method",
+    "difficulty": "easy",
+    "description": "Add a greet() method that returns 'Hello, I am {name}'.",
+    "setupCode": "class Person:\n    def __init__(self, name):\n        self.name = name",
+    "starterCode": "# Write your code here\n    def greet(self):\n        ",
+    "expectedOutput": "Hello, I am Alice",
+    "testCode": "class Person:\n    def __init__(self, name):\n        self.name = name\n{user_code}\np = Person('Alice')\nprint(p.greet())",
+    "hints": [
+      "Use self to access instance attributes",
+      "Return a string with f-string or concatenation"
+    ]
+  },
+  {
+    "id": "py-class-attribute-1",
+    "title": "Add Instance Attribute",
+    "difficulty": "easy",
+    "description": "Add a city attribute in __init__.",
+    "setupCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age",
+    "starterCode": "# Write your code here\n        ",
+    "expectedOutput": "Boston",
+    "testCode": "class Person:\n    def __init__(self, name, age, city):\n        self.name = name\n        self.age = age\n{user_code}\np = Person('Alice', 30, 'Boston')\nprint(p.city)",
+    "hints": [
+      "Add city parameter to __init__",
+      "Assign it to self.city"
+    ]
+  },
+  {
+    "id": "py-class-class-var-1",
+    "title": "Create Class Variable",
+    "difficulty": "easy",
+    "description": "Add a class variable 'species' set to 'Human'.",
+    "setupCode": "",
+    "starterCode": "# Write your code here\nclass Person:\n    ",
+    "expectedOutput": "Human",
+    "testCode": "{user_code}\n    def __init__(self, name):\n        self.name = name\nprint(Person.species)",
+    "hints": [
+      "Define variable at class level, not in __init__",
+      "species = 'Human' inside the class"
+    ]
+  },
+  {
+    "id": "py-class-str-1",
+    "title": "Add String Representation",
+    "difficulty": "easy",
+    "description": "Add __str__ method to return 'Person: {name}'.",
+    "setupCode": "class Person:\n    def __init__(self, name):\n        self.name = name",
+    "starterCode": "# Write your code here\n    def __str__(self):\n        ",
+    "expectedOutput": "Person: Alice",
+    "testCode": "class Person:\n    def __init__(self, name):\n        self.name = name\n{user_code}\np = Person('Alice')\nprint(str(p))",
+    "hints": [
+      "Return a string from __str__",
+      "Use f-string: f'Person: {self.name}'"
+    ]
+  },
+  {
+    "id": "py-class-multiple-methods-1",
+    "title": "Add Multiple Methods",
+    "difficulty": "easy",
+    "description": "Add get_info() method that returns '{name} is {age} years old'.",
+    "setupCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age",
+    "starterCode": "# Write your code here\n    def get_info(self):\n        ",
+    "expectedOutput": "Alice is 30 years old",
+    "testCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n{user_code}\np = Person('Alice', 30)\nprint(p.get_info())",
+    "hints": [
+      "Access self.name and self.age",
+      "Return formatted string"
+    ]
+  },
+  {
+    "id": "py-class-modify-1",
+    "title": "Modify Instance Attribute",
+    "difficulty": "easy",
+    "description": "Add set_age(age) method to update the age.",
+    "setupCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age",
+    "starterCode": "# Write your code here\n    def set_age(self, age):\n        ",
+    "expectedOutput": "31",
+    "testCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n{user_code}\np = Person('Alice', 30)\np.set_age(31)\nprint(p.age)",
+    "hints": [
+      "Assign parameter to self.age",
+      "self.age = age"
+    ]
+  },
+  {
+    "id": "py-class-counter-1",
+    "title": "Class Variable Counter",
+    "difficulty": "medium",
+    "description": "Add a class variable 'count' that increments in __init__.",
+    "setupCode": "",
+    "starterCode": "# Write your code here\nclass Person:\n    count = 0\n    def __init__(self, name):\n        self.name = name\n        ",
+    "expectedOutput": "2",
+    "testCode": "{user_code}\np1 = Person('Alice')\np2 = Person('Bob')\nprint(Person.count)",
+    "hints": [
+      "Increment Person.count in __init__",
+      "Person.count += 1"
+    ]
+  },
+  {
+    "id": "py-class-property-1",
+    "title": "Create Property Getter",
+    "difficulty": "medium",
+    "description": "Add @property decorator to make full_name return '{first} {last}'.",
+    "setupCode": "class Person:\n    def __init__(self, first, last):\n        self.first = first\n        self.last = last",
+    "starterCode": "# Write your code here\n    @property\n    def full_name(self):\n        ",
+    "expectedOutput": "Alice Smith",
+    "testCode": "class Person:\n    def __init__(self, first, last):\n        self.first = first\n        self.last = last\n{user_code}\np = Person('Alice', 'Smith')\nprint(p.full_name)",
+    "hints": [
+      "Return f'{self.first} {self.last}'",
+      "No need for parentheses when accessing"
+    ]
+  },
+  {
+    "id": "py-class-inheritance-1",
+    "title": "Basic Inheritance",
+    "difficulty": "medium",
+    "description": "Create Student class that inherits from Person.",
+    "setupCode": "class Person:\n    def __init__(self, name):\n        self.name = name",
+    "starterCode": "# Write your code here\nclass Student",
+    "expectedOutput": "Alice",
+    "testCode": "class Person:\n    def __init__(self, name):\n        self.name = name\n{user_code}\n    def __init__(self, name, student_id):\n        super().__init__(name)\n        self.student_id = student_id\ns = Student('Alice', 123)\nprint(s.name)",
+    "hints": [
+      "Use (Person) after class name",
+      "class Student(Person):"
+    ]
+  },
+  {
+    "id": "py-class-super-1",
+    "title": "Call Parent Constructor",
+    "difficulty": "medium",
+    "description": "Use super() to call parent __init__ in Student class.",
+    "setupCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\nclass Student(Person):\n    def __init__(self, name, age, student_id):\n        ",
+    "starterCode": "# Write your code here\n        ",
+    "expectedOutput": "Alice 20",
+    "testCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\nclass Student(Person):\n    def __init__(self, name, age, student_id):\n{user_code}\n        self.student_id = student_id\ns = Student('Alice', 20, 123)\nprint(s.name, s.age)",
+    "hints": [
+      "Use super().__init__(name, age)",
+      "Calls parent class constructor"
+    ]
+  },
+  {
+    "id": "py-class-override-1",
+    "title": "Override Method",
+    "difficulty": "medium",
+    "description": "Override greet() in Student to return 'Hi, I am student {name}'.",
+    "setupCode": "class Person:\n    def __init__(self, name):\n        self.name = name\n    def greet(self):\n        return f'Hello, I am {self.name}'\n\nclass Student(Person):\n    def __init__(self, name, student_id):\n        super().__init__(name)\n        self.student_id = student_id",
+    "starterCode": "# Write your code here\n    def greet(self):\n        ",
+    "expectedOutput": "Hi, I am student Alice",
+    "testCode": "class Person:\n    def __init__(self, name):\n        self.name = name\n    def greet(self):\n        return f'Hello, I am {self.name}'\n\nclass Student(Person):\n    def __init__(self, name, student_id):\n        super().__init__(name)\n        self.student_id = student_id\n{user_code}\ns = Student('Alice', 123)\nprint(s.greet())",
+    "hints": [
+      "Define greet with same signature",
+      "Return different string"
+    ]
+  },
+  {
+    "id": "py-class-classmethod-1",
+    "title": "Create Class Method",
+    "difficulty": "medium",
+    "description": "Add @classmethod from_birth_year to create Person from birth year.",
+    "setupCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age",
+    "starterCode": "# Write your code here\n    @classmethod\n    def from_birth_year(cls, name, birth_year):\n        ",
+    "expectedOutput": "Alice 30",
+    "testCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n{user_code}\np = Person.from_birth_year('Alice', 1995)\nprint(p.name, p.age)",
+    "hints": [
+      "Calculate age as 2025 - birth_year",
+      "Return cls(name, age)"
+    ]
+  },
+  {
+    "id": "py-class-staticmethod-1",
+    "title": "Create Static Method",
+    "difficulty": "medium",
+    "description": "Add @staticmethod is_adult(age) that returns True if age >= 18.",
+    "setupCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age",
+    "starterCode": "# Write your code here\n    @staticmethod\n    def is_adult(age):\n        ",
+    "expectedOutput": "True",
+    "testCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n{user_code}\nprint(Person.is_adult(20))",
+    "hints": [
+      "No self or cls parameter",
+      "Return age >= 18"
+    ]
+  },
+  {
+    "id": "py-class-private-1",
+    "title": "Private Attribute",
+    "difficulty": "medium",
+    "description": "Create __balance private attribute and get_balance() method.",
+    "setupCode": "class BankAccount:\n    def __init__(self, balance):\n        ",
+    "starterCode": "# Write your code here\n        ",
+    "expectedOutput": "1000",
+    "testCode": "class BankAccount:\n    def __init__(self, balance):\n{user_code}\n    def get_balance(self):\n        return self.__balance\naccount = BankAccount(1000)\nprint(account.get_balance())",
+    "hints": [
+      "Use double underscore: self.__balance",
+      "Private attributes start with __"
+    ]
+  },
+  {
+    "id": "py-class-property-setter-1",
+    "title": "Property Setter",
+    "difficulty": "medium",
+    "description": "Add setter for temperature property.",
+    "setupCode": "class Temperature:\n    def __init__(self, celsius):\n        self._celsius = celsius\n    \n    @property\n    def celsius(self):\n        return self._celsius",
+    "starterCode": "# Write your code here\n    @celsius.setter\n    def celsius(self, value):\n        ",
+    "expectedOutput": "25",
+    "testCode": "class Temperature:\n    def __init__(self, celsius):\n        self._celsius = celsius\n    \n    @property\n    def celsius(self):\n        return self._celsius\n{user_code}\nt = Temperature(20)\nt.celsius = 25\nprint(t.celsius)",
+    "hints": [
+      "Use @celsius.setter decorator",
+      "Set self._celsius = value"
+    ]
+  },
+  {
+    "id": "py-class-repr-1",
+    "title": "Add __repr__ Method",
+    "difficulty": "easy",
+    "description": "Add __repr__ to return 'Person(name={name}, age={age})'.",
+    "setupCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age",
+    "starterCode": "# Write your code here\n    def __repr__(self):\n        ",
+    "expectedOutput": "Person(name=Alice, age=30)",
+    "testCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n{user_code}\np = Person('Alice', 30)\nprint(repr(p))",
+    "hints": [
+      "__repr__ is for developer representation",
+      "Return f'Person(name={self.name}, age={self.age})'"
+    ]
+  },
+  {
+    "id": "py-class-eq-1",
+    "title": "Implement Equality",
+    "difficulty": "medium",
+    "description": "Add __eq__ to compare Points by x and y coordinates.",
+    "setupCode": "class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y",
+    "starterCode": "# Write your code here\n    def __eq__(self, other):\n        ",
+    "expectedOutput": "True",
+    "testCode": "class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n{user_code}\np1 = Point(3, 4)\np2 = Point(3, 4)\nprint(p1 == p2)",
+    "hints": [
+      "Compare self.x == other.x and self.y == other.y",
+      "Return boolean result"
+    ]
+  },
+  {
+    "id": "py-class-lt-1",
+    "title": "Implement Less Than",
+    "difficulty": "medium",
+    "description": "Add __lt__ to compare Person by age.",
+    "setupCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age",
+    "starterCode": "# Write your code here\n    def __lt__(self, other):\n        ",
+    "expectedOutput": "True",
+    "testCode": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n{user_code}\np1 = Person('Alice', 25)\np2 = Person('Bob', 30)\nprint(p1 < p2)",
+    "hints": [
+      "Return self.age < other.age",
+      "Enables sorting by age"
+    ]
+  },
+  {
+    "id": "py-class-add-1",
+    "title": "Implement Addition",
+    "difficulty": "medium",
+    "description": "Add __add__ to add two Vector objects component-wise.",
+    "setupCode": "class Vector:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y",
+    "starterCode": "# Write your code here\n    def __add__(self, other):\n        ",
+    "expectedOutput": "4 6",
+    "testCode": "class Vector:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n{user_code}\nv1 = Vector(1, 2)\nv2 = Vector(3, 4)\nv3 = v1 + v2\nprint(v3.x, v3.y)",
+    "hints": [
+      "Return new Vector instance",
+      "Vector(self.x + other.x, self.y + other.y)"
+    ]
+  },
+  {
+    "id": "py-class-len-1",
+    "title": "Implement Length",
+    "difficulty": "medium",
+    "description": "Add __len__ to return number of items in Playlist.",
+    "setupCode": "class Playlist:\n    def __init__(self):\n        self.songs = []",
+    "starterCode": "# Write your code here\n    def __len__(self):\n        ",
+    "expectedOutput": "2",
+    "testCode": "class Playlist:\n    def __init__(self):\n        self.songs = []\n{user_code}\npl = Playlist()\npl.songs.append('Song1')\npl.songs.append('Song2')\nprint(len(pl))",
+    "hints": [
+      "Return length of self.songs",
+      "return len(self.songs)"
+    ]
+  },
+  {
+    "id": "py-class-getitem-1",
+    "title": "Implement Indexing",
+    "difficulty": "medium",
+    "description": "Add __getitem__ to access Playlist songs by index.",
+    "setupCode": "class Playlist:\n    def __init__(self, songs):\n        self.songs = songs",
+    "starterCode": "# Write your code here\n    def __getitem__(self, index):\n        ",
+    "expectedOutput": "Song2",
+    "testCode": "class Playlist:\n    def __init__(self, songs):\n        self.songs = songs\n{user_code}\npl = Playlist(['Song1', 'Song2', 'Song3'])\nprint(pl[1])",
+    "hints": [
+      "Return self.songs[index]",
+      "Enables bracket notation"
+    ]
+  },
+  {
+    "id": "py-class-contains-1",
+    "title": "Implement Contains",
+    "difficulty": "medium",
+    "description": "Add __contains__ to check if song is in Playlist.",
+    "setupCode": "class Playlist:\n    def __init__(self, songs):\n        self.songs = songs",
+    "starterCode": "# Write your code here\n    def __contains__(self, item):\n        ",
+    "expectedOutput": "True",
+    "testCode": "class Playlist:\n    def __init__(self, songs):\n        self.songs = songs\n{user_code}\npl = Playlist(['Song1', 'Song2'])\nprint('Song1' in pl)",
+    "hints": [
+      "Return item in self.songs",
+      "Enables 'in' operator"
+    ]
+  },
+  {
+    "id": "py-class-iter-1",
+    "title": "Make Class Iterable",
+    "difficulty": "medium",
+    "description": "Add __iter__ to make Playlist iterable.",
+    "setupCode": "class Playlist:\n    def __init__(self, songs):\n        self.songs = songs",
+    "starterCode": "# Write your code here\n    def __iter__(self):\n        ",
+    "expectedOutput": "Song1\nSong2\nSong3",
+    "testCode": "class Playlist:\n    def __init__(self, songs):\n        self.songs = songs\n{user_code}\npl = Playlist(['Song1', 'Song2', 'Song3'])\nfor song in pl:\n    print(song)",
+    "hints": [
+      "Return iter(self.songs)",
+      "Enables for loops"
+    ]
+  },
+  {
+    "id": "py-class-context-1",
+    "title": "Context Manager",
+    "difficulty": "hard",
+    "description": "Add __enter__ to return self.",
+    "setupCode": "class FileHandler:\n    def __init__(self, filename):\n        self.filename = filename\n        self.file = None",
+    "starterCode": "# Write your code here\n    def __enter__(self):\n        ",
+    "expectedOutput": "FileHandler",
+    "testCode": "class FileHandler:\n    def __init__(self, filename):\n        self.filename = filename\n        self.file = None\n{user_code}\n    def __exit__(self, exc_type, exc_val, exc_tb):\n        pass\nwith FileHandler('test.txt') as fh:\n    print(type(fh).__name__)",
+    "hints": [
+      "Simply return self",
+      "Used with 'with' statement"
+    ]
+  },
+  {
+    "id": "py-class-multiple-inheritance-1",
+    "title": "Multiple Inheritance",
+    "difficulty": "hard",
+    "description": "Create class that inherits from both Walker and Swimmer.",
+    "setupCode": "class Walker:\n    def walk(self):\n        return 'Walking'\n\nclass Swimmer:\n    def swim(self):\n        return 'Swimming'",
+    "starterCode": "# Write your code here\nclass Amphibian",
+    "expectedOutput": "Walking Swimming",
+    "testCode": "class Walker:\n    def walk(self):\n        return 'Walking'\n\nclass Swimmer:\n    def swim(self):\n        return 'Swimming'\n\n{user_code}\n    pass\na = Amphibian()\nprint(a.walk(), a.swim())",
+    "hints": [
+      "Use (Walker, Swimmer)",
+      "Separate parent classes with comma"
+    ]
+  },
+  {
+    "id": "py-class-abstract-1",
+    "title": "Abstract Base Class",
+    "difficulty": "hard",
+    "description": "Import ABC and abstractmethod from abc module.",
+    "setupCode": "",
+    "starterCode": "# Write your code here\nfrom abc import ",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nclass Shape(ABC):\n    @abstractmethod\n    def area(self):\n        pass\nprint(hasattr(Shape, '__abstractmethods__'))",
+    "hints": [
+      "from abc import ABC, abstractmethod",
+      "Used for abstract classes"
+    ]
+  },
+  {
+    "id": "py-class-composition-1",
+    "title": "Composition Pattern",
+    "difficulty": "medium",
+    "description": "Create Engine instance in Car's __init__.",
+    "setupCode": "class Engine:\n    def __init__(self, horsepower):\n        self.horsepower = horsepower\n\nclass Car:\n    def __init__(self, horsepower):\n        ",
+    "starterCode": "# Write your code here\n        ",
+    "expectedOutput": "200",
+    "testCode": "class Engine:\n    def __init__(self, horsepower):\n        self.horsepower = horsepower\n\nclass Car:\n    def __init__(self, horsepower):\n{user_code}\nc = Car(200)\nprint(c.engine.horsepower)",
+    "hints": [
+      "Create Engine instance: self.engine = Engine(horsepower)",
+      "Composition: has-a relationship"
+    ]
+  },
+  {
+    "id": "py-class-singleton-1",
+    "title": "Class Attribute Access",
+    "difficulty": "medium",
+    "description": "Access and print the class variable 'count' from instance.",
+    "setupCode": "class Counter:\n    count = 0\n    def __init__(self):\n        Counter.count += 1",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "2",
+    "testCode": "class Counter:\n    count = 0\n    def __init__(self):\n        Counter.count += 1\n{user_code}\nc1 = Counter()\nc2 = Counter()\nprint(Counter.count)",
+    "hints": [
+      "Access via class name: Counter.count",
+      "Or via instance: c1.__class__.count"
+    ]
+  },
+  {
+    "id": "py-class-call-1",
+    "title": "Make Class Callable",
+    "difficulty": "medium",
+    "description": "Add __call__ to make instance callable, return self.value * n.",
+    "setupCode": "class Multiplier:\n    def __init__(self, value):\n        self.value = value",
+    "starterCode": "# Write your code here\n    def __call__(self, n):\n        ",
+    "expectedOutput": "15",
+    "testCode": "class Multiplier:\n    def __init__(self, value):\n        self.value = value\n{user_code}\nm = Multiplier(5)\nprint(m(3))",
+    "hints": [
+      "Return self.value * n",
+      "__call__ allows instance to be called like a function"
+    ]
+  }
+]

@@ -1,0 +1,576 @@
+[
+  {
+    "id": "py-file-read-basic-1",
+    "title": "Read Entire File",
+    "difficulty": "easy",
+    "description": "Read and print the contents of 'sample.txt'.",
+    "setupCode": "with open('sample.txt', 'w') as f:\n    f.write('Hello, World!\\nWelcome to Python.')",
+    "starterCode": "",
+    "expectedOutput": "Hello, World!\nWelcome to Python.",
+    "testCode": "with open('sample.txt', 'w') as f:\n    f.write('Hello, World!\\nWelcome to Python.')\n{user_code}",
+    "hints": [
+      "Use open('sample.txt', 'r') to open in read mode",
+      "Use .read() to get all contents, or use 'with' statement"
+    ]
+  },
+  {
+    "id": "py-file-read-lines-1",
+    "title": "Read File Line by Line",
+    "difficulty": "easy",
+    "description": "Read 'data.txt' and print each line (strip whitespace).",
+    "setupCode": "with open('data.txt', 'w') as f:\n    f.write('Line 1\\nLine 2\\nLine 3')",
+    "starterCode": "",
+    "expectedOutput": "Line 1\nLine 2\nLine 3",
+    "testCode": "with open('data.txt', 'w') as f:\n    f.write('Line 1\\nLine 2\\nLine 3')\n{user_code}",
+    "hints": [
+      "Use .readlines() or iterate directly over the file object",
+      "Use .strip() to remove newline characters"
+    ]
+  },
+  {
+    "id": "py-file-read-specific-line-1",
+    "title": "Read Specific Line",
+    "difficulty": "easy",
+    "description": "Read and print only the second line from 'numbers.txt'.",
+    "setupCode": "with open('numbers.txt', 'w') as f:\n    f.write('First\\nSecond\\nThird')",
+    "starterCode": "",
+    "expectedOutput": "Second",
+    "testCode": "with open('numbers.txt', 'w') as f:\n    f.write('First\\nSecond\\nThird')\n{user_code}",
+    "hints": [
+      "Read all lines into a list with .readlines()",
+      "Access the line at index 1 (second line)"
+    ]
+  },
+  {
+    "id": "py-file-write-basic-1",
+    "title": "Write to File",
+    "difficulty": "easy",
+    "description": "Write 'Hello, Python!' to a new file called 'output.txt'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Hello, Python!",
+    "testCode": "{user_code}\nwith open('output.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Use open('output.txt', 'w') for write mode",
+      "Use .write() method to write content"
+    ]
+  },
+  {
+    "id": "py-file-write-multiple-1",
+    "title": "Write Multiple Lines",
+    "difficulty": "easy",
+    "description": "Write three lines to 'lines.txt': 'First', 'Second', 'Third'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "First\nSecond\nThird",
+    "testCode": "{user_code}\nwith open('lines.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Use \\n to add newlines between content",
+      "Or use .writelines() with a list of strings"
+    ]
+  },
+  {
+    "id": "py-file-append-1",
+    "title": "Append to File",
+    "difficulty": "easy",
+    "description": "Append 'New line' to the existing 'log.txt' file.",
+    "setupCode": "with open('log.txt', 'w') as f:\n    f.write('Existing content')",
+    "starterCode": "",
+    "expectedOutput": "Existing contentNew line",
+    "testCode": "with open('log.txt', 'w') as f:\n    f.write('Existing content')\n{user_code}\nwith open('log.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Use 'a' mode for append: open('log.txt', 'a')",
+      "Append mode adds to the end without erasing existing content"
+    ]
+  },
+  {
+    "id": "py-file-with-statement-1",
+    "title": "Using With Statement",
+    "difficulty": "easy",
+    "description": "Use 'with' statement to read and print 'test.txt'.",
+    "setupCode": "with open('test.txt', 'w') as f:\n    f.write('Using with statement')",
+    "starterCode": "",
+    "expectedOutput": "Using with statement",
+    "testCode": "with open('test.txt', 'w') as f:\n    f.write('Using with statement')\n{user_code}",
+    "hints": [
+      "with open('test.txt', 'r') as f: automatically closes the file",
+      "No need to call .close() explicitly"
+    ]
+  },
+  {
+    "id": "py-file-exists-1",
+    "title": "Check if File Exists",
+    "difficulty": "easy",
+    "description": "Check if 'myfile.txt' exists and print True or False.",
+    "setupCode": "import os\nwith open('myfile.txt', 'w') as f:\n    f.write('test')",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "import os\nwith open('myfile.txt', 'w') as f:\n    f.write('test')\n{user_code}",
+    "hints": [
+      "Use os.path.exists('myfile.txt')",
+      "Returns True if file exists, False otherwise"
+    ]
+  },
+  {
+    "id": "py-file-count-lines-1",
+    "title": "Count Lines in File",
+    "difficulty": "easy",
+    "description": "Count and print the number of lines in 'document.txt'.",
+    "setupCode": "with open('document.txt', 'w') as f:\n    f.write('Line 1\\nLine 2\\nLine 3\\nLine 4')",
+    "starterCode": "",
+    "expectedOutput": "4",
+    "testCode": "with open('document.txt', 'w') as f:\n    f.write('Line 1\\nLine 2\\nLine 3\\nLine 4')\n{user_code}",
+    "hints": [
+      "Read lines with .readlines() and use len()",
+      "Or iterate and count"
+    ]
+  },
+  {
+    "id": "py-file-count-words-1",
+    "title": "Count Words in File",
+    "difficulty": "medium",
+    "description": "Count total words in 'text.txt' and print the count.",
+    "setupCode": "with open('text.txt', 'w') as f:\n    f.write('Hello world\\nPython is great')",
+    "starterCode": "",
+    "expectedOutput": "5",
+    "testCode": "with open('text.txt', 'w') as f:\n    f.write('Hello world\\nPython is great')\n{user_code}",
+    "hints": [
+      "Read the file and use .split() to separate words",
+      "Count the total number of words across all lines"
+    ]
+  },
+  {
+    "id": "py-file-search-word-1",
+    "title": "Search for Word in File",
+    "difficulty": "medium",
+    "description": "Check if the word 'Python' exists in 'search.txt'. Print True or False.",
+    "setupCode": "with open('search.txt', 'w') as f:\n    f.write('I love Python programming\\nIt is awesome')",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "with open('search.txt', 'w') as f:\n    f.write('I love Python programming\\nIt is awesome')\n{user_code}",
+    "hints": [
+      "Read the file content and use 'in' operator",
+      "Check if 'Python' in file_content"
+    ]
+  },
+  {
+    "id": "py-file-copy-1",
+    "title": "Copy File Contents",
+    "difficulty": "medium",
+    "description": "Copy contents from 'source.txt' to 'destination.txt'.",
+    "setupCode": "with open('source.txt', 'w') as f:\n    f.write('Content to copy')",
+    "starterCode": "",
+    "expectedOutput": "Content to copy",
+    "testCode": "with open('source.txt', 'w') as f:\n    f.write('Content to copy')\n{user_code}\nwith open('destination.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Read from source.txt",
+      "Write the content to destination.txt"
+    ]
+  },
+  {
+    "id": "py-file-reverse-lines-1",
+    "title": "Reverse Line Order",
+    "difficulty": "medium",
+    "description": "Read 'input.txt' and write lines in reverse order to 'reversed.txt'.",
+    "setupCode": "with open('input.txt', 'w') as f:\n    f.write('First\\nSecond\\nThird')",
+    "starterCode": "",
+    "expectedOutput": "Third\nSecond\nFirst",
+    "testCode": "with open('input.txt', 'w') as f:\n    f.write('First\\nSecond\\nThird')\n{user_code}\nwith open('reversed.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Read all lines into a list",
+      "Reverse the list and write to new file"
+    ]
+  },
+  {
+    "id": "py-file-filter-lines-1",
+    "title": "Filter Lines by Keyword",
+    "difficulty": "medium",
+    "description": "Write only lines containing 'error' from 'log.txt' to 'errors.txt'.",
+    "setupCode": "with open('log.txt', 'w') as f:\n    f.write('info: all good\\nerror: failed\\nwarning: check this\\nerror: timeout')",
+    "starterCode": "",
+    "expectedOutput": "error: failed\nerror: timeout",
+    "testCode": "with open('log.txt', 'w') as f:\n    f.write('info: all good\\nerror: failed\\nwarning: check this\\nerror: timeout')\n{user_code}\nwith open('errors.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Read lines from log.txt",
+      "Check if 'error' in line, then write to errors.txt"
+    ]
+  },
+  {
+    "id": "py-file-uppercase-1",
+    "title": "Convert File to Uppercase",
+    "difficulty": "medium",
+    "description": "Read 'lowercase.txt' and write uppercase version to 'uppercase.txt'.",
+    "setupCode": "with open('lowercase.txt', 'w') as f:\n    f.write('hello world\\npython programming')",
+    "starterCode": "",
+    "expectedOutput": "HELLO WORLD\nPYTHON PROGRAMMING",
+    "testCode": "with open('lowercase.txt', 'w') as f:\n    f.write('hello world\\npython programming')\n{user_code}\nwith open('uppercase.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Read content from lowercase.txt",
+      "Use .upper() method and write to uppercase.txt"
+    ]
+  },
+  {
+    "id": "py-file-csv-read-1",
+    "title": "Read CSV File",
+    "difficulty": "medium",
+    "description": "Read 'data.csv' and print each row as a list.",
+    "setupCode": "import csv\nwith open('data.csv', 'w') as f:\n    f.write('name,age,city\\nAlice,30,NYC\\nBob,25,LA')",
+    "starterCode": "import csv",
+    "expectedOutput": "['name', 'age', 'city']\n['Alice', '30', 'NYC']\n['Bob', '25', 'LA']",
+    "testCode": "import csv\nwith open('data.csv', 'w') as f:\n    f.write('name,age,city\\nAlice,30,NYC\\nBob,25,LA')\n{user_code}",
+    "hints": [
+      "Use csv.reader() to read CSV files",
+      "Iterate through the reader object to get rows"
+    ]
+  },
+  {
+    "id": "py-file-csv-write-1",
+    "title": "Write CSV File",
+    "difficulty": "medium",
+    "description": "Write data to 'output.csv' with headers: name,score and rows: Alice,95 and Bob,87.",
+    "setupCode": "",
+    "starterCode": "import csv",
+    "expectedOutput": "name,score\nAlice,95\nBob,87",
+    "testCode": "{user_code}\nwith open('output.csv', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Use csv.writer() to write CSV files",
+      "Use .writerow() for each row"
+    ]
+  },
+  {
+    "id": "py-file-json-read-1",
+    "title": "Read JSON File",
+    "difficulty": "medium",
+    "description": "Read 'data.json' and print the value of the 'name' key.",
+    "setupCode": "import json\nwith open('data.json', 'w') as f:\n    json.dump({'name': 'Alice', 'age': 30}, f)",
+    "starterCode": "import json",
+    "expectedOutput": "Alice",
+    "testCode": "import json\nwith open('data.json', 'w') as f:\n    json.dump({'name': 'Alice', 'age': 30}, f)\n{user_code}",
+    "hints": [
+      "Use json.load() to read JSON files",
+      "Access dictionary keys from the loaded data"
+    ]
+  },
+  {
+    "id": "py-file-json-write-1",
+    "title": "Write JSON File",
+    "difficulty": "medium",
+    "description": "Write a dictionary {'title': 'Python', 'year': 2024} to 'book.json'.",
+    "setupCode": "",
+    "starterCode": "import json",
+    "expectedOutput": "{\"title\": \"Python\", \"year\": 2024}",
+    "testCode": "{user_code}\nwith open('book.json', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Use json.dump() to write JSON files",
+      "Pass the dictionary and file object to json.dump()"
+    ]
+  },
+  {
+    "id": "py-file-exception-1",
+    "title": "Handle File Not Found",
+    "difficulty": "medium",
+    "description": "Try to read 'nonexistent.txt', catch the exception, and print 'File not found'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "File not found",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use try-except block",
+      "Catch FileNotFoundError exception"
+    ]
+  },
+  {
+    "id": "py-file-read-numbers-1",
+    "title": "Read Numbers and Calculate Sum",
+    "difficulty": "medium",
+    "description": "Read numbers from 'numbers.txt' (one per line) and print their sum.",
+    "setupCode": "with open('numbers.txt', 'w') as f:\n    f.write('10\\n20\\n30\\n40')",
+    "starterCode": "",
+    "expectedOutput": "100",
+    "testCode": "with open('numbers.txt', 'w') as f:\n    f.write('10\\n20\\n30\\n40')\n{user_code}",
+    "hints": [
+      "Read lines and convert each to int",
+      "Sum all the numbers"
+    ]
+  },
+  {
+    "id": "py-file-write-list-1",
+    "title": "Write List to File",
+    "difficulty": "easy",
+    "description": "Write items from list ['apple', 'banana', 'cherry'] to 'fruits.txt', one per line.",
+    "setupCode": "",
+    "starterCode": "fruits = ['apple', 'banana', 'cherry']",
+    "expectedOutput": "apple\nbanana\ncherry",
+    "testCode": "fruits = ['apple', 'banana', 'cherry']\n{user_code}\nwith open('fruits.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Loop through the list",
+      "Write each item with a newline character"
+    ]
+  },
+  {
+    "id": "py-file-read-into-list-1",
+    "title": "Read File into List",
+    "difficulty": "easy",
+    "description": "Read 'items.txt' and create a list of items (stripped). Print the list.",
+    "setupCode": "with open('items.txt', 'w') as f:\n    f.write('Item1\\nItem2\\nItem3')",
+    "starterCode": "",
+    "expectedOutput": "['Item1', 'Item2', 'Item3']",
+    "testCode": "with open('items.txt', 'w') as f:\n    f.write('Item1\\nItem2\\nItem3')\n{user_code}",
+    "hints": [
+      "Use .readlines() or iterate over the file",
+      "Strip whitespace from each line and add to list"
+    ]
+  },
+  {
+    "id": "py-file-empty-check-1",
+    "title": "Check if File is Empty",
+    "difficulty": "easy",
+    "description": "Check if 'empty.txt' is empty and print True or False.",
+    "setupCode": "with open('empty.txt', 'w') as f:\n    pass",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "with open('empty.txt', 'w') as f:\n    pass\n{user_code}",
+    "hints": [
+      "Use os.path.getsize('empty.txt')",
+      "If size is 0, file is empty"
+    ]
+  },
+  {
+    "id": "py-file-remove-duplicates-1",
+    "title": "Remove Duplicate Lines",
+    "difficulty": "medium",
+    "description": "Read 'duplicates.txt' and write unique lines to 'unique.txt'.",
+    "setupCode": "with open('duplicates.txt', 'w') as f:\n    f.write('apple\\nbanana\\napple\\ncherry\\nbanana')",
+    "starterCode": "",
+    "expectedOutput": "apple\nbanana\ncherry",
+    "testCode": "with open('duplicates.txt', 'w') as f:\n    f.write('apple\\nbanana\\napple\\ncherry\\nbanana')\n{user_code}\nwith open('unique.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Read lines into a set to remove duplicates",
+      "Write the unique lines to new file"
+    ]
+  },
+  {
+    "id": "py-file-merge-1",
+    "title": "Merge Multiple Files",
+    "difficulty": "medium",
+    "description": "Merge contents of 'file1.txt' and 'file2.txt' into 'merged.txt'.",
+    "setupCode": "with open('file1.txt', 'w') as f:\n    f.write('Content from file 1')\nwith open('file2.txt', 'w') as f:\n    f.write('Content from file 2')",
+    "starterCode": "",
+    "expectedOutput": "Content from file 1Content from file 2",
+    "testCode": "with open('file1.txt', 'w') as f:\n    f.write('Content from file 1')\nwith open('file2.txt', 'w') as f:\n    f.write('Content from file 2')\n{user_code}\nwith open('merged.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Read from both files",
+      "Write both contents to merged.txt"
+    ]
+  },
+  {
+    "id": "py-file-replace-text-1",
+    "title": "Replace Text in File",
+    "difficulty": "medium",
+    "description": "Replace all occurrences of 'old' with 'new' in 'text.txt' and save the result.",
+    "setupCode": "with open('text.txt', 'w') as f:\n    f.write('This is old text with old words')",
+    "starterCode": "",
+    "expectedOutput": "This is new text with new words",
+    "testCode": "with open('text.txt', 'w') as f:\n    f.write('This is old text with old words')\n{user_code}\nwith open('text.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Read the file content",
+      "Use .replace('old', 'new') and write back to file"
+    ]
+  },
+  {
+    "id": "py-file-binary-write-1",
+    "title": "Write Binary File",
+    "difficulty": "medium",
+    "description": "Write bytes b'Binary data' to 'data.bin'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "b'Binary data'",
+    "testCode": "{user_code}\nwith open('data.bin', 'rb') as f:\n    print(f.read())",
+    "hints": [
+      "Use 'wb' mode for binary write",
+      "Write bytes object directly"
+    ]
+  },
+  {
+    "id": "py-file-binary-read-1",
+    "title": "Read Binary File",
+    "difficulty": "medium",
+    "description": "Read and print the binary content from 'data.bin'.",
+    "setupCode": "with open('data.bin', 'wb') as f:\n    f.write(b'Binary content')",
+    "starterCode": "",
+    "expectedOutput": "b'Binary content'",
+    "testCode": "with open('data.bin', 'wb') as f:\n    f.write(b'Binary content')\n{user_code}",
+    "hints": [
+      "Use 'rb' mode for binary read",
+      "Print the bytes object"
+    ]
+  },
+  {
+    "id": "py-file-seek-tell-1",
+    "title": "File Position - Seek and Tell",
+    "difficulty": "hard",
+    "description": "Open 'position.txt', seek to position 6, and print the rest of the content.",
+    "setupCode": "with open('position.txt', 'w') as f:\n    f.write('Hello World')",
+    "starterCode": "",
+    "expectedOutput": "World",
+    "testCode": "with open('position.txt', 'w') as f:\n    f.write('Hello World')\n{user_code}",
+    "hints": [
+      "Use .seek(6) to move to position 6",
+      "Use .read() to get remaining content"
+    ]
+  },
+  {
+    "id": "py-file-word-frequency-1",
+    "title": "Word Frequency Counter",
+    "difficulty": "hard",
+    "description": "Count frequency of each word in 'words.txt' and print as dictionary.",
+    "setupCode": "with open('words.txt', 'w') as f:\n    f.write('hello world hello python world')",
+    "starterCode": "",
+    "expectedOutput": "{'hello': 2, 'world': 2, 'python': 1}",
+    "testCode": "with open('words.txt', 'w') as f:\n    f.write('hello world hello python world')\n{user_code}",
+    "hints": [
+      "Read and split the content into words",
+      "Use a dictionary to count occurrences"
+    ]
+  },
+  {
+    "id": "py-file-line-numbers-1",
+    "title": "Add Line Numbers",
+    "difficulty": "medium",
+    "description": "Read 'input.txt' and write to 'numbered.txt' with line numbers (1: First line...).",
+    "setupCode": "with open('input.txt', 'w') as f:\n    f.write('First line\\nSecond line\\nThird line')",
+    "starterCode": "",
+    "expectedOutput": "1: First line\n2: Second line\n3: Third line",
+    "testCode": "with open('input.txt', 'w') as f:\n    f.write('First line\\nSecond line\\nThird line')\n{user_code}\nwith open('numbered.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Use enumerate() with start=1",
+      "Format each line with number prefix"
+    ]
+  },
+  {
+    "id": "py-file-longest-line-1",
+    "title": "Find Longest Line",
+    "difficulty": "medium",
+    "description": "Find and print the longest line from 'lines.txt'.",
+    "setupCode": "with open('lines.txt', 'w') as f:\n    f.write('Short\\nThis is a longer line\\nMedium line')",
+    "starterCode": "",
+    "expectedOutput": "This is a longer line",
+    "testCode": "with open('lines.txt', 'w') as f:\n    f.write('Short\\nThis is a longer line\\nMedium line')\n{user_code}",
+    "hints": [
+      "Read all lines and compare lengths",
+      "Use max() with key=len"
+    ]
+  },
+  {
+    "id": "py-file-sorted-write-1",
+    "title": "Sort File Lines",
+    "difficulty": "medium",
+    "description": "Read 'unsorted.txt' and write sorted lines to 'sorted.txt'.",
+    "setupCode": "with open('unsorted.txt', 'w') as f:\n    f.write('zebra\\napple\\nmango\\nbanana')",
+    "starterCode": "",
+    "expectedOutput": "apple\nbanana\nmango\nzebra",
+    "testCode": "with open('unsorted.txt', 'w') as f:\n    f.write('zebra\\napple\\nmango\\nbanana')\n{user_code}\nwith open('sorted.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Read lines into a list",
+      "Sort the list and write to new file"
+    ]
+  },
+  {
+    "id": "py-file-csv-dict-1",
+    "title": "CSV with DictReader",
+    "difficulty": "hard",
+    "description": "Read 'people.csv' using DictReader and print each row's 'name' value.",
+    "setupCode": "import csv\nwith open('people.csv', 'w') as f:\n    f.write('name,age\\nAlice,30\\nBob,25')",
+    "starterCode": "import csv",
+    "expectedOutput": "Alice\nBob",
+    "testCode": "import csv\nwith open('people.csv', 'w') as f:\n    f.write('name,age\\nAlice,30\\nBob,25')\n{user_code}",
+    "hints": [
+      "Use csv.DictReader() to read CSV as dictionaries",
+      "Access values using row['name']"
+    ]
+  },
+  {
+    "id": "py-file-csv-dict-write-1",
+    "title": "CSV with DictWriter",
+    "difficulty": "hard",
+    "description": "Write dictionaries to 'output.csv' using DictWriter with fieldnames=['name', 'score'].",
+    "setupCode": "",
+    "starterCode": "import csv\ndata = [{'name': 'Alice', 'score': 95}, {'name': 'Bob', 'score': 87}]",
+    "expectedOutput": "name,score\nAlice,95\nBob,87",
+    "testCode": "import csv\ndata = [{'name': 'Alice', 'score': 95}, {'name': 'Bob', 'score': 87}]\n{user_code}\nwith open('output.csv', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Use csv.DictWriter() with fieldnames",
+      "Use .writeheader() and .writerows()"
+    ]
+  },
+  {
+    "id": "py-file-context-multiple-1",
+    "title": "Multiple Files in Context Manager",
+    "difficulty": "medium",
+    "description": "Open 'input.txt' for reading and 'output.txt' for writing in single with statement, copy content.",
+    "setupCode": "with open('input.txt', 'w') as f:\n    f.write('Copy this content')",
+    "starterCode": "",
+    "expectedOutput": "Copy this content",
+    "testCode": "with open('input.txt', 'w') as f:\n    f.write('Copy this content')\n{user_code}\nwith open('output.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Use with open(...) as f1, open(...) as f2:",
+      "Read from f1 and write to f2"
+    ]
+  },
+  {
+    "id": "py-file-create-directory-1",
+    "title": "Create Directory",
+    "difficulty": "easy",
+    "description": "Create a directory called 'new_folder'.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(os.path.exists('new_folder'))",
+    "hints": [
+      "Use os.mkdir('new_folder')",
+      "Or os.makedirs() for nested directories"
+    ]
+  },
+  {
+    "id": "py-file-list-directory-1",
+    "title": "List Directory Contents",
+    "difficulty": "easy",
+    "description": "Create files 'a.txt' and 'b.txt' in current directory, then list all files (sorted).",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "['a.txt', 'b.txt']",
+    "testCode": "{user_code}",
+    "hints": [
+      "Create the files first",
+      "Use os.listdir('.') to list files in current directory"
+    ]
+  },
+  {
+    "id": "py-file-delete-1",
+    "title": "Delete File",
+    "difficulty": "easy",
+    "description": "Create 'temp.txt' and then delete it. Print True if deletion successful.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "{user_code}",
+    "hints": [
+      "Create the file first with open()",
+      "Use os.remove('temp.txt') to delete"
+    ]
+  },
+  {
+    "id": "py-file-rename-1",
+    "title": "Rename File",
+    "difficulty": "easy",
+    "description": "Create 'old_name.txt' and rename it to 'new_name.txt'. Print True if new file exists.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "{user_code}",
+    "hints": [
+      "Create the file first",
+      "Use os.rename('old_name.txt', 'new_name.txt')"
+    ]
+  }
+]

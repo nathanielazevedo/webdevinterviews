@@ -1,0 +1,681 @@
+[
+  {
+    "id": "py-cond-basic-if-1",
+    "title": "Basic If Statement",
+    "difficulty": "easy",
+    "description": "Check if number 10 is greater than 5. If true, print 'Greater'.",
+    "setupCode": "",
+    "starterCode": "num = 10",
+    "expectedOutput": "Greater",
+    "testCode": "num = 10\n{user_code}",
+    "hints": [
+      "Use if num > 5:",
+      "Print inside the if block"
+    ]
+  },
+  {
+    "id": "py-cond-if-else-1",
+    "title": "If-Else Statement",
+    "difficulty": "easy",
+    "description": "Check if number is positive or negative. Print 'Positive' or 'Not positive'.",
+    "setupCode": "",
+    "starterCode": "num = -3",
+    "expectedOutput": "Not positive",
+    "testCode": "num = -3\n{user_code}",
+    "hints": [
+      "Use if num > 0: ... else:",
+      "Handle both cases"
+    ]
+  },
+  {
+    "id": "py-cond-elif-1",
+    "title": "If-Elif-Else Chain",
+    "difficulty": "easy",
+    "description": "Check if number is positive, negative, or zero. Print appropriate message.",
+    "setupCode": "",
+    "starterCode": "num = 0",
+    "expectedOutput": "Zero",
+    "testCode": "num = 0\n{user_code}",
+    "hints": [
+      "Use if/elif/else for three conditions",
+      "Check > 0, < 0, and else for zero"
+    ]
+  },
+  {
+    "id": "py-cond-comparison-1",
+    "title": "Comparison Operators",
+    "difficulty": "easy",
+    "description": "Check if 5 == 5 and print 'Equal', then check if 3 != 5 and print 'Not equal'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Equal\nNot equal",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use == for equality check",
+      "Use != for inequality check"
+    ]
+  },
+  {
+    "id": "py-cond-and-1",
+    "title": "Logical AND Operator",
+    "difficulty": "easy",
+    "description": "Check if number is between 10 and 20 (inclusive). Print 'In range' if true.",
+    "setupCode": "",
+    "starterCode": "num = 15",
+    "expectedOutput": "In range",
+    "testCode": "num = 15\n{user_code}",
+    "hints": [
+      "Use if num >= 10 and num <= 20:",
+      "Both conditions must be true"
+    ]
+  },
+  {
+    "id": "py-cond-or-1",
+    "title": "Logical OR Operator",
+    "difficulty": "easy",
+    "description": "Check if number is less than 0 or greater than 100. Print 'Out of range' if true.",
+    "setupCode": "",
+    "starterCode": "num = 150",
+    "expectedOutput": "Out of range",
+    "testCode": "num = 150\n{user_code}",
+    "hints": [
+      "Use if num < 0 or num > 100:",
+      "Either condition can be true"
+    ]
+  },
+  {
+    "id": "py-cond-not-1",
+    "title": "Logical NOT Operator",
+    "difficulty": "easy",
+    "description": "Check if boolean variable is_raining is False. Print 'No rain' if true.",
+    "setupCode": "",
+    "starterCode": "is_raining = False",
+    "expectedOutput": "No rain",
+    "testCode": "is_raining = False\n{user_code}",
+    "hints": [
+      "Use if not is_raining:",
+      "not inverts the boolean value"
+    ]
+  },
+  {
+    "id": "py-cond-nested-1",
+    "title": "Nested If Statements",
+    "difficulty": "easy",
+    "description": "Check if number is positive. If yes, check if it's even. Print 'Positive and even' if both true.",
+    "setupCode": "",
+    "starterCode": "num = 8",
+    "expectedOutput": "Positive and even",
+    "testCode": "num = 8\n{user_code}",
+    "hints": [
+      "First if: num > 0",
+      "Nested if inside: num % 2 == 0"
+    ]
+  },
+  {
+    "id": "py-cond-grade-1",
+    "title": "Grade Classification",
+    "difficulty": "medium",
+    "description": "Assign letter grade: A (90+), B (80-89), C (70-79), D (60-69), F (below 60). Print the grade.",
+    "setupCode": "",
+    "starterCode": "score = 85",
+    "expectedOutput": "B",
+    "testCode": "score = 85\n{user_code}",
+    "hints": [
+      "Use if/elif chain from highest to lowest",
+      "Check >= 90, >= 80, >= 70, >= 60, else"
+    ]
+  },
+  {
+    "id": "py-cond-even-odd-1",
+    "title": "Even or Odd",
+    "difficulty": "easy",
+    "description": "Check if number is even or odd. Print 'Even' or 'Odd'.",
+    "setupCode": "",
+    "starterCode": "num = 7",
+    "expectedOutput": "Odd",
+    "testCode": "num = 7\n{user_code}",
+    "hints": [
+      "Use modulo operator: num % 2",
+      "If remainder is 0, it's even"
+    ]
+  },
+  {
+    "id": "py-cond-ternary-1",
+    "title": "Ternary Operator",
+    "difficulty": "easy",
+    "description": "Use ternary operator to assign 'Adult' or 'Minor' to status based on age >= 18.",
+    "setupCode": "",
+    "starterCode": "age = 20",
+    "expectedOutput": "Adult",
+    "testCode": "age = 20\n{user_code}\nprint(status)",
+    "hints": [
+      "Use: status = 'Adult' if age >= 18 else 'Minor'",
+      "Compact if-else in one line"
+    ]
+  },
+  {
+    "id": "py-cond-multiple-and-1",
+    "title": "Multiple AND Conditions",
+    "difficulty": "medium",
+    "description": "Check if age is between 18-65 and has_license is True. Print 'Can drive' if both true.",
+    "setupCode": "",
+    "starterCode": "age = 25\nhas_license = True",
+    "expectedOutput": "Can drive",
+    "testCode": "age = 25\nhas_license = True\n{user_code}",
+    "hints": [
+      "Use: if age >= 18 and age <= 65 and has_license:",
+      "All conditions must be true"
+    ]
+  },
+  {
+    "id": "py-cond-string-compare-1",
+    "title": "String Comparison",
+    "difficulty": "easy",
+    "description": "Check if password equals 'secret123'. Print 'Access granted' or 'Access denied'.",
+    "setupCode": "",
+    "starterCode": "password = 'secret123'",
+    "expectedOutput": "Access granted",
+    "testCode": "password = 'secret123'\n{user_code}",
+    "hints": [
+      "Use == to compare strings",
+      "Strings are case-sensitive"
+    ]
+  },
+  {
+    "id": "py-cond-in-operator-1",
+    "title": "Using 'in' Operator",
+    "difficulty": "easy",
+    "description": "Check if 'Python' is in the list ['Java', 'Python', 'C++']. Print 'Found' if true.",
+    "setupCode": "",
+    "starterCode": "languages = ['Java', 'Python', 'C++']",
+    "expectedOutput": "Found",
+    "testCode": "languages = ['Java', 'Python', 'C++']\n{user_code}",
+    "hints": [
+      "Use: if 'Python' in languages:",
+      "'in' checks membership in collections"
+    ]
+  },
+  {
+    "id": "py-cond-not-in-1",
+    "title": "Using 'not in' Operator",
+    "difficulty": "easy",
+    "description": "Check if 'Ruby' is not in the list. Print 'Not found' if true.",
+    "setupCode": "",
+    "starterCode": "languages = ['Java', 'Python', 'C++']",
+    "expectedOutput": "Not found",
+    "testCode": "languages = ['Java', 'Python', 'C++']\n{user_code}",
+    "hints": [
+      "Use: if 'Ruby' not in languages:",
+      "'not in' checks absence from collections"
+    ]
+  },
+  {
+    "id": "py-cond-truthiness-1",
+    "title": "Truthiness - Empty String",
+    "difficulty": "easy",
+    "description": "Check if string is empty using truthiness. Print 'Empty' if empty, 'Not empty' otherwise.",
+    "setupCode": "",
+    "starterCode": "text = ''",
+    "expectedOutput": "Empty",
+    "testCode": "text = ''\n{user_code}",
+    "hints": [
+      "Empty strings are falsy",
+      "Use: if text: for not empty, if not text: for empty"
+    ]
+  },
+  {
+    "id": "py-cond-truthiness-list-1",
+    "title": "Truthiness - Empty List",
+    "difficulty": "easy",
+    "description": "Check if list is empty using truthiness. Print 'Empty' or 'Has items'.",
+    "setupCode": "",
+    "starterCode": "items = []",
+    "expectedOutput": "Empty",
+    "testCode": "items = []\n{user_code}",
+    "hints": [
+      "Empty lists are falsy",
+      "Use: if not items:"
+    ]
+  },
+  {
+    "id": "py-cond-none-check-1",
+    "title": "Check for None",
+    "difficulty": "easy",
+    "description": "Check if value is None. Print 'Is None' or 'Not None'.",
+    "setupCode": "",
+    "starterCode": "value = None",
+    "expectedOutput": "Is None",
+    "testCode": "value = None\n{user_code}",
+    "hints": [
+      "Use: if value is None:",
+      "Use 'is' for None checks, not =="
+    ]
+  },
+  {
+    "id": "py-cond-is-not-1",
+    "title": "Using 'is not'",
+    "difficulty": "easy",
+    "description": "Check if value is not None. Print 'Has value' if true.",
+    "setupCode": "",
+    "starterCode": "value = 42",
+    "expectedOutput": "Has value",
+    "testCode": "value = 42\n{user_code}",
+    "hints": [
+      "Use: if value is not None:",
+      "'is not' checks identity inequality"
+    ]
+  },
+  {
+    "id": "py-cond-max-three-1",
+    "title": "Find Maximum of Three",
+    "difficulty": "medium",
+    "description": "Find and print the largest of three numbers: 15, 23, 8.",
+    "setupCode": "",
+    "starterCode": "a, b, c = 15, 23, 8",
+    "expectedOutput": "23",
+    "testCode": "a, b, c = 15, 23, 8\n{user_code}",
+    "hints": [
+      "Compare a and b first, then compare result with c",
+      "Or use built-in max(a, b, c)"
+    ]
+  },
+  {
+    "id": "py-cond-leap-year-1",
+    "title": "Leap Year Check",
+    "difficulty": "medium",
+    "description": "Check if year 2024 is a leap year. Print 'Leap year' or 'Not leap year'.",
+    "setupCode": "",
+    "starterCode": "year = 2024",
+    "expectedOutput": "Leap year",
+    "testCode": "year = 2024\n{user_code}",
+    "hints": [
+      "Leap if divisible by 4",
+      "But not if divisible by 100, unless also by 400",
+      "Use: (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)"
+    ]
+  },
+  {
+    "id": "py-cond-vowel-1",
+    "title": "Check for Vowel",
+    "difficulty": "easy",
+    "description": "Check if character 'e' is a vowel (a, e, i, o, u). Print 'Vowel' or 'Consonant'.",
+    "setupCode": "",
+    "starterCode": "char = 'e'",
+    "expectedOutput": "Vowel",
+    "testCode": "char = 'e'\n{user_code}",
+    "hints": [
+      "Use: if char in 'aeiou':",
+      "Or check against a list/tuple of vowels"
+    ]
+  },
+  {
+    "id": "py-cond-sign-1",
+    "title": "Number Sign",
+    "difficulty": "easy",
+    "description": "Print 'Positive', 'Negative', or 'Zero' for the number.",
+    "setupCode": "",
+    "starterCode": "num = -5",
+    "expectedOutput": "Negative",
+    "testCode": "num = -5\n{user_code}",
+    "hints": [
+      "Use if/elif/else chain",
+      "Check > 0, < 0, else zero"
+    ]
+  },
+  {
+    "id": "py-cond-divisible-1",
+    "title": "Divisibility Check",
+    "difficulty": "easy",
+    "description": "Check if 15 is divisible by 3 and 5. Print 'Divisible by both' if true.",
+    "setupCode": "",
+    "starterCode": "num = 15",
+    "expectedOutput": "Divisible by both",
+    "testCode": "num = 15\n{user_code}",
+    "hints": [
+      "Use: if num % 3 == 0 and num % 5 == 0:",
+      "Modulo of 0 means evenly divisible"
+    ]
+  },
+  {
+    "id": "py-cond-fizzbuzz-1",
+    "title": "FizzBuzz Logic",
+    "difficulty": "medium",
+    "description": "For number 15: print 'FizzBuzz' if divisible by both 3 and 5, 'Fizz' if by 3, 'Buzz' if by 5, else the number.",
+    "setupCode": "",
+    "starterCode": "num = 15",
+    "expectedOutput": "FizzBuzz",
+    "testCode": "num = 15\n{user_code}",
+    "hints": [
+      "Check both first: if num % 3 == 0 and num % 5 == 0:",
+      "Then check individual conditions",
+      "Order matters!"
+    ]
+  },
+  {
+    "id": "py-cond-age-category-1",
+    "title": "Age Category",
+    "difficulty": "medium",
+    "description": "Categorize age 45: Child (<13), Teen (13-19), Adult (20-64), Senior (65+). Print category.",
+    "setupCode": "",
+    "starterCode": "age = 45",
+    "expectedOutput": "Adult",
+    "testCode": "age = 45\n{user_code}",
+    "hints": [
+      "Use if/elif chain",
+      "Check from specific to general"
+    ]
+  },
+  {
+    "id": "py-cond-temperature-1",
+    "title": "Temperature Description",
+    "difficulty": "medium",
+    "description": "Describe temp: Freezing (<0), Cold (0-15), Mild (16-25), Hot (>25). Print description for 30.",
+    "setupCode": "",
+    "starterCode": "temp = 30",
+    "expectedOutput": "Hot",
+    "testCode": "temp = 30\n{user_code}",
+    "hints": [
+      "Use if/elif/else chain",
+      "Check conditions in order"
+    ]
+  },
+  {
+    "id": "py-cond-triangle-valid-1",
+    "title": "Valid Triangle",
+    "difficulty": "medium",
+    "description": "Check if sides 3, 4, 5 form a valid triangle (sum of any two > third). Print 'Valid' or 'Invalid'.",
+    "setupCode": "",
+    "starterCode": "a, b, c = 3, 4, 5",
+    "expectedOutput": "Valid",
+    "testCode": "a, b, c = 3, 4, 5\n{user_code}",
+    "hints": [
+      "Check: a + b > c and b + c > a and a + c > b",
+      "All three conditions must be true"
+    ]
+  },
+  {
+    "id": "py-cond-username-1",
+    "title": "Username Validation",
+    "difficulty": "medium",
+    "description": "Check if username 'user123' is valid: length 5-15 and contains only letters/numbers. Print 'Valid' or 'Invalid'.",
+    "setupCode": "",
+    "starterCode": "username = 'user123'",
+    "expectedOutput": "Valid",
+    "testCode": "username = 'user123'\n{user_code}",
+    "hints": [
+      "Check: len(username) >= 5 and len(username) <= 15",
+      "Use .isalnum() to check alphanumeric"
+    ]
+  },
+  {
+    "id": "py-cond-password-strength-1",
+    "title": "Password Strength",
+    "difficulty": "medium",
+    "description": "Check password 'Pass123': Strong if len >= 8 and has digit. Print 'Strong' or 'Weak'.",
+    "setupCode": "",
+    "starterCode": "password = 'Pass123'",
+    "expectedOutput": "Strong",
+    "testCode": "password = 'Pass123'\n{user_code}",
+    "hints": [
+      "Check: len(password) >= 8",
+      "Use any(c.isdigit() for c in password) to check for digit"
+    ]
+  },
+  {
+    "id": "py-cond-abs-value-1",
+    "title": "Absolute Value",
+    "difficulty": "easy",
+    "description": "Calculate absolute value of -15 without using abs(). Print result.",
+    "setupCode": "",
+    "starterCode": "num = -15",
+    "expectedOutput": "15",
+    "testCode": "num = -15\n{user_code}",
+    "hints": [
+      "If num < 0, make it positive by multiplying by -1",
+      "Otherwise keep it as is"
+    ]
+  },
+  {
+    "id": "py-cond-min-two-1",
+    "title": "Minimum of Two",
+    "difficulty": "easy",
+    "description": "Find minimum of 7 and 12 without using min(). Print result.",
+    "setupCode": "",
+    "starterCode": "a, b = 7, 12",
+    "expectedOutput": "7",
+    "testCode": "a, b = 7, 12\n{user_code}",
+    "hints": [
+      "Use if a < b: print(a) else: print(b)",
+      "Or use ternary operator"
+    ]
+  },
+  {
+    "id": "py-cond-discount-1",
+    "title": "Calculate Discount",
+    "difficulty": "medium",
+    "description": "Price $150: 20% discount if >= $100, 10% if >= $50, none otherwise. Print final price.",
+    "setupCode": "",
+    "starterCode": "price = 150",
+    "expectedOutput": "120.0",
+    "testCode": "price = 150\n{user_code}",
+    "hints": [
+      "Check highest threshold first",
+      "Calculate: price * 0.8 for 20% off"
+    ]
+  },
+  {
+    "id": "py-cond-bmi-1",
+    "title": "BMI Category",
+    "difficulty": "medium",
+    "description": "BMI 22.5: Underweight (<18.5), Normal (18.5-24.9), Overweight (25-29.9), Obese (30+). Print category.",
+    "setupCode": "",
+    "starterCode": "bmi = 22.5",
+    "expectedOutput": "Normal",
+    "testCode": "bmi = 22.5\n{user_code}",
+    "hints": [
+      "Use if/elif chain from low to high",
+      "Check < 18.5, < 25, < 30, else"
+    ]
+  },
+  {
+    "id": "py-cond-short-circuit-1",
+    "title": "Short-Circuit Evaluation",
+    "difficulty": "medium",
+    "description": "Use short-circuit: check if list is not empty AND first element > 5. Print 'Yes' or 'No' for [7, 2, 3].",
+    "setupCode": "",
+    "starterCode": "numbers = [7, 2, 3]",
+    "expectedOutput": "Yes",
+    "testCode": "numbers = [7, 2, 3]\n{user_code}",
+    "hints": [
+      "Use: if numbers and numbers[0] > 5:",
+      "First condition prevents IndexError if empty"
+    ]
+  },
+  {
+    "id": "py-cond-chained-comparison-1",
+    "title": "Chained Comparisons",
+    "difficulty": "easy",
+    "description": "Check if 5 < x < 15 for x=10 using chained comparison. Print 'In range' if true.",
+    "setupCode": "",
+    "starterCode": "x = 10",
+    "expectedOutput": "In range",
+    "testCode": "x = 10\n{user_code}",
+    "hints": [
+      "Python allows: if 5 < x < 15:",
+      "Equivalent to: if x > 5 and x < 15:"
+    ]
+  },
+  {
+    "id": "py-cond-match-case-1",
+    "title": "Match-Case Statement (Python 3.10+)",
+    "difficulty": "medium",
+    "description": "Use match-case for status code 200: print 'OK' for 200, 'Not Found' for 404, 'Error' for others.",
+    "setupCode": "",
+    "starterCode": "status_code = 200",
+    "expectedOutput": "OK",
+    "testCode": "status_code = 200\n{user_code}",
+    "hints": [
+      "match status_code:",
+      "case 200: print('OK')",
+      "case _: for default"
+    ]
+  },
+  {
+    "id": "py-cond-all-conditions-1",
+    "title": "Using all()",
+    "difficulty": "medium",
+    "description": "Check if all numbers in [2, 4, 6, 8] are even using all(). Print 'All even' or 'Not all even'.",
+    "setupCode": "",
+    "starterCode": "numbers = [2, 4, 6, 8]",
+    "expectedOutput": "All even",
+    "testCode": "numbers = [2, 4, 6, 8]\n{user_code}",
+    "hints": [
+      "Use: if all(n % 2 == 0 for n in numbers):",
+      "all() returns True if all elements are truthy"
+    ]
+  },
+  {
+    "id": "py-cond-any-conditions-1",
+    "title": "Using any()",
+    "difficulty": "medium",
+    "description": "Check if any number in [1, 3, 5, 8] is even using any(). Print 'Has even' or 'No even'.",
+    "setupCode": "",
+    "starterCode": "numbers = [1, 3, 5, 8]",
+    "expectedOutput": "Has even",
+    "testCode": "numbers = [1, 3, 5, 8]\n{user_code}",
+    "hints": [
+      "Use: if any(n % 2 == 0 for n in numbers):",
+      "any() returns True if at least one element is truthy"
+    ]
+  },
+  {
+    "id": "py-cond-triangle-type-1",
+    "title": "Triangle Type",
+    "difficulty": "medium",
+    "description": "Classify triangle with sides 5, 5, 5: Equilateral (all equal), Isosceles (two equal), Scalene (none equal).",
+    "setupCode": "",
+    "starterCode": "a, b, c = 5, 5, 5",
+    "expectedOutput": "Equilateral",
+    "testCode": "a, b, c = 5, 5, 5\n{user_code}",
+    "hints": [
+      "Check if a == b == c for equilateral",
+      "Check if a == b or b == c or a == c for isosceles",
+      "Otherwise scalene"
+    ]
+  },
+  {
+    "id": "py-cond-quadrant-1",
+    "title": "Coordinate Quadrant",
+    "difficulty": "medium",
+    "description": "Determine quadrant for point (3, 4): Q1 (x>0, y>0), Q2 (x<0, y>0), Q3 (x<0, y<0), Q4 (x>0, y<0).",
+    "setupCode": "",
+    "starterCode": "x, y = 3, 4",
+    "expectedOutput": "Q1",
+    "testCode": "x, y = 3, 4\n{user_code}",
+    "hints": [
+      "Check combinations of x and y signs",
+      "Don't forget to handle origin (0, 0)"
+    ]
+  },
+  {
+    "id": "py-cond-season-1",
+    "title": "Determine Season",
+    "difficulty": "medium",
+    "description": "Determine season for month 7: Winter (12-2), Spring (3-5), Summer (6-8), Fall (9-11). Print season.",
+    "setupCode": "",
+    "starterCode": "month = 7",
+    "expectedOutput": "Summer",
+    "testCode": "month = 7\n{user_code}",
+    "hints": [
+      "Use if/elif for month ranges",
+      "Use 'in' with range or tuple: if month in (12, 1, 2):"
+    ]
+  },
+  {
+    "id": "py-cond-rock-paper-scissors-1",
+    "title": "Rock Paper Scissors",
+    "difficulty": "medium",
+    "description": "Determine winner: player='rock', computer='scissors'. Print 'Player wins', 'Computer wins', or 'Tie'.",
+    "setupCode": "",
+    "starterCode": "player = 'rock'\ncomputer = 'scissors'",
+    "expectedOutput": "Player wins",
+    "testCode": "player = 'rock'\ncomputer = 'scissors'\n{user_code}",
+    "hints": [
+      "Check for tie first: if player == computer",
+      "Then check winning combinations",
+      "Rock beats scissors, scissors beats paper, paper beats rock"
+    ]
+  },
+  {
+    "id": "py-cond-nested-ternary-1",
+    "title": "Nested Ternary",
+    "difficulty": "hard",
+    "description": "Use nested ternary to classify number 0: 'Positive', 'Negative', or 'Zero'.",
+    "setupCode": "",
+    "starterCode": "num = 0",
+    "expectedOutput": "Zero",
+    "testCode": "num = 0\n{user_code}\nprint(result)",
+    "hints": [
+      "result = 'Positive' if num > 0 else ('Negative' if num < 0 else 'Zero')",
+      "Nest the else part"
+    ]
+  },
+  {
+    "id": "py-cond-walrus-1",
+    "title": "Walrus Operator",
+    "difficulty": "medium",
+    "description": "Use walrus operator := to assign and check length of 'hello' in one line. Print length if > 3.",
+    "setupCode": "",
+    "starterCode": "text = 'hello'",
+    "expectedOutput": "5",
+    "testCode": "text = 'hello'\n{user_code}",
+    "hints": [
+      "Use: if (n := len(text)) > 3:",
+      "Walrus assigns and returns value in one expression"
+    ]
+  },
+  {
+    "id": "py-cond-guard-clause-1",
+    "title": "Guard Clause Pattern",
+    "difficulty": "medium",
+    "description": "Define function that returns 'Invalid' if number < 0, else returns number * 2. Use guard clause.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Invalid\n10",
+    "testCode": "{user_code}\nprint(process(-5))\nprint(process(5))",
+    "hints": [
+      "Check invalid condition first and return early",
+      "if num < 0: return 'Invalid'",
+      "Then handle valid case"
+    ]
+  },
+  {
+    "id": "py-cond-boolean-flag-1",
+    "title": "Boolean Flag",
+    "difficulty": "easy",
+    "description": "Set found=True if 5 exists in [1, 3, 5, 7], False otherwise. Print found.",
+    "setupCode": "",
+    "starterCode": "numbers = [1, 3, 5, 7]",
+    "expectedOutput": "True",
+    "testCode": "numbers = [1, 3, 5, 7]\n{user_code}\nprint(found)",
+    "hints": [
+      "Use: found = 5 in numbers",
+      "Or use if/else to set boolean variable"
+    ]
+  },
+  {
+    "id": "py-cond-early-return-1",
+    "title": "Early Return",
+    "difficulty": "medium",
+    "description": "Define function that returns 'Empty' if list is empty, otherwise returns first element.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Empty\n1",
+    "testCode": "{user_code}\nprint(get_first([]))\nprint(get_first([1, 2, 3]))",
+    "hints": [
+      "Check if not lst: return 'Empty'",
+      "Then return lst[0]",
+      "Early return avoids nested conditions"
+    ]
+  }
+]

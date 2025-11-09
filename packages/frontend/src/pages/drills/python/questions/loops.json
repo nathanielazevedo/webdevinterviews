@@ -1,0 +1,478 @@
+[
+  {
+    "id": "py-loop-basic-1",
+    "title": "Basic For Loop with Range",
+    "difficulty": "easy",
+    "description": "Print numbers 0 through 4 using a for loop.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "0\n1\n2\n3\n4",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use range(5) to generate numbers 0-4",
+      "Use a for loop to iterate and print each number"
+    ]
+  },
+  {
+    "id": "py-loop-range-start-1",
+    "title": "Range with Start and Stop",
+    "difficulty": "easy",
+    "description": "Print numbers 3 through 7 using range().",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "3\n4\n5\n6\n7",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use range(start, stop) with two arguments",
+      "range(3, 8) gives 3 through 7 (stop is exclusive)"
+    ]
+  },
+  {
+    "id": "py-loop-range-step-1",
+    "title": "Range with Step",
+    "difficulty": "easy",
+    "description": "Print even numbers 0 through 8 using range().",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "0\n2\n4\n6\n8",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use range(start, stop, step) with three arguments",
+      "range(0, 9, 2) counts by 2s"
+    ]
+  },
+  {
+    "id": "py-loop-range-reverse-1",
+    "title": "Loop in Reverse",
+    "difficulty": "easy",
+    "description": "Print numbers 5 down to 1 using range().",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "5\n4\n3\n2\n1",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use negative step: range(5, 0, -1)",
+      "Stop is exclusive, so use 0 to include 1"
+    ]
+  },
+  {
+    "id": "py-loop-list-1",
+    "title": "Loop Through List",
+    "difficulty": "easy",
+    "description": "Print each fruit in the list.",
+    "setupCode": "fruits = ['apple', 'banana', 'cherry']",
+    "starterCode": "",
+    "expectedOutput": "apple\nbanana\ncherry",
+    "testCode": "fruits = ['apple', 'banana', 'cherry']\n{user_code}",
+    "hints": [
+      "Use for fruit in fruits:",
+      "Print each fruit in the loop body"
+    ]
+  },
+  {
+    "id": "py-loop-string-1",
+    "title": "Loop Through String",
+    "difficulty": "easy",
+    "description": "Print each character in 'hello' on a separate line.",
+    "setupCode": "word = 'hello'",
+    "starterCode": "",
+    "expectedOutput": "h\ne\nl\nl\no",
+    "testCode": "word = 'hello'\n{user_code}",
+    "hints": [
+      "Strings are iterable just like lists",
+      "Use for char in word:"
+    ]
+  },
+  {
+    "id": "py-loop-enumerate-1",
+    "title": "Loop with Index - Enumerate",
+    "difficulty": "easy",
+    "description": "Print the index and value for each color using enumerate().",
+    "setupCode": "colors = ['red', 'green', 'blue']",
+    "starterCode": "",
+    "expectedOutput": "0 red\n1 green\n2 blue",
+    "testCode": "colors = ['red', 'green', 'blue']\n{user_code}",
+    "hints": [
+      "Use enumerate(colors) to get both index and value",
+      "Unpack with: for i, color in enumerate(colors):"
+    ]
+  },
+  {
+    "id": "py-loop-enumerate-start-1",
+    "title": "Enumerate with Custom Start",
+    "difficulty": "easy",
+    "description": "Print 1-indexed positions (starting from 1) using enumerate().",
+    "setupCode": "items = ['a', 'b', 'c']",
+    "starterCode": "",
+    "expectedOutput": "1 a\n2 b\n3 c",
+    "testCode": "items = ['a', 'b', 'c']\n{user_code}",
+    "hints": [
+      "Use enumerate(items, start=1)",
+      "The start parameter changes the initial index"
+    ]
+  },
+  {
+    "id": "py-loop-zip-1",
+    "title": "Loop Two Lists - Zip",
+    "difficulty": "easy",
+    "description": "Print pairs from both lists using zip().",
+    "setupCode": "names = ['Alice', 'Bob', 'Charlie']\nages = [25, 30, 35]",
+    "starterCode": "",
+    "expectedOutput": "Alice 25\nBob 30\nCharlie 35",
+    "testCode": "names = ['Alice', 'Bob', 'Charlie']\nages = [25, 30, 35]\n{user_code}",
+    "hints": [
+      "Use zip(names, ages) to pair up elements",
+      "Unpack with: for name, age in zip(names, ages):"
+    ]
+  },
+  {
+    "id": "py-loop-dict-keys-1",
+    "title": "Loop Dictionary Keys",
+    "difficulty": "easy",
+    "description": "Print each key from the dictionary.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30, 'city': 'Boston'}",
+    "starterCode": "",
+    "expectedOutput": "age\ncity\nname",
+    "testCode": "person = {'name': 'Alice', 'age': 30, 'city': 'Boston'}\n{user_code}",
+    "hints": [
+      "Loop directly over the dictionary: for key in person:",
+      "Or explicitly use: for key in person.keys():"
+    ]
+  },
+  {
+    "id": "py-loop-dict-values-1",
+    "title": "Loop Dictionary Values",
+    "difficulty": "easy",
+    "description": "Print each value from the dictionary.",
+    "setupCode": "scores = {'math': 95, 'science': 87, 'english': 92}",
+    "starterCode": "",
+    "expectedOutput": "87\n92\n95",
+    "testCode": "scores = {'math': 95, 'science': 87, 'english': 92}\n{user_code}",
+    "hints": [
+      "Use scores.values() to get just the values",
+      "for score in scores.values():"
+    ]
+  },
+  {
+    "id": "py-loop-dict-items-1",
+    "title": "Loop Dictionary Items",
+    "difficulty": "easy",
+    "description": "Print key-value pairs using items().",
+    "setupCode": "data = {'a': 1, 'b': 2, 'c': 3}",
+    "starterCode": "",
+    "expectedOutput": "a 1\nb 2\nc 3",
+    "testCode": "data = {'a': 1, 'b': 2, 'c': 3}\n{user_code}",
+    "hints": [
+      "Use data.items() to get both keys and values",
+      "Unpack with: for key, value in data.items():"
+    ]
+  },
+  {
+    "id": "py-loop-set-1",
+    "title": "Loop Through Set",
+    "difficulty": "easy",
+    "description": "Print each unique number from the set (duplicates removed).",
+    "setupCode": "numbers = {3, 1, 4, 1, 5, 9, 2}",
+    "starterCode": "",
+    "expectedOutput": "1\n2\n3\n4\n5\n9",
+    "testCode": "numbers = {3, 1, 4, 1, 5, 9, 2}\n{user_code}",
+    "hints": [
+      "Sets automatically remove duplicates",
+      "Use: for num in numbers:"
+    ]
+  },
+  {
+    "id": "py-loop-tuple-1",
+    "title": "Loop Through Tuple",
+    "difficulty": "easy",
+    "description": "Print each coordinate from the tuple.",
+    "setupCode": "point = (10, 20, 30)",
+    "starterCode": "",
+    "expectedOutput": "10\n20\n30",
+    "testCode": "point = (10, 20, 30)\n{user_code}",
+    "hints": [
+      "Tuples are iterable just like lists",
+      "Use: for coord in point:"
+    ]
+  },
+  {
+    "id": "py-loop-nested-list-1",
+    "title": "Nested Loop - 2D List",
+    "difficulty": "medium",
+    "description": "Print all numbers from the 2D list (matrix) using nested loops.",
+    "setupCode": "matrix = [[1, 2, 3], [4, 5, 6]]",
+    "starterCode": "",
+    "expectedOutput": "1\n2\n3\n4\n5\n6",
+    "testCode": "matrix = [[1, 2, 3], [4, 5, 6]]\n{user_code}",
+    "hints": [
+      "Use nested for loops",
+      "Outer loop iterates rows, inner loop iterates elements in each row"
+    ]
+  },
+  {
+    "id": "py-loop-while-1",
+    "title": "Basic While Loop",
+    "difficulty": "easy",
+    "description": "Print numbers 1 through 5 using a while loop.",
+    "setupCode": "",
+    "starterCode": "i = 1",
+    "expectedOutput": "1\n2\n3\n4\n5",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use while i <= 5:",
+      "Don't forget to increment i inside the loop"
+    ]
+  },
+  {
+    "id": "py-loop-while-break-1",
+    "title": "While Loop with Break",
+    "difficulty": "easy",
+    "description": "Print numbers starting from 0, but stop the loop when i equals 3.",
+    "setupCode": "",
+    "starterCode": "i = 0\nwhile i < 10:",
+    "expectedOutput": "0\n1\n2",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use break to exit the loop early",
+      "Check if i == 3 before printing, then break"
+    ]
+  },
+  {
+    "id": "py-loop-continue-1",
+    "title": "Skip with Continue",
+    "difficulty": "easy",
+    "description": "Print numbers 0-5, but skip number 3 using continue.",
+    "setupCode": "",
+    "starterCode": "for i in range(6):",
+    "expectedOutput": "0\n1\n2\n4\n5",
+    "testCode": "{user_code}",
+    "hints": [
+      "continue skips to the next iteration",
+      "Check if i == 3, then continue before printing"
+    ]
+  },
+  {
+    "id": "py-loop-break-1",
+    "title": "Exit Loop with Break",
+    "difficulty": "easy",
+    "description": "Loop through fruits and stop when you find 'cherry'.",
+    "setupCode": "fruits = ['apple', 'banana', 'cherry', 'date']",
+    "starterCode": "",
+    "expectedOutput": "apple\nbanana\ncherry",
+    "testCode": "fruits = ['apple', 'banana', 'cherry', 'date']\n{user_code}",
+    "hints": [
+      "Print each fruit before checking",
+      "Use break when fruit == 'cherry'"
+    ]
+  },
+  {
+    "id": "py-loop-else-1",
+    "title": "For-Else Clause",
+    "difficulty": "medium",
+    "description": "Print numbers 0-2, then print 'Complete' after the loop finishes normally.",
+    "setupCode": "",
+    "starterCode": "for i in range(3):",
+    "expectedOutput": "0\n1\n2\nComplete",
+    "testCode": "{user_code}",
+    "hints": [
+      "The else clause runs if the loop completes without hitting break",
+      "Add else: after the for loop (same indentation as for)"
+    ]
+  },
+  {
+    "id": "py-loop-else-break-1",
+    "title": "For-Else with Break",
+    "difficulty": "medium",
+    "description": "Loop 0-4, but break when i equals 2. Notice the else block won't run.",
+    "setupCode": "",
+    "starterCode": "for i in range(5):",
+    "expectedOutput": "0\n1",
+    "testCode": "{user_code}",
+    "hints": [
+      "Print i, then check if i == 2 and break",
+      "Add else: print('Complete') to see it's skipped when break executes"
+    ]
+  },
+  {
+    "id": "py-loop-list-indices-1",
+    "title": "Loop List by Index",
+    "difficulty": "easy",
+    "description": "Access list elements by index using range().",
+    "setupCode": "items = ['a', 'b', 'c']",
+    "starterCode": "",
+    "expectedOutput": "a\nb\nc",
+    "testCode": "items = ['a', 'b', 'c']\n{user_code}",
+    "hints": [
+      "Use range(len(items)) to get indices",
+      "Access elements with items[i]"
+    ]
+  },
+  {
+    "id": "py-loop-reversed-1",
+    "title": "Loop in Reverse - Reversed",
+    "difficulty": "easy",
+    "description": "Print the list in reverse order using reversed().",
+    "setupCode": "nums = [1, 2, 3, 4, 5]",
+    "starterCode": "",
+    "expectedOutput": "5\n4\n3\n2\n1",
+    "testCode": "nums = [1, 2, 3, 4, 5]\n{user_code}",
+    "hints": [
+      "Use reversed(nums) to get a reverse iterator",
+      "for num in reversed(nums):"
+    ]
+  },
+  {
+    "id": "py-loop-sorted-1",
+    "title": "Loop in Sorted Order",
+    "difficulty": "easy",
+    "description": "Print numbers in ascending order using sorted().",
+    "setupCode": "nums = [3, 1, 4, 1, 5, 9, 2]",
+    "starterCode": "",
+    "expectedOutput": "1\n1\n2\n3\n4\n5\n9",
+    "testCode": "nums = [3, 1, 4, 1, 5, 9, 2]\n{user_code}",
+    "hints": [
+      "Use sorted(nums) to return a new sorted list",
+      "for num in sorted(nums):"
+    ]
+  },
+  {
+    "id": "py-loop-filter-1",
+    "title": "Loop with Inline Condition",
+    "difficulty": "medium",
+    "description": "Print only the even numbers from the list.",
+    "setupCode": "numbers = [1, 2, 3, 4, 5, 6, 7, 8]",
+    "starterCode": "",
+    "expectedOutput": "2\n4\n6\n8",
+    "testCode": "numbers = [1, 2, 3, 4, 5, 6, 7, 8]\n{user_code}",
+    "hints": [
+      "Check if num % 2 == 0 inside the loop",
+      "Print only when the condition is true"
+    ]
+  },
+  {
+    "id": "py-loop-accumulator-1",
+    "title": "Accumulator Pattern - Sum",
+    "difficulty": "medium",
+    "description": "Calculate the sum of all numbers using a loop and print the result.",
+    "setupCode": "numbers = [10, 20, 30, 40, 50]",
+    "starterCode": "total = 0",
+    "expectedOutput": "150",
+    "testCode": "numbers = [10, 20, 30, 40, 50]\n{user_code}\nprint(total)",
+    "hints": [
+      "Loop through numbers and add each to total",
+      "total += num inside the loop"
+    ]
+  },
+  {
+    "id": "py-loop-accumulator-list-1",
+    "title": "Accumulator Pattern - List",
+    "difficulty": "medium",
+    "description": "Build a list of squares [1, 4, 9, 16, 25] using a loop.",
+    "setupCode": "",
+    "starterCode": "squares = []",
+    "expectedOutput": "[1, 4, 9, 16, 25]",
+    "testCode": "{user_code}\nprint(squares)",
+    "hints": [
+      "Loop through range(1, 6)",
+      "Use squares.append(i ** 2) inside the loop"
+    ]
+  },
+  {
+    "id": "py-loop-multiple-zip-1",
+    "title": "Zip Three Lists",
+    "difficulty": "medium",
+    "description": "Loop through three lists simultaneously using zip().",
+    "setupCode": "names = ['Alice', 'Bob']\nages = [25, 30]\ncities = ['NYC', 'LA']",
+    "starterCode": "",
+    "expectedOutput": "Alice 25 NYC\nBob 30 LA",
+    "testCode": "names = ['Alice', 'Bob']\nages = [25, 30]\ncities = ['NYC', 'LA']\n{user_code}",
+    "hints": [
+      "Use zip(names, ages, cities)",
+      "Unpack with: for name, age, city in zip(...):"
+    ]
+  },
+  {
+    "id": "py-loop-unpack-tuple-1",
+    "title": "Loop and Unpack Tuples",
+    "difficulty": "medium",
+    "description": "Unpack each coordinate tuple and print x and y values.",
+    "setupCode": "points = [(1, 2), (3, 4), (5, 6)]",
+    "starterCode": "",
+    "expectedOutput": "1 2\n3 4\n5 6",
+    "testCode": "points = [(1, 2), (3, 4), (5, 6)]\n{user_code}",
+    "hints": [
+      "Unpack tuples directly in the loop",
+      "for x, y in points:"
+    ]
+  },
+  {
+    "id": "py-loop-nested-dict-1",
+    "title": "Loop Nested Dictionary",
+    "difficulty": "medium",
+    "description": "Print all student names, courses, and grades from the nested dictionary.",
+    "setupCode": "students = {'Alice': {'math': 90, 'science': 85}, 'Bob': {'math': 88, 'science': 92}}",
+    "starterCode": "",
+    "expectedOutput": "Alice math 90\nAlice science 85\nBob math 88\nBob science 92",
+    "testCode": "students = {'Alice': {'math': 90, 'science': 85}, 'Bob': {'math': 88, 'science': 92}}\n{user_code}",
+    "hints": [
+      "Outer loop: for student, courses in students.items():",
+      "Inner loop: for course, grade in courses.items():"
+    ]
+  },
+  {
+    "id": "py-loop-list-comp-equiv-1",
+    "title": "Loop vs List Comprehension",
+    "difficulty": "medium",
+    "description": "Create a list of doubled values using a traditional loop with append.",
+    "setupCode": "nums = [1, 2, 3, 4, 5]",
+    "starterCode": "doubled = []",
+    "expectedOutput": "[2, 4, 6, 8, 10]",
+    "testCode": "nums = [1, 2, 3, 4, 5]\n{user_code}\nprint(doubled)",
+    "hints": [
+      "Loop through nums and append num * 2",
+      "This is the traditional approach (vs list comprehension)"
+    ]
+  },
+  {
+    "id": "py-loop-step-skip-1",
+    "title": "Loop Every Nth Element",
+    "difficulty": "medium",
+    "description": "Print every 3rd element from the list (indices 0, 3, 6).",
+    "setupCode": "items = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']",
+    "starterCode": "",
+    "expectedOutput": "a\nd\ng",
+    "testCode": "items = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']\n{user_code}",
+    "hints": [
+      "Use slice notation with step: items[::3]",
+      "Then loop through the sliced result"
+    ]
+  },
+  {
+    "id": "py-loop-infinite-1",
+    "title": "Infinite Loop with Condition",
+    "difficulty": "medium",
+    "description": "Create an infinite loop that stops when count reaches 3.",
+    "setupCode": "",
+    "starterCode": "count = 0\nwhile True:",
+    "expectedOutput": "0\n1\n2",
+    "testCode": "{user_code}",
+    "hints": [
+      "while True: creates an infinite loop",
+      "Print count, increment it, then break when count == 3"
+    ]
+  },
+  {
+    "id": "py-loop-parallel-indices-1",
+    "title": "Loop Two Lists by Index",
+    "difficulty": "medium",
+    "description": "Access two parallel lists using the same index (alternative to zip).",
+    "setupCode": "names = ['Alice', 'Bob', 'Charlie']\nscores = [85, 90, 78]",
+    "starterCode": "",
+    "expectedOutput": "Alice 85\nBob 90\nCharlie 78",
+    "testCode": "names = ['Alice', 'Bob', 'Charlie']\nscores = [85, 90, 78]\n{user_code}",
+    "hints": [
+      "Use range(len(names)) to get indices",
+      "Access both lists with the same index: names[i] and scores[i]"
+    ]
+  }
+]

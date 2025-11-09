@@ -1,0 +1,665 @@
+[
+  {
+    "id": "py-ctx-basic-file-1",
+    "title": "Basic File Context Manager",
+    "difficulty": "easy",
+    "description": "Use with statement to open 'test.txt', write 'Hello', and ensure it closes automatically.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Hello",
+    "testCode": "{user_code}\nwith open('test.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Use with open('test.txt', 'w') as f:",
+      "File automatically closes after with block",
+      "No need to call f.close()"
+    ]
+  },
+  {
+    "id": "py-ctx-read-file-1",
+    "title": "Read File with Context Manager",
+    "difficulty": "easy",
+    "description": "Create file 'data.txt' with 'test', then use with to read and print contents.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "test",
+    "testCode": "with open('data.txt', 'w') as f:\n    f.write('test')\n{user_code}",
+    "hints": [
+      "with open('data.txt', 'r') as f:",
+      "Use f.read() inside the block",
+      "Print the contents"
+    ]
+  },
+  {
+    "id": "py-ctx-multiple-files-1",
+    "title": "Multiple Files in One With",
+    "difficulty": "medium",
+    "description": "Open 'input.txt' for reading and 'output.txt' for writing in single with statement. Copy contents.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "copied",
+    "testCode": "with open('input.txt', 'w') as f:\n    f.write('copied')\n{user_code}\nwith open('output.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Use with open(...) as f1, open(...) as f2:",
+      "Read from f1, write to f2",
+      "Both close automatically"
+    ]
+  },
+  {
+    "id": "py-ctx-exception-handling-1",
+    "title": "Context Manager with Exception",
+    "difficulty": "medium",
+    "description": "Open file, raise ValueError inside with block. Verify file still closes. Print 'Closed'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Closed",
+    "testCode": "{user_code}\nprint('Closed')",
+    "hints": [
+      "with open('test.txt', 'w') as f:",
+      "Raise exception inside",
+      "Wrap in try-except",
+      "File closes even when exception occurs"
+    ]
+  },
+  {
+    "id": "py-ctx-custom-class-1",
+    "title": "Custom Context Manager Class",
+    "difficulty": "medium",
+    "description": "Create class MyContext with __enter__ printing 'Enter' and __exit__ printing 'Exit'. Use with.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Enter\nExit",
+    "testCode": "{user_code}\nwith MyContext():\n    pass",
+    "hints": [
+      "Define __enter__(self) method",
+      "Define __exit__(self, exc_type, exc_val, exc_tb) method",
+      "__enter__ runs at start, __exit__ at end"
+    ]
+  },
+  {
+    "id": "py-ctx-enter-return-1",
+    "title": "Context Manager Returning Value",
+    "difficulty": "medium",
+    "description": "Create context manager that returns 'value' from __enter__. Print it in with block.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "value",
+    "testCode": "{user_code}\nwith MyContext() as val:\n    print(val)",
+    "hints": [
+      "__enter__ should return 'value'",
+      "The 'as' clause captures return value",
+      "Can return self or any object"
+    ]
+  },
+  {
+    "id": "py-ctx-exit-suppress-1",
+    "title": "Suppress Exception in __exit__",
+    "difficulty": "hard",
+    "description": "Create context manager that suppresses ValueError. Raise ValueError inside, print 'Suppressed'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Suppressed",
+    "testCode": "{user_code}\nwith MyContext():\n    raise ValueError()\nprint('Suppressed')",
+    "hints": [
+      "__exit__ receives exception info",
+      "Return True to suppress exception",
+      "Return False (or None) to propagate"
+    ]
+  },
+  {
+    "id": "py-ctx-contextlib-manager-1",
+    "title": "Context Manager with contextlib",
+    "difficulty": "medium",
+    "description": "Use @contextmanager decorator to create context manager that prints 'Start' and 'End'.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "Start\nEnd",
+    "testCode": "from contextlib import contextmanager\n{user_code}\nwith my_context():\n    pass",
+    "hints": [
+      "Decorate generator function with @contextmanager",
+      "Print 'Start', yield, print 'End'",
+      "yield separates setup from teardown"
+    ]
+  },
+  {
+    "id": "py-ctx-contextlib-yield-1",
+    "title": "Yield Value in Context Manager",
+    "difficulty": "medium",
+    "description": "Create context manager with @contextmanager that yields 42. Print it.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "42",
+    "testCode": "from contextlib import contextmanager\n{user_code}\nwith my_context() as val:\n    print(val)",
+    "hints": [
+      "@contextmanager decorator",
+      "yield the value (42)",
+      "Value is captured by 'as' clause"
+    ]
+  },
+  {
+    "id": "py-ctx-contextlib-suppress-1",
+    "title": "Suppress with contextlib",
+    "difficulty": "easy",
+    "description": "Use contextlib.suppress to ignore FileNotFoundError when opening missing file. Print 'Done'.",
+    "setupCode": "",
+    "starterCode": "from contextlib import suppress",
+    "expectedOutput": "Done",
+    "testCode": "from contextlib import suppress\n{user_code}\nprint('Done')",
+    "hints": [
+      "with suppress(FileNotFoundError):",
+      "Try to open non-existent file inside",
+      "Exception is automatically suppressed"
+    ]
+  },
+  {
+    "id": "py-ctx-contextlib-redirect-1",
+    "title": "Redirect stdout",
+    "difficulty": "medium",
+    "description": "Use redirect_stdout to capture print('hello') to StringIO. Print captured value.",
+    "setupCode": "",
+    "starterCode": "from contextlib import redirect_stdout\nfrom io import StringIO",
+    "expectedOutput": "hello",
+    "testCode": "from contextlib import redirect_stdout\nfrom io import StringIO\n{user_code}",
+    "hints": [
+      "Create StringIO buffer",
+      "with redirect_stdout(buffer):",
+      "Print inside, then read buffer.getvalue()"
+    ]
+  },
+  {
+    "id": "py-ctx-timer-1",
+    "title": "Timer Context Manager",
+    "difficulty": "medium",
+    "description": "Create context manager that prints 'Elapsed' on exit (don't need actual timing).",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "Elapsed",
+    "testCode": "from contextlib import contextmanager\n{user_code}\nwith timer():\n    pass",
+    "hints": [
+      "Use @contextmanager",
+      "yield in middle",
+      "Print 'Elapsed' after yield"
+    ]
+  },
+  {
+    "id": "py-ctx-database-1",
+    "title": "Database Transaction Pattern",
+    "difficulty": "hard",
+    "description": "Create context manager that prints 'Begin', yields, then 'Commit' or 'Rollback' based on exception.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "Begin\nCommit",
+    "testCode": "from contextlib import contextmanager\n{user_code}\nwith transaction():\n    pass",
+    "hints": [
+      "Print 'Begin' before yield",
+      "Use try-finally around yield",
+      "Print 'Commit' in finally if no exception"
+    ]
+  },
+  {
+    "id": "py-ctx-closing-1",
+    "title": "Closing Context Manager",
+    "difficulty": "medium",
+    "description": "Use contextlib.closing to ensure object's close() method is called. Create class with close().",
+    "setupCode": "",
+    "starterCode": "from contextlib import closing",
+    "expectedOutput": "Closed",
+    "testCode": "from contextlib import closing\n{user_code}\nwith closing(obj):\n    pass",
+    "hints": [
+      "Create class with close() method",
+      "with closing(obj): ensures close() called",
+      "Useful for objects without __exit__"
+    ]
+  },
+  {
+    "id": "py-ctx-lock-pattern-1",
+    "title": "Lock Pattern",
+    "difficulty": "medium",
+    "description": "Create context manager that prints 'Acquire' on enter and 'Release' on exit.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "Acquire\nRelease",
+    "testCode": "from contextlib import contextmanager\n{user_code}\nwith lock():\n    pass",
+    "hints": [
+      "Common pattern for locks/resources",
+      "Acquire before yield",
+      "Release after yield (in finally)"
+    ]
+  },
+  {
+    "id": "py-ctx-temp-directory-1",
+    "title": "Temporary Directory",
+    "difficulty": "medium",
+    "description": "Use tempfile.TemporaryDirectory() to create temp dir. Print that it exists inside context.",
+    "setupCode": "",
+    "starterCode": "import tempfile\nimport os",
+    "expectedOutput": "True",
+    "testCode": "import tempfile\nimport os\n{user_code}",
+    "hints": [
+      "with tempfile.TemporaryDirectory() as tmpdir:",
+      "Check os.path.exists(tmpdir)",
+      "Directory auto-deleted after with block"
+    ]
+  },
+  {
+    "id": "py-ctx-temp-file-1",
+    "title": "Temporary File",
+    "difficulty": "medium",
+    "description": "Use tempfile.NamedTemporaryFile() to create temp file, write 'test', read it back.",
+    "setupCode": "",
+    "starterCode": "import tempfile",
+    "expectedOutput": "test",
+    "testCode": "import tempfile\n{user_code}",
+    "hints": [
+      "with tempfile.NamedTemporaryFile(mode='w+') as f:",
+      "Write, seek(0), then read",
+      "File auto-deleted after"
+    ]
+  },
+  {
+    "id": "py-ctx-chdir-1",
+    "title": "Change Directory Context Manager",
+    "difficulty": "hard",
+    "description": "Create context manager that changes to '/tmp', yields, then returns to original directory.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager\nimport os",
+    "expectedOutput": "/home/claude",
+    "testCode": "from contextlib import contextmanager\nimport os\n{user_code}\nwith chdir('/tmp'):\n    pass\nprint(os.getcwd())",
+    "hints": [
+      "Save current dir with os.getcwd()",
+      "os.chdir() to new dir",
+      "Restore in finally block"
+    ]
+  },
+  {
+    "id": "py-ctx-env-var-1",
+    "title": "Temporary Environment Variable",
+    "difficulty": "hard",
+    "description": "Create context manager that sets env var 'TEST=1', yields, then restores original.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager\nimport os",
+    "expectedOutput": "None",
+    "testCode": "from contextlib import contextmanager\nimport os\n{user_code}\nwith set_env('TEST', '1'):\n    pass\nprint(os.environ.get('TEST'))",
+    "hints": [
+      "Save original with os.environ.get()",
+      "Set new value",
+      "Restore or delete in finally"
+    ]
+  },
+  {
+    "id": "py-ctx-nested-1",
+    "title": "Nested Context Managers",
+    "difficulty": "medium",
+    "description": "Use two context managers nested (one for each file). Copy from file1 to file2.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "content",
+    "testCode": "with open('file1.txt', 'w') as f:\n    f.write('content')\n{user_code}\nwith open('file2.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "with open('file1.txt', 'r') as f1:",
+      "    with open('file2.txt', 'w') as f2:",
+      "        f2.write(f1.read())",
+      "Can also use comma syntax"
+    ]
+  },
+  {
+    "id": "py-ctx-exitstack-1",
+    "title": "ExitStack for Dynamic Context Managers",
+    "difficulty": "hard",
+    "description": "Use ExitStack to open variable number of files. Open 2 files dynamically.",
+    "setupCode": "",
+    "starterCode": "from contextlib import ExitStack",
+    "expectedOutput": "2",
+    "testCode": "from contextlib import ExitStack\nfor i in range(2):\n    with open(f'file{i}.txt', 'w') as f:\n        f.write('test')\n{user_code}",
+    "hints": [
+      "with ExitStack() as stack:",
+      "Use stack.enter_context(open(...)) in loop",
+      "All files closed when stack exits"
+    ]
+  },
+  {
+    "id": "py-ctx-nullcontext-1",
+    "title": "Null Context Manager",
+    "difficulty": "medium",
+    "description": "Use contextlib.nullcontext() which does nothing. Print 'Done'.",
+    "setupCode": "",
+    "starterCode": "from contextlib import nullcontext",
+    "expectedOutput": "Done",
+    "testCode": "from contextlib import nullcontext\n{user_code}\nprint('Done')",
+    "hints": [
+      "with nullcontext():",
+      "Useful for optional context managers",
+      "No setup or teardown"
+    ]
+  },
+  {
+    "id": "py-ctx-conditional-1",
+    "title": "Conditional Context Manager",
+    "difficulty": "hard",
+    "description": "Use file context manager if condition True, else nullcontext(). Condition = False.",
+    "setupCode": "",
+    "starterCode": "from contextlib import nullcontext",
+    "expectedOutput": "Done",
+    "testCode": "from contextlib import nullcontext\n{user_code}\nprint('Done')",
+    "hints": [
+      "condition = False",
+      "ctx = open(...) if condition else nullcontext()",
+      "with ctx: ...",
+      "Useful for optional features"
+    ]
+  },
+  {
+    "id": "py-ctx-resource-cleanup-1",
+    "title": "Resource Cleanup Pattern",
+    "difficulty": "medium",
+    "description": "Create context manager that prints 'Allocate' and 'Cleanup' for resource management.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "Allocate\nCleanup",
+    "testCode": "from contextlib import contextmanager\n{user_code}\nwith resource():\n    pass",
+    "hints": [
+      "Common pattern for managing resources",
+      "Allocate before yield",
+      "Cleanup in finally after yield"
+    ]
+  },
+  {
+    "id": "py-ctx-exception-info-1",
+    "title": "Access Exception Info in __exit__",
+    "difficulty": "hard",
+    "description": "Create context manager that prints exception type if ValueError raised, else 'No error'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "ValueError",
+    "testCode": "{user_code}\ntry:\n    with MyContext():\n        raise ValueError()\nexcept ValueError:\n    pass",
+    "hints": [
+      "__exit__ receives (exc_type, exc_val, exc_tb)",
+      "Check if exc_type is not None",
+      "Print exc_type.__name__"
+    ]
+  },
+  {
+    "id": "py-ctx-generator-cleanup-1",
+    "title": "Generator with Cleanup",
+    "difficulty": "medium",
+    "description": "Create context manager using generator with try-finally for cleanup.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "Setup\nCleanup",
+    "testCode": "from contextlib import contextmanager\n{user_code}\nwith my_context():\n    pass",
+    "hints": [
+      "@contextmanager with try-finally",
+      "Print 'Setup', yield, finally: print 'Cleanup'",
+      "Ensures cleanup even with exceptions"
+    ]
+  },
+  {
+    "id": "py-ctx-state-management-1",
+    "title": "State Management Context Manager",
+    "difficulty": "hard",
+    "description": "Create context manager that saves state, modifies it, then restores on exit.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "10\n20\n10",
+    "testCode": "from contextlib import contextmanager\n{user_code}\nvalue = 10\nprint(value)\nwith save_state():\n    value = 20\n    print(value)\nprint(value)",
+    "hints": [
+      "Save global state before yield",
+      "Restore in finally",
+      "Common for temporary state changes"
+    ]
+  },
+  {
+    "id": "py-ctx-attributes-1",
+    "title": "Context Manager with Attributes",
+    "difficulty": "medium",
+    "description": "Create class context manager with attribute 'value' set in __enter__. Print it.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "42",
+    "testCode": "{user_code}\nwith MyContext() as ctx:\n    print(ctx.value)",
+    "hints": [
+      "__enter__ should set self.value = 42",
+      "Return self from __enter__",
+      "'as' clause captures returned object"
+    ]
+  },
+  {
+    "id": "py-ctx-reentrant-1",
+    "title": "Non-Reentrant Context Manager",
+    "difficulty": "hard",
+    "description": "Create context manager that raises error if entered twice. Test with nested usage.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "Error",
+    "testCode": "from contextlib import contextmanager\n{user_code}\ntry:\n    with my_context():\n        with my_context():\n            pass\nexcept RuntimeError:\n    print('Error')",
+    "hints": [
+      "Track state (entered flag)",
+      "Raise RuntimeError if already entered",
+      "Most context managers are non-reentrant"
+    ]
+  },
+  {
+    "id": "py-ctx-contextdecorator-1",
+    "title": "Context Manager as Decorator",
+    "difficulty": "hard",
+    "description": "Use ContextDecorator to create context manager that can also be used as decorator.",
+    "setupCode": "",
+    "starterCode": "from contextlib import ContextDecorator",
+    "expectedOutput": "Start\nEnd",
+    "testCode": "from contextlib import ContextDecorator\n{user_code}\n@mycontext()\ndef func():\n    pass\nfunc()",
+    "hints": [
+      "Inherit from ContextDecorator",
+      "Implement __enter__ and __exit__",
+      "Can be used with 'with' or as @decorator"
+    ]
+  },
+  {
+    "id": "py-ctx-aclosing-1",
+    "title": "Async Context Manager (Conceptual)",
+    "difficulty": "hard",
+    "description": "Create regular context manager simulating async resource. Print 'Async enter' and 'Async exit'.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "Async enter\nAsync exit",
+    "testCode": "from contextlib import contextmanager\n{user_code}\nwith async_resource():\n    pass",
+    "hints": [
+      "Use @contextmanager",
+      "Print 'Async enter', yield, print 'Async exit'",
+      "Simulates async pattern synchronously"
+    ]
+  },
+  {
+    "id": "py-ctx-open-modes-1",
+    "title": "Different File Modes",
+    "difficulty": "easy",
+    "description": "Open file in append mode with context manager, append 'world' to existing 'hello'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "helloworld",
+    "testCode": "with open('test.txt', 'w') as f:\n    f.write('hello')\n{user_code}\nwith open('test.txt', 'r') as f:\n    print(f.read())",
+    "hints": [
+      "Use 'a' mode for append",
+      "with open('test.txt', 'a') as f:",
+      "Content is added to end"
+    ]
+  },
+  {
+    "id": "py-ctx-binary-mode-1",
+    "title": "Binary File Mode",
+    "difficulty": "medium",
+    "description": "Write bytes b'data' to file in binary mode using context manager. Read it back.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "b'data'",
+    "testCode": "{user_code}\nwith open('binary.dat', 'rb') as f:\n    print(f.read())",
+    "hints": [
+      "Use 'wb' mode for binary write",
+      "with open('binary.dat', 'wb') as f:",
+      "Write bytes object"
+    ]
+  },
+  {
+    "id": "py-ctx-contextvar-1",
+    "title": "Context Local Variables (Conceptual)",
+    "difficulty": "hard",
+    "description": "Create context manager that temporarily sets a global variable. Print values.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "1\n2\n1",
+    "testCode": "from contextlib import contextmanager\nglobal_var = 1\n{user_code}\nprint(global_var)\nwith temp_value(2):\n    print(global_var)\nprint(global_var)",
+    "hints": [
+      "Accept new value as parameter",
+      "Save old value, set new",
+      "Restore old in finally"
+    ]
+  },
+  {
+    "id": "py-ctx-warning-control-1",
+    "title": "Warning Context Manager",
+    "difficulty": "medium",
+    "description": "Use warnings.catch_warnings() to suppress warnings in context. Print 'Done'.",
+    "setupCode": "",
+    "starterCode": "import warnings",
+    "expectedOutput": "Done",
+    "testCode": "import warnings\n{user_code}\nprint('Done')",
+    "hints": [
+      "with warnings.catch_warnings():",
+      "warnings.simplefilter('ignore')",
+      "Warnings suppressed in block"
+    ]
+  },
+  {
+    "id": "py-ctx-perf-counter-1",
+    "title": "Performance Timer",
+    "difficulty": "medium",
+    "description": "Create context manager using time.perf_counter to measure elapsed time (just print 'Timed').",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager\nimport time",
+    "expectedOutput": "Timed",
+    "testCode": "from contextlib import contextmanager\nimport time\n{user_code}\nwith timer():\n    pass",
+    "hints": [
+      "Record time.perf_counter() before yield",
+      "Record again after yield",
+      "Print difference (or just 'Timed')"
+    ]
+  },
+  {
+    "id": "py-ctx-mock-pattern-1",
+    "title": "Mock/Patch Pattern",
+    "difficulty": "hard",
+    "description": "Create context manager that temporarily replaces a function, then restores it.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "original\nmocked\noriginal",
+    "testCode": "from contextlib import contextmanager\ndef my_func():\n    return 'original'\n{user_code}\nprint(my_func())\nwith mock_function():\n    print(my_func())\nprint(my_func())",
+    "hints": [
+      "Save original function",
+      "Replace with mock",
+      "Restore in finally"
+    ]
+  },
+  {
+    "id": "py-ctx-connection-pool-1",
+    "title": "Connection Pool Pattern",
+    "difficulty": "hard",
+    "description": "Create context manager simulating getting connection from pool. Print 'Get' and 'Return'.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "Get\nReturn",
+    "testCode": "from contextlib import contextmanager\n{user_code}\nwith get_connection():\n    pass",
+    "hints": [
+      "Print 'Get' before yield",
+      "Yield connection object (or None)",
+      "Print 'Return' in finally"
+    ]
+  },
+  {
+    "id": "py-ctx-logging-1",
+    "title": "Logging Context Manager",
+    "difficulty": "medium",
+    "description": "Create context manager that prints 'Start operation' and 'End operation'.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "Start operation\nEnd operation",
+    "testCode": "from contextlib import contextmanager\n{user_code}\nwith log_operation():\n    pass",
+    "hints": [
+      "@contextmanager",
+      "Print before yield",
+      "Print after yield (in finally)"
+    ]
+  },
+  {
+    "id": "py-ctx-nested-exception-1",
+    "title": "Exception in Nested Context",
+    "difficulty": "hard",
+    "description": "Create two context managers. Raise exception in inner. Both should cleanup. Print 'Outer' and 'Inner'.",
+    "setupCode": "",
+    "starterCode": "from contextlib import contextmanager",
+    "expectedOutput": "Inner cleanup\nOuter cleanup\nCaught",
+    "testCode": "from contextlib import contextmanager\n{user_code}\ntry:\n    with outer():\n        with inner():\n            raise ValueError()\nexcept ValueError:\n    print('Caught')",
+    "hints": [
+      "Create two @contextmanager functions",
+      "Use try-finally for cleanup",
+      "Both cleanup even with exception"
+    ]
+  },
+  {
+    "id": "py-ctx-enter-exception-1",
+    "title": "Exception in __enter__",
+    "difficulty": "hard",
+    "description": "Create context manager that raises exception in __enter__. Show __exit__ not called.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Enter error\nNot called",
+    "testCode": "{user_code}\ntry:\n    with MyContext():\n        pass\nexcept ValueError:\n    print('Enter error')\nprint('Not called')",
+    "hints": [
+      "__enter__ raises ValueError",
+      "__exit__ never called if __enter__ fails",
+      "Important for resource acquisition"
+    ]
+  },
+  {
+    "id": "py-ctx-property-access-1",
+    "title": "Context Manager with Properties",
+    "difficulty": "medium",
+    "description": "Create context manager class with property that's accessible in with block.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Hello",
+    "testCode": "{user_code}\nwith MyContext() as ctx:\n    print(ctx.message)",
+    "hints": [
+      "Define __enter__ returning self",
+      "Add property or attribute 'message'",
+      "Set message = 'Hello'"
+    ]
+  },
+  {
+    "id": "py-ctx-file-encoding-1",
+    "title": "File Encoding in Context Manager",
+    "difficulty": "medium",
+    "description": "Open file with UTF-8 encoding explicitly in context manager. Write and read unicode.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Hello 世界",
+    "testCode": "{user_code}",
+    "hints": [
+      "with open('file.txt', 'w', encoding='utf-8') as f:",
+      "Write unicode string",
+      "Read back with same encoding"
+    ]
+  },
+  {
+    "id": "py-ctx-reusable-1",
+    "title": "Reusable Context Manager",
+    "difficulty": "medium",
+    "description": "Create context manager that can be used multiple times. Use it twice, print count.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "2",
+    "testCode": "{user_code}\ncount = 0\nctx = Counter()\nwith ctx:\n    count += 1\nwith ctx:\n    count += 1\nprint(count)",
+    "hints": [
+      "Create class with __enter__ and __exit__",
+      "Don't store entered state",
+      "Can be entered multiple times (not nested)"
+    ]
+  }
+]

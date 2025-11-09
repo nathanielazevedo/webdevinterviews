@@ -1,0 +1,194 @@
+[
+  {
+    "id": "strings",
+    "title": "Strings",
+    "description": "Work with string methods and manipulation",
+    "icon": "�",
+    "color": "#2196F3",
+    "order": 1
+  },
+  {
+    "id": "conversions",
+    "title": "Type Conversions",
+    "description": "Convert between different data types",
+    "icon": "�",
+    "color": "#03A9F4",
+    "order": 2
+  },
+  {
+    "id": "math",
+    "title": "Math Operations",
+    "description": "Practice mathematical operations and functions",
+    "icon": "�",
+    "color": "#FF5722",
+    "order": 3
+  },
+  {
+    "id": "conditionals",
+    "title": "Conditionals",
+    "description": "Practice if/elif/else statements and boolean logic",
+    "icon": "🔀",
+    "color": "#673AB7",
+    "order": 4
+  },
+  {
+    "id": "loops",
+    "title": "Loops",
+    "description": "Master all types of loops: for, while, and iteration",
+    "icon": "�",
+    "color": "#9C27B0",
+    "order": 5
+  },
+  {
+    "id": "lists",
+    "title": "Lists",
+    "description": "Master list operations: indexing, slicing, and methods",
+    "icon": "📝",
+    "color": "#4CAF50",
+    "order": 6
+  },
+  {
+    "id": "tuples",
+    "title": "Tuples",
+    "description": "Work with immutable sequences and tuple operations",
+    "icon": "�",
+    "color": "#00BCD4",
+    "order": 7
+  },
+  {
+    "id": "dictionaries",
+    "title": "Dictionaries",
+    "description": "Learn dictionary operations and key-value pairs",
+    "icon": "�",
+    "color": "#FF9800",
+    "order": 8
+  },
+  {
+    "id": "sets",
+    "title": "Sets",
+    "description": "Master set operations and unique collections",
+    "icon": "�",
+    "color": "#009688",
+    "order": 9
+  },
+  {
+    "id": "comprehensions",
+    "title": "Comprehensions",
+    "description": "Master list, dict, and set comprehensions",
+    "icon": "⚡",
+    "color": "#FFC107",
+    "order": 10
+  },
+  {
+    "id": "functions",
+    "title": "Functions",
+    "description": "Learn function definitions, parameters, and return values",
+    "icon": "⚙️",
+    "color": "#795548",
+    "order": 11
+  },
+  {
+    "id": "classes",
+    "title": "Classes",
+    "description": "Learn object-oriented programming with classes and objects",
+    "icon": "🏗️",
+    "color": "#E91E63",
+    "order": 12
+  },
+  {
+    "id": "exceptions",
+    "title": "Exceptions",
+    "description": "Handle errors with try/except and custom exceptions",
+    "icon": "⚠️",
+    "color": "#F44336",
+    "order": 13
+  },
+  {
+    "id": "modules",
+    "title": "Modules",
+    "description": "Import and use modules, packages, and libraries",
+    "icon": "📦",
+    "color": "#607D8B",
+    "order": 14
+  },
+  {
+    "id": "files",
+    "title": "Files",
+    "description": "Learn to work with files: reading, writing, and file operations",
+    "icon": "�",
+    "color": "#3F51B5",
+    "order": 15
+  },
+  {
+    "id": "contexts",
+    "title": "Context Managers",
+    "description": "Use context managers and the with statement",
+    "icon": "�",
+    "color": "#8BC34A",
+    "order": 16
+  },
+  {
+    "id": "dates",
+    "title": "Dates & Time",
+    "description": "Work with datetime, timedelta, and date formatting",
+    "icon": "📅",
+    "color": "#9E9E9E",
+    "order": 17
+  },
+  {
+    "id": "regex",
+    "title": "Regular Expressions",
+    "description": "Pattern matching and text manipulation with regex",
+    "icon": "🔍",
+    "color": "#CDDC39",
+    "order": 18
+  },
+  {
+    "id": "os",
+    "title": "OS Operations",
+    "description": "Interact with the operating system and file paths",
+    "icon": "💻",
+    "color": "#FF6F00",
+    "order": 19
+  },
+  {
+    "id": "pathlib",
+    "title": "Pathlib",
+    "description": "Modern path operations with the pathlib module",
+    "icon": "🛤️",
+    "color": "#00ACC1",
+    "order": 20
+  },
+  {
+    "id": "io",
+    "title": "I/O Operations",
+    "description": "Input/output operations and stream handling",
+    "icon": "📥",
+    "color": "#7E57C2",
+    "order": 21
+  },
+  {
+    "id": "zip",
+    "title": "Zip & Itertools",
+    "description": "Work with zip, enumerate, and iterator tools",
+    "icon": "🔗",
+    "color": "#26A69A",
+    "order": 22
+  },
+  {
+    "id": "async",
+    "title": "Async/Await",
+    "description": "Asynchronous programming with async and await",
+    "icon": "⚡",
+    "color": "#5C6BC0",
+    "order": 23
+  },
+  {
+    "id": "futures",
+    "title": "Futures & Threading",
+    "description": "Concurrent execution with futures and threading",
+    "icon": "🔄",
+    "color": "#AB47BC",
+    "order": 24
+  }
+]

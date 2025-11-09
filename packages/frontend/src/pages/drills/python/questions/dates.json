@@ -1,0 +1,696 @@
+[
+  {
+    "id": "py-dt-import-1",
+    "title": "Import datetime Module",
+    "difficulty": "easy",
+    "description": "Import datetime module and verify it has 'date' attribute.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(hasattr(datetime, 'date'))",
+    "hints": [
+      "Use import datetime",
+      "datetime is Python's date and time module"
+    ]
+  },
+  {
+    "id": "py-dt-today-1",
+    "title": "Get Today's Date",
+    "difficulty": "easy",
+    "description": "Get today's date and verify it's a date object.",
+    "setupCode": "",
+    "starterCode": "import datetime",
+    "expectedOutput": "True",
+    "testCode": "import datetime\n{user_code}\nprint(isinstance(today, datetime.date))",
+    "hints": [
+      "Use datetime.date.today()",
+      "Returns current date without time"
+    ]
+  },
+  {
+    "id": "py-dt-now-1",
+    "title": "Get Current DateTime",
+    "difficulty": "easy",
+    "description": "Get current date and time, verify it's a datetime object.",
+    "setupCode": "",
+    "starterCode": "import datetime",
+    "expectedOutput": "True",
+    "testCode": "import datetime\n{user_code}\nprint(isinstance(now, datetime.datetime))",
+    "hints": [
+      "Use datetime.datetime.now()",
+      "Returns current date and time"
+    ]
+  },
+  {
+    "id": "py-dt-create-date-1",
+    "title": "Create Specific Date",
+    "difficulty": "easy",
+    "description": "Create date for January 1, 2024 and print it.",
+    "setupCode": "",
+    "starterCode": "import datetime",
+    "expectedOutput": "2024-01-01",
+    "testCode": "import datetime\n{user_code}\nprint(date)",
+    "hints": [
+      "Use datetime.date(2024, 1, 1)",
+      "Arguments: year, month, day"
+    ]
+  },
+  {
+    "id": "py-dt-create-datetime-1",
+    "title": "Create Specific DateTime",
+    "difficulty": "easy",
+    "description": "Create datetime for 2024-01-01 12:30:45 and print it.",
+    "setupCode": "",
+    "starterCode": "import datetime",
+    "expectedOutput": "2024-01-01 12:30:45",
+    "testCode": "import datetime\n{user_code}\nprint(dt)",
+    "hints": [
+      "Use datetime.datetime(2024, 1, 1, 12, 30, 45)",
+      "Arguments: year, month, day, hour, minute, second"
+    ]
+  },
+  {
+    "id": "py-dt-date-parts-1",
+    "title": "Access Date Parts",
+    "difficulty": "easy",
+    "description": "Get year, month, day from date 2024-03-15. Print all three.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate = datetime.date(2024, 3, 15)",
+    "expectedOutput": "2024\n3\n15",
+    "testCode": "import datetime\ndate = datetime.date(2024, 3, 15)\n{user_code}\nprint(year)\nprint(month)\nprint(day)",
+    "hints": [
+      "Use date.year, date.month, date.day",
+      "These are attributes, not methods"
+    ]
+  },
+  {
+    "id": "py-dt-time-parts-1",
+    "title": "Access Time Parts",
+    "difficulty": "easy",
+    "description": "Get hour, minute, second from datetime. Print all three.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndt = datetime.datetime(2024, 1, 1, 14, 30, 45)",
+    "expectedOutput": "14\n30\n45",
+    "testCode": "import datetime\ndt = datetime.datetime(2024, 1, 1, 14, 30, 45)\n{user_code}\nprint(hour)\nprint(minute)\nprint(second)",
+    "hints": [
+      "Use dt.hour, dt.minute, dt.second",
+      "Also available: dt.microsecond"
+    ]
+  },
+  {
+    "id": "py-dt-weekday-1",
+    "title": "Get Weekday",
+    "difficulty": "easy",
+    "description": "Get weekday number (0=Monday) for 2024-01-01. Print it.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate = datetime.date(2024, 1, 1)",
+    "expectedOutput": "0",
+    "testCode": "import datetime\ndate = datetime.date(2024, 1, 1)\n{user_code}\nprint(weekday)",
+    "hints": [
+      "Use date.weekday()",
+      "Returns 0-6 where 0 is Monday",
+      "Alternative: isoweekday() returns 1-7"
+    ]
+  },
+  {
+    "id": "py-dt-timedelta-1",
+    "title": "Create Timedelta",
+    "difficulty": "easy",
+    "description": "Create timedelta of 7 days and print it.",
+    "setupCode": "",
+    "starterCode": "import datetime",
+    "expectedOutput": "7 days, 0:00:00",
+    "testCode": "import datetime\n{user_code}\nprint(delta)",
+    "hints": [
+      "Use datetime.timedelta(days=7)",
+      "Represents duration between dates/times"
+    ]
+  },
+  {
+    "id": "py-dt-add-days-1",
+    "title": "Add Days to Date",
+    "difficulty": "easy",
+    "description": "Add 10 days to 2024-01-01. Print result.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate = datetime.date(2024, 1, 1)",
+    "expectedOutput": "2024-01-11",
+    "testCode": "import datetime\ndate = datetime.date(2024, 1, 1)\n{user_code}\nprint(new_date)",
+    "hints": [
+      "Use date + datetime.timedelta(days=10)",
+      "Can add/subtract timedelta from date"
+    ]
+  },
+  {
+    "id": "py-dt-subtract-dates-1",
+    "title": "Subtract Dates",
+    "difficulty": "easy",
+    "description": "Calculate days between 2024-01-10 and 2024-01-01. Print the number.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate1 = datetime.date(2024, 1, 10)\ndate2 = datetime.date(2024, 1, 1)",
+    "expectedOutput": "9",
+    "testCode": "import datetime\ndate1 = datetime.date(2024, 1, 10)\ndate2 = datetime.date(2024, 1, 1)\n{user_code}\nprint(days)",
+    "hints": [
+      "Subtract: date1 - date2",
+      "Returns timedelta object",
+      "Use .days to get day count"
+    ]
+  },
+  {
+    "id": "py-dt-add-hours-1",
+    "title": "Add Hours to DateTime",
+    "difficulty": "easy",
+    "description": "Add 5 hours to datetime 2024-01-01 10:00:00. Print result.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndt = datetime.datetime(2024, 1, 1, 10, 0, 0)",
+    "expectedOutput": "2024-01-01 15:00:00",
+    "testCode": "import datetime\ndt = datetime.datetime(2024, 1, 1, 10, 0, 0)\n{user_code}\nprint(new_dt)",
+    "hints": [
+      "Use dt + datetime.timedelta(hours=5)",
+      "timedelta supports days, hours, minutes, seconds"
+    ]
+  },
+  {
+    "id": "py-dt-format-strftime-1",
+    "title": "Format Date with strftime",
+    "difficulty": "easy",
+    "description": "Format 2024-03-15 as 'Mar 15, 2024'. Print result.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate = datetime.date(2024, 3, 15)",
+    "expectedOutput": "Mar 15, 2024",
+    "testCode": "import datetime\ndate = datetime.date(2024, 3, 15)\n{user_code}\nprint(formatted)",
+    "hints": [
+      "Use date.strftime('%b %d, %Y')",
+      "%b = abbreviated month, %d = day, %Y = year"
+    ]
+  },
+  {
+    "id": "py-dt-parse-strptime-1",
+    "title": "Parse Date with strptime",
+    "difficulty": "medium",
+    "description": "Parse '2024-03-15' to date object. Print the year.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate_str = '2024-03-15'",
+    "expectedOutput": "2024",
+    "testCode": "import datetime\ndate_str = '2024-03-15'\n{user_code}\nprint(parsed.year)",
+    "hints": [
+      "Use datetime.datetime.strptime(date_str, '%Y-%m-%d')",
+      "Format must match input string",
+      "Returns datetime object"
+    ]
+  },
+  {
+    "id": "py-dt-iso-format-1",
+    "title": "ISO Format",
+    "difficulty": "easy",
+    "description": "Convert datetime 2024-03-15 12:30:45 to ISO format string. Print it.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndt = datetime.datetime(2024, 3, 15, 12, 30, 45)",
+    "expectedOutput": "2024-03-15T12:30:45",
+    "testCode": "import datetime\ndt = datetime.datetime(2024, 3, 15, 12, 30, 45)\n{user_code}\nprint(iso_string)",
+    "hints": [
+      "Use dt.isoformat()",
+      "ISO 8601 format: YYYY-MM-DDTHH:MM:SS"
+    ]
+  },
+  {
+    "id": "py-dt-fromisoformat-1",
+    "title": "Parse ISO Format",
+    "difficulty": "easy",
+    "description": "Parse ISO string '2024-03-15' to date object. Print the month.",
+    "setupCode": "",
+    "starterCode": "import datetime\niso_str = '2024-03-15'",
+    "expectedOutput": "3",
+    "testCode": "import datetime\niso_str = '2024-03-15'\n{user_code}\nprint(date.month)",
+    "hints": [
+      "Use datetime.date.fromisoformat(iso_str)",
+      "Parses ISO 8601 format strings"
+    ]
+  },
+  {
+    "id": "py-dt-timestamp-1",
+    "title": "DateTime to Timestamp",
+    "difficulty": "medium",
+    "description": "Convert datetime to Unix timestamp. Verify it's a float.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndt = datetime.datetime(2024, 1, 1, 0, 0, 0)",
+    "expectedOutput": "True",
+    "testCode": "import datetime\ndt = datetime.datetime(2024, 1, 1, 0, 0, 0)\n{user_code}\nprint(isinstance(timestamp, float))",
+    "hints": [
+      "Use dt.timestamp()",
+      "Returns seconds since epoch (1970-01-01)",
+      "Returns float"
+    ]
+  },
+  {
+    "id": "py-dt-fromtimestamp-1",
+    "title": "Timestamp to DateTime",
+    "difficulty": "medium",
+    "description": "Convert timestamp 1704067200 to datetime. Print year.",
+    "setupCode": "",
+    "starterCode": "import datetime\ntimestamp = 1704067200",
+    "expectedOutput": "2024",
+    "testCode": "import datetime\ntimestamp = 1704067200\n{user_code}\nprint(dt.year)",
+    "hints": [
+      "Use datetime.datetime.fromtimestamp(timestamp)",
+      "Converts Unix timestamp to datetime"
+    ]
+  },
+  {
+    "id": "py-dt-time-object-1",
+    "title": "Create Time Object",
+    "difficulty": "easy",
+    "description": "Create time object for 14:30:00. Print it.",
+    "setupCode": "",
+    "starterCode": "import datetime",
+    "expectedOutput": "14:30:00",
+    "testCode": "import datetime\n{user_code}\nprint(time)",
+    "hints": [
+      "Use datetime.time(14, 30, 0)",
+      "Represents time without date",
+      "Arguments: hour, minute, second"
+    ]
+  },
+  {
+    "id": "py-dt-combine-1",
+    "title": "Combine Date and Time",
+    "difficulty": "medium",
+    "description": "Combine date 2024-01-01 with time 12:30:00 to create datetime. Print it.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate = datetime.date(2024, 1, 1)\ntime = datetime.time(12, 30, 0)",
+    "expectedOutput": "2024-01-01 12:30:00",
+    "testCode": "import datetime\ndate = datetime.date(2024, 1, 1)\ntime = datetime.time(12, 30, 0)\n{user_code}\nprint(dt)",
+    "hints": [
+      "Use datetime.datetime.combine(date, time)",
+      "Combines separate date and time objects"
+    ]
+  },
+  {
+    "id": "py-dt-replace-1",
+    "title": "Replace Date Parts",
+    "difficulty": "easy",
+    "description": "Change year of 2024-03-15 to 2025. Print result.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate = datetime.date(2024, 3, 15)",
+    "expectedOutput": "2025-03-15",
+    "testCode": "import datetime\ndate = datetime.date(2024, 3, 15)\n{user_code}\nprint(new_date)",
+    "hints": [
+      "Use date.replace(year=2025)",
+      "Returns new date object",
+      "Can replace year, month, day"
+    ]
+  },
+  {
+    "id": "py-dt-timedelta-total-seconds-1",
+    "title": "Timedelta Total Seconds",
+    "difficulty": "easy",
+    "description": "Create timedelta of 1 hour. Get total seconds. Print it.",
+    "setupCode": "",
+    "starterCode": "import datetime",
+    "expectedOutput": "3600.0",
+    "testCode": "import datetime\n{user_code}\nprint(seconds)",
+    "hints": [
+      "delta = datetime.timedelta(hours=1)",
+      "Use delta.total_seconds()",
+      "1 hour = 3600 seconds"
+    ]
+  },
+  {
+    "id": "py-dt-compare-dates-1",
+    "title": "Compare Dates",
+    "difficulty": "easy",
+    "description": "Check if 2024-01-10 is greater than 2024-01-01. Print True or False.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate1 = datetime.date(2024, 1, 10)\ndate2 = datetime.date(2024, 1, 1)",
+    "expectedOutput": "True",
+    "testCode": "import datetime\ndate1 = datetime.date(2024, 1, 10)\ndate2 = datetime.date(2024, 1, 1)\n{user_code}",
+    "hints": [
+      "Use date1 > date2",
+      "Dates are directly comparable",
+      "Later dates are 'greater'"
+    ]
+  },
+  {
+    "id": "py-dt-strftime-patterns-1",
+    "title": "Common strftime Patterns",
+    "difficulty": "medium",
+    "description": "Format 2024-03-15 14:30:45 as 'Friday, March 15, 2024 02:30 PM'. Print it.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndt = datetime.datetime(2024, 3, 15, 14, 30, 45)",
+    "expectedOutput": "Friday, March 15, 2024 02:30 PM",
+    "testCode": "import datetime\ndt = datetime.datetime(2024, 3, 15, 14, 30, 45)\n{user_code}\nprint(formatted)",
+    "hints": [
+      "Use strftime('%A, %B %d, %Y %I:%M %p')",
+      "%A = weekday, %B = month, %I = 12-hour, %p = AM/PM"
+    ]
+  },
+  {
+    "id": "py-dt-age-calculator-1",
+    "title": "Calculate Age",
+    "difficulty": "medium",
+    "description": "Calculate age in years from birthdate 2000-01-01 to today 2024-01-01. Print age.",
+    "setupCode": "",
+    "starterCode": "import datetime\nbirthdate = datetime.date(2000, 1, 1)\ntoday = datetime.date(2024, 1, 1)",
+    "expectedOutput": "24",
+    "testCode": "import datetime\nbirthdate = datetime.date(2000, 1, 1)\ntoday = datetime.date(2024, 1, 1)\n{user_code}\nprint(age)",
+    "hints": [
+      "Calculate today.year - birthdate.year",
+      "Adjust if birthday hasn't occurred this year",
+      "Compare month and day"
+    ]
+  },
+  {
+    "id": "py-dt-days-until-1",
+    "title": "Days Until Event",
+    "difficulty": "easy",
+    "description": "Calculate days from 2024-01-01 to 2024-12-31. Print count.",
+    "setupCode": "",
+    "starterCode": "import datetime\ntoday = datetime.date(2024, 1, 1)\nevent = datetime.date(2024, 12, 31)",
+    "expectedOutput": "365",
+    "testCode": "import datetime\ntoday = datetime.date(2024, 1, 1)\nevent = datetime.date(2024, 12, 31)\n{user_code}\nprint(days_until)",
+    "hints": [
+      "Subtract: event - today",
+      "Get .days from result"
+    ]
+  },
+  {
+    "id": "py-dt-leap-year-1",
+    "title": "Check Leap Year",
+    "difficulty": "medium",
+    "description": "Check if 2024 is a leap year. Print True or False.",
+    "setupCode": "",
+    "starterCode": "import datetime\nyear = 2024",
+    "expectedOutput": "True",
+    "testCode": "import datetime\nyear = 2024\n{user_code}",
+    "hints": [
+      "Try creating Feb 29 for that year",
+      "Or use calendar.isleap(year)",
+      "Or check: (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)"
+    ]
+  },
+  {
+    "id": "py-dt-first-day-month-1",
+    "title": "First Day of Month",
+    "difficulty": "easy",
+    "description": "Get first day of month for 2024-03-15. Print result.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate = datetime.date(2024, 3, 15)",
+    "expectedOutput": "2024-03-01",
+    "testCode": "import datetime\ndate = datetime.date(2024, 3, 15)\n{user_code}\nprint(first_day)",
+    "hints": [
+      "Use date.replace(day=1)",
+      "Keeps year and month, sets day to 1"
+    ]
+  },
+  {
+    "id": "py-dt-last-day-month-1",
+    "title": "Last Day of Month",
+    "difficulty": "medium",
+    "description": "Get last day of month for March 2024. Print result.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate = datetime.date(2024, 3, 15)",
+    "expectedOutput": "2024-03-31",
+    "testCode": "import datetime\ndate = datetime.date(2024, 3, 15)\n{user_code}\nprint(last_day)",
+    "hints": [
+      "import calendar",
+      "Use calendar.monthrange(year, month)[1]",
+      "Returns last day number of month"
+    ]
+  },
+  {
+    "id": "py-dt-next-weekday-1",
+    "title": "Find Next Monday",
+    "difficulty": "hard",
+    "description": "Find next Monday from 2024-01-01 (which is Monday). Print result.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate = datetime.date(2024, 1, 1)",
+    "expectedOutput": "2024-01-08",
+    "testCode": "import datetime\ndate = datetime.date(2024, 1, 1)\n{user_code}\nprint(next_monday)",
+    "hints": [
+      "Get current weekday: date.weekday()",
+      "Calculate days to add: (7 - weekday + target_weekday) % 7",
+      "Add timedelta"
+    ]
+  },
+  {
+    "id": "py-dt-quarter-1",
+    "title": "Get Quarter",
+    "difficulty": "medium",
+    "description": "Determine quarter (1-4) for date 2024-03-15. Print quarter number.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate = datetime.date(2024, 3, 15)",
+    "expectedOutput": "1",
+    "testCode": "import datetime\ndate = datetime.date(2024, 3, 15)\n{user_code}\nprint(quarter)",
+    "hints": [
+      "Use (date.month - 1) // 3 + 1",
+      "Q1: Jan-Mar, Q2: Apr-Jun, Q3: Jul-Sep, Q4: Oct-Dec"
+    ]
+  },
+  {
+    "id": "py-dt-week-number-1",
+    "title": "Get Week Number",
+    "difficulty": "easy",
+    "description": "Get ISO week number for 2024-01-15. Print it.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate = datetime.date(2024, 1, 15)",
+    "expectedOutput": "3",
+    "testCode": "import datetime\ndate = datetime.date(2024, 1, 15)\n{user_code}\nprint(week_num)",
+    "hints": [
+      "Use date.isocalendar()[1]",
+      "Or date.isocalendar().week",
+      "Returns ISO week number"
+    ]
+  },
+  {
+    "id": "py-dt-duration-1",
+    "title": "Measure Duration",
+    "difficulty": "medium",
+    "description": "Calculate duration between 10:00:00 and 15:30:00 in hours. Print it.",
+    "setupCode": "",
+    "starterCode": "import datetime\nstart = datetime.datetime(2024, 1, 1, 10, 0, 0)\nend = datetime.datetime(2024, 1, 1, 15, 30, 0)",
+    "expectedOutput": "5.5",
+    "testCode": "import datetime\nstart = datetime.datetime(2024, 1, 1, 10, 0, 0)\nend = datetime.datetime(2024, 1, 1, 15, 30, 0)\n{user_code}\nprint(hours)",
+    "hints": [
+      "Subtract: end - start",
+      "Use .total_seconds() / 3600",
+      "Convert seconds to hours"
+    ]
+  },
+  {
+    "id": "py-dt-utcnow-1",
+    "title": "UTC Time",
+    "difficulty": "easy",
+    "description": "Get current UTC time and verify it's datetime object.",
+    "setupCode": "",
+    "starterCode": "import datetime",
+    "expectedOutput": "True",
+    "testCode": "import datetime\n{user_code}\nprint(isinstance(utc_now, datetime.datetime))",
+    "hints": [
+      "Use datetime.datetime.utcnow()",
+      "Returns current UTC time",
+      "Deprecated in Python 3.12, use timezone-aware datetime"
+    ]
+  },
+  {
+    "id": "py-dt-timezone-1",
+    "title": "Timezone-Aware DateTime",
+    "difficulty": "medium",
+    "description": "Create timezone-aware datetime for UTC. Verify it has timezone info.",
+    "setupCode": "",
+    "starterCode": "import datetime",
+    "expectedOutput": "True",
+    "testCode": "import datetime\n{user_code}\nprint(dt.tzinfo is not None)",
+    "hints": [
+      "Use datetime.datetime.now(datetime.timezone.utc)",
+      "Or datetime.now(tz=datetime.timezone.utc)",
+      "Timezone-aware datetimes have tzinfo"
+    ]
+  },
+  {
+    "id": "py-dt-parse-common-format-1",
+    "title": "Parse Common Date Format",
+    "difficulty": "medium",
+    "description": "Parse 'March 15, 2024' to date object. Print month number.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate_str = 'March 15, 2024'",
+    "expectedOutput": "3",
+    "testCode": "import datetime\ndate_str = 'March 15, 2024'\n{user_code}\nprint(date.month)",
+    "hints": [
+      "Use strptime() with format '%B %d, %Y'",
+      "%B = full month name"
+    ]
+  },
+  {
+    "id": "py-dt-format-custom-1",
+    "title": "Custom Date Format",
+    "difficulty": "medium",
+    "description": "Format 2024-03-15 as '15/03/2024'. Print result.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate = datetime.date(2024, 3, 15)",
+    "expectedOutput": "15/03/2024",
+    "testCode": "import datetime\ndate = datetime.date(2024, 3, 15)\n{user_code}\nprint(formatted)",
+    "hints": [
+      "Use strftime('%d/%m/%Y')",
+      "%d = day, %m = month, %Y = year"
+    ]
+  },
+  {
+    "id": "py-dt-business-days-1",
+    "title": "Count Weekdays",
+    "difficulty": "hard",
+    "description": "Count weekdays (Mon-Fri) from 2024-01-01 to 2024-01-07. Print count.",
+    "setupCode": "",
+    "starterCode": "import datetime\nstart = datetime.date(2024, 1, 1)\nend = datetime.date(2024, 1, 7)",
+    "expectedOutput": "5",
+    "testCode": "import datetime\nstart = datetime.date(2024, 1, 1)\nend = datetime.date(2024, 1, 7)\n{user_code}\nprint(weekdays)",
+    "hints": [
+      "Loop through date range",
+      "Check if weekday() < 5 (Monday-Friday)",
+      "Count matching days"
+    ]
+  },
+  {
+    "id": "py-dt-timedelta-negative-1",
+    "title": "Negative Timedelta",
+    "difficulty": "easy",
+    "description": "Subtract 5 days from 2024-01-10. Print result.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndate = datetime.date(2024, 1, 10)",
+    "expectedOutput": "2024-01-05",
+    "testCode": "import datetime\ndate = datetime.date(2024, 1, 10)\n{user_code}\nprint(new_date)",
+    "hints": [
+      "Use date - datetime.timedelta(days=5)",
+      "Or date + datetime.timedelta(days=-5)",
+      "Negative timedelta goes backward"
+    ]
+  },
+  {
+    "id": "py-dt-min-max-1",
+    "title": "Min and Max Dates",
+    "difficulty": "easy",
+    "description": "Find minimum and maximum from list of dates. Print both.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndates = [datetime.date(2024, 3, 15), datetime.date(2024, 1, 1), datetime.date(2024, 6, 30)]",
+    "expectedOutput": "2024-01-01\n2024-06-30",
+    "testCode": "import datetime\ndates = [datetime.date(2024, 3, 15), datetime.date(2024, 1, 1), datetime.date(2024, 6, 30)]\n{user_code}\nprint(min_date)\nprint(max_date)",
+    "hints": [
+      "Use min(dates) and max(dates)",
+      "Dates are comparable"
+    ]
+  },
+  {
+    "id": "py-dt-sort-dates-1",
+    "title": "Sort Dates",
+    "difficulty": "easy",
+    "description": "Sort list of dates [2024-03-15, 2024-01-01, 2024-06-30]. Print sorted list.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndates = [datetime.date(2024, 3, 15), datetime.date(2024, 1, 1), datetime.date(2024, 6, 30)]",
+    "expectedOutput": "[datetime.date(2024, 1, 1), datetime.date(2024, 3, 15), datetime.date(2024, 6, 30)]",
+    "testCode": "import datetime\ndates = [datetime.date(2024, 3, 15), datetime.date(2024, 1, 1), datetime.date(2024, 6, 30)]\n{user_code}\nprint(sorted_dates)",
+    "hints": [
+      "Use sorted(dates)",
+      "Dates sort chronologically by default"
+    ]
+  },
+  {
+    "id": "py-dt-date-range-1",
+    "title": "Generate Date Range",
+    "difficulty": "medium",
+    "description": "Generate list of dates from 2024-01-01 to 2024-01-05 (inclusive). Print list.",
+    "setupCode": "",
+    "starterCode": "import datetime\nstart = datetime.date(2024, 1, 1)\nend = datetime.date(2024, 1, 5)",
+    "expectedOutput": "[datetime.date(2024, 1, 1), datetime.date(2024, 1, 2), datetime.date(2024, 1, 3), datetime.date(2024, 1, 4), datetime.date(2024, 1, 5)]",
+    "testCode": "import datetime\nstart = datetime.date(2024, 1, 1)\nend = datetime.date(2024, 1, 5)\n{user_code}\nprint(date_list)",
+    "hints": [
+      "Use loop: while date <= end",
+      "Add timedelta(days=1) each iteration",
+      "Append to list"
+    ]
+  },
+  {
+    "id": "py-dt-calendar-month-1",
+    "title": "Calendar Module",
+    "difficulty": "medium",
+    "description": "Import calendar and get month name for month 3. Print it.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "March",
+    "testCode": "{user_code}\nprint(month_name)",
+    "hints": [
+      "import calendar",
+      "Use calendar.month_name[3]",
+      "calendar module has useful utilities"
+    ]
+  },
+  {
+    "id": "py-dt-time-only-1",
+    "title": "Extract Time from DateTime",
+    "difficulty": "easy",
+    "description": "Extract time from datetime 2024-01-01 14:30:00. Print time.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndt = datetime.datetime(2024, 1, 1, 14, 30, 0)",
+    "expectedOutput": "14:30:00",
+    "testCode": "import datetime\ndt = datetime.datetime(2024, 1, 1, 14, 30, 0)\n{user_code}\nprint(time)",
+    "hints": [
+      "Use dt.time()",
+      "Returns time object without date"
+    ]
+  },
+  {
+    "id": "py-dt-date-only-1",
+    "title": "Extract Date from DateTime",
+    "difficulty": "easy",
+    "description": "Extract date from datetime 2024-01-01 14:30:00. Print date.",
+    "setupCode": "",
+    "starterCode": "import datetime\ndt = datetime.datetime(2024, 1, 1, 14, 30, 0)",
+    "expectedOutput": "2024-01-01",
+    "testCode": "import datetime\ndt = datetime.datetime(2024, 1, 1, 14, 30, 0)\n{user_code}\nprint(date)",
+    "hints": [
+      "Use dt.date()",
+      "Returns date object without time"
+    ]
+  },
+  {
+    "id": "py-dt-birthday-this-year-1",
+    "title": "Birthday This Year",
+    "difficulty": "medium",
+    "description": "Get birthday (March 15) in year 2024 from birthdate 2000-03-15. Print result.",
+    "setupCode": "",
+    "starterCode": "import datetime\nbirthdate = datetime.date(2000, 3, 15)",
+    "expectedOutput": "2024-03-15",
+    "testCode": "import datetime\nbirthdate = datetime.date(2000, 3, 15)\n{user_code}\nprint(this_year_birthday)",
+    "hints": [
+      "Use birthdate.replace(year=2024)",
+      "Keeps month and day, changes year"
+    ]
+  },
+  {
+    "id": "py-dt-elapsed-time-1",
+    "title": "Calculate Elapsed Time",
+    "difficulty": "medium",
+    "description": "Calculate hours:minutes between 09:30 and 17:45. Print as string 'H:MM'.",
+    "setupCode": "",
+    "starterCode": "import datetime\nstart = datetime.time(9, 30)\nend = datetime.time(17, 45)",
+    "expectedOutput": "8:15",
+    "testCode": "import datetime\nstart = datetime.time(9, 30)\nend = datetime.time(17, 45)\n{user_code}\nprint(elapsed)",
+    "hints": [
+      "Convert times to datetime objects",
+      "Subtract to get timedelta",
+      "Calculate hours and minutes from seconds"
+    ]
+  },
+  {
+    "id": "py-dt-microseconds-1",
+    "title": "Microseconds",
+    "difficulty": "medium",
+    "description": "Create datetime with microseconds. Print microsecond value.",
+    "setupCode": "",
+    "starterCode": "import datetime",
+    "expectedOutput": "500000",
+    "testCode": "import datetime\n{user_code}\nprint(dt.microsecond)",
+    "hints": [
+      "datetime.datetime(2024, 1, 1, 12, 0, 0, 500000)",
+      "Last argument is microseconds",
+      "1 second = 1,000,000 microseconds"
+    ]
+  }
+]

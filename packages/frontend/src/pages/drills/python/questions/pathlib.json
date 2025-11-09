@@ -1,0 +1,339 @@
+[
+  {
+    "id": "py-pathlib-import-1",
+    "title": "Import Path from pathlib",
+    "difficulty": "easy",
+    "description": "Import the Path class from the pathlib module and verify it exists.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint('Path' in dir())",
+    "hints": [
+      "Use from pathlib import Path",
+      "Path is the main class for working with file paths"
+    ]
+  },
+  {
+    "id": "py-pathlib-create-2",
+    "title": "Create a Path Object",
+    "difficulty": "easy",
+    "description": "Create a Path object representing the file 'data.txt' and store it in a variable named 'p'.",
+    "setupCode": "from pathlib import Path",
+    "starterCode": "# Create a Path object\n",
+    "expectedOutput": "data.txt",
+    "testCode": "{user_code}\nprint(p.name)",
+    "hints": [
+      "Use Path('data.txt')",
+      "Path objects represent file system paths"
+    ]
+  },
+  {
+    "id": "py-pathlib-join-3",
+    "title": "Join Paths with / Operator",
+    "difficulty": "easy",
+    "description": "Use the / operator to join Path('home') with 'user' and 'documents' to create a path. Store in variable 'full_path'.",
+    "setupCode": "from pathlib import Path",
+    "starterCode": "# Join paths using /\n",
+    "expectedOutput": "home/user/documents",
+    "testCode": "{user_code}\nprint(str(full_path).replace('\\\\', '/'))",
+    "hints": [
+      "Use Path('home') / 'user' / 'documents'",
+      "The / operator makes path joining intuitive"
+    ]
+  },
+  {
+    "id": "py-pathlib-name-4",
+    "title": "Get File Name",
+    "difficulty": "easy",
+    "description": "Given a Path object 'p' representing '/home/user/document.txt', get just the filename (with extension) and store it in 'filename'.",
+    "setupCode": "from pathlib import Path\np = Path('/home/user/document.txt')",
+    "starterCode": "# Get the filename\n",
+    "expectedOutput": "document.txt",
+    "testCode": "{user_code}\nprint(filename)",
+    "hints": [
+      "Use p.name",
+      "The .name attribute returns the final component"
+    ]
+  },
+  {
+    "id": "py-pathlib-stem-5",
+    "title": "Get File Name Without Extension",
+    "difficulty": "easy",
+    "description": "Given a Path object 'p' representing 'report.pdf', get the filename without the extension and store it in 'stem'.",
+    "setupCode": "from pathlib import Path\np = Path('report.pdf')",
+    "starterCode": "# Get filename without extension\n",
+    "expectedOutput": "report",
+    "testCode": "{user_code}\nprint(stem)",
+    "hints": [
+      "Use p.stem",
+      "The .stem attribute returns the name without suffix"
+    ]
+  },
+  {
+    "id": "py-pathlib-suffix-6",
+    "title": "Get File Extension",
+    "difficulty": "easy",
+    "description": "Given a Path object 'p' representing 'image.png', get the file extension and store it in 'extension'.",
+    "setupCode": "from pathlib import Path\np = Path('image.png')",
+    "starterCode": "# Get file extension\n",
+    "expectedOutput": ".png",
+    "testCode": "{user_code}\nprint(extension)",
+    "hints": [
+      "Use p.suffix",
+      "The .suffix attribute includes the dot"
+    ]
+  },
+  {
+    "id": "py-pathlib-parent-7",
+    "title": "Get Parent Directory",
+    "difficulty": "medium",
+    "description": "Given a Path object 'p' representing '/home/user/docs/file.txt', get the parent directory path and store it in 'parent'.",
+    "setupCode": "from pathlib import Path\np = Path('/home/user/docs/file.txt')",
+    "starterCode": "# Get parent directory\n",
+    "expectedOutput": "/home/user/docs",
+    "testCode": "{user_code}\nprint(str(parent).replace('\\\\', '/'))",
+    "hints": [
+      "Use p.parent",
+      "The .parent attribute returns the parent directory"
+    ]
+  },
+  {
+    "id": "py-pathlib-exists-8",
+    "title": "Check if Path Exists",
+    "difficulty": "easy",
+    "description": "Create a Path object for the current file (use __file__) and check if it exists. Store the boolean result in 'exists'.",
+    "setupCode": "from pathlib import Path\n__file__ = 'test.py'",
+    "starterCode": "# Check if path exists\n",
+    "expectedOutput": "False",
+    "testCode": "{user_code}\nprint(exists)",
+    "hints": [
+      "Create Path(__file__)",
+      "Use the .exists() method"
+    ]
+  },
+  {
+    "id": "py-pathlib-is-file-9",
+    "title": "Check if Path is a File",
+    "difficulty": "medium",
+    "description": "Given a Path object 'p', use the is_file() method to check if it's a file (not a directory). Store result in 'is_a_file'.",
+    "setupCode": "from pathlib import Path\np = Path('.')",
+    "starterCode": "# Check if p is a file\n",
+    "expectedOutput": "False",
+    "testCode": "{user_code}\nprint(is_a_file)",
+    "hints": [
+      "Use p.is_file()",
+      "Current directory '.' is not a file"
+    ]
+  },
+  {
+    "id": "py-pathlib-is-dir-10",
+    "title": "Check if Path is a Directory",
+    "difficulty": "medium",
+    "description": "Given a Path object 'p', use the is_dir() method to check if it's a directory. Store result in 'is_directory'.",
+    "setupCode": "from pathlib import Path\np = Path('.')",
+    "starterCode": "# Check if p is a directory\n",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(is_directory)",
+    "hints": [
+      "Use p.is_dir()",
+      "Current directory '.' is a directory"
+    ]
+  },
+  {
+    "id": "py-pathlib-absolute-11",
+    "title": "Get Absolute Path",
+    "difficulty": "medium",
+    "description": "Given a Path object 'p' with a relative path, convert it to an absolute path using the absolute() method. Store in 'abs_path'.",
+    "setupCode": "from pathlib import Path\np = Path('data.txt')",
+    "starterCode": "# Get absolute path\n",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(abs_path.is_absolute())",
+    "hints": [
+      "Use p.absolute()",
+      "This converts relative paths to absolute"
+    ]
+  },
+  {
+    "id": "py-pathlib-resolve-12",
+    "title": "Resolve Path (Remove .. and symlinks)",
+    "difficulty": "medium",
+    "description": "Given a Path object 'p' representing 'docs/../data/file.txt', resolve it to remove the '..' and store in 'resolved'.",
+    "setupCode": "from pathlib import Path\np = Path('docs/../data/file.txt')",
+    "starterCode": "# Resolve the path\n",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint('..' not in str(resolved))",
+    "hints": [
+      "Use p.resolve()",
+      "resolve() makes the path absolute and removes .. components"
+    ]
+  },
+  {
+    "id": "py-pathlib-glob-13",
+    "title": "Find Files with glob",
+    "difficulty": "medium",
+    "description": "Create a Path for current directory and use glob('*.txt') to find all .txt files. Convert the result to a list and store in 'txt_files'.",
+    "setupCode": "from pathlib import Path\nimport os\nos.makedirs('temp_test', exist_ok=True)\nopen('temp_test/a.txt', 'w').close()\nopen('temp_test/b.txt', 'w').close()\nopen('temp_test/c.py', 'w').close()",
+    "starterCode": "# Use glob to find .txt files in temp_test\n",
+    "expectedOutput": "2",
+    "testCode": "{user_code}\nprint(len(txt_files))",
+    "hints": [
+      "Use Path('temp_test').glob('*.txt')",
+      "Convert the generator to a list"
+    ]
+  },
+  {
+    "id": "py-pathlib-rglob-14",
+    "title": "Recursive glob with rglob",
+    "difficulty": "hard",
+    "description": "Use rglob() to recursively find all .py files in current directory and subdirectories. Store count in 'py_count'.",
+    "setupCode": "from pathlib import Path\nimport os\nos.makedirs('temp/sub', exist_ok=True)\nopen('temp/a.py', 'w').close()\nopen('temp/sub/b.py', 'w').close()",
+    "starterCode": "# Recursively find all .py files in temp\n",
+    "expectedOutput": "2",
+    "testCode": "{user_code}\nprint(py_count)",
+    "hints": [
+      "Use Path('temp').rglob('*.py')",
+      "rglob is like glob but searches recursively",
+      "Convert to list and get len()"
+    ]
+  },
+  {
+    "id": "py-pathlib-iterdir-15",
+    "title": "List Directory Contents",
+    "difficulty": "medium",
+    "description": "Use iterdir() to list all items in a directory. Store the list of Path objects in 'contents'.",
+    "setupCode": "from pathlib import Path\nimport os\nos.makedirs('test_dir', exist_ok=True)\nopen('test_dir/file1.txt', 'w').close()\nopen('test_dir/file2.txt', 'w').close()",
+    "starterCode": "# List contents of test_dir\n",
+    "expectedOutput": "2",
+    "testCode": "{user_code}\nprint(len(contents))",
+    "hints": [
+      "Use Path('test_dir').iterdir()",
+      "Convert the iterator to a list"
+    ]
+  },
+  {
+    "id": "py-pathlib-mkdir-16",
+    "title": "Create Directory",
+    "difficulty": "medium",
+    "description": "Use the mkdir() method to create a directory named 'new_folder'. Use exist_ok=True to avoid errors if it exists.",
+    "setupCode": "from pathlib import Path\nimport shutil\nshutil.rmtree('new_folder', ignore_errors=True)",
+    "starterCode": "# Create directory new_folder\n",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(Path('new_folder').exists())",
+    "hints": [
+      "Create Path('new_folder')",
+      "Use .mkdir(exist_ok=True)"
+    ]
+  },
+  {
+    "id": "py-pathlib-mkdir-parents-17",
+    "title": "Create Nested Directories",
+    "difficulty": "medium",
+    "description": "Create nested directories 'project/data/raw' in one command using mkdir with parents=True.",
+    "setupCode": "from pathlib import Path\nimport shutil\nshutil.rmtree('project', ignore_errors=True)",
+    "starterCode": "# Create nested directories\n",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(Path('project/data/raw').exists())",
+    "hints": [
+      "Use Path('project/data/raw').mkdir(parents=True, exist_ok=True)",
+      "parents=True creates intermediate directories"
+    ]
+  },
+  {
+    "id": "py-pathlib-read-text-18",
+    "title": "Read File with read_text",
+    "difficulty": "medium",
+    "description": "Use read_text() method to read the contents of a file into a variable named 'content'.",
+    "setupCode": "from pathlib import Path\nPath('sample.txt').write_text('Hello, pathlib!')",
+    "starterCode": "# Read the file sample.txt\n",
+    "expectedOutput": "Hello, pathlib!",
+    "testCode": "{user_code}\nprint(content)",
+    "hints": [
+      "Use Path('sample.txt').read_text()",
+      "This reads the entire file as a string"
+    ]
+  },
+  {
+    "id": "py-pathlib-write-text-19",
+    "title": "Write File with write_text",
+    "difficulty": "medium",
+    "description": "Use write_text() to write 'Python is awesome' to a file named 'output.txt'.",
+    "setupCode": "from pathlib import Path",
+    "starterCode": "# Write to output.txt\n",
+    "expectedOutput": "Python is awesome",
+    "testCode": "{user_code}\nprint(Path('output.txt').read_text())",
+    "hints": [
+      "Use Path('output.txt').write_text('Python is awesome')",
+      "write_text() creates or overwrites the file"
+    ]
+  },
+  {
+    "id": "py-pathlib-with-suffix-20",
+    "title": "Change File Extension",
+    "difficulty": "medium",
+    "description": "Given a Path 'p' representing 'document.txt', create a new path with extension changed to '.md'. Store in 'new_path'.",
+    "setupCode": "from pathlib import Path\np = Path('document.txt')",
+    "starterCode": "# Change extension to .md\n",
+    "expectedOutput": ".md",
+    "testCode": "{user_code}\nprint(new_path.suffix)",
+    "hints": [
+      "Use p.with_suffix('.md')",
+      "This returns a new Path object"
+    ]
+  },
+  {
+    "id": "py-pathlib-joinpath-21",
+    "title": "Join Paths with joinpath",
+    "difficulty": "easy",
+    "description": "Use the joinpath() method to join Path('home') with 'user', 'documents', and 'file.txt'. Store in 'full_path'.",
+    "setupCode": "from pathlib import Path",
+    "starterCode": "# Join paths with joinpath\n",
+    "expectedOutput": "file.txt",
+    "testCode": "{user_code}\nprint(full_path.name)",
+    "hints": [
+      "Use Path('home').joinpath('user', 'documents', 'file.txt')",
+      "joinpath is an alternative to the / operator"
+    ]
+  },
+  {
+    "id": "py-pathlib-parts-22",
+    "title": "Get Path Components",
+    "difficulty": "medium",
+    "description": "Given a Path '/home/user/docs/file.txt', get all path components as a tuple using .parts. Store in 'components'.",
+    "setupCode": "from pathlib import Path\np = Path('/home/user/docs/file.txt')",
+    "starterCode": "# Get path parts\n",
+    "expectedOutput": "4",
+    "testCode": "{user_code}\nprint(len(components))",
+    "hints": [
+      "Use p.parts",
+      "Returns a tuple of all path components"
+    ]
+  },
+  {
+    "id": "py-pathlib-home-23",
+    "title": "Get Home Directory",
+    "difficulty": "easy",
+    "description": "Use Path.home() to get the user's home directory path. Store in 'home_dir'.",
+    "setupCode": "from pathlib import Path",
+    "starterCode": "# Get home directory\n",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(home_dir.exists())",
+    "hints": [
+      "Use Path.home()",
+      "This is a class method"
+    ]
+  },
+  {
+    "id": "py-pathlib-cwd-24",
+    "title": "Get Current Working Directory",
+    "difficulty": "easy",
+    "description": "Use Path.cwd() to get the current working directory. Store in 'current_dir'.",
+    "setupCode": "from pathlib import Path",
+    "starterCode": "# Get current working directory\n",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(current_dir, Path))",
+    "hints": [
+      "Use Path.cwd()",
+      "This is a class method that returns a Path object"
+    ]
+  }
+]

@@ -1,0 +1,837 @@
+[
+  {
+    "id": "py-type-check-1",
+    "title": "Check Type with type()",
+    "difficulty": "easy",
+    "description": "Check and print the type of variable 42.",
+    "setupCode": "",
+    "starterCode": "x = 42",
+    "expectedOutput": "<class 'int'>",
+    "testCode": "x = 42\n{user_code}",
+    "hints": [
+      "Use type(x)",
+      "Returns the type object"
+    ]
+  },
+  {
+    "id": "py-type-isinstance-1",
+    "title": "Check Type with isinstance()",
+    "difficulty": "easy",
+    "description": "Check if 42 is an instance of int. Print True or False.",
+    "setupCode": "",
+    "starterCode": "x = 42",
+    "expectedOutput": "True",
+    "testCode": "x = 42\n{user_code}",
+    "hints": [
+      "Use isinstance(x, int)",
+      "Returns boolean",
+      "Preferred over type() for type checking"
+    ]
+  },
+  {
+    "id": "py-type-int-1",
+    "title": "Integer Type",
+    "difficulty": "easy",
+    "description": "Create integer variable with value 100 and verify it's an int.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(num, int))",
+    "hints": [
+      "num = 100",
+      "Integers have no decimal point"
+    ]
+  },
+  {
+    "id": "py-type-float-1",
+    "title": "Float Type",
+    "difficulty": "easy",
+    "description": "Create float variable with value 3.14 and verify it's a float.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(num, float))",
+    "hints": [
+      "num = 3.14",
+      "Floats have decimal point"
+    ]
+  },
+  {
+    "id": "py-type-str-1",
+    "title": "String Type",
+    "difficulty": "easy",
+    "description": "Create string variable with value 'hello' and verify it's a str.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(text, str))",
+    "hints": [
+      "text = 'hello'",
+      "Use single or double quotes"
+    ]
+  },
+  {
+    "id": "py-type-bool-1",
+    "title": "Boolean Type",
+    "difficulty": "easy",
+    "description": "Create boolean variable with value True and verify it's a bool.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(flag, bool))",
+    "hints": [
+      "flag = True",
+      "True and False are the only boolean values"
+    ]
+  },
+  {
+    "id": "py-type-list-1",
+    "title": "List Type",
+    "difficulty": "easy",
+    "description": "Create list [1, 2, 3] and verify it's a list.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(items, list))",
+    "hints": [
+      "items = [1, 2, 3]",
+      "Lists use square brackets"
+    ]
+  },
+  {
+    "id": "py-type-dict-1",
+    "title": "Dictionary Type",
+    "difficulty": "easy",
+    "description": "Create dict {'a': 1} and verify it's a dict.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(data, dict))",
+    "hints": [
+      "data = {'a': 1}",
+      "Dicts use curly braces with key:value pairs"
+    ]
+  },
+  {
+    "id": "py-type-tuple-1",
+    "title": "Tuple Type",
+    "difficulty": "easy",
+    "description": "Create tuple (1, 2, 3) and verify it's a tuple.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(items, tuple))",
+    "hints": [
+      "items = (1, 2, 3)",
+      "Tuples use parentheses"
+    ]
+  },
+  {
+    "id": "py-type-set-1",
+    "title": "Set Type",
+    "difficulty": "easy",
+    "description": "Create set {1, 2, 3} and verify it's a set.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(items, set))",
+    "hints": [
+      "items = {1, 2, 3}",
+      "Sets use curly braces without key:value pairs"
+    ]
+  },
+  {
+    "id": "py-conv-str-to-int-1",
+    "title": "Convert String to Int",
+    "difficulty": "easy",
+    "description": "Convert string '42' to integer and print the result.",
+    "setupCode": "",
+    "starterCode": "text = '42'",
+    "expectedOutput": "42",
+    "testCode": "text = '42'\n{user_code}\nprint(number)",
+    "hints": [
+      "Use int(text)",
+      "String must contain valid integer"
+    ]
+  },
+  {
+    "id": "py-conv-int-to-str-1",
+    "title": "Convert Int to String",
+    "difficulty": "easy",
+    "description": "Convert integer 42 to string and print the type.",
+    "setupCode": "",
+    "starterCode": "number = 42",
+    "expectedOutput": "<class 'str'>",
+    "testCode": "number = 42\n{user_code}\nprint(type(text))",
+    "hints": [
+      "Use str(number)",
+      "Converts any value to string representation"
+    ]
+  },
+  {
+    "id": "py-conv-str-to-float-1",
+    "title": "Convert String to Float",
+    "difficulty": "easy",
+    "description": "Convert string '3.14' to float and print the result.",
+    "setupCode": "",
+    "starterCode": "text = '3.14'",
+    "expectedOutput": "3.14",
+    "testCode": "text = '3.14'\n{user_code}\nprint(number)",
+    "hints": [
+      "Use float(text)",
+      "String must contain valid float"
+    ]
+  },
+  {
+    "id": "py-conv-float-to-int-1",
+    "title": "Convert Float to Int (Truncate)",
+    "difficulty": "easy",
+    "description": "Convert float 3.7 to int (truncates decimal). Print result.",
+    "setupCode": "",
+    "starterCode": "num = 3.7",
+    "expectedOutput": "3",
+    "testCode": "num = 3.7\n{user_code}\nprint(result)",
+    "hints": [
+      "Use int(num)",
+      "Drops decimal part (doesn't round)"
+    ]
+  },
+  {
+    "id": "py-conv-int-to-float-1",
+    "title": "Convert Int to Float",
+    "difficulty": "easy",
+    "description": "Convert integer 5 to float and print the result.",
+    "setupCode": "",
+    "starterCode": "num = 5",
+    "expectedOutput": "5.0",
+    "testCode": "num = 5\n{user_code}\nprint(result)",
+    "hints": [
+      "Use float(num)",
+      "Adds decimal point"
+    ]
+  },
+  {
+    "id": "py-conv-list-to-str-1",
+    "title": "Convert List to String",
+    "difficulty": "easy",
+    "description": "Convert list [1, 2, 3] to string representation. Print result.",
+    "setupCode": "",
+    "starterCode": "items = [1, 2, 3]",
+    "expectedOutput": "[1, 2, 3]",
+    "testCode": "items = [1, 2, 3]\n{user_code}\nprint(result)",
+    "hints": [
+      "Use str(items)",
+      "Creates string representation of list"
+    ]
+  },
+  {
+    "id": "py-conv-list-to-tuple-1",
+    "title": "Convert List to Tuple",
+    "difficulty": "easy",
+    "description": "Convert list [1, 2, 3] to tuple. Print result.",
+    "setupCode": "",
+    "starterCode": "items = [1, 2, 3]",
+    "expectedOutput": "(1, 2, 3)",
+    "testCode": "items = [1, 2, 3]\n{user_code}\nprint(result)",
+    "hints": [
+      "Use tuple(items)",
+      "Creates immutable tuple"
+    ]
+  },
+  {
+    "id": "py-conv-tuple-to-list-1",
+    "title": "Convert Tuple to List",
+    "difficulty": "easy",
+    "description": "Convert tuple (1, 2, 3) to list. Print result.",
+    "setupCode": "",
+    "starterCode": "items = (1, 2, 3)",
+    "expectedOutput": "[1, 2, 3]",
+    "testCode": "items = (1, 2, 3)\n{user_code}\nprint(result)",
+    "hints": [
+      "Use list(items)",
+      "Creates mutable list"
+    ]
+  },
+  {
+    "id": "py-conv-set-to-list-1",
+    "title": "Convert Set to List",
+    "difficulty": "easy",
+    "description": "Convert set {3, 1, 2} to sorted list. Print result.",
+    "setupCode": "",
+    "starterCode": "items = {3, 1, 2}",
+    "expectedOutput": "[1, 2, 3]",
+    "testCode": "items = {3, 1, 2}\n{user_code}\nprint(result)",
+    "hints": [
+      "Use sorted(items) or sorted(list(items))",
+      "Sets are unordered, so sort after converting"
+    ]
+  },
+  {
+    "id": "py-conv-list-to-set-1",
+    "title": "Convert List to Set",
+    "difficulty": "easy",
+    "description": "Convert list [1, 2, 2, 3, 3] to set (removes duplicates). Print result.",
+    "setupCode": "",
+    "starterCode": "items = [1, 2, 2, 3, 3]",
+    "expectedOutput": "{1, 2, 3}",
+    "testCode": "items = [1, 2, 2, 3, 3]\n{user_code}\nprint(result)",
+    "hints": [
+      "Use set(items)",
+      "Automatically removes duplicates"
+    ]
+  },
+  {
+    "id": "py-conv-str-to-list-1",
+    "title": "Convert String to List of Characters",
+    "difficulty": "easy",
+    "description": "Convert string 'hello' to list of characters. Print result.",
+    "setupCode": "",
+    "starterCode": "text = 'hello'",
+    "expectedOutput": "['h', 'e', 'l', 'l', 'o']",
+    "testCode": "text = 'hello'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use list(text)",
+      "Each character becomes list element"
+    ]
+  },
+  {
+    "id": "py-conv-list-to-str-join-1",
+    "title": "Join List to String",
+    "difficulty": "easy",
+    "description": "Join list ['a', 'b', 'c'] with '-' separator. Print result.",
+    "setupCode": "",
+    "starterCode": "items = ['a', 'b', 'c']",
+    "expectedOutput": "a-b-c",
+    "testCode": "items = ['a', 'b', 'c']\n{user_code}\nprint(result)",
+    "hints": [
+      "Use '-'.join(items)",
+      "join() method on string separator"
+    ]
+  },
+  {
+    "id": "py-conv-bool-to-int-1",
+    "title": "Convert Bool to Int",
+    "difficulty": "easy",
+    "description": "Convert True and False to integers. Print both results.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "1\n0",
+    "testCode": "{user_code}\nprint(int(True))\nprint(int(False))",
+    "hints": [
+      "True converts to 1",
+      "False converts to 0",
+      "Use int(True) and int(False)"
+    ]
+  },
+  {
+    "id": "py-conv-int-to-bool-1",
+    "title": "Convert Int to Bool",
+    "difficulty": "easy",
+    "description": "Convert 0 and 5 to booleans. Print both results.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "False\nTrue",
+    "testCode": "{user_code}\nprint(bool(0))\nprint(bool(5))",
+    "hints": [
+      "0 converts to False",
+      "Any non-zero number converts to True",
+      "Use bool(0) and bool(5)"
+    ]
+  },
+  {
+    "id": "py-type-none-1",
+    "title": "None Type",
+    "difficulty": "easy",
+    "description": "Check type of None and print it.",
+    "setupCode": "",
+    "starterCode": "x = None",
+    "expectedOutput": "<class 'NoneType'>",
+    "testCode": "x = None\n{user_code}",
+    "hints": [
+      "Use type(x)",
+      "None is its own type: NoneType"
+    ]
+  },
+  {
+    "id": "py-conv-invalid-1",
+    "title": "Handle Invalid Conversion",
+    "difficulty": "medium",
+    "description": "Try to convert 'abc' to int. Catch ValueError and print 'Invalid'.",
+    "setupCode": "",
+    "starterCode": "text = 'abc'",
+    "expectedOutput": "Invalid",
+    "testCode": "text = 'abc'\n{user_code}",
+    "hints": [
+      "Use try-except block",
+      "int('abc') raises ValueError",
+      "Catch ValueError exception"
+    ]
+  },
+  {
+    "id": "py-type-bytes-1",
+    "title": "Bytes Type",
+    "difficulty": "medium",
+    "description": "Create bytes object b'hello' and verify it's bytes type.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(data, bytes))",
+    "hints": [
+      "data = b'hello'",
+      "Prefix string with b for bytes literal"
+    ]
+  },
+  {
+    "id": "py-conv-str-to-bytes-1",
+    "title": "Convert String to Bytes",
+    "difficulty": "medium",
+    "description": "Convert string 'hello' to bytes using UTF-8 encoding. Print result.",
+    "setupCode": "",
+    "starterCode": "text = 'hello'",
+    "expectedOutput": "b'hello'",
+    "testCode": "text = 'hello'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use text.encode('utf-8')",
+      "Or text.encode() (UTF-8 is default)"
+    ]
+  },
+  {
+    "id": "py-conv-bytes-to-str-1",
+    "title": "Convert Bytes to String",
+    "difficulty": "medium",
+    "description": "Convert bytes b'hello' to string using UTF-8 decoding. Print result.",
+    "setupCode": "",
+    "starterCode": "data = b'hello'",
+    "expectedOutput": "hello",
+    "testCode": "data = b'hello'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use data.decode('utf-8')",
+      "Or data.decode() (UTF-8 is default)"
+    ]
+  },
+  {
+    "id": "py-type-complex-1",
+    "title": "Complex Number Type",
+    "difficulty": "medium",
+    "description": "Create complex number 3+4j and verify it's complex type.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(num, complex))",
+    "hints": [
+      "num = 3+4j",
+      "Use j or J for imaginary part"
+    ]
+  },
+  {
+    "id": "py-conv-to-complex-1",
+    "title": "Convert to Complex",
+    "difficulty": "medium",
+    "description": "Convert integer 5 to complex number. Print result.",
+    "setupCode": "",
+    "starterCode": "num = 5",
+    "expectedOutput": "(5+0j)",
+    "testCode": "num = 5\n{user_code}\nprint(result)",
+    "hints": [
+      "Use complex(num)",
+      "Creates complex with real=5, imag=0"
+    ]
+  },
+  {
+    "id": "py-conv-base-bin-1",
+    "title": "Convert to Binary String",
+    "difficulty": "easy",
+    "description": "Convert integer 10 to binary string representation. Print result.",
+    "setupCode": "",
+    "starterCode": "num = 10",
+    "expectedOutput": "0b1010",
+    "testCode": "num = 10\n{user_code}\nprint(result)",
+    "hints": [
+      "Use bin(num)",
+      "Returns string with '0b' prefix"
+    ]
+  },
+  {
+    "id": "py-conv-base-hex-1",
+    "title": "Convert to Hexadecimal String",
+    "difficulty": "easy",
+    "description": "Convert integer 255 to hexadecimal string. Print result.",
+    "setupCode": "",
+    "starterCode": "num = 255",
+    "expectedOutput": "0xff",
+    "testCode": "num = 255\n{user_code}\nprint(result)",
+    "hints": [
+      "Use hex(num)",
+      "Returns string with '0x' prefix"
+    ]
+  },
+  {
+    "id": "py-conv-base-oct-1",
+    "title": "Convert to Octal String",
+    "difficulty": "easy",
+    "description": "Convert integer 8 to octal string. Print result.",
+    "setupCode": "",
+    "starterCode": "num = 8",
+    "expectedOutput": "0o10",
+    "testCode": "num = 8\n{user_code}\nprint(result)",
+    "hints": [
+      "Use oct(num)",
+      "Returns string with '0o' prefix"
+    ]
+  },
+  {
+    "id": "py-conv-base-from-bin-1",
+    "title": "Convert Binary String to Int",
+    "difficulty": "medium",
+    "description": "Convert binary string '0b1010' to integer. Print result.",
+    "setupCode": "",
+    "starterCode": "binary = '0b1010'",
+    "expectedOutput": "10",
+    "testCode": "binary = '0b1010'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use int(binary, 2)",
+      "Second argument is base (2 for binary)"
+    ]
+  },
+  {
+    "id": "py-conv-base-from-hex-1",
+    "title": "Convert Hex String to Int",
+    "difficulty": "medium",
+    "description": "Convert hexadecimal string '0xff' to integer. Print result.",
+    "setupCode": "",
+    "starterCode": "hexadecimal = '0xff'",
+    "expectedOutput": "255",
+    "testCode": "hexadecimal = '0xff'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use int(hexadecimal, 16)",
+      "Second argument is base (16 for hex)"
+    ]
+  },
+  {
+    "id": "py-type-bytearray-1",
+    "title": "Bytearray Type",
+    "difficulty": "medium",
+    "description": "Create mutable bytearray from [65, 66, 67] and verify type.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(data, bytearray))",
+    "hints": [
+      "data = bytearray([65, 66, 67])",
+      "Mutable version of bytes"
+    ]
+  },
+  {
+    "id": "py-conv-truthiness-empty-1",
+    "title": "Truthiness of Empty Collections",
+    "difficulty": "medium",
+    "description": "Check bool() of empty list, dict, set, tuple, string. Print result.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "False",
+    "testCode": "{user_code}\nprint(bool([]) and bool({}) and bool(set()) and bool(()) and bool(''))",
+    "hints": [
+      "All empty collections are falsy",
+      "bool([]) returns False",
+      "Same for {}, set(), (), ''"
+    ]
+  },
+  {
+    "id": "py-conv-truthiness-numbers-1",
+    "title": "Truthiness of Numbers",
+    "difficulty": "medium",
+    "description": "Check bool() of 0, 0.0, and 5. Print all three results.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "False\nFalse\nTrue",
+    "testCode": "{user_code}\nprint(bool(0))\nprint(bool(0.0))\nprint(bool(5))",
+    "hints": [
+      "0 and 0.0 are falsy",
+      "Any non-zero number is truthy"
+    ]
+  },
+  {
+    "id": "py-conv-chr-ord-1",
+    "title": "Character to ASCII",
+    "difficulty": "easy",
+    "description": "Get ASCII code of character 'A' using ord(). Print result.",
+    "setupCode": "",
+    "starterCode": "char = 'A'",
+    "expectedOutput": "65",
+    "testCode": "char = 'A'\n{user_code}\nprint(code)",
+    "hints": [
+      "Use ord(char)",
+      "Returns Unicode code point (ASCII for basic chars)"
+    ]
+  },
+  {
+    "id": "py-conv-ord-chr-1",
+    "title": "ASCII to Character",
+    "difficulty": "easy",
+    "description": "Convert ASCII code 65 to character using chr(). Print result.",
+    "setupCode": "",
+    "starterCode": "code = 65",
+    "expectedOutput": "A",
+    "testCode": "code = 65\n{user_code}\nprint(char)",
+    "hints": [
+      "Use chr(code)",
+      "Returns character for Unicode code point"
+    ]
+  },
+  {
+    "id": "py-type-range-1",
+    "title": "Range Type",
+    "difficulty": "easy",
+    "description": "Create range(5) and verify it's a range type.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(r, range))",
+    "hints": [
+      "r = range(5)",
+      "Range is its own type"
+    ]
+  },
+  {
+    "id": "py-conv-range-to-list-1",
+    "title": "Convert Range to List",
+    "difficulty": "easy",
+    "description": "Convert range(5) to list. Print result.",
+    "setupCode": "",
+    "starterCode": "r = range(5)",
+    "expectedOutput": "[0, 1, 2, 3, 4]",
+    "testCode": "r = range(5)\n{user_code}\nprint(result)",
+    "hints": [
+      "Use list(r)",
+      "Materializes the range into list"
+    ]
+  },
+  {
+    "id": "py-type-frozenset-1",
+    "title": "Frozenset Type",
+    "difficulty": "medium",
+    "description": "Create frozenset from {1, 2, 3} and verify type.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(fs, frozenset))",
+    "hints": [
+      "fs = frozenset({1, 2, 3})",
+      "Immutable version of set"
+    ]
+  },
+  {
+    "id": "py-conv-dict-keys-list-1",
+    "title": "Dictionary Keys to List",
+    "difficulty": "easy",
+    "description": "Convert dict keys of {'a': 1, 'b': 2} to sorted list. Print result.",
+    "setupCode": "",
+    "starterCode": "d = {'a': 1, 'b': 2}",
+    "expectedOutput": "['a', 'b']",
+    "testCode": "d = {'a': 1, 'b': 2}\n{user_code}\nprint(result)",
+    "hints": [
+      "Use sorted(d.keys())",
+      "Or sorted(list(d.keys()))"
+    ]
+  },
+  {
+    "id": "py-conv-dict-values-list-1",
+    "title": "Dictionary Values to List",
+    "difficulty": "easy",
+    "description": "Convert dict values of {'a': 1, 'b': 2} to sorted list. Print result.",
+    "setupCode": "",
+    "starterCode": "d = {'a': 1, 'b': 2}",
+    "expectedOutput": "[1, 2]",
+    "testCode": "d = {'a': 1, 'b': 2}\n{user_code}\nprint(result)",
+    "hints": [
+      "Use sorted(d.values())",
+      "Or sorted(list(d.values()))"
+    ]
+  },
+  {
+    "id": "py-conv-zip-dict-1",
+    "title": "Zip to Dictionary",
+    "difficulty": "medium",
+    "description": "Convert two lists ['a', 'b'] and [1, 2] to dictionary using zip. Print result.",
+    "setupCode": "",
+    "starterCode": "keys = ['a', 'b']\nvalues = [1, 2]",
+    "expectedOutput": "{'a': 1, 'b': 2}",
+    "testCode": "keys = ['a', 'b']\nvalues = [1, 2]\n{user_code}\nprint(result)",
+    "hints": [
+      "Use dict(zip(keys, values))",
+      "zip pairs them, dict creates dictionary"
+    ]
+  },
+  {
+    "id": "py-type-multiple-check-1",
+    "title": "Check Multiple Types",
+    "difficulty": "medium",
+    "description": "Check if 3.14 is either int or float. Print True or False.",
+    "setupCode": "",
+    "starterCode": "x = 3.14",
+    "expectedOutput": "True",
+    "testCode": "x = 3.14\n{user_code}",
+    "hints": [
+      "Use isinstance(x, (int, float))",
+      "Pass tuple of types to isinstance"
+    ]
+  },
+  {
+    "id": "py-conv-round-1",
+    "title": "Round Float",
+    "difficulty": "easy",
+    "description": "Round 3.7 to nearest integer. Print result.",
+    "setupCode": "",
+    "starterCode": "num = 3.7",
+    "expectedOutput": "4",
+    "testCode": "num = 3.7\n{user_code}\nprint(result)",
+    "hints": [
+      "Use round(num)",
+      "Returns int when no decimal places specified"
+    ]
+  },
+  {
+    "id": "py-conv-round-decimals-1",
+    "title": "Round to Decimal Places",
+    "difficulty": "easy",
+    "description": "Round 3.14159 to 2 decimal places. Print result.",
+    "setupCode": "",
+    "starterCode": "num = 3.14159",
+    "expectedOutput": "3.14",
+    "testCode": "num = 3.14159\n{user_code}\nprint(result)",
+    "hints": [
+      "Use round(num, 2)",
+      "Second argument is number of decimal places"
+    ]
+  },
+  {
+    "id": "py-conv-abs-1",
+    "title": "Absolute Value",
+    "difficulty": "easy",
+    "description": "Get absolute value of -42. Print result.",
+    "setupCode": "",
+    "starterCode": "num = -42",
+    "expectedOutput": "42",
+    "testCode": "num = -42\n{user_code}\nprint(result)",
+    "hints": [
+      "Use abs(num)",
+      "Returns non-negative value"
+    ]
+  },
+  {
+    "id": "py-type-callable-1",
+    "title": "Check if Callable",
+    "difficulty": "medium",
+    "description": "Check if print is callable and if 5 is callable. Print both results.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True\nFalse",
+    "testCode": "{user_code}\nprint(callable(print))\nprint(callable(5))",
+    "hints": [
+      "Use callable(obj)",
+      "Returns True for functions, methods, classes",
+      "False for numbers, strings, etc."
+    ]
+  },
+  {
+    "id": "py-conv-scientific-1",
+    "title": "Scientific Notation",
+    "difficulty": "medium",
+    "description": "Create float from scientific notation '1.5e3' (1.5 × 10³). Print result.",
+    "setupCode": "",
+    "starterCode": "text = '1.5e3'",
+    "expectedOutput": "1500.0",
+    "testCode": "text = '1.5e3'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use float(text)",
+      "e3 means × 10³"
+    ]
+  },
+  {
+    "id": "py-type-hashable-1",
+    "title": "Check Hashable",
+    "difficulty": "hard",
+    "description": "Try to hash (1, 2) and [1, 2]. Catch TypeError for list and print 'Not hashable'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Hashable\nNot hashable",
+    "testCode": "{user_code}",
+    "hints": [
+      "Try hash((1, 2)) - succeeds",
+      "Try hash([1, 2]) - raises TypeError",
+      "Tuples are hashable, lists are not"
+    ]
+  },
+  {
+    "id": "py-conv-eval-1",
+    "title": "Evaluate String Expression",
+    "difficulty": "medium",
+    "description": "Evaluate string '2 + 3 * 4' as Python expression. Print result.",
+    "setupCode": "",
+    "starterCode": "expression = '2 + 3 * 4'",
+    "expectedOutput": "14",
+    "testCode": "expression = '2 + 3 * 4'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use eval(expression)",
+      "Evaluates string as Python code",
+      "Dangerous with untrusted input!"
+    ]
+  },
+  {
+    "id": "py-conv-format-1",
+    "title": "Format Number as String",
+    "difficulty": "medium",
+    "description": "Format 3.14159 to string with 2 decimal places using f-string. Print result.",
+    "setupCode": "",
+    "starterCode": "num = 3.14159",
+    "expectedOutput": "3.14",
+    "testCode": "num = 3.14159\n{user_code}\nprint(result)",
+    "hints": [
+      "Use f'{num:.2f}'",
+      ":.2f formats to 2 decimal places"
+    ]
+  },
+  {
+    "id": "py-type-memoryview-1",
+    "title": "Memory View Type",
+    "difficulty": "hard",
+    "description": "Create memoryview from bytes b'hello' and verify type.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(mv, memoryview))",
+    "hints": [
+      "mv = memoryview(b'hello')",
+      "Allows access to memory of bytes-like objects"
+    ]
+  },
+  {
+    "id": "py-conv-ascii-1",
+    "title": "ASCII Representation",
+    "difficulty": "medium",
+    "description": "Get ASCII representation of 'hello\\nworld'. Print result.",
+    "setupCode": "",
+    "starterCode": "text = 'hello\\nworld'",
+    "expectedOutput": "'hello\\nworld'",
+    "testCode": "text = 'hello\\nworld'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use ascii(text)",
+      "Like repr() but escapes non-ASCII characters"
+    ]
+  },
+  {
+    "id": "py-conv-repr-1",
+    "title": "Repr Representation",
+    "difficulty": "medium",
+    "description": "Get repr() of string 'hello' (with quotes). Print result.",
+    "setupCode": "",
+    "starterCode": "text = 'hello'",
+    "expectedOutput": "'hello'",
+    "testCode": "text = 'hello'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use repr(text)",
+      "Returns string representation with quotes",
+      "Useful for debugging"
+    ]
+  }
+]

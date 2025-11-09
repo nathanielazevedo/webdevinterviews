@@ -24,6 +24,9 @@ import BattlePracticeMode from "./pages/battle-practice/BattlePracticeMode";
 import Auth from "./pages/auth/Auth";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Quiz from "./pages/courses/multipleChoice/QuizMain.tsx";
+import DrillsList from "./pages/drills/DrillsList";
+import PythonDrills from "./pages/drills/python/PythonDrills";
+import PandasDrills from "./pages/drills/pandas/PandasDrills";
 
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -93,6 +96,24 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Quiz />,
+          },
+        ],
+      },
+      {
+        path: "drills",
+        errorElement: <Error />,
+        children: [
+          {
+            index: true,
+            element: <DrillsList />,
+          },
+          {
+            path: "python",
+            element: <PythonDrills />,
+          },
+          {
+            path: "pandas",
+            element: <PandasDrills />,
           },
         ],
       },

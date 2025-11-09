@@ -1,0 +1,697 @@
+[
+  {
+    "id": "py-import-basic-1",
+    "title": "Basic Import",
+    "difficulty": "easy",
+    "description": "Import the math module and use it to print the value of pi.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "3.141592653589793",
+    "testCode": "{user_code}\nprint(math.pi)",
+    "hints": [
+      "Use import math",
+      "Access with math.pi"
+    ]
+  },
+  {
+    "id": "py-import-from-1",
+    "title": "Import Specific Function",
+    "difficulty": "easy",
+    "description": "Import only sqrt from math module and calculate sqrt of 16.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "4.0",
+    "testCode": "{user_code}\nprint(sqrt(16))",
+    "hints": [
+      "Use from math import sqrt",
+      "Call directly as sqrt(16)"
+    ]
+  },
+  {
+    "id": "py-import-multiple-1",
+    "title": "Import Multiple Functions",
+    "difficulty": "easy",
+    "description": "Import sqrt and pow from math, then print sqrt(25) and pow(2, 3).",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "5.0\n8.0",
+    "testCode": "{user_code}\nprint(sqrt(25))\nprint(pow(2, 3))",
+    "hints": [
+      "Use from math import sqrt, pow",
+      "Separate multiple imports with commas"
+    ]
+  },
+  {
+    "id": "py-import-alias-1",
+    "title": "Import with Alias",
+    "difficulty": "easy",
+    "description": "Import math as m and use the alias to print pi.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "3.141592653589793",
+    "testCode": "{user_code}\nprint(m.pi)",
+    "hints": [
+      "Use import math as m",
+      "Access with m.pi instead of math.pi"
+    ]
+  },
+  {
+    "id": "py-import-function-alias-1",
+    "title": "Import Function with Alias",
+    "difficulty": "easy",
+    "description": "Import sqrt as square_root and calculate square_root(9).",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "3.0",
+    "testCode": "{user_code}\nprint(square_root(9))",
+    "hints": [
+      "Use from math import sqrt as square_root",
+      "Call with the new name"
+    ]
+  },
+  {
+    "id": "py-import-random-1",
+    "title": "Random Integer",
+    "difficulty": "easy",
+    "description": "Import random module and generate a random integer between 1 and 10 (inclusive). Print type check.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nresult = random.randint(1, 10)\nprint(1 <= result <= 10)",
+    "hints": [
+      "Use import random",
+      "Use random.randint(1, 10)"
+    ]
+  },
+  {
+    "id": "py-import-random-choice-1",
+    "title": "Random Choice",
+    "difficulty": "easy",
+    "description": "Import choice from random and pick random element from ['apple', 'banana', 'cherry'].",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nfruits = ['apple', 'banana', 'cherry']\nresult = choice(fruits)\nprint(result in fruits)",
+    "hints": [
+      "Use from random import choice",
+      "Call choice(list)"
+    ]
+  },
+  {
+    "id": "py-import-datetime-1",
+    "title": "Current Date",
+    "difficulty": "easy",
+    "description": "Import datetime and print today's date (just the date part, not time).",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\ntoday = datetime.date.today()\nprint(isinstance(today, datetime.date))",
+    "hints": [
+      "Use import datetime",
+      "Use datetime.date.today()"
+    ]
+  },
+  {
+    "id": "py-import-time-1",
+    "title": "Time Module",
+    "difficulty": "easy",
+    "description": "Import time and get current timestamp (time.time()). Verify it's a float.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\ntimestamp = time.time()\nprint(isinstance(timestamp, float))",
+    "hints": [
+      "Use import time",
+      "Use time.time() to get timestamp"
+    ]
+  },
+  {
+    "id": "py-import-os-1",
+    "title": "Get Current Directory",
+    "difficulty": "easy",
+    "description": "Import os and print the current working directory.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "/home/claude",
+    "testCode": "{user_code}\nprint(os.getcwd())",
+    "hints": [
+      "Use import os",
+      "Use os.getcwd()"
+    ]
+  },
+  {
+    "id": "py-import-sys-1",
+    "title": "Python Version",
+    "difficulty": "easy",
+    "description": "Import sys and check that sys.version is a string.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(sys.version, str))",
+    "hints": [
+      "Use import sys",
+      "Access sys.version"
+    ]
+  },
+  {
+    "id": "py-import-json-1",
+    "title": "JSON Dumps",
+    "difficulty": "easy",
+    "description": "Import json and convert dict {'name': 'Alice', 'age': 30} to JSON string.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "{\"name\": \"Alice\", \"age\": 30}",
+    "testCode": "{user_code}\ndata = {'name': 'Alice', 'age': 30}\nprint(json.dumps(data))",
+    "hints": [
+      "Use import json",
+      "Use json.dumps(data)"
+    ]
+  },
+  {
+    "id": "py-import-json-loads-1",
+    "title": "JSON Loads",
+    "difficulty": "easy",
+    "description": "Import json and parse JSON string '{\"x\": 10}' to dict. Print the value of 'x'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "10",
+    "testCode": "{user_code}\njson_str = '{\"x\": 10}'\ndata = json.loads(json_str)\nprint(data['x'])",
+    "hints": [
+      "Use import json",
+      "Use json.loads(string)"
+    ]
+  },
+  {
+    "id": "py-import-collections-1",
+    "title": "Counter from Collections",
+    "difficulty": "medium",
+    "description": "Import Counter from collections and count characters in 'hello'. Print the count.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Counter({'l': 2, 'h': 1, 'e': 1, 'o': 1})",
+    "testCode": "{user_code}\ncount = Counter('hello')\nprint(count)",
+    "hints": [
+      "Use from collections import Counter",
+      "Pass string to Counter()"
+    ]
+  },
+  {
+    "id": "py-import-defaultdict-1",
+    "title": "DefaultDict",
+    "difficulty": "medium",
+    "description": "Import defaultdict from collections with int default. Set key 'a' and print default value of 'b'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "0",
+    "testCode": "{user_code}\nd = defaultdict(int)\nd['a'] = 5\nprint(d['b'])",
+    "hints": [
+      "Use from collections import defaultdict",
+      "Create with defaultdict(int)",
+      "Missing keys return int() which is 0"
+    ]
+  },
+  {
+    "id": "py-import-itertools-1",
+    "title": "Itertools Chain",
+    "difficulty": "medium",
+    "description": "Import chain from itertools and flatten [1,2] and [3,4] into single list.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "[1, 2, 3, 4]",
+    "testCode": "{user_code}\nresult = list(chain([1, 2], [3, 4]))\nprint(result)",
+    "hints": [
+      "Use from itertools import chain",
+      "chain() flattens iterables"
+    ]
+  },
+  {
+    "id": "py-import-re-1",
+    "title": "Regular Expression Match",
+    "difficulty": "medium",
+    "description": "Import re and check if 'hello' contains pattern 'ell'. Print True or False.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nresult = re.search('ell', 'hello')\nprint(result is not None)",
+    "hints": [
+      "Use import re",
+      "Use re.search(pattern, string)",
+      "Returns match object or None"
+    ]
+  },
+  {
+    "id": "py-import-statistics-1",
+    "title": "Calculate Mean",
+    "difficulty": "easy",
+    "description": "Import statistics and calculate mean of [1, 2, 3, 4, 5].",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "3",
+    "testCode": "{user_code}\nprint(statistics.mean([1, 2, 3, 4, 5]))",
+    "hints": [
+      "Use import statistics",
+      "Use statistics.mean(list)"
+    ]
+  },
+  {
+    "id": "py-import-pathlib-1",
+    "title": "Pathlib Path",
+    "difficulty": "medium",
+    "description": "Import Path from pathlib and create path '/home/user/file.txt'. Print the filename.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "file.txt",
+    "testCode": "{user_code}\np = Path('/home/user/file.txt')\nprint(p.name)",
+    "hints": [
+      "Use from pathlib import Path",
+      "Use .name attribute to get filename"
+    ]
+  },
+  {
+    "id": "py-import-copy-1",
+    "title": "Deep Copy",
+    "difficulty": "medium",
+    "description": "Import deepcopy from copy and create deep copy of [[1,2], [3,4]]. Verify it's different object.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\noriginal = [[1, 2], [3, 4]]\ncopied = deepcopy(original)\nprint(copied == original and copied is not original)",
+    "hints": [
+      "Use from copy import deepcopy",
+      "deepcopy() creates independent copy"
+    ]
+  },
+  {
+    "id": "py-import-star-1",
+    "title": "Import All (Wildcard)",
+    "difficulty": "easy",
+    "description": "Import all from math using * and use sqrt function directly. Print sqrt(4).",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "2.0",
+    "testCode": "{user_code}\nprint(sqrt(4))",
+    "hints": [
+      "Use from math import *",
+      "Not recommended in production but useful to know",
+      "Imports everything from module"
+    ]
+  },
+  {
+    "id": "py-import-custom-module-1",
+    "title": "Create Simple Module",
+    "difficulty": "medium",
+    "description": "Create file 'mymath.py' with function add(a, b). Import and use it to add 3 and 5.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "8",
+    "testCode": "with open('mymath.py', 'w') as f:\n    f.write('def add(a, b):\\n    return a + b')\n{user_code}\nprint(mymath.add(3, 5))",
+    "hints": [
+      "Create mymath.py file first",
+      "Use import mymath",
+      "Call mymath.add(3, 5)"
+    ]
+  },
+  {
+    "id": "py-import-custom-from-1",
+    "title": "Import from Custom Module",
+    "difficulty": "medium",
+    "description": "Create 'calculator.py' with multiply(a, b). Import just multiply and use it for 4 * 7.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "28",
+    "testCode": "with open('calculator.py', 'w') as f:\n    f.write('def multiply(a, b):\\n    return a * b')\n{user_code}\nprint(multiply(4, 7))",
+    "hints": [
+      "Create calculator.py with function",
+      "Use from calculator import multiply",
+      "Call multiply(4, 7) directly"
+    ]
+  },
+  {
+    "id": "py-import-module-variable-1",
+    "title": "Import Module Variable",
+    "difficulty": "medium",
+    "description": "Create 'config.py' with VERSION = '1.0'. Import and print config.VERSION.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "1.0",
+    "testCode": "with open('config.py', 'w') as f:\n    f.write('VERSION = \"1.0\"')\n{user_code}\nprint(config.VERSION)",
+    "hints": [
+      "Variables in modules work like functions",
+      "Use import config",
+      "Access with config.VERSION"
+    ]
+  },
+  {
+    "id": "py-import-name-main-1",
+    "title": "Module __name__ Check",
+    "difficulty": "medium",
+    "description": "Create module that prints 'Running' only when executed directly, not when imported.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Imported",
+    "testCode": "with open('testmodule.py', 'w') as f:\n    f.write('if __name__ == \"__main__\":\\n    print(\"Running\")\\nelse:\\n    print(\"Imported\")')\n{user_code}\nimport testmodule",
+    "hints": [
+      "Use if __name__ == '__main__':",
+      "Code in this block only runs when script is executed directly"
+    ]
+  },
+  {
+    "id": "py-import-dir-1",
+    "title": "List Module Contents",
+    "difficulty": "easy",
+    "description": "Import math and check if 'sqrt' is in dir(math). Print True or False.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint('sqrt' in dir(math))",
+    "hints": [
+      "Use import math",
+      "dir(math) lists all attributes",
+      "Check membership with 'in'"
+    ]
+  },
+  {
+    "id": "py-import-help-1",
+    "title": "Module Documentation",
+    "difficulty": "easy",
+    "description": "Import math and verify math.__doc__ is not None.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(math.__doc__ is not None)",
+    "hints": [
+      "Use import math",
+      "__doc__ contains module documentation"
+    ]
+  },
+  {
+    "id": "py-import-reload-1",
+    "title": "Reload Module",
+    "difficulty": "hard",
+    "description": "Import importlib, create module, import it, modify it, then reload. Show value changes.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "1\n2",
+    "testCode": "with open('dynamic.py', 'w') as f:\n    f.write('value = 1')\n{user_code}\nimport dynamic\nprint(dynamic.value)\nwith open('dynamic.py', 'w') as f:\n    f.write('value = 2')\nimport importlib\nimportlib.reload(dynamic)\nprint(dynamic.value)",
+    "hints": [
+      "Use import importlib",
+      "Use importlib.reload(module)",
+      "Reloads module from disk"
+    ]
+  },
+  {
+    "id": "py-import-package-1",
+    "title": "Create Simple Package",
+    "difficulty": "hard",
+    "description": "Create package 'mypackage' with __init__.py and module 'utils.py'. Import utils.greet().",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Hello",
+    "testCode": "import os\nos.makedirs('mypackage', exist_ok=True)\nwith open('mypackage/__init__.py', 'w') as f:\n    f.write('')\nwith open('mypackage/utils.py', 'w') as f:\n    f.write('def greet():\\n    return \"Hello\"')\n{user_code}\nprint(result)",
+    "hints": [
+      "Package is a directory with __init__.py",
+      "Use from mypackage.utils import greet",
+      "Or import mypackage.utils"
+    ]
+  },
+  {
+    "id": "py-import-relative-1",
+    "title": "Relative Import",
+    "difficulty": "hard",
+    "description": "Create package with two modules where one imports from the other using relative import.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Success",
+    "testCode": "import os\nos.makedirs('pkg', exist_ok=True)\nwith open('pkg/__init__.py', 'w') as f:\n    f.write('')\nwith open('pkg/a.py', 'w') as f:\n    f.write('value = \"Success\"')\nwith open('pkg/b.py', 'w') as f:\n    f.write('from .a import value')\n{user_code}\nfrom pkg.b import value\nprint(value)",
+    "hints": [
+      "Use from .module import something",
+      "Dot notation for relative imports",
+      "Only works within packages"
+    ]
+  },
+  {
+    "id": "py-import-sys-path-1",
+    "title": "Modify sys.path",
+    "difficulty": "hard",
+    "description": "Add a custom directory to sys.path and import module from it.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Custom",
+    "testCode": "import os\nos.makedirs('custom_dir', exist_ok=True)\nwith open('custom_dir/custom.py', 'w') as f:\n    f.write('message = \"Custom\"')\n{user_code}\nimport sys\nsys.path.insert(0, 'custom_dir')\nimport custom\nprint(custom.message)",
+    "hints": [
+      "Use import sys",
+      "sys.path is list of module search paths",
+      "Use sys.path.insert(0, 'path')"
+    ]
+  },
+  {
+    "id": "py-import-circular-1",
+    "title": "Avoid Circular Import",
+    "difficulty": "hard",
+    "description": "Demonstrate circular import problem: module A imports B, B imports A. Show error handling.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Handled",
+    "testCode": "with open('mod_a.py', 'w') as f:\n    f.write('import mod_b\\nvalue_a = 1')\nwith open('mod_b.py', 'w') as f:\n    f.write('import mod_a\\nvalue_b = 2')\n{user_code}\ntry:\n    import mod_a\nexcept (ImportError, AttributeError):\n    print('Handled')",
+    "hints": [
+      "Circular imports can cause errors",
+      "Solution: import inside function, or restructure",
+      "Catch ImportError or AttributeError"
+    ]
+  },
+  {
+    "id": "py-import-lazy-1",
+    "title": "Lazy Import",
+    "difficulty": "medium",
+    "description": "Import module inside function instead of top level to demonstrate lazy loading.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "3.141592653589793",
+    "testCode": "{user_code}\nprint(get_pi())",
+    "hints": [
+      "Define function get_pi()",
+      "Import math inside function",
+      "Return math.pi",
+      "Module imported only when function called"
+    ]
+  },
+  {
+    "id": "py-import-typing-1",
+    "title": "Import Type Hints",
+    "difficulty": "medium",
+    "description": "Import List from typing and create type-hinted function that takes List[int].",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "15",
+    "testCode": "{user_code}\nprint(sum_list([1, 2, 3, 4, 5]))",
+    "hints": [
+      "Use from typing import List",
+      "def sum_list(numbers: List[int]) -> int:",
+      "Type hints are for documentation"
+    ]
+  },
+  {
+    "id": "py-import-decimal-1",
+    "title": "Decimal Module",
+    "difficulty": "medium",
+    "description": "Import Decimal from decimal and add 0.1 + 0.2 precisely. Compare with float.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "0.3",
+    "testCode": "{user_code}\nresult = Decimal('0.1') + Decimal('0.2')\nprint(result)",
+    "hints": [
+      "Use from decimal import Decimal",
+      "Decimal('0.1') for precise decimal",
+      "Avoids floating point errors"
+    ]
+  },
+  {
+    "id": "py-import-fractions-1",
+    "title": "Fractions Module",
+    "difficulty": "medium",
+    "description": "Import Fraction from fractions and create fraction 1/3 + 1/6. Print result.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "1/2",
+    "testCode": "{user_code}\nresult = Fraction(1, 3) + Fraction(1, 6)\nprint(result)",
+    "hints": [
+      "Use from fractions import Fraction",
+      "Fraction(numerator, denominator)",
+      "Automatically simplifies"
+    ]
+  },
+  {
+    "id": "py-import-abc-1",
+    "title": "Abstract Base Class",
+    "difficulty": "hard",
+    "description": "Import ABC and abstractmethod from abc. Create abstract class with abstract method.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\ntry:\n    obj = Animal()\n    print(False)\nexcept TypeError:\n    print(True)",
+    "hints": [
+      "Use from abc import ABC, abstractmethod",
+      "Class inherits from ABC",
+      "Decorate method with @abstractmethod"
+    ]
+  },
+  {
+    "id": "py-import-enum-1",
+    "title": "Enum Module",
+    "difficulty": "medium",
+    "description": "Import Enum from enum and create Color enum with RED=1, GREEN=2, BLUE=3.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "1",
+    "testCode": "{user_code}\nprint(Color.RED.value)",
+    "hints": [
+      "Use from enum import Enum",
+      "class Color(Enum):",
+      "Define constants as class attributes"
+    ]
+  },
+  {
+    "id": "py-import-dataclasses-1",
+    "title": "Dataclass",
+    "difficulty": "medium",
+    "description": "Import dataclass from dataclasses and create Person class with name and age fields.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Alice",
+    "testCode": "{user_code}\np = Person('Alice', 30)\nprint(p.name)",
+    "hints": [
+      "Use from dataclasses import dataclass",
+      "Decorate class with @dataclass",
+      "Automatically generates __init__"
+    ]
+  },
+  {
+    "id": "py-import-functools-1",
+    "title": "Functools LRU Cache",
+    "difficulty": "hard",
+    "description": "Import lru_cache from functools and create cached fibonacci function.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "55",
+    "testCode": "{user_code}\nprint(fib(10))",
+    "hints": [
+      "Use from functools import lru_cache",
+      "Decorate with @lru_cache()",
+      "Caches function results"
+    ]
+  },
+  {
+    "id": "py-import-warnings-1",
+    "title": "Warnings Module",
+    "difficulty": "medium",
+    "description": "Import warnings and issue a deprecation warning.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Done",
+    "testCode": "import warnings\nwarnings.simplefilter('ignore')\n{user_code}\nprint('Done')",
+    "hints": [
+      "Use import warnings",
+      "warnings.warn('message', DeprecationWarning)",
+      "Different from exceptions"
+    ]
+  },
+  {
+    "id": "py-import-unittest-1",
+    "title": "Import Unittest",
+    "difficulty": "medium",
+    "description": "Import unittest and verify unittest.TestCase exists.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(hasattr(unittest, 'TestCase'))",
+    "hints": [
+      "Use import unittest",
+      "Check with hasattr()"
+    ]
+  },
+  {
+    "id": "py-import-argparse-1",
+    "title": "Import Argparse",
+    "difficulty": "medium",
+    "description": "Import ArgumentParser from argparse and create a parser object.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nparser = ArgumentParser()\nprint(isinstance(parser, ArgumentParser))",
+    "hints": [
+      "Use from argparse import ArgumentParser",
+      "Create with ArgumentParser()"
+    ]
+  },
+  {
+    "id": "py-import-subprocess-1",
+    "title": "Subprocess Module",
+    "difficulty": "hard",
+    "description": "Import subprocess and verify the module has 'run' function.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(hasattr(subprocess, 'run'))",
+    "hints": [
+      "Use import subprocess",
+      "subprocess.run() executes external commands"
+    ]
+  },
+  {
+    "id": "py-import-platform-1",
+    "title": "Platform Information",
+    "difficulty": "easy",
+    "description": "Import platform and check that platform.system() returns a string.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(isinstance(platform.system(), str))",
+    "hints": [
+      "Use import platform",
+      "platform.system() returns OS name"
+    ]
+  },
+  {
+    "id": "py-import-getpass-1",
+    "title": "Getpass Module",
+    "difficulty": "easy",
+    "description": "Import getpass and verify getuser function exists.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(hasattr(getpass, 'getuser'))",
+    "hints": [
+      "Use import getpass",
+      "getpass.getuser() returns username"
+    ]
+  },
+  {
+    "id": "py-import-csv-1",
+    "title": "CSV Module",
+    "difficulty": "medium",
+    "description": "Import csv module and verify it has 'reader' and 'writer' attributes.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(hasattr(csv, 'reader') and hasattr(csv, 'writer'))",
+    "hints": [
+      "Use import csv",
+      "Check both attributes with hasattr()"
+    ]
+  },
+  {
+    "id": "py-import-urllib-1",
+    "title": "Urllib Module",
+    "difficulty": "medium",
+    "description": "Import urlparse from urllib.parse and parse 'https://example.com/path'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "example.com",
+    "testCode": "{user_code}\nresult = urlparse('https://example.com/path')\nprint(result.netloc)",
+    "hints": [
+      "Use from urllib.parse import urlparse",
+      "urlparse() returns ParseResult object",
+      "Access .netloc for domain"
+    ]
+  }
+]

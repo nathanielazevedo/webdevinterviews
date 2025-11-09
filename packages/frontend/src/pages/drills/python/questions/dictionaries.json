@@ -1,0 +1,408 @@
+[
+  {
+    "id": "py-dict-access-1",
+    "title": "Access Dictionary Value",
+    "difficulty": "easy",
+    "description": "Get the value associated with the key 'name'.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30, 'city': 'New York'}",
+    "starterCode": "# Write your code here\nname = ",
+    "expectedOutput": "Alice",
+    "testCode": "person = {'name': 'Alice', 'age': 30, 'city': 'New York'}\n{user_code}\nprint(name)",
+    "hints": [
+      "Use square brackets with the key name",
+      "Keys must match exactly (case-sensitive)"
+    ]
+  },
+  {
+    "id": "py-dict-get-1",
+    "title": "Safe Get with Default",
+    "difficulty": "easy",
+    "description": "Get the value for 'email', or 'N/A' if key doesn't exist.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30}",
+    "starterCode": "# Write your code here\nemail = ",
+    "expectedOutput": "N/A",
+    "testCode": "person = {'name': 'Alice', 'age': 30}\n{user_code}\nprint(email)",
+    "hints": [
+      "Use the get() method",
+      "Syntax: dict.get(key, default)"
+    ]
+  },
+  {
+    "id": "py-dict-keys-1",
+    "title": "Get All Keys",
+    "difficulty": "easy",
+    "description": "Get all the keys from the dictionary as a list.",
+    "setupCode": "data = {'a': 1, 'b': 2, 'c': 3}",
+    "starterCode": "# Write your code here\nkeys = ",
+    "expectedOutput": "['a', 'b', 'c']",
+    "testCode": "data = {'a': 1, 'b': 2, 'c': 3}\n{user_code}\nprint(sorted(list(keys)))",
+    "hints": [
+      "Use the keys() method",
+      "Convert to a list using list()"
+    ]
+  },
+  {
+    "id": "py-dict-values-1",
+    "title": "Get All Values",
+    "difficulty": "easy",
+    "description": "Get all the values from the dictionary as a list.",
+    "setupCode": "scores = {'math': 95, 'science': 87, 'english': 92}",
+    "starterCode": "# Write your code here\nvalues = ",
+    "expectedOutput": "[87, 92, 95]",
+    "testCode": "scores = {'math': 95, 'science': 87, 'english': 92}\n{user_code}\nprint(sorted(list(values)))",
+    "hints": [
+      "Use the values() method",
+      "Convert to a list using list()"
+    ]
+  },
+  {
+    "id": "py-dict-items-1",
+    "title": "Get Key-Value Pairs",
+    "difficulty": "easy",
+    "description": "Get all key-value pairs as a list of tuples.",
+    "setupCode": "data = {'a': 1, 'b': 2}",
+    "starterCode": "# Write your code here\nitems = ",
+    "expectedOutput": "[('a', 1), ('b', 2)]",
+    "testCode": "data = {'a': 1, 'b': 2}\n{user_code}\nprint(sorted(list(items)))",
+    "hints": [
+      "Use the items() method",
+      "Returns tuples of (key, value)"
+    ]
+  },
+  {
+    "id": "py-dict-len-1",
+    "title": "Dictionary Length",
+    "difficulty": "easy",
+    "description": "Find the number of key-value pairs in the dictionary.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30, 'city': 'New York', 'country': 'USA'}",
+    "starterCode": "# Write your code here\ncount = ",
+    "expectedOutput": "4",
+    "testCode": "person = {'name': 'Alice', 'age': 30, 'city': 'New York', 'country': 'USA'}\n{user_code}\nprint(count)",
+    "hints": [
+      "Use the len() function",
+      "Works on dictionaries just like lists"
+    ]
+  },
+  {
+    "id": "py-dict-add-1",
+    "title": "Add New Key-Value Pair",
+    "difficulty": "easy",
+    "description": "Add a new entry 'email': 'alice@example.com' to the dictionary.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30}",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "{'age': 30, 'email': 'alice@example.com', 'name': 'Alice'}",
+    "testCode": "person = {'name': 'Alice', 'age': 30}\n{user_code}\nprint(dict(sorted(person.items())))",
+    "hints": [
+      "Use dict[key] = value syntax",
+      "New keys are automatically added"
+    ]
+  },
+  {
+    "id": "py-dict-update-1",
+    "title": "Update Existing Value",
+    "difficulty": "easy",
+    "description": "Change the age to 31.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30}",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "{'age': 31, 'name': 'Alice'}",
+    "testCode": "person = {'name': 'Alice', 'age': 30}\n{user_code}\nprint(dict(sorted(person.items())))",
+    "hints": [
+      "Use dict[key] = new_value",
+      "Same syntax as adding, but key exists"
+    ]
+  },
+  {
+    "id": "py-dict-update-2",
+    "title": "Update Multiple Values",
+    "difficulty": "easy",
+    "description": "Add/update multiple key-value pairs from another dict.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30}\nnew_info = {'age': 31, 'city': 'Boston'}",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "{'age': 31, 'city': 'Boston', 'name': 'Alice'}",
+    "testCode": "person = {'name': 'Alice', 'age': 30}\nnew_info = {'age': 31, 'city': 'Boston'}\n{user_code}\nprint(dict(sorted(person.items())))",
+    "hints": [
+      "Use the update() method",
+      "Updates existing and adds new keys"
+    ]
+  },
+  {
+    "id": "py-dict-del-1",
+    "title": "Delete Key-Value Pair",
+    "difficulty": "easy",
+    "description": "Remove the 'age' key from the dictionary.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30, 'city': 'New York'}",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "{'city': 'New York', 'name': 'Alice'}",
+    "testCode": "person = {'name': 'Alice', 'age': 30, 'city': 'New York'}\n{user_code}\nprint(dict(sorted(person.items())))",
+    "hints": [
+      "Use del dict[key]",
+      "Raises error if key doesn't exist"
+    ]
+  },
+  {
+    "id": "py-dict-pop-1",
+    "title": "Remove and Return Value",
+    "difficulty": "easy",
+    "description": "Remove 'age' and store its value.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30, 'city': 'New York'}",
+    "starterCode": "# Write your code here\nage = ",
+    "expectedOutput": "30",
+    "testCode": "person = {'name': 'Alice', 'age': 30, 'city': 'New York'}\n{user_code}\nprint(age)",
+    "hints": [
+      "Use the pop() method",
+      "Returns the value that was removed"
+    ]
+  },
+  {
+    "id": "py-dict-pop-2",
+    "title": "Pop with Default Value",
+    "difficulty": "easy",
+    "description": "Remove 'email' or return 'N/A' if it doesn't exist.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30}",
+    "starterCode": "# Write your code here\nemail = ",
+    "expectedOutput": "N/A",
+    "testCode": "person = {'name': 'Alice', 'age': 30}\n{user_code}\nprint(email)",
+    "hints": [
+      "Use pop(key, default)",
+      "Won't raise error if key missing"
+    ]
+  },
+  {
+    "id": "py-dict-popitem-1",
+    "title": "Remove Last Item",
+    "difficulty": "easy",
+    "description": "Remove and return the last key-value pair.",
+    "setupCode": "data = {'a': 1, 'b': 2, 'c': 3}",
+    "starterCode": "# Write your code here\nlast = ",
+    "expectedOutput": "('c', 3)",
+    "testCode": "data = {'a': 1, 'b': 2, 'c': 3}\n{user_code}\nprint(last)",
+    "hints": [
+      "Use the popitem() method",
+      "Returns tuple of (key, value)"
+    ]
+  },
+  {
+    "id": "py-dict-clear-1",
+    "title": "Clear All Items",
+    "difficulty": "easy",
+    "description": "Remove all key-value pairs from the dictionary.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30, 'city': 'New York'}",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "{}",
+    "testCode": "person = {'name': 'Alice', 'age': 30, 'city': 'New York'}\n{user_code}\nprint(person)",
+    "hints": [
+      "Use the clear() method",
+      "Empties the dictionary"
+    ]
+  },
+  {
+    "id": "py-dict-in-1",
+    "title": "Check If Key Exists",
+    "difficulty": "easy",
+    "description": "Check if 'name' is a key in the dictionary.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30}",
+    "starterCode": "# Write your code here\nexists = ",
+    "expectedOutput": "True",
+    "testCode": "person = {'name': 'Alice', 'age': 30}\n{user_code}\nprint(exists)",
+    "hints": [
+      "Use the 'in' operator",
+      "Syntax: key in dict"
+    ]
+  },
+  {
+    "id": "py-dict-copy-1",
+    "title": "Create Shallow Copy",
+    "difficulty": "easy",
+    "description": "Create a copy of the dictionary.",
+    "setupCode": "original = {'a': 1, 'b': 2, 'c': 3}",
+    "starterCode": "# Write your code here\ncopy_dict = ",
+    "expectedOutput": "{'a': 1, 'b': 2, 'c': 3}",
+    "testCode": "original = {'a': 1, 'b': 2, 'c': 3}\n{user_code}\nprint(dict(sorted(copy_dict.items())))",
+    "hints": [
+      "Use the copy() method",
+      "Creates a new dictionary with same items"
+    ]
+  },
+  {
+    "id": "py-dict-fromkeys-1",
+    "title": "Create Dict from Keys",
+    "difficulty": "easy",
+    "description": "Create a dictionary with keys ['a', 'b', 'c'] all set to 0.",
+    "setupCode": "keys = ['a', 'b', 'c']",
+    "starterCode": "# Write your code here\nnew_dict = ",
+    "expectedOutput": "{'a': 0, 'b': 0, 'c': 0}",
+    "testCode": "keys = ['a', 'b', 'c']\n{user_code}\nprint(dict(sorted(new_dict.items())))",
+    "hints": [
+      "Use dict.fromkeys(keys, value)",
+      "All keys get the same initial value"
+    ]
+  },
+  {
+    "id": "py-dict-setdefault-1",
+    "title": "Set Default If Missing",
+    "difficulty": "easy",
+    "description": "Get 'email' or set it to 'unknown@example.com' if missing.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30}",
+    "starterCode": "# Write your code here\nemail = ",
+    "expectedOutput": "unknown@example.com",
+    "testCode": "person = {'name': 'Alice', 'age': 30}\n{user_code}\nprint(email)",
+    "hints": [
+      "Use the setdefault() method",
+      "Returns value and adds key if missing"
+    ]
+  },
+  {
+    "id": "py-dict-merge-1",
+    "title": "Merge Dictionaries",
+    "difficulty": "medium",
+    "description": "Combine two dictionaries using the | operator.",
+    "setupCode": "dict1 = {'a': 1, 'b': 2}\ndict2 = {'c': 3, 'd': 4}",
+    "starterCode": "# Write your code here\nmerged = ",
+    "expectedOutput": "{'a': 1, 'b': 2, 'c': 3, 'd': 4}",
+    "testCode": "dict1 = {'a': 1, 'b': 2}\ndict2 = {'c': 3, 'd': 4}\n{user_code}\nprint(dict(sorted(merged.items())))",
+    "hints": [
+      "Use dict1 | dict2 (Python 3.9+)",
+      "Or use {**dict1, **dict2}"
+    ]
+  },
+  {
+    "id": "py-dict-comprehension-1",
+    "title": "Dictionary Comprehension - Squares",
+    "difficulty": "medium",
+    "description": "Create dict with numbers 1-5 as keys and their squares as values.",
+    "setupCode": "",
+    "starterCode": "# Write your code here\nsquares = ",
+    "expectedOutput": "{1: 1, 2: 4, 3: 9, 4: 16, 5: 25}",
+    "testCode": "{user_code}\nprint(squares)",
+    "hints": [
+      "Use {x: x**2 for x in range(1, 6)}",
+      "Dict comprehension: {key: value for item in iterable}"
+    ]
+  },
+  {
+    "id": "py-dict-comprehension-2",
+    "title": "Dict Comprehension with Condition",
+    "difficulty": "medium",
+    "description": "Create dict of even numbers (0-9) as keys with value 'even'.",
+    "setupCode": "",
+    "starterCode": "# Write your code here\nevens = ",
+    "expectedOutput": "{0: 'even', 2: 'even', 4: 'even', 6: 'even', 8: 'even'}",
+    "testCode": "{user_code}\nprint(evens)",
+    "hints": [
+      "Use {x: 'even' for x in range(10) if x % 2 == 0}",
+      "Add if condition after the for loop"
+    ]
+  },
+  {
+    "id": "py-dict-nested-1",
+    "title": "Access Nested Dictionary",
+    "difficulty": "medium",
+    "description": "Get the street name from the nested address.",
+    "setupCode": "person = {'name': 'Alice', 'address': {'street': 'Main St', 'city': 'Boston'}}",
+    "starterCode": "# Write your code here\nstreet = ",
+    "expectedOutput": "Main St",
+    "testCode": "person = {'name': 'Alice', 'address': {'street': 'Main St', 'city': 'Boston'}}\n{user_code}\nprint(street)",
+    "hints": [
+      "Use person['address']['street']",
+      "Chain the bracket notation"
+    ]
+  },
+  {
+    "id": "py-dict-invert-1",
+    "title": "Invert Dictionary",
+    "difficulty": "medium",
+    "description": "Swap keys and values (values become keys, keys become values).",
+    "setupCode": "original = {'a': 1, 'b': 2, 'c': 3}",
+    "starterCode": "# Write your code here\ninverted = ",
+    "expectedOutput": "{1: 'a', 2: 'b', 3: 'c'}",
+    "testCode": "original = {'a': 1, 'b': 2, 'c': 3}\n{user_code}\nprint(inverted)",
+    "hints": [
+      "Use {v: k for k, v in original.items()}",
+      "Iterate through items and swap"
+    ]
+  },
+  {
+    "id": "py-dict-filter-1",
+    "title": "Filter Dictionary by Value",
+    "difficulty": "medium",
+    "description": "Keep only entries where value is greater than 50.",
+    "setupCode": "scores = {'Alice': 85, 'Bob': 45, 'Charlie': 92, 'David': 38}",
+    "starterCode": "# Write your code here\npassing = ",
+    "expectedOutput": "{'Alice': 85, 'Charlie': 92}",
+    "testCode": "scores = {'Alice': 85, 'Bob': 45, 'Charlie': 92, 'David': 38}\n{user_code}\nprint(dict(sorted(passing.items())))",
+    "hints": [
+      "Use {k: v for k, v in scores.items() if v > 50}",
+      "Filter in comprehension with if"
+    ]
+  },
+  {
+    "id": "py-dict-sort-keys-1",
+    "title": "Sort Dictionary by Keys",
+    "difficulty": "medium",
+    "description": "Create a new dict sorted by keys alphabetically.",
+    "setupCode": "data = {'c': 3, 'a': 1, 'b': 2}",
+    "starterCode": "# Write your code here\nsorted_dict = ",
+    "expectedOutput": "{'a': 1, 'b': 2, 'c': 3}",
+    "testCode": "data = {'c': 3, 'a': 1, 'b': 2}\n{user_code}\nprint(sorted_dict)",
+    "hints": [
+      "Use dict(sorted(data.items()))",
+      "sorted() on items() returns sorted list of tuples"
+    ]
+  },
+  {
+    "id": "py-dict-sort-values-1",
+    "title": "Sort Dictionary by Values",
+    "difficulty": "medium",
+    "description": "Create a new dict sorted by values in ascending order.",
+    "setupCode": "scores = {'Alice': 85, 'Bob': 92, 'Charlie': 78}",
+    "starterCode": "# Write your code here\nsorted_scores = ",
+    "expectedOutput": "{'Charlie': 78, 'Alice': 85, 'Bob': 92}",
+    "testCode": "scores = {'Alice': 85, 'Bob': 92, 'Charlie': 78}\n{user_code}\nprint(sorted_scores)",
+    "hints": [
+      "Use dict(sorted(scores.items(), key=lambda x: x[1]))",
+      "lambda x: x[1] sorts by value (second element)"
+    ]
+  },
+  {
+    "id": "py-dict-default-1",
+    "title": "Count with Default Dict Logic",
+    "difficulty": "medium",
+    "description": "Count letter occurrences using get() with default.",
+    "setupCode": "letters = ['a', 'b', 'a', 'c', 'b', 'a']",
+    "starterCode": "# Write your code here\ncounts = {}\nfor letter in letters:\n    counts[letter] = counts.get(letter, 0) + 1\nresult = ",
+    "expectedOutput": "{'a': 3, 'b': 2, 'c': 1}",
+    "testCode": "letters = ['a', 'b', 'a', 'c', 'b', 'a']\n{user_code}\nprint(dict(sorted(result.items())))",
+    "hints": [
+      "Use counts as the result",
+      "get(key, 0) returns 0 if key missing"
+    ]
+  },
+  {
+    "id": "py-dict-zip-1",
+    "title": "Create Dict from Two Lists",
+    "difficulty": "medium",
+    "description": "Combine two lists into a dictionary using zip().",
+    "setupCode": "keys = ['name', 'age', 'city']\nvalues = ['Alice', 30, 'Boston']",
+    "starterCode": "# Write your code here\nperson = ",
+    "expectedOutput": "{'age': 30, 'city': 'Boston', 'name': 'Alice'}",
+    "testCode": "keys = ['name', 'age', 'city']\nvalues = ['Alice', 30, 'Boston']\n{user_code}\nprint(dict(sorted(person.items())))",
+    "hints": [
+      "Use dict(zip(keys, values))",
+      "zip() pairs up elements from both lists"
+    ]
+  },
+  {
+    "id": "py-dict-max-value-1",
+    "title": "Find Key with Maximum Value",
+    "difficulty": "medium",
+    "description": "Find the key that has the highest value.",
+    "setupCode": "scores = {'Alice': 85, 'Bob': 92, 'Charlie': 78}",
+    "starterCode": "# Write your code here\ntop_student = ",
+    "expectedOutput": "Bob",
+    "testCode": "scores = {'Alice': 85, 'Bob': 92, 'Charlie': 78}\n{user_code}\nprint(top_student)",
+    "hints": [
+      "Use max(scores, key=scores.get)",
+      "key parameter tells max() what to compare"
+    ]
+  }
+]

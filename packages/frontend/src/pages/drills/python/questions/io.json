@@ -1,0 +1,351 @@
+[
+  {
+    "id": "py-io-import-1",
+    "title": "Import io Module",
+    "difficulty": "easy",
+    "description": "Import the io module and verify it has the 'BytesIO' class.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(hasattr(io, 'BytesIO'))",
+    "hints": [
+      "Use import io",
+      "io module provides Python's main I/O facilities"
+    ]
+  },
+  {
+    "id": "py-io-stringio-create-2",
+    "title": "Create a StringIO Object",
+    "difficulty": "easy",
+    "description": "Import StringIO from io and create a StringIO object named 'sio'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "StringIO",
+    "testCode": "{user_code}\nprint(type(sio).__name__)",
+    "hints": [
+      "Use from io import StringIO",
+      "Create with StringIO()"
+    ]
+  },
+  {
+    "id": "py-io-stringio-write-3",
+    "title": "Write to StringIO",
+    "difficulty": "easy",
+    "description": "Create a StringIO object, write 'Hello, World!' to it, then get the value. Store the string in 'output'.",
+    "setupCode": "from io import StringIO",
+    "starterCode": "# Create StringIO, write to it, get value\n",
+    "expectedOutput": "Hello, World!",
+    "testCode": "{user_code}\nprint(output)",
+    "hints": [
+      "Create sio = StringIO()",
+      "Use sio.write('Hello, World!')",
+      "Use sio.getvalue() to retrieve content"
+    ]
+  },
+  {
+    "id": "py-io-stringio-read-4",
+    "title": "Read from StringIO",
+    "difficulty": "medium",
+    "description": "Create a StringIO with initial content 'Python IO', then read all content into 'content'.",
+    "setupCode": "from io import StringIO",
+    "starterCode": "# Create StringIO with initial content and read it\n",
+    "expectedOutput": "Python IO",
+    "testCode": "{user_code}\nprint(content)",
+    "hints": [
+      "Use StringIO('Python IO')",
+      "Use .read() to get all content"
+    ]
+  },
+  {
+    "id": "py-io-stringio-seek-5",
+    "title": "Seek in StringIO",
+    "difficulty": "medium",
+    "description": "Create a StringIO with 'abcdefgh', seek to position 3, read the rest, and store in 'result'.",
+    "setupCode": "from io import StringIO",
+    "starterCode": "# Create StringIO, seek to position 3, read rest\n",
+    "expectedOutput": "defgh",
+    "testCode": "{user_code}\nprint(result)",
+    "hints": [
+      "Use StringIO('abcdefgh')",
+      "Use .seek(3) to move to position 3",
+      "Use .read() to read from current position"
+    ]
+  },
+  {
+    "id": "py-io-bytesio-create-6",
+    "title": "Create a BytesIO Object",
+    "difficulty": "easy",
+    "description": "Import BytesIO from io and create a BytesIO object named 'bio'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "BytesIO",
+    "testCode": "{user_code}\nprint(type(bio).__name__)",
+    "hints": [
+      "Use from io import BytesIO",
+      "Create with BytesIO()"
+    ]
+  },
+  {
+    "id": "py-io-bytesio-write-7",
+    "title": "Write Bytes to BytesIO",
+    "difficulty": "medium",
+    "description": "Create a BytesIO object, write b'Hello' to it, then get the bytes value. Store in 'output'.",
+    "setupCode": "from io import BytesIO",
+    "starterCode": "# Create BytesIO, write bytes, get value\n",
+    "expectedOutput": "b'Hello'",
+    "testCode": "{user_code}\nprint(repr(output))",
+    "hints": [
+      "Create bio = BytesIO()",
+      "Use bio.write(b'Hello')",
+      "Use bio.getvalue() to retrieve bytes"
+    ]
+  },
+  {
+    "id": "py-io-bytesio-read-8",
+    "title": "Read from BytesIO",
+    "difficulty": "medium",
+    "description": "Create a BytesIO with initial bytes b'Python', then read all bytes into 'data'.",
+    "setupCode": "from io import BytesIO",
+    "starterCode": "# Create BytesIO with initial bytes and read it\n",
+    "expectedOutput": "b'Python'",
+    "testCode": "{user_code}\nprint(repr(data))",
+    "hints": [
+      "Use BytesIO(b'Python')",
+      "Use .read() to get all bytes"
+    ]
+  },
+  {
+    "id": "py-io-bytesio-partial-read-9",
+    "title": "Read Specific Number of Bytes",
+    "difficulty": "medium",
+    "description": "Create a BytesIO with b'0123456789', read exactly 5 bytes, and store in 'chunk'.",
+    "setupCode": "from io import BytesIO",
+    "starterCode": "# Create BytesIO and read 5 bytes\n",
+    "expectedOutput": "b'01234'",
+    "testCode": "{user_code}\nprint(repr(chunk))",
+    "hints": [
+      "Use BytesIO(b'0123456789')",
+      "Use .read(5) to read 5 bytes"
+    ]
+  },
+  {
+    "id": "py-io-tell-10",
+    "title": "Get Current Position with tell()",
+    "difficulty": "medium",
+    "description": "Create a StringIO with 'test', read 2 characters, then use tell() to get current position. Store in 'position'.",
+    "setupCode": "from io import StringIO",
+    "starterCode": "# Create StringIO, read 2 chars, get position\n",
+    "expectedOutput": "2",
+    "testCode": "{user_code}\nprint(position)",
+    "hints": [
+      "Use StringIO('test')",
+      "Use .read(2) to read 2 characters",
+      "Use .tell() to get current position"
+    ]
+  },
+  {
+    "id": "py-io-seek-positions-11",
+    "title": "Seek to End of Stream",
+    "difficulty": "medium",
+    "description": "Create a BytesIO with b'data', seek to the end using seek(0, 2), then write b'more'. Store final bytes in 'result'.",
+    "setupCode": "from io import BytesIO",
+    "starterCode": "# Create BytesIO, seek to end, write more\n",
+    "expectedOutput": "b'datamore'",
+    "testCode": "{user_code}\nprint(repr(result))",
+    "hints": [
+      "Use BytesIO(b'data')",
+      "Use .seek(0, 2) where 2 means from end",
+      "Write b'more' and use getvalue()"
+    ]
+  },
+  {
+    "id": "py-io-readline-12",
+    "title": "Read Line from StringIO",
+    "difficulty": "medium",
+    "description": "Create a StringIO with 'line1\\nline2\\nline3', read the first line using readline(), store in 'first_line'.",
+    "setupCode": "from io import StringIO",
+    "starterCode": "# Create StringIO with multiple lines, read first line\n",
+    "expectedOutput": "line1\n",
+    "testCode": "{user_code}\nprint(repr(first_line))",
+    "hints": [
+      "Use StringIO('line1\\nline2\\nline3')",
+      "Use .readline() to read one line"
+    ]
+  },
+  {
+    "id": "py-io-readlines-13",
+    "title": "Read All Lines from StringIO",
+    "difficulty": "medium",
+    "description": "Create a StringIO with 'a\\nb\\nc', use readlines() to get all lines as a list. Store in 'lines'.",
+    "setupCode": "from io import StringIO",
+    "starterCode": "# Create StringIO and use readlines()\n",
+    "expectedOutput": "3",
+    "testCode": "{user_code}\nprint(len(lines))",
+    "hints": [
+      "Use StringIO('a\\nb\\nc')",
+      "Use .readlines() to get list of lines"
+    ]
+  },
+  {
+    "id": "py-io-truncate-14",
+    "title": "Truncate Stream",
+    "difficulty": "hard",
+    "description": "Create a BytesIO with b'1234567890', seek to position 5, truncate, then get value. Store in 'result'.",
+    "setupCode": "from io import BytesIO",
+    "starterCode": "# Create BytesIO, seek to 5, truncate\n",
+    "expectedOutput": "b'12345'",
+    "testCode": "{user_code}\nprint(repr(result))",
+    "hints": [
+      "Use BytesIO(b'1234567890')",
+      "Use .seek(5) then .truncate()",
+      "truncate() removes everything after current position"
+    ]
+  },
+  {
+    "id": "py-io-context-manager-15",
+    "title": "Use StringIO with Context Manager",
+    "difficulty": "medium",
+    "description": "Use StringIO as a context manager (with statement), write 'context' to it, and store getvalue() in 'result'.",
+    "setupCode": "from io import StringIO",
+    "starterCode": "# Use StringIO with 'with' statement\n",
+    "expectedOutput": "context",
+    "testCode": "{user_code}\nprint(result)",
+    "hints": [
+      "Use with StringIO() as sio:",
+      "Write inside the with block",
+      "Get value before with block ends"
+    ]
+  },
+  {
+    "id": "py-io-writable-16",
+    "title": "Check if Stream is Writable",
+    "difficulty": "easy",
+    "description": "Create a StringIO and check if it's writable using the writable() method. Store result in 'is_writable'.",
+    "setupCode": "from io import StringIO",
+    "starterCode": "# Create StringIO and check if writable\n",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(is_writable)",
+    "hints": [
+      "Create StringIO()",
+      "Use .writable() method"
+    ]
+  },
+  {
+    "id": "py-io-readable-17",
+    "title": "Check if Stream is Readable",
+    "difficulty": "easy",
+    "description": "Create a BytesIO with b'test' and check if it's readable using the readable() method. Store in 'is_readable'.",
+    "setupCode": "from io import BytesIO",
+    "starterCode": "# Create BytesIO and check if readable\n",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(is_readable)",
+    "hints": [
+      "Create BytesIO(b'test')",
+      "Use .readable() method"
+    ]
+  },
+  {
+    "id": "py-io-seekable-18",
+    "title": "Check if Stream is Seekable",
+    "difficulty": "easy",
+    "description": "Create a StringIO and check if it's seekable using the seekable() method. Store in 'can_seek'.",
+    "setupCode": "from io import StringIO",
+    "starterCode": "# Create StringIO and check if seekable\n",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(can_seek)",
+    "hints": [
+      "Create StringIO()",
+      "Use .seekable() method"
+    ]
+  },
+  {
+    "id": "py-io-closed-19",
+    "title": "Check if Stream is Closed",
+    "difficulty": "medium",
+    "description": "Create a BytesIO, close it, then check the 'closed' attribute. Store in 'is_closed'.",
+    "setupCode": "from io import BytesIO",
+    "starterCode": "# Create BytesIO, close it, check closed attribute\n",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(is_closed)",
+    "hints": [
+      "Create bio = BytesIO()",
+      "Use bio.close()",
+      "Check bio.closed attribute"
+    ]
+  },
+  {
+    "id": "py-io-string-bytes-conversion-20",
+    "title": "Convert Between String and Bytes IO",
+    "difficulty": "hard",
+    "description": "Create a StringIO with 'hello', encode to bytes, write to BytesIO, then get the bytes value. Store in 'result'.",
+    "setupCode": "from io import StringIO, BytesIO",
+    "starterCode": "# Create StringIO, get string, encode, write to BytesIO\n",
+    "expectedOutput": "b'hello'",
+    "testCode": "{user_code}\nprint(repr(result))",
+    "hints": [
+      "Create StringIO('hello') and get value",
+      "Use .encode() to convert string to bytes",
+      "Write to BytesIO and getvalue()"
+    ]
+  },
+  {
+    "id": "py-io-write-multiple-21",
+    "title": "Write Multiple Times",
+    "difficulty": "medium",
+    "description": "Create a StringIO, write 'Hello', then write ' World', then get the complete value. Store in 'message'.",
+    "setupCode": "from io import StringIO",
+    "starterCode": "# Write multiple times to StringIO\n",
+    "expectedOutput": "Hello World",
+    "testCode": "{user_code}\nprint(message)",
+    "hints": [
+      "Create sio = StringIO()",
+      "Call write() twice",
+      "Use getvalue() to get complete string"
+    ]
+  },
+  {
+    "id": "py-io-getbuffer-22",
+    "title": "Get BytesIO Buffer",
+    "difficulty": "hard",
+    "description": "Create a BytesIO with b'buffer', get a memoryview of its buffer using getbuffer(), and store length in 'buffer_len'.",
+    "setupCode": "from io import BytesIO",
+    "starterCode": "# Create BytesIO and get buffer length\n",
+    "expectedOutput": "6",
+    "testCode": "{user_code}\nprint(buffer_len)",
+    "hints": [
+      "Use BytesIO(b'buffer')",
+      "Use .getbuffer() to get memoryview",
+      "Get len() of the buffer"
+    ]
+  },
+  {
+    "id": "py-io-file-like-interface-23",
+    "title": "Use BytesIO as File-like Object",
+    "difficulty": "hard",
+    "description": "Create a BytesIO with b'1,2,3\\n4,5,6', pass it to a csv reader (already imported), and count rows. Store in 'row_count'.",
+    "setupCode": "from io import BytesIO, TextIOWrapper\nimport csv",
+    "starterCode": "# Create BytesIO, wrap in TextIOWrapper, use csv.reader\n",
+    "expectedOutput": "2",
+    "testCode": "{user_code}\nprint(row_count)",
+    "hints": [
+      "Create BytesIO(b'1,2,3\\n4,5,6')",
+      "Wrap with TextIOWrapper(bio, encoding='utf-8')",
+      "Pass to csv.reader() and count rows"
+    ]
+  },
+  {
+    "id": "py-io-initial-value-24",
+    "title": "Create StringIO with Initial Value",
+    "difficulty": "easy",
+    "description": "Create a StringIO with initial value 'initial', seek to end, write ' added', get value. Store in 'final'.",
+    "setupCode": "from io import StringIO",
+    "starterCode": "# Create StringIO with initial value, append to it\n",
+    "expectedOutput": "initial added",
+    "testCode": "{user_code}\nprint(final)",
+    "hints": [
+      "Use StringIO('initial')",
+      "Use .seek(0, 2) to go to end",
+      "Write ' added' and getvalue()"
+    ]
+  }
+]

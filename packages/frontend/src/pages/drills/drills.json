@@ -1,0 +1,23 @@
+[
+  {
+    "id": "python",
+    "title": "Python",
+    "description": "Master Python fundamentals, data structures, and common patterns.",
+    "color": "#3776ab",
+    "icon": "🐍"
+  },
+  {
+    "id": "pandas",
+    "title": "Pandas",
+    "description": "Learn data manipulation and analysis with the Pandas library.",
+    "color": "#150458",
+    "icon": "🐼"
+  },
+  {
+    "id": "javascript",
+    "title": "JavaScript",
+    "description": "Deep dive into JavaScript concepts, ES6+, and best practices.",
+    "color": "#f7df1e",
+    "icon": "🟨"
+  }
+]

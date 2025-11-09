@@ -1,0 +1,709 @@
+[
+  {
+    "id": "py-set-basic-1",
+    "title": "Create Basic Set",
+    "difficulty": "easy",
+    "description": "Create a set with elements 1, 2, 3, 4, 5 and print it.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "{1, 2, 3, 4, 5}",
+    "testCode": "{user_code}\nprint(numbers)",
+    "hints": [
+      "Use curly braces: {1, 2, 3, 4, 5}",
+      "Or use set([1, 2, 3, 4, 5])"
+    ]
+  },
+  {
+    "id": "py-set-from-list-1",
+    "title": "Create Set from List",
+    "difficulty": "easy",
+    "description": "Convert list [1, 2, 2, 3, 3, 3] to set (removing duplicates) and print it.",
+    "setupCode": "",
+    "starterCode": "numbers = [1, 2, 2, 3, 3, 3]",
+    "expectedOutput": "{1, 2, 3}",
+    "testCode": "numbers = [1, 2, 2, 3, 3, 3]\n{user_code}\nprint(unique)",
+    "hints": [
+      "Use set(numbers)",
+      "Sets automatically remove duplicates"
+    ]
+  },
+  {
+    "id": "py-set-empty-1",
+    "title": "Create Empty Set",
+    "difficulty": "easy",
+    "description": "Create an empty set and print its type to verify it's a set.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "<class 'set'>",
+    "testCode": "{user_code}\nprint(type(empty))",
+    "hints": [
+      "Use set() not {}",
+      "{} creates empty dict, not set"
+    ]
+  },
+  {
+    "id": "py-set-add-1",
+    "title": "Add Element to Set",
+    "difficulty": "easy",
+    "description": "Create set {1, 2, 3}, add element 4, and print the set.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3}",
+    "expectedOutput": "{1, 2, 3, 4}",
+    "testCode": "numbers = {1, 2, 3}\n{user_code}\nprint(numbers)",
+    "hints": [
+      "Use numbers.add(4)",
+      "add() method adds single element"
+    ]
+  },
+  {
+    "id": "py-set-remove-1",
+    "title": "Remove Element from Set",
+    "difficulty": "easy",
+    "description": "Create set {1, 2, 3, 4}, remove element 3, and print the set.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3, 4}",
+    "expectedOutput": "{1, 2, 4}",
+    "testCode": "numbers = {1, 2, 3, 4}\n{user_code}\nprint(numbers)",
+    "hints": [
+      "Use numbers.remove(3)",
+      "remove() raises KeyError if element not found"
+    ]
+  },
+  {
+    "id": "py-set-discard-1",
+    "title": "Discard Element Safely",
+    "difficulty": "easy",
+    "description": "Create set {1, 2, 3}, discard element 5 (doesn't exist). Should not raise error.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3}",
+    "expectedOutput": "{1, 2, 3}",
+    "testCode": "numbers = {1, 2, 3}\n{user_code}\nprint(numbers)",
+    "hints": [
+      "Use numbers.discard(5)",
+      "discard() doesn't raise error if element missing"
+    ]
+  },
+  {
+    "id": "py-set-pop-1",
+    "title": "Pop Element from Set",
+    "difficulty": "easy",
+    "description": "Create set {1, 2, 3}, pop an element, and print length of remaining set.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3}",
+    "expectedOutput": "2",
+    "testCode": "numbers = {1, 2, 3}\n{user_code}\nprint(len(numbers))",
+    "hints": [
+      "Use numbers.pop()",
+      "Removes and returns arbitrary element"
+    ]
+  },
+  {
+    "id": "py-set-clear-1",
+    "title": "Clear Set",
+    "difficulty": "easy",
+    "description": "Create set {1, 2, 3}, clear all elements, and print the empty set.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3}",
+    "expectedOutput": "set()",
+    "testCode": "numbers = {1, 2, 3}\n{user_code}\nprint(numbers)",
+    "hints": [
+      "Use numbers.clear()",
+      "Removes all elements from set"
+    ]
+  },
+  {
+    "id": "py-set-length-1",
+    "title": "Set Length",
+    "difficulty": "easy",
+    "description": "Create set {1, 2, 3, 4, 5} and print its length.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3, 4, 5}",
+    "expectedOutput": "5",
+    "testCode": "numbers = {1, 2, 3, 4, 5}\n{user_code}",
+    "hints": [
+      "Use len(numbers)",
+      "Works same as lists"
+    ]
+  },
+  {
+    "id": "py-set-membership-1",
+    "title": "Check Membership",
+    "difficulty": "easy",
+    "description": "Check if 3 is in set {1, 2, 3, 4, 5}. Print True or False.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3, 4, 5}",
+    "expectedOutput": "True",
+    "testCode": "numbers = {1, 2, 3, 4, 5}\n{user_code}",
+    "hints": [
+      "Use 3 in numbers",
+      "Membership testing is O(1) for sets"
+    ]
+  },
+  {
+    "id": "py-set-not-in-1",
+    "title": "Check Non-Membership",
+    "difficulty": "easy",
+    "description": "Check if 10 is not in set {1, 2, 3, 4, 5}. Print True or False.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3, 4, 5}",
+    "expectedOutput": "True",
+    "testCode": "numbers = {1, 2, 3, 4, 5}\n{user_code}",
+    "hints": [
+      "Use 10 not in numbers",
+      "Returns True if element absent"
+    ]
+  },
+  {
+    "id": "py-set-union-1",
+    "title": "Set Union",
+    "difficulty": "easy",
+    "description": "Find union of {1, 2, 3} and {3, 4, 5}. Print result.",
+    "setupCode": "",
+    "starterCode": "set1 = {1, 2, 3}\nset2 = {3, 4, 5}",
+    "expectedOutput": "{1, 2, 3, 4, 5}",
+    "testCode": "set1 = {1, 2, 3}\nset2 = {3, 4, 5}\n{user_code}\nprint(result)",
+    "hints": [
+      "Use set1.union(set2)",
+      "Or set1 | set2",
+      "Combines all elements from both sets"
+    ]
+  },
+  {
+    "id": "py-set-intersection-1",
+    "title": "Set Intersection",
+    "difficulty": "easy",
+    "description": "Find intersection of {1, 2, 3, 4} and {3, 4, 5, 6}. Print result.",
+    "setupCode": "",
+    "starterCode": "set1 = {1, 2, 3, 4}\nset2 = {3, 4, 5, 6}",
+    "expectedOutput": "{3, 4}",
+    "testCode": "set1 = {1, 2, 3, 4}\nset2 = {3, 4, 5, 6}\n{user_code}\nprint(result)",
+    "hints": [
+      "Use set1.intersection(set2)",
+      "Or set1 & set2",
+      "Returns common elements"
+    ]
+  },
+  {
+    "id": "py-set-difference-1",
+    "title": "Set Difference",
+    "difficulty": "easy",
+    "description": "Find difference of {1, 2, 3, 4} minus {3, 4, 5}. Print result.",
+    "setupCode": "",
+    "starterCode": "set1 = {1, 2, 3, 4}\nset2 = {3, 4, 5}",
+    "expectedOutput": "{1, 2}",
+    "testCode": "set1 = {1, 2, 3, 4}\nset2 = {3, 4, 5}\n{user_code}\nprint(result)",
+    "hints": [
+      "Use set1.difference(set2)",
+      "Or set1 - set2",
+      "Elements in set1 but not in set2"
+    ]
+  },
+  {
+    "id": "py-set-symmetric-diff-1",
+    "title": "Symmetric Difference",
+    "difficulty": "medium",
+    "description": "Find symmetric difference of {1, 2, 3} and {2, 3, 4} (elements in either but not both).",
+    "setupCode": "",
+    "starterCode": "set1 = {1, 2, 3}\nset2 = {2, 3, 4}",
+    "expectedOutput": "{1, 4}",
+    "testCode": "set1 = {1, 2, 3}\nset2 = {2, 3, 4}\n{user_code}\nprint(result)",
+    "hints": [
+      "Use set1.symmetric_difference(set2)",
+      "Or set1 ^ set2",
+      "Elements in either set but not both"
+    ]
+  },
+  {
+    "id": "py-set-issubset-1",
+    "title": "Check Subset",
+    "difficulty": "easy",
+    "description": "Check if {1, 2} is subset of {1, 2, 3, 4}. Print True or False.",
+    "setupCode": "",
+    "starterCode": "small = {1, 2}\nlarge = {1, 2, 3, 4}",
+    "expectedOutput": "True",
+    "testCode": "small = {1, 2}\nlarge = {1, 2, 3, 4}\n{user_code}",
+    "hints": [
+      "Use small.issubset(large)",
+      "Or small <= large",
+      "All elements of small must be in large"
+    ]
+  },
+  {
+    "id": "py-set-issuperset-1",
+    "title": "Check Superset",
+    "difficulty": "easy",
+    "description": "Check if {1, 2, 3, 4} is superset of {2, 3}. Print True or False.",
+    "setupCode": "",
+    "starterCode": "large = {1, 2, 3, 4}\nsmall = {2, 3}",
+    "expectedOutput": "True",
+    "testCode": "large = {1, 2, 3, 4}\nsmall = {2, 3}\n{user_code}",
+    "hints": [
+      "Use large.issuperset(small)",
+      "Or large >= small",
+      "Large must contain all elements of small"
+    ]
+  },
+  {
+    "id": "py-set-isdisjoint-1",
+    "title": "Check Disjoint Sets",
+    "difficulty": "easy",
+    "description": "Check if {1, 2, 3} and {4, 5, 6} are disjoint (no common elements). Print True or False.",
+    "setupCode": "",
+    "starterCode": "set1 = {1, 2, 3}\nset2 = {4, 5, 6}",
+    "expectedOutput": "True",
+    "testCode": "set1 = {1, 2, 3}\nset2 = {4, 5, 6}\n{user_code}",
+    "hints": [
+      "Use set1.isdisjoint(set2)",
+      "Returns True if no common elements"
+    ]
+  },
+  {
+    "id": "py-set-update-1",
+    "title": "Update Set",
+    "difficulty": "easy",
+    "description": "Update set {1, 2, 3} with elements from {3, 4, 5}. Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3}",
+    "expectedOutput": "{1, 2, 3, 4, 5}",
+    "testCode": "numbers = {1, 2, 3}\n{user_code}\nprint(numbers)",
+    "hints": [
+      "Use numbers.update({3, 4, 5})",
+      "Modifies set in place (like union)"
+    ]
+  },
+  {
+    "id": "py-set-intersection-update-1",
+    "title": "Intersection Update",
+    "difficulty": "medium",
+    "description": "Update set {1, 2, 3, 4} to contain only elements also in {3, 4, 5}. Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3, 4}",
+    "expectedOutput": "{3, 4}",
+    "testCode": "numbers = {1, 2, 3, 4}\n{user_code}\nprint(numbers)",
+    "hints": [
+      "Use numbers.intersection_update({3, 4, 5})",
+      "Or numbers &= {3, 4, 5}",
+      "Keeps only common elements"
+    ]
+  },
+  {
+    "id": "py-set-difference-update-1",
+    "title": "Difference Update",
+    "difficulty": "medium",
+    "description": "Remove elements {2, 3} from set {1, 2, 3, 4}. Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3, 4}",
+    "expectedOutput": "{1, 4}",
+    "testCode": "numbers = {1, 2, 3, 4}\n{user_code}\nprint(numbers)",
+    "hints": [
+      "Use numbers.difference_update({2, 3})",
+      "Or numbers -= {2, 3}",
+      "Removes specified elements"
+    ]
+  },
+  {
+    "id": "py-set-symmetric-diff-update-1",
+    "title": "Symmetric Difference Update",
+    "difficulty": "medium",
+    "description": "Update {1, 2, 3} with symmetric difference of {2, 3, 4}. Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3}",
+    "expectedOutput": "{1, 4}",
+    "testCode": "numbers = {1, 2, 3}\n{user_code}\nprint(numbers)",
+    "hints": [
+      "Use numbers.symmetric_difference_update({2, 3, 4})",
+      "Or numbers ^= {2, 3, 4}",
+      "Keeps elements in either but not both"
+    ]
+  },
+  {
+    "id": "py-set-copy-1",
+    "title": "Copy Set",
+    "difficulty": "easy",
+    "description": "Create copy of {1, 2, 3} and verify they're equal but not same object.",
+    "setupCode": "",
+    "starterCode": "original = {1, 2, 3}",
+    "expectedOutput": "True",
+    "testCode": "original = {1, 2, 3}\n{user_code}\nprint(copied == original and copied is not original)",
+    "hints": [
+      "Use copied = original.copy()",
+      "Creates shallow copy"
+    ]
+  },
+  {
+    "id": "py-set-from-string-1",
+    "title": "Set from String",
+    "difficulty": "easy",
+    "description": "Create set from string 'hello' to get unique characters. Print result.",
+    "setupCode": "",
+    "starterCode": "text = 'hello'",
+    "expectedOutput": "{'e', 'h', 'l', 'o'}",
+    "testCode": "text = 'hello'\n{user_code}\nprint(unique_chars)",
+    "hints": [
+      "Use set(text)",
+      "Each character becomes element"
+    ]
+  },
+  {
+    "id": "py-set-frozen-1",
+    "title": "Frozenset",
+    "difficulty": "medium",
+    "description": "Create immutable frozenset from [1, 2, 3] and print its type.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "<class 'frozenset'>",
+    "testCode": "{user_code}\nprint(type(frozen))",
+    "hints": [
+      "Use frozen = frozenset([1, 2, 3])",
+      "Frozenset is immutable (can't add/remove)"
+    ]
+  },
+  {
+    "id": "py-set-frozen-as-key-1",
+    "title": "Frozenset as Dictionary Key",
+    "difficulty": "medium",
+    "description": "Use frozenset({1, 2}) as dictionary key with value 'pair'. Print the value.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "pair",
+    "testCode": "{user_code}\nprint(d[frozenset({1, 2})])",
+    "hints": [
+      "Regular sets can't be dict keys (unhashable)",
+      "Frozensets are hashable",
+      "d = {frozenset({1, 2}): 'pair'}"
+    ]
+  },
+  {
+    "id": "py-set-unique-words-1",
+    "title": "Unique Words",
+    "difficulty": "medium",
+    "description": "Get unique words from 'hello world hello python'. Print count.",
+    "setupCode": "",
+    "starterCode": "sentence = 'hello world hello python'",
+    "expectedOutput": "3",
+    "testCode": "sentence = 'hello world hello python'\n{user_code}\nprint(len(unique_words))",
+    "hints": [
+      "Split sentence into words",
+      "Convert to set to remove duplicates"
+    ]
+  },
+  {
+    "id": "py-set-remove-duplicates-1",
+    "title": "Remove Duplicates Preserving Order",
+    "difficulty": "medium",
+    "description": "Remove duplicates from [1, 2, 2, 3, 1, 4] while preserving order. Print result as list.",
+    "setupCode": "",
+    "starterCode": "numbers = [1, 2, 2, 3, 1, 4]",
+    "expectedOutput": "[1, 2, 3, 4]",
+    "testCode": "numbers = [1, 2, 2, 3, 1, 4]\n{user_code}\nprint(result)",
+    "hints": [
+      "Can't use set alone (loses order)",
+      "Use seen = set() and check membership",
+      "Or use dict.fromkeys(numbers)"
+    ]
+  },
+  {
+    "id": "py-set-common-elements-1",
+    "title": "Find Common Elements",
+    "difficulty": "easy",
+    "description": "Find common elements between [1, 2, 3, 4] and [3, 4, 5, 6]. Print as list.",
+    "setupCode": "",
+    "starterCode": "list1 = [1, 2, 3, 4]\nlist2 = [3, 4, 5, 6]",
+    "expectedOutput": "[3, 4]",
+    "testCode": "list1 = [1, 2, 3, 4]\nlist2 = [3, 4, 5, 6]\n{user_code}\nprint(sorted(common))",
+    "hints": [
+      "Convert both to sets",
+      "Use intersection",
+      "Convert result back to list"
+    ]
+  },
+  {
+    "id": "py-set-all-elements-1",
+    "title": "All Unique Elements from Multiple Lists",
+    "difficulty": "medium",
+    "description": "Get all unique elements from [1, 2], [2, 3], [3, 4]. Print sorted list.",
+    "setupCode": "",
+    "starterCode": "lists = [[1, 2], [2, 3], [3, 4]]",
+    "expectedOutput": "[1, 2, 3, 4]",
+    "testCode": "lists = [[1, 2], [2, 3], [3, 4]]\n{user_code}\nprint(sorted(all_unique))",
+    "hints": [
+      "Convert each list to set",
+      "Use union of all sets",
+      "Or flatten and convert to set"
+    ]
+  },
+  {
+    "id": "py-set-operators-1",
+    "title": "Set Operators",
+    "difficulty": "easy",
+    "description": "Use | operator for union of {1, 2} and {2, 3}. Print result.",
+    "setupCode": "",
+    "starterCode": "set1 = {1, 2}\nset2 = {2, 3}",
+    "expectedOutput": "{1, 2, 3}",
+    "testCode": "set1 = {1, 2}\nset2 = {2, 3}\n{user_code}\nprint(result)",
+    "hints": [
+      "Use set1 | set2",
+      "| is bitwise OR, used for union"
+    ]
+  },
+  {
+    "id": "py-set-multiple-union-1",
+    "title": "Union of Multiple Sets",
+    "difficulty": "medium",
+    "description": "Find union of {1}, {2}, {3}, {4}. Print result.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "{1, 2, 3, 4}",
+    "testCode": "{user_code}\nprint(result)",
+    "hints": [
+      "Use set1.union(set2, set3, set4)",
+      "Or {1} | {2} | {3} | {4}",
+      "Or set().union({1}, {2}, {3}, {4})"
+    ]
+  },
+  {
+    "id": "py-set-multiple-intersection-1",
+    "title": "Intersection of Multiple Sets",
+    "difficulty": "medium",
+    "description": "Find intersection of {1, 2, 3}, {2, 3, 4}, {3, 4, 5}. Print result.",
+    "setupCode": "",
+    "starterCode": "set1 = {1, 2, 3}\nset2 = {2, 3, 4}\nset3 = {3, 4, 5}",
+    "expectedOutput": "{3}",
+    "testCode": "set1 = {1, 2, 3}\nset2 = {2, 3, 4}\nset3 = {3, 4, 5}\n{user_code}\nprint(result)",
+    "hints": [
+      "Use set1.intersection(set2, set3)",
+      "Or set1 & set2 & set3"
+    ]
+  },
+  {
+    "id": "py-set-proper-subset-1",
+    "title": "Proper Subset",
+    "difficulty": "medium",
+    "description": "Check if {1, 2} is proper subset of {1, 2, 3} (subset but not equal). Print True/False.",
+    "setupCode": "",
+    "starterCode": "small = {1, 2}\nlarge = {1, 2, 3}",
+    "expectedOutput": "True",
+    "testCode": "small = {1, 2}\nlarge = {1, 2, 3}\n{user_code}",
+    "hints": [
+      "Use small < large (not <=)",
+      "< checks proper subset",
+      "Must be subset AND not equal"
+    ]
+  },
+  {
+    "id": "py-set-proper-superset-1",
+    "title": "Proper Superset",
+    "difficulty": "medium",
+    "description": "Check if {1, 2, 3} is proper superset of {1, 2}. Print True/False.",
+    "setupCode": "",
+    "starterCode": "large = {1, 2, 3}\nsmall = {1, 2}",
+    "expectedOutput": "True",
+    "testCode": "large = {1, 2, 3}\nsmall = {1, 2}\n{user_code}",
+    "hints": [
+      "Use large > small (not >=)",
+      "> checks proper superset"
+    ]
+  },
+  {
+    "id": "py-set-hash-1",
+    "title": "Hashable Elements",
+    "difficulty": "medium",
+    "description": "Try to create set with list as element. Catch TypeError and print 'Unhashable'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Unhashable",
+    "testCode": "{user_code}",
+    "hints": [
+      "Try set([[1, 2]]) in try block",
+      "Lists are unhashable",
+      "Catch TypeError"
+    ]
+  },
+  {
+    "id": "py-set-convert-types-1",
+    "title": "Convert Set to List",
+    "difficulty": "easy",
+    "description": "Convert set {3, 1, 2} to sorted list. Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = {3, 1, 2}",
+    "expectedOutput": "[1, 2, 3]",
+    "testCode": "numbers = {3, 1, 2}\n{user_code}\nprint(sorted_list)",
+    "hints": [
+      "Use list(numbers)",
+      "Then sort with sorted() or .sort()"
+    ]
+  },
+  {
+    "id": "py-set-venn-diagram-1",
+    "title": "Venn Diagram Regions",
+    "difficulty": "hard",
+    "description": "For sets A={1,2,3,4} and B={3,4,5,6}, find: only A, only B, both. Print all three.",
+    "setupCode": "",
+    "starterCode": "A = {1, 2, 3, 4}\nB = {3, 4, 5, 6}",
+    "expectedOutput": "{1, 2}\n{5, 6}\n{3, 4}",
+    "testCode": "A = {1, 2, 3, 4}\nB = {3, 4, 5, 6}\n{user_code}\nprint(only_A)\nprint(only_B)\nprint(both)",
+    "hints": [
+      "only_A = A - B",
+      "only_B = B - A",
+      "both = A & B"
+    ]
+  },
+  {
+    "id": "py-set-power-set-1",
+    "title": "Power Set Size",
+    "difficulty": "hard",
+    "description": "Calculate size of power set (all subsets) for {1, 2, 3}. Print the size.",
+    "setupCode": "",
+    "starterCode": "s = {1, 2, 3}",
+    "expectedOutput": "8",
+    "testCode": "s = {1, 2, 3}\n{user_code}\nprint(size)",
+    "hints": [
+      "Power set size = 2^n where n is set size",
+      "Use 2 ** len(s)",
+      "Includes empty set and original set"
+    ]
+  },
+  {
+    "id": "py-set-filter-1",
+    "title": "Filter Set",
+    "difficulty": "medium",
+    "description": "Filter set {1, 2, 3, 4, 5, 6} to keep only even numbers. Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3, 4, 5, 6}",
+    "expectedOutput": "{2, 4, 6}",
+    "testCode": "numbers = {1, 2, 3, 4, 5, 6}\n{user_code}\nprint(evens)",
+    "hints": [
+      "Use set comprehension: {x for x in numbers if x % 2 == 0}",
+      "Or use filter: set(filter(lambda x: x % 2 == 0, numbers))"
+    ]
+  },
+  {
+    "id": "py-set-map-1",
+    "title": "Map Over Set",
+    "difficulty": "medium",
+    "description": "Square all numbers in {1, 2, 3, 4}. Print result as set.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3, 4}",
+    "expectedOutput": "{1, 4, 9, 16}",
+    "testCode": "numbers = {1, 2, 3, 4}\n{user_code}\nprint(squares)",
+    "hints": [
+      "Use set comprehension: {x**2 for x in numbers}",
+      "Or use map: set(map(lambda x: x**2, numbers))"
+    ]
+  },
+  {
+    "id": "py-set-max-min-1",
+    "title": "Max and Min in Set",
+    "difficulty": "easy",
+    "description": "Find max and min values in {5, 2, 8, 1, 9}. Print both.",
+    "setupCode": "",
+    "starterCode": "numbers = {5, 2, 8, 1, 9}",
+    "expectedOutput": "9\n1",
+    "testCode": "numbers = {5, 2, 8, 1, 9}\n{user_code}\nprint(maximum)\nprint(minimum)",
+    "hints": [
+      "Use max(numbers) and min(numbers)",
+      "Works on any iterable"
+    ]
+  },
+  {
+    "id": "py-set-sum-1",
+    "title": "Sum of Set",
+    "difficulty": "easy",
+    "description": "Calculate sum of all elements in {1, 2, 3, 4, 5}. Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3, 4, 5}",
+    "expectedOutput": "15",
+    "testCode": "numbers = {1, 2, 3, 4, 5}\n{user_code}\nprint(total)",
+    "hints": [
+      "Use sum(numbers)",
+      "Works on any iterable of numbers"
+    ]
+  },
+  {
+    "id": "py-set-iteration-1",
+    "title": "Iterate Over Set",
+    "difficulty": "easy",
+    "description": "Iterate over {1, 2, 3} and print each element.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3}",
+    "expectedOutput": "1\n2\n3",
+    "testCode": "numbers = {1, 2, 3}\n{user_code}",
+    "hints": [
+      "Use for num in numbers:",
+      "Order may vary (sets are unordered)"
+    ]
+  },
+  {
+    "id": "py-set-comprehension-1",
+    "title": "Set Comprehension",
+    "difficulty": "medium",
+    "description": "Create set of squares for numbers 1-5 using set comprehension.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "{1, 4, 9, 16, 25}",
+    "testCode": "{user_code}\nprint(squares)",
+    "hints": [
+      "Use {x**2 for x in range(1, 6)}",
+      "Similar to list comprehension but with {}"
+    ]
+  },
+  {
+    "id": "py-set-conditional-comp-1",
+    "title": "Set Comprehension with Condition",
+    "difficulty": "medium",
+    "description": "Create set of even squares for numbers 1-10 using set comprehension.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "{4, 16, 36, 64, 100}",
+    "testCode": "{user_code}\nprint(even_squares)",
+    "hints": [
+      "Use {x**2 for x in range(1, 11) if x % 2 == 0}",
+      "Filter even numbers before squaring"
+    ]
+  },
+  {
+    "id": "py-set-nested-1",
+    "title": "Flatten Nested Lists",
+    "difficulty": "hard",
+    "description": "Flatten [[1,2], [2,3], [3,4]] and get unique elements as set.",
+    "setupCode": "",
+    "starterCode": "nested = [[1, 2], [2, 3], [3, 4]]",
+    "expectedOutput": "{1, 2, 3, 4}",
+    "testCode": "nested = [[1, 2], [2, 3], [3, 4]]\n{user_code}\nprint(flat_unique)",
+    "hints": [
+      "Use set comprehension with nested loops",
+      "{num for sublist in nested for num in sublist}",
+      "Or flatten then convert: set(sum(nested, []))"
+    ]
+  },
+  {
+    "id": "py-set-partition-1",
+    "title": "Partition Set",
+    "difficulty": "hard",
+    "description": "Partition {1,2,3,4,5,6} into evens and odds. Print both sets.",
+    "setupCode": "",
+    "starterCode": "numbers = {1, 2, 3, 4, 5, 6}",
+    "expectedOutput": "{2, 4, 6}\n{1, 3, 5}",
+    "testCode": "numbers = {1, 2, 3, 4, 5, 6}\n{user_code}\nprint(evens)\nprint(odds)",
+    "hints": [
+      "evens = {x for x in numbers if x % 2 == 0}",
+      "odds = {x for x in numbers if x % 2 != 0}",
+      "Or odds = numbers - evens"
+    ]
+  },
+  {
+    "id": "py-set-jaccard-1",
+    "title": "Jaccard Similarity",
+    "difficulty": "hard",
+    "description": "Calculate Jaccard similarity of {1,2,3} and {2,3,4}: |intersection|/|union|. Print as float.",
+    "setupCode": "",
+    "starterCode": "set1 = {1, 2, 3}\nset2 = {2, 3, 4}",
+    "expectedOutput": "0.5",
+    "testCode": "set1 = {1, 2, 3}\nset2 = {2, 3, 4}\n{user_code}\nprint(similarity)",
+    "hints": [
+      "intersection = set1 & set2",
+      "union = set1 | set2",
+      "similarity = len(intersection) / len(union)"
+    ]
+  }
+]

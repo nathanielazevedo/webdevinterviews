@@ -119,6 +119,10 @@ const renderAvatarContent = (avatarId, user, size = 48) => {
 
 const pages = [
   {
+    title: "Drills",
+    to: "/drills",
+  },
+  {
     title: "Workouts",
     to: "/workouts",
   },

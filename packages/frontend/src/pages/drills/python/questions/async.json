@@ -1,0 +1,696 @@
+[
+  {
+    "id": "py-async-import-1",
+    "title": "Import asyncio Module",
+    "difficulty": "easy",
+    "description": "Import asyncio module and verify it has 'run' attribute.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(hasattr(asyncio, 'run'))",
+    "hints": [
+      "Use import asyncio",
+      "asyncio is Python's async programming module"
+    ]
+  },
+  {
+    "id": "py-async-basic-1",
+    "title": "Basic Async Function",
+    "difficulty": "easy",
+    "description": "Define async function that returns 'Hello'. Run it with asyncio.run() and print result.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Hello",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(greet()))",
+    "hints": [
+      "Use async def greet():",
+      "Return 'Hello'",
+      "async functions are coroutines"
+    ]
+  },
+  {
+    "id": "py-async-await-1",
+    "title": "Basic Await",
+    "difficulty": "easy",
+    "description": "Create async function that awaits asyncio.sleep(0) then returns 'Done'. Print result.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Done",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(wait_and_return()))",
+    "hints": [
+      "Use await asyncio.sleep(0)",
+      "await pauses execution",
+      "Return 'Done' after sleep"
+    ]
+  },
+  {
+    "id": "py-async-sleep-1",
+    "title": "Async Sleep",
+    "difficulty": "easy",
+    "description": "Create async function that sleeps 0.1 seconds then prints 'Awake'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Awake",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(sleep_then_print())",
+    "hints": [
+      "Use await asyncio.sleep(0.1)",
+      "Non-blocking sleep",
+      "Print after await"
+    ]
+  },
+  {
+    "id": "py-async-multiple-awaits-1",
+    "title": "Multiple Awaits",
+    "difficulty": "easy",
+    "description": "Create async function with two await asyncio.sleep(0) calls. Print 'Done' at end.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Done",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(multiple_sleeps())",
+    "hints": [
+      "await asyncio.sleep(0) twice",
+      "Awaits happen sequentially",
+      "Print 'Done' after both"
+    ]
+  },
+  {
+    "id": "py-async-call-async-1",
+    "title": "Call Async Function from Async Function",
+    "difficulty": "medium",
+    "description": "Create helper async function returning 'Result', call it from main async function. Print result.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Result",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(main()))",
+    "hints": [
+      "Define async def helper(): return 'Result'",
+      "In main: result = await helper()",
+      "Must use await to call async functions"
+    ]
+  },
+  {
+    "id": "py-async-gather-1",
+    "title": "Run Multiple Coroutines Concurrently",
+    "difficulty": "medium",
+    "description": "Use asyncio.gather() to run two async functions concurrently. Print list of results.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "['A', 'B']",
+    "testCode": "import asyncio\n{user_code}\nresults = asyncio.run(run_both())\nprint(results)",
+    "hints": [
+      "Define two async functions returning 'A' and 'B'",
+      "Use await asyncio.gather(func1(), func2())",
+      "Returns list of results"
+    ]
+  },
+  {
+    "id": "py-async-create-task-1",
+    "title": "Create Task",
+    "difficulty": "medium",
+    "description": "Create task from coroutine using asyncio.create_task(). Await it and print result.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Task result",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(main()))",
+    "hints": [
+      "Define async function returning 'Task result'",
+      "task = asyncio.create_task(coro())",
+      "result = await task"
+    ]
+  },
+  {
+    "id": "py-async-multiple-tasks-1",
+    "title": "Multiple Tasks",
+    "difficulty": "medium",
+    "description": "Create two tasks and await both. Print list of results.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "['Task1', 'Task2']",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(main()))",
+    "hints": [
+      "Create two tasks with create_task()",
+      "Await both: await task1, await task2",
+      "Or use asyncio.gather(*tasks)"
+    ]
+  },
+  {
+    "id": "py-async-return-value-1",
+    "title": "Async Function Return Value",
+    "difficulty": "easy",
+    "description": "Create async function that returns sum of two numbers. Print result of 3 + 5.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "8",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(add(3, 5)))",
+    "hints": [
+      "async def add(a, b):",
+      "return a + b",
+      "Can return values like regular functions"
+    ]
+  },
+  {
+    "id": "py-async-exception-1",
+    "title": "Exception in Async Function",
+    "difficulty": "medium",
+    "description": "Create async function that raises ValueError. Catch it and print 'Caught'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Caught",
+    "testCode": "import asyncio\n{user_code}\ntry:\n    asyncio.run(raise_error())\nexcept ValueError:\n    print('Caught')",
+    "hints": [
+      "async def raise_error(): raise ValueError()",
+      "Exceptions work same as sync code",
+      "Can be caught outside asyncio.run()"
+    ]
+  },
+  {
+    "id": "py-async-wait-for-1",
+    "title": "Timeout with wait_for",
+    "difficulty": "medium",
+    "description": "Use asyncio.wait_for() with 0.1s timeout on long sleep. Catch TimeoutError, print 'Timeout'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Timeout",
+    "testCode": "import asyncio\n{user_code}\ntry:\n    asyncio.run(main())\nexcept asyncio.TimeoutError:\n    print('Timeout')",
+    "hints": [
+      "await asyncio.wait_for(coro, timeout=0.1)",
+      "Raises TimeoutError if exceeds timeout",
+      "Coro should sleep longer than timeout"
+    ]
+  },
+  {
+    "id": "py-async-shield-1",
+    "title": "Shield from Cancellation",
+    "difficulty": "hard",
+    "description": "Use asyncio.shield() to protect coroutine from cancellation. Print 'Protected'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Protected",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "await asyncio.shield(coro())",
+      "Protects from cancellation",
+      "Useful for cleanup operations"
+    ]
+  },
+  {
+    "id": "py-async-task-cancel-1",
+    "title": "Cancel Task",
+    "difficulty": "medium",
+    "description": "Create task, cancel it, catch CancelledError. Print 'Cancelled'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Cancelled",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "task = asyncio.create_task(coro())",
+      "task.cancel()",
+      "await task in try-except CancelledError"
+    ]
+  },
+  {
+    "id": "py-async-as-completed-1",
+    "title": "Process as Completed",
+    "difficulty": "hard",
+    "description": "Use asyncio.as_completed() to process results as they complete. Print each result.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "1\n2\n3",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "Create multiple coroutines",
+      "for coro in asyncio.as_completed(coros):",
+      "result = await coro"
+    ]
+  },
+  {
+    "id": "py-async-wait-1",
+    "title": "Wait for Multiple Tasks",
+    "difficulty": "hard",
+    "description": "Use asyncio.wait() with return_when=ALL_COMPLETED. Print 'All done'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "All done",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "done, pending = await asyncio.wait(tasks)",
+      "return_when=asyncio.ALL_COMPLETED is default",
+      "Returns two sets: done and pending"
+    ]
+  },
+  {
+    "id": "py-async-queue-1",
+    "title": "Async Queue",
+    "difficulty": "medium",
+    "description": "Create asyncio.Queue, put item, get item. Print the item.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "item",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(main()))",
+    "hints": [
+      "queue = asyncio.Queue()",
+      "await queue.put('item')",
+      "result = await queue.get()"
+    ]
+  },
+  {
+    "id": "py-async-lock-1",
+    "title": "Async Lock",
+    "difficulty": "medium",
+    "description": "Use asyncio.Lock() to protect shared resource. Print 'Locked' then 'Unlocked'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Locked\nUnlocked",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "lock = asyncio.Lock()",
+      "async with lock:",
+      "Use context manager for automatic release"
+    ]
+  },
+  {
+    "id": "py-async-event-1",
+    "title": "Async Event",
+    "difficulty": "medium",
+    "description": "Use asyncio.Event() to signal between coroutines. Print 'Event set'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Event set",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "event = asyncio.Event()",
+      "await event.wait() to wait",
+      "event.set() to signal"
+    ]
+  },
+  {
+    "id": "py-async-semaphore-1",
+    "title": "Async Semaphore",
+    "difficulty": "medium",
+    "description": "Use asyncio.Semaphore(2) to limit concurrent access. Print 'Acquired'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Acquired",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "sem = asyncio.Semaphore(2)",
+      "async with sem:",
+      "Limits to 2 concurrent accesses"
+    ]
+  },
+  {
+    "id": "py-async-run-in-executor-1",
+    "title": "Run Blocking Code in Executor",
+    "difficulty": "hard",
+    "description": "Use run_in_executor() to run blocking function. Print 'Executed'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Executed",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "Define sync function",
+      "loop = asyncio.get_event_loop()",
+      "await loop.run_in_executor(None, func)",
+      "Runs in thread pool"
+    ]
+  },
+  {
+    "id": "py-async-gather-exceptions-1",
+    "title": "Gather with Exception Handling",
+    "difficulty": "hard",
+    "description": "Use gather() with return_exceptions=True. Print list including exception.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "True",
+    "testCode": "import asyncio\n{user_code}\nresults = asyncio.run(main())\nprint(isinstance(results[1], Exception))",
+    "hints": [
+      "One coro returns value, one raises exception",
+      "await asyncio.gather(..., return_exceptions=True)",
+      "Returns list with both results and exceptions"
+    ]
+  },
+  {
+    "id": "py-async-current-task-1",
+    "title": "Get Current Task",
+    "difficulty": "medium",
+    "description": "Get current task using asyncio.current_task(). Verify it's a Task.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "True",
+    "testCode": "import asyncio\n{user_code}\nresult = asyncio.run(main())\nprint(result)",
+    "hints": [
+      "task = asyncio.current_task()",
+      "Returns current Task object",
+      "Check isinstance(task, asyncio.Task)"
+    ]
+  },
+  {
+    "id": "py-async-all-tasks-1",
+    "title": "Get All Tasks",
+    "difficulty": "medium",
+    "description": "Create two tasks and get all tasks. Print count.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "3",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(main()))",
+    "hints": [
+      "tasks = asyncio.all_tasks()",
+      "Returns set of all tasks",
+      "Includes the running task"
+    ]
+  },
+  {
+    "id": "py-async-to-thread-1",
+    "title": "Run Sync Function in Thread",
+    "difficulty": "hard",
+    "description": "Use asyncio.to_thread() to run blocking function. Print result.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Thread result",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(main()))",
+    "hints": [
+      "Define sync function",
+      "result = await asyncio.to_thread(func)",
+      "Available in Python 3.9+",
+      "Easier than run_in_executor"
+    ]
+  },
+  {
+    "id": "py-async-task-name-1",
+    "title": "Named Task",
+    "difficulty": "easy",
+    "description": "Create task with name 'my_task'. Print the task name.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "my_task",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(main()))",
+    "hints": [
+      "task = asyncio.create_task(coro(), name='my_task')",
+      "name = task.get_name()",
+      "Useful for debugging"
+    ]
+  },
+  {
+    "id": "py-async-task-done-1",
+    "title": "Check if Task is Done",
+    "difficulty": "medium",
+    "description": "Create task, await it, check if done. Print True.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "True",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(main()))",
+    "hints": [
+      "task = asyncio.create_task(coro())",
+      "await task",
+      "return task.done()"
+    ]
+  },
+  {
+    "id": "py-async-task-result-1",
+    "title": "Get Task Result",
+    "difficulty": "medium",
+    "description": "Create task that returns 42. Get result using task.result(). Print it.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "42",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(main()))",
+    "hints": [
+      "task = asyncio.create_task(coro())",
+      "await task",
+      "result = task.result()"
+    ]
+  },
+  {
+    "id": "py-async-sleep-zero-1",
+    "title": "Yield Control with Sleep(0)",
+    "difficulty": "medium",
+    "description": "Use await asyncio.sleep(0) to yield control. Print 'Before' and 'After'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Before\nAfter",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "print('Before')",
+      "await asyncio.sleep(0)",
+      "print('After')",
+      "Yields control to event loop"
+    ]
+  },
+  {
+    "id": "py-async-timeout-1",
+    "title": "Timeout Context Manager",
+    "difficulty": "medium",
+    "description": "Use async with asyncio.timeout(0.1) to timeout long operation. Catch TimeoutError.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Timeout",
+    "testCode": "import asyncio\n{user_code}\ntry:\n    asyncio.run(main())\nexcept asyncio.TimeoutError:\n    print('Timeout')",
+    "hints": [
+      "async with asyncio.timeout(0.1):",
+      "Available in Python 3.11+",
+      "Cleaner than wait_for"
+    ]
+  },
+  {
+    "id": "py-async-taskgroup-1",
+    "title": "Task Group",
+    "difficulty": "hard",
+    "description": "Use asyncio.TaskGroup() to manage tasks. Print 'All complete'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "All complete",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "async with asyncio.TaskGroup() as tg:",
+      "tg.create_task(coro())",
+      "Available in Python 3.11+",
+      "Waits for all tasks automatically"
+    ]
+  },
+  {
+    "id": "py-async-eager-task-1",
+    "title": "Eager Task Factory",
+    "difficulty": "hard",
+    "description": "Create task that starts immediately. Print 'Started'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Started",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "Use eager_task_factory in Python 3.12+",
+      "Tasks start executing immediately",
+      "Before first await in creator"
+    ]
+  },
+  {
+    "id": "py-async-coroutine-check-1",
+    "title": "Check if Coroutine",
+    "difficulty": "easy",
+    "description": "Check if async function result is coroutine. Print True.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "True",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(main()))",
+    "hints": [
+      "async def coro(): pass",
+      "obj = coro()",
+      "return asyncio.iscoroutine(obj)"
+    ]
+  },
+  {
+    "id": "py-async-future-1",
+    "title": "Create and Set Future",
+    "difficulty": "hard",
+    "description": "Create asyncio.Future, set result, get result. Print it.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Future result",
+    "testCode": "import asyncio\n{user_code}\nprint(asyncio.run(main()))",
+    "hints": [
+      "future = asyncio.Future()",
+      "future.set_result('Future result')",
+      "result = await future"
+    ]
+  },
+  {
+    "id": "py-async-callback-1",
+    "title": "Task Callback",
+    "difficulty": "hard",
+    "description": "Add done callback to task. Print 'Callback called'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Callback called",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "Define callback function",
+      "task.add_done_callback(callback)",
+      "Callback receives task as argument"
+    ]
+  },
+  {
+    "id": "py-async-barrier-1",
+    "title": "Async Barrier",
+    "difficulty": "hard",
+    "description": "Use asyncio.Barrier(2) for synchronization. Print 'Passed barrier'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Passed barrier\nPassed barrier",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "barrier = asyncio.Barrier(2)",
+      "await barrier.wait() in multiple tasks",
+      "All tasks wait until n reach barrier"
+    ]
+  },
+  {
+    "id": "py-async-condition-1",
+    "title": "Async Condition Variable",
+    "difficulty": "hard",
+    "description": "Use asyncio.Condition() for wait/notify pattern. Print 'Notified'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Notified",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "condition = asyncio.Condition()",
+      "async with condition: await condition.wait()",
+      "async with condition: condition.notify()"
+    ]
+  },
+  {
+    "id": "py-async-streams-1",
+    "title": "Async Streams Basic",
+    "difficulty": "hard",
+    "description": "Create async echo server concept. Print 'Server ready'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Server ready",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "Use asyncio.start_server() for TCP",
+      "async def handle_client(reader, writer):",
+      "Streams for network I/O"
+    ]
+  },
+  {
+    "id": "py-async-subprocess-1",
+    "title": "Async Subprocess",
+    "difficulty": "hard",
+    "description": "Run subprocess asynchronously. Print 'Subprocess complete'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Subprocess complete",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "proc = await asyncio.create_subprocess_exec('echo', 'hello')",
+      "await proc.wait()",
+      "Non-blocking subprocess execution"
+    ]
+  },
+  {
+    "id": "py-async-gather-unpack-1",
+    "title": "Unpack Gather Results",
+    "difficulty": "medium",
+    "description": "Use gather to get multiple results, unpack them. Print both.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "A\nB",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "result1, result2 = await asyncio.gather(coro1(), coro2())",
+      "Unpack directly",
+      "Print both results"
+    ]
+  },
+  {
+    "id": "py-async-exception-group-1",
+    "title": "Multiple Exceptions",
+    "difficulty": "hard",
+    "description": "Catch ExceptionGroup from TaskGroup with failed tasks. Print 'Caught group'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Caught group",
+    "testCode": "import asyncio\n{user_code}\ntry:\n    asyncio.run(main())\nexcept ExceptionGroup:\n    print('Caught group')",
+    "hints": [
+      "TaskGroup raises ExceptionGroup if tasks fail",
+      "Available in Python 3.11+",
+      "Contains all exceptions from failed tasks"
+    ]
+  },
+  {
+    "id": "py-async-async-generator-1",
+    "title": "Async Generator",
+    "difficulty": "hard",
+    "description": "Create async generator that yields 1, 2, 3. Print all values.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "1\n2\n3",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "async def gen():",
+      "    yield 1; yield 2; yield 3",
+      "async for value in gen():",
+      "Use async for to iterate"
+    ]
+  },
+  {
+    "id": "py-async-context-manager-1",
+    "title": "Async Context Manager",
+    "difficulty": "hard",
+    "description": "Create async context manager with __aenter__ and __aexit__. Print 'Enter' and 'Exit'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Enter\nExit",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "Define __aenter__ and __aexit__",
+      "Both are async methods",
+      "async with MyContext():"
+    ]
+  },
+  {
+    "id": "py-async-context-decorator-1",
+    "title": "Async Context Manager with Decorator",
+    "difficulty": "hard",
+    "description": "Use @asynccontextmanager decorator to create context manager. Print 'Start' and 'End'.",
+    "setupCode": "",
+    "starterCode": "import asyncio\nfrom contextlib import asynccontextmanager",
+    "expectedOutput": "Start\nEnd",
+    "testCode": "import asyncio\nfrom contextlib import asynccontextmanager\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "from contextlib import asynccontextmanager",
+      "@asynccontextmanager",
+      "async def ctx(): print('Start'); yield; print('End')"
+    ]
+  },
+  {
+    "id": "py-async-async-with-1",
+    "title": "Async With Statement",
+    "difficulty": "medium",
+    "description": "Use async with on async context manager. Print 'Inside'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Inside",
+    "testCode": "import asyncio\n{user_code}\nasyncio.run(main())",
+    "hints": [
+      "async with resource:",
+      "Must be async context manager",
+      "Calls __aenter__ and __aexit__"
+    ]
+  },
+  {
+    "id": "py-async-mixed-sync-async-1",
+    "title": "Cannot Await in Sync Function",
+    "difficulty": "easy",
+    "description": "Demonstrate that await only works in async functions. Print 'Must use async'.",
+    "setupCode": "",
+    "starterCode": "import asyncio",
+    "expectedOutput": "Must use async",
+    "testCode": "import asyncio\n{user_code}\nprint('Must use async')",
+    "hints": [
+      "await can only be used inside async def",
+      "Regular functions cannot use await",
+      "This is a conceptual exercise"
+    ]
+  }
+]

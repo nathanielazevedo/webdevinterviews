@@ -1,0 +1,748 @@
+[
+  {
+    "id": "py-regex-import-1",
+    "title": "Import re Module",
+    "difficulty": "easy",
+    "description": "Import re module and verify it has 'search' attribute.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(hasattr(re, 'search'))",
+    "hints": [
+      "Use import re",
+      "re is Python's regex module"
+    ]
+  },
+  {
+    "id": "py-regex-search-basic-1",
+    "title": "Basic Search",
+    "difficulty": "easy",
+    "description": "Use re.search to find 'cat' in 'I have a cat'. Print True if found.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'I have a cat'",
+    "expectedOutput": "True",
+    "testCode": "import re\ntext = 'I have a cat'\n{user_code}",
+    "hints": [
+      "Use re.search('cat', text)",
+      "Returns match object if found, None otherwise",
+      "Check if result is not None"
+    ]
+  },
+  {
+    "id": "py-regex-match-1",
+    "title": "Match at Beginning",
+    "difficulty": "easy",
+    "description": "Use re.match to check if 'Hello' is at start of 'Hello world'. Print True or False.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'Hello world'",
+    "expectedOutput": "True",
+    "testCode": "import re\ntext = 'Hello world'\n{user_code}",
+    "hints": [
+      "Use re.match('Hello', text)",
+      "match() only checks beginning of string",
+      "Returns match object or None"
+    ]
+  },
+  {
+    "id": "py-regex-findall-1",
+    "title": "Find All Occurrences",
+    "difficulty": "easy",
+    "description": "Find all occurrences of 'a' in 'banana'. Print the list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'banana'",
+    "expectedOutput": "['a', 'a', 'a']",
+    "testCode": "import re\ntext = 'banana'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use re.findall('a', text)",
+      "Returns list of all matches"
+    ]
+  },
+  {
+    "id": "py-regex-digit-1",
+    "title": "Match Digits",
+    "difficulty": "easy",
+    "description": "Find all digits in 'Phone: 123-456'. Print the list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'Phone: 123-456'",
+    "expectedOutput": "['1', '2', '3', '4', '5', '6']",
+    "testCode": "import re\ntext = 'Phone: 123-456'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use \\d to match digits",
+      "re.findall(r'\\d', text)",
+      "Use raw string r'' for regex patterns"
+    ]
+  },
+  {
+    "id": "py-regex-word-1",
+    "title": "Match Word Characters",
+    "difficulty": "easy",
+    "description": "Find all word characters (letters, digits, underscore) in 'hello_123!'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'hello_123!'",
+    "expectedOutput": "['h', 'e', 'l', 'l', 'o', '_', '1', '2', '3']",
+    "testCode": "import re\ntext = 'hello_123!'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use \\w to match word characters",
+      "re.findall(r'\\w', text)",
+      "\\w matches [a-zA-Z0-9_]"
+    ]
+  },
+  {
+    "id": "py-regex-whitespace-1",
+    "title": "Match Whitespace",
+    "difficulty": "easy",
+    "description": "Count whitespace characters in 'hello world  test'. Print count.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'hello world  test'",
+    "expectedOutput": "3",
+    "testCode": "import re\ntext = 'hello world  test'\n{user_code}\nprint(count)",
+    "hints": [
+      "Use \\s to match whitespace",
+      "re.findall(r'\\s', text)",
+      "Get length of result"
+    ]
+  },
+  {
+    "id": "py-regex-plus-1",
+    "title": "One or More (+)",
+    "difficulty": "easy",
+    "description": "Find all sequences of one or more digits in 'a1b22c333'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'a1b22c333'",
+    "expectedOutput": "['1', '22', '333']",
+    "testCode": "import re\ntext = 'a1b22c333'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use \\d+ for one or more digits",
+      "re.findall(r'\\d+', text)",
+      "+ means 1 or more repetitions"
+    ]
+  },
+  {
+    "id": "py-regex-star-1",
+    "title": "Zero or More (*)",
+    "difficulty": "medium",
+    "description": "Find 'ab' followed by zero or more 'c's in 'ab abc abcc'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'ab abc abcc'",
+    "expectedOutput": "['ab', 'abc', 'abcc']",
+    "testCode": "import re\ntext = 'ab abc abcc'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use abc* pattern",
+      "re.findall(r'abc*', text)",
+      "* means 0 or more repetitions"
+    ]
+  },
+  {
+    "id": "py-regex-question-1",
+    "title": "Zero or One (?)",
+    "difficulty": "medium",
+    "description": "Match 'color' or 'colour' in text. Find both spellings.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'color and colour'",
+    "expectedOutput": "['color', 'colour']",
+    "testCode": "import re\ntext = 'color and colour'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use colou?r pattern",
+      "? means 0 or 1 occurrence",
+      "Matches both spellings"
+    ]
+  },
+  {
+    "id": "py-regex-dot-1",
+    "title": "Dot Matches Any Character",
+    "difficulty": "easy",
+    "description": "Find 3-letter words starting with 'c' and ending with 't' in 'cat cut cot'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'cat cut cot'",
+    "expectedOutput": "['cat', 'cut', 'cot']",
+    "testCode": "import re\ntext = 'cat cut cot'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use c.t pattern",
+      "Dot matches any single character",
+      "re.findall(r'c.t', text)"
+    ]
+  },
+  {
+    "id": "py-regex-character-class-1",
+    "title": "Character Class",
+    "difficulty": "easy",
+    "description": "Find all vowels (a, e, i, o, u) in 'hello world'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'hello world'",
+    "expectedOutput": "['e', 'o', 'o']",
+    "testCode": "import re\ntext = 'hello world'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use [aeiou] character class",
+      "Square brackets define set of characters",
+      "re.findall(r'[aeiou]', text)"
+    ]
+  },
+  {
+    "id": "py-regex-negated-class-1",
+    "title": "Negated Character Class",
+    "difficulty": "medium",
+    "description": "Find all non-digits in 'abc123xyz'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'abc123xyz'",
+    "expectedOutput": "['a', 'b', 'c', 'x', 'y', 'z']",
+    "testCode": "import re\ntext = 'abc123xyz'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use [^0-9] or \\D",
+      "^ inside [] means NOT",
+      "re.findall(r'\\D', text)"
+    ]
+  },
+  {
+    "id": "py-regex-range-1",
+    "title": "Character Range",
+    "difficulty": "easy",
+    "description": "Find all lowercase letters in 'Hello World 123'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'Hello World 123'",
+    "expectedOutput": "['e', 'l', 'l', 'o', 'o', 'r', 'l', 'd']",
+    "testCode": "import re\ntext = 'Hello World 123'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use [a-z] for lowercase range",
+      "re.findall(r'[a-z]', text)"
+    ]
+  },
+  {
+    "id": "py-regex-alternation-1",
+    "title": "Alternation (OR)",
+    "difficulty": "easy",
+    "description": "Find 'cat' or 'dog' in 'I have a cat and a dog'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'I have a cat and a dog'",
+    "expectedOutput": "['cat', 'dog']",
+    "testCode": "import re\ntext = 'I have a cat and a dog'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use cat|dog pattern",
+      "Pipe | means OR",
+      "re.findall(r'cat|dog', text)"
+    ]
+  },
+  {
+    "id": "py-regex-groups-1",
+    "title": "Capturing Groups",
+    "difficulty": "medium",
+    "description": "Extract area code from phone '(123) 456-7890'. Print '123'.",
+    "setupCode": "",
+    "starterCode": "import re\nphone = '(123) 456-7890'",
+    "expectedOutput": "123",
+    "testCode": "import re\nphone = '(123) 456-7890'\n{user_code}\nprint(area_code)",
+    "hints": [
+      "Use parentheses for groups: \\((\\d+)\\)",
+      "match.group(1) gets first group",
+      "Escape literal parentheses with \\("
+    ]
+  },
+  {
+    "id": "py-regex-multiple-groups-1",
+    "title": "Multiple Capturing Groups",
+    "difficulty": "medium",
+    "description": "Extract first and last name from 'John Doe'. Print both.",
+    "setupCode": "",
+    "starterCode": "import re\nname = 'John Doe'",
+    "expectedOutput": "John\nDoe",
+    "testCode": "import re\nname = 'John Doe'\n{user_code}\nprint(first)\nprint(last)",
+    "hints": [
+      "Use (\\w+)\\s+(\\w+) pattern",
+      "match.group(1) and match.group(2)",
+      "Or use match.groups() for tuple"
+    ]
+  },
+  {
+    "id": "py-regex-sub-1",
+    "title": "Substitute Text",
+    "difficulty": "easy",
+    "description": "Replace all digits with 'X' in 'abc123def456'. Print result.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'abc123def456'",
+    "expectedOutput": "abcXXXdefXXX",
+    "testCode": "import re\ntext = 'abc123def456'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use re.sub(pattern, replacement, text)",
+      "re.sub(r'\\d', 'X', text)",
+      "Replaces all matches"
+    ]
+  },
+  {
+    "id": "py-regex-split-1",
+    "title": "Split by Pattern",
+    "difficulty": "easy",
+    "description": "Split 'a1b2c3' by digits. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'a1b2c3'",
+    "expectedOutput": "['a', 'b', 'c', '']",
+    "testCode": "import re\ntext = 'a1b2c3'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use re.split(r'\\d', text)",
+      "Splits on pattern matches",
+      "Returns list of parts"
+    ]
+  },
+  {
+    "id": "py-regex-anchors-start-1",
+    "title": "Start Anchor (^)",
+    "difficulty": "easy",
+    "description": "Check if 'Hello' is at start of string 'Hello world'. Print True or False.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'Hello world'",
+    "expectedOutput": "True",
+    "testCode": "import re\ntext = 'Hello world'\n{user_code}",
+    "hints": [
+      "Use ^Hello pattern",
+      "^ matches start of string",
+      "re.search(r'^Hello', text)"
+    ]
+  },
+  {
+    "id": "py-regex-anchors-end-1",
+    "title": "End Anchor ($)",
+    "difficulty": "easy",
+    "description": "Check if 'world' is at end of string 'Hello world'. Print True or False.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'Hello world'",
+    "expectedOutput": "True",
+    "testCode": "import re\ntext = 'Hello world'\n{user_code}",
+    "hints": [
+      "Use world$ pattern",
+      "$ matches end of string",
+      "re.search(r'world$', text)"
+    ]
+  },
+  {
+    "id": "py-regex-word-boundary-1",
+    "title": "Word Boundary (\\b)",
+    "difficulty": "medium",
+    "description": "Find whole word 'cat' in 'cat cats scatter'. Should match only first 'cat'.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'cat cats scatter'",
+    "expectedOutput": "['cat']",
+    "testCode": "import re\ntext = 'cat cats scatter'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use \\bcat\\b pattern",
+      "\\b matches word boundary",
+      "Avoids partial matches"
+    ]
+  },
+  {
+    "id": "py-regex-greedy-1",
+    "title": "Greedy Matching",
+    "difficulty": "medium",
+    "description": "Match content between < and > in '<tag>text</tag>'. Show greedy behavior.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = '<tag>text</tag>'",
+    "expectedOutput": "tag>text</tag",
+    "testCode": "import re\ntext = '<tag>text</tag>'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use <.+> pattern",
+      "Greedy .+ matches as much as possible",
+      "Matches from first < to last >"
+    ]
+  },
+  {
+    "id": "py-regex-non-greedy-1",
+    "title": "Non-Greedy Matching",
+    "difficulty": "medium",
+    "description": "Match content between < and > non-greedily in '<tag>text</tag>'. Get both tags.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = '<tag>text</tag>'",
+    "expectedOutput": "['tag', '/tag']",
+    "testCode": "import re\ntext = '<tag>text</tag>'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use <(.+?)> pattern",
+      "? after + or * makes it non-greedy",
+      "Matches shortest possible"
+    ]
+  },
+  {
+    "id": "py-regex-email-1",
+    "title": "Extract Email",
+    "difficulty": "medium",
+    "description": "Extract email from 'Contact: user@example.com for info'. Print email.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'Contact: user@example.com for info'",
+    "expectedOutput": "user@example.com",
+    "testCode": "import re\ntext = 'Contact: user@example.com for info'\n{user_code}\nprint(email)",
+    "hints": [
+      "Use pattern like \\w+@\\w+\\.\\w+",
+      "\\w+ for username and domain",
+      "Escape dot with \\."
+    ]
+  },
+  {
+    "id": "py-regex-phone-1",
+    "title": "Extract Phone Number",
+    "difficulty": "medium",
+    "description": "Extract phone '123-456-7890' from text. Print it.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'Call me at 123-456-7890'",
+    "expectedOutput": "123-456-7890",
+    "testCode": "import re\ntext = 'Call me at 123-456-7890'\n{user_code}\nprint(phone)",
+    "hints": [
+      "Use \\d{3}-\\d{3}-\\d{4} pattern",
+      "{n} means exactly n repetitions"
+    ]
+  },
+  {
+    "id": "py-regex-case-insensitive-1",
+    "title": "Case Insensitive Matching",
+    "difficulty": "easy",
+    "description": "Find 'hello' case-insensitively in 'HELLO world Hello'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'HELLO world Hello'",
+    "expectedOutput": "['HELLO', 'Hello']",
+    "testCode": "import re\ntext = 'HELLO world Hello'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use re.IGNORECASE flag",
+      "re.findall(r'hello', text, re.IGNORECASE)",
+      "Or re.I for short"
+    ]
+  },
+  {
+    "id": "py-regex-multiline-1",
+    "title": "Multiline Flag",
+    "difficulty": "medium",
+    "description": "Match lines starting with 'Start' in multiline text. Use re.MULTILINE flag.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'Start line1\\nMiddle\\nStart line2'",
+    "expectedOutput": "['Start', 'Start']",
+    "testCode": "import re\ntext = 'Start line1\\nMiddle\\nStart line2'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use ^Start pattern with re.MULTILINE",
+      "re.findall(r'^Start', text, re.MULTILINE)",
+      "^ matches start of each line"
+    ]
+  },
+  {
+    "id": "py-regex-dotall-1",
+    "title": "Dotall Flag",
+    "difficulty": "medium",
+    "description": "Match content including newlines with . using re.DOTALL flag.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'start\\nmiddle\\nend'",
+    "expectedOutput": "True",
+    "testCode": "import re\ntext = 'start\\nmiddle\\nend'\n{user_code}",
+    "hints": [
+      "Use .+ pattern with re.DOTALL",
+      "re.search(r'start.+end', text, re.DOTALL)",
+      "Normally . doesn't match newline"
+    ]
+  },
+  {
+    "id": "py-regex-compile-1",
+    "title": "Compile Pattern",
+    "difficulty": "easy",
+    "description": "Compile pattern '\\d+' and use it to find all numbers in 'a1b2c3'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'a1b2c3'",
+    "expectedOutput": "['1', '2', '3']",
+    "testCode": "import re\ntext = 'a1b2c3'\n{user_code}\nprint(result)",
+    "hints": [
+      "pattern = re.compile(r'\\d+')",
+      "result = pattern.findall(text)",
+      "Compiling is efficient for repeated use"
+    ]
+  },
+  {
+    "id": "py-regex-match-object-1",
+    "title": "Match Object Methods",
+    "difficulty": "medium",
+    "description": "Get the matched string and its position from 'hello' in 'say hello there'.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'say hello there'",
+    "expectedOutput": "hello\n4",
+    "testCode": "import re\ntext = 'say hello there'\n{user_code}\nprint(matched_text)\nprint(position)",
+    "hints": [
+      "match = re.search(r'hello', text)",
+      "Use match.group() for text",
+      "Use match.start() for position"
+    ]
+  },
+  {
+    "id": "py-regex-finditer-1",
+    "title": "Find Iterator",
+    "difficulty": "medium",
+    "description": "Use finditer to get all digit positions in 'a1b2c3'. Print list of positions.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'a1b2c3'",
+    "expectedOutput": "[1, 3, 5]",
+    "testCode": "import re\ntext = 'a1b2c3'\n{user_code}\nprint(positions)",
+    "hints": [
+      "Use re.finditer(r'\\d', text)",
+      "Returns iterator of match objects",
+      "Use match.start() for each position"
+    ]
+  },
+  {
+    "id": "py-regex-named-groups-1",
+    "title": "Named Groups",
+    "difficulty": "medium",
+    "description": "Extract date parts from '2024-03-15' using named groups. Print month.",
+    "setupCode": "",
+    "starterCode": "import re\ndate = '2024-03-15'",
+    "expectedOutput": "03",
+    "testCode": "import re\ndate = '2024-03-15'\n{user_code}\nprint(month)",
+    "hints": [
+      "Use (?P<name>pattern) syntax",
+      "(?P<year>\\d{4})-(?P<month>\\d{2})-(?P<day>\\d{2})",
+      "Access with match.group('month')"
+    ]
+  },
+  {
+    "id": "py-regex-backreference-1",
+    "title": "Backreference",
+    "difficulty": "hard",
+    "description": "Find repeated words like 'the the' in 'the the cat'. Print matched string.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'the the cat'",
+    "expectedOutput": "the the",
+    "testCode": "import re\ntext = 'the the cat'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use (\\w+)\\s+\\1 pattern",
+      "\\1 refers back to first group",
+      "Matches repeated word"
+    ]
+  },
+  {
+    "id": "py-regex-lookahead-1",
+    "title": "Positive Lookahead",
+    "difficulty": "hard",
+    "description": "Find numbers followed by 'px' in '100px 200em 300px'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = '100px 200em 300px'",
+    "expectedOutput": "['100', '300']",
+    "testCode": "import re\ntext = '100px 200em 300px'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use \\d+(?=px) pattern",
+      "(?=...) is positive lookahead",
+      "Matches but doesn't consume 'px'"
+    ]
+  },
+  {
+    "id": "py-regex-lookbehind-1",
+    "title": "Positive Lookbehind",
+    "difficulty": "hard",
+    "description": "Find numbers preceded by '$' in 'Price: $100 or €200'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'Price: $100 or €200'",
+    "expectedOutput": "['100']",
+    "testCode": "import re\ntext = 'Price: $100 or €200'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use (?<=\\$)\\d+ pattern",
+      "(?<=...) is positive lookbehind",
+      "Matches after $ without consuming it"
+    ]
+  },
+  {
+    "id": "py-regex-negative-lookahead-1",
+    "title": "Negative Lookahead",
+    "difficulty": "hard",
+    "description": "Find numbers NOT followed by 'px' in '100px 200em'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = '100px 200em'",
+    "expectedOutput": "['200']",
+    "testCode": "import re\ntext = '100px 200em'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use \\d+(?!px) pattern",
+      "(?!...) is negative lookahead",
+      "Matches when NOT followed by pattern"
+    ]
+  },
+  {
+    "id": "py-regex-escape-1",
+    "title": "Escape Special Characters",
+    "difficulty": "medium",
+    "description": "Search for literal dot in 'file.txt'. Use re.escape(). Print True if found.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'file.txt'",
+    "expectedOutput": "True",
+    "testCode": "import re\ntext = 'file.txt'\n{user_code}",
+    "hints": [
+      "Use re.escape('.') to escape special chars",
+      "Or manually escape: r'\\.'",
+      "re.escape() escapes all special regex chars"
+    ]
+  },
+  {
+    "id": "py-regex-validate-email-1",
+    "title": "Validate Email Format",
+    "difficulty": "medium",
+    "description": "Check if 'user@example.com' is valid email format. Print True or False.",
+    "setupCode": "",
+    "starterCode": "import re\nemail = 'user@example.com'",
+    "expectedOutput": "True",
+    "testCode": "import re\nemail = 'user@example.com'\n{user_code}",
+    "hints": [
+      "Use pattern: ^[\\w.-]+@[\\w.-]+\\.\\w+$",
+      "^ and $ ensure full string match",
+      "re.match() or re.fullmatch()"
+    ]
+  },
+  {
+    "id": "py-regex-fullmatch-1",
+    "title": "Full String Match",
+    "difficulty": "easy",
+    "description": "Check if entire string '123' is only digits. Use fullmatch(). Print True or False.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = '123'",
+    "expectedOutput": "True",
+    "testCode": "import re\ntext = '123'\n{user_code}",
+    "hints": [
+      "Use re.fullmatch(r'\\d+', text)",
+      "fullmatch() requires entire string to match",
+      "Different from search() or match()"
+    ]
+  },
+  {
+    "id": "py-regex-subn-1",
+    "title": "Substitute with Count",
+    "difficulty": "medium",
+    "description": "Replace digits with 'X' and get count. Print both result and count.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'a1b2c3'",
+    "expectedOutput": "aXbXcX\n3",
+    "testCode": "import re\ntext = 'a1b2c3'\n{user_code}\nprint(new_text)\nprint(count)",
+    "hints": [
+      "Use re.subn(r'\\d', 'X', text)",
+      "Returns tuple (new_string, count)",
+      "Like sub() but also returns count"
+    ]
+  },
+  {
+    "id": "py-regex-remove-whitespace-1",
+    "title": "Remove Extra Whitespace",
+    "difficulty": "medium",
+    "description": "Replace multiple spaces with single space in 'hello    world'. Print result.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'hello    world'",
+    "expectedOutput": "hello world",
+    "testCode": "import re\ntext = 'hello    world'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use \\s+ to match multiple whitespace",
+      "re.sub(r'\\s+', ' ', text)",
+      "Replaces any whitespace sequence with single space"
+    ]
+  },
+  {
+    "id": "py-regex-extract-urls-1",
+    "title": "Extract URLs",
+    "difficulty": "hard",
+    "description": "Extract all URLs from text. Find 'http://example.com' and 'https://test.org'.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'Visit http://example.com or https://test.org'",
+    "expectedOutput": "['http://example.com', 'https://test.org']",
+    "testCode": "import re\ntext = 'Visit http://example.com or https://test.org'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use pattern: https?://[\\w.-]+",
+      "? makes 's' optional for http/https",
+      "[\\w.-]+ matches domain"
+    ]
+  },
+  {
+    "id": "py-regex-camelcase-split-1",
+    "title": "Split CamelCase",
+    "difficulty": "hard",
+    "description": "Split 'camelCaseString' into words. Print list ['camel', 'Case', 'String'].",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'camelCaseString'",
+    "expectedOutput": "['camel', 'Case', 'String']",
+    "testCode": "import re\ntext = 'camelCaseString'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use re.findall(r'[A-Z][a-z]*|[a-z]+', text)",
+      "Matches uppercase followed by lowercase, or lowercase sequence",
+      "Alternative: re.split(r'(?=[A-Z])', text)"
+    ]
+  },
+  {
+    "id": "py-regex-ip-address-1",
+    "title": "Validate IP Address",
+    "difficulty": "hard",
+    "description": "Check if '192.168.1.1' matches basic IP pattern. Print True or False.",
+    "setupCode": "",
+    "starterCode": "import re\nip = '192.168.1.1'",
+    "expectedOutput": "True",
+    "testCode": "import re\nip = '192.168.1.1'\n{user_code}",
+    "hints": [
+      "Use pattern: ^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$",
+      "Escape dots with \\.",
+      "This is simplified, real IP validation is more complex"
+    ]
+  },
+  {
+    "id": "py-regex-password-strength-1",
+    "title": "Check Password Strength",
+    "difficulty": "hard",
+    "description": "Check if 'Pass123!' has uppercase, lowercase, digit, and special char. Print True/False.",
+    "setupCode": "",
+    "starterCode": "import re\npassword = 'Pass123!'",
+    "expectedOutput": "True",
+    "testCode": "import re\npassword = 'Pass123!'\n{user_code}",
+    "hints": [
+      "Use multiple searches or lookaheads",
+      "Check: [A-Z], [a-z], \\d, [!@#$%]",
+      "All must be present"
+    ]
+  },
+  {
+    "id": "py-regex-remove-html-1",
+    "title": "Remove HTML Tags",
+    "difficulty": "medium",
+    "description": "Remove all HTML tags from '<p>Hello <b>world</b></p>'. Print 'Hello world'.",
+    "setupCode": "",
+    "starterCode": "import re\nhtml = '<p>Hello <b>world</b></p>'",
+    "expectedOutput": "Hello world",
+    "testCode": "import re\nhtml = '<p>Hello <b>world</b></p>'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use <[^>]+> pattern to match tags",
+      "re.sub(r'<[^>]+>', '', html)",
+      "[^>]+ matches anything except >"
+    ]
+  },
+  {
+    "id": "py-regex-extract-hashtags-1",
+    "title": "Extract Hashtags",
+    "difficulty": "medium",
+    "description": "Extract all hashtags from 'Love #python and #coding!'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'Love #python and #coding!'",
+    "expectedOutput": "['#python', '#coding']",
+    "testCode": "import re\ntext = 'Love #python and #coding!'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use #\\w+ pattern",
+      "# followed by word characters",
+      "re.findall(r'#\\w+', text)"
+    ]
+  },
+  {
+    "id": "py-regex-currency-1",
+    "title": "Extract Currency Amounts",
+    "difficulty": "medium",
+    "description": "Extract amounts from 'Price: $10.99 or €25.50'. Print list.",
+    "setupCode": "",
+    "starterCode": "import re\ntext = 'Price: $10.99 or €25.50'",
+    "expectedOutput": "['10.99', '25.50']",
+    "testCode": "import re\ntext = 'Price: $10.99 or €25.50'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use \\d+\\.\\d{2} pattern",
+      "Matches digits.digits",
+      "Currency symbols not captured"
+    ]
+  },
+  {
+    "id": "py-regex-verbose-1",
+    "title": "Verbose Mode",
+    "difficulty": "hard",
+    "description": "Use re.VERBOSE flag to write commented regex pattern. Match phone number.",
+    "setupCode": "",
+    "starterCode": "import re\nphone = '123-456-7890'",
+    "expectedOutput": "True",
+    "testCode": "import re\nphone = '123-456-7890'\n{user_code}",
+    "hints": [
+      "Use re.VERBOSE or re.X flag",
+      "Allows whitespace and comments in pattern",
+      "Improves readability of complex patterns"
+    ]
+  }
+]

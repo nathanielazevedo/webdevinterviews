@@ -1,0 +1,422 @@
+[
+  {
+    "id": "py-list-index-1",
+    "title": "Access List Element by Index",
+    "difficulty": "easy",
+    "description": "Get the value at index 3 in the list.",
+    "setupCode": "my_list = ['apple', 'banana', 'cherry', 'date', 'elderberry']",
+    "starterCode": "# Write your code here\nresult = ",
+    "expectedOutput": "date",
+    "testCode": "my_list = ['apple', 'banana', 'cherry', 'date', 'elderberry']\n{user_code}\nprint(result)",
+    "hints": [
+      "Remember that Python uses square brackets [] for indexing",
+      "Lists are zero-indexed in Python"
+    ]
+  },
+  {
+    "id": "py-list-index-2",
+    "title": "Negative Indexing",
+    "difficulty": "easy",
+    "description": "Get the last element of the list using negative indexing.",
+    "setupCode": "numbers = [10, 20, 30, 40, 50]",
+    "starterCode": "# Write your code here\nlast_item = ",
+    "expectedOutput": "50",
+    "testCode": "numbers = [10, 20, 30, 40, 50]\n{user_code}\nprint(last_item)",
+    "hints": [
+      "Use -1 to get the last element",
+      "Negative indices count from the end of the list"
+    ]
+  },
+  {
+    "id": "py-list-slice-1",
+    "title": "Basic Slicing",
+    "difficulty": "easy",
+    "description": "Get the first 3 elements from the list using slicing.",
+    "setupCode": "colors = ['red', 'blue', 'green', 'yellow', 'purple']",
+    "starterCode": "# Write your code here\nfirst_three = ",
+    "expectedOutput": "['red', 'blue', 'green']",
+    "testCode": "colors = ['red', 'blue', 'green', 'yellow', 'purple']\n{user_code}\nprint(first_three)",
+    "hints": [
+      "Use the slice notation [start:end]",
+      "The end index is exclusive"
+    ]
+  },
+  {
+    "id": "py-list-slice-2",
+    "title": "Slice with Step",
+    "difficulty": "easy",
+    "description": "Get every second element from the list.",
+    "setupCode": "nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]",
+    "starterCode": "# Write your code here\nevery_second = ",
+    "expectedOutput": "[0, 2, 4, 6, 8]",
+    "testCode": "nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n{user_code}\nprint(every_second)",
+    "hints": [
+      "Use the slice notation [start:end:step]",
+      "A step of 2 means every second element"
+    ]
+  },
+  {
+    "id": "py-list-slice-3",
+    "title": "Reverse with Slicing",
+    "difficulty": "easy",
+    "description": "Reverse the list using slicing.",
+    "setupCode": "letters = ['a', 'b', 'c', 'd', 'e']",
+    "starterCode": "# Write your code here\nreversed_list = ",
+    "expectedOutput": "['e', 'd', 'c', 'b', 'a']",
+    "testCode": "letters = ['a', 'b', 'c', 'd', 'e']\n{user_code}\nprint(reversed_list)",
+    "hints": [
+      "Use [::-1] to reverse",
+      "Negative step goes backwards"
+    ]
+  },
+  {
+    "id": "py-list-len-1",
+    "title": "Get List Length",
+    "difficulty": "easy",
+    "description": "Find the length of the list.",
+    "setupCode": "items = [1, 2, 3, 4, 5, 6, 7, 8]",
+    "starterCode": "# Write your code here\nlength = ",
+    "expectedOutput": "8",
+    "testCode": "items = [1, 2, 3, 4, 5, 6, 7, 8]\n{user_code}\nprint(length)",
+    "hints": [
+      "Use the len() function",
+      "len() works on lists, strings, tuples, and more"
+    ]
+  },
+  {
+    "id": "py-list-append-1",
+    "title": "Append to List",
+    "difficulty": "easy",
+    "description": "Add the number 6 to the end of the list.",
+    "setupCode": "nums = [1, 2, 3, 4, 5]",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "[1, 2, 3, 4, 5, 6]",
+    "testCode": "nums = [1, 2, 3, 4, 5]\n{user_code}\nprint(nums)",
+    "hints": [
+      "Use the append() method",
+      "append() modifies the list in place"
+    ]
+  },
+  {
+    "id": "py-list-insert-1",
+    "title": "Insert at Specific Position",
+    "difficulty": "easy",
+    "description": "Insert the value 99 at index 2.",
+    "setupCode": "nums = [1, 2, 3, 4, 5]",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "[1, 2, 99, 3, 4, 5]",
+    "testCode": "nums = [1, 2, 3, 4, 5]\n{user_code}\nprint(nums)",
+    "hints": [
+      "Use the insert() method",
+      "insert(index, value) adds value at the specified index"
+    ]
+  },
+  {
+    "id": "py-list-extend-1",
+    "title": "Extend List with Another List",
+    "difficulty": "easy",
+    "description": "Add all elements from [4, 5, 6] to the end of the list.",
+    "setupCode": "nums = [1, 2, 3]",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "[1, 2, 3, 4, 5, 6]",
+    "testCode": "nums = [1, 2, 3]\n{user_code}\nprint(nums)",
+    "hints": [
+      "Use the extend() method",
+      "extend() adds multiple elements, unlike append()"
+    ]
+  },
+  {
+    "id": "py-list-remove-1",
+    "title": "Remove Specific Value",
+    "difficulty": "easy",
+    "description": "Remove the first occurrence of 'banana' from the list.",
+    "setupCode": "fruits = ['apple', 'banana', 'cherry', 'banana']",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "['apple', 'cherry', 'banana']",
+    "testCode": "fruits = ['apple', 'banana', 'cherry', 'banana']\n{user_code}\nprint(fruits)",
+    "hints": [
+      "Use the remove() method",
+      "remove() only removes the first occurrence"
+    ]
+  },
+  {
+    "id": "py-list-pop-1",
+    "title": "Remove and Return Last Element",
+    "difficulty": "easy",
+    "description": "Remove and store the last element from the list.",
+    "setupCode": "nums = [10, 20, 30, 40, 50]",
+    "starterCode": "# Write your code here\nlast = ",
+    "expectedOutput": "50",
+    "testCode": "nums = [10, 20, 30, 40, 50]\n{user_code}\nprint(last)",
+    "hints": [
+      "Use the pop() method",
+      "pop() without arguments removes the last element"
+    ]
+  },
+  {
+    "id": "py-list-pop-2",
+    "title": "Pop Element at Index",
+    "difficulty": "easy",
+    "description": "Remove and store the element at index 1.",
+    "setupCode": "letters = ['a', 'b', 'c', 'd']",
+    "starterCode": "# Write your code here\nremoved = ",
+    "expectedOutput": "b",
+    "testCode": "letters = ['a', 'b', 'c', 'd']\n{user_code}\nprint(removed)",
+    "hints": [
+      "Use pop(index) to remove at specific position",
+      "pop() returns the removed element"
+    ]
+  },
+  {
+    "id": "py-list-clear-1",
+    "title": "Clear All Elements",
+    "difficulty": "easy",
+    "description": "Remove all elements from the list.",
+    "setupCode": "items = [1, 2, 3, 4, 5]",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "[]",
+    "testCode": "items = [1, 2, 3, 4, 5]\n{user_code}\nprint(items)",
+    "hints": [
+      "Use the clear() method",
+      "This empties the list completely"
+    ]
+  },
+  {
+    "id": "py-list-index-3",
+    "title": "Find Index of Value",
+    "difficulty": "easy",
+    "description": "Find the index of 'cherry' in the list.",
+    "setupCode": "fruits = ['apple', 'banana', 'cherry', 'date']",
+    "starterCode": "# Write your code here\nposition = ",
+    "expectedOutput": "2",
+    "testCode": "fruits = ['apple', 'banana', 'cherry', 'date']\n{user_code}\nprint(position)",
+    "hints": [
+      "Use the index() method",
+      "index() returns the position of first occurrence"
+    ]
+  },
+  {
+    "id": "py-list-count-1",
+    "title": "Count Occurrences",
+    "difficulty": "easy",
+    "description": "Count how many times 3 appears in the list.",
+    "setupCode": "nums = [1, 2, 3, 3, 4, 3, 5]",
+    "starterCode": "# Write your code here\noccurrences = ",
+    "expectedOutput": "3",
+    "testCode": "nums = [1, 2, 3, 3, 4, 3, 5]\n{user_code}\nprint(occurrences)",
+    "hints": [
+      "Use the count() method",
+      "count(value) returns frequency of value"
+    ]
+  },
+  {
+    "id": "py-list-sort-1",
+    "title": "Sort List Ascending",
+    "difficulty": "easy",
+    "description": "Sort the list in ascending order.",
+    "setupCode": "nums = [5, 2, 8, 1, 9]",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "[1, 2, 5, 8, 9]",
+    "testCode": "nums = [5, 2, 8, 1, 9]\n{user_code}\nprint(nums)",
+    "hints": [
+      "Use the sort() method",
+      "sort() modifies the list in place"
+    ]
+  },
+  {
+    "id": "py-list-sort-2",
+    "title": "Sort List Descending",
+    "difficulty": "easy",
+    "description": "Sort the list in descending order.",
+    "setupCode": "nums = [5, 2, 8, 1, 9]",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "[9, 8, 5, 2, 1]",
+    "testCode": "nums = [5, 2, 8, 1, 9]\n{user_code}\nprint(nums)",
+    "hints": [
+      "Use sort(reverse=True)",
+      "The reverse parameter sorts in descending order"
+    ]
+  },
+  {
+    "id": "py-list-reverse-1",
+    "title": "Reverse List In-Place",
+    "difficulty": "easy",
+    "description": "Reverse the order of elements in the list.",
+    "setupCode": "letters = ['a', 'b', 'c', 'd', 'e']",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "['e', 'd', 'c', 'b', 'a']",
+    "testCode": "letters = ['a', 'b', 'c', 'd', 'e']\n{user_code}\nprint(letters)",
+    "hints": [
+      "Use the reverse() method",
+      "This modifies the list in place"
+    ]
+  },
+  {
+    "id": "py-list-copy-1",
+    "title": "Create Shallow Copy",
+    "difficulty": "easy",
+    "description": "Create a copy of the list.",
+    "setupCode": "original = [1, 2, 3, 4, 5]",
+    "starterCode": "# Write your code here\ncopy_list = ",
+    "expectedOutput": "[1, 2, 3, 4, 5]",
+    "testCode": "original = [1, 2, 3, 4, 5]\n{user_code}\nprint(copy_list)",
+    "hints": [
+      "Use the copy() method",
+      "Creates a new list with same elements"
+    ]
+  },
+  {
+    "id": "py-list-in-1",
+    "title": "Check if Element Exists",
+    "difficulty": "easy",
+    "description": "Check if 'banana' is in the list (return True or False).",
+    "setupCode": "fruits = ['apple', 'banana', 'cherry']",
+    "starterCode": "# Write your code here\nexists = ",
+    "expectedOutput": "True",
+    "testCode": "fruits = ['apple', 'banana', 'cherry']\n{user_code}\nprint(exists)",
+    "hints": [
+      "Use the 'in' operator",
+      "Syntax: value in list"
+    ]
+  },
+  {
+    "id": "py-list-concat-1",
+    "title": "Concatenate Two Lists",
+    "difficulty": "easy",
+    "description": "Combine two lists using the + operator.",
+    "setupCode": "list1 = [1, 2, 3]\nlist2 = [4, 5, 6]",
+    "starterCode": "# Write your code here\ncombined = ",
+    "expectedOutput": "[1, 2, 3, 4, 5, 6]",
+    "testCode": "list1 = [1, 2, 3]\nlist2 = [4, 5, 6]\n{user_code}\nprint(combined)",
+    "hints": [
+      "Use the + operator",
+      "list1 + list2 creates a new combined list"
+    ]
+  },
+  {
+    "id": "py-list-multiply-1",
+    "title": "Repeat List Elements",
+    "difficulty": "easy",
+    "description": "Repeat the list 3 times using multiplication.",
+    "setupCode": "nums = [1, 2]",
+    "starterCode": "# Write your code here\nrepeated = ",
+    "expectedOutput": "[1, 2, 1, 2, 1, 2]",
+    "testCode": "nums = [1, 2]\n{user_code}\nprint(repeated)",
+    "hints": [
+      "Use the * operator",
+      "list * n repeats the list n times"
+    ]
+  },
+  {
+    "id": "py-list-min-1",
+    "title": "Find Minimum Value",
+    "difficulty": "easy",
+    "description": "Find the smallest number in the list.",
+    "setupCode": "nums = [45, 12, 78, 3, 89, 23]",
+    "starterCode": "# Write your code here\nminimum = ",
+    "expectedOutput": "3",
+    "testCode": "nums = [45, 12, 78, 3, 89, 23]\n{user_code}\nprint(minimum)",
+    "hints": [
+      "Use the min() function",
+      "min(list) returns the smallest value"
+    ]
+  },
+  {
+    "id": "py-list-max-1",
+    "title": "Find Maximum Value",
+    "difficulty": "easy",
+    "description": "Find the largest number in the list.",
+    "setupCode": "nums = [45, 12, 78, 3, 89, 23]",
+    "starterCode": "# Write your code here\nmaximum = ",
+    "expectedOutput": "89",
+    "testCode": "nums = [45, 12, 78, 3, 89, 23]\n{user_code}\nprint(maximum)",
+    "hints": [
+      "Use the max() function",
+      "max(list) returns the largest value"
+    ]
+  },
+  {
+    "id": "py-list-sum-1",
+    "title": "Sum All Elements",
+    "difficulty": "easy",
+    "description": "Calculate the sum of all numbers in the list.",
+    "setupCode": "nums = [10, 20, 30, 40, 50]",
+    "starterCode": "# Write your code here\ntotal = ",
+    "expectedOutput": "150",
+    "testCode": "nums = [10, 20, 30, 40, 50]\n{user_code}\nprint(total)",
+    "hints": [
+      "Use the sum() function",
+      "sum(list) adds all elements together"
+    ]
+  },
+  {
+    "id": "py-list-comprehension-1",
+    "title": "List Comprehension - Squares",
+    "difficulty": "medium",
+    "description": "Create a list of squares from 1 to 5 using list comprehension.",
+    "setupCode": "",
+    "starterCode": "# Write your code here\nsquares = ",
+    "expectedOutput": "[1, 4, 9, 16, 25]",
+    "testCode": "{user_code}\nprint(squares)",
+    "hints": [
+      "Use [x**2 for x in range(1, 6)]",
+      "List comprehension is [expression for item in iterable]"
+    ]
+  },
+  {
+    "id": "py-list-comprehension-2",
+    "title": "List Comprehension with Condition",
+    "difficulty": "medium",
+    "description": "Create a list of even numbers from 0 to 9.",
+    "setupCode": "",
+    "starterCode": "# Write your code here\nevens = ",
+    "expectedOutput": "[0, 2, 4, 6, 8]",
+    "testCode": "{user_code}\nprint(evens)",
+    "hints": [
+      "Use [x for x in range(10) if x % 2 == 0]",
+      "Add 'if condition' after the for loop"
+    ]
+  },
+  {
+    "id": "py-list-unpack-1",
+    "title": "Unpack First and Rest",
+    "difficulty": "medium",
+    "description": "Unpack the first element and the rest of the list.",
+    "setupCode": "nums = [1, 2, 3, 4, 5]",
+    "starterCode": "# Write your code here (use first, *rest = ...)\nfirst, *rest = ",
+    "expectedOutput": "[2, 3, 4, 5]",
+    "testCode": "nums = [1, 2, 3, 4, 5]\n{user_code}\nprint(rest)",
+    "hints": [
+      "Use first, *rest = nums",
+      "The * operator collects remaining elements"
+    ]
+  },
+  {
+    "id": "py-list-enumerate-1",
+    "title": "Get Index and Value Pairs",
+    "difficulty": "medium",
+    "description": "Convert the list to a list of (index, value) tuples.",
+    "setupCode": "letters = ['a', 'b', 'c']",
+    "starterCode": "# Write your code here\npairs = ",
+    "expectedOutput": "[(0, 'a'), (1, 'b'), (2, 'c')]",
+    "testCode": "letters = ['a', 'b', 'c']\n{user_code}\nprint(pairs)",
+    "hints": [
+      "Use list(enumerate(letters))",
+      "enumerate() returns index-value pairs"
+    ]
+  },
+  {
+    "id": "py-list-zip-1",
+    "title": "Zip Two Lists Together",
+    "difficulty": "medium",
+    "description": "Combine two lists into tuples.",
+    "setupCode": "names = ['Alice', 'Bob', 'Charlie']\nages = [25, 30, 35]",
+    "starterCode": "# Write your code here\nzipped = ",
+    "expectedOutput": "[('Alice', 25), ('Bob', 30), ('Charlie', 35)]",
+    "testCode": "names = ['Alice', 'Bob', 'Charlie']\nages = [25, 30, 35]\n{user_code}\nprint(zipped)",
+    "hints": [
+      "Use list(zip(names, ages))",
+      "zip() combines elements from multiple lists"
+    ]
+  }
+]

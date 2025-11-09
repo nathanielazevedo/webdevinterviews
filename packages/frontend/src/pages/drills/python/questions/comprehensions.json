@@ -1,0 +1,703 @@
+[
+  {
+    "id": "py-except-basic-1",
+    "title": "Basic Try-Except",
+    "difficulty": "easy",
+    "description": "Try to divide 10 by 0. Catch the exception and print 'Cannot divide by zero'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Cannot divide by zero",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use try: ... except ZeroDivisionError:",
+      "Put risky code in try block"
+    ]
+  },
+  {
+    "id": "py-except-general-1",
+    "title": "Catch Any Exception",
+    "difficulty": "easy",
+    "description": "Try to convert 'abc' to int. Catch any exception and print 'Error occurred'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Error occurred",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use except Exception: to catch all exceptions",
+      "int('abc') raises ValueError"
+    ]
+  },
+  {
+    "id": "py-except-specific-1",
+    "title": "Catch Specific Exception",
+    "difficulty": "easy",
+    "description": "Try to access index 10 in list [1, 2, 3]. Catch IndexError and print 'Index out of range'.",
+    "setupCode": "",
+    "starterCode": "numbers = [1, 2, 3]",
+    "expectedOutput": "Index out of range",
+    "testCode": "numbers = [1, 2, 3]\n{user_code}",
+    "hints": [
+      "Use except IndexError:",
+      "Accessing invalid index raises IndexError"
+    ]
+  },
+  {
+    "id": "py-except-multiple-1",
+    "title": "Multiple Except Blocks",
+    "difficulty": "medium",
+    "description": "Try to divide 10 by 0. Handle ZeroDivisionError with 'Division error' and TypeError with 'Type error'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Division error",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use multiple except blocks, one for each exception type",
+      "except ZeroDivisionError: ... except TypeError: ..."
+    ]
+  },
+  {
+    "id": "py-except-tuple-1",
+    "title": "Catch Multiple Exceptions",
+    "difficulty": "medium",
+    "description": "Try int('abc'). Catch both ValueError and TypeError in one except block, print 'Conversion error'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Conversion error",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use except (ValueError, TypeError):",
+      "Tuple of exception types in one except"
+    ]
+  },
+  {
+    "id": "py-except-else-1",
+    "title": "Try-Except-Else",
+    "difficulty": "medium",
+    "description": "Try to divide 10 by 2. If successful, print 'Result: 5.0' in else block.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Result: 5.0",
+    "testCode": "{user_code}",
+    "hints": [
+      "else block runs if no exception occurs",
+      "Place result printing in else:"
+    ]
+  },
+  {
+    "id": "py-except-finally-1",
+    "title": "Try-Except-Finally",
+    "difficulty": "medium",
+    "description": "Try dividing by 0. Catch exception with 'Error', then print 'Cleanup' in finally block.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Error\nCleanup",
+    "testCode": "{user_code}",
+    "hints": [
+      "finally block always runs, even after exception",
+      "Use for cleanup operations"
+    ]
+  },
+  {
+    "id": "py-except-message-1",
+    "title": "Access Exception Message",
+    "difficulty": "easy",
+    "description": "Try int('abc'). Catch ValueError as e and print the exception message.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "invalid literal for int() with base 10: 'abc'",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use except ValueError as e:",
+      "Print with print(e) or str(e)"
+    ]
+  },
+  {
+    "id": "py-except-raise-1",
+    "title": "Raise an Exception",
+    "difficulty": "easy",
+    "description": "Raise a ValueError with message 'Invalid input' and catch it, printing the message.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Invalid input",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use raise ValueError('Invalid input')",
+      "Catch with except ValueError as e:"
+    ]
+  },
+  {
+    "id": "py-except-reraise-1",
+    "title": "Re-raise Exception",
+    "difficulty": "medium",
+    "description": "Catch an exception, print 'Logging error', then re-raise it.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Logging error\nError caught",
+    "testCode": "try:\n    {user_code}\nexcept ValueError:\n    print('Error caught')",
+    "hints": [
+      "In except block, print message then use 'raise' with no arguments",
+      "Re-raises the same exception"
+    ]
+  },
+  {
+    "id": "py-except-file-not-found-1",
+    "title": "Handle FileNotFoundError",
+    "difficulty": "easy",
+    "description": "Try to open 'nonexistent.txt'. Catch FileNotFoundError and print 'File not found'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "File not found",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use open('nonexistent.txt', 'r')",
+      "Catch with except FileNotFoundError:"
+    ]
+  },
+  {
+    "id": "py-except-key-error-1",
+    "title": "Handle KeyError",
+    "difficulty": "easy",
+    "description": "Try to access key 'age' from dict {'name': 'Alice'}. Catch KeyError and print 'Key not found'.",
+    "setupCode": "",
+    "starterCode": "person = {'name': 'Alice'}",
+    "expectedOutput": "Key not found",
+    "testCode": "person = {'name': 'Alice'}\n{user_code}",
+    "hints": [
+      "Try: person['age']",
+      "Catch with except KeyError:"
+    ]
+  },
+  {
+    "id": "py-except-attribute-error-1",
+    "title": "Handle AttributeError",
+    "difficulty": "easy",
+    "description": "Try to call .append() on a string 'hello'. Catch AttributeError and print 'Method not found'.",
+    "setupCode": "",
+    "starterCode": "text = 'hello'",
+    "expectedOutput": "Method not found",
+    "testCode": "text = 'hello'\n{user_code}",
+    "hints": [
+      "Try: text.append('x')",
+      "Strings don't have append method"
+    ]
+  },
+  {
+    "id": "py-except-type-error-1",
+    "title": "Handle TypeError",
+    "difficulty": "easy",
+    "description": "Try to add 5 + 'hello'. Catch TypeError and print 'Type mismatch'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Type mismatch",
+    "testCode": "{user_code}",
+    "hints": [
+      "Can't add int and string",
+      "Catch with except TypeError:"
+    ]
+  },
+  {
+    "id": "py-except-import-error-1",
+    "title": "Handle ImportError",
+    "difficulty": "easy",
+    "description": "Try to import nonexistent module 'fake_module'. Catch ImportError and print 'Module not found'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Module not found",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use import fake_module",
+      "Or: from fake_module import something"
+    ]
+  },
+  {
+    "id": "py-except-assert-1",
+    "title": "Handle AssertionError",
+    "difficulty": "medium",
+    "description": "Use assert with False condition. Catch AssertionError and print 'Assertion failed'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Assertion failed",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use assert False, 'message'",
+      "Catch with except AssertionError:"
+    ]
+  },
+  {
+    "id": "py-except-custom-1",
+    "title": "Custom Exception Class",
+    "difficulty": "medium",
+    "description": "Create custom exception 'NegativeNumberError', raise it for -5, and catch it printing 'Negative not allowed'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Negative not allowed",
+    "testCode": "{user_code}",
+    "hints": [
+      "class NegativeNumberError(Exception): pass",
+      "Raise with raise NegativeNumberError()",
+      "Catch like any other exception"
+    ]
+  },
+  {
+    "id": "py-except-custom-message-1",
+    "title": "Custom Exception with Message",
+    "difficulty": "medium",
+    "description": "Create custom exception with __init__ that stores message. Raise with 'Invalid value' and print message.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Invalid value",
+    "testCode": "{user_code}",
+    "hints": [
+      "Define __init__(self, message)",
+      "Store as self.message",
+      "Access with except CustomError as e: print(e.message)"
+    ]
+  },
+  {
+    "id": "py-except-safe-divide-1",
+    "title": "Safe Division Function",
+    "difficulty": "medium",
+    "description": "Define safe_divide(a, b) that returns a/b or 'Error' if ZeroDivisionError. Test with 10, 0.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Error",
+    "testCode": "{user_code}\nprint(safe_divide(10, 0))",
+    "hints": [
+      "Use try-except inside function",
+      "Return result or error message"
+    ]
+  },
+  {
+    "id": "py-except-safe-input-1",
+    "title": "Safe Integer Input",
+    "difficulty": "medium",
+    "description": "Define get_int(value) that converts to int or returns None if ValueError. Test with 'abc'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "None",
+    "testCode": "{user_code}\nprint(get_int('abc'))",
+    "hints": [
+      "Try: return int(value)",
+      "Except ValueError: return None"
+    ]
+  },
+  {
+    "id": "py-except-list-access-1",
+    "title": "Safe List Access",
+    "difficulty": "medium",
+    "description": "Define get_item(lst, index) that returns item or 'Invalid index' if IndexError. Test [1,2,3] with index 5.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Invalid index",
+    "testCode": "{user_code}\nprint(get_item([1, 2, 3], 5))",
+    "hints": [
+      "Try: return lst[index]",
+      "Except IndexError: return message"
+    ]
+  },
+  {
+    "id": "py-except-dict-access-1",
+    "title": "Safe Dictionary Access",
+    "difficulty": "medium",
+    "description": "Define get_value(d, key) that returns value or 'Key not found' if KeyError. Test {'a': 1} with key 'b'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Key not found",
+    "testCode": "{user_code}\nprint(get_value({'a': 1}, 'b'))",
+    "hints": [
+      "Try: return d[key]",
+      "Except KeyError: return message",
+      "Alternative: use d.get(key, default)"
+    ]
+  },
+  {
+    "id": "py-except-nested-1",
+    "title": "Nested Try-Except",
+    "difficulty": "hard",
+    "description": "Outer try divides 10/2. Inner try converts 'abc' to int. Handle both errors separately.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Inner error",
+    "testCode": "{user_code}",
+    "hints": [
+      "Put one try-except inside another",
+      "Each handles different exceptions"
+    ]
+  },
+  {
+    "id": "py-except-chain-1",
+    "title": "Exception Chaining",
+    "difficulty": "hard",
+    "description": "Catch ValueError, then raise custom exception with 'from e' to chain them.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Custom error",
+    "testCode": "class CustomError(Exception): pass\ntry:\n    {user_code}\nexcept CustomError:\n    print('Custom error')",
+    "hints": [
+      "In except block: raise CustomError() from e",
+      "Chains the original exception"
+    ]
+  },
+  {
+    "id": "py-except-suppress-1",
+    "title": "Suppress Exception",
+    "difficulty": "medium",
+    "description": "Use contextlib.suppress to ignore FileNotFoundError when opening 'missing.txt'. Print 'Done' after.",
+    "setupCode": "",
+    "starterCode": "from contextlib import suppress",
+    "expectedOutput": "Done",
+    "testCode": "from contextlib import suppress\n{user_code}\nprint('Done')",
+    "hints": [
+      "with suppress(FileNotFoundError):",
+      "Indented code ignores specified exceptions"
+    ]
+  },
+  {
+    "id": "py-except-else-finally-1",
+    "title": "Try-Except-Else-Finally Complete",
+    "difficulty": "medium",
+    "description": "Try dividing 10/2. Print 'Success' in else, 'Cleanup' in finally. Should print both.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Success\nCleanup",
+    "testCode": "{user_code}",
+    "hints": [
+      "All four blocks: try, except, else, finally",
+      "else runs if no exception, finally always runs"
+    ]
+  },
+  {
+    "id": "py-except-file-handling-1",
+    "title": "File Handling with Exception",
+    "difficulty": "medium",
+    "description": "Try to read 'missing.txt', handle error, use finally to print 'File operation complete'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Error reading file\nFile operation complete",
+    "testCode": "{user_code}",
+    "hints": [
+      "Try: open and read file",
+      "Except: print error message",
+      "Finally: print completion message"
+    ]
+  },
+  {
+    "id": "py-except-validation-1",
+    "title": "Input Validation with Exceptions",
+    "difficulty": "medium",
+    "description": "Define validate_age(age) that raises ValueError if age < 0 or age > 120. Test with -5.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Invalid age",
+    "testCode": "{user_code}\ntry:\n    validate_age(-5)\nexcept ValueError:\n    print('Invalid age')",
+    "hints": [
+      "Check conditions inside function",
+      "raise ValueError('message') if invalid"
+    ]
+  },
+  {
+    "id": "py-except-retry-1",
+    "title": "Retry Pattern",
+    "difficulty": "hard",
+    "description": "Try operation 3 times. If it fails all times, print 'Failed after 3 attempts'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Failed after 3 attempts",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use for loop for attempts",
+      "Try operation in each iteration",
+      "Break if successful, continue if exception"
+    ]
+  },
+  {
+    "id": "py-except-context-manager-1",
+    "title": "Custom Context Manager with Exceptions",
+    "difficulty": "hard",
+    "description": "Create context manager that prints 'Enter' on entry, 'Exit' on exit even if exception occurs.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Enter\nError\nExit",
+    "testCode": "{user_code}\ntry:\n    with MyContext():\n        print('Error')\n        raise ValueError()\nexcept ValueError:\n    pass",
+    "hints": [
+      "Define __enter__ and __exit__ methods",
+      "__exit__ receives exception info",
+      "Return True to suppress exception"
+    ]
+  },
+  {
+    "id": "py-except-bare-except-1",
+    "title": "Avoid Bare Except",
+    "difficulty": "medium",
+    "description": "Demonstrate why bare except is bad. Catch Exception (not bare) for 10/0, print 'Error handled'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Error handled",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use except Exception: not except:",
+      "Bare except catches SystemExit and KeyboardInterrupt too"
+    ]
+  },
+  {
+    "id": "py-except-logging-1",
+    "title": "Exception Logging Pattern",
+    "difficulty": "medium",
+    "description": "Try invalid operation, catch exception, print 'Error: ' + error message.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Error: division by zero",
+    "testCode": "{user_code}",
+    "hints": [
+      "except Exception as e:",
+      "print(f'Error: {e}')"
+    ]
+  },
+  {
+    "id": "py-except-graceful-1",
+    "title": "Graceful Degradation",
+    "difficulty": "medium",
+    "description": "Try to import json. If successful print 'Available', if not print 'Unavailable' and continue.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Available",
+    "testCode": "{user_code}",
+    "hints": [
+      "Try: import json; print('Available')",
+      "Except ImportError: print('Unavailable')",
+      "Program continues after exception"
+    ]
+  },
+  {
+    "id": "py-except-calculator-1",
+    "title": "Calculator with Error Handling",
+    "difficulty": "medium",
+    "description": "Define calc(a, op, b) that handles division by zero and invalid operators. Test 10 / 0.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Cannot divide by zero",
+    "testCode": "{user_code}\nprint(calc(10, '/', 0))",
+    "hints": [
+      "Check operator with if/elif",
+      "Wrap division in try-except",
+      "Return error message for invalid operator"
+    ]
+  },
+  {
+    "id": "py-except-json-parse-1",
+    "title": "Safe JSON Parsing",
+    "difficulty": "medium",
+    "description": "Try to parse invalid JSON string '{bad}'. Catch JSONDecodeError and return None.",
+    "setupCode": "",
+    "starterCode": "import json",
+    "expectedOutput": "None",
+    "testCode": "import json\n{user_code}\nprint(result)",
+    "hints": [
+      "Try: json.loads('{bad}')",
+      "Except json.JSONDecodeError: return None"
+    ]
+  },
+  {
+    "id": "py-except-multiple-errors-1",
+    "title": "Handle Multiple Error Sources",
+    "difficulty": "hard",
+    "description": "Function reads file and parses JSON. Handle both FileNotFoundError and JSONDecodeError separately.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "File error",
+    "testCode": "{user_code}\nprint(read_json('missing.json'))",
+    "hints": [
+      "Two except blocks for two error types",
+      "Return different messages for each"
+    ]
+  },
+  {
+    "id": "py-except-timeout-1",
+    "title": "Timeout Exception",
+    "difficulty": "hard",
+    "description": "Simulate timeout with TimeoutError. Raise after delay, catch and print 'Operation timed out'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Operation timed out",
+    "testCode": "{user_code}",
+    "hints": [
+      "raise TimeoutError('message')",
+      "Catch with except TimeoutError:"
+    ]
+  },
+  {
+    "id": "py-except-guard-1",
+    "title": "Exception as Guard Clause",
+    "difficulty": "medium",
+    "description": "Define function that tries to convert input to int. If fails, return 0 as default.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "0",
+    "testCode": "{user_code}\nprint(to_int_safe('abc'))",
+    "hints": [
+      "Try: return int(value)",
+      "Except ValueError: return 0",
+      "Exception used for control flow"
+    ]
+  },
+  {
+    "id": "py-except-stack-trace-1",
+    "title": "Print Stack Trace",
+    "difficulty": "medium",
+    "description": "Import traceback. Catch exception and use traceback.print_exc() to show stack trace.",
+    "setupCode": "",
+    "starterCode": "import traceback",
+    "expectedOutput": "Stack trace printed",
+    "testCode": "import traceback\n{user_code}\nprint('Stack trace printed')",
+    "hints": [
+      "In except block: traceback.print_exc()",
+      "Prints full error details"
+    ]
+  },
+  {
+    "id": "py-except-warnings-1",
+    "title": "Warnings vs Exceptions",
+    "difficulty": "medium",
+    "description": "Import warnings, issue a UserWarning with 'Deprecated feature', continue execution, print 'Done'.",
+    "setupCode": "",
+    "starterCode": "import warnings",
+    "expectedOutput": "Done",
+    "testCode": "import warnings\nwarnings.simplefilter('ignore')\n{user_code}\nprint('Done')",
+    "hints": [
+      "Use warnings.warn('message', UserWarning)",
+      "Unlike exceptions, execution continues"
+    ]
+  },
+  {
+    "id": "py-except-eafp-1",
+    "title": "EAFP vs LBYL - EAFP Style",
+    "difficulty": "medium",
+    "description": "Use EAFP (Easier to Ask Forgiveness than Permission): try to access dict['key'] rather than checking.",
+    "setupCode": "",
+    "starterCode": "data = {'name': 'Alice'}",
+    "expectedOutput": "Not found",
+    "testCode": "data = {'name': 'Alice'}\n{user_code}",
+    "hints": [
+      "Try: value = data['age']",
+      "Except KeyError: print('Not found')",
+      "Don't check 'if key in dict' first"
+    ]
+  },
+  {
+    "id": "py-except-lbyl-1",
+    "title": "EAFP vs LBYL - LBYL Style",
+    "difficulty": "medium",
+    "description": "Use LBYL (Look Before You Leap): check if key exists before accessing. Check 'age' in {'name': 'Alice'}.",
+    "setupCode": "",
+    "starterCode": "data = {'name': 'Alice'}",
+    "expectedOutput": "Not found",
+    "testCode": "data = {'name': 'Alice'}\n{user_code}",
+    "hints": [
+      "if 'age' in data: ... else: print('Not found')",
+      "Check before accessing, no exception handling"
+    ]
+  },
+  {
+    "id": "py-except-resource-cleanup-1",
+    "title": "Resource Cleanup with Finally",
+    "difficulty": "medium",
+    "description": "Open file in try, read it, close in finally. Simulate with print statements.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Opening\nReading\nClosing",
+    "testCode": "{user_code}",
+    "hints": [
+      "Print 'Opening' in try",
+      "Print 'Reading' in try",
+      "Print 'Closing' in finally"
+    ]
+  },
+  {
+    "id": "py-except-assertion-validation-1",
+    "title": "Assertions for Validation",
+    "difficulty": "medium",
+    "description": "Use assert to validate age > 0. Test with -5, catch AssertionError, print 'Invalid'.",
+    "setupCode": "",
+    "starterCode": "age = -5",
+    "expectedOutput": "Invalid",
+    "testCode": "age = -5\n{user_code}",
+    "hints": [
+      "assert age > 0, 'Age must be positive'",
+      "Assertions are for debugging, not user input validation"
+    ]
+  },
+  {
+    "id": "py-except-exception-hierarchy-1",
+    "title": "Exception Hierarchy",
+    "difficulty": "hard",
+    "description": "Catch OSError (parent) which catches both FileNotFoundError and PermissionError (children). Test with FileNotFoundError.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "OS error occurred",
+    "testCode": "{user_code}",
+    "hints": [
+      "raise FileNotFoundError()",
+      "except OSError: catches it because it's parent class",
+      "Order matters: catch specific before general"
+    ]
+  },
+  {
+    "id": "py-except-sys-exit-1",
+    "title": "Handle SystemExit",
+    "difficulty": "hard",
+    "description": "Catch SystemExit from sys.exit(1), print 'Exit caught' instead of exiting.",
+    "setupCode": "",
+    "starterCode": "import sys",
+    "expectedOutput": "Exit caught",
+    "testCode": "import sys\n{user_code}",
+    "hints": [
+      "Try: sys.exit(1)",
+      "except SystemExit: print('Exit caught')",
+      "Normally shouldn't catch this"
+    ]
+  },
+  {
+    "id": "py-except-keyboard-interrupt-1",
+    "title": "Handle KeyboardInterrupt",
+    "difficulty": "medium",
+    "description": "Simulate Ctrl+C with raise KeyboardInterrupt(). Catch it and print 'Interrupted'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Interrupted",
+    "testCode": "{user_code}",
+    "hints": [
+      "raise KeyboardInterrupt()",
+      "except KeyboardInterrupt: print('Interrupted')",
+      "Allows graceful shutdown"
+    ]
+  },
+  {
+    "id": "py-except-exception-args-1",
+    "title": "Exception Arguments",
+    "difficulty": "medium",
+    "description": "Raise ValueError with multiple args: ('error', 404). Catch and print args as tuple.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "('error', 404)",
+    "testCode": "{user_code}",
+    "hints": [
+      "raise ValueError('error', 404)",
+      "except ValueError as e: print(e.args)"
+    ]
+  },
+  {
+    "id": "py-except-finally-return-1",
+    "title": "Finally with Return",
+    "difficulty": "hard",
+    "description": "Define function with try that returns 1, finally that prints 'Cleanup'. Show finally executes before return.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Cleanup\n1",
+    "testCode": "{user_code}\nprint(test_finally())",
+    "hints": [
+      "Try: return 1",
+      "Finally: print('Cleanup')",
+      "Finally runs even when returning"
+    ]
+  }
+]

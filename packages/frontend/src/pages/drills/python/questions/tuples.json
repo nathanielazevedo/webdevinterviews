@@ -1,0 +1,728 @@
+[
+  {
+    "id": "py-tuple-basic-1",
+    "title": "Create Basic Tuple",
+    "difficulty": "easy",
+    "description": "Create a tuple with elements 1, 2, 3, 4, 5 and print it.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "(1, 2, 3, 4, 5)",
+    "testCode": "{user_code}\nprint(numbers)",
+    "hints": [
+      "Use parentheses: (1, 2, 3, 4, 5)",
+      "Or use tuple([1, 2, 3, 4, 5])"
+    ]
+  },
+  {
+    "id": "py-tuple-single-1",
+    "title": "Single Element Tuple",
+    "difficulty": "easy",
+    "description": "Create tuple with single element 5 and print it.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "(5,)",
+    "testCode": "{user_code}\nprint(single)",
+    "hints": [
+      "Use (5,) with trailing comma",
+      "Without comma, (5) is just an integer",
+      "The comma makes it a tuple"
+    ]
+  },
+  {
+    "id": "py-tuple-empty-1",
+    "title": "Create Empty Tuple",
+    "difficulty": "easy",
+    "description": "Create an empty tuple and print its type.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "<class 'tuple'>",
+    "testCode": "{user_code}\nprint(type(empty))",
+    "hints": [
+      "Use () or tuple()",
+      "Empty tuple is written as ()"
+    ]
+  },
+  {
+    "id": "py-tuple-no-parens-1",
+    "title": "Tuple Without Parentheses",
+    "difficulty": "easy",
+    "description": "Create tuple 1, 2, 3 without using parentheses. Print type to verify.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "<class 'tuple'>",
+    "testCode": "{user_code}\nprint(type(numbers))",
+    "hints": [
+      "Use numbers = 1, 2, 3",
+      "Comma creates tuple, not parentheses",
+      "Parentheses are optional (except for empty tuple)"
+    ]
+  },
+  {
+    "id": "py-tuple-index-1",
+    "title": "Access Tuple Element",
+    "difficulty": "easy",
+    "description": "Access the second element (index 1) of tuple ('a', 'b', 'c'). Print it.",
+    "setupCode": "",
+    "starterCode": "letters = ('a', 'b', 'c')",
+    "expectedOutput": "b",
+    "testCode": "letters = ('a', 'b', 'c')\n{user_code}\nprint(element)",
+    "hints": [
+      "Use letters[1]",
+      "Indexing works same as lists",
+      "Zero-indexed"
+    ]
+  },
+  {
+    "id": "py-tuple-negative-index-1",
+    "title": "Negative Indexing",
+    "difficulty": "easy",
+    "description": "Access last element of (10, 20, 30, 40) using negative index. Print it.",
+    "setupCode": "",
+    "starterCode": "numbers = (10, 20, 30, 40)",
+    "expectedOutput": "40",
+    "testCode": "numbers = (10, 20, 30, 40)\n{user_code}\nprint(last)",
+    "hints": [
+      "Use numbers[-1]",
+      "-1 gets last element",
+      "-2 would get second-to-last"
+    ]
+  },
+  {
+    "id": "py-tuple-slice-1",
+    "title": "Slice Tuple",
+    "difficulty": "easy",
+    "description": "Get elements at indices 1-3 (exclusive) from (0, 1, 2, 3, 4). Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = (0, 1, 2, 3, 4)",
+    "expectedOutput": "(1, 2)",
+    "testCode": "numbers = (0, 1, 2, 3, 4)\n{user_code}\nprint(slice_result)",
+    "hints": [
+      "Use numbers[1:3]",
+      "Slicing returns new tuple",
+      "End index is exclusive"
+    ]
+  },
+  {
+    "id": "py-tuple-length-1",
+    "title": "Tuple Length",
+    "difficulty": "easy",
+    "description": "Find length of tuple (1, 2, 3, 4, 5). Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 3, 4, 5)",
+    "expectedOutput": "5",
+    "testCode": "numbers = (1, 2, 3, 4, 5)\n{user_code}\nprint(length)",
+    "hints": [
+      "Use len(numbers)",
+      "Same as lists"
+    ]
+  },
+  {
+    "id": "py-tuple-immutable-1",
+    "title": "Tuple Immutability",
+    "difficulty": "easy",
+    "description": "Try to modify element at index 0 of (1, 2, 3). Catch TypeError and print 'Immutable'.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 3)",
+    "expectedOutput": "Immutable",
+    "testCode": "numbers = (1, 2, 3)\n{user_code}",
+    "hints": [
+      "Try numbers[0] = 10 in try block",
+      "Tuples cannot be modified",
+      "Catch TypeError"
+    ]
+  },
+  {
+    "id": "py-tuple-concatenate-1",
+    "title": "Concatenate Tuples",
+    "difficulty": "easy",
+    "description": "Concatenate (1, 2) and (3, 4) into single tuple. Print result.",
+    "setupCode": "",
+    "starterCode": "tuple1 = (1, 2)\ntuple2 = (3, 4)",
+    "expectedOutput": "(1, 2, 3, 4)",
+    "testCode": "tuple1 = (1, 2)\ntuple2 = (3, 4)\n{user_code}\nprint(combined)",
+    "hints": [
+      "Use tuple1 + tuple2",
+      "+ creates new tuple",
+      "Original tuples unchanged"
+    ]
+  },
+  {
+    "id": "py-tuple-repeat-1",
+    "title": "Repeat Tuple",
+    "difficulty": "easy",
+    "description": "Repeat tuple (1, 2) three times. Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2)",
+    "expectedOutput": "(1, 2, 1, 2, 1, 2)",
+    "testCode": "numbers = (1, 2)\n{user_code}\nprint(repeated)",
+    "hints": [
+      "Use numbers * 3",
+      "* repeats tuple",
+      "Creates new tuple"
+    ]
+  },
+  {
+    "id": "py-tuple-membership-1",
+    "title": "Check Membership",
+    "difficulty": "easy",
+    "description": "Check if 3 is in tuple (1, 2, 3, 4, 5). Print True or False.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 3, 4, 5)",
+    "expectedOutput": "True",
+    "testCode": "numbers = (1, 2, 3, 4, 5)\n{user_code}",
+    "hints": [
+      "Use 3 in numbers",
+      "Returns boolean"
+    ]
+  },
+  {
+    "id": "py-tuple-count-1",
+    "title": "Count Element Occurrences",
+    "difficulty": "easy",
+    "description": "Count how many times 2 appears in (1, 2, 2, 3, 2, 4). Print count.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 2, 3, 2, 4)",
+    "expectedOutput": "3",
+    "testCode": "numbers = (1, 2, 2, 3, 2, 4)\n{user_code}\nprint(count)",
+    "hints": [
+      "Use numbers.count(2)",
+      "Returns number of occurrences"
+    ]
+  },
+  {
+    "id": "py-tuple-index-method-1",
+    "title": "Find Element Index",
+    "difficulty": "easy",
+    "description": "Find index of first occurrence of 'b' in ('a', 'b', 'c', 'b'). Print index.",
+    "setupCode": "",
+    "starterCode": "letters = ('a', 'b', 'c', 'b')",
+    "expectedOutput": "1",
+    "testCode": "letters = ('a', 'b', 'c', 'b')\n{user_code}\nprint(index)",
+    "hints": [
+      "Use letters.index('b')",
+      "Returns index of first occurrence",
+      "Raises ValueError if not found"
+    ]
+  },
+  {
+    "id": "py-tuple-unpack-1",
+    "title": "Basic Tuple Unpacking",
+    "difficulty": "easy",
+    "description": "Unpack tuple (1, 2, 3) into variables a, b, c. Print b.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 3)",
+    "expectedOutput": "2",
+    "testCode": "numbers = (1, 2, 3)\n{user_code}\nprint(b)",
+    "hints": [
+      "Use a, b, c = numbers",
+      "Number of variables must match tuple length"
+    ]
+  },
+  {
+    "id": "py-tuple-swap-1",
+    "title": "Swap Variables Using Tuple",
+    "difficulty": "easy",
+    "description": "Swap values of x=5 and y=10 using tuple unpacking. Print x, y after swap.",
+    "setupCode": "",
+    "starterCode": "x = 5\ny = 10",
+    "expectedOutput": "10 5",
+    "testCode": "x = 5\ny = 10\n{user_code}\nprint(x, y)",
+    "hints": [
+      "Use x, y = y, x",
+      "Right side creates tuple (y, x)",
+      "Left side unpacks it"
+    ]
+  },
+  {
+    "id": "py-tuple-extended-unpack-1",
+    "title": "Extended Unpacking",
+    "difficulty": "medium",
+    "description": "Unpack (1, 2, 3, 4, 5) to first, *middle, last. Print middle.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 3, 4, 5)",
+    "expectedOutput": "[2, 3, 4]",
+    "testCode": "numbers = (1, 2, 3, 4, 5)\n{user_code}\nprint(middle)",
+    "hints": [
+      "Use first, *middle, last = numbers",
+      "* collects remaining elements as list",
+      "Can be in any position"
+    ]
+  },
+  {
+    "id": "py-tuple-ignore-1",
+    "title": "Ignore Values with Underscore",
+    "difficulty": "medium",
+    "description": "Unpack (1, 2, 3) but only keep first and last. Use _ for middle. Print first and last.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 3)",
+    "expectedOutput": "1 3",
+    "testCode": "numbers = (1, 2, 3)\n{user_code}\nprint(first, last)",
+    "hints": [
+      "Use first, _, last = numbers",
+      "_ is convention for ignored values"
+    ]
+  },
+  {
+    "id": "py-tuple-nested-1",
+    "title": "Nested Tuple",
+    "difficulty": "medium",
+    "description": "Create nested tuple ((1, 2), (3, 4)) and access element 4. Print it.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "4",
+    "testCode": "{user_code}\nprint(element)",
+    "hints": [
+      "nested = ((1, 2), (3, 4))",
+      "Use nested[1][1] to access 4",
+      "First index gets inner tuple, second gets element"
+    ]
+  },
+  {
+    "id": "py-tuple-nested-unpack-1",
+    "title": "Nested Tuple Unpacking",
+    "difficulty": "medium",
+    "description": "Unpack ((1, 2), (3, 4)) into a, b, c, d. Print c.",
+    "setupCode": "",
+    "starterCode": "nested = ((1, 2), (3, 4))",
+    "expectedOutput": "3",
+    "testCode": "nested = ((1, 2), (3, 4))\n{user_code}\nprint(c)",
+    "hints": [
+      "Use (a, b), (c, d) = nested",
+      "Pattern matches structure",
+      "Unpacks nested tuples"
+    ]
+  },
+  {
+    "id": "py-tuple-return-multiple-1",
+    "title": "Function Returning Tuple",
+    "difficulty": "medium",
+    "description": "Define function that returns min and max of [1, 5, 3, 9, 2] as tuple. Print result.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "(1, 9)",
+    "testCode": "{user_code}\nprint(get_min_max([1, 5, 3, 9, 2]))",
+    "hints": [
+      "Return multiple values: return min(lst), max(lst)",
+      "Python automatically creates tuple",
+      "Common pattern for multiple return values"
+    ]
+  },
+  {
+    "id": "py-tuple-enumerate-1",
+    "title": "Enumerate Returns Tuples",
+    "difficulty": "medium",
+    "description": "Use enumerate on ['a', 'b', 'c'] and print the tuples.",
+    "setupCode": "",
+    "starterCode": "letters = ['a', 'b', 'c']",
+    "expectedOutput": "(0, 'a')\n(1, 'b')\n(2, 'c')",
+    "testCode": "letters = ['a', 'b', 'c']\n{user_code}",
+    "hints": [
+      "for item in enumerate(letters): print(item)",
+      "enumerate returns (index, value) tuples"
+    ]
+  },
+  {
+    "id": "py-tuple-zip-1",
+    "title": "Zip Creates Tuples",
+    "difficulty": "medium",
+    "description": "Zip [1, 2, 3] with ['a', 'b', 'c'] and print list of tuples.",
+    "setupCode": "",
+    "starterCode": "numbers = [1, 2, 3]\nletters = ['a', 'b', 'c']",
+    "expectedOutput": "[(1, 'a'), (2, 'b'), (3, 'c')]",
+    "testCode": "numbers = [1, 2, 3]\nletters = ['a', 'b', 'c']\n{user_code}\nprint(result)",
+    "hints": [
+      "Use list(zip(numbers, letters))",
+      "zip pairs elements into tuples"
+    ]
+  },
+  {
+    "id": "py-tuple-items-1",
+    "title": "Dictionary Items as Tuples",
+    "difficulty": "easy",
+    "description": "Get items from {'a': 1, 'b': 2} as list of tuples. Print it.",
+    "setupCode": "",
+    "starterCode": "d = {'a': 1, 'b': 2}",
+    "expectedOutput": "[('a', 1), ('b', 2)]",
+    "testCode": "d = {'a': 1, 'b': 2}\n{user_code}\nprint(sorted(items))",
+    "hints": [
+      "Use list(d.items())",
+      "items() returns (key, value) tuples"
+    ]
+  },
+  {
+    "id": "py-tuple-max-min-1",
+    "title": "Max and Min of Tuple",
+    "difficulty": "easy",
+    "description": "Find max and min of (5, 2, 8, 1, 9). Print both.",
+    "setupCode": "",
+    "starterCode": "numbers = (5, 2, 8, 1, 9)",
+    "expectedOutput": "9\n1",
+    "testCode": "numbers = (5, 2, 8, 1, 9)\n{user_code}\nprint(maximum)\nprint(minimum)",
+    "hints": [
+      "Use max(numbers) and min(numbers)",
+      "Works on any iterable"
+    ]
+  },
+  {
+    "id": "py-tuple-sum-1",
+    "title": "Sum of Tuple",
+    "difficulty": "easy",
+    "description": "Calculate sum of (1, 2, 3, 4, 5). Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 3, 4, 5)",
+    "expectedOutput": "15",
+    "testCode": "numbers = (1, 2, 3, 4, 5)\n{user_code}\nprint(total)",
+    "hints": [
+      "Use sum(numbers)",
+      "Works on tuples of numbers"
+    ]
+  },
+  {
+    "id": "py-tuple-sorted-1",
+    "title": "Sort Tuple",
+    "difficulty": "easy",
+    "description": "Sort tuple (3, 1, 4, 1, 5) and return as list. Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = (3, 1, 4, 1, 5)",
+    "expectedOutput": "[1, 1, 3, 4, 5]",
+    "testCode": "numbers = (3, 1, 4, 1, 5)\n{user_code}\nprint(sorted_list)",
+    "hints": [
+      "Use sorted(numbers)",
+      "Returns list, not tuple",
+      "Original tuple unchanged"
+    ]
+  },
+  {
+    "id": "py-tuple-convert-list-1",
+    "title": "Convert Tuple to List",
+    "difficulty": "easy",
+    "description": "Convert tuple (1, 2, 3) to list. Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 3)",
+    "expectedOutput": "[1, 2, 3]",
+    "testCode": "numbers = (1, 2, 3)\n{user_code}\nprint(number_list)",
+    "hints": [
+      "Use list(numbers)",
+      "Creates mutable list from tuple"
+    ]
+  },
+  {
+    "id": "py-tuple-convert-from-list-1",
+    "title": "Convert List to Tuple",
+    "difficulty": "easy",
+    "description": "Convert list [1, 2, 3] to tuple. Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = [1, 2, 3]",
+    "expectedOutput": "(1, 2, 3)",
+    "testCode": "numbers = [1, 2, 3]\n{user_code}\nprint(number_tuple)",
+    "hints": [
+      "Use tuple(numbers)",
+      "Creates immutable tuple from list"
+    ]
+  },
+  {
+    "id": "py-tuple-iteration-1",
+    "title": "Iterate Over Tuple",
+    "difficulty": "easy",
+    "description": "Iterate over ('a', 'b', 'c') and print each element.",
+    "setupCode": "",
+    "starterCode": "letters = ('a', 'b', 'c')",
+    "expectedOutput": "a\nb\nc",
+    "testCode": "letters = ('a', 'b', 'c')\n{user_code}",
+    "hints": [
+      "Use for letter in letters:",
+      "Iterate same as lists"
+    ]
+  },
+  {
+    "id": "py-tuple-comprehension-1",
+    "title": "Tuple from Comprehension",
+    "difficulty": "medium",
+    "description": "Create tuple of squares for 1-5 using tuple comprehension (via generator). Print result.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "(1, 4, 9, 16, 25)",
+    "testCode": "{user_code}\nprint(squares)",
+    "hints": [
+      "Use tuple(x**2 for x in range(1, 6))",
+      "No tuple comprehension, use tuple(generator)"
+    ]
+  },
+  {
+    "id": "py-tuple-as-key-1",
+    "title": "Tuple as Dictionary Key",
+    "difficulty": "medium",
+    "description": "Use tuple (1, 2) as dict key with value 'pair'. Print the value.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "pair",
+    "testCode": "{user_code}\nprint(d[(1, 2)])",
+    "hints": [
+      "d = {(1, 2): 'pair'}",
+      "Tuples are hashable (immutable)",
+      "Can be dict keys, unlike lists"
+    ]
+  },
+  {
+    "id": "py-tuple-coordinates-1",
+    "title": "Point as Tuple",
+    "difficulty": "medium",
+    "description": "Create point (3, 4) and calculate distance from origin using Pythagorean theorem. Print distance.",
+    "setupCode": "",
+    "starterCode": "point = (3, 4)",
+    "expectedOutput": "5.0",
+    "testCode": "point = (3, 4)\n{user_code}\nprint(distance)",
+    "hints": [
+      "Unpack: x, y = point",
+      "Use (x**2 + y**2)**0.5",
+      "Or import math and use math.sqrt(x**2 + y**2)"
+    ]
+  },
+  {
+    "id": "py-tuple-named-1",
+    "title": "Named Tuple",
+    "difficulty": "medium",
+    "description": "Import namedtuple and create Point with x, y fields. Create point(3, 4) and print x.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "3",
+    "testCode": "{user_code}\np = Point(3, 4)\nprint(p.x)",
+    "hints": [
+      "from collections import namedtuple",
+      "Point = namedtuple('Point', ['x', 'y'])",
+      "Access with dot notation"
+    ]
+  },
+  {
+    "id": "py-tuple-named-unpack-1",
+    "title": "Unpack Named Tuple",
+    "difficulty": "medium",
+    "description": "Create Person namedtuple with name, age. Create person('Alice', 30) and unpack. Print name.",
+    "setupCode": "",
+    "starterCode": "from collections import namedtuple",
+    "expectedOutput": "Alice",
+    "testCode": "from collections import namedtuple\n{user_code}\nprint(name)",
+    "hints": [
+      "Person = namedtuple('Person', ['name', 'age'])",
+      "p = Person('Alice', 30)",
+      "name, age = p"
+    ]
+  },
+  {
+    "id": "py-tuple-compare-1",
+    "title": "Compare Tuples",
+    "difficulty": "medium",
+    "description": "Compare (1, 2, 3) and (1, 2, 4). Print which is smaller.",
+    "setupCode": "",
+    "starterCode": "tuple1 = (1, 2, 3)\ntuple2 = (1, 2, 4)",
+    "expectedOutput": "(1, 2, 3)",
+    "testCode": "tuple1 = (1, 2, 3)\ntuple2 = (1, 2, 4)\n{user_code}\nprint(smaller)",
+    "hints": [
+      "Use tuple1 < tuple2",
+      "Lexicographic comparison",
+      "Compares element by element"
+    ]
+  },
+  {
+    "id": "py-tuple-sort-tuples-1",
+    "title": "Sort List of Tuples",
+    "difficulty": "medium",
+    "description": "Sort [(3, 'c'), (1, 'a'), (2, 'b')] by first element. Print result.",
+    "setupCode": "",
+    "starterCode": "data = [(3, 'c'), (1, 'a'), (2, 'b')]",
+    "expectedOutput": "[(1, 'a'), (2, 'b'), (3, 'c')]",
+    "testCode": "data = [(3, 'c'), (1, 'a'), (2, 'b')]\n{user_code}\nprint(sorted_data)",
+    "hints": [
+      "Use sorted(data)",
+      "Sorts by first element by default",
+      "Then by second if first is equal"
+    ]
+  },
+  {
+    "id": "py-tuple-sort-key-1",
+    "title": "Sort by Second Element",
+    "difficulty": "medium",
+    "description": "Sort [('a', 3), ('b', 1), ('c', 2)] by second element. Print result.",
+    "setupCode": "",
+    "starterCode": "data = [('a', 3), ('b', 1), ('c', 2)]",
+    "expectedOutput": "[('b', 1), ('c', 2), ('a', 3)]",
+    "testCode": "data = [('a', 3), ('b', 1), ('c', 2)]\n{user_code}\nprint(sorted_data)",
+    "hints": [
+      "Use sorted(data, key=lambda x: x[1])",
+      "key parameter specifies sort criteria"
+    ]
+  },
+  {
+    "id": "py-tuple-flatten-1",
+    "title": "Flatten Tuple of Tuples",
+    "difficulty": "medium",
+    "description": "Flatten ((1, 2), (3, 4), (5, 6)) to single tuple (1, 2, 3, 4, 5, 6). Print result.",
+    "setupCode": "",
+    "starterCode": "nested = ((1, 2), (3, 4), (5, 6))",
+    "expectedOutput": "(1, 2, 3, 4, 5, 6)",
+    "testCode": "nested = ((1, 2), (3, 4), (5, 6))\n{user_code}\nprint(flat)",
+    "hints": [
+      "Use tuple(num for t in nested for num in t)",
+      "Or sum(nested, ()) to concatenate"
+    ]
+  },
+  {
+    "id": "py-tuple-reverse-1",
+    "title": "Reverse Tuple",
+    "difficulty": "easy",
+    "description": "Reverse tuple (1, 2, 3, 4, 5). Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 3, 4, 5)",
+    "expectedOutput": "(5, 4, 3, 2, 1)",
+    "testCode": "numbers = (1, 2, 3, 4, 5)\n{user_code}\nprint(reversed_tuple)",
+    "hints": [
+      "Use numbers[::-1]",
+      "Or tuple(reversed(numbers))",
+      "Slicing creates new tuple"
+    ]
+  },
+  {
+    "id": "py-tuple-all-same-1",
+    "title": "Check All Elements Same",
+    "difficulty": "medium",
+    "description": "Check if all elements in (5, 5, 5, 5) are the same. Print True or False.",
+    "setupCode": "",
+    "starterCode": "numbers = (5, 5, 5, 5)",
+    "expectedOutput": "True",
+    "testCode": "numbers = (5, 5, 5, 5)\n{user_code}",
+    "hints": [
+      "Use len(set(numbers)) == 1",
+      "Set removes duplicates",
+      "If only one unique value, all are same"
+    ]
+  },
+  {
+    "id": "py-tuple-any-all-1",
+    "title": "Any and All with Tuples",
+    "difficulty": "medium",
+    "description": "Check if any element > 5 and all elements > 0 in (1, 3, 7, 2). Print both results.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 3, 7, 2)",
+    "expectedOutput": "True\nTrue",
+    "testCode": "numbers = (1, 3, 7, 2)\n{user_code}\nprint(any_greater)\nprint(all_positive)",
+    "hints": [
+      "Use any(x > 5 for x in numbers)",
+      "Use all(x > 0 for x in numbers)"
+    ]
+  },
+  {
+    "id": "py-tuple-filter-1",
+    "title": "Filter Tuple",
+    "difficulty": "medium",
+    "description": "Filter (1, 2, 3, 4, 5, 6) to keep only even numbers. Return as tuple.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 3, 4, 5, 6)",
+    "expectedOutput": "(2, 4, 6)",
+    "testCode": "numbers = (1, 2, 3, 4, 5, 6)\n{user_code}\nprint(evens)",
+    "hints": [
+      "Use tuple(x for x in numbers if x % 2 == 0)",
+      "Or tuple(filter(lambda x: x % 2 == 0, numbers))"
+    ]
+  },
+  {
+    "id": "py-tuple-map-1",
+    "title": "Map Over Tuple",
+    "difficulty": "medium",
+    "description": "Square all numbers in (1, 2, 3, 4). Return as tuple.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 3, 4)",
+    "expectedOutput": "(1, 4, 9, 16)",
+    "testCode": "numbers = (1, 2, 3, 4)\n{user_code}\nprint(squares)",
+    "hints": [
+      "Use tuple(x**2 for x in numbers)",
+      "Or tuple(map(lambda x: x**2, numbers))"
+    ]
+  },
+  {
+    "id": "py-tuple-matrix-1",
+    "title": "Tuple of Tuples as Matrix",
+    "difficulty": "medium",
+    "description": "Create 2x3 matrix as tuple of tuples. Print element at row 1, col 2.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "6",
+    "testCode": "{user_code}\nprint(matrix[1][2])",
+    "hints": [
+      "matrix = ((1, 2, 3), (4, 5, 6))",
+      "Access with matrix[row][col]",
+      "Immutable alternative to nested lists"
+    ]
+  },
+  {
+    "id": "py-tuple-rgb-1",
+    "title": "RGB Color as Tuple",
+    "difficulty": "medium",
+    "description": "Create RGB color (255, 0, 128) and check if valid (all 0-255). Print True/False.",
+    "setupCode": "",
+    "starterCode": "color = (255, 0, 128)",
+    "expectedOutput": "True",
+    "testCode": "color = (255, 0, 128)\n{user_code}",
+    "hints": [
+      "Use all(0 <= c <= 255 for c in color)",
+      "Check each component in range"
+    ]
+  },
+  {
+    "id": "py-tuple-partition-1",
+    "title": "Partition Tuple",
+    "difficulty": "hard",
+    "description": "Split (1, 2, 3, 4, 5, 6) into two tuples: evens and odds. Print both.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 3, 4, 5, 6)",
+    "expectedOutput": "(2, 4, 6)\n(1, 3, 5)",
+    "testCode": "numbers = (1, 2, 3, 4, 5, 6)\n{user_code}\nprint(evens)\nprint(odds)",
+    "hints": [
+      "evens = tuple(x for x in numbers if x % 2 == 0)",
+      "odds = tuple(x for x in numbers if x % 2 != 0)"
+    ]
+  },
+  {
+    "id": "py-tuple-frequency-1",
+    "title": "Element Frequency",
+    "difficulty": "medium",
+    "description": "Count frequency of each element in (1, 2, 2, 3, 3, 3) as dict. Print it.",
+    "setupCode": "",
+    "starterCode": "numbers = (1, 2, 2, 3, 3, 3)",
+    "expectedOutput": "{1: 1, 2: 2, 3: 3}",
+    "testCode": "numbers = (1, 2, 2, 3, 3, 3)\n{user_code}\nprint(freq)",
+    "hints": [
+      "Use {num: numbers.count(num) for num in set(numbers)}",
+      "Or from collections import Counter"
+    ]
+  },
+  {
+    "id": "py-tuple-immutable-contents-1",
+    "title": "Mutable Objects in Tuple",
+    "difficulty": "hard",
+    "description": "Create tuple with list inside: ([1, 2], 3). Modify the list. Print tuple.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "([1, 2, 99], 3)",
+    "testCode": "{user_code}\nt[0].append(99)\nprint(t)",
+    "hints": [
+      "t = ([1, 2], 3)",
+      "Tuple is immutable, but contents can be mutable",
+      "Can modify the list inside"
+    ]
+  },
+  {
+    "id": "py-tuple-memory-1",
+    "title": "Tuple vs List Memory",
+    "difficulty": "medium",
+    "description": "Compare size of tuple (1, 2, 3) vs list [1, 2, 3]. Print which is smaller.",
+    "setupCode": "",
+    "starterCode": "import sys",
+    "expectedOutput": "tuple",
+    "testCode": "import sys\n{user_code}\nprint(result)",
+    "hints": [
+      "Use sys.getsizeof(tuple) and sys.getsizeof(list)",
+      "Tuples use less memory",
+      "Immutable structures are more efficient"
+    ]
+  }
+]

@@ -1,0 +1,118 @@
+[
+  {
+    "id": "py-futures-import-1",
+    "title": "Import concurrent.futures Module",
+    "difficulty": "easy",
+    "description": "Import the concurrent.futures module and verify it has the 'ThreadPoolExecutor' class.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(hasattr(concurrent.futures, 'ThreadPoolExecutor'))",
+    "hints": [
+      "Use import concurrent.futures",
+      "concurrent.futures provides high-level interfaces for asynchronous execution"
+    ]
+  },
+  {
+    "id": "py-futures-executor-2",
+    "title": "Create a ThreadPoolExecutor",
+    "difficulty": "easy",
+    "description": "Import concurrent.futures and create a ThreadPoolExecutor named 'executor' with 3 workers.",
+    "setupCode": "import concurrent.futures",
+    "starterCode": "# Create executor here\n",
+    "expectedOutput": "ThreadPoolExecutor",
+    "testCode": "{user_code}\nprint(type(executor).__name__)",
+    "hints": [
+      "Use concurrent.futures.ThreadPoolExecutor(max_workers=3)",
+      "Assign it to a variable named 'executor'"
+    ]
+  },
+  {
+    "id": "py-futures-submit-3",
+    "title": "Submit a Function to Executor",
+    "difficulty": "medium",
+    "description": "Create a function that returns the square of a number, then submit it to a ThreadPoolExecutor with the argument 5. Store the Future object in a variable named 'future'.",
+    "setupCode": "import concurrent.futures\nexecutor = concurrent.futures.ThreadPoolExecutor(max_workers=2)",
+    "starterCode": "def square(n):\n    # Your code here\n    pass\n\n# Submit the function\n",
+    "expectedOutput": "25",
+    "testCode": "{user_code}\nprint(future.result())",
+    "hints": [
+      "Define square to return n * n",
+      "Use executor.submit(square, 5)",
+      "The submit method returns a Future object"
+    ]
+  },
+  {
+    "id": "py-futures-result-4",
+    "title": "Get Future Result",
+    "difficulty": "easy",
+    "description": "A Future object named 'future' has been created. Call its result() method and store the return value in a variable named 'output'.",
+    "setupCode": "import concurrent.futures\nimport time\n\ndef slow_function():\n    time.sleep(0.1)\n    return 'completed'\n\nexecutor = concurrent.futures.ThreadPoolExecutor()\nfuture = executor.submit(slow_function)",
+    "starterCode": "# Get the result from future\n",
+    "expectedOutput": "completed",
+    "testCode": "{user_code}\nprint(output)",
+    "hints": [
+      "Use future.result()",
+      "This will block until the result is available"
+    ]
+  },
+  {
+    "id": "py-futures-map-5",
+    "title": "Use Executor Map",
+    "difficulty": "medium",
+    "description": "Use ThreadPoolExecutor's map method to apply a function that doubles numbers to the list [1, 2, 3, 4, 5]. Store the results as a list in variable 'results'.",
+    "setupCode": "import concurrent.futures",
+    "starterCode": "def double(n):\n    return n * 2\n\n# Use executor.map here\n",
+    "expectedOutput": "[2, 4, 6, 8, 10]",
+    "testCode": "{user_code}\nprint(results)",
+    "hints": [
+      "Create a ThreadPoolExecutor using 'with' statement",
+      "Use executor.map(double, [1, 2, 3, 4, 5])",
+      "Convert the result to a list"
+    ]
+  },
+  {
+    "id": "py-futures-process-pool-6",
+    "title": "Create ProcessPoolExecutor",
+    "difficulty": "medium",
+    "description": "Import concurrent.futures and create a ProcessPoolExecutor (not ThreadPoolExecutor) named 'executor' with 2 workers.",
+    "setupCode": "",
+    "starterCode": "# Import and create ProcessPoolExecutor\n",
+    "expectedOutput": "ProcessPoolExecutor",
+    "testCode": "{user_code}\nprint(type(executor).__name__)",
+    "hints": [
+      "Use concurrent.futures.ProcessPoolExecutor(max_workers=2)",
+      "ProcessPoolExecutor uses separate processes instead of threads"
+    ]
+  },
+  {
+    "id": "py-futures-as-completed-7",
+    "title": "Use as_completed",
+    "difficulty": "hard",
+    "description": "Submit 3 tasks to an executor and use concurrent.futures.as_completed() to collect results as they complete. Store results in a list named 'results'.",
+    "setupCode": "import concurrent.futures\nimport time\nimport random\n\ndef task(n):\n    time.sleep(random.uniform(0.01, 0.05))\n    return n * 10",
+    "starterCode": "# Create executor and submit tasks\n# Use as_completed to gather results\n",
+    "expectedOutput": "30",
+    "testCode": "{user_code}\nprint(sum(results))",
+    "hints": [
+      "Submit tasks using executor.submit(task, n) for n in [1, 2, 3]",
+      "Use concurrent.futures.as_completed(futures) to iterate",
+      "Call .result() on each completed future"
+    ]
+  },
+  {
+    "id": "py-futures-wait-8",
+    "title": "Wait for Futures",
+    "difficulty": "medium",
+    "description": "Submit 2 tasks and use concurrent.futures.wait() to wait for all of them to complete. Store the done futures in a variable named 'done'.",
+    "setupCode": "import concurrent.futures\nimport time\n\ndef task(n):\n    time.sleep(0.05)\n    return n * 2\n\nexecutor = concurrent.futures.ThreadPoolExecutor()",
+    "starterCode": "# Submit tasks and use wait()\n",
+    "expectedOutput": "2",
+    "testCode": "{user_code}\nprint(len(done))",
+    "hints": [
+      "Submit two tasks: executor.submit(task, 5) and executor.submit(task, 10)",
+      "Use concurrent.futures.wait([future1, future2])",
+      "wait() returns a named tuple with 'done' and 'not_done' sets"
+    ]
+  }
+]

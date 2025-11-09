@@ -1,0 +1,674 @@
+[
+  {
+    "id": "py-func-basic-1",
+    "title": "Define Simple Function",
+    "difficulty": "easy",
+    "description": "Define a function 'greet' that prints 'Hello, World!' when called.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Hello, World!",
+    "testCode": "{user_code}\ngreet()",
+    "hints": [
+      "Use def keyword to define function",
+      "Function should print, not return"
+    ]
+  },
+  {
+    "id": "py-func-param-1",
+    "title": "Function with Parameter",
+    "difficulty": "easy",
+    "description": "Define function 'greet_name' that takes a name parameter and prints 'Hello, {name}!'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Hello, Alice!",
+    "testCode": "{user_code}\ngreet_name('Alice')",
+    "hints": [
+      "Add parameter in parentheses after function name",
+      "Use f-string or .format() to insert name"
+    ]
+  },
+  {
+    "id": "py-func-return-1",
+    "title": "Function with Return Value",
+    "difficulty": "easy",
+    "description": "Define function 'add' that takes two numbers and returns their sum.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "8",
+    "testCode": "{user_code}\nprint(add(3, 5))",
+    "hints": [
+      "Use return keyword to return value",
+      "Function should calculate a + b"
+    ]
+  },
+  {
+    "id": "py-func-multiple-params-1",
+    "title": "Multiple Parameters",
+    "difficulty": "easy",
+    "description": "Define 'full_name' that takes first_name and last_name, returns them combined with space.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "John Doe",
+    "testCode": "{user_code}\nprint(full_name('John', 'Doe'))",
+    "hints": [
+      "Take two parameters",
+      "Return first_name + ' ' + last_name"
+    ]
+  },
+  {
+    "id": "py-func-default-1",
+    "title": "Default Parameter Value",
+    "difficulty": "easy",
+    "description": "Define 'greet' with parameter name (default='World'). Returns 'Hello, {name}!'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Hello, World!\nHello, Alice!",
+    "testCode": "{user_code}\nprint(greet())\nprint(greet('Alice'))",
+    "hints": [
+      "Use name='World' in parameter list",
+      "Return the greeting string"
+    ]
+  },
+  {
+    "id": "py-func-docstring-1",
+    "title": "Function with Docstring",
+    "difficulty": "easy",
+    "description": "Define 'square' that returns x squared. Add docstring 'Returns the square of x'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Returns the square of x",
+    "testCode": "{user_code}\nprint(square.__doc__)",
+    "hints": [
+      "Add triple-quoted string right after def line",
+      "Docstring should be 'Returns the square of x'"
+    ]
+  },
+  {
+    "id": "py-func-multiple-return-1",
+    "title": "Return Multiple Values",
+    "difficulty": "easy",
+    "description": "Define 'min_max' that takes a list and returns tuple of (min, max) values.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "(1, 9)",
+    "testCode": "{user_code}\nprint(min_max([3, 1, 9, 2, 5]))",
+    "hints": [
+      "Use min() and max() functions",
+      "Return them as tuple: return min(lst), max(lst)"
+    ]
+  },
+  {
+    "id": "py-func-boolean-1",
+    "title": "Function Returning Boolean",
+    "difficulty": "easy",
+    "description": "Define 'is_even' that returns True if number is even, False otherwise.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True\nFalse",
+    "testCode": "{user_code}\nprint(is_even(4))\nprint(is_even(7))",
+    "hints": [
+      "Check if num % 2 == 0",
+      "Return the boolean result"
+    ]
+  },
+  {
+    "id": "py-func-string-manip-1",
+    "title": "String Manipulation Function",
+    "difficulty": "easy",
+    "description": "Define 'reverse_string' that returns the reversed string.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "olleh",
+    "testCode": "{user_code}\nprint(reverse_string('hello'))",
+    "hints": [
+      "Use string slicing [::-1]",
+      "Return the reversed string"
+    ]
+  },
+  {
+    "id": "py-func-list-operation-1",
+    "title": "List Operation Function",
+    "difficulty": "easy",
+    "description": "Define 'sum_list' that returns the sum of all numbers in a list.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "15",
+    "testCode": "{user_code}\nprint(sum_list([1, 2, 3, 4, 5]))",
+    "hints": [
+      "Use built-in sum() function",
+      "Or loop through and accumulate"
+    ]
+  },
+  {
+    "id": "py-func-count-1",
+    "title": "Count Occurrences",
+    "difficulty": "easy",
+    "description": "Define 'count_char' that counts how many times a character appears in a string.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "3",
+    "testCode": "{user_code}\nprint(count_char('hello world', 'l'))",
+    "hints": [
+      "Use string's .count() method",
+      "Or loop and count manually"
+    ]
+  },
+  {
+    "id": "py-func-filter-1",
+    "title": "Filter List",
+    "difficulty": "medium",
+    "description": "Define 'get_evens' that returns a list of only even numbers from input list.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "[2, 4, 6, 8]",
+    "testCode": "{user_code}\nprint(get_evens([1, 2, 3, 4, 5, 6, 7, 8]))",
+    "hints": [
+      "Loop through list and check if num % 2 == 0",
+      "Append to new list or use list comprehension"
+    ]
+  },
+  {
+    "id": "py-func-factorial-1",
+    "title": "Calculate Factorial",
+    "difficulty": "medium",
+    "description": "Define 'factorial' that returns n! (n factorial). Use iteration.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "120",
+    "testCode": "{user_code}\nprint(factorial(5))",
+    "hints": [
+      "5! = 5 * 4 * 3 * 2 * 1 = 120",
+      "Use loop to multiply: result *= i"
+    ]
+  },
+  {
+    "id": "py-func-fibonacci-1",
+    "title": "Fibonacci Number",
+    "difficulty": "medium",
+    "description": "Define 'fibonacci' that returns the nth Fibonacci number (0-indexed).",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "5",
+    "testCode": "{user_code}\nprint(fibonacci(5))",
+    "hints": [
+      "Fib sequence: 0, 1, 1, 2, 3, 5, 8...",
+      "Use loop with two variables to track previous values"
+    ]
+  },
+  {
+    "id": "py-func-palindrome-1",
+    "title": "Check Palindrome",
+    "difficulty": "medium",
+    "description": "Define 'is_palindrome' that returns True if string reads same forwards and backwards.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True\nFalse",
+    "testCode": "{user_code}\nprint(is_palindrome('radar'))\nprint(is_palindrome('hello'))",
+    "hints": [
+      "Compare string with its reverse",
+      "Use string[::-1] to reverse"
+    ]
+  },
+  {
+    "id": "py-func-kwargs-1",
+    "title": "Keyword Arguments",
+    "difficulty": "medium",
+    "description": "Define 'create_person' that takes name and age as keyword arguments, returns dict.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "{'name': 'Alice', 'age': 30}",
+    "testCode": "{user_code}\nprint(create_person(name='Alice', age=30))",
+    "hints": [
+      "Parameters can be called by name",
+      "Return dictionary with both values"
+    ]
+  },
+  {
+    "id": "py-func-args-1",
+    "title": "Variable Arguments (*args)",
+    "difficulty": "medium",
+    "description": "Define 'sum_all' that takes any number of arguments and returns their sum.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "15",
+    "testCode": "{user_code}\nprint(sum_all(1, 2, 3, 4, 5))",
+    "hints": [
+      "Use *args in parameter list",
+      "args becomes a tuple of all arguments",
+      "Use sum(args)"
+    ]
+  },
+  {
+    "id": "py-func-kwargs-dict-1",
+    "title": "Keyword Arguments (**kwargs)",
+    "difficulty": "medium",
+    "description": "Define 'print_info' that accepts any keyword arguments and prints them as 'key: value'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "age: 30\nname: Alice",
+    "testCode": "{user_code}\nprint_info(name='Alice', age=30)",
+    "hints": [
+      "Use **kwargs in parameter list",
+      "kwargs is a dictionary",
+      "Loop through sorted(kwargs.items())"
+    ]
+  },
+  {
+    "id": "py-func-mixed-args-1",
+    "title": "Mixed Arguments",
+    "difficulty": "medium",
+    "description": "Define 'describe' with positional arg 'name', *args for hobbies, **kwargs for details. Return formatted string.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Alice likes reading, gaming. age: 25",
+    "testCode": "{user_code}\nprint(describe('Alice', 'reading', 'gaming', age=25))",
+    "hints": [
+      "Order: def describe(name, *args, **kwargs):",
+      "Format args as comma-separated hobbies",
+      "Format kwargs as key: value pairs"
+    ]
+  },
+  {
+    "id": "py-func-lambda-1",
+    "title": "Simple Lambda Function",
+    "difficulty": "easy",
+    "description": "Create a lambda function that squares a number and assign it to 'square'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "25",
+    "testCode": "{user_code}\nprint(square(5))",
+    "hints": [
+      "Use lambda x: x ** 2",
+      "Assign to variable: square = lambda x: ..."
+    ]
+  },
+  {
+    "id": "py-func-lambda-two-args-1",
+    "title": "Lambda with Two Arguments",
+    "difficulty": "easy",
+    "description": "Create lambda 'multiply' that takes two numbers and returns their product.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "12",
+    "testCode": "{user_code}\nprint(multiply(3, 4))",
+    "hints": [
+      "Use lambda x, y: x * y",
+      "Lambda can have multiple parameters"
+    ]
+  },
+  {
+    "id": "py-func-map-1",
+    "title": "Using map() with Function",
+    "difficulty": "medium",
+    "description": "Use map() with lambda to square all numbers in [1, 2, 3, 4]. Print as list.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "[1, 4, 9, 16]",
+    "testCode": "{user_code}",
+    "hints": [
+      "map(lambda x: x**2, numbers)",
+      "Convert to list with list(map(...))"
+    ]
+  },
+  {
+    "id": "py-func-filter-lambda-1",
+    "title": "Using filter() with Lambda",
+    "difficulty": "medium",
+    "description": "Use filter() to get only numbers > 5 from [1, 8, 3, 9, 2, 6]. Print as list.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "[8, 9, 6]",
+    "testCode": "{user_code}",
+    "hints": [
+      "filter(lambda x: x > 5, numbers)",
+      "Convert to list with list(filter(...))"
+    ]
+  },
+  {
+    "id": "py-func-sorted-key-1",
+    "title": "Sorted with Key Function",
+    "difficulty": "medium",
+    "description": "Sort ['apple', 'pie', 'a', 'cherry'] by length using sorted() with key parameter.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "['a', 'pie', 'apple', 'cherry']",
+    "testCode": "{user_code}",
+    "hints": [
+      "Use sorted(words, key=len)",
+      "Or key=lambda x: len(x)"
+    ]
+  },
+  {
+    "id": "py-func-nested-1",
+    "title": "Nested Function",
+    "difficulty": "medium",
+    "description": "Define 'outer' that defines inner function 'inner' which returns 'Hello'. outer() should return inner().",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Hello",
+    "testCode": "{user_code}\nprint(outer())",
+    "hints": [
+      "Define inner function inside outer",
+      "Call and return inner() from outer"
+    ]
+  },
+  {
+    "id": "py-func-closure-1",
+    "title": "Closure",
+    "difficulty": "hard",
+    "description": "Define 'multiplier' that takes n and returns a function that multiplies its argument by n.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "15",
+    "testCode": "{user_code}\ntimes_three = multiplier(3)\nprint(times_three(5))",
+    "hints": [
+      "Inner function should use n from outer scope",
+      "Return the inner function (not call it)"
+    ]
+  },
+  {
+    "id": "py-func-decorator-simple-1",
+    "title": "Simple Decorator",
+    "difficulty": "hard",
+    "description": "Create decorator 'uppercase' that converts function's string return value to uppercase.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "HELLO",
+    "testCode": "{user_code}\n@uppercase\ndef greet():\n    return 'hello'\nprint(greet())",
+    "hints": [
+      "Decorator is a function that takes a function",
+      "Define wrapper function inside that calls original and modifies result",
+      "Return wrapper function"
+    ]
+  },
+  {
+    "id": "py-func-decorator-args-1",
+    "title": "Decorator with Arguments",
+    "difficulty": "hard",
+    "description": "Create decorator 'repeat' that takes n and calls the function n times.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Hello\nHello\nHello",
+    "testCode": "{user_code}\n@repeat(3)\ndef say_hello():\n    print('Hello')\nsay_hello()",
+    "hints": [
+      "Decorator with arguments needs three levels of functions",
+      "Outer takes n, middle takes func, inner is wrapper"
+    ]
+  },
+  {
+    "id": "py-func-recursion-1",
+    "title": "Recursive Function",
+    "difficulty": "medium",
+    "description": "Define recursive 'countdown' that prints numbers from n down to 1.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "3\n2\n1",
+    "testCode": "{user_code}\ncountdown(3)",
+    "hints": [
+      "Base case: if n <= 0, return",
+      "Print n, then call countdown(n-1)"
+    ]
+  },
+  {
+    "id": "py-func-recursion-factorial-1",
+    "title": "Recursive Factorial",
+    "difficulty": "medium",
+    "description": "Define recursive 'factorial' that returns n!.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "120",
+    "testCode": "{user_code}\nprint(factorial(5))",
+    "hints": [
+      "Base case: if n <= 1, return 1",
+      "Recursive case: return n * factorial(n-1)"
+    ]
+  },
+  {
+    "id": "py-func-memoization-1",
+    "title": "Memoization Pattern",
+    "difficulty": "hard",
+    "description": "Define 'fibonacci' with memoization using a cache dict (passed as default arg).",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "55",
+    "testCode": "{user_code}\nprint(fibonacci(10))",
+    "hints": [
+      "Use cache={} as default parameter",
+      "Check if n in cache before calculating",
+      "Store result in cache before returning"
+    ]
+  },
+  {
+    "id": "py-func-callback-1",
+    "title": "Callback Function",
+    "difficulty": "medium",
+    "description": "Define 'process' that takes a list and a callback function, applies callback to each element.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "[1, 4, 9, 16]",
+    "testCode": "{user_code}\nresult = process([1, 2, 3, 4], lambda x: x**2)\nprint(result)",
+    "hints": [
+      "Loop through list",
+      "Apply callback to each element",
+      "Return new list with results"
+    ]
+  },
+  {
+    "id": "py-func-partial-1",
+    "title": "Partial Function Application",
+    "difficulty": "hard",
+    "description": "Use functools.partial to create 'add_five' from a general 'add(a, b)' function.",
+    "setupCode": "",
+    "starterCode": "from functools import partial",
+    "expectedOutput": "15",
+    "testCode": "from functools import partial\n{user_code}\nprint(add_five(10))",
+    "hints": [
+      "Define add(a, b) function first",
+      "Use partial(add, 5) to fix first argument",
+      "Assign to add_five"
+    ]
+  },
+  {
+    "id": "py-func-generator-basic-1",
+    "title": "Simple Generator Function",
+    "difficulty": "medium",
+    "description": "Define generator 'count_up' that yields numbers from 1 to n.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "[1, 2, 3, 4, 5]",
+    "testCode": "{user_code}\nprint(list(count_up(5)))",
+    "hints": [
+      "Use yield instead of return",
+      "Loop from 1 to n and yield each number"
+    ]
+  },
+  {
+    "id": "py-func-type-hints-1",
+    "title": "Function with Type Hints",
+    "difficulty": "medium",
+    "description": "Define 'add' with type hints: takes two ints, returns int.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "8",
+    "testCode": "{user_code}\nprint(add(3, 5))",
+    "hints": [
+      "Use def add(a: int, b: int) -> int:",
+      "Type hints don't enforce types, just document them"
+    ]
+  },
+  {
+    "id": "py-func-any-all-1",
+    "title": "Using any() and all()",
+    "difficulty": "medium",
+    "description": "Define 'has_even' that returns True if list has any even number. Define 'all_positive' that returns True if all numbers are positive.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True\nFalse",
+    "testCode": "{user_code}\nprint(has_even([1, 3, 4, 7]))\nprint(all_positive([1, -2, 3]))",
+    "hints": [
+      "Use any(x % 2 == 0 for x in lst)",
+      "Use all(x > 0 for x in lst)"
+    ]
+  },
+  {
+    "id": "py-func-zip-custom-1",
+    "title": "Custom Zip Function",
+    "difficulty": "hard",
+    "description": "Define 'pair_lists' that takes two lists and returns list of tuples (like zip).",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "[(1, 'a'), (2, 'b'), (3, 'c')]",
+    "testCode": "{user_code}\nprint(pair_lists([1, 2, 3], ['a', 'b', 'c']))",
+    "hints": [
+      "Loop using range(len(list1))",
+      "Create tuple (list1[i], list2[i])",
+      "Append to result list"
+    ]
+  },
+  {
+    "id": "py-func-curry-1",
+    "title": "Function Currying",
+    "difficulty": "hard",
+    "description": "Define 'add' that takes one argument and returns a function that takes another argument and adds them.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "8",
+    "testCode": "{user_code}\nprint(add(3)(5))",
+    "hints": [
+      "Return lambda that uses outer argument",
+      "def add(a): return lambda b: a + b"
+    ]
+  },
+  {
+    "id": "py-func-compose-1",
+    "title": "Function Composition",
+    "difficulty": "hard",
+    "description": "Define 'compose' that takes two functions f and g, returns function that computes f(g(x)).",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "9",
+    "testCode": "{user_code}\ndouble = lambda x: x * 2\nincrement = lambda x: x + 1\nfunc = compose(double, increment)\nprint(func(4))",
+    "hints": [
+      "compose returns a function",
+      "That function calls f(g(x))",
+      "def compose(f, g): return lambda x: f(g(x))"
+    ]
+  },
+  {
+    "id": "py-func-reduce-1",
+    "title": "Using functools.reduce",
+    "difficulty": "medium",
+    "description": "Use reduce to calculate the product of [1, 2, 3, 4, 5].",
+    "setupCode": "",
+    "starterCode": "from functools import reduce",
+    "expectedOutput": "120",
+    "testCode": "from functools import reduce\n{user_code}",
+    "hints": [
+      "reduce(lambda a, b: a * b, numbers)",
+      "Applies function cumulatively to items"
+    ]
+  },
+  {
+    "id": "py-func-default-mutable-1",
+    "title": "Avoiding Mutable Default Arguments",
+    "difficulty": "hard",
+    "description": "Define 'append_to' that appends item to list. Use None as default and create new list if None.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "[1]\n[2]",
+    "testCode": "{user_code}\nprint(append_to(1))\nprint(append_to(2))",
+    "hints": [
+      "def append_to(item, lst=None):",
+      "if lst is None: lst = []",
+      "This avoids shared mutable default"
+    ]
+  },
+  {
+    "id": "py-func-annotation-1",
+    "title": "Function Annotations",
+    "difficulty": "medium",
+    "description": "Define 'greet' with parameter 'name' annotated as str and return type str. Return 'Hello, {name}!'.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "Hello, Alice!",
+    "testCode": "{user_code}\nprint(greet('Alice'))",
+    "hints": [
+      "def greet(name: str) -> str:",
+      "Annotations are in the syntax but not enforced"
+    ]
+  },
+  {
+    "id": "py-func-unpacking-args-1",
+    "title": "Unpacking Arguments",
+    "difficulty": "medium",
+    "description": "Define 'add_three' that takes three arguments. Call it by unpacking list [1, 2, 3].",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "6",
+    "testCode": "{user_code}",
+    "hints": [
+      "Define def add_three(a, b, c): return a + b + c",
+      "Call with add_three(*[1, 2, 3])",
+      "* unpacks list into separate arguments"
+    ]
+  },
+  {
+    "id": "py-func-side-effects-1",
+    "title": "Function with Side Effects",
+    "difficulty": "medium",
+    "description": "Define 'append_and_return' that appends item to list and returns the modified list.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "[1, 2, 3, 4]",
+    "testCode": "{user_code}\nmy_list = [1, 2, 3]\nresult = append_and_return(my_list, 4)\nprint(result)",
+    "hints": [
+      "Lists are mutable, so changes persist",
+      "lst.append(item) modifies in place",
+      "Return lst after appending"
+    ]
+  },
+  {
+    "id": "py-func-pure-1",
+    "title": "Pure Function (No Side Effects)",
+    "difficulty": "medium",
+    "description": "Define 'add_item' that returns new list with item added, without modifying original.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "[1, 2, 3, 4]\n[1, 2, 3]",
+    "testCode": "{user_code}\noriginal = [1, 2, 3]\nresult = add_item(original, 4)\nprint(result)\nprint(original)",
+    "hints": [
+      "Create copy: new_list = lst + [item]",
+      "Or lst.copy() then append",
+      "Original list should remain unchanged"
+    ]
+  },
+  {
+    "id": "py-func-first-class-1",
+    "title": "Functions as First-Class Objects",
+    "difficulty": "medium",
+    "description": "Define 'apply_twice' that takes a function and value, applies function to value twice.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "16",
+    "testCode": "{user_code}\nprint(apply_twice(lambda x: x * 2, 4))",
+    "hints": [
+      "Call func(value) once, then call func on result again",
+      "return func(func(value))"
+    ]
+  },
+  {
+    "id": "py-func-early-return-1",
+    "title": "Early Return Pattern",
+    "difficulty": "medium",
+    "description": "Define 'divide' that returns a/b, but returns None if b is 0 (early return).",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "5.0\nNone",
+    "testCode": "{user_code}\nprint(divide(10, 2))\nprint(divide(10, 0))",
+    "hints": [
+      "Check if b == 0 first",
+      "if b == 0: return None",
+      "Otherwise return a / b"
+    ]
+  }
+]

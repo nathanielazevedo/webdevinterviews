@@ -1,0 +1,114 @@
+[
+  {
+    "id": "py-list-index-1",
+    "title": "Access List Element by Index",
+    "difficulty": "easy",
+    "description": "Get the value at index 3 in the list.",
+    "setupCode": "my_list = ['apple', 'banana', 'cherry', 'date', 'elderberry']",
+    "starterCode": "# Write your code here\nresult = ",
+    "expectedOutput": "date",
+    "testCode": "my_list = ['apple', 'banana', 'cherry', 'date', 'elderberry']\n{user_code}\nprint(result)",
+    "hints": [
+      "Remember that Python uses square brackets [] for indexing",
+      "Lists are zero-indexed in Python"
+    ]
+  },
+  {
+    "id": "py-list-index-2",
+    "title": "Negative Indexing",
+    "difficulty": "easy",
+    "description": "Get the last element of the list using negative indexing.",
+    "setupCode": "numbers = [10, 20, 30, 40, 50]",
+    "starterCode": "# Write your code here\nlast_item = ",
+    "expectedOutput": "50",
+    "testCode": "numbers = [10, 20, 30, 40, 50]\n{user_code}\nprint(last_item)",
+    "hints": [
+      "Use -1 to get the last element",
+      "Negative indices count from the end of the list"
+    ]
+  },
+  {
+    "id": "py-list-slice-1",
+    "title": "List Slicing",
+    "difficulty": "easy",
+    "description": "Get the first 3 elements from the list using slicing.",
+    "setupCode": "colors = ['red', 'blue', 'green', 'yellow', 'purple']",
+    "starterCode": "# Write your code here\nfirst_three = ",
+    "expectedOutput": "['red', 'blue', 'green']",
+    "testCode": "colors = ['red', 'blue', 'green', 'yellow', 'purple']\n{user_code}\nprint(first_three)",
+    "hints": [
+      "Use the slice notation [start:end]",
+      "The end index is exclusive"
+    ]
+  },
+  {
+    "id": "py-string-index-1",
+    "title": "String Indexing",
+    "difficulty": "easy",
+    "description": "Get the character at index 5 in the string.",
+    "setupCode": "text = 'Hello World'",
+    "starterCode": "# Write your code here\nchar = ",
+    "expectedOutput": " ",
+    "testCode": "text = 'Hello World'\n{user_code}\nprint(repr(char))",
+    "hints": [
+      "Strings can be indexed just like lists",
+      "Don't forget spaces count as characters"
+    ]
+  },
+  {
+    "id": "py-len-1",
+    "title": "Get List Length",
+    "difficulty": "easy",
+    "description": "Find the length of the list.",
+    "setupCode": "items = [1, 2, 3, 4, 5, 6, 7, 8]",
+    "starterCode": "# Write your code here\nlength = ",
+    "expectedOutput": "8",
+    "testCode": "items = [1, 2, 3, 4, 5, 6, 7, 8]\n{user_code}\nprint(length)",
+    "hints": [
+      "Use the len() function",
+      "len() works on lists, strings, tuples, and more"
+    ]
+  },
+  {
+    "id": "py-dict-access-1",
+    "title": "Dictionary Value Access",
+    "difficulty": "easy",
+    "description": "Get the value associated with the key 'name' from the dictionary.",
+    "setupCode": "person = {'name': 'Alice', 'age': 30, 'city': 'New York'}",
+    "starterCode": "# Write your code here\nname = ",
+    "expectedOutput": "Alice",
+    "testCode": "person = {'name': 'Alice', 'age': 30, 'city': 'New York'}\n{user_code}\nprint(name)",
+    "hints": [
+      "Use square brackets with the key name",
+      "Keys must match exactly (case-sensitive)"
+    ]
+  },
+  {
+    "id": "py-list-append-1",
+    "title": "Append to List",
+    "difficulty": "easy",
+    "description": "Add the number 6 to the end of the list.",
+    "setupCode": "nums = [1, 2, 3, 4, 5]",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "[1, 2, 3, 4, 5, 6]",
+    "testCode": "nums = [1, 2, 3, 4, 5]\n{user_code}\nprint(nums)",
+    "hints": [
+      "Use the append() method",
+      "append() modifies the list in place"
+    ]
+  },
+  {
+    "id": "py-string-upper-1",
+    "title": "Convert to Uppercase",
+    "difficulty": "easy",
+    "description": "Convert the string to uppercase.",
+    "setupCode": "message = 'hello world'",
+    "starterCode": "# Write your code here\nuppercase = ",
+    "expectedOutput": "HELLO WORLD",
+    "testCode": "message = 'hello world'\n{user_code}\nprint(uppercase)",
+    "hints": [
+      "Use the upper() method",
+      "String methods return a new string"
+    ]
+  }
+]

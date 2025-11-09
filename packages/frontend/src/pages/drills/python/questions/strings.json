@@ -1,0 +1,548 @@
+[
+  {
+    "id": "py-string-index-1",
+    "title": "String Indexing",
+    "difficulty": "easy",
+    "description": "Get the character at index 5 in the string.",
+    "setupCode": "text = 'HelloWorld'",
+    "starterCode": "# Write your code here\nchar = ",
+    "expectedOutput": "o",
+    "testCode": "text = 'Hello World'\n{user_code}\nprint(repr(char))",
+    "hints": [
+      "Strings can be indexed just like lists",
+      "Don't forget spaces count as characters"
+    ]
+  },
+  {
+    "id": "py-string-negative-index-1",
+    "title": "Negative String Indexing",
+    "difficulty": "easy",
+    "description": "Get the last character using negative indexing.",
+    "setupCode": "word = 'Python'",
+    "starterCode": "# Write your code here\nlast_char = ",
+    "expectedOutput": "n",
+    "testCode": "word = 'Python'\n{user_code}\nprint(last_char)",
+    "hints": [
+      "Use -1 to get the last character",
+      "Negative indices work the same as with lists"
+    ]
+  },
+  {
+    "id": "py-string-slice-1",
+    "title": "Basic String Slicing",
+    "difficulty": "easy",
+    "description": "Get the first 5 characters from the string.",
+    "setupCode": "text = 'Hello World'",
+    "starterCode": "# Write your code here\nfirst_five = ",
+    "expectedOutput": "Hello",
+    "testCode": "text = 'Hello World'\n{user_code}\nprint(first_five)",
+    "hints": [
+      "Use [0:5] or [:5]",
+      "String slicing works like list slicing"
+    ]
+  },
+  {
+    "id": "py-string-slice-2",
+    "title": "Slice with Step",
+    "difficulty": "easy",
+    "description": "Get every second character from the string.",
+    "setupCode": "text = 'abcdefgh'",
+    "starterCode": "# Write your code here\nevery_second = ",
+    "expectedOutput": "aceg",
+    "testCode": "text = 'abcdefgh'\n{user_code}\nprint(every_second)",
+    "hints": [
+      "Use [::2] for step of 2",
+      "The third parameter in slicing is the step"
+    ]
+  },
+  {
+    "id": "py-string-reverse-1",
+    "title": "Reverse String",
+    "difficulty": "easy",
+    "description": "Reverse the string using slicing.",
+    "setupCode": "word = 'Python'",
+    "starterCode": "# Write your code here\nreversed_word = ",
+    "expectedOutput": "nohtyP",
+    "testCode": "word = 'Python'\n{user_code}\nprint(reversed_word)",
+    "hints": [
+      "Use [::-1]",
+      "Negative step reverses the string"
+    ]
+  },
+  {
+    "id": "py-string-len-1",
+    "title": "String Length",
+    "difficulty": "easy",
+    "description": "Find the length of the string.",
+    "setupCode": "word = 'Python'",
+    "starterCode": "# Write your code here\nlength = ",
+    "expectedOutput": "6",
+    "testCode": "word = 'Python'\n{user_code}\nprint(length)",
+    "hints": [
+      "Use the len() function",
+      "Strings are sequences just like lists"
+    ]
+  },
+  {
+    "id": "py-string-upper-1",
+    "title": "Convert to Uppercase",
+    "difficulty": "easy",
+    "description": "Convert the string to uppercase.",
+    "setupCode": "message = 'hello world'",
+    "starterCode": "# Write your code here\nuppercase = ",
+    "expectedOutput": "HELLO WORLD",
+    "testCode": "message = 'hello world'\n{user_code}\nprint(uppercase)",
+    "hints": [
+      "Use the upper() method",
+      "String methods return a new string"
+    ]
+  },
+  {
+    "id": "py-string-lower-1",
+    "title": "Convert to Lowercase",
+    "difficulty": "easy",
+    "description": "Convert the string to lowercase.",
+    "setupCode": "text = 'PYTHON PROGRAMMING'",
+    "starterCode": "# Write your code here\nlowercase = ",
+    "expectedOutput": "python programming",
+    "testCode": "text = 'PYTHON PROGRAMMING'\n{user_code}\nprint(lowercase)",
+    "hints": [
+      "Use the lower() method",
+      "This is the opposite of upper()"
+    ]
+  },
+  {
+    "id": "py-string-capitalize-1",
+    "title": "Capitalize First Letter",
+    "difficulty": "easy",
+    "description": "Capitalize only the first letter of the string.",
+    "setupCode": "text = 'hello world'",
+    "starterCode": "# Write your code here\ncapitalized = ",
+    "expectedOutput": "Hello world",
+    "testCode": "text = 'hello world'\n{user_code}\nprint(capitalized)",
+    "hints": [
+      "Use the capitalize() method",
+      "Only the first letter becomes uppercase"
+    ]
+  },
+  {
+    "id": "py-string-title-1",
+    "title": "Title Case",
+    "difficulty": "easy",
+    "description": "Convert to title case (capitalize each word).",
+    "setupCode": "text = 'hello world python'",
+    "starterCode": "# Write your code here\ntitle_case = ",
+    "expectedOutput": "Hello World Python",
+    "testCode": "text = 'hello world python'\n{user_code}\nprint(title_case)",
+    "hints": [
+      "Use the title() method",
+      "Capitalizes the first letter of each word"
+    ]
+  },
+  {
+    "id": "py-string-strip-1",
+    "title": "Remove Leading/Trailing Whitespace",
+    "difficulty": "easy",
+    "description": "Remove spaces from both ends of the string.",
+    "setupCode": "text = '  hello  '",
+    "starterCode": "# Write your code here\ntrimmed = ",
+    "expectedOutput": "hello",
+    "testCode": "text = '  hello  '\n{user_code}\nprint(trimmed)",
+    "hints": [
+      "Use the strip() method",
+      "Removes whitespace from both sides"
+    ]
+  },
+  {
+    "id": "py-string-lstrip-1",
+    "title": "Remove Leading Whitespace",
+    "difficulty": "easy",
+    "description": "Remove spaces only from the left side.",
+    "setupCode": "text = '  hello  '",
+    "starterCode": "# Write your code here\nleft_trimmed = ",
+    "expectedOutput": "hello  ",
+    "testCode": "text = '  hello  '\n{user_code}\nprint(repr(left_trimmed))",
+    "hints": [
+      "Use the lstrip() method",
+      "Only removes from the left/start"
+    ]
+  },
+  {
+    "id": "py-string-rstrip-1",
+    "title": "Remove Trailing Whitespace",
+    "difficulty": "easy",
+    "description": "Remove spaces only from the right side.",
+    "setupCode": "text = '  hello  '",
+    "starterCode": "# Write your code here\nright_trimmed = ",
+    "expectedOutput": "  hello",
+    "testCode": "text = '  hello  '\n{user_code}\nprint(repr(right_trimmed))",
+    "hints": [
+      "Use the rstrip() method",
+      "Only removes from the right/end"
+    ]
+  },
+  {
+    "id": "py-string-replace-1",
+    "title": "Replace Substring",
+    "difficulty": "easy",
+    "description": "Replace 'world' with 'Python'.",
+    "setupCode": "text = 'Hello world'",
+    "starterCode": "# Write your code here\nreplaced = ",
+    "expectedOutput": "Hello Python",
+    "testCode": "text = 'Hello world'\n{user_code}\nprint(replaced)",
+    "hints": [
+      "Use the replace() method",
+      "Syntax: replace(old, new)"
+    ]
+  },
+  {
+    "id": "py-string-split-1",
+    "title": "Split String into List",
+    "difficulty": "easy",
+    "description": "Split the string by spaces into a list of words.",
+    "setupCode": "text = 'Hello world Python'",
+    "starterCode": "# Write your code here\nwords = ",
+    "expectedOutput": "['Hello', 'world', 'Python']",
+    "testCode": "text = 'Hello world Python'\n{user_code}\nprint(words)",
+    "hints": [
+      "Use the split() method",
+      "split() with no arguments splits by whitespace"
+    ]
+  },
+  {
+    "id": "py-string-split-2",
+    "title": "Split by Custom Delimiter",
+    "difficulty": "easy",
+    "description": "Split the string by commas.",
+    "setupCode": "text = 'apple,banana,cherry'",
+    "starterCode": "# Write your code here\nfruits = ",
+    "expectedOutput": "['apple', 'banana', 'cherry']",
+    "testCode": "text = 'apple,banana,cherry'\n{user_code}\nprint(fruits)",
+    "hints": [
+      "Use split(',') with comma as delimiter",
+      "The argument specifies what to split by"
+    ]
+  },
+  {
+    "id": "py-string-join-1",
+    "title": "Join List into String",
+    "difficulty": "easy",
+    "description": "Join the list with spaces between words.",
+    "setupCode": "words = ['Hello', 'world', 'Python']",
+    "starterCode": "# Write your code here\nsentence = ",
+    "expectedOutput": "Hello world Python",
+    "testCode": "words = ['Hello', 'world', 'Python']\n{user_code}\nprint(sentence)",
+    "hints": [
+      "Use ' '.join(words)",
+      "The string before .join() is the separator"
+    ]
+  },
+  {
+    "id": "py-string-join-2",
+    "title": "Join with Custom Separator",
+    "difficulty": "easy",
+    "description": "Join the list with commas.",
+    "setupCode": "items = ['apple', 'banana', 'cherry']",
+    "starterCode": "# Write your code here\nresult = ",
+    "expectedOutput": "apple,banana,cherry",
+    "testCode": "items = ['apple', 'banana', 'cherry']\n{user_code}\nprint(result)",
+    "hints": [
+      "Use ','.join(items)",
+      "The separator goes before .join()"
+    ]
+  },
+  {
+    "id": "py-string-startswith-1",
+    "title": "Check String Start",
+    "difficulty": "easy",
+    "description": "Check if the string starts with 'Hello'.",
+    "setupCode": "text = 'Hello world'",
+    "starterCode": "# Write your code here\nstarts = ",
+    "expectedOutput": "True",
+    "testCode": "text = 'Hello world'\n{user_code}\nprint(starts)",
+    "hints": [
+      "Use the startswith() method",
+      "Returns True or False"
+    ]
+  },
+  {
+    "id": "py-string-endswith-1",
+    "title": "Check String End",
+    "difficulty": "easy",
+    "description": "Check if the string ends with 'Python'.",
+    "setupCode": "text = 'I love Python'",
+    "starterCode": "# Write your code here\nends = ",
+    "expectedOutput": "True",
+    "testCode": "text = 'I love Python'\n{user_code}\nprint(ends)",
+    "hints": [
+      "Use the endswith() method",
+      "Returns True or False"
+    ]
+  },
+  {
+    "id": "py-string-find-1",
+    "title": "Find Substring Position",
+    "difficulty": "easy",
+    "description": "Find the index where 'world' starts.",
+    "setupCode": "text = 'Hello world'",
+    "starterCode": "# Write your code here\nposition = ",
+    "expectedOutput": "6",
+    "testCode": "text = 'Hello world'\n{user_code}\nprint(position)",
+    "hints": [
+      "Use the find() method",
+      "Returns -1 if not found"
+    ]
+  },
+  {
+    "id": "py-string-count-1",
+    "title": "Count Substring Occurrences",
+    "difficulty": "easy",
+    "description": "Count how many times 'o' appears in the string.",
+    "setupCode": "text = 'Hello world'",
+    "starterCode": "# Write your code here\ncount = ",
+    "expectedOutput": "2",
+    "testCode": "text = 'Hello world'\n{user_code}\nprint(count)",
+    "hints": [
+      "Use the count() method",
+      "Counts non-overlapping occurrences"
+    ]
+  },
+  {
+    "id": "py-string-in-1",
+    "title": "Check Substring Exists",
+    "difficulty": "easy",
+    "description": "Check if 'world' is in the string.",
+    "setupCode": "text = 'Hello world'",
+    "starterCode": "# Write your code here\nexists = ",
+    "expectedOutput": "True",
+    "testCode": "text = 'Hello world'\n{user_code}\nprint(exists)",
+    "hints": [
+      "Use the 'in' operator",
+      "Syntax: substring in string"
+    ]
+  },
+  {
+    "id": "py-string-isalpha-1",
+    "title": "Check If Alphabetic",
+    "difficulty": "easy",
+    "description": "Check if all characters are alphabetic (no spaces/numbers).",
+    "setupCode": "text = 'Python'",
+    "starterCode": "# Write your code here\nis_alpha = ",
+    "expectedOutput": "True",
+    "testCode": "text = 'Python'\n{user_code}\nprint(is_alpha)",
+    "hints": [
+      "Use the isalpha() method",
+      "Returns False if any non-letter character"
+    ]
+  },
+  {
+    "id": "py-string-isdigit-1",
+    "title": "Check If Numeric",
+    "difficulty": "easy",
+    "description": "Check if all characters are digits.",
+    "setupCode": "text = '12345'",
+    "starterCode": "# Write your code here\nis_digit = ",
+    "expectedOutput": "True",
+    "testCode": "text = '12345'\n{user_code}\nprint(is_digit)",
+    "hints": [
+      "Use the isdigit() method",
+      "Returns True only if all digits"
+    ]
+  },
+  {
+    "id": "py-string-isalnum-1",
+    "title": "Check If Alphanumeric",
+    "difficulty": "easy",
+    "description": "Check if all characters are letters or numbers.",
+    "setupCode": "text = 'Python3'",
+    "starterCode": "# Write your code here\nis_alnum = ",
+    "expectedOutput": "True",
+    "testCode": "text = 'Python3'\n{user_code}\nprint(is_alnum)",
+    "hints": [
+      "Use the isalnum() method",
+      "No spaces or special characters allowed"
+    ]
+  },
+  {
+    "id": "py-string-isspace-1",
+    "title": "Check If Whitespace",
+    "difficulty": "easy",
+    "description": "Check if string contains only whitespace.",
+    "setupCode": "text = '   '",
+    "starterCode": "# Write your code here\nis_space = ",
+    "expectedOutput": "True",
+    "testCode": "text = '   '\n{user_code}\nprint(is_space)",
+    "hints": [
+      "Use the isspace() method",
+      "Returns True for spaces, tabs, newlines"
+    ]
+  },
+  {
+    "id": "py-string-islower-1",
+    "title": "Check If Lowercase",
+    "difficulty": "easy",
+    "description": "Check if all letters are lowercase.",
+    "setupCode": "text = 'python'",
+    "starterCode": "# Write your code here\nis_lower = ",
+    "expectedOutput": "True",
+    "testCode": "text = 'python'\n{user_code}\nprint(is_lower)",
+    "hints": [
+      "Use the islower() method",
+      "Numbers/symbols are ignored"
+    ]
+  },
+  {
+    "id": "py-string-isupper-1",
+    "title": "Check If Uppercase",
+    "difficulty": "easy",
+    "description": "Check if all letters are uppercase.",
+    "setupCode": "text = 'PYTHON'",
+    "starterCode": "# Write your code here\nis_upper = ",
+    "expectedOutput": "True",
+    "testCode": "text = 'PYTHON'\n{user_code}\nprint(is_upper)",
+    "hints": [
+      "Use the isupper() method",
+      "Numbers/symbols are ignored"
+    ]
+  },
+  {
+    "id": "py-string-swapcase-1",
+    "title": "Swap Case",
+    "difficulty": "easy",
+    "description": "Swap uppercase to lowercase and vice versa.",
+    "setupCode": "text = 'Hello World'",
+    "starterCode": "# Write your code here\nswapped = ",
+    "expectedOutput": "hELLO wORLD",
+    "testCode": "text = 'Hello World'\n{user_code}\nprint(swapped)",
+    "hints": [
+      "Use the swapcase() method",
+      "Upper becomes lower, lower becomes upper"
+    ]
+  },
+  {
+    "id": "py-string-center-1",
+    "title": "Center String with Padding",
+    "difficulty": "easy",
+    "description": "Center the string in a field of width 15.",
+    "setupCode": "text = 'Python'",
+    "starterCode": "# Write your code here\ncentered = ",
+    "expectedOutput": "    Python     ",
+    "testCode": "text = 'Python'\n{user_code}\nprint(repr(centered))",
+    "hints": [
+      "Use the center() method",
+      "Syntax: center(width)"
+    ]
+  },
+  {
+    "id": "py-string-ljust-1",
+    "title": "Left Justify with Padding",
+    "difficulty": "easy",
+    "description": "Left justify the string in a field of width 10.",
+    "setupCode": "text = 'Python'",
+    "starterCode": "# Write your code here\nleft_just = ",
+    "expectedOutput": "Python    ",
+    "testCode": "text = 'Python'\n{user_code}\nprint(repr(left_just))",
+    "hints": [
+      "Use the ljust() method",
+      "Adds spaces to the right"
+    ]
+  },
+  {
+    "id": "py-string-rjust-1",
+    "title": "Right Justify with Padding",
+    "difficulty": "easy",
+    "description": "Right justify the string in a field of width 10.",
+    "setupCode": "text = 'Python'",
+    "starterCode": "# Write your code here\nright_just = ",
+    "expectedOutput": "    Python",
+    "testCode": "text = 'Python'\n{user_code}\nprint(repr(right_just))",
+    "hints": [
+      "Use the rjust() method",
+      "Adds spaces to the left"
+    ]
+  },
+  {
+    "id": "py-string-zfill-1",
+    "title": "Zero-Fill Number String",
+    "difficulty": "easy",
+    "description": "Pad the number string with zeros to width 5.",
+    "setupCode": "num = '42'",
+    "starterCode": "# Write your code here\npadded = ",
+    "expectedOutput": "00042",
+    "testCode": "num = '42'\n{user_code}\nprint(padded)",
+    "hints": [
+      "Use the zfill() method",
+      "Adds leading zeros"
+    ]
+  },
+  {
+    "id": "py-string-format-1",
+    "title": "String Formatting with format()",
+    "difficulty": "medium",
+    "description": "Insert 'Python' and 3 into the template.",
+    "setupCode": "template = 'I love {} version {}'",
+    "starterCode": "# Write your code here\nresult = ",
+    "expectedOutput": "I love Python version 3",
+    "testCode": "template = 'I love {} version {}'\n{user_code}\nprint(result)",
+    "hints": [
+      "Use format('Python', 3)",
+      "{} are placeholders"
+    ]
+  },
+  {
+    "id": "py-string-fstring-1",
+    "title": "F-String Formatting",
+    "difficulty": "medium",
+    "description": "Create an f-string with name and age variables.",
+    "setupCode": "name = 'Alice'\nage = 30",
+    "starterCode": "# Write your code here (use f-string)\nresult = ",
+    "expectedOutput": "Alice is 30 years old",
+    "testCode": "name = 'Alice'\nage = 30\n{user_code}\nprint(result)",
+    "hints": [
+      "Use f'{name} is {age} years old'",
+      "F-strings allow embedding expressions"
+    ]
+  },
+  {
+    "id": "py-string-concat-1",
+    "title": "Concatenate Strings",
+    "difficulty": "easy",
+    "description": "Combine three strings with the + operator.",
+    "setupCode": "s1 = 'Hello'\ns2 = ' '\ns3 = 'World'",
+    "starterCode": "# Write your code here\ncombined = ",
+    "expectedOutput": "Hello World",
+    "testCode": "s1 = 'Hello'\ns2 = ' '\ns3 = 'World'\n{user_code}\nprint(combined)",
+    "hints": [
+      "Use s1 + s2 + s3",
+      "The + operator concatenates strings"
+    ]
+  },
+  {
+    "id": "py-string-multiply-1",
+    "title": "Repeat String",
+    "difficulty": "easy",
+    "description": "Repeat the string 3 times.",
+    "setupCode": "text = 'Python'",
+    "starterCode": "# Write your code here\nrepeated = ",
+    "expectedOutput": "PythonPythonPython",
+    "testCode": "text = 'Python'\n{user_code}\nprint(repeated)",
+    "hints": [
+      "Use text * 3",
+      "The * operator repeats strings"
+    ]
+  },
+  {
+    "id": "py-string-partition-1",
+    "title": "Partition String",
+    "difficulty": "medium",
+    "description": "Split string into 3 parts at first '@'.",
+    "setupCode": "email = 'user@example.com'",
+    "starterCode": "# Write your code here\nparts = ",
+    "expectedOutput": "('user', '@', 'example.com')",
+    "testCode": "email = 'user@example.com'\n{user_code}\nprint(parts)",
+    "hints": [
+      "Use the partition() method",
+      "Returns (before, sep, after) tuple"
+    ]
+  }
+]

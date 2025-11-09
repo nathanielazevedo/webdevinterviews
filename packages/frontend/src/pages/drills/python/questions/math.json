@@ -1,0 +1,774 @@
+[
+  {
+    "id": "py-math-import-1",
+    "title": "Import Math Module",
+    "difficulty": "easy",
+    "description": "Import math module and verify it has 'sqrt' attribute.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(hasattr(math, 'sqrt'))",
+    "hints": [
+      "Use import math",
+      "math is Python's mathematical functions module"
+    ]
+  },
+  {
+    "id": "py-math-sqrt-1",
+    "title": "Square Root",
+    "difficulty": "easy",
+    "description": "Calculate square root of 16 using math.sqrt(). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "4.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.sqrt(16)",
+      "Returns float"
+    ]
+  },
+  {
+    "id": "py-math-pow-1",
+    "title": "Power Function",
+    "difficulty": "easy",
+    "description": "Calculate 2 to the power of 3 using math.pow(). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "8.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.pow(2, 3)",
+      "Alternative: 2 ** 3",
+      "math.pow returns float"
+    ]
+  },
+  {
+    "id": "py-math-ceil-1",
+    "title": "Ceiling Function",
+    "difficulty": "easy",
+    "description": "Round 3.2 up to nearest integer using math.ceil(). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "4",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.ceil(3.2)",
+      "Rounds up to next integer",
+      "Returns integer"
+    ]
+  },
+  {
+    "id": "py-math-floor-1",
+    "title": "Floor Function",
+    "difficulty": "easy",
+    "description": "Round 3.8 down to nearest integer using math.floor(). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "3",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.floor(3.8)",
+      "Rounds down to previous integer",
+      "Returns integer"
+    ]
+  },
+  {
+    "id": "py-math-abs-1",
+    "title": "Absolute Value",
+    "difficulty": "easy",
+    "description": "Get absolute value of -42. Print result.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "42",
+    "testCode": "{user_code}\nprint(result)",
+    "hints": [
+      "Use abs(-42)",
+      "Built-in function, not in math module",
+      "Returns non-negative value"
+    ]
+  },
+  {
+    "id": "py-math-pi-1",
+    "title": "Pi Constant",
+    "difficulty": "easy",
+    "description": "Print the value of pi from math module.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "3.141592653589793",
+    "testCode": "import math\n{user_code}",
+    "hints": [
+      "Use math.pi",
+      "It's a constant, not a function",
+      "No parentheses needed"
+    ]
+  },
+  {
+    "id": "py-math-e-1",
+    "title": "Euler's Number",
+    "difficulty": "easy",
+    "description": "Print Euler's number (e) from math module.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "2.718281828459045",
+    "testCode": "import math\n{user_code}",
+    "hints": [
+      "Use math.e",
+      "Mathematical constant e",
+      "Base of natural logarithm"
+    ]
+  },
+  {
+    "id": "py-math-exp-1",
+    "title": "Exponential Function",
+    "difficulty": "easy",
+    "description": "Calculate e raised to power 2 using math.exp(). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "7.38905609893065",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.exp(2)",
+      "Equivalent to math.e ** 2",
+      "Returns e^x"
+    ]
+  },
+  {
+    "id": "py-math-log-1",
+    "title": "Natural Logarithm",
+    "difficulty": "easy",
+    "description": "Calculate natural log of 10 using math.log(). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "2.302585092994046",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.log(10)",
+      "Natural logarithm (base e)",
+      "Inverse of exp()"
+    ]
+  },
+  {
+    "id": "py-math-log10-1",
+    "title": "Base-10 Logarithm",
+    "difficulty": "easy",
+    "description": "Calculate log base 10 of 100. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "2.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.log10(100)",
+      "Logarithm base 10",
+      "log10(100) = 2 because 10^2 = 100"
+    ]
+  },
+  {
+    "id": "py-math-log-base-1",
+    "title": "Logarithm with Custom Base",
+    "difficulty": "medium",
+    "description": "Calculate log base 2 of 8. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "3.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.log(8, 2)",
+      "Second argument is base",
+      "log2(8) = 3 because 2^3 = 8"
+    ]
+  },
+  {
+    "id": "py-math-sin-1",
+    "title": "Sine Function",
+    "difficulty": "easy",
+    "description": "Calculate sine of pi/2 radians. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "1.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.sin(math.pi / 2)",
+      "Input is in radians",
+      "sin(π/2) = 1"
+    ]
+  },
+  {
+    "id": "py-math-cos-1",
+    "title": "Cosine Function",
+    "difficulty": "easy",
+    "description": "Calculate cosine of 0 radians. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "1.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.cos(0)",
+      "Input is in radians",
+      "cos(0) = 1"
+    ]
+  },
+  {
+    "id": "py-math-tan-1",
+    "title": "Tangent Function",
+    "difficulty": "easy",
+    "description": "Calculate tangent of pi/4 radians. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "1.0",
+    "testCode": "import math\n{user_code}\nprint(round(result, 10))",
+    "hints": [
+      "Use math.tan(math.pi / 4)",
+      "Input is in radians",
+      "tan(π/4) = 1"
+    ]
+  },
+  {
+    "id": "py-math-radians-1",
+    "title": "Degrees to Radians",
+    "difficulty": "easy",
+    "description": "Convert 180 degrees to radians. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "3.141592653589793",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.radians(180)",
+      "180 degrees = π radians"
+    ]
+  },
+  {
+    "id": "py-math-degrees-1",
+    "title": "Radians to Degrees",
+    "difficulty": "easy",
+    "description": "Convert pi radians to degrees. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "180.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.degrees(math.pi)",
+      "π radians = 180 degrees"
+    ]
+  },
+  {
+    "id": "py-math-factorial-1",
+    "title": "Factorial",
+    "difficulty": "easy",
+    "description": "Calculate factorial of 5 using math.factorial(). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "120",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.factorial(5)",
+      "5! = 5 × 4 × 3 × 2 × 1 = 120"
+    ]
+  },
+  {
+    "id": "py-math-gcd-1",
+    "title": "Greatest Common Divisor",
+    "difficulty": "easy",
+    "description": "Find GCD of 48 and 18. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "6",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.gcd(48, 18)",
+      "GCD is largest number that divides both",
+      "Also called GCF (Greatest Common Factor)"
+    ]
+  },
+  {
+    "id": "py-math-lcm-1",
+    "title": "Least Common Multiple",
+    "difficulty": "easy",
+    "description": "Find LCM of 12 and 18. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "36",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.lcm(12, 18)",
+      "LCM is smallest number divisible by both",
+      "Available in Python 3.9+"
+    ]
+  },
+  {
+    "id": "py-math-trunc-1",
+    "title": "Truncate Decimal",
+    "difficulty": "easy",
+    "description": "Truncate 3.7 to integer using math.trunc(). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "3",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.trunc(3.7)",
+      "Removes decimal part",
+      "Similar to int() but handles negatives differently"
+    ]
+  },
+  {
+    "id": "py-math-fabs-1",
+    "title": "Float Absolute Value",
+    "difficulty": "easy",
+    "description": "Get absolute value of -3.5 using math.fabs(). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "3.5",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.fabs(-3.5)",
+      "Returns float (unlike abs())",
+      "Always returns positive float"
+    ]
+  },
+  {
+    "id": "py-math-copysign-1",
+    "title": "Copy Sign",
+    "difficulty": "medium",
+    "description": "Copy sign of -1 to 5 using math.copysign(). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "-5.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.copysign(5, -1)",
+      "Returns magnitude of first arg with sign of second",
+      "Result is -5.0"
+    ]
+  },
+  {
+    "id": "py-math-isclose-1",
+    "title": "Check Float Equality",
+    "difficulty": "medium",
+    "description": "Check if 0.1 + 0.2 is close to 0.3 using math.isclose(). Print True/False.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "True",
+    "testCode": "import math\n{user_code}",
+    "hints": [
+      "Use math.isclose(0.1 + 0.2, 0.3)",
+      "Handles floating point precision issues",
+      "Better than == for floats"
+    ]
+  },
+  {
+    "id": "py-math-isinf-1",
+    "title": "Check for Infinity",
+    "difficulty": "easy",
+    "description": "Check if float('inf') is infinite. Print True/False.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "True",
+    "testCode": "import math\n{user_code}",
+    "hints": [
+      "Use math.isinf(float('inf'))",
+      "Returns True for positive or negative infinity"
+    ]
+  },
+  {
+    "id": "py-math-isnan-1",
+    "title": "Check for NaN",
+    "difficulty": "easy",
+    "description": "Check if float('nan') is NaN. Print True/False.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "True",
+    "testCode": "import math\n{user_code}",
+    "hints": [
+      "Use math.isnan(float('nan'))",
+      "NaN = Not a Number",
+      "Result of undefined operations"
+    ]
+  },
+  {
+    "id": "py-math-isfinite-1",
+    "title": "Check for Finite Number",
+    "difficulty": "easy",
+    "description": "Check if 42.5 is finite (not inf or nan). Print True/False.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "True",
+    "testCode": "import math\n{user_code}",
+    "hints": [
+      "Use math.isfinite(42.5)",
+      "Returns True for normal numbers",
+      "False for inf or nan"
+    ]
+  },
+  {
+    "id": "py-math-hypot-1",
+    "title": "Hypotenuse",
+    "difficulty": "medium",
+    "description": "Calculate hypotenuse of right triangle with sides 3 and 4. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "5.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.hypot(3, 4)",
+      "Returns sqrt(x² + y²)",
+      "Pythagorean theorem"
+    ]
+  },
+  {
+    "id": "py-math-dist-1",
+    "title": "Euclidean Distance",
+    "difficulty": "medium",
+    "description": "Calculate distance between points (0,0) and (3,4). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "5.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.dist([0, 0], [3, 4])",
+      "Euclidean distance between two points",
+      "Available in Python 3.8+"
+    ]
+  },
+  {
+    "id": "py-math-fmod-1",
+    "title": "Float Modulo",
+    "difficulty": "medium",
+    "description": "Calculate float modulo of 7.5 % 2.5 using math.fmod(). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "0.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.fmod(7.5, 2.5)",
+      "Like % but for floats",
+      "Returns remainder"
+    ]
+  },
+  {
+    "id": "py-math-modf-1",
+    "title": "Split into Fractional and Integer Parts",
+    "difficulty": "medium",
+    "description": "Split 3.75 into fractional and integer parts. Print both.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "0.75\n3.0",
+    "testCode": "import math\n{user_code}\nprint(frac)\nprint(integer)",
+    "hints": [
+      "Use math.modf(3.75)",
+      "Returns tuple (fractional, integer)",
+      "Both are floats"
+    ]
+  },
+  {
+    "id": "py-math-frexp-1",
+    "title": "Mantissa and Exponent",
+    "difficulty": "hard",
+    "description": "Get mantissa and exponent of 8.0. Print both.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "0.5\n4",
+    "testCode": "import math\n{user_code}\nprint(mantissa)\nprint(exponent)",
+    "hints": [
+      "Use math.frexp(8.0)",
+      "Returns (mantissa, exponent)",
+      "8.0 = mantissa * 2^exponent"
+    ]
+  },
+  {
+    "id": "py-math-ldexp-1",
+    "title": "Create Float from Mantissa and Exponent",
+    "difficulty": "hard",
+    "description": "Create float from mantissa 0.5 and exponent 4. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "8.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.ldexp(0.5, 4)",
+      "Returns mantissa * 2^exponent",
+      "Inverse of frexp()"
+    ]
+  },
+  {
+    "id": "py-math-comb-1",
+    "title": "Combinations",
+    "difficulty": "medium",
+    "description": "Calculate combinations C(5,2) - ways to choose 2 from 5. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "10",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.comb(5, 2)",
+      "C(n,k) = n! / (k! * (n-k)!)",
+      "Available in Python 3.8+"
+    ]
+  },
+  {
+    "id": "py-math-perm-1",
+    "title": "Permutations",
+    "difficulty": "medium",
+    "description": "Calculate permutations P(5,2) - arrangements of 2 from 5. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "20",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.perm(5, 2)",
+      "P(n,k) = n! / (n-k)!",
+      "Available in Python 3.8+"
+    ]
+  },
+  {
+    "id": "py-math-prod-1",
+    "title": "Product of Numbers",
+    "difficulty": "easy",
+    "description": "Calculate product of [2, 3, 4] using math.prod(). Print result.",
+    "setupCode": "",
+    "starterCode": "import math\nnumbers = [2, 3, 4]",
+    "expectedOutput": "24",
+    "testCode": "import math\nnumbers = [2, 3, 4]\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.prod(numbers)",
+      "Returns product of all elements",
+      "Available in Python 3.8+"
+    ]
+  },
+  {
+    "id": "py-math-sum-1",
+    "title": "Sum of Numbers",
+    "difficulty": "easy",
+    "description": "Calculate sum of [1, 2, 3, 4, 5]. Print result.",
+    "setupCode": "",
+    "starterCode": "numbers = [1, 2, 3, 4, 5]",
+    "expectedOutput": "15",
+    "testCode": "numbers = [1, 2, 3, 4, 5]\n{user_code}\nprint(result)",
+    "hints": [
+      "Use sum(numbers)",
+      "Built-in function, not in math module"
+    ]
+  },
+  {
+    "id": "py-math-round-1",
+    "title": "Round to Decimals",
+    "difficulty": "easy",
+    "description": "Round 3.14159 to 2 decimal places. Print result.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "3.14",
+    "testCode": "{user_code}\nprint(result)",
+    "hints": [
+      "Use round(3.14159, 2)",
+      "Second argument is number of decimals",
+      "Built-in function"
+    ]
+  },
+  {
+    "id": "py-math-min-max-1",
+    "title": "Min and Max",
+    "difficulty": "easy",
+    "description": "Find min and max of [3, 1, 4, 1, 5, 9]. Print both.",
+    "setupCode": "",
+    "starterCode": "numbers = [3, 1, 4, 1, 5, 9]",
+    "expectedOutput": "1\n9",
+    "testCode": "numbers = [3, 1, 4, 1, 5, 9]\n{user_code}\nprint(minimum)\nprint(maximum)",
+    "hints": [
+      "Use min(numbers) and max(numbers)",
+      "Built-in functions"
+    ]
+  },
+  {
+    "id": "py-math-divmod-1",
+    "title": "Division and Modulo",
+    "difficulty": "easy",
+    "description": "Get quotient and remainder of 17 divided by 5. Print both.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "3\n2",
+    "testCode": "{user_code}\nprint(quotient)\nprint(remainder)",
+    "hints": [
+      "Use divmod(17, 5)",
+      "Returns tuple (quotient, remainder)",
+      "Built-in function"
+    ]
+  },
+  {
+    "id": "py-math-inf-1",
+    "title": "Infinity Constant",
+    "difficulty": "easy",
+    "description": "Get positive infinity from math module. Print it.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "inf",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.inf",
+      "Represents positive infinity",
+      "Alternative: float('inf')"
+    ]
+  },
+  {
+    "id": "py-math-tau-1",
+    "title": "Tau Constant",
+    "difficulty": "easy",
+    "description": "Get tau (2*pi) from math module. Print it.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "6.283185307179586",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.tau",
+      "tau = 2π",
+      "Full circle in radians"
+    ]
+  },
+  {
+    "id": "py-math-asin-1",
+    "title": "Arcsine",
+    "difficulty": "medium",
+    "description": "Calculate arcsine of 0.5 (in radians). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "0.5235987755982989",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.asin(0.5)",
+      "Inverse sine function",
+      "Returns angle in radians"
+    ]
+  },
+  {
+    "id": "py-math-acos-1",
+    "title": "Arccosine",
+    "difficulty": "medium",
+    "description": "Calculate arccosine of 0.5 (in radians). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "1.0471975511965979",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.acos(0.5)",
+      "Inverse cosine function",
+      "Returns angle in radians"
+    ]
+  },
+  {
+    "id": "py-math-atan-1",
+    "title": "Arctangent",
+    "difficulty": "medium",
+    "description": "Calculate arctangent of 1 (in radians). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "0.7853981633974483",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.atan(1)",
+      "Inverse tangent function",
+      "Returns angle in radians"
+    ]
+  },
+  {
+    "id": "py-math-atan2-1",
+    "title": "Two-Argument Arctangent",
+    "difficulty": "hard",
+    "description": "Calculate angle in radians from origin to point (1, 1). Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "0.7853981633974483",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.atan2(1, 1)",
+      "atan2(y, x) handles all quadrants",
+      "Returns angle from x-axis"
+    ]
+  },
+  {
+    "id": "py-math-sinh-1",
+    "title": "Hyperbolic Sine",
+    "difficulty": "medium",
+    "description": "Calculate hyperbolic sine of 1. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "1.1752011936438014",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.sinh(1)",
+      "Hyperbolic sine function",
+      "sinh(x) = (e^x - e^(-x)) / 2"
+    ]
+  },
+  {
+    "id": "py-math-cosh-1",
+    "title": "Hyperbolic Cosine",
+    "difficulty": "medium",
+    "description": "Calculate hyperbolic cosine of 0. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "1.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.cosh(0)",
+      "Hyperbolic cosine function",
+      "cosh(x) = (e^x + e^(-x)) / 2"
+    ]
+  },
+  {
+    "id": "py-math-tanh-1",
+    "title": "Hyperbolic Tangent",
+    "difficulty": "medium",
+    "description": "Calculate hyperbolic tangent of 1. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "0.7615941559557649",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.tanh(1)",
+      "Hyperbolic tangent function",
+      "tanh(x) = sinh(x) / cosh(x)"
+    ]
+  },
+  {
+    "id": "py-math-remainder-1",
+    "title": "IEEE Remainder",
+    "difficulty": "hard",
+    "description": "Calculate IEEE remainder of 7 divided by 3. Print result.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "1.0",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.remainder(7, 3)",
+      "Different from fmod()",
+      "Rounds to nearest integer multiple"
+    ]
+  },
+  {
+    "id": "py-math-nextafter-1",
+    "title": "Next Representable Float",
+    "difficulty": "hard",
+    "description": "Get next float after 1.0 towards 2.0. Verify it's greater than 1.0.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "True",
+    "testCode": "import math\n{user_code}\nprint(result > 1.0 and result < 1.1)",
+    "hints": [
+      "Use math.nextafter(1.0, 2.0)",
+      "Returns next representable float",
+      "Available in Python 3.9+"
+    ]
+  },
+  {
+    "id": "py-math-ulp-1",
+    "title": "Unit in Last Place",
+    "difficulty": "hard",
+    "description": "Get ULP (unit of least precision) of 1.0. Print it.",
+    "setupCode": "",
+    "starterCode": "import math",
+    "expectedOutput": "2.220446049250313e-16",
+    "testCode": "import math\n{user_code}\nprint(result)",
+    "hints": [
+      "Use math.ulp(1.0)",
+      "Returns smallest step for float",
+      "Available in Python 3.9+"
+    ]
+  }
+]

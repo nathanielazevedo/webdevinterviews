@@ -1,0 +1,687 @@
+[
+  {
+    "id": "py-os-cwd-1",
+    "title": "Get Current Working Directory",
+    "difficulty": "easy",
+    "description": "Print the current working directory path.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "/home/claude",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.getcwd() to get current working directory",
+      "Returns the absolute path as a string"
+    ]
+  },
+  {
+    "id": "py-os-chdir-1",
+    "title": "Change Directory",
+    "difficulty": "easy",
+    "description": "Create a directory 'test_dir', change to it, and print the new working directory name.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "test_dir",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.mkdir() to create directory",
+      "Use os.chdir() to change directory",
+      "Use os.path.basename(os.getcwd()) to get just the directory name"
+    ]
+  },
+  {
+    "id": "py-os-listdir-1",
+    "title": "List Directory Contents",
+    "difficulty": "easy",
+    "description": "Create files 'a.txt', 'b.txt', 'c.txt' and print sorted list of filenames.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "['a.txt', 'b.txt', 'c.txt']",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create files using open()",
+      "Use os.listdir('.') to list current directory",
+      "Sort the result"
+    ]
+  },
+  {
+    "id": "py-os-mkdir-1",
+    "title": "Create Single Directory",
+    "difficulty": "easy",
+    "description": "Create a directory named 'my_folder' and verify it exists.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.mkdir('my_folder')",
+      "Use os.path.exists() to verify"
+    ]
+  },
+  {
+    "id": "py-os-makedirs-1",
+    "title": "Create Nested Directories",
+    "difficulty": "easy",
+    "description": "Create nested directory structure 'parent/child/grandchild' and verify grandchild exists.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.makedirs() for nested directories",
+      "Check if 'parent/child/grandchild' exists"
+    ]
+  },
+  {
+    "id": "py-os-remove-1",
+    "title": "Remove File",
+    "difficulty": "easy",
+    "description": "Create 'temp.txt', delete it, and verify it doesn't exist.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "False",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create file with open()",
+      "Use os.remove() to delete file",
+      "Check with os.path.exists()"
+    ]
+  },
+  {
+    "id": "py-os-rmdir-1",
+    "title": "Remove Empty Directory",
+    "difficulty": "easy",
+    "description": "Create directory 'empty_dir', remove it, and verify it doesn't exist.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "False",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.mkdir() to create",
+      "Use os.rmdir() to remove (only works on empty directories)",
+      "Verify with os.path.exists()"
+    ]
+  },
+  {
+    "id": "py-os-rename-1",
+    "title": "Rename File",
+    "difficulty": "easy",
+    "description": "Create 'old.txt', rename it to 'new.txt', verify new exists and old doesn't.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True False",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create file first",
+      "Use os.rename('old.txt', 'new.txt')",
+      "Check both files"
+    ]
+  },
+  {
+    "id": "py-os-exists-1",
+    "title": "Check Path Exists",
+    "difficulty": "easy",
+    "description": "Create 'test.txt' and check if both 'test.txt' and 'missing.txt' exist.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True False",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create test.txt first",
+      "Use os.path.exists() for both files",
+      "Print both results"
+    ]
+  },
+  {
+    "id": "py-os-isfile-1",
+    "title": "Check if Path is File",
+    "difficulty": "easy",
+    "description": "Create file 'doc.txt' and directory 'folder', check which is a file.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True False",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create both file and directory",
+      "Use os.path.isfile() on both",
+      "Print results for doc.txt and folder"
+    ]
+  },
+  {
+    "id": "py-os-isdir-1",
+    "title": "Check if Path is Directory",
+    "difficulty": "easy",
+    "description": "Create directory 'mydir' and file 'myfile.txt', check which is a directory.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True False",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create both directory and file",
+      "Use os.path.isdir() on both",
+      "Print results for mydir and myfile.txt"
+    ]
+  },
+  {
+    "id": "py-os-getsize-1",
+    "title": "Get File Size",
+    "difficulty": "easy",
+    "description": "Create 'data.txt' with content 'Hello' (5 bytes) and print its size.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "5",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Write exactly 'Hello' to file",
+      "Use os.path.getsize('data.txt')",
+      "Size is in bytes"
+    ]
+  },
+  {
+    "id": "py-os-abspath-1",
+    "title": "Get Absolute Path",
+    "difficulty": "easy",
+    "description": "Create file 'test.txt' and print its absolute path.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "/home/claude/test.txt",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create the file first",
+      "Use os.path.abspath('test.txt')",
+      "Returns full path from root"
+    ]
+  },
+  {
+    "id": "py-os-basename-1",
+    "title": "Get Base Name from Path",
+    "difficulty": "easy",
+    "description": "Extract and print the filename from path '/home/user/documents/file.txt'.",
+    "setupCode": "",
+    "starterCode": "import os\npath = '/home/user/documents/file.txt'",
+    "expectedOutput": "file.txt",
+    "testCode": "import os\npath = '/home/user/documents/file.txt'\n{user_code}",
+    "hints": [
+      "Use os.path.basename(path)",
+      "Returns the last component of the path"
+    ]
+  },
+  {
+    "id": "py-os-dirname-1",
+    "title": "Get Directory Name from Path",
+    "difficulty": "easy",
+    "description": "Extract and print the directory from path '/home/user/documents/file.txt'.",
+    "setupCode": "",
+    "starterCode": "import os\npath = '/home/user/documents/file.txt'",
+    "expectedOutput": "/home/user/documents",
+    "testCode": "import os\npath = '/home/user/documents/file.txt'\n{user_code}",
+    "hints": [
+      "Use os.path.dirname(path)",
+      "Returns path without the filename"
+    ]
+  },
+  {
+    "id": "py-os-split-1",
+    "title": "Split Path into Directory and File",
+    "difficulty": "easy",
+    "description": "Split '/home/user/file.txt' and print as tuple (directory, filename).",
+    "setupCode": "",
+    "starterCode": "import os\npath = '/home/user/file.txt'",
+    "expectedOutput": "('/home/user', 'file.txt')",
+    "testCode": "import os\npath = '/home/user/file.txt'\n{user_code}",
+    "hints": [
+      "Use os.path.split(path)",
+      "Returns tuple of (directory, filename)"
+    ]
+  },
+  {
+    "id": "py-os-splitext-1",
+    "title": "Split Filename and Extension",
+    "difficulty": "easy",
+    "description": "Split 'document.pdf' into name and extension, print as tuple.",
+    "setupCode": "",
+    "starterCode": "import os\nfilename = 'document.pdf'",
+    "expectedOutput": "('document', '.pdf')",
+    "testCode": "import os\nfilename = 'document.pdf'\n{user_code}",
+    "hints": [
+      "Use os.path.splitext(filename)",
+      "Returns tuple of (name, extension)"
+    ]
+  },
+  {
+    "id": "py-os-join-1",
+    "title": "Join Path Components",
+    "difficulty": "easy",
+    "description": "Join 'home', 'user', and 'file.txt' into a single path and print it.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "home/user/file.txt",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.path.join('home', 'user', 'file.txt')",
+      "Handles path separators correctly for the OS"
+    ]
+  },
+  {
+    "id": "py-os-walk-1",
+    "title": "Walk Directory Tree",
+    "difficulty": "medium",
+    "description": "Create structure: dir1/file1.txt and dir1/subdir/file2.txt. Print all file paths found.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "dir1/file1.txt\ndir1/subdir/file2.txt",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create directories with os.makedirs()",
+      "Use os.walk() to traverse directory tree",
+      "os.walk() yields (dirpath, dirnames, filenames)"
+    ]
+  },
+  {
+    "id": "py-os-environ-1",
+    "title": "Access Environment Variable",
+    "difficulty": "easy",
+    "description": "Get and print the 'HOME' environment variable.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "/home/claude",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.environ['HOME']",
+      "Or os.environ.get('HOME') to avoid KeyError"
+    ]
+  },
+  {
+    "id": "py-os-environ-set-1",
+    "title": "Set Environment Variable",
+    "difficulty": "easy",
+    "description": "Set environment variable 'MY_VAR' to 'test_value' and print it.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "test_value",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.environ['MY_VAR'] = 'test_value'",
+      "Then print os.environ['MY_VAR']"
+    ]
+  },
+  {
+    "id": "py-os-getenv-1",
+    "title": "Get Environment Variable with Default",
+    "difficulty": "easy",
+    "description": "Get 'NONEXISTENT_VAR' with default value 'default' and print it.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "default",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.getenv('NONEXISTENT_VAR', 'default')",
+      "Returns default if variable doesn't exist"
+    ]
+  },
+  {
+    "id": "py-os-listdir-filter-1",
+    "title": "Filter Files by Extension",
+    "difficulty": "medium",
+    "description": "Create files 'a.txt', 'b.py', 'c.txt', 'd.py'. Print list of only .txt files (sorted).",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "['a.txt', 'c.txt']",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create all files first",
+      "Use os.listdir() and filter with .endswith('.txt')",
+      "Sort the result"
+    ]
+  },
+  {
+    "id": "py-os-stat-1",
+    "title": "Get File Statistics",
+    "difficulty": "medium",
+    "description": "Create 'info.txt' with 'test' and print its size using os.stat().",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "4",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create file with content 'test'",
+      "Use os.stat('info.txt').st_size",
+      "Returns detailed file information"
+    ]
+  },
+  {
+    "id": "py-os-path-isabs-1",
+    "title": "Check if Path is Absolute",
+    "difficulty": "easy",
+    "description": "Check if '/home/user/file.txt' and 'relative/path.txt' are absolute paths.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True False",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.path.isabs() on both paths",
+      "Absolute paths start from root (/)",
+      "Print results for both"
+    ]
+  },
+  {
+    "id": "py-os-makedirs-exist-1",
+    "title": "Create Directory (Ignore if Exists)",
+    "difficulty": "medium",
+    "description": "Create 'test_folder' twice using exist_ok=True. Print True if it exists after both calls.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.makedirs('test_folder', exist_ok=True)",
+      "exist_ok=True prevents error if directory exists",
+      "Call it twice to test"
+    ]
+  },
+  {
+    "id": "py-os-scandir-1",
+    "title": "Scan Directory with Details",
+    "difficulty": "medium",
+    "description": "Create 'file.txt' and 'dir1' directory. Use os.scandir() to print names of all entries (sorted).",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "['dir1', 'file.txt']",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create both file and directory",
+      "Use os.scandir('.') to get directory entries",
+      "Extract names from entries and sort"
+    ]
+  },
+  {
+    "id": "py-os-path-commonpath-1",
+    "title": "Find Common Path",
+    "difficulty": "medium",
+    "description": "Find common path between '/home/user/docs/file1.txt' and '/home/user/docs/file2.txt'.",
+    "setupCode": "",
+    "starterCode": "import os\npaths = ['/home/user/docs/file1.txt', '/home/user/docs/file2.txt']",
+    "expectedOutput": "/home/user/docs",
+    "testCode": "import os\npaths = ['/home/user/docs/file1.txt', '/home/user/docs/file2.txt']\n{user_code}",
+    "hints": [
+      "Use os.path.commonpath(paths)",
+      "Returns the longest common sub-path"
+    ]
+  },
+  {
+    "id": "py-os-system-1",
+    "title": "Execute System Command",
+    "difficulty": "medium",
+    "description": "Use os.system() to create file 'output.txt' with 'echo hello > output.txt', then read and print it.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "hello",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.system('echo hello > output.txt')",
+      "Then read the file to verify",
+      "os.system() executes shell commands"
+    ]
+  },
+  {
+    "id": "py-os-cpu-count-1",
+    "title": "Get CPU Count",
+    "difficulty": "easy",
+    "description": "Print the number of CPUs in the system.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "32",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.cpu_count()",
+      "Returns number of logical CPUs"
+    ]
+  },
+  {
+    "id": "py-os-sep-1",
+    "title": "Get Path Separator",
+    "difficulty": "easy",
+    "description": "Print the OS-specific path separator.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "/",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.sep",
+      "Returns '/' on Unix/Linux, '\\\\' on Windows"
+    ]
+  },
+  {
+    "id": "py-os-pathsep-1",
+    "title": "Get Path List Separator",
+    "difficulty": "easy",
+    "description": "Print the character used to separate paths in environment variables like PATH.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": ":",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.pathsep",
+      "Returns ':' on Unix/Linux, ';' on Windows"
+    ]
+  },
+  {
+    "id": "py-os-name-1",
+    "title": "Get Operating System Name",
+    "difficulty": "easy",
+    "description": "Print the OS name identifier.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "posix",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.name",
+      "Returns 'posix' for Unix/Linux, 'nt' for Windows"
+    ]
+  },
+  {
+    "id": "py-os-walk-count-1",
+    "title": "Count All Files in Directory Tree",
+    "difficulty": "medium",
+    "description": "Create dir1/a.txt, dir1/b.txt, dir1/sub/c.txt. Count total files using os.walk().",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "3",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create directory structure first",
+      "Use os.walk() to traverse all directories",
+      "Count files in each directory"
+    ]
+  },
+  {
+    "id": "py-os-path-normpath-1",
+    "title": "Normalize Path",
+    "difficulty": "easy",
+    "description": "Normalize path 'home/user/../user/./docs' and print the result.",
+    "setupCode": "",
+    "starterCode": "import os\npath = 'home/user/../user/./docs'",
+    "expectedOutput": "home/user/docs",
+    "testCode": "import os\npath = 'home/user/../user/./docs'\n{user_code}",
+    "hints": [
+      "Use os.path.normpath(path)",
+      "Removes redundant separators and up-level references"
+    ]
+  },
+  {
+    "id": "py-os-access-1",
+    "title": "Check File Access Permissions",
+    "difficulty": "medium",
+    "description": "Create 'test.txt' and check if it's readable using os.access().",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create the file first",
+      "Use os.access('test.txt', os.R_OK)",
+      "os.R_OK checks read permission"
+    ]
+  },
+  {
+    "id": "py-os-chmod-1",
+    "title": "Change File Permissions",
+    "difficulty": "medium",
+    "description": "Create 'script.sh', make it executable, and verify with os.access().",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create the file first",
+      "Use os.chmod('script.sh', 0o755)",
+      "Verify with os.access('script.sh', os.X_OK)"
+    ]
+  },
+  {
+    "id": "py-os-umask-1",
+    "title": "Get and Set Umask",
+    "difficulty": "hard",
+    "description": "Get current umask, set it to 0o022, and print the old value (in octal format).",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "0o22",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.umask(0o022) - returns previous umask",
+      "Format with oct() to print in octal",
+      "umask affects default file permissions"
+    ]
+  },
+  {
+    "id": "py-os-getpid-1",
+    "title": "Get Process ID",
+    "difficulty": "easy",
+    "description": "Print the current process ID (will vary, check if it's an integer).",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "import os\n{user_code}\nprint(isinstance(os.getpid(), int))",
+    "hints": [
+      "Use os.getpid()",
+      "Returns current process ID as integer"
+    ]
+  },
+  {
+    "id": "py-os-getppid-1",
+    "title": "Get Parent Process ID",
+    "difficulty": "easy",
+    "description": "Print the parent process ID (will vary, check if it's an integer).",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "import os\n{user_code}\nprint(isinstance(os.getppid(), int))",
+    "hints": [
+      "Use os.getppid()",
+      "Returns parent process ID as integer"
+    ]
+  },
+  {
+    "id": "py-os-urandom-1",
+    "title": "Generate Random Bytes",
+    "difficulty": "easy",
+    "description": "Generate 4 random bytes and print the length.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "4",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.urandom(4)",
+      "Returns bytes object of specified length",
+      "Print len() of the result"
+    ]
+  },
+  {
+    "id": "py-os-path-samefile-1",
+    "title": "Check if Paths Reference Same File",
+    "difficulty": "medium",
+    "description": "Create 'original.txt'. Check if 'original.txt' and './original.txt' are the same file.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create the file first",
+      "Use os.path.samefile('original.txt', './original.txt')",
+      "Returns True if both paths point to same file"
+    ]
+  },
+  {
+    "id": "py-os-path-expanduser-1",
+    "title": "Expand User Home Directory",
+    "difficulty": "easy",
+    "description": "Expand '~/documents/file.txt' to full path and print it.",
+    "setupCode": "",
+    "starterCode": "import os\npath = '~/documents/file.txt'",
+    "expectedOutput": "/home/claude/documents/file.txt",
+    "testCode": "import os\npath = '~/documents/file.txt'\n{user_code}",
+    "hints": [
+      "Use os.path.expanduser(path)",
+      "Replaces ~ with user's home directory"
+    ]
+  },
+  {
+    "id": "py-os-makedirs-parents-1",
+    "title": "Create Deep Directory Structure",
+    "difficulty": "medium",
+    "description": "Create 'a/b/c/d/e' directory structure in one call and verify 'e' exists.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Use os.makedirs('a/b/c/d/e')",
+      "Creates all intermediate directories automatically",
+      "Verify with os.path.exists('a/b/c/d/e')"
+    ]
+  },
+  {
+    "id": "py-os-link-1",
+    "title": "Create Hard Link",
+    "difficulty": "hard",
+    "description": "Create 'source.txt' with content 'data', create hard link 'link.txt', print link.txt content.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "data",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create source file first",
+      "Use os.link('source.txt', 'link.txt')",
+      "Read link.txt to verify"
+    ]
+  },
+  {
+    "id": "py-os-symlink-1",
+    "title": "Create Symbolic Link",
+    "difficulty": "hard",
+    "description": "Create 'target.txt' with 'hello', create symlink 'link.txt', verify link exists.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "True",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create target file first",
+      "Use os.symlink('target.txt', 'link.txt')",
+      "Verify with os.path.islink('link.txt')"
+    ]
+  },
+  {
+    "id": "py-os-readlink-1",
+    "title": "Read Symbolic Link Target",
+    "difficulty": "hard",
+    "description": "Create 'real.txt', create symlink 'link.txt' pointing to it, read and print the link target.",
+    "setupCode": "",
+    "starterCode": "import os",
+    "expectedOutput": "real.txt",
+    "testCode": "import os\n{user_code}",
+    "hints": [
+      "Create file and symlink first",
+      "Use os.readlink('link.txt')",
+      "Returns the path the symlink points to"
+    ]
+  }
+]

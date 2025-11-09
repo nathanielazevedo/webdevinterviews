@@ -1,0 +1,220 @@
+[
+  {
+    "id": "py-zipfile-import-1",
+    "title": "Import zipfile Module",
+    "difficulty": "easy",
+    "description": "Import the zipfile module and verify it has 'ZipFile' class.",
+    "setupCode": "",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(hasattr(zipfile, 'ZipFile'))",
+    "hints": [
+      "Use import zipfile",
+      "zipfile is Python's module for working with ZIP archives"
+    ]
+  },
+  {
+    "id": "py-zipfile-create-2",
+    "title": "Create a ZIP Archive",
+    "difficulty": "medium",
+    "description": "Create a file 'test.txt' with content 'Hello', then create a ZIP archive 'archive.zip' containing that file.",
+    "setupCode": "import zipfile",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "import os\nwith open('test.txt', 'w') as f:\n    f.write('Hello')\n{user_code}\nprint(os.path.exists('archive.zip'))",
+    "hints": [
+      "Create the text file first",
+      "Use zipfile.ZipFile('archive.zip', 'w') as zf:",
+      "Use zf.write('test.txt')"
+    ]
+  },
+  {
+    "id": "py-zipfile-add-multiple-3",
+    "title": "Add Multiple Files to ZIP",
+    "difficulty": "medium",
+    "description": "Create three files (file1.txt, file2.txt, file3.txt) and add all of them to 'bundle.zip'.",
+    "setupCode": "import zipfile\nfor i in range(1, 4):\n    with open(f'file{i}.txt', 'w') as f:\n        f.write(f'Content {i}')",
+    "starterCode": "",
+    "expectedOutput": "3",
+    "testCode": "{user_code}\nwith zipfile.ZipFile('bundle.zip', 'r') as zf:\n    print(len(zf.namelist()))",
+    "hints": [
+      "Use zipfile.ZipFile('bundle.zip', 'w')",
+      "Write file1.txt, file2.txt, and file3.txt",
+      "Use a loop to add all three files"
+    ]
+  },
+  {
+    "id": "py-zipfile-list-contents-4",
+    "title": "List ZIP Contents",
+    "difficulty": "easy",
+    "description": "Open 'data.zip' and get a list of all filenames inside. Store in 'file_list'.",
+    "setupCode": "import zipfile\nwith zipfile.ZipFile('data.zip', 'w') as zf:\n    zf.writestr('file1.txt', 'data1')\n    zf.writestr('file2.txt', 'data2')",
+    "starterCode": "",
+    "expectedOutput": "['file1.txt', 'file2.txt']",
+    "testCode": "{user_code}\nprint(file_list)",
+    "hints": [
+      "Open with zipfile.ZipFile('data.zip', 'r')",
+      "Use the .namelist() method"
+    ]
+  },
+  {
+    "id": "py-zipfile-extract-5",
+    "title": "Extract File from ZIP",
+    "difficulty": "medium",
+    "description": "Extract 'document.txt' from 'archive.zip' to current directory, then read and store its content in 'content'.",
+    "setupCode": "import zipfile\nwith zipfile.ZipFile('archive.zip', 'w') as zf:\n    zf.writestr('document.txt', 'Important data')",
+    "starterCode": "",
+    "expectedOutput": "Important data",
+    "testCode": "{user_code}\nprint(content)",
+    "hints": [
+      "Open the ZIP file in read mode",
+      "Use .extract('document.txt')",
+      "Read the extracted file"
+    ]
+  },
+  {
+    "id": "py-zipfile-extractall-6",
+    "title": "Extract All Files",
+    "difficulty": "medium",
+    "description": "Extract all files from 'package.zip' to a folder named 'extracted'. Count how many files were extracted and store in 'count'.",
+    "setupCode": "import zipfile\nimport os\nwith zipfile.ZipFile('package.zip', 'w') as zf:\n    zf.writestr('a.txt', 'A')\n    zf.writestr('b.txt', 'B')\n    zf.writestr('c.txt', 'C')",
+    "starterCode": "",
+    "expectedOutput": "3",
+    "testCode": "{user_code}\nprint(count)",
+    "hints": [
+      "Open the ZIP file",
+      "Use .extractall('extracted')",
+      "List files in the extracted folder and count them"
+    ]
+  },
+  {
+    "id": "py-zipfile-read-without-extract-7",
+    "title": "Read File Without Extracting",
+    "difficulty": "medium",
+    "description": "Read the contents of 'data.txt' from 'archive.zip' without extracting it. Store the content (as string) in 'data'.",
+    "setupCode": "import zipfile\nwith zipfile.ZipFile('archive.zip', 'w') as zf:\n    zf.writestr('data.txt', 'ZIP content')",
+    "starterCode": "",
+    "expectedOutput": "ZIP content",
+    "testCode": "{user_code}\nprint(data)",
+    "hints": [
+      "Open the ZIP file",
+      "Use .read('data.txt') to get bytes",
+      "Decode bytes to string with .decode()"
+    ]
+  },
+  {
+    "id": "py-zipfile-writestr-8",
+    "title": "Write String Directly to ZIP",
+    "difficulty": "medium",
+    "description": "Create 'notes.zip' and write string 'Quick note' directly as 'note.txt' without creating a physical file first.",
+    "setupCode": "import zipfile",
+    "starterCode": "",
+    "expectedOutput": "Quick note",
+    "testCode": "{user_code}\nwith zipfile.ZipFile('notes.zip', 'r') as zf:\n    print(zf.read('note.txt').decode())",
+    "hints": [
+      "Use zipfile.ZipFile('notes.zip', 'w')",
+      "Use .writestr('note.txt', 'Quick note')"
+    ]
+  },
+  {
+    "id": "py-zipfile-compression-9",
+    "title": "Create ZIP with Compression",
+    "difficulty": "hard",
+    "description": "Create 'compressed.zip' with ZIP_DEFLATED compression and add 'large.txt' to it.",
+    "setupCode": "import zipfile\nwith open('large.txt', 'w') as f:\n    f.write('x' * 1000)",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nimport os\nprint(os.path.exists('compressed.zip'))",
+    "hints": [
+      "Use zipfile.ZipFile('compressed.zip', 'w', zipfile.ZIP_DEFLATED)",
+      "Write 'large.txt' to the archive"
+    ]
+  },
+  {
+    "id": "py-zipfile-getinfo-10",
+    "title": "Get File Info from ZIP",
+    "difficulty": "medium",
+    "description": "Get the file size (in bytes) of 'document.txt' inside 'archive.zip'. Store in 'file_size'.",
+    "setupCode": "import zipfile\nwith zipfile.ZipFile('archive.zip', 'w') as zf:\n    zf.writestr('document.txt', 'Hello World')",
+    "starterCode": "",
+    "expectedOutput": "11",
+    "testCode": "{user_code}\nprint(file_size)",
+    "hints": [
+      "Open the ZIP file",
+      "Use .getinfo('document.txt')",
+      "Access the .file_size attribute"
+    ]
+  },
+  {
+    "id": "py-zipfile-context-manager-11",
+    "title": "Use ZipFile with Context Manager",
+    "difficulty": "easy",
+    "description": "Use a 'with' statement to create 'safe.zip' and write 'config.txt' to it. The file should contain 'settings'.",
+    "setupCode": "import zipfile\nwith open('config.txt', 'w') as f:\n    f.write('settings')",
+    "starterCode": "",
+    "expectedOutput": "settings",
+    "testCode": "{user_code}\nwith zipfile.ZipFile('safe.zip', 'r') as zf:\n    print(zf.read('config.txt').decode())",
+    "hints": [
+      "Use with zipfile.ZipFile('safe.zip', 'w') as zf:",
+      "Write config.txt inside the with block"
+    ]
+  },
+  {
+    "id": "py-zipfile-is-zipfile-12",
+    "title": "Check if File is a ZIP",
+    "difficulty": "easy",
+    "description": "Use zipfile.is_zipfile() to check if 'test.zip' is a valid ZIP file. Store result in 'is_valid'.",
+    "setupCode": "import zipfile\nwith zipfile.ZipFile('test.zip', 'w') as zf:\n    zf.writestr('dummy.txt', 'data')",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nprint(is_valid)",
+    "hints": [
+      "Use zipfile.is_zipfile('test.zip')",
+      "Returns True if it's a valid ZIP archive"
+    ]
+  },
+  {
+    "id": "py-zipfile-append-mode-13",
+    "title": "Append to Existing ZIP",
+    "difficulty": "hard",
+    "description": "Open 'existing.zip' in append mode and add a new file 'added.txt' with content 'new file'. Store number of files after appending in 'total'.",
+    "setupCode": "import zipfile\nwith zipfile.ZipFile('existing.zip', 'w') as zf:\n    zf.writestr('original.txt', 'original')\nwith open('added.txt', 'w') as f:\n    f.write('new file')",
+    "starterCode": "",
+    "expectedOutput": "2",
+    "testCode": "{user_code}\nprint(total)",
+    "hints": [
+      "Open with mode 'a' for append",
+      "Add the new file with .write()",
+      "Count files with .namelist()"
+    ]
+  },
+  {
+    "id": "py-zipfile-extract-member-14",
+    "title": "Extract Specific Member",
+    "difficulty": "medium",
+    "description": "Extract only 'important.txt' from 'multi.zip' (which contains multiple files) to 'output' folder.",
+    "setupCode": "import zipfile\nimport os\nwith zipfile.ZipFile('multi.zip', 'w') as zf:\n    zf.writestr('important.txt', 'critical')\n    zf.writestr('other.txt', 'not needed')\n    zf.writestr('extra.txt', 'skip')",
+    "starterCode": "",
+    "expectedOutput": "True",
+    "testCode": "{user_code}\nimport os\nprint(os.path.exists('output/important.txt'))",
+    "hints": [
+      "Open the ZIP file",
+      "Use .extract('important.txt', 'output')"
+    ]
+  },
+  {
+    "id": "py-zipfile-password-15",
+    "title": "Extract Password-Protected ZIP",
+    "difficulty": "hard",
+    "description": "Extract 'secret.txt' from password-protected 'secure.zip' using password 'pass123'. Store content in 'secret'.",
+    "setupCode": "import zipfile\nwith zipfile.ZipFile('secure.zip', 'w') as zf:\n    zf.setpassword(b'pass123')\n    zf.writestr('secret.txt', 'confidential')",
+    "starterCode": "",
+    "expectedOutput": "confidential",
+    "testCode": "{user_code}\nprint(secret)",
+    "hints": [
+      "Open the ZIP file",
+      "Use .setpassword(b'pass123')",
+      "Read 'secret.txt' and decode"
+    ]
+  }
+]

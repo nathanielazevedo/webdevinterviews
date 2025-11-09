@@ -216,6 +216,16 @@ export const api = {
   getBattleEffects: (battleId: string) => 
     apiClient.get<ApiResponse<{ effects: BattleAttackLog[] }>>(`/attacks/battle/${battleId}/effects`),
 
+  // Drills endpoints
+  executeCode: (language: string, code: string, expectedOutput?: string) =>
+    apiClient.post<{
+      success: boolean;
+      output?: string;
+      error?: string;
+      isCorrect?: boolean;
+      expectedOutput?: string;
+    }>('/drills/execute', { language, code, expectedOutput }),
+
   // Health check
   healthCheck: () => apiClient.get<HealthCheckResponse>('/'),
 };

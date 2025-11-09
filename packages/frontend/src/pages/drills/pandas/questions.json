@@ -1,0 +1,450 @@
+[
+  {
+    "id": "pd-import-1",
+    "title": "Import Pandas",
+    "difficulty": "easy",
+    "description": "Import pandas with the standard alias 'pd'.",
+    "setupCode": "",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "<module 'pandas' from",
+    "testCode": "{user_code}\nprint(str(pd)[:25])",
+    "hints": [
+      "Use import pandas as pd",
+      "This is the standard convention"
+    ]
+  },
+  {
+    "id": "pd-series-create-1",
+    "title": "Create Series from List",
+    "difficulty": "easy",
+    "description": "Create a Series from the list [10, 20, 30, 40, 50].",
+    "setupCode": "import pandas as pd",
+    "starterCode": "# Write your code here\ns = ",
+    "expectedOutput": "0    10\n1    20\n2    30\n3    40\n4    50\ndtype: int64",
+    "testCode": "import pandas as pd\n{user_code}\nprint(s)",
+    "hints": [
+      "Use pd.Series([10, 20, 30, 40, 50])",
+      "Series is a one-dimensional array"
+    ]
+  },
+  {
+    "id": "pd-series-index-1",
+    "title": "Create Series with Custom Index",
+    "difficulty": "easy",
+    "description": "Create a Series with values [1, 2, 3] and index ['a', 'b', 'c'].",
+    "setupCode": "import pandas as pd",
+    "starterCode": "# Write your code here\ns = ",
+    "expectedOutput": "a    1\nb    2\nc    3\ndtype: int64",
+    "testCode": "import pandas as pd\n{user_code}\nprint(s)",
+    "hints": [
+      "Use pd.Series([1, 2, 3], index=['a', 'b', 'c'])",
+      "Index parameter sets custom labels"
+    ]
+  },
+  {
+    "id": "pd-series-access-1",
+    "title": "Access Series Value by Index",
+    "difficulty": "easy",
+    "description": "Get the value at index 'b' from the Series.",
+    "setupCode": "import pandas as pd\ns = pd.Series([10, 20, 30], index=['a', 'b', 'c'])",
+    "starterCode": "# Write your code here\nvalue = ",
+    "expectedOutput": "20",
+    "testCode": "import pandas as pd\ns = pd.Series([10, 20, 30], index=['a', 'b', 'c'])\n{user_code}\nprint(value)",
+    "hints": [
+      "Use s['b'] to access by label",
+      "Or s.loc['b']"
+    ]
+  },
+  {
+    "id": "pd-dataframe-dict-1",
+    "title": "Create DataFrame from Dictionary",
+    "difficulty": "easy",
+    "description": "Create a DataFrame from dict: {'name': ['Alice', 'Bob'], 'age': [25, 30]}.",
+    "setupCode": "import pandas as pd",
+    "starterCode": "# Write your code here\ndf = ",
+    "expectedOutput": "    name  age\n0  Alice   25\n1    Bob   30",
+    "testCode": "import pandas as pd\n{user_code}\nprint(df)",
+    "hints": [
+      "Use pd.DataFrame({'name': ['Alice', 'Bob'], 'age': [25, 30]})",
+      "Keys become column names"
+    ]
+  },
+  {
+    "id": "pd-dataframe-columns-1",
+    "title": "Get DataFrame Columns",
+    "difficulty": "easy",
+    "description": "Get the column names from the DataFrame as a list.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2], 'B': [3, 4], 'C': [5, 6]})",
+    "starterCode": "# Write your code here\ncolumns = ",
+    "expectedOutput": "['A', 'B', 'C']",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2], 'B': [3, 4], 'C': [5, 6]})\n{user_code}\nprint(columns)",
+    "hints": [
+      "Use df.columns.tolist()",
+      "Or list(df.columns)"
+    ]
+  },
+  {
+    "id": "pd-select-column-1",
+    "title": "Select Single Column",
+    "difficulty": "easy",
+    "description": "Select the 'name' column from the DataFrame.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Alice', 'Bob', 'Charlie'], 'age': [25, 30, 35]})",
+    "starterCode": "# Write your code here\nnames = ",
+    "expectedOutput": "0      Alice\n1        Bob\n2    Charlie\nName: name, dtype: object",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Alice', 'Bob', 'Charlie'], 'age': [25, 30, 35]})\n{user_code}\nprint(names)",
+    "hints": [
+      "Use df['name']",
+      "Returns a Series"
+    ]
+  },
+  {
+    "id": "pd-select-multiple-1",
+    "title": "Select Multiple Columns",
+    "difficulty": "easy",
+    "description": "Select 'name' and 'age' columns from the DataFrame.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Alice', 'Bob'], 'age': [25, 30], 'city': ['NYC', 'LA']})",
+    "starterCode": "# Write your code here\nsubset = ",
+    "expectedOutput": "    name  age\n0  Alice   25\n1    Bob   30",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Alice', 'Bob'], 'age': [25, 30], 'city': ['NYC', 'LA']})\n{user_code}\nprint(subset)",
+    "hints": [
+      "Use df[['name', 'age']]",
+      "Double brackets for multiple columns"
+    ]
+  },
+  {
+    "id": "pd-head-1",
+    "title": "Get First N Rows",
+    "difficulty": "easy",
+    "description": "Get the first 2 rows of the DataFrame.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2, 3, 4, 5]})",
+    "starterCode": "# Write your code here\nfirst_two = ",
+    "expectedOutput": "   A\n0  1\n1  2",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2, 3, 4, 5]})\n{user_code}\nprint(first_two)",
+    "hints": [
+      "Use df.head(2)",
+      "Default is 5 rows"
+    ]
+  },
+  {
+    "id": "pd-filter-1",
+    "title": "Filter Rows by Condition",
+    "difficulty": "easy",
+    "description": "Filter rows where age > 25.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Alice', 'Bob', 'Charlie'], 'age': [25, 30, 35]})",
+    "starterCode": "# Write your code here\nfiltered = ",
+    "expectedOutput": "      name  age\n1      Bob   30\n2  Charlie   35",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Alice', 'Bob', 'Charlie'], 'age': [25, 30, 35]})\n{user_code}\nprint(filtered)",
+    "hints": [
+      "Use df[df['age'] > 25]",
+      "Boolean indexing"
+    ]
+  },
+  {
+    "id": "pd-sort-1",
+    "title": "Sort DataFrame",
+    "difficulty": "easy",
+    "description": "Sort the DataFrame by 'age' in ascending order.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Charlie', 'Alice', 'Bob'], 'age': [35, 25, 30]})",
+    "starterCode": "# Write your code here\nsorted_df = ",
+    "expectedOutput": "      name  age\n1    Alice   25\n2      Bob   30\n0  Charlie   35",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Charlie', 'Alice', 'Bob'], 'age': [35, 25, 30]})\n{user_code}\nprint(sorted_df)",
+    "hints": [
+      "Use df.sort_values('age')",
+      "Add ascending=False for descending"
+    ]
+  },
+  {
+    "id": "pd-add-column-1",
+    "title": "Add New Column",
+    "difficulty": "easy",
+    "description": "Add a new column 'salary' with values [50000, 60000, 70000].",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Alice', 'Bob', 'Charlie'], 'age': [25, 30, 35]})",
+    "starterCode": "# Write your code here\n",
+    "expectedOutput": "      name  age  salary\n0    Alice   25   50000\n1      Bob   30   60000\n2  Charlie   35   70000",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Alice', 'Bob', 'Charlie'], 'age': [25, 30, 35]})\n{user_code}\nprint(df)",
+    "hints": [
+      "Use df['salary'] = [50000, 60000, 70000]",
+      "Assign directly to new column name"
+    ]
+  },
+  {
+    "id": "pd-drop-column-1",
+    "title": "Drop Column",
+    "difficulty": "easy",
+    "description": "Drop the 'city' column from the DataFrame.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Alice', 'Bob'], 'age': [25, 30], 'city': ['NYC', 'LA']})",
+    "starterCode": "# Write your code here\ndf_dropped = ",
+    "expectedOutput": "    name  age\n0  Alice   25\n1    Bob   30",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Alice', 'Bob'], 'age': [25, 30], 'city': ['NYC', 'LA']})\n{user_code}\nprint(df_dropped)",
+    "hints": [
+      "Use df.drop('city', axis=1)",
+      "axis=1 means columns, axis=0 means rows"
+    ]
+  },
+  {
+    "id": "pd-loc-1",
+    "title": "Select with loc",
+    "difficulty": "easy",
+    "description": "Use loc to select row at index 1.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'A': [10, 20, 30], 'B': [40, 50, 60]})",
+    "starterCode": "# Write your code here\nrow = ",
+    "expectedOutput": "A    20\nB    50\nName: 1, dtype: int64",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'A': [10, 20, 30], 'B': [40, 50, 60]})\n{user_code}\nprint(row)",
+    "hints": [
+      "Use df.loc[1]",
+      "loc uses labels"
+    ]
+  },
+  {
+    "id": "pd-iloc-1",
+    "title": "Select with iloc",
+    "difficulty": "easy",
+    "description": "Use iloc to select the first row.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'A': [10, 20, 30], 'B': [40, 50, 60]})",
+    "starterCode": "# Write your code here\nrow = ",
+    "expectedOutput": "A    10\nB    40\nName: 0, dtype: int64",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'A': [10, 20, 30], 'B': [40, 50, 60]})\n{user_code}\nprint(row)",
+    "hints": [
+      "Use df.iloc[0]",
+      "iloc uses integer positions"
+    ]
+  },
+  {
+    "id": "pd-shape-1",
+    "title": "Get DataFrame Shape",
+    "difficulty": "easy",
+    "description": "Get the shape (rows, columns) of the DataFrame.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})",
+    "starterCode": "# Write your code here\nshape = ",
+    "expectedOutput": "(3, 3)",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})\n{user_code}\nprint(shape)",
+    "hints": [
+      "Use df.shape",
+      "Returns tuple (rows, columns)"
+    ]
+  },
+  {
+    "id": "pd-describe-1",
+    "title": "Get Summary Statistics",
+    "difficulty": "easy",
+    "description": "Get the mean of column 'A'.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'A': [10, 20, 30, 40, 50]})",
+    "starterCode": "# Write your code here\nmean_a = ",
+    "expectedOutput": "30.0",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'A': [10, 20, 30, 40, 50]})\n{user_code}\nprint(mean_a)",
+    "hints": [
+      "Use df['A'].mean()",
+      "Or df.describe() for all stats"
+    ]
+  },
+  {
+    "id": "pd-groupby-1",
+    "title": "GroupBy and Aggregate",
+    "difficulty": "medium",
+    "description": "Group by 'category' and calculate mean of 'value'.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'category': ['A', 'B', 'A', 'B'], 'value': [10, 20, 30, 40]})",
+    "starterCode": "# Write your code here\ngrouped = ",
+    "expectedOutput": "category\nA    20.0\nB    30.0\nName: value, dtype: float64",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'category': ['A', 'B', 'A', 'B'], 'value': [10, 20, 30, 40]})\n{user_code}\nprint(grouped)",
+    "hints": [
+      "Use df.groupby('category')['value'].mean()",
+      "GroupBy splits data into groups"
+    ]
+  },
+  {
+    "id": "pd-null-check-1",
+    "title": "Check for Null Values",
+    "difficulty": "easy",
+    "description": "Check if there are any null values in the DataFrame.",
+    "setupCode": "import pandas as pd\nimport numpy as np\ndf = pd.DataFrame({'A': [1, 2, np.nan], 'B': [4, np.nan, 6]})",
+    "starterCode": "# Write your code here\nhas_nulls = ",
+    "expectedOutput": "True",
+    "testCode": "import pandas as pd\nimport numpy as np\ndf = pd.DataFrame({'A': [1, 2, np.nan], 'B': [4, np.nan, 6]})\n{user_code}\nprint(has_nulls)",
+    "hints": [
+      "Use df.isnull().any().any()",
+      "First any() checks columns, second checks if any column has nulls"
+    ]
+  },
+  {
+    "id": "pd-fillna-1",
+    "title": "Fill Null Values",
+    "difficulty": "easy",
+    "description": "Fill null values with 0.",
+    "setupCode": "import pandas as pd\nimport numpy as np\ndf = pd.DataFrame({'A': [1, np.nan, 3]})",
+    "starterCode": "# Write your code here\ndf_filled = ",
+    "expectedOutput": "     A\n0  1.0\n1  0.0\n2  3.0",
+    "testCode": "import pandas as pd\nimport numpy as np\ndf = pd.DataFrame({'A': [1, np.nan, 3]})\n{user_code}\nprint(df_filled)",
+    "hints": [
+      "Use df.fillna(0)",
+      "Replaces NaN with specified value"
+    ]
+  },
+  {
+    "id": "pd-dropna-1",
+    "title": "Drop Rows with Null Values",
+    "difficulty": "easy",
+    "description": "Drop rows containing any null values.",
+    "setupCode": "import pandas as pd\nimport numpy as np\ndf = pd.DataFrame({'A': [1, 2, np.nan], 'B': [4, 5, 6]})",
+    "starterCode": "# Write your code here\ndf_clean = ",
+    "expectedOutput": "     A  B\n0  1.0  4\n1  2.0  5",
+    "testCode": "import pandas as pd\nimport numpy as np\ndf = pd.DataFrame({'A': [1, 2, np.nan], 'B': [4, 5, 6]})\n{user_code}\nprint(df_clean)",
+    "hints": [
+      "Use df.dropna()",
+      "Removes rows with any NaN"
+    ]
+  },
+  {
+    "id": "pd-unique-1",
+    "title": "Get Unique Values",
+    "difficulty": "easy",
+    "description": "Get unique values from 'category' column as sorted list.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'category': ['A', 'B', 'A', 'C', 'B', 'A']})",
+    "starterCode": "# Write your code here\nunique_vals = ",
+    "expectedOutput": "['A', 'B', 'C']",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'category': ['A', 'B', 'A', 'C', 'B', 'A']})\n{user_code}\nprint(unique_vals)",
+    "hints": [
+      "Use sorted(df['category'].unique())",
+      "unique() returns unique values"
+    ]
+  },
+  {
+    "id": "pd-value-counts-1",
+    "title": "Count Value Occurrences",
+    "difficulty": "easy",
+    "description": "Count occurrences of each category.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'category': ['A', 'B', 'A', 'C', 'B', 'A']})",
+    "starterCode": "# Write your code here\ncounts = ",
+    "expectedOutput": "category\nA    3\nB    2\nC    1\nName: count, dtype: int64",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'category': ['A', 'B', 'A', 'C', 'B', 'A']})\n{user_code}\nprint(counts)",
+    "hints": [
+      "Use df['category'].value_counts()",
+      "Returns counts in descending order"
+    ]
+  },
+  {
+    "id": "pd-rename-1",
+    "title": "Rename Columns",
+    "difficulty": "easy",
+    "description": "Rename column 'A' to 'Alpha' and 'B' to 'Beta'.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})",
+    "starterCode": "# Write your code here\ndf_renamed = ",
+    "expectedOutput": "   Alpha  Beta\n0      1     3\n1      2     4",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})\n{user_code}\nprint(df_renamed)",
+    "hints": [
+      "Use df.rename(columns={'A': 'Alpha', 'B': 'Beta'})",
+      "Pass dictionary mapping old to new names"
+    ]
+  },
+  {
+    "id": "pd-reset-index-1",
+    "title": "Reset Index",
+    "difficulty": "easy",
+    "description": "Reset the index of the DataFrame.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2, 3]}, index=['x', 'y', 'z'])",
+    "starterCode": "# Write your code here\ndf_reset = ",
+    "expectedOutput": "  index  A\n0     x  1\n1     y  2\n2     z  3",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2, 3]}, index=['x', 'y', 'z'])\n{user_code}\nprint(df_reset)",
+    "hints": [
+      "Use df.reset_index()",
+      "Old index becomes a column"
+    ]
+  },
+  {
+    "id": "pd-apply-1",
+    "title": "Apply Function to Column",
+    "difficulty": "medium",
+    "description": "Apply lambda function to double all values in column 'A'.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2, 3, 4, 5]})",
+    "starterCode": "# Write your code here\ndf['A'] = ",
+    "expectedOutput": "    A\n0   2\n1   4\n2   6\n3   8\n4  10",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2, 3, 4, 5]})\n{user_code}\nprint(df)",
+    "hints": [
+      "Use df['A'].apply(lambda x: x * 2)",
+      "Or simply df['A'] * 2"
+    ]
+  },
+  {
+    "id": "pd-merge-1",
+    "title": "Merge DataFrames",
+    "difficulty": "medium",
+    "description": "Merge df1 and df2 on 'id' column.",
+    "setupCode": "import pandas as pd\ndf1 = pd.DataFrame({'id': [1, 2], 'name': ['Alice', 'Bob']})\ndf2 = pd.DataFrame({'id': [1, 2], 'age': [25, 30]})",
+    "starterCode": "# Write your code here\nmerged = ",
+    "expectedOutput": "   id   name  age\n0   1  Alice   25\n1   2    Bob   30",
+    "testCode": "import pandas as pd\ndf1 = pd.DataFrame({'id': [1, 2], 'name': ['Alice', 'Bob']})\ndf2 = pd.DataFrame({'id': [1, 2], 'age': [25, 30]})\n{user_code}\nprint(merged)",
+    "hints": [
+      "Use pd.merge(df1, df2, on='id')",
+      "Or df1.merge(df2, on='id')"
+    ]
+  },
+  {
+    "id": "pd-concat-1",
+    "title": "Concatenate DataFrames",
+    "difficulty": "medium",
+    "description": "Concatenate df1 and df2 vertically.",
+    "setupCode": "import pandas as pd\ndf1 = pd.DataFrame({'A': [1, 2]})\ndf2 = pd.DataFrame({'A': [3, 4]})",
+    "starterCode": "# Write your code here\nconcatenated = ",
+    "expectedOutput": "   A\n0  1\n1  2\n0  3\n1  4",
+    "testCode": "import pandas as pd\ndf1 = pd.DataFrame({'A': [1, 2]})\ndf2 = pd.DataFrame({'A': [3, 4]})\n{user_code}\nprint(concatenated)",
+    "hints": [
+      "Use pd.concat([df1, df2])",
+      "Default axis=0 stacks vertically"
+    ]
+  },
+  {
+    "id": "pd-pivot-1",
+    "title": "Pivot Table",
+    "difficulty": "medium",
+    "description": "Create pivot table with index='date', columns='category', values='value', aggfunc='sum'.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({\n    'date': ['2024-01-01', '2024-01-01', '2024-01-02', '2024-01-02'],\n    'category': ['A', 'B', 'A', 'B'],\n    'value': [10, 20, 30, 40]\n})",
+    "starterCode": "# Write your code here\npivot = ",
+    "expectedOutput": "category        A   B\ndate                 \n2024-01-01  10  20\n2024-01-02  30  40",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({\n    'date': ['2024-01-01', '2024-01-01', '2024-01-02', '2024-01-02'],\n    'category': ['A', 'B', 'A', 'B'],\n    'value': [10, 20, 30, 40]\n})\n{user_code}\nprint(pivot)",
+    "hints": [
+      "Use df.pivot_table(index='date', columns='category', values='value', aggfunc='sum')",
+      "Reshapes data for analysis"
+    ]
+  },
+  {
+    "id": "pd-str-upper-1",
+    "title": "String Method - Uppercase",
+    "difficulty": "easy",
+    "description": "Convert 'name' column to uppercase.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['alice', 'bob', 'charlie']})",
+    "starterCode": "# Write your code here\ndf['name'] = ",
+    "expectedOutput": "      name\n0    ALICE\n1      BOB\n2  CHARLIE",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['alice', 'bob', 'charlie']})\n{user_code}\nprint(df)",
+    "hints": [
+      "Use df['name'].str.upper()",
+      "str accessor for string methods"
+    ]
+  },
+  {
+    "id": "pd-str-contains-1",
+    "title": "String Method - Contains",
+    "difficulty": "medium",
+    "description": "Filter rows where 'name' contains 'a'.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Alice', 'Bob', 'Charlie']})",
+    "starterCode": "# Write your code here\nfiltered = ",
+    "expectedOutput": "      name\n0    Alice\n2  Charlie",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'name': ['Alice', 'Bob', 'Charlie']})\n{user_code}\nprint(filtered)",
+    "hints": [
+      "Use df[df['name'].str.contains('a', case=False)]",
+      "case=False for case-insensitive"
+    ]
+  },
+  {
+    "id": "pd-duplicates-1",
+    "title": "Drop Duplicate Rows",
+    "difficulty": "easy",
+    "description": "Drop duplicate rows from the DataFrame.",
+    "setupCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2, 2, 3], 'B': [4, 5, 5, 6]})",
+    "starterCode": "# Write your code here\ndf_unique = ",
+    "expectedOutput": "   A  B\n0  1  4\n1  2  5\n3  3  6",
+    "testCode": "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2, 2, 3], 'B': [4, 5, 5, 6]})\n{user_code}\nprint(df_unique)",
+    "hints": [
+      "Use df.drop_duplicates()",
+      "Keeps first occurrence by default"
+    ]
+  }
+]
