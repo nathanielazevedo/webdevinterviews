@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { UserPerformanceService } from '../services/user-performance.service';
-import { sendSuccessResponse, sendErrorResponse } from '../utils/response';
+import { UserPerformanceService } from '../services/user-performance.service.js';
+import { sendSuccessResponse, sendErrorResponse } from '../utils/response.js';
 
 const router = Router();
 
